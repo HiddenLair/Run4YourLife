@@ -50,13 +50,13 @@ namespace Run4YourLife.GameInput
 
         private const string JOYSTICK = "joy";
 
-        public int controllerId;
+        private int controllerId;
+        public bool IsAssigned { get; private set; }
 
         public Controller(int id)
         {
             controllerId = id;
         }
-
 
         private string GetButtonString(Button button)
         {
@@ -96,6 +96,11 @@ namespace Run4YourLife.GameInput
         public float GetAxis(Axis axis)
         {
             return Input.GetAxis(GetAxisString(axis));
+        }
+
+        public float GetAxisRaw(Axis axis)
+        {
+            return Input.GetAxisRaw(GetAxisString(axis));
         }
     }
 }
