@@ -26,7 +26,7 @@ namespace Run4YourLife.CharacterSelection
         [SerializeField]
         private GameObject orangeRunner;
 
-
+        private List<GameObject> stands = new List<GameObject>();
 
         private void Awake()
         {
@@ -42,18 +42,18 @@ namespace Run4YourLife.CharacterSelection
 
         private void SpawnNewStands()
         {
-            int standIndex = 0;
+            Debug.Assert(stands.Count == 0);
             foreach (PlayerDefinition player in playerManager.GetPlayers())
             {
-                SpawnPlayerStand(player,standPositions[standIndex]);
-                standIndex++;
+                GameObject stand = SpawnPlayerStand(player,standPositions[stands.Count]);
+                stands.Add(stand);
             }
         }
 
-        private void SpawnPlayerStand(PlayerDefinition player, Transform transform)
+        private GameObject SpawnPlayerStand(PlayerDefinition player, Transform transform)
         {
             GameObject prefab = null;
-            switch(player.characterType)
+            switch(player.CharacterType)
             {
                 case CharacterType.Blue:
                     prefab = blueRunner;
@@ -81,17 +81,16 @@ namespace Run4YourLife.CharacterSelection
                 //BossDecoration bossDecoration = instance.GetComponent<BossDecoration>();
                 //bossDecoration.enable
             }
+            return instance;
         }
 
         private void DestroyCurrentStants()
         {
-            foreach (Transform stand in standPositions)
+            foreach (GameObject stand in stands)
             {
-                if (stand.childCount > 0)
-                {
-                    Destroy(stand.GetChild(0));
-                }
+                Destroy(stand);
             }
+            stands.Clear();
         }
     }
 }

@@ -57,7 +57,7 @@ namespace Run4YourLife.CharacterSelection
         {
             foreach (PlayerDefinition player in playerManager.GetPlayers())
             {
-                //UpdatePlayer(player);
+                UpdatePlayer(player);
             }
         }
 
@@ -73,7 +73,7 @@ namespace Run4YourLife.CharacterSelection
             {
                 playerManager.RemovePlayer(player);
             }
-            else if (controller.GetButton(Controller.Button.Y))
+            /*else if (controller.GetButton(Controller.Button.Y))
             {
                 BackToMainMenu();
             }
@@ -84,7 +84,7 @@ namespace Run4YourLife.CharacterSelection
             else if(controller.GetButton(Controller.Button.L))
             {
                 ChangePlayerCharacter(AdvanceType.Previous);
-            }
+            }*/
         }
 
         enum AdvanceType

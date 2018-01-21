@@ -18,6 +18,6 @@ namespace Run4YourLife.Player
     {
         public bool IsBoss { get; set; }
         public Controller Controller { get; set; }
-        public CharacterType characterType;
+        public CharacterType CharacterType { get; set; }
     }
 }
