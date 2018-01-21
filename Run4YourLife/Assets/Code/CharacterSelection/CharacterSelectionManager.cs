@@ -57,7 +57,7 @@ namespace Run4YourLife.CharacterSelection
         {
             foreach (PlayerDefinition player in playerManager.GetPlayers())
             {
-                UpdatePlayer(player);
+                //UpdatePlayer(player);
             }
         }
 

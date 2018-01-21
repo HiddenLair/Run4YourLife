@@ -16,14 +16,14 @@ namespace Run4YourLife.CharacterSelection
 
         void Awake()
         {
-            playerInput = GameObject.FindGameObjectWithTag("GlobalManager").GetComponent<ControllerManager>();
+            playerInput = Component.FindObjectOfType<ControllerManager>();
             if (playerInput == null)
                 Debug.LogError(playerInput);
         }
 
         void Update()
-        {
-            foreach(Controller controller in playerInput.GetControllers()) 
+        {            
+            foreach (Controller controller in playerInput.GetControllers()) 
             {
                 if (controller.GetButtonDown(Controller.Button.A))
                 {
