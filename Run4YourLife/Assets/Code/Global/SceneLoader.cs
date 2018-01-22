@@ -26,6 +26,9 @@ namespace Run4YourLife.SceneManagement
         [SerializeField]
         private LoadEvent loadEvent;
 
+        [SerializeField]
+        private bool setLoadedSceneAsActiveScene = true;
+
         void Awake()
         {
             if (loadEvent.Equals(LoadEvent.Awake))
@@ -68,7 +71,17 @@ namespace Run4YourLife.SceneManagement
 
         public void LoadScene()
         {
-            SceneManager.LoadScene(sceneName, loadSceneMode);
+            SceneManager.sceneLoaded += SceneLoaded;
+            SceneManager.LoadSceneAsync(sceneName, loadSceneMode);
+        }
+
+        private void SceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
+        {
+            SceneManager.sceneLoaded -= SceneLoaded;
+            if (setLoadedSceneAsActiveScene)
+            {
+                SceneManager.SetActiveScene(scene);
+            }
         }
     }
 }

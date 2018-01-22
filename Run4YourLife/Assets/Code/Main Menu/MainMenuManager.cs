@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Run4YourLife.MainMenu
 {
@@ -8,7 +9,8 @@ namespace Run4YourLife.MainMenu
     {
         public void OnPlayButtonPressed()
         {
-            Debug.Log("OnPlayButtonPressed");
+            Scene mainMenuScene = gameObject.scene;
+            SceneManager.UnloadSceneAsync(mainMenuScene);
         }
 
         public void OnOptionsButtonPressed()
