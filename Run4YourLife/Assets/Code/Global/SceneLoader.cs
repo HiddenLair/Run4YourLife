@@ -12,7 +12,6 @@ namespace Run4YourLife.SceneManagement
         Start,
         OnEnable,
         OnDisable,
-        Destroyed,
         OnDestroy
     }
 
@@ -42,7 +41,6 @@ namespace Run4YourLife.SceneManagement
                 LoadScene();
             }
         }
-
 
         void OnEnable()
         {

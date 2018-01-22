@@ -4,6 +4,7 @@ using UnityEngine;
 
 using Run4YourLife.Player;
 using Run4YourLife.GameInput;
+using System;
 
 namespace Run4YourLife.CharacterSelection
 {
@@ -13,94 +14,56 @@ namespace Run4YourLife.CharacterSelection
 
         void Awake()
         {
-            playerManager = Object.FindObjectOfType<PlayerManager>();
-            if (playerManager == null)
-                Debug.LogWarning("Player Manager is NULL but should not be null");
+            playerManager = Component.FindObjectOfType<PlayerManager>();
+            Debug.Assert(playerManager != null);
 
             ControllerDetector controllerDetector = GetComponent<ControllerDetector>();
-            if (controllerDetector == null)
-                Debug.LogWarning("ControllerDetector is NULL but should not be null");
+            Debug.Assert(controllerDetector != null);
             controllerDetector.OnControllerDetected += OnControllerDetected;
         }
 
-        void OnControllerDetected(Controller controller)
+        public void OnControllerDetected(Controller controller)
         {
-            if (!IsAssignedToAPlayer(controller))
-            {
-                PlayerDefinition player = new PlayerDefinition
-                {
-                    Controller = controller
-                };
-
-                if (playerManager.GetPlayers().Count == 0)
-                {
-                    player.IsBoss = true;
-                }
-
-                playerManager.AddPlayer(player);
-            }
+            CreatePlayerForController(controller);
         }
 
-        private bool IsAssignedToAPlayer(Controller controller)
+        private void CreatePlayerForController(Controller controller)
         {
-            foreach(PlayerDefinition p in playerManager.GetPlayers())
+            PlayerDefinition playerDefinition = new PlayerDefinition();
+            playerDefinition.Controller = controller;
+            if (playerManager.GetPlayers().Count == 1)
             {
-                if (p.Controller.Equals(controller))
+                playerManager.SetPlayerAsBoss(playerDefinition);
+            }
+            playerDefinition.CharacterType = GetFirstAviablePlayerCharacterType();
+
+            playerManager.AddPlayer(playerDefinition);
+        }
+
+        private CharacterType GetFirstAviablePlayerCharacterType()
+        {
+            CharacterType ret = CharacterType.Red;
+            foreach (CharacterType characterType in Enum.GetValues(typeof(CharacterType)))
+            {
+                if (!PlayerHasCharacterType(characterType))
+                {
+                    ret = characterType;
+                    break;
+                }
+            }
+            return ret;
+        }
+
+        private bool PlayerHasCharacterType(CharacterType characterType)
+        {
+            foreach(PlayerDefinition player in playerManager.GetPlayers())
+            {
+                if (player.CharacterType.Equals(characterType))
                 {
                     return true;
                 }
             }
             return false;
-        }
-
-        public void Update()
-        {
-            foreach (PlayerDefinition player in playerManager.GetPlayers())
-            {
-                UpdatePlayer(player);
-            }
-        }
-
-        private void UpdatePlayer(PlayerDefinition player)
-        {
-            Controller controller = player.Controller;
-
-            if (controller.GetButton(Controller.Button.X))
-            {
-                playerManager.SetPlayerAsBoss(player);
-            }
-            else if (controller.GetButton(Controller.Button.B))
-            {
-                playerManager.RemovePlayer(player);
-            }
-            /*else if (controller.GetButton(Controller.Button.Y))
-            {
-                BackToMainMenu();
-            }
-            else if (controller.GetButton(Controller.Button.R))
-            {
-                ChangePlayerCharacter(AdvanceType.Next);
-            }
-            else if(controller.GetButton(Controller.Button.L))
-            {
-                ChangePlayerCharacter(AdvanceType.Previous);
-            }*/
-        }
-
-        enum AdvanceType
-        {
-            Next,
-            Previous
-        }
-
-        private void ChangePlayerCharacter(AdvanceType advanceType)
-        {
-            throw new System.NotImplementedException("Still not implemented");
-        }
-
-        private void BackToMainMenu()
-        {
-            throw new System.NotImplementedException("Still not implemented");
         }
     }
 }

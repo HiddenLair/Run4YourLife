@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,16 +7,31 @@ namespace Run4YourLife.Player
 {
     public class PlayerManager : MonoBehaviour
     {
+        private List<PlayerDefinition> players = new List<PlayerDefinition>();
+        private List<PlayerDefinition> playersToDelete = new List<PlayerDefinition>();
+
         public delegate void dgPlayerChange();
         public event dgPlayerChange OnPlayerChange;
+
+        void LateUpdate()
+        {
+            if (playersToDelete.Count > 0)
+            {
+                foreach (PlayerDefinition player in playersToDelete)
+                {
+                    players.Remove(player);
+                }
+                playersToDelete.Clear();
+
+                CallOnPlayerChange();
+            }
+        }
 
         private void CallOnPlayerChange()
         {
             if (OnPlayerChange != null)
                 OnPlayerChange();
         }
-
-        private List<PlayerDefinition> players = new List<PlayerDefinition>();
 
         public List<PlayerDefinition> GetPlayers()
         {
@@ -61,16 +77,16 @@ namespace Run4YourLife.Player
             CallOnPlayerChange();
         }
 
-        public void AddPlayer(PlayerDefinition player)
+        public PlayerDefinition AddPlayer(PlayerDefinition playerDefinition)
         {
-            players.Add(player);
+            players.Add(playerDefinition);
             CallOnPlayerChange();
+            return playerDefinition;
         }
 
         public void RemovePlayer(PlayerDefinition player)
         {
-            players.Remove(player);
-            CallOnPlayerChange();
+            playersToDelete.Add(player);
         }
     }
 }

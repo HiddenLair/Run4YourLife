@@ -4,53 +4,53 @@ using UnityEngine;
 
 namespace Run4YourLife.GameInput
 {
+    public class Axis
+    {
+        public string ID { get; private set; }
+
+        private Axis(string id) { ID = id; }
+
+        public static readonly Axis LEFT_HORIZONTAL = new Axis("lhor");
+        public static readonly Axis LEFT_VERTICAL = new Axis("lver");
+        public static readonly Axis RIGHT_HORIZONTAL = new Axis("rhor");
+        public static readonly Axis RIGHT_VERTICAL = new Axis("rver");
+    }
+
+    public class Trigger
+    {
+        public string ID { get; private set; }
+
+        private Trigger(string id) { ID = id; }
+
+        public static readonly Trigger LEFT = new Trigger("ltrig");
+        public static readonly Trigger RIGHT = new Trigger("rtrig");
+    }
+
+    public class Button
+    {
+        public string ID { get; private set; }
+
+        private Button(string id) { ID = id; }
+
+        public static readonly Button DPAD_LEFT = new Button("dleft");
+        public static readonly Button DPAD_RIGHT = new Button("dright");
+        public static readonly Button DPAD_UP = new Button("dup");
+        public static readonly Button DPAD_DOWN = new Button("ddown");
+        public static readonly Button START = new Button("start");
+        public static readonly Button SELECT = new Button("select");
+        public static readonly Button A = new Button("A");
+        public static readonly Button B = new Button("B");
+        public static readonly Button X = new Button("X");
+        public static readonly Button Y = new Button("Y");
+        public static readonly Button R = new Button("R");
+        public static readonly Button L = new Button("L");
+    }
+
     public class Controller
     {
-        public class Axis
-        {
-            public string ID { get; private set; }
-
-            public Axis(string id) { ID = id; }
-
-            public static readonly Axis LEFT_HORIZONTAL = new Axis("lhor");
-            public static readonly Axis LEFT_VERTICAL = new Axis("lver");
-            public static readonly Axis RIGHT_HORIZONTAL = new Axis("rhor");
-            public static readonly Axis RIGHT_VERTICAL = new Axis("rver");
-        }
-
-        public class Trigger
-        {
-            public string ID { get; private set; }
-
-            public Trigger(string id) { ID = id; }
-
-            public static readonly Trigger LEFT = new Trigger("ltrig");
-            public static readonly Trigger RIGHT = new Trigger("rtrig");
-        }
-
-        public class Button
-        {
-            public string ID { get; private set; }
-
-            public Button(string id) { ID = id; }
-
-            public static readonly Button DPAD_LEFT = new Button("dleft");
-            public static readonly Button DPAD_RIGHT = new Button("dright");
-            public static readonly Button DPAD_UP = new Button("dup");
-            public static readonly Button DPAD_DOWN = new Button("ddown");
-            public static readonly Button START = new Button("start");
-            public static readonly Button SELECT = new Button("select");
-            public static readonly Button A = new Button("A");
-            public static readonly Button B = new Button("B");
-            public static readonly Button X = new Button("X");
-            public static readonly Button Y = new Button("Y");
-            public static readonly Button R = new Button("R");
-            public static readonly Button L = new Button("L");
-        }
-
         private const string JOYSTICK = "joy";
 
-        private int controllerId;
+        public int controllerId;
         public bool IsAssigned { get; private set; }
 
         public Controller(int id)
