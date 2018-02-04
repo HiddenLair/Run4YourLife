@@ -9,14 +9,32 @@ public class BossManager : MonoBehaviour {
     public Quaternion currentPosition;
     public float speed;
 
+    Vector3 startingPosition;
+
+    bool moving = false;
+
     private void Awake()
     {
         currentPosition = Quaternion.identity;
+        startingPosition = transform.position;
     }
 
     void Update () {
-        currentPosition *= Quaternion.Euler(0, -speed*Time.deltaTime, 0);
-        transform.position = center.position + currentPosition*center.right*radius;
-        transform.LookAt(center);
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            moving = !moving;
+            if (!moving)
+            {
+                transform.position = startingPosition;
+                transform.rotation = Quaternion.identity;
+            }
+        }
+
+        if (moving)
+        {
+            currentPosition *= Quaternion.Euler(0, -speed * Time.deltaTime, 0);
+            transform.position = center.position + currentPosition * center.right * radius;
+            transform.LookAt(center);
+        }
 	}
 }
