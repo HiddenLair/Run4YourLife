@@ -20,7 +20,7 @@ public class CameraBossFollow : MonoBehaviour {
         DecreaseTraumaLinear();
 
         if (Input.GetKey(KeyCode.Space))
-            trauma = 1;
+            AddTrauma(0.2f);
 
         transform.position = CalculateCameraPosition();
         transform.LookAt(CalculateLookAtPosition());
@@ -69,19 +69,20 @@ public class CameraBossFollow : MonoBehaviour {
     private Vector3 CalculateCameraPosition()
     {
         Camera camera = GetComponent<Camera>();
-        float aspectRatio = (float)Screen.width / Screen.height;
+        Vector3 lookAt = CalculateLookAtPosition();
 
         float z = bossAndFloorHeight / (2.0f * Mathf.Tan(Mathf.Deg2Rad * camera.fieldOfView / 2.0f));
-        float horizontalFieldOfView = camera.fieldOfView * aspectRatio;
-        float x = bossAndFloorHeight * aspectRatio;
 
-        return boss.position + bossPositionOffset + new Vector3(x / 2.0f, bossAndFloorHeight / 2.0f, -z);
+        return lookAt + -boss.forward * z;
     }
 
     private Vector3 CalculateLookAtPosition()
     {
-        Vector3 lookAt = CalculateCameraPosition();
-        lookAt.z = boss.position.z;
-        return lookAt;
+        Camera camera = GetComponent<Camera>();
+        float aspectRatio = (float)Screen.width / Screen.height;
+
+        float x = bossAndFloorHeight * aspectRatio;
+
+        return boss.position + boss.rotation * bossPositionOffset + boss.right * (x / 2.0f) + Vector3.up * (bossAndFloorHeight / 2.0f);
     }
 }
