@@ -28,8 +28,6 @@ public class RigidbodyCharacterController : MonoBehaviour {
         SetPlayerDefinition(playerDefinition);
         
         rigidbody = GetComponent<Rigidbody>();
-
-        isGrounded = true;
     }
 
     void SetPlayerDefinition(PlayerDefinition playerDefinition)
@@ -39,7 +37,7 @@ public class RigidbodyCharacterController : MonoBehaviour {
     }
 
     void Update()
-    {
+    { 
         float horizontal = controller.GetAxis(Axis.LEFT_HORIZONTAL);
 
         rigidbody.velocity = GetVelocity(horizontal);
@@ -67,10 +65,18 @@ public class RigidbodyCharacterController : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        isGrounded = true;
         if (collision.gameObject.tag.Equals("Floor"))
         {
-            
+            isGrounded = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag.Equals("Floor"))
+        {
+            Debug.Log("exit");
+            isGrounded = false;
         }
     }
 }
