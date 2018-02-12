@@ -26,7 +26,7 @@ public class RigidbodyCharacterController : MonoBehaviour {
             Controller = new Controller(1)
         };
         SetPlayerDefinition(playerDefinition);
-        
+
         rigidbody = GetComponent<Rigidbody>();
     }
 
@@ -37,10 +37,8 @@ public class RigidbodyCharacterController : MonoBehaviour {
     }
 
     void Update()
-    { 
-        float horizontal = controller.GetAxis(Axis.LEFT_HORIZONTAL);
-
-        rigidbody.velocity = GetVelocity(horizontal);
+    {
+        Move();
 
         if (isGrounded && controller.GetButtonDown(Button.A))
         {
@@ -48,11 +46,15 @@ public class RigidbodyCharacterController : MonoBehaviour {
         }
     }
 
-    private Vector3 GetVelocity(float horizontal)
+    private void Move()
+    { 
+        rigidbody.velocity = Vector3.up * rigidbody.velocity.y + GetHorizontalVelocity();
+    }
+
+    private Vector3 GetHorizontalVelocity()
     {
-        Vector3 velocity = rigidbody.velocity;
-        velocity.x = horizontal * speed * Time.deltaTime;
-        return velocity;
+        float horizontal = controller.GetAxis(Axis.LEFT_HORIZONTAL);
+        return new Vector3(horizontal * speed * Time.deltaTime,0,0);
     }
 
     private void Jump()
