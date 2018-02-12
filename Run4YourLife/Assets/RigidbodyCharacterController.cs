@@ -64,4 +64,13 @@ public class RigidbodyCharacterController : MonoBehaviour {
         rigidbody.velocity = velocity;
         rigidbody.AddForce(new Vector3(0, jumpingForce, 0), ForceMode.Impulse);
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        isGrounded = true;
+        if (collision.gameObject.tag.Equals("Floor"))
+        {
+            
+        }
+    }
 }
