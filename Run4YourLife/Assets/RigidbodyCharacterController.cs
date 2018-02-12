@@ -37,7 +37,7 @@ public class RigidbodyCharacterController : MonoBehaviour {
     }
 
     void Update()
-    {
+    { 
         float horizontal = controller.GetAxis(Axis.LEFT_HORIZONTAL);
 
         rigidbody.velocity = GetVelocity(horizontal);
