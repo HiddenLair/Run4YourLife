@@ -23,7 +23,7 @@ public class RigidbodyCharacterController : MonoBehaviour {
         PlayerDefinition playerDefinition = new PlayerDefinition
         {
             CharacterType = CharacterType.Red,
-            Controller = new Controller(1)
+            Controller = new Controller(2)
         };
         SetPlayerDefinition(playerDefinition);
         
