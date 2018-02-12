@@ -78,12 +78,12 @@ public class Laser : MonoBehaviour {
 
         }
 
-        if (controller.GetButtonDown(Button.R))
+        if (controller.GetButtonDown(Button.RB))
         {
             setIndex = (setIndex - 1+sets.Length) % sets.Length;
         }
 
-        if (controller.GetButtonDown(Button.L))
+        if (controller.GetButtonDown(Button.LB))
         {
             setIndex = (setIndex + 1) % sets.Length;
         }
