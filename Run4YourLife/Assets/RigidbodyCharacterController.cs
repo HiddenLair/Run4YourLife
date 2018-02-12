@@ -38,6 +38,9 @@ public class RigidbodyCharacterController : MonoBehaviour {
 
     void Update()
     {
+        Debug.Log(controller.GetTriggerRaw(Trigger.LEFT));
+        Debug.Log(controller.GetTriggerRaw(Trigger.RIGHT));
+
         float horizontal = controller.GetAxis(Axis.LEFT_HORIZONTAL);
 
         rigidbody.velocity = GetVelocity(horizontal);

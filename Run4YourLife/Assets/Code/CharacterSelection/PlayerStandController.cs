@@ -104,11 +104,11 @@ namespace Run4YourLife.CharacterSelection
             {
                 playerManager.RemovePlayer(playerDefinition);
             }
-            else if (controller.GetButtonDown(Button.R))
+            else if (controller.GetButtonDown(Button.RB))
             {
                 ChangePlayerCharacter(AdvanceType.Next);
             }
-            else if(controller.GetButtonDown(Button.L))
+            else if(controller.GetButtonDown(Button.LB))
             {
                 ChangePlayerCharacter(AdvanceType.Previous);
             }

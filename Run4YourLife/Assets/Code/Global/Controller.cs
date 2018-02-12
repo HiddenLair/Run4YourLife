@@ -22,8 +22,8 @@ namespace Run4YourLife.GameInput
 
         private Trigger(string id) { ID = id; }
 
-        public static readonly Trigger LEFT = new Trigger("ltrig");
-        public static readonly Trigger RIGHT = new Trigger("rtrig");
+        public static readonly Trigger LEFT = new Trigger("LT");
+        public static readonly Trigger RIGHT = new Trigger("RT");
     }
 
     public class Button
@@ -42,8 +42,8 @@ namespace Run4YourLife.GameInput
         public static readonly Button B = new Button("B");
         public static readonly Button X = new Button("X");
         public static readonly Button Y = new Button("Y");
-        public static readonly Button R = new Button("R");
-        public static readonly Button L = new Button("L");
+        public static readonly Button RB = new Button("RB");
+        public static readonly Button LB = new Button("LB");
     }
 
     public class Controller
@@ -86,6 +86,11 @@ namespace Run4YourLife.GameInput
         public float GetTrigger(Trigger trigger)
         {
             return Input.GetAxis(GetTriggerString(trigger));
+        }
+
+        public float GetTriggerRaw(Trigger trigger)
+        {
+            return Input.GetAxisRaw(GetTriggerString(trigger));
         }
 
         private string GetAxisString(Axis axis)
