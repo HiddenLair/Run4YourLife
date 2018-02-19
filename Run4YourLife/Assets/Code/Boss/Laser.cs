@@ -23,6 +23,7 @@ public class Laser : MonoBehaviour {
     private Type[] sets = new Type[] { Type.Type1, Type.Type2 };
 
     private int yPosIndex = 0;
+    private float lastYPos = 0;
     private float timerChangeBetweenY = 0;
 
     private PlayerDefinition playerDefinition;
@@ -68,6 +69,7 @@ public class Laser : MonoBehaviour {
         System.Array.Sort(posiblePlaces, (x, y) => y.distance.CompareTo(x.distance));
         if (posiblePlaces.Length > 0)
         {
+            bool changed = false;
             laser.gameObject.SetActive(true);
             float yInput = controller.GetAxis(Axis.LEFT_VERTICAL);
             if (Mathf.Abs(yInput) > 0.2)
@@ -77,17 +79,32 @@ public class Laser : MonoBehaviour {
                     if (yInput < 0)
                     {
                         yPosIndex++;
+                        changed = true;
                     }
                     else
                     {
                         yPosIndex--;
+                        changed = true;
                     }
                     timerChangeBetweenY = 0.0f;
                 }
             }
-            yPosIndex = Mathf.Clamp(yPosIndex, 0, posiblePlaces.Length - 1);
-
+            yPosIndex = Mathf.Clamp(yPosIndex,0,posiblePlaces.Length-1);
+            if (!changed)
+            {
+                for (int i = posiblePlaces.Length-1; i >= 0; i--)
+                {
+                    if (posiblePlaces[i].point.y <= lastYPos)
+                    {
+                        yPosIndex = i;
+                        break;
+                    }
+                }
+            }
             laser.position = posiblePlaces[yPosIndex].point;
+            lastYPos = laser.position.y;
+
+            SetTraps();
         }
         else
         {
@@ -105,17 +122,20 @@ public class Laser : MonoBehaviour {
         if (controller.GetButtonDown(Button.LB))
         {
             setIndex = (setIndex + 1) % sets.Length;
-        }
+        }   
+    }
 
+    void SetTraps()
+    {
         if (controller.GetButtonDown(Button.A))
         {
-            if(sets[setIndex] == Type.Type2)
+            if (sets[setIndex] == Type.Type2)
             {
                 Vector3 temp = laser.position;
-                temp.y = temp.y + (ceilTrapA.GetComponent<Renderer>().bounds.size.y/2);
+                temp.y = temp.y + (ceilTrapA.GetComponent<Renderer>().bounds.size.y / 2);
                 Instantiate(ceilTrapA, temp, ceilTrapA.GetComponent<Transform>().rotation);
             }
-            else if(sets[setIndex] == Type.Type1)
+            else if (sets[setIndex] == Type.Type1)
             {
                 Vector3 temp = laser.position;
                 temp.y = temp.y + (floorTrapA.GetComponent<Renderer>().bounds.size.y / 2);
