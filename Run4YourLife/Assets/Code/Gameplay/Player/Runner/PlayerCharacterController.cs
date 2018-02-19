@@ -23,9 +23,6 @@ public class PlayerCharacterController : MonoBehaviour {
     [SerializeField]
     private float maxJumpHeight;
 
-    [SerializeField]
-    private LayerMask groundLayer;
-
     #endregion
 
     #region References
