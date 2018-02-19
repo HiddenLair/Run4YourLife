@@ -5,7 +5,7 @@ using UnityEngine;
 using Run4YourLife.Player;
 using Run4YourLife.GameInput;
 
-public class RigidbodyCharacterController : MonoBehaviour {
+public class RigidbodyCharacterController : MonoBehaviour, IEventMessageTarget {
     [SerializeField]
     private float speed;
     [SerializeField]
@@ -47,6 +47,27 @@ public class RigidbodyCharacterController : MonoBehaviour {
             Jump();
         }
     }
+
+    #region MessageHandling
+
+    void IEventMessageTarget.Explosion()
+    {
+        Debug.Log(gameObject.name + " recieved an explosion!");
+    }
+
+    void IEventMessageTarget.Impulse(Vector3 force)
+    {
+        Debug.Log(gameObject.name + " recieved an impact!");
+
+        rigidbody.isKinematic = false;
+
+        Debug.Log(gameObject.name + " " + force);
+        rigidbody.AddForce(new Vector3(1.0f, 0.0f, 0.0f) * 100.0f, ForceMode.Acceleration);
+
+        //rigidbody.isKinematic = true;
+    }
+
+    #endregion
 
     private Vector3 GetVelocity(float horizontal)
     {
