@@ -54,6 +54,7 @@ public class CameraBossFollow : MonoBehaviour {
         trauma = Mathf.Clamp01(trauma + amount);
     }
 
+
     private void DecreaseTraumaLinear()
     {
         trauma = Mathf.Clamp01(trauma - traumaDecreaseSpeed * Time.deltaTime);
