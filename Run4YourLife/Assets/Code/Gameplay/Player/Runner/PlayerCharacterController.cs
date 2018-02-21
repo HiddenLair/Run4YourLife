@@ -5,23 +5,25 @@ using UnityEngine;
 using Run4YourLife.Player;
 using Run4YourLife.GameInput;
 using System;
-using System.IO;
 
 public class PlayerCharacterController : MonoBehaviour {
 
     #region InspectorVariables
 
     [SerializeField]
-    private float speed;
+    private float m_speed;
 
     [SerializeField]
-    private float gravity;
+    private float m_gravity;
 
     [SerializeField]
-    private float endOfJumpGravity;
+    private float m_endOfJumpGravity;
 
     [SerializeField]
-    private float maxJumpHeight;
+    private float m_jumpHeight;
+
+    [SerializeField]
+    private float m_jumpOnTopOfAnotherPlayerHeight;
 
     #endregion
 
@@ -35,8 +37,9 @@ public class PlayerCharacterController : MonoBehaviour {
 
     #region Private Variables
 
-    private Vector3 velocity;
-    private bool isJumping;
+    private bool m_isJumping;
+
+    private Vector3 m_velocity;
 
     #endregion
 
@@ -70,20 +73,20 @@ public class PlayerCharacterController : MonoBehaviour {
 
     private void Gravity()
     {
-        velocity.y += gravity * Time.deltaTime;
+        m_velocity.y += m_gravity * Time.deltaTime;
 
-        if (!isJumping && characterController.isGrounded)
+        if (!m_isJumping && characterController.isGrounded)
         {
-            velocity.y = gravity * Time.deltaTime;
+            m_velocity.y = m_gravity * Time.deltaTime;
         }
     }
 
     private void Move()
     {
         float horizontal = controller.GetAxis(Axis.LEFT_HORIZONTAL);
-        Vector3 move = transform.forward * horizontal * speed * Time.deltaTime;
+        Vector3 move = transform.forward * horizontal * m_speed * Time.deltaTime;
 
-        characterController.Move(move + velocity * Time.deltaTime);
+        characterController.Move(move + m_velocity * Time.deltaTime);
     }
 
     private void Jump()
@@ -91,16 +94,23 @@ public class PlayerCharacterController : MonoBehaviour {
         StartCoroutine(JumpCoroutine());
     }
 
+    #region Jump Coroutines
+
+    private float HeightToVelocity(float height)
+    {
+        return Mathf.Sqrt(height * -2f * m_gravity);
+    }
+
     private IEnumerator JumpCoroutine()
     {
-        isJumping = true;
+        m_isJumping = true;
         
         //set vertical velocity to the velocity needed to reach maxJumpHeight
-        velocity.y = Mathf.Sqrt(maxJumpHeight * -2f * gravity);
+        AddVelocity(new Vector3(0, HeightToVelocity(m_jumpHeight), 0));
 
         yield return StartCoroutine(WaitUntilApexOfJumpOrReleaseButton());
 
-        isJumping = false;
+        m_isJumping = false;
 
         yield return StartCoroutine(FallFaster());
     }
@@ -109,7 +119,7 @@ public class PlayerCharacterController : MonoBehaviour {
     {
         while (!characterController.isGrounded)
         {
-            velocity.y += endOfJumpGravity * Time.deltaTime;
+            m_velocity.y += m_endOfJumpGravity * Time.deltaTime;
             yield return null;
         }
     }
@@ -124,5 +134,23 @@ public class PlayerCharacterController : MonoBehaviour {
             previousPositionY = transform.position.y;
             yield return null;
         }
+    }
+
+    #endregion
+
+    public void AddVelocity(Vector3 velocity)
+    {
+        m_velocity += velocity;
+    }
+
+    internal void OnPlayerHasBeenJumpedOnTopByAnotherPlayer()
+    {
+        Debug.Log("Jumped on top");
+    }
+
+    internal void OnPlayerHasJumpedOnTopOfAnotherPlayer()
+    {
+        //TODO: Stop current jump
+        m_velocity.y = HeightToVelocity(m_jumpOnTopOfAnotherPlayerHeight);
     }
 }
