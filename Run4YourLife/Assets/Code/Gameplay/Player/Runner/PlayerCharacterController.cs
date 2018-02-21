@@ -10,8 +10,8 @@ public class PlayerCharacterController : MonoBehaviour {
 
     #region InspectorVariables
 
-    [SerializeField]
-    private float m_speed;
+    // [SerializeField]
+    // private float m_speed;
 
     [SerializeField]
     private float m_gravity;
@@ -19,8 +19,8 @@ public class PlayerCharacterController : MonoBehaviour {
     [SerializeField]
     private float m_endOfJumpGravity;
 
-    [SerializeField]
-    private float m_jumpHeight;
+    // [SerializeField]
+    // private float m_jumpHeight;
 
     [SerializeField]
     private float m_jumpOnTopOfAnotherPlayerHeight;
@@ -32,6 +32,7 @@ public class PlayerCharacterController : MonoBehaviour {
     private CharacterController characterController;
     private PlayerDefinition playerDefinition;
     private Controller controller;
+    private Stats stats;
 
     #endregion
 
@@ -52,6 +53,7 @@ public class PlayerCharacterController : MonoBehaviour {
         SetPlayerDefinition(playerDefinition);
 
         characterController = GetComponent<CharacterController>();
+        stats = GetComponent<Stats>();
     }
 
     void SetPlayerDefinition(PlayerDefinition playerDefinition)
@@ -84,7 +86,7 @@ public class PlayerCharacterController : MonoBehaviour {
     private void Move()
     {
         float horizontal = controller.GetAxis(Axis.LEFT_HORIZONTAL);
-        Vector3 move = transform.forward * horizontal * m_speed * Time.deltaTime;
+        Vector3 move = transform.forward * horizontal * stats.Get(StatType.SPEED) * Time.deltaTime;
 
         characterController.Move(move + m_velocity * Time.deltaTime);
     }
@@ -106,7 +108,7 @@ public class PlayerCharacterController : MonoBehaviour {
         m_isJumping = true;
         
         //set vertical velocity to the velocity needed to reach maxJumpHeight
-        AddVelocity(new Vector3(0, HeightToVelocity(m_jumpHeight), 0));
+        AddVelocity(new Vector3(0, HeightToVelocity(stats.Get(StatType.JUMP_HEIGHT)), 0));
 
         yield return StartCoroutine(WaitUntilApexOfJumpOrReleaseButton());
 
