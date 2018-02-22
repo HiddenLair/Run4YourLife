@@ -18,61 +18,10 @@ public class CameraBossFollow : MonoBehaviour {
     public float maxRotationalScreenShakeAngle;
     public float maxTranslationalScreenShakeOffset;
 
-    private bool lockTrauma;
-
-    public Image traumaImage;
-    public Image traumaCubeImage;
-    public GameObject translational;
-    public GameObject rotational;
-
     private void LateUpdate()
-    {
-        if (!lockTrauma)
-            DecreaseTraumaLinear();
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            trauma = 1;
-            lockTrauma = !lockTrauma;
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            AddTrauma(0.5f);
-        }
-
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            bossAndFloorHeight += 2f * Time.deltaTime;
-        }
-
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            bossAndFloorHeight -= 2f * Time.deltaTime;
-        }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            rotational.SetActive(!rotational.activeSelf);
-        }
-
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            translational.SetActive(!translational.activeSelf);
-        }
-
-        traumaImage.fillAmount = trauma;
-        traumaCubeImage.fillAmount = trauma * trauma * trauma;
-
-
+    { 
         transform.position = CalculateCameraPosition();
         transform.LookAt(CalculateLookAtPosition());
-
-        if (translational.activeSelf)
-            transform.position += GetTranslationalCameraShake();
-
-        if (rotational.activeSelf)
-            transform.rotation *= GetRotationalCameraShake();
     }
 
     private Vector3 GetTranslationalCameraShake()
