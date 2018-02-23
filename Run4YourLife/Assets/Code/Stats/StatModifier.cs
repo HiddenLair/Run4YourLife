@@ -10,6 +10,8 @@ public enum ModifierType
 [Serializable]
 public class StatModifier
 {
+    #region InspectorVariables
+
     [SerializeField]
     private StatType statType;
 
@@ -25,9 +27,15 @@ public class StatModifier
     [SerializeField]
     private float endTime;
 
+    #endregion
+
+    #region Private Variables
+
     private Stats stats;
 
     private float currentTime = 0.0f;
+
+    #endregion
 
     public StatModifier(StatType statType, ModifierType modifierType, bool buff, float amount, float endTime)
     {
@@ -41,9 +49,13 @@ public class StatModifier
     public void SetStats(Stats stats)
     {
         this.stats = stats;
+
+        Apply();
+
+        stats.RemoveAfter(this, endTime);
     }
 
-    public bool Apply()
+    public void Apply()
     {
         float value = amount;
 
@@ -58,19 +70,5 @@ public class StatModifier
         }
 
         stats.Increase(statType, value);
-
-        return Keep();
-    }
-
-    private bool Keep()
-    {
-        if(endTime >= 0.0f)
-        {
-            currentTime += Time.deltaTime;
-
-            return currentTime < endTime;
-        }
-
-        return true;
     }
 }

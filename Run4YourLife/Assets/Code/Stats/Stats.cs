@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public enum StatType
@@ -46,10 +47,6 @@ public class Stats : MonoBehaviour
 
     void Update()
     {
-        Clear();
-
-        statsModifiers.RemoveWhere(statModifier => !statModifier.Apply());
-
         TMP_currentSpeed_TMP = Get(StatType.SPEED);
         TMP_currentJumpHeight_TMP = Get(StatType.JUMP_HEIGHT);
     }
@@ -66,8 +63,25 @@ public class Stats : MonoBehaviour
 
     public void AddModifier(StatModifier statModifier)
     {
-        statModifier.SetStats(this);
         statsModifiers.Add(statModifier);
+        statModifier.SetStats(this);
+    }
+
+    public void RemoveAfter(StatModifier statModifier, float time)
+    {
+        if(time >= 0.0f)
+        {
+            StartCoroutine(RemoveStatModifier(statModifier, time));
+        }
+    }
+
+    private IEnumerator RemoveStatModifier(StatModifier statModifier, float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        statsModifiers.Remove(statModifier);
+
+        Compute();
     }
 
     private void Clear()
@@ -75,6 +89,16 @@ public class Stats : MonoBehaviour
         foreach(StatType statType in Enum.GetValues(typeof(StatType)))
         {
             computedStats[statType] = initialStats[statType];
+        }
+    }
+
+    private void Compute()
+    {
+        Clear();
+
+        foreach(StatModifier statModifier in statsModifiers)
+        {
+            statModifier.Apply();
         }
     }
 }
