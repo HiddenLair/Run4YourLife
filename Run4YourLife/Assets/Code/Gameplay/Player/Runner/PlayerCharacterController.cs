@@ -30,9 +30,8 @@ public class PlayerCharacterController : MonoBehaviour {
     #region References
 
     private CharacterController characterController;
-    private PlayerDefinition playerDefinition;
-    private Controller controller;
     private Stats stats;
+    private PlayerControlScheme playerControlScheme;
 
     #endregion
 
@@ -45,27 +44,17 @@ public class PlayerCharacterController : MonoBehaviour {
     #endregion
 
     void Awake () {
-        PlayerDefinition playerDefinition = new PlayerDefinition
-        {
-            CharacterType = CharacterType.Red,
-            Controller = new Controller(1)
-        };
-        SetPlayerDefinition(playerDefinition);
+        playerControlScheme = GetComponent<PlayerControlScheme>();
+        playerControlScheme.Activate();
 
         characterController = GetComponent<CharacterController>();
         stats = GetComponent<Stats>();
     }
 
-    void SetPlayerDefinition(PlayerDefinition playerDefinition)
-    {
-        this.playerDefinition = playerDefinition;
-        controller = playerDefinition.Controller;
-    }
-
     void Update () {
         Gravity();
          
-        if (characterController.isGrounded && controller.GetButtonDown(Button.A))
+        if (characterController.isGrounded && playerControlScheme.jump.Started())
         {
             Jump();
         }
@@ -85,7 +74,7 @@ public class PlayerCharacterController : MonoBehaviour {
 
     private void Move()
     {
-        float horizontal = controller.GetAxis(Axis.LEFT_HORIZONTAL);
+        float horizontal = playerControlScheme.move.Value();
         Vector3 move = transform.forward * horizontal * stats.Get(StatType.SPEED) * Time.deltaTime;
 
         characterController.Move(move + m_velocity * Time.deltaTime);
@@ -131,7 +120,7 @@ public class PlayerCharacterController : MonoBehaviour {
         float previousPositionY = transform.position.y;
         yield return null;
 
-        while (!controller.GetButtonUp(Button.A) && previousPositionY < transform.position.y)
+        while (playerControlScheme.jump.Persists() && previousPositionY < transform.position.y)
         {
             previousPositionY = transform.position.y;
             yield return null;
