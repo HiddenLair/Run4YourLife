@@ -1,24 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using Run4YourLife.Player;
 
-using Run4YourLife.GameInput;
-
-public class PlayerControlScheme : ControlScheme {
-    public Action move;
-    public Action jump;
-    public Action interact;
-
-    void Awake()
+namespace Run4YourLife.Input
+{
+    public class PlayerControlScheme : ControlScheme
     {
-        inputDevice = new InputDevice(1); 
+        public Action move;
+        public Action jump;
+        public Action interact;
 
-        move = new Action(new InputSource(Axis.LEFT_HORIZONTAL,inputDevice));
-        jump = new Action(new InputSource(Button.A, inputDevice));
-        interact = new Action(new InputSource(Button.X, inputDevice));
+        void Start()
+        {
+            inputDevice = GetComponent<PlayerInstance>().playerDefinition.inputDevice;
 
-        actions.Add(move);
-        actions.Add(jump);
-        actions.Add(interact);
+            actions.Add(move = new Action(new InputSource(Axis.LEFT_HORIZONTAL, inputDevice)));
+            actions.Add(jump = new Action(new InputSource(Button.A, inputDevice)));
+            actions.Add(interact = new Action(new InputSource(Button.X, inputDevice)));
+        }
     }
 }

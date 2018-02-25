@@ -2,127 +2,117 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using Run4YourLife.Player;
-using Run4YourLife.GameInput;
+using Run4YourLife.Input;
 
-public class Boss : MonoBehaviour {
-    //Shoot
-    public GameObject shoot;
-    public GameObject shoot2;
-    public float rotationSpeed;
-    public float bulletSpeed;
-    public Transform bulletStartingPoint;
-    public float reload;
-
-    //Mele
-    public GameObject mele;
-    public Transform meleZone;
-    public float meleReload;
-
-    private Transform body;
-    private float timer;
-    private float meleTimer;
-    private int shootMode = 0;
-    private bool shootStillAlive = false;//Only for second shoot
-
-    private PlayerDefinition playerDefinition;
-    private Controller controller;
-
-    private void Awake()
+namespace Run4YourLife.Player
+{
+    [RequireComponent(typeof(BossControlScheme))]
+    public class Boss : MonoBehaviour
     {
-        PlayerDefinition playerDefinition = new PlayerDefinition
-        {
-            CharacterType = CharacterType.Red,
-            Controller = new Controller(1)
-        };
-        SetPlayerDefinition(playerDefinition);
-        body = gameObject.GetComponent<Transform>();
-        timer = reload;
-        meleTimer = meleReload;
-    }
+        //Shoot
+        public GameObject shoot;
+        public GameObject shoot2;
+        public float rotationSpeed;
+        public float bulletSpeed;
+        public Transform bulletStartingPoint;
+        public float reload;
 
-    void SetPlayerDefinition(PlayerDefinition playerDefinition)
-    {
-        this.playerDefinition = playerDefinition;
-        controller = playerDefinition.Controller;
-    }
+        //Mele
+        public GameObject mele;
+        public Transform meleZone;
+        public float meleReload;
 
-    // Update is called once per frame
-    void Update() {
-        if (controller.GetButtonDown(Button.START))
+        private float timer;
+        private float meleTimer;
+        private int shootMode = 0;
+        private bool shootStillAlive = false;//Only for second shoot
+
+        private BossControlScheme bossControlScheme;
+
+        private void Awake()
         {
-            shootMode ^= 1;
+            bossControlScheme = GetComponent<BossControlScheme>();
+            timer = reload;
+            meleTimer = meleReload;
+
         }
-        switch (shootMode) {
-            case 0:
+
+        private void Update()
+        {
+            switch (shootMode)
+            {
+                case 0:
+                    {
+                        Shoot1();
+                    }
+                    break;
+                case 1:
+                    {
+                        Shoot2();
+                    }
+                    break;
+            }
+
+            if (bossControlScheme.melee.Value() > 0.2)
+            {
+                if (meleTimer >= meleReload)
                 {
-                    Shoot1(); 
+                    var meleInst = Instantiate(mele, meleZone.position, mele.GetComponent<Transform>().rotation);
+                    Destroy(meleInst, 1.0f);
+                    meleTimer = 0.0f;
                 }
-                break;
-            case 1:
+            }
+            meleTimer += Time.deltaTime;
+        }
+
+        void Shoot1()
+        {
+            float yInput = bossControlScheme.moveLaserVertical.Value();
+            if (Mathf.Abs(yInput) > 0.2)
+            {
+                if (yInput < 0)
                 {
-                    Shoot2();
+                    Quaternion temp = transform.rotation * Quaternion.Euler(0, 0, rotationSpeed);
+                    transform.rotation = temp;
                 }
-                break;
-        }
-        if (Input.GetAxis("RT") > 0.2)
-        {
-            if (meleTimer >= meleReload)
-            {
-                var meleInst = Instantiate(mele, meleZone.position, mele.GetComponent<Transform>().rotation);
-                Destroy(meleInst, 1.0f);
-                meleTimer = 0.0f;
-            }
-        }
-        meleTimer += Time.deltaTime;
-    }
+                else
+                {
+                    Quaternion temp = transform.rotation * Quaternion.Euler(0, 0, -rotationSpeed);
+                    transform.rotation = temp;
+                }
 
-    void Shoot1()
-    {
-        float yInput = controller.GetAxis(Axis.RIGHT_VERTICAL);
-        if (Mathf.Abs(yInput) > 0.2)
-        {
-            if (yInput < 0)
-            {
-                Quaternion temp = body.rotation * Quaternion.Euler(0, 0, rotationSpeed);
-                body.rotation = temp;
-            }
-            else
-            {
-                Quaternion temp = body.rotation * Quaternion.Euler(0, 0, -rotationSpeed);
-                body.rotation = temp;
             }
 
+            if (bossControlScheme.shoot.Value() > 0.2)
+            {
+                if (timer >= reload)
+                {
+                    var bulletInst = Instantiate(shoot, bulletStartingPoint.position, shoot.GetComponent<Transform>().rotation * transform.rotation);
+                    bulletInst.GetComponent<Rigidbody>().velocity = bulletInst.GetComponent<Transform>().up * bulletSpeed;
+                    timer = 0;
+                }
+            }
+            timer += Time.deltaTime;
         }
 
-        if (Input.GetAxis("LT") > 0.2)
+        void Shoot2()
         {
-            if (timer >= reload)
+            if (bossControlScheme.shoot.Value() > 0.2)
             {
-                var bulletInst = Instantiate(shoot, bulletStartingPoint.position, shoot.GetComponent<Transform>().rotation * body.rotation);
-                bulletInst.GetComponent<Rigidbody>().velocity = bulletInst.GetComponent<Transform>().up * bulletSpeed;
-                timer = 0;
+                if (!shootStillAlive)
+                {
+                    var bulletInst = Instantiate(shoot2, bulletStartingPoint.position, shoot2.GetComponent<Transform>().rotation * transform.rotation);
+                    bulletInst.GetComponent<Rigidbody>().velocity = new Vector3(-bulletSpeed, 0, 0);
+                    bulletInst.GetComponent<MovingBullet>().SetCallback(gameObject);
+                    shootStillAlive = true;
+                }
             }
         }
-        timer += Time.deltaTime;
-    }
 
-    void Shoot2()
-    {
-        if (Input.GetAxis("LT") > 0.2)
+        public void SetShootStillAlive()
         {
-            if (!shootStillAlive)
-            {
-                var bulletInst = Instantiate(shoot2, bulletStartingPoint.position, shoot2.GetComponent<Transform>().rotation * body.rotation);
-                bulletInst.GetComponent<Rigidbody>().velocity = new Vector3(-bulletSpeed,0,0);
-                bulletInst.GetComponent<MovingBullet>().SetCallback(gameObject);
-                shootStillAlive = true;
-            }
+            shootStillAlive = false;
         }
     }
 
-    public void SetShootStillAlive()
-    {
-        shootStillAlive = false;
-    }
 }

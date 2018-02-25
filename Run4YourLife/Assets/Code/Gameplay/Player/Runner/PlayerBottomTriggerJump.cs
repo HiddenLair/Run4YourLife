@@ -1,20 +1,24 @@
 ﻿using UnityEngine;
 
-public class PlayerBottomTriggerJump : MonoBehaviour {
-
-    private PlayerCharacterController characterController;
-
-    private void Awake()
+namespace Run4YourLife.Player
+{
+    public class PlayerBottomTriggerJump : MonoBehaviour
     {
-        characterController = transform.parent.GetComponent<PlayerCharacterController>();
-        Debug.Assert(characterController, "Objects needs a parent that has a player character controller");
-    }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.GetComponent<PlayerTopTriggerJump>())
+        private PlayerCharacterController characterController;
+
+        private void Awake()
         {
-            characterController.OnPlayerHasJumpedOnTopOfAnotherPlayer();
-        } 
+            characterController = transform.parent.GetComponent<PlayerCharacterController>();
+            Debug.Assert(characterController, "Objects needs a parent that has a player character controller");
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.GetComponent<PlayerTopTriggerJump>())
+            {
+                characterController.OnPlayerHasJumpedOnTopOfAnotherPlayer();
+            }
+        }
     }
 }

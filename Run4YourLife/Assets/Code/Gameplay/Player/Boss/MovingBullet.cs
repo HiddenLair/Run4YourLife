@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using Run4YourLife.Player;
+
 public class MovingBullet : MonoBehaviour {
 
     public float force;
@@ -10,12 +12,10 @@ public class MovingBullet : MonoBehaviour {
     private GameObject callBack;
     private Rigidbody body;
 
-	// Use this for initialization
 	void Start () {
         body = gameObject.GetComponent<Rigidbody>();
 	}
 	
-	// Update is called once per frame
 	void Update () {
         float yInput = Input.GetAxis("RightJoystickY1");
         if (Mathf.Abs(yInput) > 0.2)

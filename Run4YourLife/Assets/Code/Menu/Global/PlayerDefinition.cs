@@ -1,4 +1,4 @@
-﻿using Run4YourLife.GameInput;
+﻿using Run4YourLife.Input;
 
 namespace Run4YourLife.Player
 {
@@ -13,8 +13,7 @@ namespace Run4YourLife.Player
     public class PlayerDefinition
     {
         public uint ID;
-        public Controller Controller { get; set; }
-
+        public InputDevice inputDevice;
         public bool IsBoss { get; set; }
         public CharacterType CharacterType { get; set; }
     }
