@@ -73,7 +73,6 @@ public class CameraBossFollow : MonoBehaviour {
 
     private Vector3 CalculateLookAtPosition()
     {
-        Camera camera = GetComponent<Camera>();
         float aspectRatio = (float)Screen.width / Screen.height;
 
         float x = bossAndFloorHeight * aspectRatio;
