@@ -14,6 +14,9 @@ public class PlayerCharacterController : MonoBehaviour {
     // private float m_speed;
 
     [SerializeField]
+    private GameObject graphics;
+
+    [SerializeField]
     private float m_gravity;
 
     [SerializeField]
@@ -33,6 +36,7 @@ public class PlayerCharacterController : MonoBehaviour {
     private PlayerDefinition playerDefinition;
     private Controller controller;
     private Stats stats;
+    private Animator anim;
 
     #endregion
 
@@ -41,6 +45,8 @@ public class PlayerCharacterController : MonoBehaviour {
     private bool m_isJumping;
 
     private Vector3 m_velocity;
+
+    private bool facingRight = true;
 
     #endregion
 
@@ -54,6 +60,7 @@ public class PlayerCharacterController : MonoBehaviour {
 
         characterController = GetComponent<CharacterController>();
         stats = GetComponent<Stats>();
+        anim = GetComponent<Animator>();
     }
 
     void SetPlayerDefinition(PlayerDefinition playerDefinition)
@@ -64,10 +71,14 @@ public class PlayerCharacterController : MonoBehaviour {
 
     void Update () {
         Gravity();
-         
-        if (characterController.isGrounded && controller.GetButtonDown(Button.A))
+        bool grounded = characterController.isGrounded;
+
+        anim.SetBool("ground",grounded);
+
+        if (grounded && controller.GetButtonDown(Button.A))
         {
             Jump();
+            anim.SetTrigger("jump");
         }
 
         Move();
@@ -87,8 +98,15 @@ public class PlayerCharacterController : MonoBehaviour {
     {
         float horizontal = controller.GetAxis(Axis.LEFT_HORIZONTAL);
         Vector3 move = transform.forward * horizontal * stats.Get(StatType.SPEED) * Time.deltaTime;
+        Vector3 speed = move + m_velocity * Time.deltaTime;
 
-        characterController.Move(move + m_velocity * Time.deltaTime);
+        anim.SetFloat("xSpeed",Math.Abs(speed.x));
+        if((facingRight && speed.x < 0) || (!facingRight && speed.x > 0))
+        {
+            Flip();
+        }
+
+        characterController.Move(speed);
     }
 
     private void Jump()
@@ -148,11 +166,18 @@ public class PlayerCharacterController : MonoBehaviour {
     internal void OnPlayerHasBeenJumpedOnTopByAnotherPlayer()
     {
         Debug.Log("Jumped on top");
+        anim.SetTrigger("bump");
     }
 
     internal void OnPlayerHasJumpedOnTopOfAnotherPlayer()
     {
         //TODO: Stop current jump
         m_velocity.y = HeightToVelocity(m_jumpOnTopOfAnotherPlayerHeight);
+    }
+
+    private void Flip()
+    {
+        graphics.transform.Rotate(Vector3.up,180);
+        facingRight = !facingRight;
     }
 }
