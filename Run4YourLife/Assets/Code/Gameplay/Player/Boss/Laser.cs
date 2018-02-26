@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using Run4YourLife.Player;
-using Run4YourLife.GameInput;
+using Run4YourLife.Input;
 
 public class Laser : MonoBehaviour {
 
@@ -26,29 +25,16 @@ public class Laser : MonoBehaviour {
     private float lastYPos = 0;
     private float timerChangeBetweenY = 0;
 
-    private PlayerDefinition playerDefinition;
-    private Controller controller;
+    BossControlScheme bossControlScheme;
 
     private void Awake()
     {
-        PlayerDefinition playerDefinition = new PlayerDefinition
-        {
-            CharacterType = CharacterType.Red,
-            Controller = new Controller(1)
-        };
-        SetPlayerDefinition(playerDefinition);
+        bossControlScheme = GetComponent<BossControlScheme>();
     }
 
-    void SetPlayerDefinition(PlayerDefinition playerDefinition)
-    {
-        this.playerDefinition = playerDefinition;
-        controller = playerDefinition.Controller;
-    }
-
-    // Update is called once per frame
     void Update () {
 
-        float xInput = controller.GetAxis(Axis.LEFT_HORIZONTAL);
+        float xInput = bossControlScheme.moveTrapIndicatorHorizontal.Value();
         if (Mathf.Abs(xInput) > 0.2)
         {
             if(xInput > 0)
@@ -71,7 +57,7 @@ public class Laser : MonoBehaviour {
         {
             bool changed = false;
             laser.gameObject.SetActive(true);
-            float yInput = controller.GetAxis(Axis.LEFT_VERTICAL);
+            float yInput = bossControlScheme.moveTrapIndicatorVertical.Value();
             if (Mathf.Abs(yInput) > 0.2)
             {
                 if (timerChangeBetweenY >= timeBetweenY)
@@ -114,12 +100,12 @@ public class Laser : MonoBehaviour {
         timerChangeBetweenY += Time.deltaTime;
 
 
-        if (controller.GetButtonDown(Button.RB))
+        if (bossControlScheme.nextSet.Started())
         {
             setIndex = (setIndex - 1+sets.Length) % sets.Length;
         }
 
-        if (controller.GetButtonDown(Button.LB))
+        if (bossControlScheme.previousSet.Started())
         {
             setIndex = (setIndex + 1) % sets.Length;
         }   
@@ -127,7 +113,7 @@ public class Laser : MonoBehaviour {
 
     void SetTraps()
     {
-        if (controller.GetButtonDown(Button.A))
+        if (bossControlScheme.skill1.Started())
         {
             if (sets[setIndex] == Type.Type2)
             {
@@ -143,7 +129,7 @@ public class Laser : MonoBehaviour {
             }
         }
 
-        if (controller.GetButtonDown(Button.X))
+        if (bossControlScheme.skill2.Started())
         {
             if (sets[setIndex] == Type.Type2)
             {

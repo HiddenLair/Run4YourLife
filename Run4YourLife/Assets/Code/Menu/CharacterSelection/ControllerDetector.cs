@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Run4YourLife.Player;
-using Run4YourLife.GameInput;
+using Run4YourLife.Input;
 
 namespace Run4YourLife.CharacterSelection
 {
     public class ControllerDetector : MonoBehaviour {
 
-        public delegate void dgController(Controller controller);
+        public delegate void dgController(InputDevice controller);
         public event dgController OnControllerDetected;
 
-        private ControllerManager playerInput;
+        private InputDeviceManager inputDeviceManager;
         private PlayerManager playerManager;
 
         void Awake()
         {
-            playerInput = Component.FindObjectOfType<ControllerManager>();
-            Debug.Assert(playerInput != null);
+            inputDeviceManager = Component.FindObjectOfType<InputDeviceManager>();
+            Debug.Assert(inputDeviceManager != null);
 
             playerManager = Component.FindObjectOfType<PlayerManager>();
             Debug.Assert(playerManager != null);
@@ -26,23 +26,21 @@ namespace Run4YourLife.CharacterSelection
 
         void Update()
         {            
-            foreach (Controller controller in playerInput.GetControllers()) 
+            foreach (InputDevice inputDevice in inputDeviceManager.InputDevices()) 
             {
-                if (controller.GetButtonDown(Button.A) && !IsAssignedToAPlayer(controller))
+                if (new InputSource(Button.A, inputDevice).ButtonDown() && !IsAssignedToAPlayer(inputDevice))
                 {
-                    Debug.Assert(controller != null);
-
                     if (OnControllerDetected != null)
-                        OnControllerDetected(controller);
+                        OnControllerDetected(inputDevice);
                 }
             }
         }
 
-        private bool IsAssignedToAPlayer(Controller controller)
+        private bool IsAssignedToAPlayer(InputDevice controller)
         {
             foreach (PlayerDefinition p in playerManager.GetPlayers())
             {
-                if (p.Controller.Equals(controller))
+                if (p.inputDevice.Equals(controller))
                 {
                     return true;
                 }

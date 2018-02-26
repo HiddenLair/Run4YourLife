@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Run4YourLife.Player;
-using Run4YourLife.GameInput;
+using Run4YourLife.Input;
 using System;
 
 namespace Run4YourLife.CharacterSelection
@@ -22,22 +22,23 @@ namespace Run4YourLife.CharacterSelection
             controllerDetector.OnControllerDetected += OnControllerDetected;
         }
 
-        public void OnControllerDetected(Controller controller)
+        public void OnControllerDetected(InputDevice controller)
         {
             CreatePlayerForController(controller);
         }
 
-        private void CreatePlayerForController(Controller controller)
+        private void CreatePlayerForController(InputDevice inputDevice)
         {
             PlayerDefinition playerDefinition = new PlayerDefinition();
-            playerDefinition.Controller = controller;
-            if (playerManager.GetPlayers().Count == 1)
+            playerManager.AddPlayer(playerDefinition);
+
+            playerDefinition.inputDevice = inputDevice;
+            if (playerManager.GetPlayers().Count == 0)
             {
                 playerManager.SetPlayerAsBoss(playerDefinition);
             }
             playerDefinition.CharacterType = GetFirstAviablePlayerCharacterType();
 
-            playerManager.AddPlayer(playerDefinition);
         }
 
         private CharacterType GetFirstAviablePlayerCharacterType()

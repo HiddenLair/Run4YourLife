@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Run4YourLife.Player;
-using Run4YourLife.GameInput;
+using Run4YourLife.Input;
 using System;
 
 namespace Run4YourLife.CharacterSelection
@@ -27,10 +27,17 @@ namespace Run4YourLife.CharacterSelection
 
         private GameObject activeStand;
 
+        private PlayerStandControllerControlScheme controlScheme;
+
         void Awake()
         {
             playerManager = Component.FindObjectOfType<PlayerManager>();
             Debug.Assert(playerManager != null);
+        }
+
+        private void Start()
+        {
+
         }
 
         public void SetPlayerDefinition(PlayerDefinition playerDefinition)
@@ -45,7 +52,6 @@ namespace Run4YourLife.CharacterSelection
             Destroy(activeStand);
             activeStand = null;
         }
-
 
         private GameObject SpawnPlayerStand(PlayerDefinition player)
         {
@@ -93,22 +99,20 @@ namespace Run4YourLife.CharacterSelection
         }
 
         private void UpdatePlayer()
-        {
-            Controller controller = playerDefinition.Controller;
-
-            if (controller.GetButtonDown(Button.X))
+        {            
+            if (controlScheme.getBoss.Started())
             {
                 playerManager.SetPlayerAsBoss(playerDefinition);
             }
-            else if (controller.GetButtonDown(Button.B))
+            else if (controlScheme.leaveGame.Started())
             {
                 playerManager.RemovePlayer(playerDefinition);
             }
-            else if (controller.GetButtonDown(Button.RB))
+            else if (controlScheme.nextStand.Started())
             {
                 ChangePlayerCharacter(AdvanceType.Next);
             }
-            else if(controller.GetButtonDown(Button.LB))
+            else if(controlScheme.previousStand.Started())
             {
                 ChangePlayerCharacter(AdvanceType.Previous);
             }

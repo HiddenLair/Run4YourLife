@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Run4YourLife.GameInput
+namespace Run4YourLife.Input
 {
     public class Axis
     {
@@ -46,66 +44,40 @@ namespace Run4YourLife.GameInput
         public static readonly Button LB = new Button("LB");
     }
 
-    public class Controller
+    public class InputSource
     {
-        private const string JOYSTICK = "joy";
+        private string input;
+        private InputDevice inputDevice;
 
-        public int controllerId;
-        public bool IsAssigned { get; private set; }
+        public InputSource(Axis axis, InputDevice inputDevice) : this(axis.ID, inputDevice) { }
+        public InputSource(Button button, InputDevice inputDevice) : this(button.ID, inputDevice) { }
+        public InputSource(Trigger trigger, InputDevice inputDevice) : this(trigger.ID, inputDevice) { }
 
-        public Controller(int id)
+        private InputSource(string input, InputDevice inputDevice)
         {
-            controllerId = id;
+            this.input = input;
+            this.inputDevice = inputDevice;
         }
 
-        private string GetButtonString(Button button)
+        public bool ButtonDown()
         {
-            return JOYSTICK + controllerId + button.ID;
+            return UnityEngine.Input.GetButtonDown(inputDevice.InputString(input));
         }
 
-        public bool GetButton(Button button)
+        public bool Button()
         {
-            return Input.GetButton(GetButtonString(button));
+            return UnityEngine.Input.GetButton(inputDevice.InputString(input));
         }
 
-        public bool GetButtonDown(Button button)
+        public bool ButtonUp()
         {
-            return Input.GetButtonDown(GetButtonString(button));
+            return UnityEngine.Input.GetButtonUp(inputDevice.InputString(input));
         }
 
-        public bool GetButtonUp(Button button)
+        public float Value()
         {
-            return Input.GetButtonUp(GetButtonString(button));
-        }
-
-        private string GetTriggerString(Trigger trigger)
-        {
-            return JOYSTICK + controllerId + trigger.ID;
-        }
-
-        public float GetTrigger(Trigger trigger)
-        {
-            return Input.GetAxis(GetTriggerString(trigger));
-        }
-
-        public float GetTriggerRaw(Trigger trigger)
-        {
-            return Input.GetAxisRaw(GetTriggerString(trigger));
-        }
-
-        private string GetAxisString(Axis axis)
-        {
-            return JOYSTICK + controllerId + axis.ID;
-        }
-
-        public float GetAxis(Axis axis)
-        {
-            return Input.GetAxis(GetAxisString(axis));
-        }
-
-        public float GetAxisRaw(Axis axis)
-        {
-            return Input.GetAxisRaw(GetAxisString(axis));
+            return UnityEngine.Input.GetAxis(inputDevice.InputString(input));
         }
     }
+
 }

@@ -14,7 +14,7 @@ namespace Run4YourLife
 
         private int m_currentDestinyIndex = 0;
 
-        private new Rigidbody m_rigidbody;
+        private Rigidbody m_rigidbody;
 
         private Vector3 m_previousPosition;
 

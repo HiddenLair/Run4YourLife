@@ -2,16 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour {
+namespace Run4YourLife.Player
+{
 
-    private void OnTriggerEnter(Collider other)
+    public class Bullet : MonoBehaviour
     {
-        if(other.tag == "Player" || other.tag == "Trap")
-        {
-            Destroy(other.gameObject);
-        }
-        Destroy(gameObject);
-        //TODO: destroy if it goes out off screen
-    }
 
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.tag == "Player" || other.tag == "Trap")
+            {
+                Destroy(other.gameObject);
+            }
+            Destroy(gameObject);
+            //TODO: destroy if it goes out off screen
+        }
+
+    }
 }
