@@ -7,9 +7,8 @@ using Run4YourLife.Input;
 namespace Run4YourLife.Player
 {
     [RequireComponent(typeof(PlayerControlScheme))]
-    public class PlayerCharacterController : MonoBehaviour
+    public class PlayerCharacterController : MonoBehaviour, IEventMessageTarget
     {
-
         #region InspectorVariables
 
         // [SerializeField]
@@ -67,16 +66,19 @@ namespace Run4YourLife.Player
 
         void Update()
         {
-            Gravity();
-
-            anim.SetBool("ground", characterController.isGrounded);
-
-            if (characterController.isGrounded && playerControlScheme.jump.Started())
+            if (GetComponent<Rigidbody>().isKinematic)
             {
-                Jump();
-            }
+                Gravity();
 
-            Move();
+                anim.SetBool("ground", characterController.isGrounded);
+
+                if (characterController.isGrounded && playerControlScheme.jump.Started())
+                {
+                    Jump();
+                }
+
+                Move();
+            }
         }
 
         private void Gravity()
@@ -176,6 +178,23 @@ namespace Run4YourLife.Player
         {
             graphics.transform.Rotate(Vector3.up, 180);
             facingRight = !facingRight;
+        }
+
+        public void Explosion()
+        {
+            Destroy(gameObject);
+        }
+
+        public void Root(int rootHardness)
+        {
+            Debug.Log("ROOT");
+        }
+
+        public void Impulse(Vector3 force)
+        {
+            Rigidbody body = GetComponent<Rigidbody>();
+            body.isKinematic = false;
+            body.AddForce(force*500);
         }
     }
 }

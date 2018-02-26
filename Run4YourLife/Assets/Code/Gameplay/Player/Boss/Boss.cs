@@ -58,7 +58,6 @@ namespace Run4YourLife.Player
         void ShootVerification()
         {
             float yInput = bossControlScheme.moveLaserVertical.Value();
-            Debug.Log(yInput);
             if (Mathf.Abs(yInput) > 0.2)
             {
                 if (yInput < 0)
