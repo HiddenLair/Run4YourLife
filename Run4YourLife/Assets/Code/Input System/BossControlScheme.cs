@@ -48,10 +48,5 @@ namespace Run4YourLife.Input
         {
             InitializeActionsWithPlayerInputDevice();
         }
-
-        private void Start()
-        {
-            InitializeActionsWithPlayerInputDevice();
-        }
     }
 }
