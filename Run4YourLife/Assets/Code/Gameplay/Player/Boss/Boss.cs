@@ -43,7 +43,7 @@ namespace Run4YourLife.Player
 
         private void Start()
         {
-            bossControlScheme.Activate();
+            bossControlScheme.Active = true;
         }
 
         void Update()

@@ -8,25 +8,30 @@ namespace Run4YourLife.Input
 {
     public abstract class ControlScheme : MonoBehaviour
     {
-        public InputDevice inputDevice { get; set; }
+        public InputDevice InputDevice { get; set; }
+
+        private bool m_active;
+        public bool Active
+        {
+            get
+            {
+                return m_active;
+            }
+
+            set
+            {
+                if(value != m_active)
+                {
+                    m_active = value;
+                    foreach (Action action in actions)
+                    {
+                        action.enabled = value;
+                    }
+                }
+            }
+        }
 
         protected List<Action> actions = new List<Action>();
-
-        public void Activate()
-        {
-            foreach (Action action in actions)
-            {
-                action.enabled = true;
-            }
-        }
-
-        public void Deactivate()
-        {
-            foreach (Action action in actions)
-            {
-                action.enabled = false;
-            }
-        }
 
         protected void InitializeActionsWithPlayerInputDevice()
         {

@@ -62,7 +62,7 @@ namespace Run4YourLife.Player
 
         private void Start()
         {
-            playerControlScheme.Activate();
+            playerControlScheme.Active = true;
         }
 
         void Update()
