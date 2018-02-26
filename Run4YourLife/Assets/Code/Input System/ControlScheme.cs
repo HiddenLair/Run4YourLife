@@ -41,6 +41,15 @@ namespace Run4YourLife.Input
                 action.inputSource.inputDevice = inputDevice;
             }
         }
+
+        protected void InitializeActionsWithPlayerInputDevice()
+        {
+            InputDevice inputDevice = GetComponent<PlayerInstance>().PlayerDefinition.inputDevice;
+            foreach (Action action in actions)
+            {
+                action.inputSource.inputDevice = inputDevice;
+            }
+        }
     }
 
 }
