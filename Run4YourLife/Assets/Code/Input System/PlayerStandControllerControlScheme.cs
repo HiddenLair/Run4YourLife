@@ -12,14 +12,17 @@ namespace Run4YourLife.Input
         public Action getBoss;
         public Action leaveGame;
 
-        void Start()
+        private void Awake()
         {
-            inputDevice = GetComponent<PlayerInstance>().PlayerDefinition.inputDevice;
+            actions.Add(nextStand = new Action(new InputSource(Button.RB)));
+            actions.Add(previousStand = new Action(new InputSource(Button.LB)));
+            actions.Add(getBoss = new Action(new InputSource(Button.X)));
+            actions.Add(leaveGame = new Action(new InputSource(Button.B)));
+        }
 
-            actions.Add(nextStand = new Action(new InputSource(Button.RB, inputDevice)));
-            actions.Add(previousStand = new Action(new InputSource(Button.LB, inputDevice)));
-            actions.Add(getBoss = new Action(new InputSource(Button.X, inputDevice)));
-            actions.Add(leaveGame = new Action(new InputSource(Button.B, inputDevice)));
+        private void Start()
+        {
+            InitializeActionsWithPlayerInputDevice();
         }
     }
 }

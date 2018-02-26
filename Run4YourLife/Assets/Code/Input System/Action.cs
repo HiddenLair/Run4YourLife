@@ -3,7 +3,7 @@
     public class Action
     {
         public bool enabled;
-        private InputSource inputSource;
+        public InputSource inputSource;
 
         public Action(InputSource inputSource)
         {

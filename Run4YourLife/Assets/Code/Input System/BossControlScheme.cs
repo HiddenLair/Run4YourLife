@@ -25,26 +25,28 @@ namespace Run4YourLife.Input
         public Action moveLaserVertical;
 
 
+        private void Awake()
+        {
+            actions.Add(moveTrapIndicatorVertical = new Action(new InputSource(Axis.LEFT_VERTICAL)));
+            actions.Add(moveTrapIndicatorHorizontal = new Action(new InputSource(Axis.LEFT_HORIZONTAL)));
+
+            actions.Add(skill1 = new Action(new InputSource(Button.A)));
+            actions.Add(skill2 = new Action(new InputSource(Button.X)));
+            actions.Add(skill3 = new Action(new InputSource(Button.Y)));
+            actions.Add(skill4 = new Action(new InputSource(Button.B)));
+
+            actions.Add(nextSet = new Action(new InputSource(Button.RB)));
+            actions.Add(previousSet = new Action(new InputSource(Button.LB)));
+
+            actions.Add(shoot = new Action(new InputSource(Trigger.RIGHT)));
+            actions.Add(melee = new Action(new InputSource(Trigger.LEFT)));
+
+            actions.Add(moveLaserVertical = new Action(new InputSource(Axis.RIGHT_VERTICAL)));
+        }
+
         private void Start()
         {
-            inputDevice = GetComponent<PlayerInstance>().PlayerDefinition.inputDevice;
-
-            actions.Add(moveTrapIndicatorVertical = new Action(new InputSource(Axis.LEFT_VERTICAL, inputDevice)));
-            actions.Add(moveTrapIndicatorHorizontal = new Action(new InputSource(Axis.LEFT_HORIZONTAL, inputDevice)));
-
-            actions.Add(skill1 = new Action(new InputSource(Button.A, inputDevice)));
-            actions.Add(skill2 = new Action(new InputSource(Button.X, inputDevice)));
-            actions.Add(skill3 = new Action(new InputSource(Button.Y, inputDevice)));
-            actions.Add(skill4 = new Action(new InputSource(Button.B, inputDevice)));
-
-            actions.Add(nextSet = new Action(new InputSource(Button.RB, inputDevice)));
-            actions.Add(previousSet = new Action(new InputSource(Button.LB, inputDevice)));
-
-            actions.Add(shoot = new Action(new InputSource(Trigger.RIGHT, inputDevice)));
-            actions.Add(melee = new Action(new InputSource(Trigger.LEFT, inputDevice)));
-
-            actions.Add(moveLaserVertical = new Action(new InputSource(Axis.RIGHT_VERTICAL, inputDevice)));
-            Activate();
+            InitializeActionsWithPlayerInputDevice();
         }
     }
 }

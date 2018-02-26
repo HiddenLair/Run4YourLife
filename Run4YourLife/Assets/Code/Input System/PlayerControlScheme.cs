@@ -8,13 +8,16 @@ namespace Run4YourLife.Input
         public Action jump;
         public Action interact;
 
-        void Start()
+        private void Awake()
         {
-            inputDevice = GetComponent<PlayerInstance>().PlayerDefinition.inputDevice;
+            actions.Add(move = new Action(new InputSource(Axis.LEFT_HORIZONTAL)));
+            actions.Add(jump = new Action(new InputSource(Button.A)));
+            actions.Add(interact = new Action(new InputSource(Button.X)));
+        }
 
-            actions.Add(move = new Action(new InputSource(Axis.LEFT_HORIZONTAL, inputDevice)));
-            actions.Add(jump = new Action(new InputSource(Button.A, inputDevice)));
-            actions.Add(interact = new Action(new InputSource(Button.X, inputDevice)));
+        private void Start()
+        {
+            InitializeActionsWithPlayerInputDevice();
         }
     }
 }
