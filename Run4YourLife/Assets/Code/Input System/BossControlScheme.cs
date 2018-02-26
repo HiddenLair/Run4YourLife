@@ -44,6 +44,7 @@ namespace Run4YourLife.Input
             actions.Add(melee = new Action(new InputSource(Trigger.LEFT, inputDevice)));
 
             actions.Add(moveLaserVertical = new Action(new InputSource(Axis.RIGHT_VERTICAL, inputDevice)));
+            Activate();
         }
     }
 }

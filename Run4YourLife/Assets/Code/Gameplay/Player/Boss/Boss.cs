@@ -57,38 +57,47 @@ namespace Run4YourLife.Player
 
         void ShootVerification()
         {
-                float yInput = bossControlScheme.moveLaserVertical.Value();
-                if (Mathf.Abs(yInput) > 0.2)
+            float yInput = bossControlScheme.moveLaserVertical.Value();
+            Debug.Log(yInput);
+            if (Mathf.Abs(yInput) > 0.2)
+            {
+                if (yInput < 0)
                 {
                     Quaternion temp = shootMarker.rotation * Quaternion.Euler(0, 0, rotationSpeed);
                     shootMarker.rotation = temp;
                 }
-
-                if (bossControlScheme.shoot.Value() > 0.2)
+                else
                 {
-                    if (!shootStillAlive)
-                    {
-                        if (bulletTimer >= reload)
-                        {
-                            internalShootTimer += Time.deltaTime;
-                            if (internalShootTimer > timeToChargedShoot)
-                            {
-                                Shoot(bullet2);
-                                shootStillAlive = true;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (!shootPressed)
-                        {
-                            Shoot2Detonation();
-                            shootStillAlive = false;
-                            explosionShootPressed = true;
-                        }
-                    }
-                    shootPressed = true;
+                    Quaternion temp = shootMarker.rotation * Quaternion.Euler(0, 0, -rotationSpeed);
+                    shootMarker.rotation = temp;
                 }
+            }
+
+            if (bossControlScheme.shoot.Value() > 0.2)
+            {
+                if (!shootStillAlive)
+                {
+                    if (bulletTimer >= reload)
+                    {
+                        internalShootTimer += Time.deltaTime;
+                        if (internalShootTimer > timeToChargedShoot)
+                        {
+                            Shoot(bullet2);
+                            shootStillAlive = true;
+                        }
+                    }
+                }
+                else
+                {
+                    if (!shootPressed)
+                    {
+                        Shoot2Detonation();
+                        shootStillAlive = false;
+                        explosionShootPressed = true;
+                    }
+                }
+                shootPressed = true;
+            }
             else
             {
                 shootPressed = false;

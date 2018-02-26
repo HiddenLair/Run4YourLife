@@ -9,7 +9,7 @@ namespace Run4YourLife.Player
     {
         public PlayerDefinition playerDefinition;
 
-        private void Start()
+        private void OnEnable()
         {
             if (playerDefinition == null)
             {
