@@ -16,6 +16,9 @@ namespace Run4YourLife.Player
         // private float m_speed;
 
         [SerializeField]
+        private GameObject graphics;
+
+        [SerializeField]
         private float m_gravity;
 
         [SerializeField]
@@ -31,9 +34,11 @@ namespace Run4YourLife.Player
 
         #region References
 
+
         private CharacterController characterController;
         private Stats stats;
         private PlayerControlScheme playerControlScheme;
+        private Animator anim;
 
         #endregion
 
@@ -43,14 +48,16 @@ namespace Run4YourLife.Player
 
         private Vector3 m_velocity;
 
+        private bool facingRight = true;
+
         #endregion
 
         void Awake()
         {
             playerControlScheme = GetComponent<PlayerControlScheme>();
-
             characterController = GetComponent<CharacterController>();
             stats = GetComponent<Stats>();
+            anim = GetComponent<Animator>();
         }
 
         private void Start()
@@ -61,6 +68,8 @@ namespace Run4YourLife.Player
         void Update()
         {
             Gravity();
+
+            anim.SetBool("ground", characterController.isGrounded);
 
             if (characterController.isGrounded && playerControlScheme.jump.Started())
             {
@@ -85,6 +94,14 @@ namespace Run4YourLife.Player
             float horizontal = playerControlScheme.move.Value();
             Vector3 move = transform.forward * horizontal * stats.Get(StatType.SPEED) * Time.deltaTime;
 
+            Vector3 speed = move + m_velocity * Time.deltaTime;
+
+            anim.SetFloat("xSpeed", Mathf.Abs(speed.x));
+            if ((facingRight && speed.x < 0) || (!facingRight && speed.x > 0))
+            {
+                Flip();
+            }
+
             characterController.Move(move + m_velocity * Time.deltaTime);
         }
 
@@ -103,6 +120,7 @@ namespace Run4YourLife.Player
         private IEnumerator JumpCoroutine()
         {
             m_isJumping = true;
+            anim.SetTrigger("jump");
 
             //set vertical velocity to the velocity needed to reach maxJumpHeight
             AddVelocity(new Vector3(0, HeightToVelocity(stats.Get(StatType.JUMP_HEIGHT)), 0));
@@ -151,7 +169,13 @@ namespace Run4YourLife.Player
         {
             //TODO: Stop current jump
             m_velocity.y = HeightToVelocity(m_jumpOnTopOfAnotherPlayerHeight);
+            anim.SetTrigger("bump");
+        }
+
+        private void Flip()
+        {
+            graphics.transform.Rotate(Vector3.up, 180);
+            facingRight = !facingRight;
         }
     }
-
 }
