@@ -7,10 +7,12 @@ using Run4YourLife.GameInput;
 
 public class Boss : MonoBehaviour {
     //Shoot
-    public GameObject shoot;
-    public GameObject shoot2;
+    public GameObject bullet1;
+    public GameObject bullet2;
     public float rotationSpeed;
     public float bulletSpeed;
+    public float timeToChargedShoot;
+    public Transform shootMarker;
     public Transform bulletStartingPoint;
     public float reload;
 
@@ -19,12 +21,14 @@ public class Boss : MonoBehaviour {
     public Transform meleZone;
     public float meleReload;
 
-    private Transform body;
-    private float timer;
+    private float bulletTimer;
     private float meleTimer;
-    private int shootMode = 0;
-    private bool shootStillAlive = false;//Only for second shoot
+    private bool shootStillAlive = false;//Only for charged shoot
+    private bool shootPressed = false;
+    private float internalShootTimer = 0;
+    private bool explosionShootPressed = false;
 
+    private GameObject lastBulletShoot;
     private PlayerDefinition playerDefinition;
     private Controller controller;
 
@@ -36,8 +40,7 @@ public class Boss : MonoBehaviour {
             Controller = new Controller(1)
         };
         SetPlayerDefinition(playerDefinition);
-        body = gameObject.GetComponent<Transform>();
-        timer = reload;
+        bulletTimer = reload;
         meleTimer = meleReload;
     }
 
@@ -49,27 +52,95 @@ public class Boss : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (controller.GetButtonDown(Button.START))
+
+        ShootVerification();
+
+        MeleVerification();
+
+    }
+
+    void ShootVerification()
+    {
+        float yInput = controller.GetAxis(Axis.RIGHT_VERTICAL);
+        if (Mathf.Abs(yInput) > 0.2)
         {
-            shootMode ^= 1;
+            if (yInput < 0)
+            {
+                Quaternion temp = shootMarker.rotation * Quaternion.Euler(0, 0, rotationSpeed);
+                shootMarker.rotation = temp;
+            }
+            else
+            {
+                Quaternion temp = shootMarker.rotation * Quaternion.Euler(0, 0, -rotationSpeed);
+                shootMarker.rotation = temp;
+            }
+
         }
-        switch (shootMode) {
-            case 0:
+
+        if (Input.GetAxis("joy1LT") > 0.2)
+        {
+            if (!shootStillAlive)
+            {
+                if (bulletTimer >= reload)
                 {
-                    Shoot1(); 
+                    internalShootTimer += Time.deltaTime;
+                    if (internalShootTimer > timeToChargedShoot)
+                    {
+                        Shoot(bullet2);
+                        shootStillAlive = true;
+                    }
                 }
-                break;
-            case 1:
+            }
+            else
+            {
+                if (!shootPressed)
                 {
-                    Shoot2();
+                    Shoot2Detonation();
+                    shootStillAlive = false;
+                    explosionShootPressed = true;
                 }
-                break;
+            }
+            shootPressed = true;
         }
-        if (Input.GetAxis("RT") > 0.2)
+        else
+        {
+            shootPressed = false;
+
+            if (internalShootTimer > 0 && internalShootTimer < timeToChargedShoot && !explosionShootPressed)
+            {
+                Shoot(bullet1);
+                bulletTimer = 0;
+            }
+
+            explosionShootPressed = false;
+            internalShootTimer = 0;
+        }
+        bulletTimer += Time.deltaTime;
+    }
+
+    void Shoot(GameObject bullet)
+    {
+        lastBulletShoot = Instantiate(bullet, bulletStartingPoint.position, bullet.GetComponent<Transform>().rotation * shootMarker.rotation);
+        lastBulletShoot.GetComponent<Rigidbody>().velocity = lastBulletShoot.GetComponent<Transform>().right * bulletSpeed;
+        if (lastBulletShoot.GetComponent<ChargedBullet>())
+        {
+            lastBulletShoot.GetComponent<ChargedBullet>().SetCallback(this);
+        }
+    }
+
+    public void Shoot2Detonation()
+    {
+        lastBulletShoot.GetComponent<ChargedBullet>().Explosion();
+    }
+
+    void MeleVerification()
+    {
+        if (Input.GetAxis("joy1RT") > 0.2)
         {
             if (meleTimer >= meleReload)
             {
                 var meleInst = Instantiate(mele, meleZone.position, mele.GetComponent<Transform>().rotation);
+                meleInst.transform.SetParent(transform);
                 Destroy(meleInst, 1.0f);
                 meleTimer = 0.0f;
             }
@@ -77,52 +148,8 @@ public class Boss : MonoBehaviour {
         meleTimer += Time.deltaTime;
     }
 
-    void Shoot1()
+    public void SetShootStillAlive(bool value)
     {
-        float yInput = controller.GetAxis(Axis.RIGHT_VERTICAL);
-        if (Mathf.Abs(yInput) > 0.2)
-        {
-            if (yInput < 0)
-            {
-                Quaternion temp = body.rotation * Quaternion.Euler(0, 0, rotationSpeed);
-                body.rotation = temp;
-            }
-            else
-            {
-                Quaternion temp = body.rotation * Quaternion.Euler(0, 0, -rotationSpeed);
-                body.rotation = temp;
-            }
-
-        }
-
-        if (Input.GetAxis("LT") > 0.2)
-        {
-            if (timer >= reload)
-            {
-                var bulletInst = Instantiate(shoot, bulletStartingPoint.position, shoot.GetComponent<Transform>().rotation * body.rotation);
-                bulletInst.GetComponent<Rigidbody>().velocity = bulletInst.GetComponent<Transform>().up * bulletSpeed;
-                timer = 0;
-            }
-        }
-        timer += Time.deltaTime;
-    }
-
-    void Shoot2()
-    {
-        if (Input.GetAxis("LT") > 0.2)
-        {
-            if (!shootStillAlive)
-            {
-                var bulletInst = Instantiate(shoot2, bulletStartingPoint.position, shoot2.GetComponent<Transform>().rotation * body.rotation);
-                bulletInst.GetComponent<Rigidbody>().velocity = new Vector3(-bulletSpeed,0,0);
-                bulletInst.GetComponent<MovingBullet>().SetCallback(gameObject);
-                shootStillAlive = true;
-            }
-        }
-    }
-
-    public void SetShootStillAlive()
-    {
-        shootStillAlive = false;
+        shootStillAlive = value;
     }
 }

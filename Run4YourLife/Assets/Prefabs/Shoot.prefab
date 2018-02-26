@@ -22,12 +22,11 @@ GameObject:
   - component: {fileID: 33790237547037418}
   - component: {fileID: 136294981277922018}
   - component: {fileID: 23967986929313498}
-  - component: {fileID: 114548142037490126}
   - component: {fileID: 54703588503610652}
-  - component: {fileID: 114442432997022266}
-  m_Layer: 0
+  - component: {fileID: 114975267396139458}
+  m_Layer: 16
   m_Name: Shoot
-  m_TagString: Untagged
+  m_TagString: Shoot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38,13 +37,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1291411062935820}
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 9.78, y: 3.74, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23967986929313498
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -101,7 +100,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &114442432997022266
+--- !u!114 &114975267396139458
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -109,18 +108,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1291411062935820}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87454d527b33c7e408f62f548eada405, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114548142037490126
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1291411062935820}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6934c04b3b43b94b8ca3ecc27adbc76, type: 3}
+  m_Script: {fileID: 11500000, guid: 64c97d5127e64394983b38c82e27a4c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!136 &136294981277922018
@@ -130,7 +118,7 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1291411062935820}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2

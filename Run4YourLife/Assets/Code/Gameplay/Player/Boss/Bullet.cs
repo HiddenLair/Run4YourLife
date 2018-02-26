@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if(collision.collider.tag == "Destructible")
+        if(other.tag == "Player" || other.tag == "Trap")
         {
-            Destroy(collision.gameObject);
+            Destroy(other.gameObject);
         }
-        if (collision.collider.tag == "Destructible" || collision.collider.tag == "Ground")
-        {
-            Destroy(gameObject);
-        }         
+        Destroy(gameObject);
+        //TODO: destroy if it goes out off screen
     }
 
 }
