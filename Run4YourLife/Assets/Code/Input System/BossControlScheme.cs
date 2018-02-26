@@ -27,7 +27,7 @@ namespace Run4YourLife.Input
 
         private void Start()
         {
-            inputDevice = GetComponent<PlayerInstance>().playerDefinition.inputDevice;
+            inputDevice = GetComponent<PlayerInstance>().PlayerDefinition.inputDevice;
 
             actions.Add(moveTrapIndicatorVertical = new Action(new InputSource(Axis.LEFT_VERTICAL, inputDevice)));
             actions.Add(moveTrapIndicatorHorizontal = new Action(new InputSource(Axis.LEFT_HORIZONTAL, inputDevice)));

@@ -14,7 +14,7 @@ namespace Run4YourLife.Input
 
         void Start()
         {
-            inputDevice = GetComponent<PlayerInstance>().playerDefinition.inputDevice;
+            inputDevice = GetComponent<PlayerInstance>().PlayerDefinition.inputDevice;
 
             actions.Add(nextStand = new Action(new InputSource(Button.RB, inputDevice)));
             actions.Add(previousStand = new Action(new InputSource(Button.LB, inputDevice)));

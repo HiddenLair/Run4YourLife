@@ -7,14 +7,21 @@ namespace Run4YourLife.Player
 {
     public class PlayerInstance : MonoBehaviour
     {
-        public PlayerDefinition playerDefinition;
 
-        private void OnEnable()
-        {
-            if (playerDefinition == null)
-            {
-                Debug.LogWarning("Player does not have player definition");
-                playerDefinition = CreateDefaultPlayerDefinition();
+        private PlayerDefinition m_playerDefinition;
+
+        public PlayerDefinition PlayerDefinition {
+            get {
+                if (m_playerDefinition == null)
+                {
+                    Debug.LogWarning("Player does not have player definition, creating an instance using the default properties");
+                    m_playerDefinition = CreateDefaultPlayerDefinition();
+                }
+                return m_playerDefinition;
+            }
+
+            set {
+                m_playerDefinition = value;
             }
         }
 

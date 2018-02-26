@@ -10,7 +10,7 @@ namespace Run4YourLife.Input
 
         void Start()
         {
-            inputDevice = GetComponent<PlayerInstance>().playerDefinition.inputDevice;
+            inputDevice = GetComponent<PlayerInstance>().PlayerDefinition.inputDevice;
 
             actions.Add(move = new Action(new InputSource(Axis.LEFT_HORIZONTAL, inputDevice)));
             actions.Add(jump = new Action(new InputSource(Button.A, inputDevice)));
