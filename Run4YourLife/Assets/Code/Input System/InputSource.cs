@@ -44,8 +44,12 @@
 
     public class InputSource
     {
-        private string input;
-        private InputDevice inputDevice;
+        public string input;
+        public InputDevice inputDevice;
+
+        public InputSource(Axis axis) : this(axis.ID, null) { }
+        public InputSource(Button button) : this(button.ID, null) { }
+        public InputSource(Trigger trigger) : this(trigger.ID, null) { }
 
         public InputSource(Axis axis, InputDevice inputDevice) : this(axis.ID, inputDevice) { }
         public InputSource(Button button, InputDevice inputDevice) : this(button.ID, inputDevice) { }

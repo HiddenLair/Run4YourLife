@@ -25,7 +25,7 @@ namespace Run4YourLife.Input
         public Action moveLaserVertical;
 
 
-        private void Start()
+        private void Awake()
         {
             inputDevice = GetComponent<PlayerInstance>().PlayerDefinition.inputDevice;
 
@@ -44,7 +44,11 @@ namespace Run4YourLife.Input
             actions.Add(melee = new Action(new InputSource(Trigger.LEFT, inputDevice)));
 
             actions.Add(moveLaserVertical = new Action(new InputSource(Axis.RIGHT_VERTICAL, inputDevice)));
-            Activate();
+        }
+
+        private void Start()
+        {
+            InitializeActionsWithPlayerInputDevice();
         }
     }
 }

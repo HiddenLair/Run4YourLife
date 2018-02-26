@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using Run4YourLife.Player;
+
 namespace Run4YourLife.Input
 {
     public abstract class ControlScheme : MonoBehaviour
@@ -23,6 +25,15 @@ namespace Run4YourLife.Input
             foreach (Action action in actions)
             {
                 action.enabled = false;
+            }
+        }
+
+        protected void InitializeActionsWithPlayerInputDevice()
+        {
+            InputDevice inputDevice = GetComponent<PlayerInstance>().PlayerDefinition.inputDevice;
+            foreach (Action action in actions)
+            {
+                action.inputSource.inputDevice = inputDevice;
             }
         }
     }
