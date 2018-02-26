@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Run4YourLife.Input
+﻿namespace Run4YourLife.Input
 {
     public class Axis
     {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Run4YourLife.Input;
 
 namespace Run4YourLife.Player
 {
@@ -23,7 +24,8 @@ namespace Run4YourLife.Player
             {
                 CharacterType = CharacterType.Blue,
                 ID = 1,
-                IsBoss = false
+                IsBoss = false,
+                inputDevice = new InputDevice(1)
             };
         }
     }
