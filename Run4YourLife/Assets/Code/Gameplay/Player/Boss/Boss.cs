@@ -83,6 +83,7 @@ namespace Run4YourLife.Player
                         {
                             Shoot(bullet2);
                             shootStillAlive = true;
+                            internalShootTimer = 0;
                         }
                     }
                 }
@@ -94,6 +95,7 @@ namespace Run4YourLife.Player
                         shootStillAlive = false;
                         explosionShootPressed = true;
                     }
+                    bulletTimer = 0;
                 }
                 shootPressed = true;
             }

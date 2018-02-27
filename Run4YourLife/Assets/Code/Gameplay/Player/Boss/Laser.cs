@@ -7,19 +7,22 @@ using Run4YourLife.Input;
 public class Laser : MonoBehaviour {
 
     public Transform laser;
+    public Transform laserOff;
     public float timeBetweenY;
     public float xSpeed;
 
+    public GameObject skillA;
     public GameObject trapA;
-    public GameObject floorTrapA;
-    public GameObject ceilTrapA;
+    public GameObject skillX;
     public GameObject trapX;
-    public GameObject floorTrapX;
-    public GameObject ceilTrapX;
+    public GameObject skillY;
+    public GameObject trapY;
+    public GameObject skillB;
+    public GameObject trapB;
 
-    private enum Type { Type1,Type2};
+    private enum Type { TRAP,SKILL};
     private int setIndex = 0;
-    private Type[] sets = new Type[] { Type.Type1, Type.Type2 };
+    private Type[] sets = new Type[] { Type.TRAP, Type.SKILL };
 
     private int yPosIndex = 0;
     private float lastYPos = 0;
@@ -34,27 +37,62 @@ public class Laser : MonoBehaviour {
 
     void Update () {
 
+        MoveX(laser);
+        MoveX(laserOff);
+
+        MoveY();
+
+        //We need to re-evaluate cause it may change inside MoveY
+        if (laser.gameObject.activeInHierarchy)
+        {
+           SetTraps();
+        }
+
+        timerChangeBetweenY += Time.deltaTime;
+
+        if (bossControlScheme.nextSet.Started())
+        {
+            setIndex = (setIndex - 1+sets.Length) % sets.Length;
+        }
+
+        if (bossControlScheme.previousSet.Started())
+        {
+            setIndex = (setIndex + 1) % sets.Length;
+        }   
+    }
+
+    void MoveX(Transform t)
+    {
         float xInput = bossControlScheme.moveTrapIndicatorHorizontal.Value();
         if (Mathf.Abs(xInput) > 0.2)
         {
-            if(xInput > 0)
+            if (xInput > 0)
             {
-                Vector3 temp = laser.position;
+                Vector3 temp = t.position;
                 temp.x = temp.x + xSpeed;
-                laser.position = temp;
+                t.position = temp;
             }
             else
             {
-                Vector3 temp = laser.position;
+                Vector3 temp = t.position;
                 temp.x = temp.x - xSpeed;
-                laser.position = temp;
+                t.position = temp;
             }
         }
+    }
 
+    void MoveY()
+    {
         RaycastHit[] posiblePlaces = GetZone();
         System.Array.Sort(posiblePlaces, (x, y) => y.distance.CompareTo(x.distance));
         if (posiblePlaces.Length > 0)
         {
+            if (!laser.gameObject.activeInHierarchy)
+            {
+                laser.gameObject.SetActive(true);
+                laserOff.gameObject.SetActive(false);
+            }
+
             bool changed = false;
             laser.gameObject.SetActive(true);
             float yInput = bossControlScheme.moveTrapIndicatorVertical.Value();
@@ -75,12 +113,14 @@ public class Laser : MonoBehaviour {
                     timerChangeBetweenY = 0.0f;
                 }
             }
-            yPosIndex = Mathf.Clamp(yPosIndex,0,posiblePlaces.Length-1);
+            yPosIndex = Mathf.Clamp(yPosIndex, 0, posiblePlaces.Length - 1);
             if (!changed)
             {
-                for (int i = posiblePlaces.Length-1; i >= 0; i--)
+                for (int i = posiblePlaces.Length - 1; i >= 0; i--)
                 {
-                    if (posiblePlaces[i].point.y <= lastYPos)
+                    //TODO: try to solve problem
+                    //Problem with raycast, sometimes it takes the y a little different,
+                    if (Mathf.Abs(posiblePlaces[i].point.y - lastYPos)<0.005 || posiblePlaces[i].point.y < lastYPos)
                     {
                         yPosIndex = i;
                         break;
@@ -89,59 +129,79 @@ public class Laser : MonoBehaviour {
             }
             laser.position = posiblePlaces[yPosIndex].point;
             lastYPos = laser.position.y;
-
-            SetTraps();
         }
         else
         {
-            laser.gameObject.SetActive(false);
+            if (laser.gameObject.activeInHierarchy) {
+                laserOff.gameObject.SetActive(true);
+                Vector3 temp = laserOff.position;
+                temp.y = laser.position.y;
+                laserOff.position = temp;
+                laser.gameObject.SetActive(false);
+            }
         }
-
-        timerChangeBetweenY += Time.deltaTime;
-
-
-        if (bossControlScheme.nextSet.Started())
-        {
-            setIndex = (setIndex - 1+sets.Length) % sets.Length;
-        }
-
-        if (bossControlScheme.previousSet.Started())
-        {
-            setIndex = (setIndex + 1) % sets.Length;
-        }   
     }
-
     void SetTraps()
     {
         if (bossControlScheme.skill1.Started())
         {
-            if (sets[setIndex] == Type.Type2)
+            if (sets[setIndex] == Type.SKILL)
             {
                 Vector3 temp = laser.position;
-                temp.y = temp.y + (ceilTrapA.GetComponent<Renderer>().bounds.size.y / 2);
-                Instantiate(ceilTrapA, temp, ceilTrapA.GetComponent<Transform>().rotation);
+                temp.y = temp.y + (skillA.GetComponent<Renderer>().bounds.size.y / 2);
+                Instantiate(skillA, temp, skillA.GetComponent<Transform>().rotation);
             }
-            else if (sets[setIndex] == Type.Type1)
+            else if (sets[setIndex] == Type.TRAP)
             {
                 Vector3 temp = laser.position;
-                temp.y = temp.y + (floorTrapA.GetComponent<Renderer>().bounds.size.y / 2);
-                Instantiate(floorTrapA, temp, floorTrapA.GetComponent<Transform>().rotation);
+                temp.y = temp.y + (trapA.GetComponent<Renderer>().bounds.size.y / 2);
+                Instantiate(trapA, temp, trapA.GetComponent<Transform>().rotation);
             }
         }
 
         if (bossControlScheme.skill2.Started())
         {
-            if (sets[setIndex] == Type.Type2)
+            if (sets[setIndex] == Type.SKILL)
             {
                 Vector3 temp = laser.position;
-                temp.y = temp.y + (ceilTrapX.GetComponent<Renderer>().bounds.size.y / 2);
-                Instantiate(ceilTrapX, temp, ceilTrapX.GetComponent<Transform>().rotation);
+                temp.y = temp.y + (skillX.GetComponent<Renderer>().bounds.size.y / 2);
+                Instantiate(skillX, temp, skillX.GetComponent<Transform>().rotation);
             }
-            else if (sets[setIndex] == Type.Type1)
+            else if (sets[setIndex] == Type.TRAP)
             {
                 Vector3 temp = laser.position;
-                temp.y = temp.y + (floorTrapX.GetComponent<Renderer>().bounds.size.y / 2);
-                Instantiate(floorTrapX, temp, floorTrapX.GetComponent<Transform>().rotation);
+                temp.y = temp.y + (trapX.GetComponent<Renderer>().bounds.size.y / 2);
+                Instantiate(trapX, temp, trapX.GetComponent<Transform>().rotation);
+            }
+        }
+        if (bossControlScheme.skill3.Started())
+        {
+            if (sets[setIndex] == Type.SKILL)
+            {
+                Vector3 temp = laser.position;
+                temp.y = temp.y + (skillY.GetComponent<Renderer>().bounds.size.y / 2);
+                Instantiate(skillY, temp, skillY.GetComponent<Transform>().rotation);
+            }
+            else if (sets[setIndex] == Type.TRAP)
+            {
+                Vector3 temp = laser.position;
+                temp.y = temp.y + (trapY.GetComponent<Renderer>().bounds.size.y / 2);
+                Instantiate(trapY, temp, trapY.GetComponent<Transform>().rotation);
+            }
+        }
+        if (bossControlScheme.skill4.Started())
+        {
+            if (sets[setIndex] == Type.SKILL)
+            {
+                Vector3 temp = laser.position;
+                temp.y = temp.y + (skillB.GetComponent<Renderer>().bounds.size.y / 2);
+                Instantiate(skillB, temp, skillB.GetComponent<Transform>().rotation);
+            }
+            else if (sets[setIndex] == Type.TRAP)
+            {
+                Vector3 temp = laser.position;
+                temp.y = temp.y + (trapB.GetComponent<Renderer>().bounds.size.y / 2);
+                Instantiate(trapB, temp, trapB.GetComponent<Transform>().rotation);
             }
         }
     }
