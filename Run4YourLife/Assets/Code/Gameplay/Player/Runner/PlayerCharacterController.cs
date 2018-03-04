@@ -29,6 +29,9 @@ namespace Run4YourLife.Player
         [SerializeField]
         private float m_jumpOnTopOfAnotherPlayerHeight;
 
+        [SerializeField]
+        public float timeToIdle = 5.0f;
+
         #endregion
 
         #region References
@@ -49,6 +52,8 @@ namespace Run4YourLife.Player
 
         private bool facingRight = true;
 
+        private float idleTimer = 0.0f;
+
         #endregion
 
         void Awake()
@@ -66,19 +71,16 @@ namespace Run4YourLife.Player
 
         void Update()
         {
-            if (GetComponent<Rigidbody>().isKinematic)
+            Gravity();
+
+            anim.SetBool("ground", characterController.isGrounded);
+
+            if (characterController.isGrounded && playerControlScheme.jump.Started())
             {
-                Gravity();
-
-                anim.SetBool("ground", characterController.isGrounded);
-
-                if (characterController.isGrounded && playerControlScheme.jump.Started())
-                {
-                    Jump();
-                }
-
-                Move();
+                Jump();
             }
+
+            Move();   
         }
 
         private void Gravity()
@@ -99,9 +101,20 @@ namespace Run4YourLife.Player
             Vector3 speed = move + m_velocity * Time.deltaTime;
 
             anim.SetFloat("xSpeed", Mathf.Abs(speed.x));
+            anim.SetFloat("timeToIdle", idleTimer);
+
             if ((facingRight && speed.x < 0) || (!facingRight && speed.x > 0))
             {
                 Flip();
+            }
+
+            if(speed.x == 0)
+            {
+                idleTimer += Time.deltaTime;
+            }
+            else
+            {
+                idleTimer = 0.0f;
             }
 
             characterController.Move(move + m_velocity * Time.deltaTime);
@@ -192,9 +205,7 @@ namespace Run4YourLife.Player
 
         public void Impulse(Vector3 force)
         {
-            Rigidbody body = GetComponent<Rigidbody>();
-            body.isKinematic = false;
-            body.AddForce(force*500);
+            Debug.Log("IMPULSE");
         }
     }
 }

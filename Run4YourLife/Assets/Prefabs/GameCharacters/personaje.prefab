@@ -1772,7 +1772,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 120
   m_CollisionDetection: 0
 --- !u!95 &95157172401138878
 Animator:
@@ -1802,8 +1802,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2d1b5309e129f4e8b1fcb95811671a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  jumpHeight: 5
+  speed: 5
+  jumpHeight: 2
   TMP_currentSpeed_TMP: 0
   TMP_currentJumpHeight_TMP: 0
 --- !u!114 &114493553861098924
@@ -1865,6 +1865,7 @@ MonoBehaviour:
   m_gravity: -40
   m_endOfJumpGravity: -30
   m_jumpOnTopOfAnotherPlayerHeight: 3
+  timeToIdle: 5
 --- !u!135 &135442090678079562
 SphereCollider:
   m_ObjectHideFlags: 1
