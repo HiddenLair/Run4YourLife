@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 using Run4YourLife.Player;
 using System;
@@ -17,10 +18,11 @@ namespace Run4YourLife.CharacterSelection
         private void Awake()
         {
             playerManager = Component.FindObjectOfType<PlayerManager>();
-            playerManager.OnPlayerChange += OnPlayerChange;
+            Debug.Assert(playerManager != null);
+            playerManager.OnPlayerChanged.AddListener(OnPlayerChanged);
         }
 
-        void OnPlayerChange()
+        void OnPlayerChanged()
         {
             DestroyCurrentStants();
             SpawnNewStands();
@@ -30,7 +32,7 @@ namespace Run4YourLife.CharacterSelection
         {
             foreach (PlayerStandController stand in standControllers)
             {
-                stand.ClearPlayerDefinition();
+                ExecuteEvents.Execute<IPlayerDefinitionEvents>(stand.gameObject, null, (a, b) => a.OnPlayerDefinitionChanged(null));
             }
         }
 
@@ -41,7 +43,7 @@ namespace Run4YourLife.CharacterSelection
 
             for (int i = 0; i < players.Count; i++)
             {
-                standControllers[i].SetPlayerDefinition(players[i]);
+                ExecuteEvents.Execute<IPlayerDefinitionEvents>(standControllers[i].gameObject, null, (a, b) => a.OnPlayerDefinitionChanged(players[i]));
             }
         }
     }

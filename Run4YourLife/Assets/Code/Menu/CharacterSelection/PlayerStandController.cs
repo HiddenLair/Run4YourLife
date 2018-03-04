@@ -8,10 +8,11 @@ using System;
 
 namespace Run4YourLife.CharacterSelection
 {
-    public class PlayerStandController : MonoBehaviour
+    public class PlayerStandController : MonoBehaviour, IPlayerDefinitionEvents
     {
-        private PlayerDefinition playerDefinition;
-        private PlayerManager playerManager;
+        private PlayerDefinition m_playerDefinition;
+        private PlayerManager m_playerManager;
+        private PlayerStandControllerControlScheme m_controlScheme;
 
         [SerializeField]
         private GameObject redRunner;
@@ -25,32 +26,42 @@ namespace Run4YourLife.CharacterSelection
         [SerializeField]
         private GameObject orangeRunner;
 
-        private GameObject activeStand;
+        private GameObject m_activeStand;
 
-        private PlayerStandControllerControlScheme controlScheme;
 
         void Awake()
         {
-            playerManager = Component.FindObjectOfType<PlayerManager>();
-            Debug.Assert(playerManager != null);
+            m_playerManager = Component.FindObjectOfType<PlayerManager>();
+            Debug.Assert(m_playerManager != null);
+            m_controlScheme = GetComponent<PlayerStandControllerControlScheme>();
+            Debug.Assert(m_controlScheme != null);
         }
 
-        private void Start()
+        public void OnPlayerDefinitionChanged(PlayerDefinition playerDefinition)
         {
-
+            if(playerDefinition == null)
+            {
+                ClearPlayerDefinition();
+            }
+            else
+            {
+                SetPlayerDefinition(playerDefinition);
+            }
         }
 
         public void SetPlayerDefinition(PlayerDefinition playerDefinition)
         {
-            this.playerDefinition = playerDefinition;
-            activeStand = SpawnPlayerStand(playerDefinition);
+            m_playerDefinition = playerDefinition;
+            m_activeStand = SpawnPlayerStand(playerDefinition);
+            m_controlScheme.Active = true;
         }
 
         public void ClearPlayerDefinition()
         {
-            this.playerDefinition = null;
-            Destroy(activeStand);
-            activeStand = null;
+            m_playerDefinition = null;
+            Destroy(m_activeStand);
+            m_activeStand = null;
+            m_controlScheme.Active = false;
         }
 
         private GameObject SpawnPlayerStand(PlayerDefinition player)
@@ -92,7 +103,7 @@ namespace Run4YourLife.CharacterSelection
 
         void Update()
         {
-            if (playerDefinition != null)
+            if (m_playerDefinition != null)
             {
                 UpdatePlayer();
             }
@@ -100,19 +111,19 @@ namespace Run4YourLife.CharacterSelection
 
         private void UpdatePlayer()
         {            
-            if (controlScheme.getBoss.Started())
+            if (m_controlScheme.getBoss.Started())
             {
-                playerManager.SetPlayerAsBoss(playerDefinition);
+                m_playerManager.SetPlayerAsBoss(m_playerDefinition);
             }
-            else if (controlScheme.leaveGame.Started())
+            else if (m_controlScheme.leaveGame.Started())
             {
-                playerManager.RemovePlayer(playerDefinition);
+                m_playerManager.RemovePlayer(m_playerDefinition);
             }
-            else if (controlScheme.nextStand.Started())
+            else if (m_controlScheme.nextStand.Started())
             {
                 ChangePlayerCharacter(AdvanceType.Next);
             }
-            else if(controlScheme.previousStand.Started())
+            else if(m_controlScheme.previousStand.Started())
             {
                 ChangePlayerCharacter(AdvanceType.Previous);
             }
@@ -120,17 +131,15 @@ namespace Run4YourLife.CharacterSelection
 
         private enum AdvanceType
         {
-            Next,
-            Previous
+            Next = 1,
+            Previous = -1
         }
 
         private void ChangePlayerCharacter(AdvanceType advanceType)
         {
-            PlayerDefinition playerDefinition = this.playerDefinition;
+            PlayerDefinition playerDefinition = this.m_playerDefinition;
             ClearPlayerDefinition();
-
-            int delta = advanceType.Equals(AdvanceType.Next) ? 1 : -1;
-            playerDefinition.CharacterType = GetDeltaCharacterType(playerDefinition.CharacterType, delta);
+            playerDefinition.CharacterType = GetDeltaCharacterType(playerDefinition.CharacterType, (int)advanceType);
             SetPlayerDefinition(playerDefinition);
         }
 

@@ -19,7 +19,7 @@ namespace Run4YourLife.CharacterSelection
 
             ControllerDetector controllerDetector = GetComponent<ControllerDetector>();
             Debug.Assert(controllerDetector != null);
-            controllerDetector.OnControllerDetected += OnControllerDetected;
+            controllerDetector.OncontrollerDetected.AddListener(OnControllerDetected);
         }
 
         public void OnControllerDetected(InputDevice controller)
@@ -30,7 +30,6 @@ namespace Run4YourLife.CharacterSelection
         private void CreatePlayerForController(InputDevice inputDevice)
         {
             PlayerDefinition playerDefinition = new PlayerDefinition();
-            playerManager.AddPlayer(playerDefinition);
 
             playerDefinition.inputDevice = inputDevice;
             if (playerManager.GetPlayers().Count == 0)
@@ -39,6 +38,7 @@ namespace Run4YourLife.CharacterSelection
             }
             playerDefinition.CharacterType = GetFirstAviablePlayerCharacterType();
 
+            playerManager.AddPlayer(playerDefinition);
         }
 
         private CharacterType GetFirstAviablePlayerCharacterType()

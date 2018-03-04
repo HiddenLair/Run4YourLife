@@ -6,9 +6,9 @@ using Run4YourLife.Player;
 
 namespace Run4YourLife.Input
 {
-    public abstract class ControlScheme : MonoBehaviour
+    public abstract class ControlScheme : MonoBehaviour, IPlayerDefinitionEvents
     {
-        public InputDevice InputDevice { get; set; }
+        protected List<Action> actions = new List<Action>();
 
         private bool m_active;
         public bool Active
@@ -20,7 +20,7 @@ namespace Run4YourLife.Input
 
             set
             {
-                if(value != m_active)
+                if (value != m_active)
                 {
                     m_active = value;
                     foreach (Action action in actions)
@@ -31,16 +31,31 @@ namespace Run4YourLife.Input
             }
         }
 
-        protected List<Action> actions = new List<Action>();
+        private InputDevice m_inputDevice;
+        public InputDevice InputDevice {
+            get
+            {
+                return m_inputDevice;
+            }
 
-        protected void InitializeActionsWithPlayerInputDevice()
+            private set
+            {
+                UpdateInputDevice(value);
+            }
+        }
+
+        public void OnPlayerDefinitionChanged(PlayerDefinition playerDefinition)
         {
-            InputDevice inputDevice = GetComponent<PlayerInstance>().PlayerDefinition.inputDevice;
+            InputDevice = playerDefinition != null ? playerDefinition.inputDevice : null;
+        }
+
+        protected void UpdateInputDevice(InputDevice inputDevice)
+        {
+            m_inputDevice = inputDevice;
             foreach (Action action in actions)
             {
                 action.inputSource.inputDevice = inputDevice;
             }
         }
     }
-
 }
