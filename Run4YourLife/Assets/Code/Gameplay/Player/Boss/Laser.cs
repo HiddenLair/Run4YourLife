@@ -11,6 +11,7 @@ public class Laser : MonoBehaviour {
     public float timeBetweenY;
     public float xSpeed;
 
+    public Phase phase;
     public GameObject skillA;
     public GameObject trapA;
     public GameObject skillX;
@@ -20,6 +21,7 @@ public class Laser : MonoBehaviour {
     public GameObject skillB;
     public GameObject trapB;
 
+    public enum Phase {Phase1,Phase2,Phase3 };
     private enum Type { TRAP,SKILL};
     private int setIndex = 0;
     private Type[] sets = new Type[] { Type.TRAP, Type.SKILL };
@@ -33,6 +35,7 @@ public class Laser : MonoBehaviour {
     private void Awake()
     {
         bossControlScheme = GetComponent<BossControlScheme>();
+        setIndex = (int)phase % sets.Length;
     }
 
     void Update () {
@@ -50,15 +53,18 @@ public class Laser : MonoBehaviour {
 
         timerChangeBetweenY += Time.deltaTime;
 
-        if (bossControlScheme.nextSet.Started())
+        if (phase == Phase.Phase3)
         {
-            setIndex = (setIndex - 1+sets.Length) % sets.Length;
-        }
+            if (bossControlScheme.nextSet.Started())
+            {
+                setIndex = (setIndex - 1 + sets.Length) % sets.Length;
+            }
 
-        if (bossControlScheme.previousSet.Started())
-        {
-            setIndex = (setIndex + 1) % sets.Length;
-        }   
+            if (bossControlScheme.previousSet.Started())
+            {
+                setIndex = (setIndex + 1) % sets.Length;
+            }
+        }
     }
 
     void MoveX(Transform t)
@@ -120,7 +126,7 @@ public class Laser : MonoBehaviour {
                 {
                     //TODO: try to solve problem
                     //Problem with raycast, sometimes it takes the y a little different,
-                    if (Mathf.Abs(posiblePlaces[i].point.y - lastYPos)<0.005 || posiblePlaces[i].point.y < lastYPos)
+                    if (Mathf.Approximately(posiblePlaces[i].point.y,lastYPos) || posiblePlaces[i].point.y < lastYPos)
                     {
                         yPosIndex = i;
                         break;
@@ -212,7 +218,7 @@ public class Laser : MonoBehaviour {
          * The ray length.
          * Modify it to change the length of the Ray.
          */
-        float distance = 10f;
+        float distance = 50f;
         /*
          * A variable to store the location of the hit.
          */

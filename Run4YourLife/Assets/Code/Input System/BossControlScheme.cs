@@ -23,6 +23,7 @@ namespace Run4YourLife.Input
         public Action melee;
 
         public Action moveLaserVertical;
+        public Action moveLaserHorizontal;
 
 
         private void Awake()
@@ -42,6 +43,7 @@ namespace Run4YourLife.Input
             actions.Add(melee = new Action(new InputSource(Trigger.LEFT)));
 
             actions.Add(moveLaserVertical = new Action(new InputSource(Axis.RIGHT_VERTICAL)));
+            actions.Add(moveLaserHorizontal = new Action(new InputSource(Axis.RIGHT_HORIZONTAL)));
         }
     }
 }
