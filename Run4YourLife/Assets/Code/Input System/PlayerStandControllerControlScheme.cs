@@ -19,10 +19,5 @@ namespace Run4YourLife.Input
             actions.Add(getBoss = new Action(new InputSource(Button.X)));
             actions.Add(leaveGame = new Action(new InputSource(Button.B)));
         }
-
-        private void Start()
-        {
-            InitializeActionsWithPlayerInputDevice();
-        }
     }
 }

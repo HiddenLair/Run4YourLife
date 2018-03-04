@@ -43,10 +43,5 @@ namespace Run4YourLife.Input
 
             actions.Add(moveLaserVertical = new Action(new InputSource(Axis.RIGHT_VERTICAL)));
         }
-
-        private void Start()
-        {
-            InitializeActionsWithPlayerInputDevice();
-        }
     }
 }

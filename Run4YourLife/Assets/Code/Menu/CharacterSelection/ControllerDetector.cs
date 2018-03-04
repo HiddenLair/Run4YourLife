@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 using UnityEngine;
 
 using Run4YourLife.Player;
@@ -8,9 +9,7 @@ using Run4YourLife.Input;
 namespace Run4YourLife.CharacterSelection
 {
     public class ControllerDetector : MonoBehaviour {
-
-        public delegate void dgController(InputDevice controller);
-        public event dgController OnControllerDetected;
+        public InputDeviceEvent OncontrollerDetected;
 
         private InputDeviceManager inputDeviceManager;
         private PlayerManager playerManager;
@@ -30,8 +29,7 @@ namespace Run4YourLife.CharacterSelection
             {
                 if (new InputSource(Button.A, inputDevice).ButtonDown() && !IsAssignedToAPlayer(inputDevice))
                 {
-                    if (OnControllerDetected != null)
-                        OnControllerDetected(inputDevice);
+                    OncontrollerDetected.Invoke(inputDevice);
                 }
             }
         }

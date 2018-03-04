@@ -14,10 +14,5 @@ namespace Run4YourLife.Input
             actions.Add(jump = new Action(new InputSource(Button.A)));
             actions.Add(interact = new Action(new InputSource(Button.X)));
         }
-
-        private void Start()
-        {
-            InitializeActionsWithPlayerInputDevice();
-        }
     }
 }

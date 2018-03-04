@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Run4YourLife.Player
 {
@@ -10,8 +11,7 @@ namespace Run4YourLife.Player
         private List<PlayerDefinition> players = new List<PlayerDefinition>();
         private List<PlayerDefinition> playersToDelete = new List<PlayerDefinition>();
 
-        public delegate void dgPlayerChange();
-        public event dgPlayerChange OnPlayerChange;
+        public UnityEvent OnPlayerChanged;
 
         void LateUpdate()
         {
@@ -23,14 +23,8 @@ namespace Run4YourLife.Player
                 }
                 playersToDelete.Clear();
 
-                CallOnPlayerChange();
+                OnPlayerChanged.Invoke();
             }
-        }
-
-        private void CallOnPlayerChange()
-        {
-            if (OnPlayerChange != null)
-                OnPlayerChange();
         }
 
         public List<PlayerDefinition> GetPlayers()
@@ -74,13 +68,13 @@ namespace Run4YourLife.Player
 
             player.IsBoss = true;
 
-            CallOnPlayerChange();
+            OnPlayerChanged.Invoke();
         }
 
         public PlayerDefinition AddPlayer(PlayerDefinition playerDefinition)
         {
             players.Add(playerDefinition);
-            CallOnPlayerChange();
+            OnPlayerChanged.Invoke();
             return playerDefinition;
         }
 

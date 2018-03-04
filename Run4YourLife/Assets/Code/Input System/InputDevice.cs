@@ -1,5 +1,12 @@
-﻿namespace Run4YourLife.Input
+﻿using UnityEngine.Events;
+
+namespace Run4YourLife.Input
 {
+    [System.Serializable]
+    public class InputDeviceEvent : UnityEvent<InputDevice>
+    {
+    }
+
     public class InputDevice
     {
         uint id;
