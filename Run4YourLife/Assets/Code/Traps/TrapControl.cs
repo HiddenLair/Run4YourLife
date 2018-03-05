@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public enum TrapType { EXPLOSION, PUSH, ROOT };
+public enum TrapType { EXPLOSION, PUSH, ROOT, DEBUFF };
 
 public class TrapControl : MonoBehaviour
 {
@@ -50,6 +50,7 @@ public class TrapControl : MonoBehaviour
                 break;
 
             case TrapType.ROOT:
+                //Only affects to the collided player
                 foreach (Collider c in collisions)
                 {
                     if (!Physics.Linecast(transform.position, c.gameObject.GetComponent<Collider>().bounds.center, blockingElement))
@@ -58,6 +59,9 @@ public class TrapControl : MonoBehaviour
                         toDelete = true;
                     }
                 }
+                break;
+            case TrapType.DEBUFF:
+                //Only affects to the collided player
                 break;
         }
 
