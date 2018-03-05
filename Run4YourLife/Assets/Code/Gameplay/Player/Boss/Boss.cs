@@ -33,12 +33,14 @@ namespace Run4YourLife.Player
 
         private GameObject lastBulletShoot;
         private BossControlScheme bossControlScheme;
+        private Animator anim;
 
         private void Awake()
         {
             bossControlScheme = GetComponent<BossControlScheme>();
             bulletTimer = reload;
             meleTimer = meleReload;
+            anim = GetComponent<Animator>();
         }
 
         private void Start()
@@ -81,6 +83,7 @@ namespace Run4YourLife.Player
                         internalShootTimer += Time.deltaTime;
                         if (internalShootTimer > timeToChargedShoot)
                         {
+                            anim.SetTrigger("ChargedShoot");
                             Shoot(bullet2);
                             shootStillAlive = true;
                             internalShootTimer = 0;
@@ -105,6 +108,7 @@ namespace Run4YourLife.Player
 
                 if (internalShootTimer > 0 && internalShootTimer < timeToChargedShoot && !explosionShootPressed)
                 {
+                    anim.SetTrigger("Shoot");
                     Shoot(bullet1);
                     bulletTimer = 0;
                 }
@@ -136,6 +140,7 @@ namespace Run4YourLife.Player
             {
                 if (meleTimer >= meleReload)
                 {
+                    anim.SetTrigger("Mele");
                     var meleInst = Instantiate(mele, meleZone.position, mele.GetComponent<Transform>().rotation);
                     meleInst.transform.SetParent(transform);
                     Destroy(meleInst, 1.0f);
