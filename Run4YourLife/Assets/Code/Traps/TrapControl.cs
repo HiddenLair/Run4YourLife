@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+public enum TrapType { EXPLOSION, PUSH, ROOT };
+
 public class TrapControl : MonoBehaviour
 {
     #region Private variables
-    public enum TrapType { EXPLOSION, PUSH, ROOT };
+    private bool toDelete = false;
     #endregion
 
     #region Public variables
     public float AOERadius = 2.0f;
+    public GameObject activationParticles;
     public LayerMask trapListener;
     public LayerMask blockingElement;
     public TrapType trapType;
@@ -29,6 +32,7 @@ public class TrapControl : MonoBehaviour
                     if (!Physics.Linecast(transform.position, c.gameObject.GetComponent<Collider>().bounds.center, blockingElement))
                     {
                         ExecuteEvents.Execute<IEventMessageTarget>(c.gameObject, null, (x, y) => x.Explosion());
+                        toDelete = true;
                     }
                 }
                 break;
@@ -40,6 +44,7 @@ public class TrapControl : MonoBehaviour
                     {
                         Vector3 direction = c.gameObject.GetComponent<Collider>().bounds.center - transform.position;
                         ExecuteEvents.Execute<IEventMessageTarget>(c.gameObject, null, (x, y) => x.Impulse(direction.normalized));
+                        toDelete = true;
                     }
                 }
                 break;
@@ -50,9 +55,16 @@ public class TrapControl : MonoBehaviour
                     if (!Physics.Linecast(transform.position, c.gameObject.GetComponent<Collider>().bounds.center, blockingElement))
                     {
                         ExecuteEvents.Execute<IEventMessageTarget>(c.gameObject, null, (x, y) => x.Root(rootHardness));
+                        toDelete = true;
                     }
                 }
                 break;
+        }
+
+        if(toDelete)
+        {
+            Instantiate(activationParticles, transform.position, transform.rotation);
+            Destroy(gameObject);
         }
     }
 
