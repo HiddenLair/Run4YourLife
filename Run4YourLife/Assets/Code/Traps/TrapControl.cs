@@ -18,6 +18,7 @@ public class TrapControl : MonoBehaviour
     public LayerMask blockingElement;
     public TrapType trapType;
     public int rootHardness = 5;
+    public StatModifier statModifier;
     #endregion
 
     private void OnTriggerEnter(Collider collider)
@@ -55,7 +56,8 @@ public class TrapControl : MonoBehaviour
                 break;
 
             case TrapType.DEBUFF:
-                //Only affects to the collided player
+                ExecuteEvents.Execute<IEventMessageTarget>(collider.gameObject, null, (x, y) => x.Debuff(statModifier));
+                toDelete = true;
                 break;
         }
 

@@ -36,7 +36,6 @@ namespace Run4YourLife.Player
 
         #region References
 
-
         private CharacterController characterController;
         private Stats stats;
         private PlayerControlScheme playerControlScheme;
@@ -206,6 +205,11 @@ namespace Run4YourLife.Player
         public void Impulse(Vector3 force)
         {
             Debug.Log("IMPULSE");
+        }
+
+        public void Debuff(StatModifier statmodifier)
+        {
+            stats.AddModifier(statmodifier);
         }
     }
 }
