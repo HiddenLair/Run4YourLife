@@ -50,16 +50,10 @@ public class TrapControl : MonoBehaviour
                 break;
 
             case TrapType.ROOT:
-                //Only affects to the collided player
-                foreach (Collider c in collisions)
-                {
-                    if (!Physics.Linecast(transform.position, c.gameObject.GetComponent<Collider>().bounds.center, blockingElement))
-                    {
-                        ExecuteEvents.Execute<IEventMessageTarget>(c.gameObject, null, (x, y) => x.Root(rootHardness));
-                        toDelete = true;
-                    }
-                }
+                ExecuteEvents.Execute<IEventMessageTarget>(collider.gameObject, null, (x, y) => x.Root(rootHardness));
+                toDelete = true;
                 break;
+
             case TrapType.DEBUFF:
                 //Only affects to the collided player
                 break;
