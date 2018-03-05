@@ -14,7 +14,6 @@ namespace Run4YourLife.Player
         public float laserDuration;
         public float rotationSpeed;
         public Transform shootMarker;
-        public Transform bulletStartingPoint;
         public float reload;
 
         //Mele
