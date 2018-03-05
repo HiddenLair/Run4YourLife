@@ -113,91 +113,76 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &420573254
+--- !u!1 &934757958
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 420573256}
-  - component: {fileID: 420573257}
-  - component: {fileID: 420573258}
-  - component: {fileID: 420573255}
-  - component: {fileID: 420573259}
+  - component: {fileID: 934757960}
+  - component: {fileID: 934757959}
+  - component: {fileID: 934757961}
   m_Layer: 0
-  m_Name: GlobalManager
+  m_Name: Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &420573255
+--- !u!114 &934757959
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 420573254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 920a1bff773888e4aaab054b93d450f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &420573256
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 420573254}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &420573257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 420573254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01cb0bb6c13e4ca48813aaec87f7c581, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnPlayerChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
---- !u!114 &420573258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 420573254}
+  m_GameObject: {fileID: 934757958}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a08ab14bc7dc03449cf117ec037024b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &420573259
+  sceneName: Load2
+  loadSceneMode: 1
+  loadEvent: 0
+  setLoadedSceneAsActiveScene: 1
+--- !u!4 &934757960
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 934757958}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.5650215, y: 0.65263844, z: 0.7430725}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &934757961
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 420573254}
+  m_GameObject: {fileID: 934757958}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b54b125ffc0a6ec46b3f2eecc0eff95c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a0572a1c2548b0449e25f2032ffa139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneLoadRequestData:
-    sceneName: MainMenu
-    loadSceneMode: 1
-    loadEvent: 1
-    setLoadedSceneAsActiveScene: 1
-    unloadScene: 0
-    unloadedSceneName: 
+  events:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 934757959}
+        m_MethodName: LoadScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  key: 257
