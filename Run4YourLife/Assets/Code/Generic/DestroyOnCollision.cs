@@ -8,4 +8,9 @@ public class DestroyOnCollision : MonoBehaviour {
     {
         Destroy(other.gameObject);
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Destroy(collision.gameObject);
+    }
 }
