@@ -28,7 +28,6 @@ namespace Run4YourLife.Player
         private float bulletTimer;
         private float meleTimer;
 
-        private GameObject lastBulletShoot;
         private BossControlScheme bossControlScheme;
 
         private void Awake()
