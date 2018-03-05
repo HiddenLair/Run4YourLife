@@ -8,7 +8,6 @@ namespace Run4YourLife.SceneManagement
     public enum LoadEvent
     {
         Custom,
-        Awake,
         Start,
         OnEnable,
         OnDisable,
@@ -21,21 +20,19 @@ namespace Run4YourLife.SceneManagement
         private string sceneName;
 
         [SerializeField]
-        private LoadSceneMode loadSceneMode;
+        private LoadSceneMode loadSceneMode = LoadSceneMode.Additive;
 
         [SerializeField]
-        private LoadEvent loadEvent;
+        private LoadEvent loadEvent = LoadEvent.Custom;
 
         [SerializeField]
         private bool setLoadedSceneAsActiveScene = true;
 
-        void Awake()
-        {
-            if (loadEvent.Equals(LoadEvent.Awake))
-            {
-                LoadScene();
-            }
-        }
+        [SerializeField]
+        private bool unloadActiveScene = false;
+
+        [SerializeField]
+        private bool waitUntilUnloadCompletedToLoadNext = false;
 
         void Start()
         {
@@ -71,8 +68,34 @@ namespace Run4YourLife.SceneManagement
 
         public void LoadScene()
         {
-            SceneManager.sceneLoaded += SceneLoaded;
-            SceneManager.LoadSceneAsync(sceneName, loadSceneMode);
+            if(!unloadActiveScene && waitUntilUnloadCompletedToLoadNext)
+            {
+                Debug.LogError("If you don't unload the active scene, the unload event will not trigger and no scene will be loaded");
+            }
+
+            if(unloadActiveScene)
+            {
+                SceneManager.sceneUnloaded += SceneUnloaded;
+                SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+            }
+
+            if(!waitUntilUnloadCompletedToLoadNext)
+            {
+                SceneManager.sceneLoaded += SceneLoaded;
+                SceneManager.LoadSceneAsync(sceneName, loadSceneMode);
+            }
+            
+        }
+
+        private void SceneUnloaded(Scene scene)
+        {
+            SceneManager.sceneUnloaded -= SceneUnloaded;
+
+            if (waitUntilUnloadCompletedToLoadNext)
+            {
+                SceneManager.sceneLoaded += SceneLoaded;
+                SceneManager.LoadSceneAsync(sceneName, loadSceneMode);
+            }
         }
 
         private void SceneLoaded(Scene scene, LoadSceneMode loadSceneMode)

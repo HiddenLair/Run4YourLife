@@ -6,16 +6,25 @@ using Run4YourLife.Player;
 using Run4YourLife.Input;
 using System;
 
+using Run4YourLife.SceneManagement;
+
 namespace Run4YourLife.CharacterSelection
 {
+    [RequireComponent(typeof(ControllerDetector))]
     public class CharacterSelectionManager : MonoBehaviour
     {
-        PlayerManager playerManager;
+        private PlayerManager m_playerManager;
+
+        [SerializeField]
+        private SceneLoader m_gameLoader;
+
+        [SerializeField]
+        private SceneLoader m_mainMenuLoader;
 
         void Awake()
         {
-            playerManager = Component.FindObjectOfType<PlayerManager>();
-            Debug.Assert(playerManager != null);
+            m_playerManager = Component.FindObjectOfType<PlayerManager>();
+            Debug.Assert(m_playerManager != null);
 
             ControllerDetector controllerDetector = GetComponent<ControllerDetector>();
             Debug.Assert(controllerDetector != null);
@@ -32,13 +41,13 @@ namespace Run4YourLife.CharacterSelection
             PlayerDefinition playerDefinition = new PlayerDefinition();
 
             playerDefinition.inputDevice = inputDevice;
-            if (playerManager.GetPlayers().Count == 0)
+            if (m_playerManager.GetPlayers().Count == 0)
             {
-                playerManager.SetPlayerAsBoss(playerDefinition);
+                m_playerManager.SetPlayerAsBoss(playerDefinition);
             }
             playerDefinition.CharacterType = GetFirstAviablePlayerCharacterType();
 
-            playerManager.AddPlayer(playerDefinition);
+            m_playerManager.AddPlayer(playerDefinition);
         }
 
         private CharacterType GetFirstAviablePlayerCharacterType()
@@ -57,7 +66,7 @@ namespace Run4YourLife.CharacterSelection
 
         private bool PlayerHasCharacterType(CharacterType characterType)
         {
-            foreach(PlayerDefinition player in playerManager.GetPlayers())
+            foreach(PlayerDefinition player in m_playerManager.GetPlayers())
             {
                 if (player.CharacterType.Equals(characterType))
                 {
@@ -65,6 +74,16 @@ namespace Run4YourLife.CharacterSelection
                 }
             }
             return false;
+        }
+
+        public void OnGameStart()
+        {
+            m_gameLoader.LoadScene();
+        }
+
+        public void OnMainMenuStart()
+        {
+            m_mainMenuLoader.LoadScene();
         }
     }
 }

@@ -22,6 +22,11 @@ namespace Run4YourLife.CharacterSelection
             playerManager.OnPlayerChanged.AddListener(OnPlayerChanged);
         }
 
+        private void Start()
+        {
+            OnPlayerChanged();
+        }
+
         void OnPlayerChanged()
         {
             DestroyCurrentStants();

@@ -11,6 +11,8 @@ namespace Run4YourLife.Input
         public Action previousStand;
         public Action getBoss;
         public Action leaveGame;
+        public Action startGame;
+        public Action mainMenu;
 
         private void Awake()
         {
@@ -18,6 +20,8 @@ namespace Run4YourLife.Input
             actions.Add(previousStand = new Action(new InputSource(Button.LB)));
             actions.Add(getBoss = new Action(new InputSource(Button.X)));
             actions.Add(leaveGame = new Action(new InputSource(Button.B)));
+            actions.Add(startGame = new Action(new InputSource(Button.START)));
+            actions.Add(mainMenu = new Action(new InputSource(Button.Y)));
         }
     }
 }

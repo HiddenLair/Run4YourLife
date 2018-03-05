@@ -870,6 +870,8 @@ GameObject:
   - component: {fileID: 1019550587}
   - component: {fileID: 1019550586}
   - component: {fileID: 1019550589}
+  - component: {fileID: 1019550591}
+  - component: {fileID: 1019550590}
   m_Layer: 0
   m_Name: CharacterSelectionManager
   m_TagString: Untagged
@@ -888,6 +890,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 479d51fae04210e4f9ca217714d31dd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OncontrollerDetected:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Run4YourLife.Input.InputDeviceEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &1019550587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -899,6 +906,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b355f4f687fcaba4691a16df37115250, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_gameLoader: {fileID: 1019550591}
+  m_mainMenuLoader: {fileID: 1019550590}
 --- !u!4 &1019550588
 Transform:
   m_ObjectHideFlags: 0
@@ -928,6 +937,40 @@ MonoBehaviour:
   - {fileID: 129860516}
   - {fileID: 573850431}
   - {fileID: 519213314}
+--- !u!114 &1019550590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1019550585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a08ab14bc7dc03449cf117ec037024b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: MainMenu
+  loadSceneMode: 1
+  loadEvent: 0
+  setLoadedSceneAsActiveScene: 1
+  unloadActiveScene: 1
+  waitUntilUnloadCompletedToLoadNext: 1
+--- !u!114 &1019550591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1019550585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a08ab14bc7dc03449cf117ec037024b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: Jungle
+  loadSceneMode: 1
+  loadEvent: 0
+  setLoadedSceneAsActiveScene: 1
+  unloadActiveScene: 1
+  waitUntilUnloadCompletedToLoadNext: 1
 --- !u!1 &1198080457
 GameObject:
   m_ObjectHideFlags: 0

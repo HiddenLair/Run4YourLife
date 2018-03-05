@@ -8,11 +8,20 @@ using System;
 
 namespace Run4YourLife.CharacterSelection
 {
+    [RequireComponent(typeof(PlayerStandControllerControlScheme))]
     public class PlayerStandController : MonoBehaviour, IPlayerDefinitionEvents
     {
+
+        #region References
+
+        private CharacterSelectionManager m_characterSelectionManager;
         private PlayerDefinition m_playerDefinition;
         private PlayerManager m_playerManager;
         private PlayerStandControllerControlScheme m_controlScheme;
+
+        #endregion
+
+        #region Stands
 
         [SerializeField]
         private GameObject redRunner;
@@ -28,13 +37,18 @@ namespace Run4YourLife.CharacterSelection
 
         private GameObject m_activeStand;
 
+        #endregion
+
 
         void Awake()
         {
+            m_characterSelectionManager = Component.FindObjectOfType<CharacterSelectionManager>();
+            Debug.Assert(m_characterSelectionManager != null);
+
             m_playerManager = Component.FindObjectOfType<PlayerManager>();
             Debug.Assert(m_playerManager != null);
+
             m_controlScheme = GetComponent<PlayerStandControllerControlScheme>();
-            Debug.Assert(m_controlScheme != null);
         }
 
         public void OnPlayerDefinitionChanged(PlayerDefinition playerDefinition)
@@ -126,6 +140,14 @@ namespace Run4YourLife.CharacterSelection
             else if(m_controlScheme.previousStand.Started())
             {
                 ChangePlayerCharacter(AdvanceType.Previous);
+            }
+            else if(m_controlScheme.startGame.Started())
+            {
+                m_characterSelectionManager.OnGameStart();
+            }
+            else if(m_controlScheme.mainMenu.Started())
+            {
+                m_characterSelectionManager.OnMainMenuStart();
             }
         }
 
