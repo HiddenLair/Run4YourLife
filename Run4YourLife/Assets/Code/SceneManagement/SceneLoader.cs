@@ -1,110 +1,47 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Run4YourLife.SceneManagement
 {
-    public enum LoadEvent
-    {
-        Custom,
-        Start,
-        OnEnable,
-        OnDisable,
-        OnDestroy
-    }
-
     public class SceneLoader : MonoBehaviour
     {
-        [SerializeField]
-        private string sceneName;
-
-        [SerializeField]
-        private LoadSceneMode loadSceneMode = LoadSceneMode.Additive;
-
-        [SerializeField]
-        private LoadEvent loadEvent = LoadEvent.Custom;
-
-        [SerializeField]
-        private bool setLoadedSceneAsActiveScene = true;
-
-        [SerializeField]
-        private bool unloadActiveScene = false;
-
-        [SerializeField]
-        private bool waitUntilUnloadCompletedToLoadNext = false;
-
-        void Start()
+        public void ExecuteRequest(SceneLoadRequestData sceneLoadRequestData)
         {
-            if (loadEvent.Equals(LoadEvent.Start))
-            {
-                LoadScene();
-            }
+            StartCoroutine(CoroutineExecuteRequest(sceneLoadRequestData));
         }
 
-        void OnEnable()
+        private IEnumerator CoroutineExecuteRequest(SceneLoadRequestData data)
         {
-            if (loadEvent.Equals(LoadEvent.OnEnable))
-            {
-                LoadScene();
-            }
-        }
+            AsyncOperation unloadSceneAsync = null;
 
-        void OnDisable()
-        {
-            if (loadEvent.Equals(LoadEvent.OnDisable))
+            if (data.unloadScene)
             {
-                LoadScene();
-            }
-        }
-
-        void OnDestroy()
-        {
-            if (loadEvent.Equals(LoadEvent.OnDestroy))
-            {
-                LoadScene();
-            }
-        }
-
-        public void LoadScene()
-        {
-            if(!unloadActiveScene && waitUntilUnloadCompletedToLoadNext)
-            {
-                Debug.LogError("If you don't unload the active scene, the unload event will not trigger and no scene will be loaded");
+                unloadSceneAsync = SceneManager.UnloadSceneAsync(data.unloadedSceneName);
             }
 
-            if(unloadActiveScene)
-            {
-                SceneManager.sceneUnloaded += SceneUnloaded;
-                SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-            }
+            AsyncOperation loadSceneAsync = SceneManager.LoadSceneAsync(data.sceneName, data.loadSceneMode);
+            loadSceneAsync.allowSceneActivation = false;
 
-            if(!waitUntilUnloadCompletedToLoadNext)
+            while (!loadSceneAsync.isDone)
             {
-                SceneManager.sceneLoaded += SceneLoaded;
-                SceneManager.LoadSceneAsync(sceneName, loadSceneMode);
-            }
-            
-        }
+                // loading bar progress
+                //_loadingProgress = Mathf.Clamp01(asyncScene.progress / 0.9f) * 100;
 
-        private void SceneUnloaded(Scene scene)
-        {
-            SceneManager.sceneUnloaded -= SceneUnloaded;
+                // scene has loaded as much as possible, the last 10% can't be multi-threaded
+                if (loadSceneAsync.progress >= 0.9f)
+                {
+                    if(unloadSceneAsync != null)
+                    {
+                        yield return new WaitUntil(() => unloadSceneAsync.isDone);
+                    }
+                    loadSceneAsync.allowSceneActivation = true;
+                }
 
-            if (waitUntilUnloadCompletedToLoadNext)
-            {
-                SceneManager.sceneLoaded += SceneLoaded;
-                SceneManager.LoadSceneAsync(sceneName, loadSceneMode);
+                yield return null;
             }
-        }
-
-        private void SceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
-        {
-            SceneManager.sceneLoaded -= SceneLoaded;
-            if (setLoadedSceneAsActiveScene)
-            {
-                SceneManager.SetActiveScene(scene);
-            }
-        }
+        }      
     }
 }

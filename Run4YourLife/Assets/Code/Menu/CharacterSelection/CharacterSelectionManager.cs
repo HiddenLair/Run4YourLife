@@ -16,10 +16,10 @@ namespace Run4YourLife.CharacterSelection
         private PlayerManager m_playerManager;
 
         [SerializeField]
-        private SceneLoader m_gameLoader;
+        private SceneLoadRequest m_gameLoadRequest;
 
         [SerializeField]
-        private SceneLoader m_mainMenuLoader;
+        private SceneLoadRequest m_mainMenuLoadRequest;
 
         void Awake()
         {
@@ -78,12 +78,12 @@ namespace Run4YourLife.CharacterSelection
 
         public void OnGameStart()
         {
-            m_gameLoader.LoadScene();
+            m_gameLoadRequest.Execute();
         }
 
         public void OnMainMenuStart()
         {
-            m_mainMenuLoader.LoadScene();
+            m_mainMenuLoadRequest.Execute();
         }
     }
 }

@@ -22,6 +22,9 @@ public class CameraBossFollow : MonoBehaviour {
     { 
         transform.position = CalculateCameraPosition();
         transform.LookAt(CalculateLookAtPosition());
+        transform.position = transform.position + GetTranslationalCameraShake();
+        transform.rotation = transform.rotation * GetRotationalCameraShake();
+        DecreaseTraumaLinear();
     }
 
     private Vector3 GetTranslationalCameraShake()

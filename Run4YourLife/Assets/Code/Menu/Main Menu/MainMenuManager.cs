@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+using Run4YourLife.SceneManagement;
+
 namespace Run4YourLife.MainMenu
 {
     public class MainMenuManager : MonoBehaviour
     {
+        [SerializeField]
+        private SceneLoadRequest m_characterSelectionLoadRequest;
+
         public void OnPlayButtonPressed()
         {
-            Scene mainMenuScene = gameObject.scene;
-            SceneManager.UnloadSceneAsync(mainMenuScene);
+            m_characterSelectionLoadRequest.Execute();
         }
 
         public void OnOptionsButtonPressed()

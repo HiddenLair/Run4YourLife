@@ -28,14 +28,15 @@ namespace Run4YourLife.Player
         private float bulletTimer;
         private float meleTimer;
 
-        private GameObject lastBulletShoot;
         private BossControlScheme bossControlScheme;
+        private Animator anim;
 
         private void Awake()
         {
             bossControlScheme = GetComponent<BossControlScheme>();
             bulletTimer = reload;
             meleTimer = meleReload;
+            anim = GetComponent<Animator>();
         }
 
         private void Start()
@@ -73,6 +74,7 @@ namespace Run4YourLife.Player
             {
                 if (bulletTimer >= reload)
                 {
+                    anim.SetTrigger("Shoot");
                     Shoot(bullet);
                     bulletTimer = 0;
                 }         

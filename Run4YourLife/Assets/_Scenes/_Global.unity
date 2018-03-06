@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 420573257}
   - component: {fileID: 420573258}
   - component: {fileID: 420573255}
+  - component: {fileID: 420573259}
   m_Layer: 0
   m_Name: GlobalManager
   m_TagString: Untagged
@@ -182,9 +183,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a08ab14bc7dc03449cf117ec037024b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: CharacterSelection
-  loadSceneMode: 1
-  loadEvent: 2
-  setLoadedSceneAsActiveScene: 1
-  unloadActiveScene: 0
-  waitUntilUnloadCompletedToLoadNext: 0
+--- !u!114 &420573259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 420573254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b54b125ffc0a6ec46b3f2eecc0eff95c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneLoadRequestData:
+    sceneName: MainMenu
+    loadSceneMode: 1
+    loadEvent: 1
+    setLoadedSceneAsActiveScene: 1
+    unloadScene: 0
+    unloadedSceneName: 

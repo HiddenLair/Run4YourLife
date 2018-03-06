@@ -31,10 +31,12 @@ public class Laser : MonoBehaviour {
     private float timerChangeBetweenY = 0;
 
     BossControlScheme bossControlScheme;
+    private Animator anim;
 
     private void Awake()
     {
         bossControlScheme = GetComponent<BossControlScheme>();
+        anim = GetComponent<Animator>();
         setIndex = (int)phase % sets.Length;
     }
 
@@ -151,6 +153,7 @@ public class Laser : MonoBehaviour {
     {
         if (bossControlScheme.skill1.Started())
         {
+            anim.SetTrigger("Casting");
             if (sets[setIndex] == Type.SKILL)
             {
                 Vector3 temp = laser.position;
@@ -167,6 +170,7 @@ public class Laser : MonoBehaviour {
 
         if (bossControlScheme.skill2.Started())
         {
+            anim.SetTrigger("Casting");
             if (sets[setIndex] == Type.SKILL)
             {
                 Vector3 temp = laser.position;
@@ -182,6 +186,7 @@ public class Laser : MonoBehaviour {
         }
         if (bossControlScheme.skill3.Started())
         {
+            anim.SetTrigger("Casting");
             if (sets[setIndex] == Type.SKILL)
             {
                 Vector3 temp = laser.position;
@@ -197,6 +202,7 @@ public class Laser : MonoBehaviour {
         }
         if (bossControlScheme.skill4.Started())
         {
+            anim.SetTrigger("Casting");
             if (sets[setIndex] == Type.SKILL)
             {
                 Vector3 temp = laser.position;

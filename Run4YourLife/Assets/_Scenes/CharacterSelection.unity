@@ -170,6 +170,53 @@ Transform:
   m_PrefabParentObject: {fileID: 4745700278705608, guid: 9e0b5bbcc85d553469b8d4ca1e199003,
     type: 2}
   m_PrefabInternal: {fileID: 129860515}
+--- !u!1 &306127980
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 306127982}
+  - component: {fileID: 306127981}
+  m_Layer: 0
+  m_Name: GameLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &306127981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 306127980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b54b125ffc0a6ec46b3f2eecc0eff95c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneLoadRequestData:
+    sceneName: GameInstantiateTest
+    loadSceneMode: 1
+    loadEvent: 0
+    setLoadedSceneAsActiveScene: 1
+    unloadScene: 1
+    unloadedSceneName: CharacterSelection
+--- !u!4 &306127982
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 306127980}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1019550588}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &453664714
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,6 +571,53 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 573850430}
   m_Script: {fileID: 11500000, guid: b730eb98a97e96841b80cae426377761, type: 3}
+--- !u!1 &686402502
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 686402504}
+  - component: {fileID: 686402503}
+  m_Layer: 0
+  m_Name: MainMenuLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &686402503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 686402502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b54b125ffc0a6ec46b3f2eecc0eff95c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneLoadRequestData:
+    sceneName: MainMenu
+    loadSceneMode: 1
+    loadEvent: 0
+    setLoadedSceneAsActiveScene: 1
+    unloadScene: 1
+    unloadedSceneName: CharacterSelection
+--- !u!4 &686402504
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 686402502}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1019550588}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &723555562
 GameObject:
   m_ObjectHideFlags: 0
@@ -870,8 +964,6 @@ GameObject:
   - component: {fileID: 1019550587}
   - component: {fileID: 1019550586}
   - component: {fileID: 1019550589}
-  - component: {fileID: 1019550591}
-  - component: {fileID: 1019550590}
   m_Layer: 0
   m_Name: CharacterSelectionManager
   m_TagString: Untagged
@@ -906,8 +998,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b355f4f687fcaba4691a16df37115250, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_gameLoader: {fileID: 1019550591}
-  m_mainMenuLoader: {fileID: 1019550590}
+  m_gameLoadRequest: {fileID: 306127981}
+  m_mainMenuLoadRequest: {fileID: 686402503}
 --- !u!4 &1019550588
 Transform:
   m_ObjectHideFlags: 0
@@ -917,7 +1009,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 306127982}
+  - {fileID: 686402504}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -937,40 +1031,6 @@ MonoBehaviour:
   - {fileID: 129860516}
   - {fileID: 573850431}
   - {fileID: 519213314}
---- !u!114 &1019550590
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1019550585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a08ab14bc7dc03449cf117ec037024b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneName: MainMenu
-  loadSceneMode: 1
-  loadEvent: 0
-  setLoadedSceneAsActiveScene: 1
-  unloadActiveScene: 1
-  waitUntilUnloadCompletedToLoadNext: 1
---- !u!114 &1019550591
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1019550585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a08ab14bc7dc03449cf117ec037024b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneName: Jungle
-  loadSceneMode: 1
-  loadEvent: 0
-  setLoadedSceneAsActiveScene: 1
-  unloadActiveScene: 1
-  waitUntilUnloadCompletedToLoadNext: 1
 --- !u!1 &1198080457
 GameObject:
   m_ObjectHideFlags: 0
