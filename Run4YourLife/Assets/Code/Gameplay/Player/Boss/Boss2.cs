@@ -13,6 +13,7 @@ namespace Run4YourLife.Player
         public GameObject bullet;
         public float rotationSpeed;
         public float bulletSpeed;
+        public AnimationClip animShoot;
         public Transform shootMarker;
         public Transform bulletStartingPoint;
         public float reload;
@@ -27,12 +28,19 @@ namespace Run4YourLife.Player
 
         private float bulletTimer;
         private float meleTimer;
+        private const float shootAnimTimeVariation = 0.2f;
+
+        //Head rotation limits
+        private const float leftHeadRotation = 35;
+        private const float rightHeadRotation = -35;
 
         private BossControlScheme bossControlScheme;
         private Animator anim;
+        private Laser trapSetter;
 
         private void Awake()
         {
+            trapSetter = GetComponent<Laser>();
             bossControlScheme = GetComponent<BossControlScheme>();
             bulletTimer = reload;
             meleTimer = meleReload;
@@ -47,9 +55,14 @@ namespace Run4YourLife.Player
         void Update()
         {
 
-            ShootVerification();
-
-            MeleVerification();
+            if (trapSetter.isReadyForAction)
+            {
+                ShootVerification();
+            }
+            if (trapSetter.isReadyForAction)
+            {
+                MeleVerification();
+            }
 
         }
 
@@ -58,15 +71,27 @@ namespace Run4YourLife.Player
             float xInput = bossControlScheme.moveLaserHorizontal.Value();
             if (Mathf.Abs(xInput) > 0.2)
             {
-                if (xInput < 0)
-                {
-                    Quaternion temp = shootMarker.rotation * Quaternion.Euler(0, rotationSpeed, 0);
-                    shootMarker.rotation = temp;
-                }
-                else
-                {
-                    Quaternion temp = shootMarker.rotation * Quaternion.Euler(0, -rotationSpeed, 0);
-                    shootMarker.rotation = temp;
+                if (leftHeadRotation >= shootMarker.localEulerAngles.x || 360 + rightHeadRotation <= shootMarker.localEulerAngles.x) {
+                    if (xInput < 0)
+                    {
+                        Quaternion initRotation = shootMarker.rotation;
+                        Quaternion temp = initRotation * Quaternion.Euler(0, rotationSpeed, 0);
+                        shootMarker.rotation = temp;
+                        if(shootMarker.localEulerAngles.x > leftHeadRotation && shootMarker.localEulerAngles.x < 360 + rightHeadRotation)
+                        {
+                            shootMarker.rotation = initRotation;
+                        }
+                    }
+                    else
+                    {
+                        Quaternion initRotation = shootMarker.rotation;
+                        Quaternion temp = initRotation * Quaternion.Euler(0, -rotationSpeed, 0);
+                        shootMarker.rotation = temp;
+                        if (shootMarker.localEulerAngles.x < 360 + rightHeadRotation && shootMarker.localEulerAngles.x > leftHeadRotation)
+                        {
+                            shootMarker.rotation = initRotation;
+                        }
+                    }
                 }
             }
 
@@ -75,11 +100,17 @@ namespace Run4YourLife.Player
                 if (bulletTimer >= reload)
                 {
                     anim.SetTrigger("Shoot");
-                    Shoot(bullet);
+                    trapSetter.isReadyForAction = false;
+                    Invoke("NormalShootDelayed", animShoot.length - shootAnimTimeVariation);
                     bulletTimer = 0;
                 }         
             }
             bulletTimer += Time.deltaTime;
+        }
+
+        void NormalShootDelayed()
+        {
+            Shoot(bullet);
         }
 
         void Shoot(GameObject bullet)

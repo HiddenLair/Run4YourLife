@@ -2683,8 +2683,8 @@ GameObject:
   - component: {fileID: 662047991}
   - component: {fileID: 662047990}
   - component: {fileID: 662047989}
-  - component: {fileID: 662047988}
   - component: {fileID: 662047987}
+  - component: {fileID: 662047988}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -2735,6 +2735,8 @@ MonoBehaviour:
   trapY: {fileID: 1244499117138228, guid: e7e661a6bdf2b734497407d3c1e47138, type: 2}
   skillB: {fileID: 1053646925812610, guid: 6891dd8f950938046ba0d059588dd1d4, type: 2}
   trapB: {fileID: 1053646925812610, guid: 6891dd8f950938046ba0d059588dd1d4, type: 2}
+  trapDelaySpawn: 1
+  isReadyForAction: 1
 --- !u!114 &662047988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2750,7 +2752,9 @@ MonoBehaviour:
   bullet2: {fileID: 1214334319900842, guid: e49eed30291e49844809c8393cf7819c, type: 2}
   rotationSpeed: 1
   bulletSpeed: 2
-  timeToChargedShoot: 2
+  animShoot: {fileID: 7400008, guid: 269ba7a10d2b32e40b15460e98338e66, type: 3}
+  animChargedShoot: {fileID: 7400010, guid: 269ba7a10d2b32e40b15460e98338e66, type: 3}
+  timeToStartChargedShoot: 0.25
   shootMarker: {fileID: 1886636844}
   bulletStartingPoint: {fileID: 678789824}
   reload: 0.5
@@ -2871,7 +2875,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 678789823}
   m_LocalRotation: {x: -0.008439817, y: 0.001466163, z: -0.000000119209275, w: -0.99996334}
-  m_LocalPosition: {x: 0.475, y: 0.226, z: 0.067}
+  m_LocalPosition: {x: 0.475, y: 0.226, z: 0}
   m_LocalScale: {x: 0.3584222, y: 0.14336887, z: 0.3584223}
   m_Children: []
   m_Father: {fileID: 1886636844}
@@ -7346,14 +7350,14 @@ Transform:
   m_PrefabParentObject: {fileID: 400004, guid: 269ba7a10d2b32e40b15460e98338e66, type: 3}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1886636843}
-  m_LocalRotation: {x: 0.28696612, y: 0.9579377, z: 0.00067464705, w: -0.0023031188}
+  m_LocalRotation: {x: -0.300208, y: -0.9538707, z: -0.0006435252, w: 0.0023158868}
   m_LocalPosition: {x: 0.03756714, y: -0.18732202, z: 0.0332222}
   m_LocalScale: {x: 0.9999998, y: 1.0000002, z: 1}
   m_Children:
   - {fileID: 678789824}
   m_Father: {fileID: 876908088}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.15, y: -179.76901, z: 34.94}
 --- !u!23 &1886636845
 MeshRenderer:
   m_ObjectHideFlags: 0
