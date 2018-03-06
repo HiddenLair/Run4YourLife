@@ -75,7 +75,7 @@ namespace Run4YourLife.Player
                     if (xInput < 0)
                     {
                         Quaternion initRotation = shootMarker.rotation;
-                        Quaternion temp = initRotation * Quaternion.Euler(0, rotationSpeed, 0);
+                        Quaternion temp = initRotation * Quaternion.Euler(0, rotationSpeed * Time.deltaTime, 0);
                         shootMarker.rotation = temp;
                         if(shootMarker.localEulerAngles.x > leftHeadRotation && shootMarker.localEulerAngles.x < 360 + rightHeadRotation)
                         {
@@ -85,7 +85,7 @@ namespace Run4YourLife.Player
                     else
                     {
                         Quaternion initRotation = shootMarker.rotation;
-                        Quaternion temp = initRotation * Quaternion.Euler(0, -rotationSpeed, 0);
+                        Quaternion temp = initRotation * Quaternion.Euler(0, -rotationSpeed * Time.deltaTime, 0);
                         shootMarker.rotation = temp;
                         if (shootMarker.localEulerAngles.x < 360 + rightHeadRotation && shootMarker.localEulerAngles.x > leftHeadRotation)
                         {
@@ -116,7 +116,7 @@ namespace Run4YourLife.Player
         void Shoot(GameObject bullet)
         {
             GameObject lastBulletShoot = Instantiate(bullet, bulletStartingPoint.position, bullet.transform.rotation * shootMarker.rotation);
-            lastBulletShoot.GetComponent<Rigidbody>().velocity = lastBulletShoot.transform.right * bulletSpeed;
+            lastBulletShoot.GetComponent<Rigidbody>().velocity = lastBulletShoot.transform.right * bulletSpeed*Time.deltaTime;
         }
 
         void MeleVerification()
@@ -146,7 +146,7 @@ namespace Run4YourLife.Player
         void MeleAtack(Vector3 pos,Quaternion rotation)
         {
             GameObject meleInst = Instantiate(mele, pos, rotation);
-            meleInst.GetComponent<Rigidbody>().velocity = meleInst.transform.right * meleSpeed;
+            meleInst.GetComponent<Rigidbody>().velocity = meleInst.transform.right * meleSpeed *Time.deltaTime;
         }
     }
 }

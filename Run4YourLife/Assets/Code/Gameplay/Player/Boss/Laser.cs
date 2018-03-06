@@ -82,13 +82,13 @@ public class Laser : MonoBehaviour {
             if (xInput > 0)
             {
                 Vector3 temp = t.position;
-                temp.x = temp.x + xSpeed;
+                temp.x = temp.x + xSpeed * Time.deltaTime;
                 t.position = temp;
             }
             else
             {
                 Vector3 temp = t.position;
-                temp.x = temp.x - xSpeed;
+                temp.x = temp.x - xSpeed * Time.deltaTime;
                 t.position = temp;
             }
         }

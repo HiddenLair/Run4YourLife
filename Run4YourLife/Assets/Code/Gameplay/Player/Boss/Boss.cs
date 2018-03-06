@@ -87,7 +87,7 @@ namespace Run4YourLife.Player
                     if (yInput < 0)
                     {
                         Quaternion initRotation = shootMarker.rotation;
-                        Quaternion temp = initRotation * Quaternion.Euler(0, 0, rotationSpeed);
+                        Quaternion temp = initRotation * Quaternion.Euler(0, 0, rotationSpeed*Time.deltaTime);
                         shootMarker.rotation = temp;
                         if (shootMarker.localEulerAngles.z > topHeadRotation && shootMarker.localEulerAngles.z < 360 + bottomHeadRotation)
                         {
@@ -97,7 +97,7 @@ namespace Run4YourLife.Player
                     else
                     {
                         Quaternion initRotation = shootMarker.rotation;
-                        Quaternion temp = initRotation * Quaternion.Euler(0, 0, -rotationSpeed);
+                        Quaternion temp = initRotation * Quaternion.Euler(0, 0, -rotationSpeed * Time.deltaTime);
                         shootMarker.rotation = temp;
                         if (shootMarker.localEulerAngles.z < 360 + bottomHeadRotation && shootMarker.localEulerAngles.z > topHeadRotation)
                         {
@@ -171,7 +171,7 @@ namespace Run4YourLife.Player
         void Shoot(GameObject bullet)
         {
             lastBulletShoot = Instantiate(bullet, bulletStartingPoint.position, bullet.GetComponent<Transform>().rotation * shootMarker.rotation);
-            lastBulletShoot.GetComponent<Rigidbody>().velocity = lastBulletShoot.GetComponent<Transform>().right * bulletSpeed;
+            lastBulletShoot.GetComponent<Rigidbody>().velocity = lastBulletShoot.GetComponent<Transform>().right * bulletSpeed * Time.deltaTime;
             if (lastBulletShoot.GetComponent<ChargedBullet>())
             {
                 lastBulletShoot.GetComponent<ChargedBullet>().SetCallback(this);
