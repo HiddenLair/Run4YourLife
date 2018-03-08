@@ -97,7 +97,7 @@ namespace Run4YourLife.Player
                 if (meleTimer >= meleReload)
                 {
                     GameObject tempMele = Instantiate(mele, meleStartingPoint.position, Quaternion.identity);
-                    tempMele.GetComponent<Rigidbody>().velocity = new Vector3(0,-meleSpeed,0);
+                    tempMele.GetComponent<Rigidbody>().velocity = new Vector3(0,-meleSpeed * Time.deltaTime,0);
                     meleTimer = 0.0f;
                 }
             }

@@ -20,6 +20,7 @@ public class Laser : MonoBehaviour {
     public GameObject trapY;
     public GameObject skillB;
     public GameObject trapB;
+    public float trapDelaySpawn;
 
     public enum Phase {Phase1,Phase2,Phase3 };
     private enum Type { TRAP,SKILL};
@@ -30,15 +31,21 @@ public class Laser : MonoBehaviour {
     private float lastYPos = 0;
     private float timerChangeBetweenY = 0;
 
+    [HideInInspector]
+    public bool isReadyForAction = true; //needed also for boss scripts
     BossControlScheme bossControlScheme;
+    private Animator anim;
 
     private void Awake()
     {
         bossControlScheme = GetComponent<BossControlScheme>();
+        anim = GetComponent<Animator>();
         setIndex = (int)phase % sets.Length;
     }
 
     void Update () {
+
+        isReadyForAction = anim.GetCurrentAnimatorStateInfo(0).IsName("move");
 
         MoveX(laser);
         MoveX(laserOff);
@@ -46,7 +53,7 @@ public class Laser : MonoBehaviour {
         MoveY();
 
         //We need to re-evaluate cause it may change inside MoveY
-        if (laser.gameObject.activeInHierarchy)
+        if (laser.gameObject.activeInHierarchy && isReadyForAction)
         {
            SetTraps();
         }
@@ -75,13 +82,13 @@ public class Laser : MonoBehaviour {
             if (xInput > 0)
             {
                 Vector3 temp = t.position;
-                temp.x = temp.x + xSpeed;
+                temp.x = temp.x + xSpeed * Time.deltaTime;
                 t.position = temp;
             }
             else
             {
                 Vector3 temp = t.position;
-                temp.x = temp.x - xSpeed;
+                temp.x = temp.x - xSpeed * Time.deltaTime;
                 t.position = temp;
             }
         }
@@ -151,65 +158,58 @@ public class Laser : MonoBehaviour {
     {
         if (bossControlScheme.skill1.Started())
         {
-            if (sets[setIndex] == Type.SKILL)
-            {
-                Vector3 temp = laser.position;
-                temp.y = temp.y + (skillA.GetComponent<Renderer>().bounds.size.y / 2);
-                Instantiate(skillA, temp, skillA.GetComponent<Transform>().rotation);
-            }
-            else if (sets[setIndex] == Type.TRAP)
-            {
-                Vector3 temp = laser.position;
-                temp.y = temp.y + (trapA.GetComponent<Renderer>().bounds.size.y / 2);
-                Instantiate(trapA, temp, trapA.GetComponent<Transform>().rotation);
-            }
+            SetElement(trapA,skillA);
         }
 
         if (bossControlScheme.skill2.Started())
         {
-            if (sets[setIndex] == Type.SKILL)
-            {
-                Vector3 temp = laser.position;
-                temp.y = temp.y + (skillX.GetComponent<Renderer>().bounds.size.y / 2);
-                Instantiate(skillX, temp, skillX.GetComponent<Transform>().rotation);
-            }
-            else if (sets[setIndex] == Type.TRAP)
-            {
-                Vector3 temp = laser.position;
-                temp.y = temp.y + (trapX.GetComponent<Renderer>().bounds.size.y / 2);
-                Instantiate(trapX, temp, trapX.GetComponent<Transform>().rotation);
-            }
+            SetElement(trapX, skillX);
         }
         if (bossControlScheme.skill3.Started())
         {
-            if (sets[setIndex] == Type.SKILL)
-            {
-                Vector3 temp = laser.position;
-                temp.y = temp.y + (skillY.GetComponent<Renderer>().bounds.size.y / 2);
-                Instantiate(skillY, temp, skillY.GetComponent<Transform>().rotation);
-            }
-            else if (sets[setIndex] == Type.TRAP)
-            {
-                Vector3 temp = laser.position;
-                temp.y = temp.y + (trapY.GetComponent<Renderer>().bounds.size.y / 2);
-                Instantiate(trapY, temp, trapY.GetComponent<Transform>().rotation);
-            }
+            SetElement(trapY, skillY);
         }
         if (bossControlScheme.skill4.Started())
         {
-            if (sets[setIndex] == Type.SKILL)
-            {
-                Vector3 temp = laser.position;
-                temp.y = temp.y + (skillB.GetComponent<Renderer>().bounds.size.y / 2);
-                Instantiate(skillB, temp, skillB.GetComponent<Transform>().rotation);
-            }
-            else if (sets[setIndex] == Type.TRAP)
-            {
-                Vector3 temp = laser.position;
-                temp.y = temp.y + (trapB.GetComponent<Renderer>().bounds.size.y / 2);
-                Instantiate(trapB, temp, trapB.GetComponent<Transform>().rotation);
-            }
+            SetElement(trapB, skillB);
         }
+    }
+
+    void SetElement(GameObject trap, GameObject skill)
+    {
+        anim.SetTrigger("Casting");
+        isReadyForAction = false;
+        if (sets[setIndex] == Type.SKILL)
+        {
+            Vector3 temp = laser.position;
+            temp.y = temp.y + (skill.GetComponent<Renderer>().bounds.size.y / 2);
+            Instantiate(skill, temp, skill.GetComponent<Transform>().rotation);
+        }
+        else if (sets[setIndex] == Type.TRAP)
+        {
+            Vector3 temp = laser.position;
+            temp.y = temp.y + (trap.GetComponent<Renderer>().bounds.size.y / 2);
+            GameObject g = Instantiate(trap, temp, trap.GetComponent<Transform>().rotation);
+            g.GetComponent<Collider>().enabled = false;
+            Color actualC = g.GetComponent<Renderer>().material.color;
+            actualC.a = 0;
+            g.GetComponent<Renderer>().material.color = actualC;
+            StartCoroutine(SpawnElementDelayed(g, trapDelaySpawn));
+        }
+    }
+
+    IEnumerator SpawnElementDelayed(GameObject g, float time)
+    {
+        float fps = 1 / Time.deltaTime;
+        float alphaPerFrame = 1 / (time * fps);
+        Color temp = g.GetComponent<Renderer>().material.color;
+        while (temp.a < 1)
+        {
+            temp.a += alphaPerFrame;
+            g.GetComponent<Renderer>().material.color = temp;
+            yield return 0;//Wait 1 frame
+        }
+        g.GetComponent<Collider>().enabled = true;
     }
 
     RaycastHit[] GetZone()
