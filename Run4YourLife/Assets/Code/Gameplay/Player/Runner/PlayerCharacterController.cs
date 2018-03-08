@@ -40,6 +40,7 @@ namespace Run4YourLife.Player
         private Stats stats;
         private PlayerControlScheme playerControlScheme;
         private Animator anim;
+        private Animation actualAnimation;
 
         #endregion
 
@@ -73,13 +74,28 @@ namespace Run4YourLife.Player
             Gravity();
 
             anim.SetBool("ground", characterController.isGrounded);
-
-            if (characterController.isGrounded && playerControlScheme.jump.Started())
+         
+            if (!stats.root)
             {
-                Jump();
-            }
+                if (characterController.isGrounded && playerControlScheme.jump.Started())
+                {
+                    Jump();
+                }
 
-            Move();   
+                Move();
+            }
+            else
+            {
+                if(playerControlScheme.interact.Started())
+                {
+                    stats.rootHardness -= 1;
+                }
+
+                if (stats.rootHardness == 0)
+                {
+                    stats.root = false;
+                }
+            }
         }
 
         private void Gravity()
@@ -199,7 +215,11 @@ namespace Run4YourLife.Player
 
         public void Root(int rootHardness)
         {
-            Debug.Log("ROOT");
+            anim.SetTrigger("root");
+            anim.SetFloat("xSpeed", 0.0f);
+
+            stats.root = true;
+            stats.rootHardness = rootHardness;
         }
 
         public void Impulse(Vector3 force)
