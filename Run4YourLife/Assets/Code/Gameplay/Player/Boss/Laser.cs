@@ -21,6 +21,7 @@ public class Laser : MonoBehaviour {
     public GameObject skillB;
     public GameObject trapB;
     public float trapDelaySpawn;
+    public float globalTrapCD = 1.5f;
 
     public enum Phase {Phase1,Phase2,Phase3 };
     private enum Type { TRAP,SKILL};
@@ -29,7 +30,8 @@ public class Laser : MonoBehaviour {
 
     private int yPosIndex = 0;
     private float lastYPos = 0;
-    private float timerChangeBetweenY = 0;
+    private float timerChangeBetweenY = 0.0f;
+    private float globalTrapCDTimer = 0.0f;
 
     [HideInInspector]
     public bool isReadyForAction = true; //needed also for boss scripts
@@ -43,8 +45,10 @@ public class Laser : MonoBehaviour {
         setIndex = (int)phase % sets.Length;
     }
 
-    void Update () {
+    void Update ()
+    {
 
+        globalTrapCDTimer += Time.deltaTime;
         isReadyForAction = anim.GetCurrentAnimatorStateInfo(0).IsName("move");
 
         MoveX(laser);
@@ -55,7 +59,7 @@ public class Laser : MonoBehaviour {
         //We need to re-evaluate cause it may change inside MoveY
         if (laser.gameObject.activeInHierarchy && isReadyForAction)
         {
-           SetTraps();
+            SetTraps();
         }
 
         timerChangeBetweenY += Time.deltaTime;
@@ -156,27 +160,31 @@ public class Laser : MonoBehaviour {
     }
     void SetTraps()
     {
-        if (bossControlScheme.skill1.Started())
+        if (globalTrapCDTimer > globalTrapCD)
         {
-            SetElement(trapA,skillA);
-        }
-
-        if (bossControlScheme.skill2.Started())
-        {
-            SetElement(trapX, skillX);
-        }
-        if (bossControlScheme.skill3.Started())
-        {
-            SetElement(trapY, skillY);
-        }
-        if (bossControlScheme.skill4.Started())
-        {
-            SetElement(trapB, skillB);
+            if (bossControlScheme.skill1.Started())
+            {
+                SetElement(trapA, skillA);
+            }
+            else if (bossControlScheme.skill2.Started())
+            {               
+                SetElement(trapX, skillX);
+            }
+            else if (bossControlScheme.skill3.Started())
+            {
+                SetElement(trapY, skillY);
+            }
+            else if (bossControlScheme.skill4.Started())
+            {
+                SetElement(trapB, skillB);
+            }
         }
     }
 
     void SetElement(GameObject trap, GameObject skill)
     {
+        globalTrapCDTimer = 0.0f;
+
         anim.SetTrigger("Casting");
         isReadyForAction = false;
         if (sets[setIndex] == Type.SKILL)

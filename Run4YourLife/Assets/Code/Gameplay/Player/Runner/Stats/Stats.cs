@@ -37,10 +37,19 @@ public class Stats : MonoBehaviour
 
     #endregion
 
+    #region Public Variable
+
+    public bool root;
+
+    public int rootHardness;
+
+    #endregion
+
     void Start()
     {
         initialStats.Add(StatType.SPEED, speed);
         initialStats.Add(StatType.JUMP_HEIGHT, jumpHeight);
+        rootHardness = 0;
 
         Clear();
     }

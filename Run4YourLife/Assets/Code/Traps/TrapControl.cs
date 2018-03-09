@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public enum TrapType { EXPLOSION, PUSH, ROOT };
+public enum TrapType { EXPLOSION, PUSH, ROOT, DEBUFF };
 
 public class TrapControl : MonoBehaviour
 {
@@ -18,6 +18,7 @@ public class TrapControl : MonoBehaviour
     public LayerMask blockingElement;
     public TrapType trapType;
     public int rootHardness = 5;
+    public StatModifier statModifier;
     #endregion
 
     private void OnTriggerEnter(Collider collider)
@@ -50,14 +51,13 @@ public class TrapControl : MonoBehaviour
                 break;
 
             case TrapType.ROOT:
-                foreach (Collider c in collisions)
-                {
-                    if (!Physics.Linecast(transform.position, c.gameObject.GetComponent<Collider>().bounds.center, blockingElement))
-                    {
-                        ExecuteEvents.Execute<IEventMessageTarget>(c.gameObject, null, (x, y) => x.Root(rootHardness));
-                        toDelete = true;
-                    }
-                }
+                ExecuteEvents.Execute<IEventMessageTarget>(collider.gameObject, null, (x, y) => x.Root(rootHardness));
+                toDelete = true;
+                break;
+
+            case TrapType.DEBUFF:
+                ExecuteEvents.Execute<IEventMessageTarget>(collider.gameObject, null, (x, y) => x.Debuff(statModifier));
+                toDelete = true;
                 break;
         }
 

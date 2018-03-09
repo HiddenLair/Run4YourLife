@@ -2725,7 +2725,7 @@ MonoBehaviour:
   laser: {fileID: 229651644}
   laserOff: {fileID: 1424684206}
   timeBetweenY: 0.5
-  xSpeed: 0.1
+  xSpeed: 10
   phase: 0
   skillA: {fileID: 1674844452342998, guid: 824cd44351d62dd4898f4369812cf9dd, type: 2}
   trapA: {fileID: 1674844452342998, guid: 824cd44351d62dd4898f4369812cf9dd, type: 2}
@@ -2733,9 +2733,10 @@ MonoBehaviour:
   trapX: {fileID: 1053646925812610, guid: 6891dd8f950938046ba0d059588dd1d4, type: 2}
   skillY: {fileID: 1244499117138228, guid: e7e661a6bdf2b734497407d3c1e47138, type: 2}
   trapY: {fileID: 1244499117138228, guid: e7e661a6bdf2b734497407d3c1e47138, type: 2}
-  skillB: {fileID: 1053646925812610, guid: 6891dd8f950938046ba0d059588dd1d4, type: 2}
-  trapB: {fileID: 1053646925812610, guid: 6891dd8f950938046ba0d059588dd1d4, type: 2}
+  skillB: {fileID: 1397588157857540, guid: 63d71b658400a024b9a9b989a4975592, type: 2}
+  trapB: {fileID: 1397588157857540, guid: 63d71b658400a024b9a9b989a4975592, type: 2}
   trapDelaySpawn: 1
+  globalTrapCD: 1.5
   isReadyForAction: 1
 --- !u!114 &662047988
 MonoBehaviour:
@@ -2750,8 +2751,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet1: {fileID: 1291411062935820, guid: e8ac79f5b65bc4b47979ed4ca39d2027, type: 2}
   bullet2: {fileID: 1214334319900842, guid: e49eed30291e49844809c8393cf7819c, type: 2}
-  rotationSpeed: 1
-  bulletSpeed: 2
+  rotationSpeed: 50
+  bulletSpeed: 800
   animShoot: {fileID: 7400008, guid: 269ba7a10d2b32e40b15460e98338e66, type: 3}
   animChargedShoot: {fileID: 7400010, guid: 269ba7a10d2b32e40b15460e98338e66, type: 3}
   timeToStartChargedShoot: 0.25
@@ -2805,7 +2806,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c76f12a23755a4ea52364e80a3a62a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.01
+  speed: 0.02
 --- !u!95 &662047993
 Animator:
   serializedVersion: 3
