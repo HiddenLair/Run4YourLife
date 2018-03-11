@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.EventSystems;
+
+using Run4YourLife.UI;
+
 using Run4YourLife.Input;
 
 public class Laser : MonoBehaviour {
@@ -47,11 +51,12 @@ public class Laser : MonoBehaviour {
     private float trapXCD_Timer = 0.0f;
     #endregion
 
-
     [HideInInspector]
     public bool isReadyForAction = true; //needed also for boss scripts
     BossControlScheme bossControlScheme;
     private Animator anim;
+
+    private GameObject uiManager;
 
     private void Awake()
     {
@@ -62,16 +67,13 @@ public class Laser : MonoBehaviour {
         trapBCD_Timer = trapBCD;
         trapXCD_Timer = trapXCD;
         trapYCD_Timer = trapYCD;
+
+        uiManager = FindObjectOfType<UIManager>().gameObject;
     }
 
     void Update ()
     {
         //Add deltaTime to CD Timers
-        // globalTrapCD_Timer += Time.deltaTime;
-        // trapACD_Timer += Time.deltaTime;
-        // trapBCD_Timer += Time.deltaTime;
-        // trapXCD_Timer += Time.deltaTime;
-        // trapYCD_Timer += Time.deltaTime;
 
         globalTrapCD_Timer = Mathf.Min(globalTrapCD_Timer + Time.deltaTime, globalTrapCD);
 
@@ -93,8 +95,6 @@ public class Laser : MonoBehaviour {
             SetTraps();
         }
 
-        // timerChangeBetweenY += Time.deltaTime;
-
         timerChangeBetweenY = Mathf.Min(timerChangeBetweenY + Time.deltaTime, timeBetweenY);
 
         if (phase == Phase.Phase3)
@@ -110,75 +110,6 @@ public class Laser : MonoBehaviour {
             }
         }
     }
-
-    #region CanDoAction & Times
-
-    public bool CanDoAction()
-    {
-        return anim.GetCurrentAnimatorStateInfo(0).IsName("move");
-    }
-
-    public bool CanTrapA()
-    {
-        return CanDoAction() && globalTrapCD_Timer >= globalTrapCD && trapACD_Timer >= trapACD;
-    }
-
-    public bool CanTrapB()
-    {
-        return CanDoAction() && globalTrapCD_Timer >= globalTrapCD && trapBCD_Timer >= trapBCD;
-    }
-
-    public bool CanTrapX()
-    {
-        return CanDoAction() && globalTrapCD_Timer >= globalTrapCD && trapXCD_Timer >= trapXCD;
-    }
-
-    public bool CanTrapY()
-    {
-        return CanDoAction() && globalTrapCD_Timer >= globalTrapCD && trapYCD_Timer >= trapYCD;
-    }
-
-    public float GetTrapARemainingTime()
-    {
-        return trapACD - trapACD_Timer;
-    }
-
-    public float GetTrapBRemainingTime()
-    {
-        return trapBCD - trapBCD_Timer;
-    }
-
-    public float GetTrapXRemainingTime()
-    {
-        return trapXCD - trapXCD_Timer;
-    }
-
-    public float GetTrapYRemainingTime()
-    {
-        return trapYCD - trapYCD_Timer;
-    }
-
-    public float GetTrapARemainingTimePercent()
-    {
-        return GetTrapARemainingTime() / trapACD;
-    }
-
-    public float GetTrapBRemainingTimePercent()
-    {
-        return GetTrapBRemainingTime() / trapBCD;
-    }
-
-    public float GetTrapXRemainingTimePercent()
-    {
-        return GetTrapXRemainingTime() / trapXCD;
-    }
-
-    public float GetTrapYRemainingTimePercent()
-    {
-        return GetTrapYRemainingTime() / trapYCD;
-    }
-
-    #endregion
 
     void MoveX(Transform t)
     {
@@ -269,21 +200,29 @@ public class Laser : MonoBehaviour {
             {
                 trapACD_Timer = 0.0f;
                 SetElement(trapA, skillA);
+
+                ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.TRAP_A, trapACD));
             }
             else if (bossControlScheme.skill2.Started() && (trapXCD_Timer >= trapXCD))
             {
                 trapXCD_Timer = 0.0f;
                 SetElement(trapX, skillX);
+
+                ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.TRAP_X, trapXCD));
             }
             else if (bossControlScheme.skill3.Started() && (trapYCD_Timer >= trapYCD))
             {
                 trapYCD_Timer = 0.0f;
                 SetElement(trapY, skillY);
+
+                ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.TRAP_Y, trapYCD));
             }
             else if (bossControlScheme.skill4.Started() && (trapBCD_Timer >= trapBCD))
             {
                 trapBCD_Timer = 0.0f;
                 SetElement(trapB, skillB);
+
+                ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.TRAP_B, trapBCD));
             }
         }
     }

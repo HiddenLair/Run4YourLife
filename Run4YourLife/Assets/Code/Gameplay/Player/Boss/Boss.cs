@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Run4YourLife.Input;
+using UnityEngine.EventSystems;
+
+using Run4YourLife.UI;
 
 namespace Run4YourLife.Player
 {
@@ -48,6 +51,8 @@ namespace Run4YourLife.Player
         private Animator anim;
         private Laser trapSetter;
 
+        private GameObject uiManager;
+
         private void Awake()
         {
             trapSetter = GetComponent<Laser>();
@@ -56,6 +61,8 @@ namespace Run4YourLife.Player
             meleTimer = meleReload;
             anim = GetComponent<Animator>();
             timeToChargedShoot = animChargedShoot.length -chargedShootAnimTimeVariation;//Substract a little of time, in order to fit more the times
+
+            uiManager = FindObjectOfType<UIManager>().gameObject;
         }
 
         private void Start()
@@ -78,42 +85,6 @@ namespace Run4YourLife.Player
             {
                 MeleVerification();
             }
-        }
-
-        public bool CanDoAction()
-        {
-            return anim.GetCurrentAnimatorStateInfo(0).IsName("move");
-        }
-
-        public bool CanMele()
-        {
-            return CanDoAction();
-        }
-
-        public float GetMeleRemainingTime()
-        {
-            return meleReload - meleTimer;
-        }
-
-        public float GetMeleRemainingTimePercent()
-        {
-            return GetMeleRemainingTime() / meleReload;
-        }
-
-        public bool CanShoot()
-        {
-            return CanDoAction() || startingChargedShoot;
-            // return trapSetter.isReadyForAction || startingChargedShoot;
-        }
-
-        public float GetShootRemainingTime()
-        {
-            return reload - bulletTimer;
-        }
-
-        public float GetShootRemainingTimePercent()
-        {
-            return GetShootRemainingTime() / reload;
         }
 
         void ShootVerification()
@@ -156,7 +127,7 @@ namespace Run4YourLife.Player
                         if(internalShootTimer >= timeToStartChargedShoot && !startingChargedShoot)
                         {
                             anim.SetTrigger("ChargedShoot");
-                            trapSetter.isReadyForAction = false;
+                            // trapSetter.isReadyForAction = false;
                             startingChargedShoot = true;
                         }
                         if (internalShootTimer >= timeToChargedShoot)
@@ -165,6 +136,8 @@ namespace Run4YourLife.Player
                             Shoot(bullet2);
                             shootStillAlive = true;
                             internalShootTimer = 0;
+
+                            ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.SHOOT, reload));
                         }
                     }
                 }
@@ -187,9 +160,11 @@ namespace Run4YourLife.Player
                 if (internalShootTimer > 0 && internalShootTimer < timeToStartChargedShoot && !explosionShootPressed)
                 {
                     anim.SetTrigger("Shoot");
-                    trapSetter.isReadyForAction = false;
+                    // trapSetter.isReadyForAction = false;
                     Invoke("NormalShootDelayed", animShoot.length-shootAnimTimeVariation);
                     bulletTimer = 0;
+
+                    ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.SHOOT, reload));
                 }
                 else if(internalShootTimer > 0)
                 {
@@ -199,8 +174,6 @@ namespace Run4YourLife.Player
                 startingChargedShoot = false;
                 internalShootTimer = 0;
             }
-            // bulletTimer += Time.deltaTime;
-            // bulletTimer = Mathf.Min(bulletTimer, reload);
         }
 
         void NormalShootDelayed()
@@ -230,20 +203,22 @@ namespace Run4YourLife.Player
                 if (meleTimer >= meleReload && !meleBeingPressed)
                 {
                     anim.SetTrigger("Mele");
-                    trapSetter.isReadyForAction = false;
+                    // trapSetter.isReadyForAction = false;
                     var meleInst = Instantiate(mele, meleZone.position, mele.GetComponent<Transform>().rotation);
                     meleInst.transform.SetParent(transform);
                     Destroy(meleInst, 1.0f);
                     meleTimer = 0.0f;
                     meleBeingPressed = true;
+
+                    ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.MELE, meleReload));
+
+                    // ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnEnableActions(false));
                 }
             }
             else
             {
                 meleBeingPressed = false;
             }
-            // meleTimer += Time.deltaTime;
-            // meleTimer = Mathf.Min(meleTimer, meleReload);
         }
 
         public void SetShootStillAlive(bool value)
