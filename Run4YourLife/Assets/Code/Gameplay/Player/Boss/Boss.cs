@@ -64,6 +64,9 @@ namespace Run4YourLife.Player
 
         void Update()
         {
+            bulletTimer = Mathf.Min(bulletTimer + Time.deltaTime, reload);
+
+            meleTimer = Mathf.Min(meleTimer + Time.deltaTime, meleReload);
 
             if (trapSetter.isReadyForAction || startingChargedShoot)
             {
@@ -74,7 +77,42 @@ namespace Run4YourLife.Player
             {
                 MeleVerification();
             }
+        }
 
+        public bool CanDoAction()
+        {
+            return anim.GetCurrentAnimatorStateInfo(0).IsName("move");
+        }
+
+        public bool CanMele()
+        {
+            return CanDoAction();
+        }
+
+        public float GetMeleRemainingTime()
+        {
+            return meleReload - meleTimer;
+        }
+
+        public float GetMeleRemainingTimePercent()
+        {
+            return GetMeleRemainingTime() / meleReload;
+        }
+
+        public bool CanShoot()
+        {
+            return CanDoAction() || startingChargedShoot;
+            // return trapSetter.isReadyForAction || startingChargedShoot;
+        }
+
+        public float GetShootRemainingTime()
+        {
+            return reload - bulletTimer;
+        }
+
+        public float GetShootRemainingTimePercent()
+        {
+            return GetShootRemainingTime() / reload;
         }
 
         void ShootVerification()
@@ -160,7 +198,8 @@ namespace Run4YourLife.Player
                 startingChargedShoot = false;
                 internalShootTimer = 0;
             }
-            bulletTimer += Time.deltaTime;
+            // bulletTimer += Time.deltaTime;
+            // bulletTimer = Mathf.Min(bulletTimer, reload);
         }
 
         void NormalShootDelayed()
@@ -197,7 +236,8 @@ namespace Run4YourLife.Player
                     meleTimer = 0.0f;
                 }
             }
-            meleTimer += Time.deltaTime;
+            // meleTimer += Time.deltaTime;
+            // meleTimer = Mathf.Min(meleTimer, meleReload);
         }
 
         public void SetShootStillAlive(bool value)
