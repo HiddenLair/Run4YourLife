@@ -760,7 +760,7 @@ MonoBehaviour:
   laserOff: {fileID: 1943172815}
   timeBetweenY: 0.5
   xSpeed: 0.1
-  phase: 0
+  phase: 2
   skillA: {fileID: 1674844452342998, guid: 824cd44351d62dd4898f4369812cf9dd, type: 2}
   trapA: {fileID: 1674844452342998, guid: 824cd44351d62dd4898f4369812cf9dd, type: 2}
   skillX: {fileID: 1053646925812610, guid: 6891dd8f950938046ba0d059588dd1d4, type: 2}
@@ -769,6 +769,13 @@ MonoBehaviour:
   trapY: {fileID: 1244499117138228, guid: e7e661a6bdf2b734497407d3c1e47138, type: 2}
   skillB: {fileID: 1053646925812610, guid: 6891dd8f950938046ba0d059588dd1d4, type: 2}
   trapB: {fileID: 1053646925812610, guid: 6891dd8f950938046ba0d059588dd1d4, type: 2}
+  trapDelaySpawn: 0
+  globalTrapCD: 1.5
+  trapACD: 5
+  trapBCD: 5
+  trapYCD: 5
+  trapXCD: 5
+  isReadyForAction: 1
 --- !u!114 &301883473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1434,8 +1441,6 @@ GameObject:
   - component: {fileID: 599450746}
   - component: {fileID: 599450748}
   - component: {fileID: 599450747}
-  - component: {fileID: 599450750}
-  - component: {fileID: 599450749}
   m_Layer: 16
   m_Name: Shoot
   m_TagString: Shoot
@@ -5051,29 +5056,6 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!114 &599450749
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 599450745}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92da25443a33a384798fa6c0a70cfb43, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!65 &599450750
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 599450745}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 13.18, y: 1.5, z: 1}
-  m_Center: {x: 6.6, y: 0.1, z: 0}
 --- !u!1 &619632594
 GameObject:
   m_ObjectHideFlags: 0

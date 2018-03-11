@@ -14,6 +14,7 @@ namespace Run4YourLife.Player
         public float laserDuration;
         public float rotationSpeed;
         public Transform shootMarker;
+        public Transform bulletStartingPoint;
         public float reload;
 
         //Mele
@@ -80,7 +81,17 @@ namespace Run4YourLife.Player
 
         void Shoot()
         {
+            RaycastHit[] targetLocation;
+
             laser.SetActive(true);
+            float distance = 50.0f;
+            float thickness = laser.GetComponent<ParticleSystem>().shape.boxThickness.y; //<-- Desired thickness here.
+            LayerMask layers = LayerMask.GetMask("Player") | LayerMask.GetMask("Trap");
+            targetLocation = Physics.SphereCastAll(bulletStartingPoint.position,thickness,bulletStartingPoint.right,distance,layers);
+            foreach(RaycastHit r in targetLocation)
+            {
+                Destroy(r.collider.gameObject);
+            }
             StartCoroutine(DesactivateDelayed(laser,laserDuration));
         }
 
