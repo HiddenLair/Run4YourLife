@@ -4,11 +4,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 using Run4YourLife.Player;
+using System;
 
 namespace Run4YourLife.GameManagement
 {
     public class GameManager : MonoBehaviour
     {
+        #region PlayerSpawning
+
         [SerializeField]
         private GameObject blueRunnerPrefab;
 
@@ -29,6 +32,10 @@ namespace Run4YourLife.GameManagement
 
         [SerializeField]
         private Transform spawnLocationBoss;
+
+        #endregion
+
+        #region Initialization
 
         private void Awake()
         {
@@ -126,5 +133,38 @@ namespace Run4YourLife.GameManagement
 
             return instance; 
         }
+
+        #endregion
+
+        #region Phase1
+
+        public void OnEnteredPhase1()
+        {
+
+        }
+
+        #endregion
+
+        #region Phase2
+
+        public GameObject phase2BossPrefab;
+        public Transform phase2BossSpawnTransform;
+
+        public GameObject phase1to2Bridge;
+
+        public void OnEnteredPhase2()
+        {
+            StartCoroutine(StartPhase2());
+        }
+
+        private IEnumerator StartPhase2()
+        {
+            Instantiate(phase2BossPrefab, phase2BossSpawnTransform.position, phase2BossSpawnTransform.rotation);
+
+            yield return new WaitForSeconds(2);
+            Destroy(phase1to2Bridge);
+        }
+
+        #endregion
     }
 }
