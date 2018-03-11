@@ -19,7 +19,10 @@ public class CameraBossFollow : MonoBehaviour {
     public float maxTranslationalScreenShakeOffset;
 
     private void LateUpdate()
-    { 
+    {
+        if (boss == null)
+            return;
+
         transform.position = CalculateCameraPosition();
         transform.LookAt(CalculateLookAtPosition());
         transform.position = transform.position + GetTranslationalCameraShake();

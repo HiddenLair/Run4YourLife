@@ -52,6 +52,8 @@ namespace Run4YourLife.Player
 
         private bool facingRight = true;
 
+        private float burnedHorizontal = 1.0f;
+
         private float idleTimer = 0.0f;
 
         #endregion
@@ -111,6 +113,25 @@ namespace Run4YourLife.Player
         private void Move()
         {
             float horizontal = playerControlScheme.move.Value();
+
+            if(stats.burned)
+            {
+                if(horizontal > 0.0f)
+                {
+                    horizontal = 1.0f;
+                    burnedHorizontal = horizontal;
+                }
+                else if(horizontal < 0.0f)
+                {
+                    horizontal = -1.0f;
+                    burnedHorizontal = horizontal;
+                }
+                else
+                {
+                    horizontal = burnedHorizontal;
+                }
+            }
+
             Vector3 move = transform.forward * horizontal * stats.Get(StatType.SPEED) * Time.deltaTime;
 
             Vector3 speed = move + m_velocity * Time.deltaTime;
@@ -230,6 +251,11 @@ namespace Run4YourLife.Player
         public void Debuff(StatModifier statmodifier)
         {
             stats.AddModifier(statmodifier);
+        }
+
+        public void Burned()
+        {
+            stats.burned = true;
         }
     }
 }
