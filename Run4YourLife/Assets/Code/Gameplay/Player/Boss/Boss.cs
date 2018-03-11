@@ -29,6 +29,7 @@ namespace Run4YourLife.Player
 
         private float bulletTimer;
         private float meleTimer;
+        private bool meleBeingPressed = false;
         private float timeToChargedShoot;
         private const float chargedShootAnimTimeVariation = 0.4f;
         private const float shootAnimTimeVariation = 0.2f;
@@ -226,7 +227,7 @@ namespace Run4YourLife.Player
         {
             if (bossControlScheme.melee.Value() > 0.2)
             {
-                if (meleTimer >= meleReload)
+                if (meleTimer >= meleReload && !meleBeingPressed)
                 {
                     anim.SetTrigger("Mele");
                     trapSetter.isReadyForAction = false;
@@ -234,7 +235,12 @@ namespace Run4YourLife.Player
                     meleInst.transform.SetParent(transform);
                     Destroy(meleInst, 1.0f);
                     meleTimer = 0.0f;
+                    meleBeingPressed = true;
                 }
+            }
+            else
+            {
+                meleBeingPressed = false;
             }
             // meleTimer += Time.deltaTime;
             // meleTimer = Mathf.Min(meleTimer, meleReload);

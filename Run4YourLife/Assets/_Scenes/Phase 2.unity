@@ -4470,14 +4470,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 1291411062935820, guid: e8ac79f5b65bc4b47979ed4ca39d2027, type: 2}
-  rotationSpeed: 1
-  bulletSpeed: 5
+  rotationSpeed: 100
+  bulletSpeed: 500
   animShoot: {fileID: 7400008, guid: 269ba7a10d2b32e40b15460e98338e66, type: 3}
   shootMarker: {fileID: 990539351}
   bulletStartingPoint: {fileID: 767316124}
   reload: 0.5
   mele: {fileID: 1853949273198062, guid: 16c1b679a9999164eb9bd95018765767, type: 2}
-  meleSpeed: 5
+  meleSpeed: 500
   meleReload: 2
   trapIndicator: {fileID: 1526507888}
 --- !u!114 &1391630568
@@ -4494,7 +4494,7 @@ MonoBehaviour:
   laser: {fileID: 1526507888}
   laserOff: {fileID: 1042606895}
   timeBetweenY: 0.5
-  xSpeed: 0.1
+  xSpeed: 10
   phase: 1
   skillA: {fileID: 1674844452342998, guid: 824cd44351d62dd4898f4369812cf9dd, type: 2}
   trapA: {fileID: 1674844452342998, guid: 824cd44351d62dd4898f4369812cf9dd, type: 2}
@@ -4505,6 +4505,11 @@ MonoBehaviour:
   skillB: {fileID: 1053646925812610, guid: 6891dd8f950938046ba0d059588dd1d4, type: 2}
   trapB: {fileID: 1053646925812610, guid: 6891dd8f950938046ba0d059588dd1d4, type: 2}
   trapDelaySpawn: 0.5
+  globalTrapCD: 1.5
+  trapACD: 5
+  trapBCD: 5
+  trapYCD: 5
+  trapXCD: 5
   isReadyForAction: 1
 --- !u!114 &1391630569
 MonoBehaviour:

@@ -28,6 +28,7 @@ namespace Run4YourLife.Player
 
         private float bulletTimer;
         private float meleTimer;
+        private bool meleBeingPressed = false;
         private const float shootAnimTimeVariation = 0.2f;
 
         //Head rotation limits
@@ -55,10 +56,15 @@ namespace Run4YourLife.Player
         void Update()
         {
 
+            bulletTimer = Mathf.Min(bulletTimer + Time.deltaTime, reload);
+
+            meleTimer = Mathf.Min(meleTimer + Time.deltaTime, meleReload);
+
             if (trapSetter.isReadyForAction)
             {
                 ShootVerification();
             }
+
             if (trapSetter.isReadyForAction)
             {
                 MeleVerification();
@@ -105,7 +111,7 @@ namespace Run4YourLife.Player
                     bulletTimer = 0;
                 }         
             }
-            bulletTimer += Time.deltaTime;
+            //bulletTimer += Time.deltaTime;
         }
 
         void NormalShootDelayed()
@@ -123,7 +129,7 @@ namespace Run4YourLife.Player
         {
             if (bossControlScheme.melee.Value() > 0.2)
             {
-                if (meleTimer >= meleReload)
+                if (meleTimer >= meleReload && !meleBeingPressed)
                 {
                     Vector3 trapPos = trapIndicator.position;
                     Vector3 screenPos = Camera.main.WorldToScreenPoint(trapPos);
@@ -138,9 +144,14 @@ namespace Run4YourLife.Player
                         MeleAtack(trapPos,Quaternion.Euler(0,180,0));
                     }
                     meleTimer = 0.0f;
+                    meleBeingPressed = true;
                 }
             }
-            meleTimer += Time.deltaTime;
+            else
+            {
+                meleBeingPressed = false;
+            }
+            //meleTimer += Time.deltaTime;
         }
 
         void MeleAtack(Vector3 pos,Quaternion rotation)
