@@ -1,26 +1,60 @@
 ﻿using UnityEngine;
 
-using Run4YourLife.Player;
-
 namespace Run4YourLife.UI
 {
     public abstract class Updater : MonoBehaviour
     {
-        [SerializeField]
-        protected Boss boss = null;
+        private float time = 0.0f;
 
-        [SerializeField]
-        protected Laser laser = null;
+        private float currentTime = 0.0f;
 
-        protected CanDoActionDelegate canDoActionDelegate = null;
+        private bool disabled = false;
 
-        void Awake()
+        void Update()
         {
-            Configure();
+            if(time > 0.0f)
+            {
+                if((currentTime += Time.deltaTime) >= time)
+                {
+                    time = 0.0f;
+                    currentTime = 0.0f;
+                }
+                else
+                {
+                    float remainingTime = time - currentTime;
+                    float remainingTimePercent = remainingTime / time;
+
+                    OnCoolDown(remainingTime, remainingTimePercent);
+                }
+            }
+            else
+            {
+                if(disabled)
+                {
+                    OnDisabled();
+                }
+                else
+                {
+                    OnEnabled();
+                }
+            }
         }
 
-        protected abstract void Configure();
+        public void Use(float time)
+        {
+            this.time = time;
+            currentTime = 0.0f;
+        }
 
-        protected delegate bool CanDoActionDelegate();
+        public void Enable(bool enabled)
+        {
+            disabled = !enabled;
+        }
+
+        protected abstract void OnEnabled();
+
+        protected abstract void OnDisabled();
+
+        protected abstract void OnCoolDown(float remainingTime, float remainingTimePercent);
     }
 }

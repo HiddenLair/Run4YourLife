@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿/* using UnityEngine;
 using UnityEngine.UI;
 
 namespace Run4YourLife.UI
@@ -27,4 +27,4 @@ namespace Run4YourLife.UI
 
         protected delegate float GetRemainingTimePercentDelegate();
     }
-}
+} */

@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+﻿/* using UnityEngine;
 
 namespace Run4YourLife.UI
 {
-    public class TrapImageUpdater : ImageUpdater
+    public class TrapTextUpdater : TextUpdater
     {
         private enum ActionType
         {
@@ -18,21 +18,21 @@ namespace Run4YourLife.UI
             {
                 case ActionType.A:
                     canDoActionDelegate = laser.CanTrapA;
-                    getRemainingTimePercentDelegate = laser.GetTrapARemainingTimePercent;
+                    getRemainingTimeDelegate = laser.GetTrapARemainingTime;
                     break;
                 case ActionType.B:
                     canDoActionDelegate = laser.CanTrapB;
-                    getRemainingTimePercentDelegate = laser.GetTrapBRemainingTimePercent;
+                    getRemainingTimeDelegate = laser.GetTrapBRemainingTime;
                     break;
                 case ActionType.X:
                     canDoActionDelegate = laser.CanTrapX;
-                    getRemainingTimePercentDelegate = laser.GetTrapXRemainingTimePercent;
+                    getRemainingTimeDelegate = laser.GetTrapXRemainingTime;
                     break;
                 case ActionType.Y:
                     canDoActionDelegate = laser.CanTrapY;
-                    getRemainingTimePercentDelegate = laser.GetTrapYRemainingTimePercent;
+                    getRemainingTimeDelegate = laser.GetTrapYRemainingTime;
                     break;
             }
         }
     }
-}
+} */
