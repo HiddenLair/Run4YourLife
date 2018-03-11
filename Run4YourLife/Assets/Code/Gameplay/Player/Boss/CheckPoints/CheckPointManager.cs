@@ -11,7 +11,7 @@ public class CheckPointManager : MonoBehaviour {
     }
 
     [SerializeField]
-    private List<CheckPoint> list;
+    private Transform[] checkpoints;
     private Dictionary<int, InnerPos> idMap = new Dictionary<int, InnerPos>();
     static private int idSetter = 0;
 
@@ -66,20 +66,20 @@ public class CheckPointManager : MonoBehaviour {
         if (idMap.ContainsKey(id))
         {
             InnerPos inner = idMap[id];
-            if(inner.listOffset == list.Count-2 && inner.progressionOffset >= 1)
+            if(inner.listOffset == checkpoints.Length-2 && inner.progressionOffset >= 1)
             {
-                return list[inner.listOffset+1].transform.position; //We stand in the last point
+                return checkpoints[inner.listOffset+1].position; //We stand in the last point
             }
 
-            Vector3 point1 = list[inner.listOffset].transform.position;
-            Vector3 point2 = list[inner.listOffset+1].transform.position;
+            Vector3 point1 = checkpoints[inner.listOffset].position;
+            Vector3 point2 = checkpoints[inner.listOffset+1].position;
             float lerpSpeed = speed / Vector3.Distance(point1, point2);
             inner.progressionOffset += lerpSpeed;
-            if (inner.progressionOffset > 1 && inner.listOffset < list.Count-2)
+            if (inner.progressionOffset > 1 && inner.listOffset < checkpoints.Length-2)
             {
                 inner.listOffset++;
                 float percent = (inner.progressionOffset - 1)/lerpSpeed;
-                Vector3 point3 = list[inner.listOffset + 1].transform.position;
+                Vector3 point3 = checkpoints[inner.listOffset + 1].transform.position;
                 lerpSpeed = speed / Vector3.Distance(point2, point3);
                 inner.progressionOffset = lerpSpeed*percent;
             }

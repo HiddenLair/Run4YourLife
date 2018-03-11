@@ -11,7 +11,7 @@ namespace Run4YourLife.Player
         private List<PlayerDefinition> players = new List<PlayerDefinition>();
         private List<PlayerDefinition> playersToDelete = new List<PlayerDefinition>();
 
-        public UnityEvent OnPlayerChanged;
+        public UnityEvent OnPlayerChanged = new UnityEvent();
 
         void LateUpdate()
         {
@@ -71,11 +71,10 @@ namespace Run4YourLife.Player
             OnPlayerChanged.Invoke();
         }
 
-        public PlayerDefinition AddPlayer(PlayerDefinition playerDefinition)
+        public void AddPlayer(PlayerDefinition playerDefinition)
         {
             players.Add(playerDefinition);
             OnPlayerChanged.Invoke();
-            return playerDefinition;
         }
 
         public void RemovePlayer(PlayerDefinition player)
