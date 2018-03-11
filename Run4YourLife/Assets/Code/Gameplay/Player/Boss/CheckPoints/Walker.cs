@@ -7,18 +7,15 @@ public class Walker : MonoBehaviour {
 
     public float speed;
     private int id;
-    private Transform body;
-    private CheckPointManager circuit;
+    private CheckPointManager checkPointManager;
 
     void Start()
     {
-        body = gameObject.GetComponent<Transform>();
-        circuit = CheckPointManager.Instance();
-        id = circuit.Subscribe();
+        checkPointManager = FindObjectOfType<CheckPointManager>();
+        id = checkPointManager.Subscribe();
     }
 
-    // Update is called once per frame
     void Update () {
-        body.position = circuit.GetPosition(id,speed);
+        transform.position = checkPointManager.GetPosition(id,speed);
 	}
 }

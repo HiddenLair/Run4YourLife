@@ -99,6 +99,7 @@ namespace Run4YourLife.GameManagement
             if(playerDefinition.IsBoss)
             {
                 instance = Instantiate(bossPrefab, spawnLocationBoss.position, spawnLocationBoss.rotation);
+                Camera.main.GetComponent<CameraBossFollow>().boss = instance.transform; // TODO: Temporal camera attachment
             } 
             else
             {
