@@ -19,12 +19,6 @@ public class Stats : MonoBehaviour
     [SerializeField]
     private float jumpHeight;
 
-    [SerializeField]
-    private float TMP_currentSpeed_TMP;
-
-    [SerializeField]
-    private float TMP_currentJumpHeight_TMP;
-
     #endregion
 
     #region Private Variables
@@ -54,12 +48,6 @@ public class Stats : MonoBehaviour
         rootHardness = 0;
 
         Clear();
-    }
-
-    void Update()
-    {
-        TMP_currentSpeed_TMP = Get(StatType.SPEED);
-        TMP_currentJumpHeight_TMP = Get(StatType.JUMP_HEIGHT);
     }
 
     public float Get(StatType statType, bool initial = false)

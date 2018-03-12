@@ -33,8 +33,6 @@ public class StatModifier
 
     private Stats stats;
 
-    private float currentTime = 0.0f;
-
     #endregion
 
     public StatModifier(StatType statType, ModifierType modifierType, bool buff, float amount, float endTime)
