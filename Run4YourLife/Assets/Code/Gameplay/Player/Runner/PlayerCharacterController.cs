@@ -102,11 +102,17 @@ namespace Run4YourLife.Player
 
         private void Gravity()
         {
-            m_velocity.y += m_gravity * Time.deltaTime;
+            if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Push")) {
+                m_velocity.y += m_gravity * Time.deltaTime;
 
-            if (!m_isJumping && characterController.isGrounded)
+                if (!m_isJumping && characterController.isGrounded)
+                {
+                    m_velocity.y = m_gravity * Time.deltaTime;
+                }
+            }
+            else
             {
-                m_velocity.y = m_gravity * Time.deltaTime;
+                Debug.Log("No ENTRA");
             }
         }
 
@@ -178,6 +184,7 @@ namespace Run4YourLife.Player
 
             yield return StartCoroutine(WaitUntilApexOfJumpOrReleaseButton());
 
+            Debug.Log("Co_Rutina");
             m_isJumping = false;
 
             yield return StartCoroutine(FallFaster());
@@ -185,11 +192,9 @@ namespace Run4YourLife.Player
 
         private IEnumerator FallFaster()
         {
-            while (!characterController.isGrounded)
-            {
-                m_velocity.y += m_endOfJumpGravity * Time.deltaTime;
-                yield return null;
-            }
+            m_gravity += m_endOfJumpGravity;
+            yield return new WaitUntil(() => characterController.isGrounded);
+            m_gravity -= m_endOfJumpGravity;
         }
 
         private IEnumerator WaitUntilApexOfJumpOrReleaseButton()
@@ -245,7 +250,9 @@ namespace Run4YourLife.Player
 
         public void Impulse(Vector3 force)
         {
-            Debug.Log("IMPULSE");
+            anim.SetTrigger("push");
+            anim.SetFloat("pushForce", force.x);
+            m_velocity.y = 0;
         }
 
         public void Debuff(StatModifier statmodifier)
