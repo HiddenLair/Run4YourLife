@@ -8,5 +8,6 @@ public interface IEventMessageTarget : IEventSystemHandler
     void Root(int rootHardness);
     void Debuff(StatModifier statsModifier);
     void Burned(int burningTime);
-    void WindPush();
+    void ActivateWindPush();
+    void DeactivateWindPush();
 }

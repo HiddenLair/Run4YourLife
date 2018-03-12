@@ -115,23 +115,7 @@ namespace Run4YourLife.Player
         {
             float horizontal = playerControlScheme.move.Value();
 
-            if(stats.burned)
-            {
-                if(horizontal > 0.0f)
-                {
-                    horizontal = 1.0f;
-                    burnedHorizontal = horizontal;
-                }
-                else if(horizontal < 0.0f)
-                {
-                    horizontal = -1.0f;
-                    burnedHorizontal = horizontal;
-                }
-                else
-                {
-                    horizontal = burnedHorizontal;
-                }
-            }
+            horizontal = CheckStatModificators(horizontal);
 
             Vector3 move = transform.forward * horizontal * stats.Get(StatType.SPEED) * Time.deltaTime;
 
@@ -155,6 +139,36 @@ namespace Run4YourLife.Player
             }
 
             characterController.Move(move + m_velocity * Time.deltaTime);
+        }
+
+        private float CheckStatModificators(float controllerHorizontal)
+        {
+            float toReturn = controllerHorizontal;
+
+            if (stats.burned)
+            {
+                if (toReturn > 0.0f)
+                {
+                    toReturn = 1.0f;
+                    burnedHorizontal = toReturn;
+                }
+                else if (toReturn < 0.0f)
+                {
+                    toReturn = -1.0f;
+                    burnedHorizontal = toReturn;
+                }
+                else
+                {
+                    toReturn = burnedHorizontal;
+                }
+            }
+
+            if (stats.windPush)
+            {
+                toReturn -= 0.7f;
+            }
+
+            return toReturn;
         }
 
         private void Jump()
@@ -262,9 +276,14 @@ namespace Run4YourLife.Player
             }
         }
 
-        public void WindPush()
+        public void ActivateWindPush()
         {
+            stats.windPush = true;
+        }
 
+        public void DeactivateWindPush()
+        {
+            stats.windPush = false;
         }
 
         private IEnumerator BurnedCharacter(int value)

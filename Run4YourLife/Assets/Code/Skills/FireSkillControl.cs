@@ -11,7 +11,9 @@ public class FireSkillControl : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collider)
     {
-        if(collider.tag == "Player")
-        ExecuteEvents.Execute<IEventMessageTarget>(collider.gameObject, null, (x, y) => x.Burned(burningTime));     
+        if (collider.tag == "Player")
+        {
+            ExecuteEvents.Execute<IEventMessageTarget>(collider.gameObject, null, (x, y) => x.Burned(burningTime));
+        }
     }
 }

@@ -37,6 +37,8 @@ public class Stats : MonoBehaviour
 
     public bool burned;
 
+    public bool windPush;
+
     public int rootHardness;
 
     #endregion
