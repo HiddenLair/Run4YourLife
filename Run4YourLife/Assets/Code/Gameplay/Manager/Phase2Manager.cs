@@ -68,7 +68,9 @@ namespace Run4YourLife.GameManagement
         private IEnumerator StartPhase2()
         {
             m_phase2StartTrigger.SetActive(false);
-            Instantiate(m_bossPrefab, m_bossSpawn.position, m_bossSpawn.rotation);
+            GameObject boss = Instantiate(m_bossPrefab, m_bossSpawn.position, m_bossSpawn.rotation);
+            Camera.main.GetComponent<CameraBossFollow>().boss = boss.transform; // TODO: Temporal camera attachment
+
 
             yield return new WaitForSeconds(2);
             m_phase1to2Bridge.SetActive(false);
