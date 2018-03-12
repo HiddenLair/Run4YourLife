@@ -6520,6 +6520,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1595376865}
   - component: {fileID: 1595376864}
+  - component: {fileID: 1595376866}
+  - component: {fileID: 1595376867}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -6538,25 +6540,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d558957ad2708c49855d7dc4d59ad3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blueRunnerPrefab: {fileID: 1687235175787912, guid: f56fc955c6309bf4fb0e815e07968f6f,
-    type: 2}
-  redRunnerPrefab: {fileID: 1835481004429120, guid: 19568776e72829f458bab9d2a78da215,
-    type: 2}
-  greenRunnerPrefab: {fileID: 1719215593309362, guid: 617d296a621650247be4e7f6c0201eb3,
-    type: 2}
-  orangeRunnerPrefab: {fileID: 1835481004429120, guid: 19568776e72829f458bab9d2a78da215,
-    type: 2}
-  bossPrefab: {fileID: 1034222424642850, guid: b566f5c526f5ed042a45e74da4b918c0, type: 2}
-  runnerSpawn:
-  - {fileID: 1463413913}
-  - {fileID: 1818321679}
-  - {fileID: 883767465}
-  - {fileID: 180319627}
-  spawnLocationBoss: {fileID: 476894582}
-  phase2BossPrefab: {fileID: 1435242058213750, guid: 396f106b96270b84aa701a89e08f0080,
-    type: 2}
-  phase2BossSpawnTransform: {fileID: 458854381}
-  phase1to2Bridge: {fileID: 150233907}
 --- !u!4 &1595376865
 Transform:
   m_ObjectHideFlags: 0
@@ -6570,6 +6553,63 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1595376866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1595376863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89ca3426aa36d9f4dbd72030cedde20a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blueRunnerPrefab: {fileID: 1835481004429120, guid: 19568776e72829f458bab9d2a78da215,
+    type: 2}
+  redRunnerPrefab: {fileID: 1687235175787912, guid: f56fc955c6309bf4fb0e815e07968f6f,
+    type: 2}
+  greenRunnerPrefab: {fileID: 1719215593309362, guid: 617d296a621650247be4e7f6c0201eb3,
+    type: 2}
+  orangeRunnerPrefab: {fileID: 1687235175787912, guid: f56fc955c6309bf4fb0e815e07968f6f,
+    type: 2}
+  bossPrefab: {fileID: 1034222424642850, guid: b566f5c526f5ed042a45e74da4b918c0, type: 2}
+  runnerSpawn:
+  - {fileID: 1463413913}
+  - {fileID: 1818321679}
+  - {fileID: 883767465}
+  - {fileID: 180319627}
+  spawnLocationBoss: {fileID: 476894582}
+  m_phase1to2Bridge: {fileID: 150233907}
+  m_phase2StartTrigger: {fileID: 701746325}
+--- !u!114 &1595376867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1595376863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdc640f39079c8b4ca7ba7b29e0efda0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_debugRunnerSpawn:
+  - {fileID: 157892507}
+  - {fileID: 511623211}
+  - {fileID: 1374432263}
+  - {fileID: 1725745495}
+  m_bossSpawn: {fileID: 458854381}
+  m_bossPrefab: {fileID: 1435242058213750, guid: 396f106b96270b84aa701a89e08f0080,
+    type: 2}
+  m_phase1to2Bridge: {fileID: 150233907}
+  m_phase2StartTrigger: {fileID: 701746325}
+  m_debugBlueRunnerPrefab: {fileID: 1835481004429120, guid: 19568776e72829f458bab9d2a78da215,
+    type: 2}
+  m_debugRedRunnerPrefab: {fileID: 1687235175787912, guid: f56fc955c6309bf4fb0e815e07968f6f,
+    type: 2}
+  m_debugGreenRunnerPrefab: {fileID: 1719215593309362, guid: 617d296a621650247be4e7f6c0201eb3,
+    type: 2}
+  m_debugOrangeRunnerPrefab: {fileID: 1687235175787912, guid: f56fc955c6309bf4fb0e815e07968f6f,
+    type: 2}
 --- !u!1 &1604889981
 GameObject:
   m_ObjectHideFlags: 0
@@ -9090,7 +9130,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2070856907}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 124.15}
+  m_LocalPosition: {x: 0, y: 0, z: -0.56}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1463413913}
