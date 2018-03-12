@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33038138652243014}
   - component: {fileID: 136736314915172390}
   - component: {fileID: 23390492018021858}
-  - component: {fileID: 114405312961291970}
+  - component: {fileID: 114136394725893406}
   m_Layer: 11
   m_Name: DebuffTrap
   m_TagString: Trap
@@ -52,7 +52,6 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -68,7 +67,6 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -84,7 +82,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1397588157857540}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114405312961291970
+--- !u!114 &114136394725893406
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -92,20 +90,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1397588157857540}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bbc40d918e301c4ca449112d01fab9d, type: 3}
+  m_Script: {fileID: 11500000, guid: 60ce94287e6d5644e9d850e73390930c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AOERadius: 0.89
   activationParticles: {fileID: 1394625515734414, guid: f264e05d59f3182498f76aa564400582,
     type: 2}
-  trapListener:
-    serializedVersion: 2
-    m_Bits: 0
-  blockingElement:
-    serializedVersion: 2
-    m_Bits: 1024
-  trapType: 3
-  rootHardness: 5
   statModifier:
     statType: 0
     modifierType: 1
@@ -119,7 +108,7 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1397588157857540}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2

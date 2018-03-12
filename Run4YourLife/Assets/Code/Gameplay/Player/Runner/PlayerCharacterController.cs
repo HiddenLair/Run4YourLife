@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Run4YourLife.Input;
+using System;
 
 namespace Run4YourLife.Player
 {
@@ -253,9 +254,24 @@ namespace Run4YourLife.Player
             stats.AddModifier(statmodifier);
         }
 
-        public void Burned()
+        public void Burned(int burnedTime)
+        {
+            if (!stats.burned)
+            {
+                StartCoroutine(BurnedCharacter(burnedTime));
+            }
+        }
+
+        public void WindPush()
+        {
+
+        }
+
+        private IEnumerator BurnedCharacter(int value)
         {
             stats.burned = true;
+            yield return new WaitForSeconds(value);
+            stats.burned = false;
         }
     }
 }

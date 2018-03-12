@@ -4,16 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public enum SkillType { FIRE };
+public enum SkillType { FIRE, WIND };
 
 public class SkillControl : MonoBehaviour
 {
     #region Public variables
     public SkillType skilltype;
-    #endregion
-
-    #region Private variables
-    private float timer = 0.0f;
+    public int burningTime = 5;
     #endregion
 
     private void OnTriggerEnter(Collider collider)
@@ -21,7 +18,11 @@ public class SkillControl : MonoBehaviour
         switch(skilltype)
         {
             case SkillType.FIRE:
-                ExecuteEvents.Execute<IEventMessageTarget>(collider.gameObject, null, (x, y) => x.Burned());
+                ExecuteEvents.Execute<IEventMessageTarget>(collider.gameObject, null, (x, y) => x.Burned(burningTime));
+                break;
+
+            case SkillType.WIND:
+                ExecuteEvents.Execute<IEventMessageTarget>(collider.gameObject, null, (x, y) => x.WindPush());
                 break;
         }
     }
