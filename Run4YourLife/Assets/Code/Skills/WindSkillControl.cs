@@ -1,14 +1,29 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class WindSkillControl : MonoBehaviour {
 
-    private void OnTriggerStay(Collider collider)
+    #region Public Variables
+    public int timeToDie = 5;
+    #endregion
+
+    #region Private Variables
+    HashSet<GameObject> colliders = new HashSet<GameObject>();
+    #endregion
+
+    private void Awake()
+    {
+        Destroy(gameObject, timeToDie);
+    }
+
+    private void OnTriggerEnter(Collider collider)
     {
         if (collider.tag == "Player")
         {
+            colliders.Add(collider.gameObject);
             ExecuteEvents.Execute<IEventMessageTarget>(collider.gameObject, null, (x, y) => x.ActivateWindPush());
         }
     }
@@ -17,7 +32,16 @@ public class WindSkillControl : MonoBehaviour {
     {
         if (collider.tag == "Player")
         {
+            colliders.Remove(collider.gameObject);
             ExecuteEvents.Execute<IEventMessageTarget>(collider.gameObject, null, (x, y) => x.DeactivateWindPush());
+        }
+    }
+
+    private void OnDestroy()
+    {
+        foreach(GameObject gO in colliders)
+        {
+            ExecuteEvents.Execute<IEventMessageTarget>(gO, null, (x, y) => x.DeactivateWindPush());
         }
     }
 }
