@@ -28,9 +28,6 @@ namespace Run4YourLife.Player
         // private float m_jumpHeight;
 
         [SerializeField]
-        private float m_jumpOnTopOfAnotherPlayerHeight;
-
-        [SerializeField]
         public float timeToIdle = 5.0f;
 
         #endregion
@@ -229,16 +226,20 @@ namespace Run4YourLife.Player
             m_velocity += velocity;
         }
 
-        internal void OnPlayerHasBeenJumpedOnTopByAnotherPlayer()
+        internal void BounceOnMe()
         {
-            Debug.Log("Jumped on top");
+            anim.SetTrigger("bump");
         }
 
-        internal void OnPlayerHasJumpedOnTopOfAnotherPlayer()
+        internal void Bounce(float bounceForce)
         {
             //TODO: Stop current jump
-            m_velocity.y = HeightToVelocity(m_jumpOnTopOfAnotherPlayerHeight);
-            anim.SetTrigger("bump");
+            m_velocity.y = HeightToVelocity(bounceForce);
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            
         }
 
         private void Flip()
@@ -311,6 +312,11 @@ namespace Run4YourLife.Player
             stats.burned = true;
             yield return new WaitForSeconds(value);
             stats.burned = false;
+        }
+
+        public Vector3 GetVelocity()
+        {
+            return m_velocity;
         }
     }
 }

@@ -4,7 +4,6 @@ namespace Run4YourLife.Player
 {
     public class PlayerBottomTriggerJump : MonoBehaviour
     {
-
         private PlayerCharacterController characterController;
 
         private void Awake()
@@ -15,9 +14,10 @@ namespace Run4YourLife.Player
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.GetComponent<PlayerTopTriggerJump>())
+            if (characterController.GetVelocity().y < 0)
             {
-                characterController.OnPlayerHasJumpedOnTopOfAnotherPlayer();
+                characterController.Bounce(other.GetComponent<JumpOver>().GetBounceForce());
+                other.GetComponent<JumpOver>().JumpedOn();
             }
         }
     }

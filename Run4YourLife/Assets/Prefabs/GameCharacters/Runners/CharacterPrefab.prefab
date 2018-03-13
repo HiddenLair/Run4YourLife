@@ -245,9 +245,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4718166853848898}
-  - component: {fileID: 135114375678676532}
   - component: {fileID: 114538691397763578}
-  m_Layer: 8
+  - component: {fileID: 135529307988074332}
+  m_Layer: 9
   m_Name: BottomPlayerTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -308,8 +308,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4726796741481108}
   - component: {fileID: 135906001470850998}
-  - component: {fileID: 114722447351976130}
-  m_Layer: 8
+  - component: {fileID: 114885800663105030}
+  m_Layer: 9
   m_Name: TopPlayerTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1085,7 +1085,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1095223732133840}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 1.18, y: 0, z: -0}
+  m_LocalPosition: {x: 0.205, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4540691455470320}
@@ -1845,19 +1845,7 @@ MonoBehaviour:
   graphics: {fileID: 1329669962546220}
   m_gravity: -40
   m_endOfJumpGravity: -30
-  m_jumpOnTopOfAnotherPlayerHeight: 3
   timeToIdle: 5
---- !u!114 &114722447351976130
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1502835247784896}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 529d6db202e052146b636e1fe3f759e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114855254125299974
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1869,6 +1857,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cec698f25fa65f47a9e9032dfde8efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114885800663105030
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1502835247784896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 796661589eb16c34cafc228a3b528274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bounceOverMeForce: 3
 --- !u!114 &114970028009125270
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1880,7 +1880,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67d256071968d944793b20e43cfc5a0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!135 &135114375678676532
+--- !u!135 &135529307988074332
 SphereCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
