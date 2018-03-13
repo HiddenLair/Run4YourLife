@@ -50,6 +50,8 @@ namespace Run4YourLife.Player
 
         private Vector3 m_velocity;
 
+        private bool beingPushed = false;
+
         private bool facingRight = true;
 
         private float burnedHorizontal = 1.0f;
@@ -73,46 +75,43 @@ namespace Run4YourLife.Player
 
         void Update()
         {
-            Gravity();
-
-            anim.SetBool("ground", characterController.isGrounded);
-         
-            if (!stats.root)
+            if (!beingPushed)
             {
-                if (characterController.isGrounded && playerControlScheme.jump.Started())
-                {
-                    Jump();
-                }
+                Gravity();
 
-                Move();
-            }
-            else
-            {
-                if(playerControlScheme.interact.Started())
-                {
-                    stats.rootHardness -= 1;
-                }
+                anim.SetBool("ground", characterController.isGrounded);
 
-                if (stats.rootHardness == 0)
+                if (!stats.root)
                 {
-                    stats.root = false;
+                    if (characterController.isGrounded && playerControlScheme.jump.Started())
+                    {
+                        Jump();
+                    }
+
+                    Move();
+                }
+                else
+                {
+                    if (playerControlScheme.interact.Started())
+                    {
+                        stats.rootHardness -= 1;
+                    }
+
+                    if (stats.rootHardness == 0)
+                    {
+                        stats.root = false;
+                    }
                 }
             }
         }
 
         private void Gravity()
         {
-            if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Push")) {
-                m_velocity.y += m_gravity * Time.deltaTime;
+            m_velocity.y += m_gravity * Time.deltaTime;
 
-                if (!m_isJumping && characterController.isGrounded)
-                {
-                    m_velocity.y = m_gravity * Time.deltaTime;
-                }
-            }
-            else
+            if (!m_isJumping && characterController.isGrounded)
             {
-                Debug.Log("No ENTRA");
+                m_velocity.y = m_gravity * Time.deltaTime;
             }
         }
 
@@ -184,7 +183,6 @@ namespace Run4YourLife.Player
 
             yield return StartCoroutine(WaitUntilApexOfJumpOrReleaseButton());
 
-            Debug.Log("Co_Rutina");
             m_isJumping = false;
 
             yield return StartCoroutine(FallFaster());
@@ -252,7 +250,22 @@ namespace Run4YourLife.Player
         {
             anim.SetTrigger("push");
             anim.SetFloat("pushForce", force.x);
+            beingPushed = true;
             m_velocity.y = 0;
+            StartCoroutine(BeingPushed());
+        }
+
+        IEnumerator BeingPushed()
+        {
+            while(!anim.GetCurrentAnimatorStateInfo(0).IsName("Push"))
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            while (anim.GetCurrentAnimatorStateInfo(0).IsName("Push"))
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            beingPushed = false;
         }
 
         public void Debuff(StatModifier statmodifier)
