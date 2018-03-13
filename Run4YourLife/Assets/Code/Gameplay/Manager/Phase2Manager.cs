@@ -102,12 +102,12 @@ namespace Run4YourLife.GameManagement
         {
             m_phase1to2Bridge.SetActive(false);
             m_phase2StartTrigger.SetActive(false);
-            m_cameraTargetCentered.enabled = true;
 
 
             PlayerManager playerManager = FindObjectOfType<PlayerManager>();
             InstantiatePlayers(playerManager.GetPlayers());
-        }  
+            m_cameraTargetCentered.enabled = true;
+        }
 
         private void InstantiatePlayers(List<PlayerDefinition> playerDefinitions)
         {

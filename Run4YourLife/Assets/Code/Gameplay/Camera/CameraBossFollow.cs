@@ -23,8 +23,8 @@ public class CameraBossFollow : MonoBehaviour {
         if (boss == null)
             return;
 
-        //transform.position = Vector3.Lerp(transform.position, CalculateCameraPosition(),0.9f*Time.deltaTime);
-        transform.position = CalculateCameraPosition();
+        transform.position = Vector3.Lerp(transform.position, CalculateCameraPosition(),0.9f*Time.deltaTime);
+        //transform.position = CalculateCameraPosition();
         transform.LookAt(CalculateLookAtPosition());
         transform.position = transform.position + GetTranslationalCameraShake();
         transform.rotation = transform.rotation * GetRotationalCameraShake();

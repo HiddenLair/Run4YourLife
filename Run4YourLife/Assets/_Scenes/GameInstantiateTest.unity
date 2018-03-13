@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -7349,6 +7349,7 @@ GameObject:
   - component: {fileID: 1595376864}
   - component: {fileID: 1595376866}
   - component: {fileID: 1595376867}
+  - component: {fileID: 1595376868}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -7439,6 +7440,21 @@ MonoBehaviour:
     type: 2}
   m_debugOrangeRunnerPrefab: {fileID: 1687235175787912, guid: f56fc955c6309bf4fb0e815e07968f6f,
     type: 2}
+--- !u!54 &1595376868
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1595376863}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1604889981
 GameObject:
   m_ObjectHideFlags: 0
@@ -10435,7 +10451,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2070856907}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 110.7}
+  m_LocalPosition: {x: 0, y: 0, z: 113.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1463413913}
