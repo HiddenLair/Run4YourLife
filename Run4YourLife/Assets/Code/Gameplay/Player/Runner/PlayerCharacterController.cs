@@ -28,9 +28,6 @@ namespace Run4YourLife.Player
         // private float m_jumpHeight;
 
         [SerializeField]
-        private float m_jumpOnTopOfAnotherPlayerHeight;
-
-        [SerializeField]
         public float timeToIdle = 5.0f;
 
         #endregion
@@ -50,6 +47,8 @@ namespace Run4YourLife.Player
         private bool m_isJumping;
 
         private Vector3 m_velocity;
+
+        private bool beingPushed = false;
 
         private bool facingRight = true;
 
@@ -74,29 +73,32 @@ namespace Run4YourLife.Player
 
         void Update()
         {
-            Gravity();
-
-            anim.SetBool("ground", characterController.isGrounded);
-         
-            if (!stats.root)
+            if (!beingPushed)
             {
-                if (characterController.isGrounded && playerControlScheme.jump.Started())
-                {
-                    Jump();
-                }
+                Gravity();
 
-                Move();
-            }
-            else
-            {
-                if(playerControlScheme.interact.Started())
-                {
-                    stats.rootHardness -= 1;
-                }
+                anim.SetBool("ground", characterController.isGrounded);
 
-                if (stats.rootHardness == 0)
+                if (!stats.root)
                 {
-                    stats.root = false;
+                    if (characterController.isGrounded && playerControlScheme.jump.Started())
+                    {
+                        Jump();
+                    }
+
+                    Move();
+                }
+                else
+                {
+                    if (playerControlScheme.interact.Started())
+                    {
+                        stats.rootHardness -= 1;
+                    }
+
+                    if (stats.rootHardness == 0)
+                    {
+                        stats.root = false;
+                    }
                 }
             }
         }
@@ -200,11 +202,9 @@ namespace Run4YourLife.Player
 
         private IEnumerator FallFaster()
         {
-            while (!characterController.isGrounded)
-            {
-                m_velocity.y += m_endOfJumpGravity * Time.deltaTime;
-                yield return null;
-            }
+            m_gravity += m_endOfJumpGravity;
+            yield return new WaitUntil(() => characterController.isGrounded);
+            m_gravity -= m_endOfJumpGravity;
         }
 
         private IEnumerator WaitUntilApexOfJumpOrReleaseButton()
@@ -226,16 +226,20 @@ namespace Run4YourLife.Player
             m_velocity += velocity;
         }
 
-        internal void OnPlayerHasBeenJumpedOnTopByAnotherPlayer()
+        internal void BounceOnMe()
         {
-            Debug.Log("Jumped on top");
+            anim.SetTrigger("bump");
         }
 
-        internal void OnPlayerHasJumpedOnTopOfAnotherPlayer()
+        internal void Bounce(float bounceForce)
         {
             //TODO: Stop current jump
-            m_velocity.y = HeightToVelocity(m_jumpOnTopOfAnotherPlayerHeight);
-            anim.SetTrigger("bump");
+            m_velocity.y = HeightToVelocity(bounceForce);
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            
         }
 
         private void Flip()
@@ -260,7 +264,24 @@ namespace Run4YourLife.Player
 
         public void Impulse(Vector3 force)
         {
-            Debug.Log("IMPULSE");
+            anim.SetTrigger("push");
+            anim.SetFloat("pushForce", force.x);
+            beingPushed = true;
+            m_velocity.y = 0;
+            StartCoroutine(BeingPushed());
+        }
+
+        IEnumerator BeingPushed()
+        {
+            while(!anim.GetCurrentAnimatorStateInfo(0).IsName("Push"))
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            while (anim.GetCurrentAnimatorStateInfo(0).IsName("Push"))
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            beingPushed = false;
         }
 
         public void Debuff(StatModifier statmodifier)
@@ -291,6 +312,11 @@ namespace Run4YourLife.Player
             stats.burned = true;
             yield return new WaitForSeconds(value);
             stats.burned = false;
+        }
+
+        public Vector3 GetVelocity()
+        {
+            return m_velocity;
         }
     }
 }

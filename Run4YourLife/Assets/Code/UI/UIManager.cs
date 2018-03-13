@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 namespace Run4YourLife.UI
 {
+    #region Useful types for events
+
     public enum ActionType
     {
         MELE, SHOOT,
@@ -10,15 +12,22 @@ namespace Run4YourLife.UI
         SKILL_A, SKILL_B, SKILL_X, SKILL_Y
     }
 
-    public enum ActionGroupType
+    public enum SetType
     {
-        BASE,
-        TRAP,
-        SKILL
+        TRAPS, SKILLS
     }
+
+    public enum PhaseType
+    {
+        FIRST, SECOND, THIRD
+    }
+
+    #endregion
 
     public class UIManager : MonoBehaviour, IUIEvents
     {
+        #region Text updaters
+
         [SerializeField]
         private TextUpdater textUpdaterMele;
 
@@ -37,6 +46,10 @@ namespace Run4YourLife.UI
         [SerializeField]
         private TextUpdater textUpdaterTrapY;
 
+        #endregion
+
+        #region Image updaters
+
         [SerializeField]
         private ImageUpdater imageUpdaterMele;
 
@@ -54,6 +67,8 @@ namespace Run4YourLife.UI
 
         [SerializeField]
         private ImageUpdater imageUpdaterTrapY;
+
+        #endregion
 
         private List<TextUpdater> textUpdaters = new List<TextUpdater>();
 
@@ -80,69 +95,21 @@ namespace Run4YourLife.UI
         {
             textUpdaters[(int)actionType].Use(time);
             imageUpdaters[(int)actionType].Use(time);
-
-            /* switch(actionType)
-            {
-                case ActionType.MELE:
-                    textUpdaterMele.Use(time);
-                    imageUpdaterMele.Use(time);
-                    break;
-                case ActionType.SHOOT:
-                    textUpdaterShoot.Use(time);
-                    imageUpdaterShoot.Use(time);
-                    break;
-                case ActionType.TRAP_A:
-                    textUpdaterTrapA.Use(time);
-                    imageUpdaterTrapA.Use(time);
-                    break;
-                case ActionType.TRAP_B:
-                    textUpdaterTrapB.Use(time);
-                    imageUpdaterTrapB.Use(time);
-                    break;
-                case ActionType.TRAP_X:
-                    textUpdaterTrapX.Use(time);
-                    imageUpdaterTrapX.Use(time);
-                    break;
-                case ActionType.TRAP_Y:
-                    textUpdaterTrapY.Use(time);
-                    imageUpdaterTrapY.Use(time);
-                    break;
-            } */
         }
 
-        public void OnEnableActions(bool enabled)
+        public void OnSetSetted(SetType setType)
         {
-            foreach(TextUpdater textUpdater in textUpdaters)
-            {
-                textUpdater.Enable(enabled);
-            }
 
-            foreach(ImageUpdater imageUpdater in imageUpdaters)
-            {
-                imageUpdater.Enable(enabled);
-            }
+        }
 
-            /* switch(actionGroupType)
-            {
-                case ActionGroupType.BASE:
-                    textUpdaterMele.Disable();
-                    imageUpdaterMele.Disable();
-                    textUpdaterShoot.Disable();
-                    imageUpdaterShoot.Disable();
-                    break;
-                case ActionGroupType.TRAP:
-                    textUpdaterTrapA.Disable();
-                    imageUpdaterTrapA.Disable();
-                    textUpdaterTrapB.Disable();
-                    imageUpdaterTrapB.Disable();
-                    textUpdaterTrapX.Disable();
-                    imageUpdaterTrapX.Disable();
-                    textUpdaterTrapY.Disable();
-                    imageUpdaterTrapY.Disable();
-                    break;
-                case ActionGroupType.SKILL:
-                    break;
-            } */
+        public void OnPhaseSetted(PhaseType phaseType)
+        {
+
+        }
+
+        public void OnBossProgress(float percent)
+        {
+
         }
     }
 }

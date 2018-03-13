@@ -211,8 +211,6 @@ namespace Run4YourLife.Player
                     meleBeingPressed = true;
 
                     ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.MELE, meleReload));
-
-                    // ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnEnableActions(false));
                 }
             }
             else
