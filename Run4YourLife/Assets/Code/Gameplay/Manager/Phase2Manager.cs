@@ -25,6 +25,9 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private GameObject m_phase2StartTrigger;
 
+        [SerializeField]
+        private CameraTargetCentered m_cameraTargetCentered;
+
         #endregion
 
         #region Debug variables
@@ -58,6 +61,7 @@ namespace Run4YourLife.GameManagement
         {
             GameObject boss = FindObjectOfType<Boss2>().gameObject;
             Destroy(boss);
+            m_cameraTargetCentered.enabled = false;
         }
 
         public override void StartPhase()
@@ -69,8 +73,8 @@ namespace Run4YourLife.GameManagement
         {
             m_phase2StartTrigger.SetActive(false);
             GameObject boss = Instantiate(m_bossPrefab, m_bossSpawn.position, m_bossSpawn.rotation);
-            Camera.main.GetComponent<CameraBossFollow>().boss = boss.transform; // TODO: Temporal camera attachment
-
+            m_cameraTargetCentered.m_target = boss.transform; // TODO: Temporal camera attachment
+            m_cameraTargetCentered.enabled = true;
 
             yield return new WaitForSeconds(2);
             m_phase1to2Bridge.SetActive(false);
@@ -91,12 +95,15 @@ namespace Run4YourLife.GameManagement
             {
                 Destroy(player.gameObject);
             }
+            m_cameraTargetCentered.enabled = false;
         }
 
         public override void DebugStartPhase()
         {
             m_phase1to2Bridge.SetActive(false);
             m_phase2StartTrigger.SetActive(false);
+            m_cameraTargetCentered.enabled = true;
+
 
             PlayerManager playerManager = FindObjectOfType<PlayerManager>();
             InstantiatePlayers(playerManager.GetPlayers());
@@ -123,7 +130,7 @@ namespace Run4YourLife.GameManagement
             if (playerDefinition.IsBoss)
             {
                 instance = Instantiate(m_bossPrefab, m_bossSpawn.position, m_bossSpawn.rotation);
-                Camera.main.GetComponent<CameraBossFollow>().boss = instance.transform; // TODO: Temporal camera attachment
+                m_cameraTargetCentered.m_target = instance.transform; // TODO: Temporal camera attachment
             }
             else
             {

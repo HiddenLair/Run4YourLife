@@ -38,6 +38,9 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private GameObject m_phase2StartTrigger;
 
+        [SerializeField]
+        private CameraBossFollow m_cameraBossFollow;
+
         #endregion
 
         #region Initialization
@@ -58,16 +61,18 @@ namespace Run4YourLife.GameManagement
 
             InstantiatePlayers(playerManager.GetPlayers());
 
+            m_cameraBossFollow.enabled = true;
             m_phase1to2Bridge.SetActive(true);
             m_phase2StartTrigger.SetActive(true);
         }
 
         public override void EndPhase()
         {
-            Debug.Log("Boss should play exit animation");
+            //Boss should play exit animation
             GameObject boss = FindObjectOfType<Boss>().gameObject;
             Debug.Assert(boss != null);
             Destroy(boss);
+            m_cameraBossFollow.enabled = false;
         }
 
         private void InstantiatePlayers(List<PlayerDefinition> playerDefinitions)
@@ -91,7 +96,7 @@ namespace Run4YourLife.GameManagement
             if (playerDefinition.IsBoss)
             {
                 instance = Instantiate(bossPrefab, spawnLocationBoss.position, spawnLocationBoss.rotation);
-                Camera.main.GetComponent<CameraBossFollow>().boss = instance.transform; // TODO: Temporal camera attachment
+                m_cameraBossFollow.boss = instance.transform; // TODO: Temporal camera attachment
             }
             else
             {
@@ -134,6 +139,7 @@ namespace Run4YourLife.GameManagement
             {
                 Destroy(player.gameObject);
             }
+            m_cameraBossFollow.enabled = false;
         }
 
         public override void DebugStartPhase()
