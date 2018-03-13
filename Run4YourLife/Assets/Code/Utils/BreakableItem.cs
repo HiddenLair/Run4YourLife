@@ -15,7 +15,7 @@ public class BreakableItem : MonoBehaviour, IPropEvents {
         
         if(hitsToBreak <= 0)
         {
-            Destroy(gameObject);
+            Destroy(gameObject.transform.parent.gameObject);
         }
     }
 }

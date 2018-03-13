@@ -4,6 +4,7 @@ using UnityEngine;
 
 using Run4YourLife.Input;
 using System;
+using UnityEngine.EventSystems;
 
 namespace Run4YourLife.Player
 {
@@ -93,7 +94,6 @@ namespace Run4YourLife.Player
                     if (playerControlScheme.interact.Started())
                     {
                         stats.rootHardness -= 1;
-                        NotifyInteractables();
                     }
 
                     if (stats.rootHardness == 0)
@@ -104,9 +104,12 @@ namespace Run4YourLife.Player
             }
         }
 
-        private void NotifyInteractables()
+        private void OnTriggerStay(Collider collider)
         {
-            
+            if (collider.tag == "Interactable" && playerControlScheme.interact.Started())
+            {
+                ExecuteEvents.Execute<IPropEvents>(collider.gameObject, null, (x, y) => x.OnInteraction());
+            }
         }
 
         private void Gravity()
