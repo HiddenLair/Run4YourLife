@@ -8,7 +8,7 @@ using System;
 namespace Run4YourLife.Player
 {
     [RequireComponent(typeof(PlayerControlScheme))]
-    public class PlayerCharacterController : MonoBehaviour, IEventMessageTarget
+    public class PlayerCharacterController : MonoBehaviour, ICharacterEvents
     {
         #region InspectorVariables
 
@@ -93,6 +93,7 @@ namespace Run4YourLife.Player
                     if (playerControlScheme.interact.Started())
                     {
                         stats.rootHardness -= 1;
+                        NotifyInteractables();
                     }
 
                     if (stats.rootHardness == 0)
@@ -101,6 +102,11 @@ namespace Run4YourLife.Player
                     }
                 }
             }
+        }
+
+        private void NotifyInteractables()
+        {
+            
         }
 
         private void Gravity()

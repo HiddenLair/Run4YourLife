@@ -32,7 +32,7 @@ public class TrapControl : MonoBehaviour
                 {
                     if (!Physics.Linecast(transform.position, c.gameObject.GetComponent<Collider>().bounds.center, blockingElement))
                     {
-                        ExecuteEvents.Execute<IEventMessageTarget>(c.gameObject, null, (x, y) => x.Explosion());
+                        ExecuteEvents.Execute<ICharacterEvents>(c.gameObject, null, (x, y) => x.Explosion());
                         toDelete = true;
                     }
                 }
@@ -44,19 +44,19 @@ public class TrapControl : MonoBehaviour
                     if (!Physics.Linecast(transform.position, c.gameObject.GetComponent<Collider>().bounds.center, blockingElement))
                     {
                         Vector3 direction = c.gameObject.GetComponent<Collider>().bounds.center - transform.position;
-                        ExecuteEvents.Execute<IEventMessageTarget>(c.gameObject, null, (x, y) => x.Impulse(direction.normalized));
+                        ExecuteEvents.Execute<ICharacterEvents>(c.gameObject, null, (x, y) => x.Impulse(direction.normalized));
                         toDelete = true;
                     }
                 }
                 break;
 
             case TrapType.ROOT:
-                ExecuteEvents.Execute<IEventMessageTarget>(collider.gameObject, null, (x, y) => x.Root(rootHardness));
+                ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.Root(rootHardness));
                 toDelete = true;
                 break;
 
             case TrapType.DEBUFF:
-                ExecuteEvents.Execute<IEventMessageTarget>(collider.gameObject, null, (x, y) => x.Debuff(statModifier));
+                ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.Debuff(statModifier));
                 toDelete = true;
                 break;
         }

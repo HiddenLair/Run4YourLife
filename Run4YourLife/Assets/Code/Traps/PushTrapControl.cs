@@ -25,7 +25,7 @@ public class PushTrapControl : MonoBehaviour {
             if (!Physics.Linecast(transform.position, c.gameObject.GetComponent<Collider>().bounds.center, blockingElement))
             {
                 Vector3 direction = c.gameObject.GetComponent<Collider>().bounds.center - transform.position;
-                ExecuteEvents.Execute<IEventMessageTarget>(c.gameObject, null, (x, y) => x.Impulse(direction.normalized));
+                ExecuteEvents.Execute<ICharacterEvents>(c.gameObject, null, (x, y) => x.Impulse(direction.normalized));
                 toDelete = true;
             }
         }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public interface IEventMessageTarget : IEventSystemHandler
+public interface ICharacterEvents : IEventSystemHandler
 {
     void Explosion();
     void Impulse(Vector3 force);

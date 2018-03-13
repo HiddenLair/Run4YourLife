@@ -18,7 +18,7 @@ public class RootTrapControl : MonoBehaviour {
     {
         if (collider.tag == "Player")
         {
-            ExecuteEvents.Execute<IEventMessageTarget>(collider.gameObject, null, (x, y) => x.Root(rootHardness));
+            ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.Root(rootHardness));
             toDelete = true;
         }
 

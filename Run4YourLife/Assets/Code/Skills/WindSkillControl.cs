@@ -24,7 +24,7 @@ public class WindSkillControl : MonoBehaviour {
         if (collider.tag == "Player")
         {
             colliders.Add(collider.gameObject);
-            ExecuteEvents.Execute<IEventMessageTarget>(collider.gameObject, null, (x, y) => x.ActivateWindPush());
+            ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.ActivateWindPush());
         }
     }
 
@@ -33,7 +33,7 @@ public class WindSkillControl : MonoBehaviour {
         if (collider.tag == "Player")
         {
             colliders.Remove(collider.gameObject);
-            ExecuteEvents.Execute<IEventMessageTarget>(collider.gameObject, null, (x, y) => x.DeactivateWindPush());
+            ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.DeactivateWindPush());
         }
     }
 
@@ -41,7 +41,7 @@ public class WindSkillControl : MonoBehaviour {
     {
         foreach(GameObject gO in colliders)
         {
-            ExecuteEvents.Execute<IEventMessageTarget>(gO, null, (x, y) => x.DeactivateWindPush());
+            ExecuteEvents.Execute<ICharacterEvents>(gO, null, (x, y) => x.DeactivateWindPush());
         }
     }
 }

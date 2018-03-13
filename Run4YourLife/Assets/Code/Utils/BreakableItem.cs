@@ -1,11 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class BreakableItem : MonoBehaviour {
+public class BreakableItem : MonoBehaviour, IPropEvents {
 
-    private void OnTriggerStay(Collider collider)
+    #region Public Variable
+    public int hitsToBreak = 5;
+    #endregion
+
+    public void OnInteraction()
     {
+        hitsToBreak -= 1;
         
+        if(hitsToBreak <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
