@@ -61,22 +61,22 @@ namespace Run4YourLife.GameManagement
 
         private void Start()
         {
-            EndExecutingPhaseAndStartPhase(GamePhase.Phase1);
+            EndExecutingPhaseAndStartPhase(GamePhase.TransitionToEasyMoveHorizontal);
         }
 
         private void Update()
         {
             if (UnityEngine.Input.GetKeyDown(KeyCode.Keypad1))
             {
-                DebugEndExecutingPhaseAndDebugStartPhase(GamePhase.Phase1);
+                DebugEndExecutingPhaseAndDebugStartPhase(GamePhase.EasyMoveHorizontal);
             }
             else if (UnityEngine.Input.GetKeyDown(KeyCode.Keypad2))
             {
-                DebugEndExecutingPhaseAndDebugStartPhase(GamePhase.Phase2);
+                DebugEndExecutingPhaseAndDebugStartPhase(GamePhase.BossFight);
             }
             else if (UnityEngine.Input.GetKeyDown(KeyCode.Keypad3))
             {
-                DebugEndExecutingPhaseAndDebugStartPhase(GamePhase.Phase3);
+                DebugEndExecutingPhaseAndDebugStartPhase(GamePhase.HardMoveHorizontal);
             }
         }
 
