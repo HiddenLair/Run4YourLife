@@ -42,6 +42,7 @@ public class Laser : MonoBehaviour {
     private int yPosIndex = 0;
     private float lastYPos = 0;
     private float timerChangeBetweenY = 0.0f;
+    private GameObject gameObjectOverWithLaser;
 
     #region Private Trap CD Timers
     private float globalTrapCD_Timer = 0.0f;
@@ -168,8 +169,6 @@ public class Laser : MonoBehaviour {
             {
                 for (int i = posiblePlaces.Length - 1; i >= 0; i--)
                 {
-                    //TODO: try to solve problem
-                    //Problem with raycast, sometimes it takes the y a little different,
                     if (Mathf.Approximately(posiblePlaces[i].point.y,lastYPos) || posiblePlaces[i].point.y < lastYPos)
                     {
                         yPosIndex = i;
@@ -178,6 +177,7 @@ public class Laser : MonoBehaviour {
                 }
             }
             laser.position = posiblePlaces[yPosIndex].point;
+            gameObjectOverWithLaser = posiblePlaces[yPosIndex].collider.gameObject;
             lastYPos = laser.position.y;
         }
         else
@@ -237,13 +237,15 @@ public class Laser : MonoBehaviour {
         {
             Vector3 temp = laser.position;
             temp.y = temp.y + (skill.GetComponent<Renderer>().bounds.size.y / 2);
-            Instantiate(skill, temp, skill.GetComponent<Transform>().rotation);
+            var g = Instantiate(skill, temp, skill.GetComponent<Transform>().rotation);
+            g.transform.SetParent(gameObjectOverWithLaser.transform);
         }
         else if (sets[setIndex] == Type.TRAP)
         {
             Vector3 temp = laser.position;
             temp.y = temp.y + (trap.GetComponent<Renderer>().bounds.size.y / 2);
             GameObject g = Instantiate(trap, temp, trap.GetComponent<Transform>().rotation);
+            g.transform.SetParent(gameObjectOverWithLaser.transform);
             g.GetComponent<Collider>().enabled = false;
             Color actualC = g.GetComponent<Renderer>().material.color;
             actualC.a = 0;
