@@ -7,9 +7,12 @@ namespace Run4YourLife.GameManagement
 {
     public enum GamePhase
     {
-        Phase1,
-        Phase2,
-        Phase3
+        TransitionToEasyMoveHorizontal,
+        EasyMoveHorizontal,
+        TransitionToBossFight,
+        BossFight,
+        TransitionToHardMoveHorizontal,
+        HardMoveHorizontal
     }
 
     public abstract class GamePhaseManager : MonoBehaviour {
@@ -18,7 +21,7 @@ namespace Run4YourLife.GameManagement
         public void RegisterPhase(GamePhase gamePhase)
         {
             GamePhase = gamePhase;
-            GetComponent<GameManager>().RegisterPhase(this.GamePhase,this);
+            FindObjectOfType<GameManager>().RegisterPhase(this.GamePhase,this);
         }
 
         public abstract void StartPhase();
