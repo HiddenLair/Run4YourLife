@@ -20,11 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4350504664586080}
   - component: {fileID: 54702583773323194}
-  - component: {fileID: 65104998009440542}
-  - component: {fileID: 114944456625850128}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: PlataformaConPinchos
-  m_TagString: Floor
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40,9 +38,12 @@ GameObject:
   - component: {fileID: 33780841793057316}
   - component: {fileID: 23494419355044962}
   - component: {fileID: 95014254433602188}
-  m_Layer: 0
+  - component: {fileID: 65674266928732498}
+  - component: {fileID: 65281784507539064}
+  - component: {fileID: 114255683098813744}
+  m_Layer: 10
   m_Name: R4YL_PROP_thick_platform
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -87,7 +88,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1496112649186604}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 46.237003, y: 3.843001, z: -0.41299617}
+  m_LocalPosition: {x: -5.0064535, y: 2.201, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4848273707595170}
@@ -205,18 +206,30 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
---- !u!65 &65104998009440542
+--- !u!65 &65281784507539064
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1496112649186604}
+  m_GameObject: {fileID: 1526976591401628}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.14, y: 0.40584102, z: 2.416872}
+  m_Center: {x: 0.090838216, y: 0.43, z: 0.17480545}
+--- !u!65 &65674266928732498
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1526976591401628}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.35, y: 3, z: 0.4}
-  m_Center: {x: -0.09, y: 0, z: 0.27}
+  m_Size: {x: 2.41, y: 0.40584102, z: 2.416872}
+  m_Center: {x: 0.090838216, y: 0.24057303, z: 0.17480545}
 --- !u!65 &65851756811815470
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -263,17 +276,19 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114944456625850128
+--- !u!114 &114255683098813744
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1496112649186604}
+  m_GameObject: {fileID: 1526976591401628}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b230fe735622f847bbf6105a51aca36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  body: {fileID: 54702583773323194}
+  delayActivation: 0.25
   gravity: 1
   kinematic: 0
 --- !u!114 &114992371960544192

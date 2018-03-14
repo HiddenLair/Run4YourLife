@@ -4,26 +4,38 @@ using UnityEngine;
 
 public class ChangeRigidBodyOnCollision : MonoBehaviour {
 
+
+    [SerializeField]
+    private Rigidbody body;
+
+    public float delayActivation = 0;
     public bool gravity;
     public bool kinematic;
     //TODO:: add more options
 
-    private Rigidbody body;
-
-	// Use this for initialization
-	void Start () {
-        body = GetComponent<Rigidbody>();
-	}
+    private bool activatedFlag=false;
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Entra");
-        body.useGravity = gravity;
-        body.isKinematic = kinematic;
+        if (!activatedFlag)
+        {
+            StartCoroutine(ChangeDelayed());
+        }
+        activatedFlag = true;
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!activatedFlag)
+        {
+            StartCoroutine(ChangeDelayed());
+        }
+        activatedFlag = true;
+    }
+
+    IEnumerator ChangeDelayed()
+    {
+        yield return new WaitForSeconds(delayActivation);
         body.useGravity = gravity;
         body.isKinematic = kinematic;
     }
