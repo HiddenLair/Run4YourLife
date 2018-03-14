@@ -20,9 +20,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4183379815606930}
   - component: {fileID: 95060120618191712}
-  m_Layer: 0
+  - component: {fileID: 65465501952971852}
+  m_Layer: 10
   m_Name: R4YL_PROP_foliage_platform
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37,7 +38,7 @@ GameObject:
   - component: {fileID: 4978180174362608}
   - component: {fileID: 33391570676268420}
   - component: {fileID: 23150188877731210}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: R4YL_PROP_foliage (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +55,7 @@ GameObject:
   - component: {fileID: 4816742601001040}
   - component: {fileID: 33041264906525402}
   - component: {fileID: 23205707803400324}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: R4YL_PROP_foliage_platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +72,7 @@ GameObject:
   - component: {fileID: 4159801014332016}
   - component: {fileID: 33912688971396504}
   - component: {fileID: 23995272108334882}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: R4YL_PROP_foliage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,8 +98,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1374042687058224}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 12.46, y: 3.85, z: -0.35}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 6.923478, y: 3.8499985, z: -0.34999847}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4159801014332016}
@@ -142,6 +143,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -157,6 +159,7 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -174,6 +177,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -189,6 +193,7 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -206,6 +211,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -221,6 +227,7 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -250,6 +257,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1988923902775616}
   m_Mesh: {fileID: 4300002, guid: 1c1e5f04f922e4541836f75f754c45fa, type: 3}
+--- !u!65 &65465501952971852
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1374042687058224}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.3025794, y: 0.31499195, z: 2.5080516}
+  m_Center: {x: 0.058035135, y: 0.31373358, z: 0.017622232}
 --- !u!95 &95060120618191712
 Animator:
   serializedVersion: 3
