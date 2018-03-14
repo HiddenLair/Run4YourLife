@@ -2562,6 +2562,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2070856908}
+  - {fileID: 1936313259}
   - {fileID: 2047686401}
   m_Father: {fileID: 1579985389}
   m_RootOrder: 2
@@ -4847,6 +4848,10 @@ MonoBehaviour:
   m_phase1to2Bridge: {fileID: 150233907}
   m_transitionStartTrigger: {fileID: 24406962}
   m_phase2StartTrigger: {fileID: 701746325}
+  m_cameraTargetCentered: {fileID: 900552255}
+  cameraHandlePrefab: {fileID: 1956598496207784, guid: 2f38cec1b752a2b498df80a572a585e8,
+    type: 2}
+  cameraHandleTarget: {fileID: 1918243979}
 --- !u!114 &1003672621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10000,6 +10005,34 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.6497954, y: 2.6555595, z: 0.25400007}
   m_Center: {x: 0, y: 0, z: 0.12700003}
+--- !u!1 &1918243978
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1918243979}
+  m_Layer: 0
+  m_Name: CameraHandleDestiny
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1918243979
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1918243978}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.82, y: 0.71, z: 133.03}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1936313259}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1926671096
 GameObject:
   m_ObjectHideFlags: 0
@@ -10133,6 +10166,35 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 06d6a6c11ac36674e9e2dd1964cb4fc1, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1936313258
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1936313259}
+  m_Layer: 0
+  m_Name: BossFightTransition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1936313259
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1936313258}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1918243979}
+  m_Father: {fileID: 485536188}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1959894630
 GameObject:
   m_ObjectHideFlags: 0
@@ -10572,7 +10634,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2047686401}
   m_Layer: 0
-  m_Name: Phase2
+  m_Name: BossFight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10594,7 +10656,7 @@ Transform:
   - {fileID: 1374432263}
   - {fileID: 1725745495}
   m_Father: {fileID: 485536188}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2070856907
 GameObject:
@@ -10605,7 +10667,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2070856908}
   m_Layer: 0
-  m_Name: Phase1
+  m_Name: EasyMoveHorizontal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10618,7 +10680,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2070856907}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 96.12}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1463413913}
