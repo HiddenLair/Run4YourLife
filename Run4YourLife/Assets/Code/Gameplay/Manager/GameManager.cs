@@ -4,48 +4,20 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 using Run4YourLife.Player;
-using System;
 
 namespace Run4YourLife.GameManagement
 {
     public class GameManager : MonoBehaviour
     {
-        #region PlayerSpawning
-
-        [SerializeField]
-        private GameObject blueRunnerPrefab;
-
-        [SerializeField]
-        private GameObject redRunnerPrefab;
-
-        [SerializeField]
-        private GameObject greenRunnerPrefab;
-
-        [SerializeField]
-        private GameObject orangeRunnerPrefab;
-
-        [SerializeField]
-        private GameObject bossPrefab;
-
-        [SerializeField]
-        private Transform[] runnerSpawn;
-
-        [SerializeField]
-        private Transform spawnLocationBoss;
-
-        #endregion
-
         #region Initialization
 
         private void Awake()
         {
-            PlayerManager playerManger = GetOrCreateDefaultPlayerManager();
-            Debug.Assert(playerManger != null);
-
-            InstantiatePlayers(playerManger.GetPlayers());
+            PlayerManager playerManager = GetOrCreateDefaultPlayerManagerIfNoneIsAviable();
+            Debug.Assert(playerManager != null);
         }
 
-        private PlayerManager GetOrCreateDefaultPlayerManager()
+        private PlayerManager GetOrCreateDefaultPlayerManagerIfNoneIsAviable()
         {
             //TODO if no playermanager is found, create default player manager
             //useful for debug opening the scene+
@@ -85,84 +57,91 @@ namespace Run4YourLife.GameManagement
             return playerManager;
         }
 
-        private void InstantiatePlayers(List<PlayerDefinition> playerDefinitions)
+        #endregion
+
+        private void Start()
         {
-            foreach(PlayerDefinition playerDefinition in playerDefinitions)
+            EndExecutingPhaseAndStartPhase(GamePhase.TransitionToEasyMoveHorizontal);
+        }
+
+        private void Update()
+        {
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Keypad1))
             {
-                InstantiatePlayer(playerDefinition);
+                DebugEndExecutingPhaseAndDebugStartPhase(GamePhase.EasyMoveHorizontal);
+            }
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Keypad2))
+            {
+                DebugEndExecutingPhaseAndDebugStartPhase(GamePhase.BossFight);
+            }
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Keypad3))
+            {
+                DebugEndExecutingPhaseAndDebugStartPhase(GamePhase.HardMoveHorizontal);
             }
         }
 
-        private void InstantiatePlayer(PlayerDefinition playerDefinition)
-        {
-            GameObject player = InstantiatePlayerByType(playerDefinition);
-            ExecuteEvents.Execute<IPlayerDefinitionEvents>(player, null, (a, b) => a.OnPlayerDefinitionChanged(playerDefinition));
-        }
+        #region Phase Execution
 
-        private GameObject InstantiatePlayerByType(PlayerDefinition playerDefinition)
-        {
-            GameObject instance;
-
-            if(playerDefinition.IsBoss)
-            {
-                instance = Instantiate(bossPrefab, spawnLocationBoss.position, spawnLocationBoss.rotation);
-                Camera.main.GetComponent<CameraBossFollow>().boss = instance.transform; // TODO: Temporal camera attachment
-            } 
-            else
-            {
-                GameObject runnerPrefab = null;
-                switch (playerDefinition.CharacterType)
-                {
-                    case CharacterType.Blue:
-                        runnerPrefab = bossPrefab;
-                        break;
-                    case CharacterType.Green:
-                        runnerPrefab = greenRunnerPrefab;
-                        break;
-                    case CharacterType.Orange:
-                        runnerPrefab = orangeRunnerPrefab;
-                        break;
-                    case CharacterType.Red:
-                        runnerPrefab = redRunnerPrefab;
-                        break;
-                }
-                // TODO implementation of spawn that does not require 3 transforms instead of 4
-                Transform spawn = runnerSpawn[playerDefinition.ID - 1];
-                instance = Instantiate(runnerPrefab, spawn.position, spawn.rotation);
+        public GamePhase GamePhase {
+            get {
+                Debug.Assert(m_executingGamePhaseManager != null);
+                return m_executingGamePhaseManager.GamePhase;
             }
-
-            return instance; 
         }
 
-        #endregion
+        public Dictionary<GamePhase, GamePhaseManager> gamePhases = new Dictionary<GamePhase, GamePhaseManager>();
+        private GamePhaseManager m_executingGamePhaseManager;
 
-        #region Phase1
-
-        public void OnEnteredPhase1()
+        public void RegisterPhase(GamePhase gamePhase, GamePhaseManager gamePhaseManager)
         {
-
+            Debug.Assert(!gamePhases.ContainsKey(gamePhase), "Error, trying to add multiple gamePhaseManagers with the same gamePhase");
+            gamePhases.Add(gamePhase, gamePhaseManager);
         }
 
-        #endregion
-
-        #region Phase2
-
-        public GameObject phase2BossPrefab;
-        public Transform phase2BossSpawnTransform;
-
-        public GameObject phase1to2Bridge;
-
-        public void OnEnteredPhase2()
+        public void EndExecutingPhaseAndStartPhase(GamePhase gamePhase)
         {
-            StartCoroutine(StartPhase2());
+            PhaseEnd();
+            PhaseStart(gamePhase);
         }
 
-        private IEnumerator StartPhase2()
+        public void DebugEndExecutingPhaseAndDebugStartPhase(GamePhase gamePhase)
         {
-            Instantiate(phase2BossPrefab, phase2BossSpawnTransform.position, phase2BossSpawnTransform.rotation);
+            DebugPhaseEnd();
+            DebugPhaseStart(gamePhase);
+        }
 
-            yield return new WaitForSeconds(2);
-            Destroy(phase1to2Bridge);
+        public void PhaseStart(GamePhase gamePhase)
+        {
+            Debug.Assert(m_executingGamePhaseManager == null);
+
+            m_executingGamePhaseManager = gamePhases[gamePhase];
+            m_executingGamePhaseManager.StartPhase();
+        }
+
+        public void PhaseEnd()
+        {
+            if(m_executingGamePhaseManager != null)
+            {
+                m_executingGamePhaseManager.EndPhase();
+                m_executingGamePhaseManager = null;
+            }
+        }
+
+        public void DebugPhaseStart(GamePhase gamePhase)
+        {
+            Debug.Assert(m_executingGamePhaseManager == null);
+
+            m_executingGamePhaseManager = gamePhases[gamePhase];
+            m_executingGamePhaseManager.DebugStartPhase();
+        }
+
+        public void DebugPhaseEnd()
+        {
+            if (m_executingGamePhaseManager != null)
+            {
+                m_executingGamePhaseManager.DebugEndPhase();
+                m_executingGamePhaseManager = null;
+            }
         }
 
         #endregion

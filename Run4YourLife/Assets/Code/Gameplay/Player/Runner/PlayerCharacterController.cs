@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Run4YourLife.Input;
+using System;
+using UnityEngine.EventSystems;
 
 namespace Run4YourLife.Player
 {
     [RequireComponent(typeof(PlayerControlScheme))]
-    public class PlayerCharacterController : MonoBehaviour, IEventMessageTarget
+    public class PlayerCharacterController : MonoBehaviour, ICharacterEvents
     {
         #region InspectorVariables
 
@@ -25,9 +27,6 @@ namespace Run4YourLife.Player
 
         // [SerializeField]
         // private float m_jumpHeight;
-
-        [SerializeField]
-        private float m_jumpOnTopOfAnotherPlayerHeight;
 
         [SerializeField]
         public float timeToIdle = 5.0f;
@@ -49,6 +48,8 @@ namespace Run4YourLife.Player
         private bool m_isJumping;
 
         private Vector3 m_velocity;
+
+        private bool beingPushed = false;
 
         private bool facingRight = true;
 
@@ -73,30 +74,41 @@ namespace Run4YourLife.Player
 
         void Update()
         {
-            Gravity();
-
-            anim.SetBool("ground", characterController.isGrounded);
-         
-            if (!stats.root)
+            if (!beingPushed)
             {
-                if (characterController.isGrounded && playerControlScheme.jump.Started())
-                {
-                    Jump();
-                }
+                Gravity();
 
-                Move();
+                anim.SetBool("ground", characterController.isGrounded);
+
+                if (!stats.root)
+                {
+                    if (characterController.isGrounded && playerControlScheme.jump.Started())
+                    {
+                        Jump();
+                    }
+
+                    Move();
+                }
+                else
+                {
+                    if (playerControlScheme.interact.Started())
+                    {
+                        stats.rootHardness -= 1;
+                    }
+
+                    if (stats.rootHardness == 0)
+                    {
+                        stats.root = false;
+                    }
+                }
             }
-            else
-            {
-                if(playerControlScheme.interact.Started())
-                {
-                    stats.rootHardness -= 1;
-                }
+        }
 
-                if (stats.rootHardness == 0)
-                {
-                    stats.root = false;
-                }
+        private void OnTriggerStay(Collider collider)
+        {
+            if (collider.tag == "Interactable" && playerControlScheme.interact.Started())
+            {
+                ExecuteEvents.Execute<IPropEvents>(collider.gameObject, null, (x, y) => x.OnInteraction());
             }
         }
 
@@ -114,23 +126,7 @@ namespace Run4YourLife.Player
         {
             float horizontal = playerControlScheme.move.Value();
 
-            if(stats.burned)
-            {
-                if(horizontal > 0.0f)
-                {
-                    horizontal = 1.0f;
-                    burnedHorizontal = horizontal;
-                }
-                else if(horizontal < 0.0f)
-                {
-                    horizontal = -1.0f;
-                    burnedHorizontal = horizontal;
-                }
-                else
-                {
-                    horizontal = burnedHorizontal;
-                }
-            }
+            horizontal = CheckStatModificators(horizontal);
 
             Vector3 move = transform.forward * horizontal * stats.Get(StatType.SPEED) * Time.deltaTime;
 
@@ -154,6 +150,36 @@ namespace Run4YourLife.Player
             }
 
             characterController.Move(move + m_velocity * Time.deltaTime);
+        }
+
+        private float CheckStatModificators(float controllerHorizontal)
+        {
+            float toReturn = controllerHorizontal;
+
+            if (stats.burned)
+            {
+                if (toReturn > 0.0f)
+                {
+                    toReturn = 1.0f;
+                    burnedHorizontal = toReturn;
+                }
+                else if (toReturn < 0.0f)
+                {
+                    toReturn = -1.0f;
+                    burnedHorizontal = toReturn;
+                }
+                else
+                {
+                    toReturn = burnedHorizontal;
+                }
+            }
+
+            if (stats.windPush)
+            {
+                toReturn -= 0.7f;
+            }
+
+            return toReturn;
         }
 
         private void Jump()
@@ -185,11 +211,9 @@ namespace Run4YourLife.Player
 
         private IEnumerator FallFaster()
         {
-            while (!characterController.isGrounded)
-            {
-                m_velocity.y += m_endOfJumpGravity * Time.deltaTime;
-                yield return null;
-            }
+            m_gravity += m_endOfJumpGravity;
+            yield return new WaitUntil(() => characterController.isGrounded);
+            m_gravity -= m_endOfJumpGravity;
         }
 
         private IEnumerator WaitUntilApexOfJumpOrReleaseButton()
@@ -211,16 +235,20 @@ namespace Run4YourLife.Player
             m_velocity += velocity;
         }
 
-        internal void OnPlayerHasBeenJumpedOnTopByAnotherPlayer()
+        internal void BounceOnMe()
         {
-            Debug.Log("Jumped on top");
+            anim.SetTrigger("bump");
         }
 
-        internal void OnPlayerHasJumpedOnTopOfAnotherPlayer()
+        internal void Bounce(float bounceForce)
         {
             //TODO: Stop current jump
-            m_velocity.y = HeightToVelocity(m_jumpOnTopOfAnotherPlayerHeight);
-            anim.SetTrigger("bump");
+            m_velocity.y = HeightToVelocity(bounceForce);
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            
         }
 
         private void Flip()
@@ -245,7 +273,24 @@ namespace Run4YourLife.Player
 
         public void Impulse(Vector3 force)
         {
-            Debug.Log("IMPULSE");
+            anim.SetTrigger("push");
+            anim.SetFloat("pushForce", force.x);
+            beingPushed = true;
+            m_velocity.y = 0;
+            StartCoroutine(BeingPushed());
+        }
+
+        IEnumerator BeingPushed()
+        {
+            while(!anim.GetCurrentAnimatorStateInfo(0).IsName("Push"))
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            while (anim.GetCurrentAnimatorStateInfo(0).IsName("Push"))
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            beingPushed = false;
         }
 
         public void Debuff(StatModifier statmodifier)
@@ -253,9 +298,34 @@ namespace Run4YourLife.Player
             stats.AddModifier(statmodifier);
         }
 
-        public void Burned()
+        public void Burned(int burnedTime)
+        {
+            if (!stats.burned)
+            {
+                StartCoroutine(BurnedCharacter(burnedTime));
+            }
+        }
+
+        public void ActivateWindPush()
+        {
+            stats.windPush = true;
+        }
+
+        public void DeactivateWindPush()
+        {
+            stats.windPush = false;
+        }
+
+        private IEnumerator BurnedCharacter(int value)
         {
             stats.burned = true;
+            yield return new WaitForSeconds(value);
+            stats.burned = false;
+        }
+
+        public Vector3 GetVelocity()
+        {
+            return m_velocity;
         }
     }
 }
