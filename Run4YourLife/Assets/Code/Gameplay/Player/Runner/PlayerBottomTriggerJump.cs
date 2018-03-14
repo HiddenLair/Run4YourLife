@@ -14,7 +14,7 @@ namespace Run4YourLife.Player
 
         private void OnTriggerEnter(Collider other)
         {
-            if (characterController.GetVelocity().y < 0 && other.tag == "Player")
+            if (characterController.GetVelocity().y < 0)
             {
                 characterController.Bounce(other.GetComponent<JumpOver>().GetBounceForce());
                 other.GetComponent<JumpOver>().JumpedOn();
