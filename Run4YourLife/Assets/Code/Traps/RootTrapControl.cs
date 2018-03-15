@@ -25,7 +25,7 @@ public class RootTrapControl : MonoBehaviour {
         if (toDelete)
         {
             Instantiate(activationParticles, transform.position, transform.rotation);
-            Destroy(gameObject);
+            Destroy(gameObject.transform.parent.gameObject);
         }
     }
 }
