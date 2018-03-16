@@ -70,6 +70,13 @@ namespace Run4YourLife.UI
 
         #endregion
 
+        #region Progress
+
+        [SerializeField]
+        private Progress progress;
+
+        #endregion
+
         private List<TextUpdater> textUpdaters = new List<TextUpdater>();
 
         private List<ImageUpdater> imageUpdaters = new List<ImageUpdater>();
@@ -104,12 +111,21 @@ namespace Run4YourLife.UI
 
         public void OnPhaseSetted(PhaseType phaseType)
         {
+            if(phaseType == PhaseType.SECOND)
+            {
+                progress.gameObject.SetActive(false);
+            }
+            else
+            {
+                progress.gameObject.SetActive(true);
+            }
 
+            progress.SetPhase(phaseType);
         }
 
         public void OnBossProgress(float percent)
         {
-
+            progress.SetPercent(percent);
         }
     }
 }
