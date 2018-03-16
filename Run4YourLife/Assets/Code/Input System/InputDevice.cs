@@ -9,7 +9,20 @@ namespace Run4YourLife.Input
 
     public class InputDevice
     {
-        uint id;
+        private uint id;
+        
+        public uint ID
+        {
+            get
+            {
+                return id;
+            }
+
+            private set
+            {
+                id = value;
+            }
+        }
 
         public InputDevice(uint id)
         {

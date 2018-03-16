@@ -37,7 +37,7 @@ namespace Run4YourLife.GameManagement
                     CharacterType = CharacterType.Orange,
                     ID = 2,
                     inputDevice = new Input.InputDevice(2),
-                    IsBoss = false
+                    IsBoss = true
                 });
                 playerManager.AddPlayer(new PlayerDefinition()
                 {
@@ -51,7 +51,7 @@ namespace Run4YourLife.GameManagement
                     CharacterType = CharacterType.Blue,
                     ID = 4,
                     inputDevice = new Input.InputDevice(4),
-                    IsBoss = true
+                    IsBoss = false
                 });
             }
             return playerManager;

@@ -46,6 +46,7 @@ namespace Run4YourLife.CharacterSelection
                 m_playerManager.SetPlayerAsBoss(playerDefinition);
             }
             playerDefinition.CharacterType = GetFirstAviablePlayerCharacterType();
+            playerDefinition.ID = inputDevice.ID;
 
             m_playerManager.AddPlayer(playerDefinition);
         }
