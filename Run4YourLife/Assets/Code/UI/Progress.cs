@@ -31,6 +31,11 @@ namespace Run4YourLife.UI
 
         private Vector3 currentStart, currentEnd;
 
+        void Awake()
+        {
+            SetPhase(PhaseType.FIRST);
+        }
+
         public void SetPhase(PhaseType phaseType)
         {
             switch(phaseType)
