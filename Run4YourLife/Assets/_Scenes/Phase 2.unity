@@ -1425,7 +1425,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &1109948315
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2078,9 +2078,11 @@ MonoBehaviour:
   shootMarker: {fileID: 990539351}
   bulletStartingPoint: {fileID: 767316124}
   reload: 0.5
+  shootSFX: {fileID: 0}
   mele: {fileID: 1316436286298340, guid: 69d16cc697016ce409429c4fb4cb0daa, type: 2}
   meleSpeed: 500
   meleReload: 2
+  meleeSFX: {fileID: 0}
   trapIndicator: {fileID: 1526507888}
 --- !u!114 &1391630568
 MonoBehaviour:
@@ -2107,6 +2109,7 @@ MonoBehaviour:
   skillB: {fileID: 1053646925812610, guid: 6891dd8f950938046ba0d059588dd1d4, type: 2}
   trapB: {fileID: 1053646925812610, guid: 6891dd8f950938046ba0d059588dd1d4, type: 2}
   trapDelaySpawn: 0.5
+  trapCastSFX: {fileID: 0}
   globalTrapCD: 1.5
   trapACD: 5
   trapBCD: 5
