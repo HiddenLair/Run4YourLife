@@ -58,6 +58,8 @@ namespace Run4YourLife.Player
 
         private float idleTimer = 0.0f;
 
+        private Collider dropPlatformCollider = null;
+
         #endregion
 
         #region Public Variable
@@ -83,6 +85,7 @@ namespace Run4YourLife.Player
         {
             if (!beingPushed)
             {
+                dropPlatformCollider = null;
                 Gravity();
 
                 anim.SetBool("ground", characterController.isGrounded);
@@ -95,6 +98,7 @@ namespace Run4YourLife.Player
                     }
 
                     Move();
+                    CheckForDrop();
                 }
                 else
                 {
@@ -116,6 +120,14 @@ namespace Run4YourLife.Player
             if (collider.tag == "Interactable" && playerControlScheme.interact.Started())
             {
                 ExecuteEvents.Execute<IPropEvents>(collider.gameObject, null, (x, y) => x.OnInteraction());
+            }
+        }
+
+        private void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            if(hit.collider.tag == "DropPlatform")
+            {
+                dropPlatformCollider = hit.collider;
             }
         }
 
@@ -157,6 +169,14 @@ namespace Run4YourLife.Player
             }
 
             characterController.Move(move + m_velocity * Time.deltaTime);
+        }
+
+        private void CheckForDrop()
+        {
+            if(playerControlScheme.vertical.Value() > 0.2 && dropPlatformCollider != null)//If press joystick down
+            {
+                Physics.IgnoreCollision(GetComponent<Collider>(), dropPlatformCollider);
+            }
         }
 
         private float CheckStatModificators(float controllerHorizontal)

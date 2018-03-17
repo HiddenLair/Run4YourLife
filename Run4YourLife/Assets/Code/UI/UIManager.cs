@@ -19,7 +19,8 @@ namespace Run4YourLife.UI
 
     public enum PhaseType
     {
-        FIRST, SECOND, THIRD
+        FIRST, SECOND, THIRD,
+        TRANSITION
     }
 
     #endregion
@@ -111,13 +112,14 @@ namespace Run4YourLife.UI
 
         public void OnPhaseSetted(PhaseType phaseType)
         {
-            if(phaseType == PhaseType.SECOND)
+            if(phaseType == PhaseType.TRANSITION)
             {
-                progress.gameObject.SetActive(false);
+                ActiveAll(false);
             }
-            else
+            else if(phaseType == PhaseType.SECOND)
             {
-                progress.gameObject.SetActive(true);
+                ActiveAll(true);
+                progress.gameObject.SetActive(phaseType != PhaseType.SECOND);
             }
 
             progress.SetPhase(phaseType);
@@ -126,6 +128,14 @@ namespace Run4YourLife.UI
         public void OnBossProgress(float percent)
         {
             progress.SetPercent(percent);
+        }
+
+        private void ActiveAll(bool active)
+        {
+            for(int i = 0; i < transform.childCount; ++i)
+            {
+                transform.GetChild(i).gameObject.SetActive(active);
+            }
         }
     }
 }
