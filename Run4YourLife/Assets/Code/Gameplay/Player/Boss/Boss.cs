@@ -23,12 +23,13 @@ namespace Run4YourLife.Player
         public Transform shootMarker;
         public Transform bulletStartingPoint;
         public float reload;
-
+        public AudioClip shootSFX;
 
         //Mele
         public GameObject mele;
         public Transform meleZone;
         public float meleReload;
+        public AudioClip meleeSFX;
 
         private float bulletTimer;
         private float meleTimer;
@@ -50,11 +51,12 @@ namespace Run4YourLife.Player
         private BossControlScheme bossControlScheme;
         private Animator anim;
         private Laser trapSetter;
-
+        private AudioSource audioBoss;
         private GameObject uiManager;
 
         private void Awake()
         {
+            audioBoss = GetComponent<AudioSource>();
             trapSetter = GetComponent<Laser>();
             bossControlScheme = GetComponent<BossControlScheme>();
             bulletTimer = reload;
@@ -183,6 +185,7 @@ namespace Run4YourLife.Player
 
         void Shoot(GameObject bullet)
         {
+            PlaySFX(shootSFX);
             lastBulletShoot = Instantiate(bullet, bulletStartingPoint.position, bullet.GetComponent<Transform>().rotation * shootMarker.rotation);
             lastBulletShoot.GetComponent<Rigidbody>().velocity = lastBulletShoot.GetComponent<Transform>().right * bulletSpeed * Time.deltaTime;
             if (lastBulletShoot.GetComponent<ChargedBullet>())
@@ -202,6 +205,7 @@ namespace Run4YourLife.Player
             {
                 if (meleTimer >= meleReload && !meleBeingPressed)
                 {
+                    PlaySFX(meleeSFX);
                     anim.SetTrigger("Mele");
                     // trapSetter.isReadyForAction = false;
                     var meleInst = Instantiate(mele, meleZone.position, mele.GetComponent<Transform>().rotation);
@@ -222,6 +226,14 @@ namespace Run4YourLife.Player
         public void SetShootStillAlive(bool value)
         {
             shootStillAlive = value;
+        }
+
+        private void PlaySFX(AudioClip clip)
+        {
+            if (clip != null)
+            {
+                audioBoss.PlayOneShot(clip);
+            }
         }
     }
 }
