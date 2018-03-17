@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Run4YourLife.Player
 {
     public class ChargedBullet : MonoBehaviour
     {
-
         public GameObject explosion;
 
         private Boss callback;
@@ -14,7 +11,12 @@ namespace Run4YourLife.Player
         private void OnTriggerEnter(Collider other)
         {
             Explosion();
-            //TODO: destroy if it goes out off screen 
+        }
+
+        void OnBecameInvisible()
+        {
+            callback.SetShootStillAlive(false);
+            Destroy(gameObject);
         }
 
         public void Explosion()
