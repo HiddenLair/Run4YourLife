@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 using Run4YourLife.Player;
+using System;
 
 namespace Run4YourLife.GameManagement
 {
@@ -61,6 +62,12 @@ namespace Run4YourLife.GameManagement
 
         private void Start()
         {
+            StartCoroutine(StartNextFrame());
+        }
+
+        private IEnumerator StartNextFrame()
+        {
+            yield return null;
             EndExecutingPhaseAndStartPhase(GamePhase.TransitionToEasyMoveHorizontal);
         }
 
