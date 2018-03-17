@@ -9,22 +9,12 @@ public class TortoiseShell : MonoBehaviour {
     public float speed = 10.0f;
     public float timeAction = 0.5f;
 
+    List<Transform> players = new List<Transform>();
     private float timer= 0.0f;
     private enum State{ SINKING,EMERGING,NONE };
     private State state = State.NONE;
-    private Collider trigger;
+    private bool triggerLogicActive = true;
     private bool changingStateFlag = false;
-
-    private void Start()
-    {
-        foreach(Collider c in GetComponents<Collider>())
-        {
-            if (c.isTrigger)
-            {
-                trigger = c;
-            }
-        }
-    }
 
     // Update is called once per frame
     void Update () {
@@ -34,12 +24,13 @@ public class TortoiseShell : MonoBehaviour {
                 {
                     if (timer <= timeAction)
                     {
+                        MovePlayers(speed);
                         transform.Translate(new Vector3(0,0 , speed * Time.deltaTime));
                         timer += Time.deltaTime;
                     }
                     else
                     {
-                        trigger.enabled = true;
+                        triggerLogicActive = true;
                         state = State.NONE;
                         timer = 0.0f;
                     }
@@ -48,6 +39,7 @@ public class TortoiseShell : MonoBehaviour {
             case State.SINKING:
                 if (timer <= timeAction)
                 {
+                    MovePlayers(-speed);
                     transform.Translate(new Vector3(0, 0 , -speed * Time.deltaTime));
                     timer += Time.deltaTime;
                 }
@@ -64,12 +56,24 @@ public class TortoiseShell : MonoBehaviour {
         }
 	}
 
+    private void MovePlayers(float speedValue)
+    {
+        foreach (Transform transform in players)
+        {
+            transform.Translate(new Vector3(0, speedValue * Time.deltaTime, 0), Space.World);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
         {
-            trigger.enabled = false;
-            StartCoroutine(ChangeStateDelayed(State.SINKING,sinkDelay));
+            players.Add(other.transform);
+            if (triggerLogicActive)
+            {
+                triggerLogicActive = false;
+                StartCoroutine(ChangeStateDelayed(State.SINKING, sinkDelay));
+            }
         }
     }
 
@@ -80,5 +84,13 @@ public class TortoiseShell : MonoBehaviour {
         changingStateFlag = false;
         timer = 0.0f;
         state = s;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            players.Remove(other.transform);
+        }
     }
 }
