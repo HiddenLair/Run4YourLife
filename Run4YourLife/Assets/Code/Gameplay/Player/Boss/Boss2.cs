@@ -52,7 +52,7 @@ namespace Run4YourLife.Player
             meleTimer = meleReload;
             anim = GetComponent<Animator>();
 
-            uiManager = FindObjectOfType<UIManager>().gameObject;
+            uiManager = GameObject.FindGameObjectWithTag("UI");
         }
 
         private void Start()

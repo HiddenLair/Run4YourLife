@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Run4YourLife.Input;
+using UnityEngine.EventSystems;
+
+using Run4YourLife.UI;
 
 namespace Run4YourLife.Player
 {
@@ -37,6 +40,8 @@ namespace Run4YourLife.Player
         private Laser trapSetter;
         private Animator anim;
 
+        private GameObject uiManager;
+
         private void Awake()
         {
             bossControlScheme = GetComponent<BossControlScheme>();
@@ -44,6 +49,8 @@ namespace Run4YourLife.Player
             meleTimer = meleReload;
             anim = GetComponent<Animator>();
             trapSetter = GetComponent<Laser>();
+
+            uiManager = GameObject.FindGameObjectWithTag("UI");
         }
 
         private void Start()
@@ -107,6 +114,8 @@ namespace Run4YourLife.Player
                     trapSetter.isReadyForAction = false;
                     Invoke("NormalShootDelayed", animShoot.length - shootAnimTimeVariation);
                     bulletTimer = 0;
+
+                    ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.SHOOT, reload));
                 }
             }
             //bulletTimer += Time.deltaTime;
@@ -151,6 +160,8 @@ namespace Run4YourLife.Player
                     tempMele.GetComponent<Rigidbody>().velocity = new Vector3(0,-meleSpeed * Time.deltaTime,0);
                     meleTimer = 0.0f;
                     meleBeingPressed = true;
+
+                    ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.MELE, meleReload));
                 }
             }
             else
