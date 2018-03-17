@@ -11,5 +11,7 @@ namespace Run4YourLife.UI
         void OnPhaseSetted(PhaseType phaseType);
 
         void OnBossProgress(float percent);
+
+        void OnCountdownSetted(float time);
     }
 }

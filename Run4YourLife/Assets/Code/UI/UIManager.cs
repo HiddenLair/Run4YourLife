@@ -78,6 +78,13 @@ namespace Run4YourLife.UI
 
         #endregion
 
+        #region Countdown
+
+        [SerializeField]
+        private Countdown countdown;
+
+        #endregion
+
         private List<TextUpdater> textUpdaters = new List<TextUpdater>();
 
         private List<ImageUpdater> imageUpdaters = new List<ImageUpdater>();
@@ -116,10 +123,11 @@ namespace Run4YourLife.UI
             {
                 ActiveAll(false);
             }
-            else if(phaseType == PhaseType.SECOND)
+            else
             {
                 ActiveAll(true);
                 progress.gameObject.SetActive(phaseType != PhaseType.SECOND);
+                countdown.gameObject.SetActive(phaseType == PhaseType.SECOND);
             }
 
             progress.SetPhase(phaseType);
@@ -128,6 +136,11 @@ namespace Run4YourLife.UI
         public void OnBossProgress(float percent)
         {
             progress.SetPercent(percent);
+        }
+
+        public void OnCountdownSetted(float time)
+        {
+            countdown.Go(time);
         }
 
         private void ActiveAll(bool active)
