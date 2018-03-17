@@ -40,6 +40,7 @@ namespace Run4YourLife.Player
         private PlayerControlScheme playerControlScheme;
         private Animator anim;
         private Animation actualAnimation;
+        private AudioSource audioCharacter;
 
         #endregion
 
@@ -59,8 +60,14 @@ namespace Run4YourLife.Player
 
         #endregion
 
+        #region Public Variable
+        public AudioClip jumpClip;
+        public AudioClip bounceClip;
+        #endregion
+
         void Awake()
         {
+            audioCharacter = GetComponent<AudioSource>();
             playerControlScheme = GetComponent<PlayerControlScheme>();
             characterController = GetComponent<CharacterController>();
             stats = GetComponent<Stats>();
@@ -184,6 +191,7 @@ namespace Run4YourLife.Player
 
         private void Jump()
         {
+            PlaySFX(jumpClip);
             StartCoroutine(JumpCoroutine());
         }
 
@@ -237,7 +245,16 @@ namespace Run4YourLife.Player
 
         internal void BounceOnMe()
         {
+            PlaySFX(bounceClip);
             anim.SetTrigger("bump");
+        }
+
+        private void PlaySFX(AudioClip clip)
+        {
+            if (clip != null)
+            {
+                audioCharacter.PlayOneShot(clip);
+            }
         }
 
         internal void Bounce(float bounceForce)
