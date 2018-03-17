@@ -284,7 +284,7 @@ public class Laser : MonoBehaviour {
          */
         float zDistance =laser.position.z - Camera.main.transform.position.z;
         Vector3 pos = new Vector3(laser.position.x,Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, zDistance)).y, laser.position.z);
-        targetLocation = Physics.RaycastAll(pos,Vector3.down,distance,LayerMask.GetMask("Ground"));
+        targetLocation = Physics.RaycastAll(pos,Vector3.down,distance,LayerMask.GetMask("Ground"),QueryTriggerInteraction.Ignore);
 
         return targetLocation;
     }
