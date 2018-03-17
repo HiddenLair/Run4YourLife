@@ -265,7 +265,6 @@ namespace Run4YourLife.Player
 
         internal void BounceOnMe()
         {
-            PlaySFX(bounceClip);
             anim.SetTrigger("bump");
         }
 
@@ -280,6 +279,7 @@ namespace Run4YourLife.Player
         internal void Bounce(float bounceForce)
         {
             //TODO: Stop current jump
+            PlaySFX(bounceClip);
             m_velocity.y = HeightToVelocity(bounceForce);
         }
 
