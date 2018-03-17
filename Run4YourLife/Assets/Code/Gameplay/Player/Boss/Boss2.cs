@@ -20,11 +20,13 @@ namespace Run4YourLife.Player
         public Transform shootMarker;
         public Transform bulletStartingPoint;
         public float reload;
+        public AudioClip shootSFX;
 
         //Mele
         public GameObject mele;
         public float meleSpeed;
         public float meleReload;
+        public AudioClip meleeSFX;
 
         //Trap Indicator
         public Transform trapIndicator;
@@ -41,11 +43,12 @@ namespace Run4YourLife.Player
         private BossControlScheme bossControlScheme;
         private Animator anim;
         private Laser trapSetter;
-
+        private AudioSource audioBoss;
         private GameObject uiManager;
 
         private void Awake()
         {
+            audioBoss = GetComponent<AudioSource>();
             trapSetter = GetComponent<Laser>();
             bossControlScheme = GetComponent<BossControlScheme>();
             bulletTimer = reload;
@@ -130,6 +133,7 @@ namespace Run4YourLife.Player
 
         void Shoot(GameObject bullet)
         {
+            PlaySFX(shootSFX);
             GameObject lastBulletShoot = Instantiate(bullet, bulletStartingPoint.position, bullet.transform.rotation * shootMarker.rotation);
             lastBulletShoot.GetComponent<Rigidbody>().velocity = lastBulletShoot.transform.right * bulletSpeed*Time.deltaTime;
         }
@@ -140,6 +144,7 @@ namespace Run4YourLife.Player
             {
                 if (meleTimer >= meleReload && !meleBeingPressed)
                 {
+                    PlaySFX(meleeSFX);
                     Vector3 trapPos = trapIndicator.position;
                     Vector3 screenPos = Camera.main.WorldToScreenPoint(trapPos);
                     if (screenPos.x <= Camera.main.pixelWidth / 2)//Left side screen
@@ -169,6 +174,14 @@ namespace Run4YourLife.Player
         {
             GameObject meleInst = Instantiate(mele, pos, rotation);
             meleInst.GetComponent<Rigidbody>().velocity = meleInst.transform.right * meleSpeed *Time.deltaTime;
+        }
+
+        private void PlaySFX(AudioClip clip)
+        {
+            if (clip != null)
+            {
+                audioBoss.PlayOneShot(clip);
+            }
         }
     }
 }
