@@ -179,8 +179,6 @@ GameObject:
   m_Component:
   - component: {fileID: 306127982}
   - component: {fileID: 306127981}
-  - component: {fileID: 306127983}
-  - component: {fileID: 306127984}
   m_Layer: 0
   m_Name: GameLoader
   m_TagString: Untagged
@@ -201,7 +199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneLoadRequestData:
     sceneName: Phase 1
-    loadSceneMode: 1
+    loadSceneMode: 0
     loadEvent: 0
     setLoadedSceneAsActiveScene: 1
     unloadScene: 1
@@ -219,42 +217,6 @@ Transform:
   m_Father: {fileID: 1019550588}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &306127983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 306127980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b54b125ffc0a6ec46b3f2eecc0eff95c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneLoadRequestData:
-    sceneName: Phase 2
-    loadSceneMode: 1
-    loadEvent: 0
-    setLoadedSceneAsActiveScene: 0
-    unloadScene: 0
-    unloadedSceneName: 
---- !u!114 &306127984
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 306127980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b54b125ffc0a6ec46b3f2eecc0eff95c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneLoadRequestData:
-    sceneName: Phase 3
-    loadSceneMode: 1
-    loadEvent: 0
-    setLoadedSceneAsActiveScene: 0
-    unloadScene: 0
-    unloadedSceneName: 
 --- !u!1 &453664714
 GameObject:
   m_ObjectHideFlags: 0
