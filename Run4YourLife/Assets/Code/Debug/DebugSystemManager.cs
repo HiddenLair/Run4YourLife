@@ -10,6 +10,8 @@ namespace Run4YourLife.DebuggingTools
 
         private WireframeMode wireframeMode = null;
 
+        private FPSCounter fpsCounter = null;
+
         void Awake()
         {
             mainCamera = Camera.main.gameObject;
@@ -19,43 +21,53 @@ namespace Run4YourLife.DebuggingTools
         {
             if(UnityEngine.Input.GetKeyDown(KeyCode.F1))
             {
-                EnableVertexAndTriangleCounter(vertexAndTriangleCounter == null);
+                fpsCounter = ToggleMode<FPSCounter>(fpsCounter);
             }
 
             if(UnityEngine.Input.GetKeyDown(KeyCode.F2))
             {
-                EnableWireframeMode(wireframeMode == null);
+                vertexAndTriangleCounter = ToggleMode<VertexAndTriangleCounter>(vertexAndTriangleCounter);
+            }
+
+            if(UnityEngine.Input.GetKeyDown(KeyCode.F3))
+            {
+                wireframeMode = ToggleMode<WireframeMode>(wireframeMode);
             }
         }
 
         void OnGUI()
         {
+            DrawFPSCounter();
             DrawVertexAndTriangleCounter();
         }
 
-        private void EnableVertexAndTriangleCounter(bool enabled)
+        private T ToggleMode<T>(MonoBehaviour mode) where T : Component
         {
-            if(enabled && !vertexAndTriangleCounter)
+            T ret = null;
+
+            if(mode == null)
             {
-                vertexAndTriangleCounter = mainCamera.AddComponent<VertexAndTriangleCounter>();
+                ret = mainCamera.AddComponent<T>();
             }
-            else if(!enabled && vertexAndTriangleCounter)
+            else
             {
-                Destroy(vertexAndTriangleCounter);
-                vertexAndTriangleCounter = null;
+                Destroy(mode);
             }
+
+            return ret;
         }
 
-        private void EnableWireframeMode(bool enabled)
+        private void DrawFPSCounter()
         {
-            if(enabled && !wireframeMode)
+            if(fpsCounter != null)
             {
-                wireframeMode = mainCamera.AddComponent<WireframeMode>();
-            }
-            else if(!enabled && wireframeMode)
-            {
-                Destroy(wireframeMode);
-                wireframeMode = null;
+                float w = 150.0f;
+                float h = 20.0f;
+
+                float x = Screen.width - w;
+                float y = 10.0f;
+
+                GUI.Label(new Rect(x, y, w, h), "FPS: " + fpsCounter.GetFPS().ToString("0.###"));
             }
         }
 
@@ -68,7 +80,7 @@ namespace Run4YourLife.DebuggingTools
 
                 float x = Screen.width - w;
 
-                float vY = 10.0f;
+                float vY = 30.0f;
                 float vT = vY + h;
 
                 GUI.Label(new Rect(x, vY, w, h), "Num. Vertices: " + vertexAndTriangleCounter.GetVertexCount());
