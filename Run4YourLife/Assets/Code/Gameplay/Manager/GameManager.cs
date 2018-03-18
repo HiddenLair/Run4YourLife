@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 using Run4YourLife.Player;
@@ -10,6 +11,8 @@ namespace Run4YourLife.GameManagement
 {
     public class GameManager : MonoBehaviour
     {
+        public GamePhaseEvent onGamePhaseChanged;
+
         #region Initialization
 
         private void Awake()
@@ -113,12 +116,14 @@ namespace Run4YourLife.GameManagement
         {
             PhaseEnd();
             PhaseStart(gamePhase);
+            onGamePhaseChanged.Invoke(gamePhase);
         }
 
         public void DebugEndExecutingPhaseAndDebugStartPhase(GamePhase gamePhase)
         {
             DebugPhaseEnd();
             DebugPhaseStart(gamePhase);
+            onGamePhaseChanged.Invoke(gamePhase);
         }
 
         public void PhaseStart(GamePhase gamePhase)
