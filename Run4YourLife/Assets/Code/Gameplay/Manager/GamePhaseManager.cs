@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 
 namespace Run4YourLife.GameManagement
 {
@@ -14,6 +14,11 @@ namespace Run4YourLife.GameManagement
         TransitionToHardMoveHorizontal,
         HardMoveHorizontal,
         End
+    }
+
+    [System.Serializable]
+    public class GamePhaseEvent : UnityEvent<GamePhase>
+    {
     }
 
     public abstract class GamePhaseManager : MonoBehaviour {
