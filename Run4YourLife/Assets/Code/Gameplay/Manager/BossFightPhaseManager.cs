@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -13,6 +14,9 @@ namespace Run4YourLife.GameManagement
 
         [SerializeField]
         private CameraTargetCentered m_cameraTargetCentered;
+
+        [SerializeField]
+        private Transform bossFightStartingCameraPositionDebug;
 
         #endregion
 
@@ -72,9 +76,11 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugStartPhase()
         {
-            m_playerSpawner.InstantiatePlayers();
+            m_cameraTargetCentered.transform.position = bossFightStartingCameraPositionDebug.position;
 
-            GameObject boss = GameObject.FindGameObjectWithTag("Boss");
+            GameObject[] players = m_playerSpawner.InstantiatePlayers();
+
+            GameObject boss = players.Where(x => x.CompareTag("Boss")).First();
             m_cameraTargetCentered.m_target = boss.transform; // TODO: Temporal camera attachment
             m_cameraTargetCentered.enabled = true;
         }

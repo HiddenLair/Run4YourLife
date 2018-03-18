@@ -1867,7 +1867,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: b3cd3feb01fc7764b845b2fd9a43ab5e, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -1915,6 +1915,24 @@ MonoBehaviour:
   m_gravity: -40
   m_endOfJumpGravity: -30
   timeToIdle: 5
+  m_pushAnimation:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: -0.03857422
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.4999547
+      value: 1.0000026
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
   jumpClip: {fileID: 8300000, guid: 8bc5dbb3f916c7d4bb404c8a010f4106, type: 3}
   bounceClip: {fileID: 8300000, guid: 4c27b064170a56b48907e5a15905f521, type: 3}
 --- !u!114 &114855254125299974

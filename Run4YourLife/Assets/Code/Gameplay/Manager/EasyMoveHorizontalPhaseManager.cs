@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,7 +10,7 @@ namespace Run4YourLife.GameManagement
 {
     public class EasyMoveHorizontalPhaseManager : GamePhaseManager
     {
-        #region Member variables
+        #region Editor variables
 
         [SerializeField]
         private GameObject m_phase1to2Bridge;
@@ -22,10 +23,19 @@ namespace Run4YourLife.GameManagement
 
         #endregion
 
+        #region Member variables
+
+        private PlayerSpawner m_playerSpawner;
+
+        #endregion
+
         #region Initialization
 
         private void Awake()
         {
+            m_playerSpawner = GetComponent<PlayerSpawner>();
+            Debug.Assert(m_playerSpawner != null);
+
             RegisterPhase(GamePhase.EasyMoveHorizontal);
         }
 
@@ -55,7 +65,14 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugStartPhase()
         {
-            StartPhase();
+            GameObject[] players = m_playerSpawner.InstantiatePlayers();
+
+            GameObject boss = players.Where(x => x.CompareTag("Boss")).First();
+            m_cameraBossFollow.boss = boss.transform;
+            m_cameraBossFollow.enabled = true;
+
+            m_phase1to2Bridge.SetActive(true);
+            m_phase2StartTrigger.SetActive(true);
         }
 
         public override void DebugEndPhase()

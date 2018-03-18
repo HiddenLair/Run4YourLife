@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class MovePlayersWithYou : MonoBehaviour {
 
-    public Vector3 speed;
+    private Vector3 m_previousPosition;
 
     List<Transform> players = new List<Transform>();
 	
 	// Update is called once per frame
 	void Update () {
+        Vector3 delta = transform.position - m_previousPosition;
+
         foreach (Transform transform in players)
         {
-            transform.Translate(speed * Time.deltaTime, Space.World);
+            transform.Translate(delta, Space.World);
         }
+
+        m_previousPosition = transform.position;
     }
 
     private void OnTriggerEnter(Collider other)

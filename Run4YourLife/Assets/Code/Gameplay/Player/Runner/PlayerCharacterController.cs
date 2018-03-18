@@ -29,7 +29,10 @@ namespace Run4YourLife.Player
         // private float m_jumpHeight;
 
         [SerializeField]
-        public float timeToIdle = 5.0f;
+        private float timeToIdle = 5.0f;
+
+        [SerializeField]
+        private AnimationCurve m_pushAnimation;
 
         #endregion
 
@@ -47,6 +50,7 @@ namespace Run4YourLife.Player
         #region Private Variables
 
         private bool m_isJumping;
+        private bool m_isBouncing;
 
         private Vector3 m_velocity;
 
@@ -221,7 +225,6 @@ namespace Run4YourLife.Player
 
         private void Jump()
         {
-            PlaySFX(jumpClip);
             StartCoroutine(JumpCoroutine());
         }
 
@@ -234,6 +237,7 @@ namespace Run4YourLife.Player
 
         private IEnumerator JumpCoroutine()
         {
+            PlaySFX(jumpClip);
             m_isJumping = true;
             anim.SetTrigger("jump");
 
@@ -250,7 +254,7 @@ namespace Run4YourLife.Player
         private IEnumerator FallFaster()
         {
             m_gravity += m_endOfJumpGravity;
-            yield return new WaitUntil(() => characterController.isGrounded);
+            yield return new WaitUntil(() => characterController.isGrounded || m_isBouncing || m_isJumping);
             m_gravity -= m_endOfJumpGravity;
         }
 
@@ -286,17 +290,38 @@ namespace Run4YourLife.Player
             }
         }
 
-        internal void Bounce(float bounceForce)
+        #region Bounce
+
+        public void Bounce(float bounceForce)
         {
-            //TODO: Stop current jump
-            PlaySFX(bounceClip);
-            m_velocity.y = HeightToVelocity(bounceForce);
+            StartCoroutine(BounceCoroutine(bounceForce));
         }
 
-        private void OnCollisionEnter(Collision collision)
+        IEnumerator BounceCoroutine(float bounceForce)
         {
-            
+            m_isBouncing = true;
+            PlaySFX(bounceClip);
+            m_velocity.y = HeightToVelocity(bounceForce);
+
+            yield return StartCoroutine(WaitUntilApexOfBounce());
+            m_isBouncing = false;
+
+            yield return StartCoroutine(FallFaster());
         }
+
+        private IEnumerator WaitUntilApexOfBounce()
+        {
+            float previousPositionY = transform.position.y;
+            yield return null;
+
+            while (previousPositionY < transform.position.y)
+            {
+                previousPositionY = transform.position.y;
+                yield return null;
+            }
+        }
+
+        #endregion
 
         private void Flip()
         {
