@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 420573258}
   - component: {fileID: 420573255}
   - component: {fileID: 420573259}
+  - component: {fileID: 420573260}
   m_Layer: 0
   m_Name: GlobalManager
   m_TagString: Untagged
@@ -196,8 +197,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneLoadRequestData:
     sceneName: MainMenu
-    loadSceneMode: 1
+    loadSceneMode: 0
     loadEvent: 1
     setLoadedSceneAsActiveScene: 1
     unloadScene: 0
     unloadedSceneName: 
+--- !u!114 &420573260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 420573254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d4f141c614704f499d0e863d1dc4356, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
