@@ -89,4 +89,56 @@ public class CheckPointManager : MonoBehaviour {
         return ret;
     }
 
+    public bool GetFloorHeightAndPositionOffset(int id, float speed, out float floorHeight, out Vector3 positionOffset)
+    {
+        floorHeight = 0.0f;
+        positionOffset = Vector3.zero;
+
+        if(idMap.ContainsKey(id))
+        {
+            InnerPos inner = idMap[id];
+
+            if(inner.listOffset == checkpoints.Length - 2 && inner.progressionOffset >= 1)
+            {
+                int index = inner.listOffset + 1;
+
+                CameraAttributesDefinition cameraAttributesDefinition = checkpoints[index].GetComponent<CameraAttributesDefinition>();
+
+                if(cameraAttributesDefinition != null)
+                {
+                    floorHeight = cameraAttributesDefinition.desiredFloorHeight;
+                    positionOffset = cameraAttributesDefinition.desiredPositionOffset;
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            int index1 = inner.listOffset;
+            int index2 = inner.listOffset + 1;
+
+            CameraAttributesDefinition cameraAttributesDefinition1 = checkpoints[index1].GetComponent<CameraAttributesDefinition>();
+            CameraAttributesDefinition cameraAttributesDefinition2 = checkpoints[index2].GetComponent<CameraAttributesDefinition>();
+
+            CameraBossFollow cameraBossFollow = Camera.main.GetComponent<CameraBossFollow>();
+
+            float fH1 = cameraAttributesDefinition1 != null ? cameraAttributesDefinition1.desiredFloorHeight : cameraBossFollow.bossAndFloorHeight;
+            float fH2 = cameraAttributesDefinition2 != null ? cameraAttributesDefinition2.desiredFloorHeight : cameraBossFollow.bossAndFloorHeight;
+
+            Vector3 oP1 = cameraAttributesDefinition1 != null ? cameraAttributesDefinition1.desiredPositionOffset : cameraBossFollow.bossPositionOffset;
+            Vector3 oP2 = cameraAttributesDefinition2 != null ? cameraAttributesDefinition2.desiredPositionOffset : cameraBossFollow.bossPositionOffset;
+
+            floorHeight = Mathf.Lerp(fH1, fH2, Mathf.Clamp01(inner.progressionOffset));
+            positionOffset = Vector3.Lerp(oP1, oP2, Mathf.Clamp01(inner.progressionOffset));
+
+            return true;
+        }
+
+        Debug.LogError("Invalid Id");
+
+        return false;
+    }
 }
