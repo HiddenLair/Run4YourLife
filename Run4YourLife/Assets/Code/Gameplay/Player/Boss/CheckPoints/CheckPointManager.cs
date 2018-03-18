@@ -15,7 +15,7 @@ public class CheckPointManager : MonoBehaviour {
     private Dictionary<int, InnerPos> idMap = new Dictionary<int, InnerPos>();
     static private int idSetter = 0;
 
-    private static CheckPointManager instance;
+    /*private static CheckPointManager instance;
 
     public static CheckPointManager Instance()
     {
@@ -50,7 +50,7 @@ public class CheckPointManager : MonoBehaviour {
     void Awake()
     {
         instance = this;
-    }
+    }*/
 
     public int Subscribe()
     {

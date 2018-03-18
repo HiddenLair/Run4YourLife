@@ -2,35 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
-
-using Run4YourLife.Player;
 
 namespace Run4YourLife.GameManagement
 {
-    public class EasyMoveHorizontalPhaseManager : GamePhaseManager
+    public class HardMoveHorizontalManager : GamePhaseManager
     {
         #region Editor variables
 
         [SerializeField]
-        private GameObject m_phase1to2Bridge;
-
-        [SerializeField]
-        private GameObject m_phase2StartTrigger;
+        private CheckPointManager m_checkPointManager;
 
         [SerializeField]
         private CameraBossFollow m_cameraBossFollow;
 
-        [SerializeField]
-        private CheckPointManager m_checkPointManager;
-
         #endregion
 
-        #region Member variables
+        #region Member Variables
 
         private PlayerSpawner m_playerSpawner;
 
         #endregion
+
+        #region Regular Execution
 
         #region Initialization
 
@@ -39,30 +32,29 @@ namespace Run4YourLife.GameManagement
             m_playerSpawner = GetComponent<PlayerSpawner>();
             Debug.Assert(m_playerSpawner != null);
 
-            RegisterPhase(GamePhase.EasyMoveHorizontal);
+            RegisterPhase(GamePhase.HardMoveHorizontal);
         }
 
         #endregion
 
-        #region Regular Execution
-
         public override void StartPhase()
         {
-            GameObject boss = GameObject.FindGameObjectWithTag("Boss"); //TODO make class with all tags and reference that
-            Debug.Assert(boss != null);
+            m_checkPointManager.gameObject.SetActive(true);
+
+            GameObject boss = m_playerSpawner.InstantiateBossPlayer();
             m_cameraBossFollow.boss = boss.transform;
             m_cameraBossFollow.enabled = true;
-
-            m_phase1to2Bridge.SetActive(true);
-            m_phase2StartTrigger.SetActive(true);
         }
 
         public override void EndPhase()
         {
             m_checkPointManager.gameObject.SetActive(false);
 
-            m_cameraBossFollow.enabled = false;
+            GameObject boss = GameObject.FindGameObjectWithTag("Boss");
+            Destroy(boss);
+
             m_cameraBossFollow.boss = null;
+            m_cameraBossFollow.enabled = false;
         }
 
         #endregion
@@ -72,33 +64,26 @@ namespace Run4YourLife.GameManagement
         public override void DebugStartPhase()
         {
             m_checkPointManager.gameObject.SetActive(true);
+
             GameObject[] players = m_playerSpawner.InstantiatePlayers();
 
             GameObject boss = players.Where(x => x.CompareTag("Boss")).First();
             m_cameraBossFollow.boss = boss.transform;
             m_cameraBossFollow.enabled = true;
-
-            m_phase1to2Bridge.SetActive(true);
-            m_phase2StartTrigger.SetActive(true);
         }
 
         public override void DebugEndPhase()
         {
             m_checkPointManager.gameObject.SetActive(false);
-            GameObject boss = FindObjectOfType<Boss>().gameObject;
-            Debug.Assert(boss != null);
+
+            GameObject boss = GameObject.FindGameObjectWithTag("Boss");
             Destroy(boss);
 
-            PlayerCharacterController[] players = FindObjectsOfType<PlayerCharacterController>();
-            foreach (PlayerCharacterController player in players)
-            {
-                Destroy(player.gameObject);
-            }
-            m_cameraBossFollow.enabled = false;
             m_cameraBossFollow.boss = null;
-
+            m_cameraBossFollow.enabled = false;
         }
 
         #endregion
     }
 }
+

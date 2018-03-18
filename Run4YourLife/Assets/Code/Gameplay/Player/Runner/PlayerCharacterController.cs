@@ -5,6 +5,7 @@ using UnityEngine;
 using Run4YourLife.Input;
 using System;
 using UnityEngine.EventSystems;
+using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.Player
 {
@@ -83,6 +84,13 @@ namespace Run4YourLife.Player
         private void Start()
         {
             playerControlScheme.Active = true;
+        }
+
+        private void OnDestroy()
+        {
+            GameObject temp = FindObjectOfType<PlayerStateManager>().gameObject;
+            PlayerDefinition playerDef = GetComponent<PlayerInstance>().PlayerDefinition;
+            ExecuteEvents.Execute<IPlayerStateEvents>(temp, null, (x, y) => x.OnPlayerDeath(playerDef));
         }
 
         void Update()

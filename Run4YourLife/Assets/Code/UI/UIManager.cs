@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.UI
 {
@@ -104,6 +105,32 @@ namespace Run4YourLife.UI
             imageUpdaters.Add(imageUpdaterTrapB);
             imageUpdaters.Add(imageUpdaterTrapX);
             imageUpdaters.Add(imageUpdaterTrapY);
+
+            FindObjectOfType<GameManager>().onGamePhaseChanged.AddListener(x => ConversorTemporal(x));
+        }
+
+        public void ConversorTemporal(GamePhase phase)//TODO: REFACTOR THIS
+        {
+            PhaseType ret = PhaseType.TRANSITION;
+            switch (phase)
+            {
+                case GamePhase.EasyMoveHorizontal:
+                    {
+                        ret = PhaseType.FIRST;
+                    }
+                    break;
+                case GamePhase.BossFight:
+                    {
+                        ret = PhaseType.SECOND;
+                    }
+                    break;
+                case GamePhase.HardMoveHorizontal:
+                    {
+                        ret = PhaseType.THIRD;
+                    }
+                    break;
+            }
+            OnPhaseSetted(ret);
         }
 
         public void OnActionUsed(ActionType actionType, float time)

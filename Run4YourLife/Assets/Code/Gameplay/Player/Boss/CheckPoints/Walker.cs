@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Walker : MonoBehaviour {
 
@@ -11,7 +12,7 @@ public class Walker : MonoBehaviour {
 
     void Start()
     {
-        checkPointManager = FindObjectOfType<CheckPointManager>();
+        checkPointManager = FindObjectsOfType<CheckPointManager>().Where(x => x.enabled).First();
         id = checkPointManager.Subscribe();
     }
 
