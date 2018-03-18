@@ -85,6 +85,10 @@ namespace Run4YourLife.GameManagement
             {
                 DebugEndExecutingPhaseAndDebugStartPhase(GamePhase.HardMoveHorizontal);
             }
+            else if (UnityEngine.Input.GetKeyDown(KeyCode.Keypad4))
+            {
+                EndExecutingPhaseAndStartPhase(GamePhase.TransitionToHardMoveHorizontal);
+            }
         }
 
         #region Phase Execution

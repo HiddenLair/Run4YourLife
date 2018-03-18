@@ -16,13 +16,15 @@ namespace Run4YourLife.GameManagement
         private CameraTargetCentered m_cameraTargetCentered;
 
         [SerializeField]
-        private Transform bossFightStartingCameraPositionDebug;
+        private Transform m_bossFightStartingCameraPositionDebug;
 
         #endregion
 
         #region Member variables
 
         private PlayerSpawner m_playerSpawner;
+
+        private ExecuteEventAfterSeconds m_transitionToNextPhaseAfterSeconds;
 
         #endregion
 
@@ -32,6 +34,9 @@ namespace Run4YourLife.GameManagement
         {
             m_playerSpawner = GetComponent<PlayerSpawner>();
             Debug.Assert(m_playerSpawner != null);
+
+            m_transitionToNextPhaseAfterSeconds = GetComponent<ExecuteEventAfterSeconds>();
+            Debug.Assert(m_transitionToNextPhaseAfterSeconds != null);
 
             RegisterPhase(GamePhase.BossFight);
         }
@@ -47,6 +52,7 @@ namespace Run4YourLife.GameManagement
             GameObject boss = m_playerSpawner.InstantiateBossPlayer();
             m_cameraTargetCentered.m_target = boss.transform; // TODO: Temporal camera attachment
             m_cameraTargetCentered.enabled = true;
+            m_transitionToNextPhaseAfterSeconds.Invoke();
         }
 
         public override void EndPhase()
@@ -54,11 +60,24 @@ namespace Run4YourLife.GameManagement
             GameObject boss = GameObject.FindGameObjectWithTag("Boss");
             Destroy(boss);
             m_cameraTargetCentered.enabled = false;
+            m_cameraTargetCentered.m_target = null;
         }
 
         #endregion
 
         #region Debug Execution
+
+        public override void DebugStartPhase()
+        {
+            m_cameraTargetCentered.transform.position = m_bossFightStartingCameraPositionDebug.position;
+
+            GameObject[] players = m_playerSpawner.InstantiatePlayers();
+
+            GameObject boss = players.Where(x => x.CompareTag("Boss")).First();
+            m_cameraTargetCentered.m_target = boss.transform; // TODO: Temporal camera attachment
+            m_cameraTargetCentered.enabled = true;
+            m_transitionToNextPhaseAfterSeconds.Invoke();
+        }
 
         public override void DebugEndPhase()
         {
@@ -74,16 +93,6 @@ namespace Run4YourLife.GameManagement
             m_cameraTargetCentered.enabled = false;
         }
 
-        public override void DebugStartPhase()
-        {
-            m_cameraTargetCentered.transform.position = bossFightStartingCameraPositionDebug.position;
-
-            GameObject[] players = m_playerSpawner.InstantiatePlayers();
-
-            GameObject boss = players.Where(x => x.CompareTag("Boss")).First();
-            m_cameraTargetCentered.m_target = boss.transform; // TODO: Temporal camera attachment
-            m_cameraTargetCentered.enabled = true;
-        }
         #endregion
     }
 }

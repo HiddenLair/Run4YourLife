@@ -12,7 +12,8 @@ namespace Run4YourLife.GameManagement
         TransitionToBossFight,
         BossFight,
         TransitionToHardMoveHorizontal,
-        HardMoveHorizontal
+        HardMoveHorizontal,
+        End
     }
 
     public abstract class GamePhaseManager : MonoBehaviour {
