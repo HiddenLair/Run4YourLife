@@ -13,7 +13,6 @@ namespace Run4YourLife.Player
 
             Destroy(gameObject);
         }
-
         void OnBecameInvisible()
         {
             Destroy(gameObject);
