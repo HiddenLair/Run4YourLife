@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-
+using Run4YourLife.SceneManagement;
 using Run4YourLife.Player;
 using System;
 
@@ -12,6 +12,9 @@ namespace Run4YourLife.GameManagement
     public class GameManager : MonoBehaviour
     {
         public GamePhaseEvent onGamePhaseChanged;
+
+        [SerializeField]
+        private SceneLoadRequest toMainMenuRequest;
 
         #region Initialization
 
@@ -92,6 +95,11 @@ namespace Run4YourLife.GameManagement
             {
                 EndExecutingPhaseAndStartPhase(GamePhase.TransitionToHardMoveHorizontal);
             }
+        }
+
+        public void OnAllRunnersDeath()
+        {
+            toMainMenuRequest.Execute();
         }
 
         #region Phase Execution

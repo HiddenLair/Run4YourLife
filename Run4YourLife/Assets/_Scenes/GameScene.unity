@@ -14918,6 +14918,8 @@ GameObject:
   - component: {fileID: 1193818216}
   - component: {fileID: 1193818217}
   - component: {fileID: 1193818218}
+  - component: {fileID: 1193818219}
+  - component: {fileID: 1193818220}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -14960,6 +14962,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Run4YourLife.GameManagement.GamePhaseEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  toMainMenuRequest: {fileID: 1193818220}
 --- !u!114 &1193818218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14975,6 +14978,51 @@ MonoBehaviour:
   endPhase1: {fileID: 84853449}
   startPhase3: {fileID: 309245634}
   endPhase3: {fileID: 16004300}
+--- !u!114 &1193818219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1193818215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9421b2c73a10614180bf237afbd5a88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onAllPlayersDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1193818217}
+        m_MethodName: OnAllRunnersDeath
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &1193818220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1193818215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b54b125ffc0a6ec46b3f2eecc0eff95c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneLoadRequestData:
+    sceneName: MainMenu
+    loadSceneMode: 1
+    loadEvent: 0
+    setLoadedSceneAsActiveScene: 1
+    unloadScene: 1
+    unloadedSceneName: GameScene
 --- !u!1001 &1196899895
 Prefab:
   m_ObjectHideFlags: 0
@@ -26829,7 +26877,8 @@ GameObject:
   - component: {fileID: 2108495245}
   - component: {fileID: 2108495244}
   - component: {fileID: 2108495243}
-  m_Layer: 0
+  - component: {fileID: 2108495246}
+  m_Layer: 10
   m_Name: EndGameTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
@@ -26843,7 +26892,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2108495241}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 504.97, y: 4.03, z: 0.99998474}
+  m_LocalPosition: {x: 505.58, y: 4.03, z: -0.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 998850292}
@@ -26865,6 +26914,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2108495244}
         m_MethodName: Transition
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2108495246}
+        m_MethodName: Execute
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -26905,6 +26965,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.77, y: 20, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2108495246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2108495241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b54b125ffc0a6ec46b3f2eecc0eff95c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneLoadRequestData:
+    sceneName: MainMenu
+    loadSceneMode: 1
+    loadEvent: 0
+    setLoadedSceneAsActiveScene: 1
+    unloadScene: 1
+    unloadedSceneName: GameScene
 --- !u!1001 &2120569181
 Prefab:
   m_ObjectHideFlags: 0

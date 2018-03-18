@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Run4YourLife.SceneManagement
@@ -30,8 +31,19 @@ namespace Run4YourLife.SceneManagement
 
         private void Awake()
         {
-            m_sceneLoader = Component.FindObjectOfType<SceneLoader>();
+            m_sceneLoader = GetOrCreateDefaultSceneLoader();
             Debug.Assert(m_sceneLoader != null);
+        }
+
+        private SceneLoader GetOrCreateDefaultSceneLoader()
+        {
+            SceneLoader ret = FindObjectOfType<SceneLoader>();
+            if(ret == null)
+            {
+                ret = gameObject.AddComponent<SceneLoader>();
+            }
+
+            return ret;
         }
 
         private void Start()

@@ -111,7 +111,6 @@ namespace Run4YourLife.UI
 
         public void ConversorTemporal(GamePhase phase)//TODO: REFACTOR THIS
         {
-            Debug.Log(phase);
             PhaseType ret = PhaseType.TRANSITION;
             switch (phase)
             {
