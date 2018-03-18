@@ -499,7 +499,7 @@ GameObject:
   - component: {fileID: 114207125779255010}
   - component: {fileID: 114613523126294976}
   m_Layer: 0
-  m_Name: R4YL_CHAR_Boss
+  m_Name: Phase3Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -931,7 +931,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1898532112394816
 GameObject:
   m_ObjectHideFlags: 1
@@ -1432,7 +1432,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1601248243005334}
   m_LocalRotation: {x: -0.00000009735359, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.9, y: 0, z: 0}
+  m_LocalPosition: {x: -10.91, y: -2.54, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4336117528379726}
@@ -2282,7 +2282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   laser: {fileID: 1897983130793434}
-  laserDuration: 1
+  laserDuration: 0.25
   rotationSpeed: 100
   animShoot: {fileID: 7400008, guid: 269ba7a10d2b32e40b15460e98338e66, type: 3}
   shootMarker: {fileID: 4424678723774586}
@@ -2401,7 +2401,7 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1897983130793434}
   serializedVersion: 5
-  lengthInSec: 5
+  lengthInSec: 0.25
   simulationSpeed: 1
   stopAction: 0
   looping: 0
@@ -2454,14 +2454,14 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1326068958
+  randomSeed: 1497576069
   InitialModule:
     serializedVersion: 3
     enabled: 1
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 0.25
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -3141,7 +3141,7 @@ ParticleSystem:
       cycleCount: 1
       repeatInterval: 0.01
     - serializedVersion: 2
-      time: 0.1
+      time: 0.0001
       countCurve:
         serializedVersion: 2
         minMaxState: 0
@@ -3186,7 +3186,7 @@ ParticleSystem:
       cycleCount: 1
       repeatInterval: 0.01
     - serializedVersion: 2
-      time: 0.2
+      time: 0.0001
       countCurve:
         serializedVersion: 2
         minMaxState: 0
@@ -3231,7 +3231,7 @@ ParticleSystem:
       cycleCount: 1
       repeatInterval: 0.01
     - serializedVersion: 2
-      time: 0.25
+      time: 0.0001
       countCurve:
         serializedVersion: 2
         minMaxState: 0
