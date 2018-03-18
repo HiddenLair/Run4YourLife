@@ -14642,8 +14642,6 @@ GameObject:
   - component: {fileID: 1176960336}
   - component: {fileID: 1176960339}
   - component: {fileID: 1176960337}
-  - component: {fileID: 1176960340}
-  - component: {fileID: 1176960338}
   m_Layer: 0
   m_Name: BossFight
   m_TagString: Untagged
@@ -14677,18 +14675,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_cameraTargetCentered: {fileID: 1312331677}
   m_bossFightStartingCameraPositionDebug: {fileID: 519286012}
---- !u!114 &1176960338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1176960335}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 601e58cb1c05702428875c5c1c7c7fe9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_nextGamePhase: 4
+  m_timeOfPhase: 10
+  m_triggerToPhase: {fileID: 617278718}
 --- !u!114 &1176960339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14710,34 +14698,6 @@ MonoBehaviour:
   - {fileID: 553486800}
   - {fileID: 633940980}
   m_bossSpawn: {fileID: 869682911}
---- !u!114 &1176960340
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1176960335}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9200325461c89340b07f51194bc898e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_toExecute:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1176960338}
-        m_MethodName: Transition
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_seconds: 2
 --- !u!1001 &1184203497
 Prefab:
   m_ObjectHideFlags: 0
@@ -14995,6 +14955,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d558957ad2708c49855d7dc4d59ad3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onGamePhaseChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Run4YourLife.GameManagement.GamePhaseEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &1193818218
 MonoBehaviour:
   m_ObjectHideFlags: 0
