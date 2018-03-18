@@ -12,7 +12,7 @@ public class ExplosionArea : MonoBehaviour {
         Collider[] collisions = Physics.OverlapSphere(transform.position, AOERadius, layersListener);
         foreach (Collider c in collisions)
         {
-            ExecuteEvents.Execute<ICharacterEvents>(c.gameObject, null, (x, y) => x.Explosion());
+            ExecuteEvents.Execute<ICharacterEvents>(c.gameObject, null, (x, y) => x.Kill());
         }
     }
 

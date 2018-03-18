@@ -335,7 +335,7 @@ namespace Run4YourLife.Player
             facingRight = !facingRight;
         }
 
-        public void Explosion()
+        public void Kill()
         {
             Destroy(gameObject);
         }

@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4121043048440612}
   - component: {fileID: 65254021861464548}
-  - component: {fileID: 114989309479590328}
+  - component: {fileID: 114350154689404916}
   m_Layer: 12
   m_Name: PlayerKiller
   m_TagString: Shoot
@@ -68,9 +68,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1882295906769866}
-  m_LocalRotation: {x: 0, y: -0.9995879, z: 0, w: 0.0287067}
-  m_LocalPosition: {x: -0.24743181, y: 0, z: 0.5}
-  m_LocalScale: {x: 3.65, y: 4.6, z: 3.12}
+  m_LocalRotation: {x: -0, y: -0.9995879, z: -0, w: 0.0287067}
+  m_LocalPosition: {x: 236.76, y: 52.06229, z: -45.59}
+  m_LocalScale: {x: 3.650001, y: 4.6, z: 3.1200013}
   m_Children:
   - {fileID: 4121043048440612}
   m_Father: {fileID: 0}
@@ -170,6 +170,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114350154689404916
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1083108709329836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 412452455570aa44bac37005f9813a6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114394894168695208
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -184,14 +195,3 @@ MonoBehaviour:
   initialFallSpeed: 10
   gravity: 40
   maxRotation: 90
---- !u!114 &114989309479590328
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1083108709329836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92da25443a33a384798fa6c0a70cfb43, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
