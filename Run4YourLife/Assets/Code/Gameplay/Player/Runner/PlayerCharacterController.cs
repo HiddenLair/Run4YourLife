@@ -86,13 +86,6 @@ namespace Run4YourLife.Player
             playerControlScheme.Active = true;
         }
 
-        private void OnDestroy()
-        {
-            GameObject temp = FindObjectOfType<PlayerStateManager>().gameObject;
-            PlayerDefinition playerDef = GetComponent<PlayerInstance>().PlayerDefinition;
-            ExecuteEvents.Execute<IPlayerStateEvents>(temp, null, (x, y) => x.OnPlayerDeath(playerDef));
-        }
-
         void Update()
         {
             if (!beingPushed)
@@ -337,7 +330,9 @@ namespace Run4YourLife.Player
 
         public void Kill()
         {
-            Destroy(gameObject);
+            GameObject temp = FindObjectOfType<PlayerStateManager>().gameObject;
+            PlayerDefinition playerDef = GetComponent<PlayerInstance>().PlayerDefinition;
+            ExecuteEvents.Execute<IPlayerStateEvents>(temp, null, (x, y) => x.OnPlayerDeath(playerDef));
         }
 
         public void Root(int rootHardness)
