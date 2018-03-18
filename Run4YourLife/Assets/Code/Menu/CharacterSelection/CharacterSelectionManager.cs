@@ -16,7 +16,7 @@ namespace Run4YourLife.CharacterSelection
         private PlayerManager m_playerManager;
 
         [SerializeField]
-        private SceneLoadRequest m_gameLoadRequest;
+        private GameObject m_gameLoadRequest;
 
         [SerializeField]
         private SceneLoadRequest m_mainMenuLoadRequest;
@@ -79,7 +79,10 @@ namespace Run4YourLife.CharacterSelection
 
         public void OnGameStart()
         {
-            m_gameLoadRequest.Execute();
+            foreach (SceneLoadRequest request in m_gameLoadRequest.GetComponents<SceneLoadRequest>())
+            {
+                request.Execute();
+            }
         }
 
         public void OnMainMenuStart()

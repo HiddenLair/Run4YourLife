@@ -23,6 +23,8 @@ GameObject:
   - component: {fileID: 23152872664159702}
   - component: {fileID: 95715152304623800}
   - component: {fileID: 65731918305813442}
+  - component: {fileID: 65140269535847126}
+  - component: {fileID: 114823235769098416}
   m_Layer: 0
   m_Name: R4YL_PROP_drowing_platform
   m_TagString: Untagged
@@ -37,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1354323235554828}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 92.35857, y: 51.711895, z: -47.529354}
+  m_LocalPosition: {x: 0.63321364, y: 0, z: -0.10786247}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -84,6 +86,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1354323235554828}
   m_Mesh: {fileID: 4300000, guid: 219a4bc3e15b535448d889929d9c126e, type: 3}
+--- !u!65 &65140269535847126
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1354323235554828}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5336807, y: 2.1890523, z: 0.26010257}
+  m_Center: {x: 0.002649188, y: 1.2573611e-15, z: 0.81}
 --- !u!65 &65731918305813442
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -113,3 +127,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114823235769098416
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1354323235554828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c53d72cc15db9f46b3fbafb1ded56c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sinkDelay: 0.25
+  emergeDelay: 0.1
+  speed: 2.5
+  timeAction: 0.25

@@ -24,7 +24,7 @@ public class ExplosionTrapControl : MonoBehaviour {
         {
             if (!Physics.Linecast(transform.position, c.gameObject.GetComponent<Collider>().bounds.center, blockingElement))
             {
-                ExecuteEvents.Execute<ICharacterEvents>(c.gameObject, null, (x, y) => x.Explosion());
+                ExecuteEvents.Execute<ICharacterEvents>(c.gameObject, null, (x, y) => x.Kill());
                 toDelete = true;
             }
         }

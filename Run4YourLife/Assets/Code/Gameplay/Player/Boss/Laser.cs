@@ -25,6 +25,7 @@ public class Laser : MonoBehaviour {
     public GameObject skillB;
     public GameObject trapB;
     public float trapDelaySpawn;
+    public AudioClip trapCastSFX;
 
     #region Public Trap CD
     public float globalTrapCD = 1.5f;
@@ -56,11 +57,12 @@ public class Laser : MonoBehaviour {
     public bool isReadyForAction = true; //needed also for boss scripts
     BossControlScheme bossControlScheme;
     private Animator anim;
-
+    private AudioSource audioTrap;
     private GameObject uiManager;
 
     private void Awake()
     {
+        audioTrap = GetComponent<AudioSource>();
         bossControlScheme = GetComponent<BossControlScheme>();
         anim = GetComponent<Animator>();
         setIndex = (int)phase % sets.Length;
@@ -69,7 +71,7 @@ public class Laser : MonoBehaviour {
         trapXCD_Timer = trapXCD;
         trapYCD_Timer = trapYCD;
 
-        uiManager = FindObjectOfType<UIManager>().gameObject;
+        uiManager = GameObject.FindGameObjectWithTag("UI");
     }
 
     void Update ()
@@ -229,6 +231,7 @@ public class Laser : MonoBehaviour {
 
     void SetElement(GameObject trap, GameObject skill)
     {
+        PlaySFX(trapCastSFX);
         globalTrapCD_Timer = 0.0f;
 
         anim.SetTrigger("Casting");
@@ -284,8 +287,16 @@ public class Laser : MonoBehaviour {
          */
         float zDistance =laser.position.z - Camera.main.transform.position.z;
         Vector3 pos = new Vector3(laser.position.x,Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, zDistance)).y, laser.position.z);
-        targetLocation = Physics.RaycastAll(pos,Vector3.down,distance,LayerMask.GetMask("Ground"));
+        targetLocation = Physics.RaycastAll(pos,Vector3.down,distance,LayerMask.GetMask("Ground"),QueryTriggerInteraction.Ignore);
 
         return targetLocation;
+    }
+
+    private void PlaySFX(AudioClip clip)
+    {
+        if (clip != null)
+        {
+            audioTrap.PlayOneShot(clip);
+        }
     }
 }

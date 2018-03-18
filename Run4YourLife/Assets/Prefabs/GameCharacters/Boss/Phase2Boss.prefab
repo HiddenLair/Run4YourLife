@@ -479,6 +479,7 @@ GameObject:
   - component: {fileID: 114937148663753440}
   - component: {fileID: 114582281687953202}
   - component: {fileID: 114888666313753424}
+  - component: {fileID: 82911549256438540}
   m_Layer: 0
   m_Name: Phase2Boss
   m_TagString: Boss
@@ -1993,7 +1994,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 0f752cd40b047a5418ffcfdeeb06cff9, type: 2}
+  - {fileID: 2100000, guid: 8e61ddee64c4a034a9338adaf932af3b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2034,6 +2035,86 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1652950656869090}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!82 &82911549256438540
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1435242058213750}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &95950610944987414
 Animator:
   serializedVersion: 3
@@ -2069,9 +2150,11 @@ MonoBehaviour:
   shootMarker: {fileID: 4702150358215722}
   bulletStartingPoint: {fileID: 4621370887555960}
   reload: 0.5
+  shootSFX: {fileID: 8300000, guid: c3833cf9a9803f145bb95bbf5defe584, type: 3}
   mele: {fileID: 1316436286298340, guid: 69d16cc697016ce409429c4fb4cb0daa, type: 2}
   meleSpeed: 500
   meleReload: 2
+  meleeSFX: {fileID: 8300000, guid: 5a17a99919f460e4f961de3bb2f63aa7, type: 3}
   trapIndicator: {fileID: 4129931644911652}
 --- !u!114 &114582281687953202
 MonoBehaviour:
@@ -2111,15 +2194,16 @@ MonoBehaviour:
   timeBetweenY: 0.5
   xSpeed: 10
   phase: 1
-  skillA: {fileID: 1674844452342998, guid: 824cd44351d62dd4898f4369812cf9dd, type: 2}
+  skillA: {fileID: 1392325496747952, guid: 51ca4f89786442b43970d93af24d9878, type: 2}
   trapA: {fileID: 1674844452342998, guid: 824cd44351d62dd4898f4369812cf9dd, type: 2}
-  skillX: {fileID: 1053646925812610, guid: 6891dd8f950938046ba0d059588dd1d4, type: 2}
+  skillX: {fileID: 1919952662679816, guid: 0e0278c361a7ea340a30ade8fded1ab1, type: 2}
   trapX: {fileID: 1053646925812610, guid: 6891dd8f950938046ba0d059588dd1d4, type: 2}
-  skillY: {fileID: 1244499117138228, guid: e7e661a6bdf2b734497407d3c1e47138, type: 2}
+  skillY: {fileID: 1278277454888450, guid: fb22f60ed90b40d42b41a5467fc91add, type: 2}
   trapY: {fileID: 1244499117138228, guid: e7e661a6bdf2b734497407d3c1e47138, type: 2}
-  skillB: {fileID: 1053646925812610, guid: 6891dd8f950938046ba0d059588dd1d4, type: 2}
-  trapB: {fileID: 1053646925812610, guid: 6891dd8f950938046ba0d059588dd1d4, type: 2}
+  skillB: {fileID: 1919952662679816, guid: 0e0278c361a7ea340a30ade8fded1ab1, type: 2}
+  trapB: {fileID: 1397588157857540, guid: 63d71b658400a024b9a9b989a4975592, type: 2}
   trapDelaySpawn: 0.5
+  trapCastSFX: {fileID: 8300000, guid: 4a235b16048326246adf6fdd4f2cecee, type: 3}
   globalTrapCD: 1.5
   trapACD: 5
   trapBCD: 5

@@ -15,7 +15,7 @@ public class CheckPointManager : MonoBehaviour {
     private Dictionary<int, InnerPos> idMap = new Dictionary<int, InnerPos>();
     static private int idSetter = 0;
 
-    private static CheckPointManager instance;
+    /*private static CheckPointManager instance;
 
     public static CheckPointManager Instance()
     {
@@ -50,7 +50,7 @@ public class CheckPointManager : MonoBehaviour {
     void Awake()
     {
         instance = this;
-    }
+    }*/
 
     public int Subscribe()
     {
@@ -60,12 +60,47 @@ public class CheckPointManager : MonoBehaviour {
         return ret;
     }
 
+    public void Compute(int id, float speed)
+    {
+        if(idMap.ContainsKey(id))
+        {
+            InnerPos inner = idMap[id];
+
+            if(inner.listOffset == checkpoints.Length - 2 && inner.progressionOffset >= 1)
+            {
+                return;
+            }
+
+            Vector3 point1 = checkpoints[inner.listOffset].position;
+            Vector3 point2 = checkpoints[inner.listOffset + 1].position;
+
+            float lerpSpeed = speed / Vector3.Distance(point1, point2);
+            inner.progressionOffset += lerpSpeed;
+
+            if(inner.progressionOffset > 1 && inner.listOffset < checkpoints.Length - 2)
+            {
+                inner.listOffset++;
+
+                float percent = (inner.progressionOffset - 1) / lerpSpeed;
+                Vector3 point3 = checkpoints[inner.listOffset + 1].transform.position;
+                lerpSpeed = speed / Vector3.Distance(point2, point3);
+                inner.progressionOffset = lerpSpeed * percent;
+            }
+
+            return;
+        }
+
+        Debug.LogError("Invalid Id");
+    }
+
     public Vector3 GetPosition( int id, float speed)
     {
         Vector3 ret = Vector3.zero;
-        if (idMap.ContainsKey(id))
+
+        if(idMap.ContainsKey(id))
         {
             InnerPos inner = idMap[id];
+
             if(inner.listOffset == checkpoints.Length-2 && inner.progressionOffset >= 1)
             {
                 return checkpoints[inner.listOffset+1].position; //We stand in the last point
@@ -74,7 +109,8 @@ public class CheckPointManager : MonoBehaviour {
             Vector3 point1 = checkpoints[inner.listOffset].position;
             Vector3 point2 = checkpoints[inner.listOffset+1].position;
             float lerpSpeed = speed / Vector3.Distance(point1, point2);
-            inner.progressionOffset += lerpSpeed;
+
+            /* inner.progressionOffset += lerpSpeed;
             if (inner.progressionOffset > 1 && inner.listOffset < checkpoints.Length-2)
             {
                 inner.listOffset++;
@@ -82,11 +118,57 @@ public class CheckPointManager : MonoBehaviour {
                 Vector3 point3 = checkpoints[inner.listOffset + 1].transform.position;
                 lerpSpeed = speed / Vector3.Distance(point2, point3);
                 inner.progressionOffset = lerpSpeed*percent;
-            }
+            } */
+
             return Vector3.Lerp(point1,point2,Mathf.Clamp01(inner.progressionOffset));
         }
+
         Debug.LogError("Invalid Id");
+
         return ret;
     }
 
+    public void GetFloorHeightAndPositionOffset(int id, float speed, out float floorHeight, out Vector3 positionOffset)
+    {
+        floorHeight = 0.0f;
+        positionOffset = Vector3.zero;
+
+        if(idMap.ContainsKey(id))
+        {
+            InnerPos inner = idMap[id];
+
+            if(inner.listOffset == checkpoints.Length - 2 && inner.progressionOffset >= 1)
+            {
+                int index = inner.listOffset + 1;
+
+                CameraAttributesDefinition cameraAttributesDefinition = checkpoints[index].GetComponent<CameraAttributesDefinition>();
+
+                floorHeight = cameraAttributesDefinition.desiredFloorHeight;
+                positionOffset = cameraAttributesDefinition.desiredPositionOffset;
+
+                return;
+            }
+
+            int index1 = inner.listOffset;
+            int index2 = inner.listOffset + 1;
+
+            CameraAttributesDefinition cameraAttributesDefinition1 = checkpoints[index1].GetComponent<CameraAttributesDefinition>();
+            CameraAttributesDefinition cameraAttributesDefinition2 = checkpoints[index2].GetComponent<CameraAttributesDefinition>();
+
+            CameraBossFollow cameraBossFollow = Camera.main.GetComponent<CameraBossFollow>();
+
+            float fH1 = cameraAttributesDefinition1.desiredFloorHeight;
+            float fH2 = cameraAttributesDefinition2.desiredFloorHeight;
+
+            Vector3 oP1 = cameraAttributesDefinition1.desiredPositionOffset;
+            Vector3 oP2 = cameraAttributesDefinition2.desiredPositionOffset;
+
+            floorHeight = Mathf.Lerp(fH1, fH2, Mathf.Clamp01(inner.progressionOffset));
+            positionOffset = Vector3.Lerp(oP1, oP2, Mathf.Clamp01(inner.progressionOffset));
+
+            return;
+        }
+
+        Debug.LogError("Invalid Id");
+    }
 }

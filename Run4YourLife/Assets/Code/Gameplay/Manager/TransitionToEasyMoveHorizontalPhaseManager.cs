@@ -35,6 +35,12 @@ namespace Run4YourLife.GameManagement
 
             //Once the animation has ended and we are in a stable and easy to manage state,
             //we transition directly to the next state
+            StartCoroutine(StartNextFrame());
+        }
+
+        IEnumerator StartNextFrame()
+        {
+            yield return null;
             m_gameManager.EndExecutingPhaseAndStartPhase(GamePhase.EasyMoveHorizontal); // last line of code, maybe execute next frame(?)
         }
 

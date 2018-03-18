@@ -16,8 +16,12 @@ namespace Run4YourLife.Player
         {
             if (characterController.GetVelocity().y < 0)
             {
-                characterController.Bounce(other.GetComponent<JumpOver>().GetBounceForce());
-                other.GetComponent<JumpOver>().JumpedOn();
+                JumpOver otherJumpOver = other.GetComponent<JumpOver>();
+                if (otherJumpOver != null)
+                {
+                    characterController.Bounce(otherJumpOver.GetBounceForce());
+                    otherJumpOver.JumpedOn();
+                }
             }
         }
     }

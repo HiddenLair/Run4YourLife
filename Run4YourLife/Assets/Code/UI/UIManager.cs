@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.UI
 {
@@ -19,7 +20,8 @@ namespace Run4YourLife.UI
 
     public enum PhaseType
     {
-        FIRST, SECOND, THIRD
+        FIRST, SECOND, THIRD,
+        TRANSITION
     }
 
     #endregion
@@ -77,6 +79,13 @@ namespace Run4YourLife.UI
 
         #endregion
 
+        #region Countdown
+
+        [SerializeField]
+        private Countdown countdown;
+
+        #endregion
+
         private List<TextUpdater> textUpdaters = new List<TextUpdater>();
 
         private List<ImageUpdater> imageUpdaters = new List<ImageUpdater>();
@@ -96,6 +105,32 @@ namespace Run4YourLife.UI
             imageUpdaters.Add(imageUpdaterTrapB);
             imageUpdaters.Add(imageUpdaterTrapX);
             imageUpdaters.Add(imageUpdaterTrapY);
+
+            FindObjectOfType<GameManager>().onGamePhaseChanged.AddListener(x => ConversorTemporal(x));
+        }
+
+        public void ConversorTemporal(GamePhase phase)//TODO: REFACTOR THIS
+        {
+            PhaseType ret = PhaseType.TRANSITION;
+            switch (phase)
+            {
+                case GamePhase.EasyMoveHorizontal:
+                    {
+                        ret = PhaseType.FIRST;
+                    }
+                    break;
+                case GamePhase.BossFight:
+                    {
+                        ret = PhaseType.SECOND;
+                    }
+                    break;
+                case GamePhase.HardMoveHorizontal:
+                    {
+                        ret = PhaseType.THIRD;
+                    }
+                    break;
+            }
+            OnPhaseSetted(ret);
         }
 
         public void OnActionUsed(ActionType actionType, float time)
@@ -111,13 +146,15 @@ namespace Run4YourLife.UI
 
         public void OnPhaseSetted(PhaseType phaseType)
         {
-            if(phaseType == PhaseType.SECOND)
+            if(phaseType == PhaseType.TRANSITION)
             {
-                progress.gameObject.SetActive(false);
+                ActiveAll(false);
             }
             else
             {
-                progress.gameObject.SetActive(true);
+                ActiveAll(true);
+                progress.gameObject.SetActive(phaseType != PhaseType.SECOND);
+                countdown.gameObject.SetActive(phaseType == PhaseType.SECOND);
             }
 
             progress.SetPhase(phaseType);
@@ -126,6 +163,19 @@ namespace Run4YourLife.UI
         public void OnBossProgress(float percent)
         {
             progress.SetPercent(percent);
+        }
+
+        public void OnCountdownSetted(float time)
+        {
+            countdown.Go(time);
+        }
+
+        private void ActiveAll(bool active)
+        {
+            for(int i = 0; i < transform.childCount; ++i)
+            {
+                transform.GetChild(i).gameObject.SetActive(active);
+            }
         }
     }
 }
