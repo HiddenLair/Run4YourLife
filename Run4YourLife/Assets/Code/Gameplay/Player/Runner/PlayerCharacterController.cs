@@ -333,6 +333,7 @@ namespace Run4YourLife.Player
             GameObject temp = FindObjectOfType<PlayerStateManager>().gameObject;
             PlayerDefinition playerDef = GetComponent<PlayerInstance>().PlayerDefinition;
             ExecuteEvents.Execute<IPlayerStateEvents>(temp, null, (x, y) => x.OnPlayerDeath(playerDef));
+            Destroy(gameObject);
         }
 
         public void Root(int rootHardness)
