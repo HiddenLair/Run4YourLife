@@ -172,17 +172,15 @@ namespace Run4YourLife.Player
                 idleTimer = 0.0f;
             }
 
+            characterController.Move(move + m_velocity * Time.deltaTime);
+
             float xScreenRight = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, Camera.main.transform.position.z - transform.position.z)).x;
-            if (transform.position.x <= xScreenRight)
-            {               
-                characterController.Move(move + m_velocity * Time.deltaTime);
-            }
-            else
+            if (transform.position.x > xScreenRight)
             {
                 Vector3 tempPos = transform.position;
                 tempPos.x = xScreenRight;
                 transform.position = tempPos;
-            }     
+            }
         }
 
         private void CheckForDrop()
