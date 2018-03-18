@@ -16,20 +16,20 @@ public class Walker : MonoBehaviour {
         id = checkPointManager.Subscribe();
     }
 
-    void Update () {
+    void Update()
+    {
+        checkPointManager.Compute(id, speed);
+
         transform.position = checkPointManager.GetPosition(id,speed);
 
         float fH;
         Vector3 pO;
 
-        bool valid = checkPointManager.GetFloorHeightAndPositionOffset(id, speed, out fH, out pO);
+        checkPointManager.GetFloorHeightAndPositionOffset(id, speed, out fH, out pO);
 
-        if(valid)
-        {
-            CameraBossFollow cameraBossFollow = Camera.main.GetComponent<CameraBossFollow>();
+        CameraBossFollow cameraBossFollow = Camera.main.GetComponent<CameraBossFollow>();
 
-            cameraBossFollow.bossAndFloorHeight = fH;
-            cameraBossFollow.bossPositionOffset = pO;
-        }
+        cameraBossFollow.bossAndFloorHeight = fH;
+        cameraBossFollow.bossPositionOffset = pO;
     }
 }
