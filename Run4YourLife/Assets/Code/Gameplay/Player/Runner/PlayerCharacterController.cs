@@ -174,8 +174,7 @@ namespace Run4YourLife.Player
             }
 
             characterController.Move(move + m_velocity * Time.deltaTime);
-
-            float xScreenRight = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, Camera.main.transform.position.z - transform.position.z)).x;
+            float xScreenRight = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, 0, Math.Abs(Camera.main.transform.position.z - transform.position.z))).x;
             if (transform.position.x > xScreenRight)
             {
                 Vector3 tempPos = transform.position;

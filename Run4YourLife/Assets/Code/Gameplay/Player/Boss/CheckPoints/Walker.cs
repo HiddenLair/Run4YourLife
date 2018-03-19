@@ -7,6 +7,8 @@ public class Walker : MonoBehaviour {
 
 
     public float speed;
+    public bool increaseSpeedOverTime;
+    public float increaseValue;
     private int id;
     private CheckPointManager checkPointManager;
 
@@ -18,6 +20,10 @@ public class Walker : MonoBehaviour {
 
     void Update()
     {
+        if (increaseSpeedOverTime)
+        {
+            speed += increaseValue * Time.deltaTime;
+        }
         checkPointManager.Compute(id, speed);
 
         transform.position = checkPointManager.GetPosition(id,speed);
