@@ -25,6 +25,9 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private GameObject m_triggerToPhase;
 
+        [SerializeField]
+        private Tiling m_backgroundTiling;
+
         #endregion
 
         #region Member variables
@@ -59,6 +62,7 @@ namespace Run4YourLife.GameManagement
             ExecuteEvents.Execute<IUIEvents>(m_uiManager, null, (x, y) => x.OnCountdownSetted(m_timeOfPhase));
             StartCoroutine(StartNextPhaseInSeconds(m_timeOfPhase));
             m_triggerToPhase.SetActive(false);
+            m_backgroundTiling.SetActive(false);
         }
 
         IEnumerator StartNextPhaseInSeconds(float time)
@@ -91,6 +95,7 @@ namespace Run4YourLife.GameManagement
             ExecuteEvents.Execute<IUIEvents>(m_uiManager, null, (x, y) => x.OnCountdownSetted(m_timeOfPhase));
             StartCoroutine(StartNextPhaseInSeconds(m_timeOfPhase));
             m_triggerToPhase.SetActive(false);
+            m_backgroundTiling.SetActive(false);
         }
 
         public override void DebugEndPhase()

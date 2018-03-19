@@ -9,6 +9,7 @@ public class Tiling : MonoBehaviour {
 
     private Vector2 actualTiling;
     private Vector2 initialTiling;
+    private bool active = true;
 
     private void Start()
     {
@@ -23,6 +24,19 @@ public class Tiling : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        mat.mainTextureOffset +=speed*Time.deltaTime;
+        if (active)
+        {
+            mat.mainTextureOffset += speed * Time.deltaTime;
+        }
 	}
+
+    public void SetActive(bool value)
+    {
+        active = value;
+    }
+
+    public bool GetActive()
+    {
+        return active;
+    }
 }

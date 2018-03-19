@@ -15,6 +15,12 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private CameraBossFollow m_cameraBossFollow;
 
+        [SerializeField]
+        private GameObject m_background;
+
+        [SerializeField]
+        private Material m_newBackgroundMat;
+
         #endregion
 
         #region Member Variables
@@ -44,6 +50,9 @@ namespace Run4YourLife.GameManagement
             GameObject boss = m_playerSpawner.InstantiateBossPlayer();
             m_cameraBossFollow.boss = boss.transform;
             m_cameraBossFollow.enabled = true;
+            m_background.GetComponent<Renderer>().material = m_newBackgroundMat;
+            m_background.GetComponent<Tiling>().mat = m_newBackgroundMat;
+            m_background.GetComponent<Tiling>().SetActive(true);
         }
 
         public override void EndPhase()
@@ -70,6 +79,9 @@ namespace Run4YourLife.GameManagement
             GameObject boss = players.Where(x => x.CompareTag("Boss")).First();
             m_cameraBossFollow.boss = boss.transform;
             m_cameraBossFollow.enabled = true;
+            m_background.GetComponent<Renderer>().material = m_newBackgroundMat;
+            m_background.GetComponent<Tiling>().mat = m_newBackgroundMat;
+            m_background.GetComponent<Tiling>().SetActive(true);
         }
 
         public override void DebugEndPhase()
