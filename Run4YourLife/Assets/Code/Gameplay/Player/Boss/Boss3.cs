@@ -137,7 +137,7 @@ namespace Run4YourLife.Player
             targetLocation = Physics.SphereCastAll(bulletStartingPoint.position,thickness,bulletStartingPoint.right,distance,layers);
             foreach(RaycastHit r in targetLocation)
             {
-                Destroy(r.collider.gameObject);
+                ExecuteEvents.Execute<ICharacterEvents>(r.transform.gameObject, null, (x, y) => x.Kill());
             }
             StartCoroutine(DesactivateDelayed(laser,laserDuration));
         }
