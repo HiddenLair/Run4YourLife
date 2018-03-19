@@ -8,8 +8,7 @@ public class MovePlayersWithYou : MonoBehaviour {
 
     List<Transform> players = new List<Transform>();
 	
-	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         Vector3 delta = transform.position - m_previousPosition;
 
         foreach (Transform transform in players)
