@@ -17,12 +17,14 @@ public class MelePhase3 : MonoBehaviour {
             Destroy(other.gameObject);
         }
 
-        if(other.tag == "Ground")
+        if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             Tremble();
-            Destroy(gameObject,timeToDestroy);
+            Destroy(gameObject, timeToDestroy);
         }
+        
+        
     }
 
     private void Tremble()

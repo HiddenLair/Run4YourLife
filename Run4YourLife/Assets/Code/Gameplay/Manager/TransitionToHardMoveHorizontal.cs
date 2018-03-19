@@ -17,6 +17,9 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private Transform m_cameraTargetHandle;
 
+        [SerializeField]
+        private GameObject m_hardMoveHorizontalStartTrigger;
+
         #endregion
 
         #region Initialization
@@ -37,12 +40,15 @@ namespace Run4YourLife.GameManagement
 
             m_cameraTargetCentered.m_target = m_cameraTargetHandle;
             m_cameraTargetCentered.enabled = true;
+            m_hardMoveHorizontalStartTrigger.SetActive(true);
         }
 
         public override void EndPhase()
         {
             m_cameraTargetCentered.m_target = null;
             m_cameraTargetCentered.enabled = false;
+            m_hardMoveHorizontalStartTrigger.SetActive(false);
+
         }
 
         #endregion
