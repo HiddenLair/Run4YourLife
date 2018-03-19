@@ -7,7 +7,7 @@ public class EliminatePlayerOnTrigger : MonoBehaviour {
 
     private void OnTriggerEnter(Collider triggered)
     {
-        if(triggered.tag == "Player")
+        if(triggered.CompareTag(Tags.Player))
         {
             ExecuteEvents.Execute<ICharacterEvents>(triggered.gameObject, null, (x, y) => x.Kill());
         }
@@ -15,7 +15,7 @@ public class EliminatePlayerOnTrigger : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collided)
     {
-        if(collided.gameObject.tag == "Player")
+        if(collided.gameObject.CompareTag(Tags.Player))
         {
             ExecuteEvents.Execute<ICharacterEvents>(collided.gameObject, null, (x, y) => x.Kill());
         }
