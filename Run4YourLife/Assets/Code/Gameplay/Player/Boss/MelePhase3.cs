@@ -12,19 +12,12 @@ public class MelePhase3 : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
-        {
-            Destroy(other.gameObject);
-        }
-
         if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             Tremble();
             Destroy(gameObject, timeToDestroy);
         }
-        
-        
     }
 
     private void Tremble()
