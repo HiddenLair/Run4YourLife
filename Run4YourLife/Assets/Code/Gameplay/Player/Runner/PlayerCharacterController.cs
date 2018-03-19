@@ -33,7 +33,13 @@ namespace Run4YourLife.Player
         private float timeToIdle = 5.0f;
 
         [SerializeField]
-        private AnimationCurve m_pushAnimation;
+        private float pushReduction;
+
+        [SerializeField]
+        private float minPushMagnitude;
+
+        [SerializeField]
+        private float gravityPushMuliplier;
 
         #endregion
 
@@ -173,7 +179,12 @@ namespace Run4YourLife.Player
                 idleTimer = 0.0f;
             }
 
-            characterController.Move(move + m_velocity * Time.deltaTime);
+            MoveCharacterContoller(move + m_velocity * Time.deltaTime);
+        }
+
+        private void MoveCharacterContoller(Vector3 movement)
+        {
+            characterController.Move(movement);
             float xScreenRight = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, 0, Math.Abs(Camera.main.transform.position.z - transform.position.z))).x;
             if (transform.position.x > xScreenRight)
             {
@@ -344,25 +355,31 @@ namespace Run4YourLife.Player
             stats.rootHardness = rootHardness;
         }
 
-        public void Impulse(Vector3 force)
+        public void Impulse(Vector3 direction,float force)
         {
-            anim.SetTrigger("push");
-            anim.SetFloat("pushForce", force.x);
-            beingPushed = true;
-            m_velocity.y = 0;
-            StartCoroutine(BeingPushed());
+            StartCoroutine(BeingPushed(direction,force));
         }
 
-        IEnumerator BeingPushed()
+        IEnumerator BeingPushed(Vector3 direction,float force)
         {
-            while(!anim.GetCurrentAnimatorStateInfo(0).IsName("Push"))
+            anim.SetTrigger("push");
+            anim.SetFloat("pushForce", direction.x);
+            beingPushed = true;
+            bool isRight = direction.x > 0;
+            Vector3 director = Quaternion.Euler(0,0,45) * Vector3.right;
+            if (!isRight)
             {
-                yield return new WaitForEndOfFrame();
+                director.x = -director.x;
             }
-            while (anim.GetCurrentAnimatorStateInfo(0).IsName("Push"))
+            director *= force;
+            while(Mathf.Abs(director.x) > minPushMagnitude)
             {
-                yield return new WaitForEndOfFrame();
+                MoveCharacterContoller(director * Time.deltaTime);
+                yield return null;
+                director.x = Mathf.Lerp(director.x,0,Time.deltaTime/pushReduction);
+                director.y += m_gravity * Time.deltaTime*gravityPushMuliplier;
             }
+            
             beingPushed = false;
         }
 

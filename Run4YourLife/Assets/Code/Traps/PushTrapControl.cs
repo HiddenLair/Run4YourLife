@@ -14,6 +14,7 @@ public class PushTrapControl : MonoBehaviour {
     public GameObject activationParticles;
     public LayerMask trapListener;
     public LayerMask blockingElement;
+    public float pushForce;
     #endregion
 
     private void OnTriggerEnter(Collider collider)
@@ -25,7 +26,7 @@ public class PushTrapControl : MonoBehaviour {
             if (!Physics.Linecast(transform.position, c.gameObject.GetComponent<Collider>().bounds.center, blockingElement))
             {
                 Vector3 direction = c.gameObject.GetComponent<Collider>().bounds.center - transform.position;
-                ExecuteEvents.Execute<ICharacterEvents>(c.gameObject, null, (x, y) => x.Impulse(direction.normalized));
+                ExecuteEvents.Execute<ICharacterEvents>(c.gameObject, null, (x, y) => x.Impulse(direction.normalized,pushForce));
                 toDelete = true;
             }
         }
