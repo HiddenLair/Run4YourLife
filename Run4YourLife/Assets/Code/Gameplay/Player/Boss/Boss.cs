@@ -186,7 +186,10 @@ namespace Run4YourLife.Player
         void Shoot(GameObject bullet)
         {
             PlaySFX(shootSFX);
-            lastBulletShoot = Instantiate(bullet, bulletStartingPoint.position, bullet.GetComponent<Transform>().rotation * shootMarker.rotation);
+            Vector3 eulerRotation = shootMarker.rotation.eulerAngles;
+            eulerRotation.x = 0;
+            eulerRotation.y = 0;
+            lastBulletShoot = Instantiate(bullet, bulletStartingPoint.position, Quaternion.Euler(eulerRotation)); 
             lastBulletShoot.GetComponent<Rigidbody>().velocity = lastBulletShoot.GetComponent<Transform>().right * bulletSpeed * Time.deltaTime;
             if (lastBulletShoot.GetComponent<ChargedBullet>())
             {
