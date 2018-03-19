@@ -71,6 +71,8 @@ namespace Run4YourLife.Player
 
         private Collider dropPlatformCollider = null;
 
+        private float m_currentGravity;
+
         #endregion
 
         #region Public Variable
@@ -85,6 +87,7 @@ namespace Run4YourLife.Player
             characterController = GetComponent<CharacterController>();
             stats = GetComponent<Stats>();
             anim = GetComponent<Animator>();
+            m_currentGravity = m_gravity;
         }
 
         private void Start()
@@ -144,11 +147,11 @@ namespace Run4YourLife.Player
 
         private void Gravity()
         {
-            m_velocity.y += m_gravity * Time.deltaTime;
+            m_velocity.y += m_currentGravity * Time.deltaTime;
 
             if (!m_isJumping && characterController.isGrounded)
             {
-                m_velocity.y = m_gravity * Time.deltaTime;
+                m_velocity.y = m_currentGravity * Time.deltaTime;
             }
         }
 
@@ -251,8 +254,7 @@ namespace Run4YourLife.Player
             anim.SetTrigger("jump");
 
             //set vertical velocity to the velocity needed to reach maxJumpHeight
-            AddVelocity(new Vector3(0, HeightToVelocity(stats.Get(StatType.JUMP_HEIGHT)), 0));
-
+            m_velocity.y = HeightToVelocity(stats.Get(StatType.JUMP_HEIGHT));
             yield return StartCoroutine(WaitUntilApexOfJumpOrReleaseButton());
 
             m_isJumping = false;
@@ -262,9 +264,9 @@ namespace Run4YourLife.Player
 
         private IEnumerator FallFaster()
         {
-            m_gravity += m_endOfJumpGravity;
+            m_currentGravity += m_endOfJumpGravity;
             yield return new WaitUntil(() => characterController.isGrounded || m_isBouncing || m_isJumping);
-            m_gravity -= m_endOfJumpGravity;
+            m_currentGravity -= m_endOfJumpGravity;
         }
 
         private IEnumerator WaitUntilApexOfJumpOrReleaseButton()
@@ -377,7 +379,7 @@ namespace Run4YourLife.Player
                 MoveCharacterContoller(director * Time.deltaTime);
                 yield return null;
                 director.x = Mathf.Lerp(director.x,0,Time.deltaTime/pushReduction);
-                director.y += m_gravity * Time.deltaTime*gravityPushMuliplier;
+                director.y += m_currentGravity * Time.deltaTime*gravityPushMuliplier;
             }
             
             beingPushed = false;
