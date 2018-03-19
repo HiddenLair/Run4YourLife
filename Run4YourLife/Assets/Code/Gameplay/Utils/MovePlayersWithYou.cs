@@ -22,11 +22,17 @@ public class MovePlayersWithYou : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        players.Add(other.transform);
+        if(other.CompareTag(Tags.Player))
+        {
+            players.Add(other.transform);
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        players.Remove(other.transform);
+        if (other.CompareTag(Tags.Player))
+        {
+            players.Remove(other.transform);
+        }
     }
 }
