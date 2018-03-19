@@ -131,7 +131,7 @@ namespace Run4YourLife.Player
 
         private void OnTriggerStay(Collider collider)
         {
-            if (collider.tag == "Interactable" && playerControlScheme.interact.Started())
+            if (collider.CompareTag(Tags.Interactable) && playerControlScheme.interact.Started())
             {
                 ExecuteEvents.Execute<IPropEvents>(collider.gameObject, null, (x, y) => x.OnInteraction());
             }
