@@ -19,12 +19,12 @@ namespace Run4YourLife.MainMenu
 
         public void OnOptionsButtonPressed()
         {
-            Debug.Log("OnOptionsButtonPressed");
+            Debug.LogWarning("OnOptionsButtonPressed not yet implemented");
         }
 
         public void OnExitButtonPressed()
         {
-            Debug.Log("OnExitButtonPressed");
+            Application.Quit();
         }
     }
 }
