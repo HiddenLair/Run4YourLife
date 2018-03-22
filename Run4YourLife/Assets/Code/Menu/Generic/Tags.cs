@@ -16,6 +16,6 @@ public class Tags : MonoBehaviour {
     public readonly static string Boss = "Boss";
     public readonly static string Floor = "Floor";
     public readonly static string Interactable = "Interactable";
-    public readonly static string DropPlatform = "Trap";
+    public readonly static string DropPlatform = "DropPlatform";
     public readonly static string UI = "UI";
 }

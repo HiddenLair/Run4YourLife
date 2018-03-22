@@ -49,6 +49,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4583484698477256}
+  - component: {fileID: 82693109956806110}
   - component: {fileID: 95884124920993610}
   - component: {fileID: 54340244567870528}
   - component: {fileID: 143507371991397858}
@@ -56,7 +57,7 @@ GameObject:
   - component: {fileID: 114970028009125270}
   - component: {fileID: 114540371618756184}
   - component: {fileID: 114459242405966914}
-  - component: {fileID: 82693109956806110}
+  - component: {fileID: 114469587828184810}
   m_Layer: 8
   m_Name: CharacterPrefab
   m_TagString: Player
@@ -1085,7 +1086,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1095223732133840}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -1.73, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 3.76, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4540691455470320}
@@ -1889,6 +1890,17 @@ MonoBehaviour:
   burned: 0
   windPush: 0
   rootHardness: 0
+--- !u!114 &114469587828184810
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1095223732133840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8b0df537c06d4c4ea4bb0fb29379284, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114538691397763578
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1912,12 +1924,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graphics: {fileID: 1329669962546220}
-  m_gravity: -40
+  m_baseGravity: -40
   m_endOfJumpGravity: -30
-  timeToIdle: 5
-  pushReduction: 0.2
-  minPushMagnitude: 0.25
-  gravityPushMuliplier: 3
+  m_gravityPushMuliplier: 0
+  m_timeToIdle: 5
+  m_pushReduction: 0.8
+  m_minPushMagnitude: 0.1
   jumpClip: {fileID: 8300000, guid: 8bc5dbb3f916c7d4bb404c8a010f4106, type: 3}
   bounceClip: {fileID: 8300000, guid: 4c27b064170a56b48907e5a15905f521, type: 3}
 --- !u!114 &114855254125299974

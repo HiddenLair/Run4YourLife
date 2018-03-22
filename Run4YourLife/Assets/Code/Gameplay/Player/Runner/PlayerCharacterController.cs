@@ -9,48 +9,42 @@ using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.Player
 {
-    [RequireComponent(typeof(PlayerControlScheme))]
+    [RequireComponent(typeof(RunnerControlScheme))]
     public class PlayerCharacterController : MonoBehaviour, ICharacterEvents
     {
         #region InspectorVariables
-
-        // [SerializeField]
-        // private float m_speed;
 
         [SerializeField]
         private GameObject graphics;
 
         [SerializeField]
-        private float m_gravity;
+        private float m_baseGravity;
 
         [SerializeField]
         private float m_endOfJumpGravity;
 
-        // [SerializeField]
-        // private float m_jumpHeight;
+        [SerializeField]
+        private float m_gravityPushMuliplier;
 
         [SerializeField]
-        private float timeToIdle = 5.0f;
+        private float m_timeToIdle;
 
         [SerializeField]
-        private float pushReduction;
+        private float m_pushReduction;
 
         [SerializeField]
-        private float minPushMagnitude;
-
-        [SerializeField]
-        private float gravityPushMuliplier;
+        private float m_minPushMagnitude;
 
         #endregion
 
         #region References
 
-        private CharacterController characterController;
-        private Stats stats;
-        private PlayerControlScheme playerControlScheme;
-        private Animator anim;
-        private Animation actualAnimation;
-        private AudioSource audioCharacter;
+        private CharacterController m_characterController;
+        private Stats m_stats;
+        private RunnerControlScheme m_playerControlScheme;
+        private Animator m_animator;
+        private Animation m_currentAnimation;
+        private AudioSource m_audioSource;
 
         #endregion
 
@@ -58,20 +52,18 @@ namespace Run4YourLife.Player
 
         private bool m_isJumping;
         private bool m_isBouncing;
+        private bool m_isBeingPushed;
+
+        private bool m_isFacingRight = true;
 
         private Vector3 m_velocity;
+        private float m_gravity;
 
-        private bool beingPushed = false;
 
-        private bool facingRight = true;
 
-        private float burnedHorizontal = 1.0f;
+        private float m_burnedHorizontal = 1.0f;
 
-        private float idleTimer = 0.0f;
-
-        private Collider dropPlatformCollider = null;
-
-        private float m_currentGravity;
+        private float m_idleTimer = 0.0f;
 
         #endregion
 
@@ -82,48 +74,46 @@ namespace Run4YourLife.Player
 
         void Awake()
         {
-            audioCharacter = GetComponent<AudioSource>();
-            playerControlScheme = GetComponent<PlayerControlScheme>();
-            characterController = GetComponent<CharacterController>();
-            stats = GetComponent<Stats>();
-            anim = GetComponent<Animator>();
-            m_currentGravity = m_gravity;
+            m_audioSource = GetComponent<AudioSource>();
+            m_playerControlScheme = GetComponent<RunnerControlScheme>();
+            m_characterController = GetComponent<CharacterController>();
+            m_stats = GetComponent<Stats>();
+            m_animator = GetComponent<Animator>();
+            m_gravity = m_baseGravity;
         }
 
         private void Start()
         {
-            playerControlScheme.Active = true;
+            m_playerControlScheme.Active = true;
         }
 
         void Update()
         {
-            if (!beingPushed)
+            if (!m_isBeingPushed)
             {
-                dropPlatformCollider = null;
                 Gravity();
 
-                anim.SetBool("ground", characterController.isGrounded);
+                m_animator.SetBool("ground", m_characterController.isGrounded);
 
-                if (!stats.root)
+                if (!m_stats.root)
                 {
-                    if (characterController.isGrounded && playerControlScheme.jump.Started())
+                    if (m_characterController.isGrounded && m_playerControlScheme.jump.Started())
                     {
                         Jump();
                     }
 
                     Move();
-                    CheckForDrop();
                 }
                 else
                 {
-                    if (playerControlScheme.interact.Started())
+                    if (m_playerControlScheme.interact.Started())
                     {
-                        stats.rootHardness -= 1;
+                        m_stats.rootHardness -= 1;
                     }
 
-                    if (stats.rootHardness == 0)
+                    if (m_stats.rootHardness == 0)
                     {
-                        stats.root = false;
+                        m_stats.root = false;
                     }
                 }
             }
@@ -131,55 +121,47 @@ namespace Run4YourLife.Player
 
         private void OnTriggerStay(Collider collider)
         {
-            if (collider.CompareTag(Tags.Interactable) && playerControlScheme.interact.Started())
+            if (collider.CompareTag(Tags.Interactable) && m_playerControlScheme.interact.Started())
             {
                 ExecuteEvents.Execute<IPropEvents>(collider.gameObject, null, (x, y) => x.OnInteraction());
             }
         }
 
-        private void OnControllerColliderHit(ControllerColliderHit hit)
-        {
-            if(hit.collider.tag == "DropPlatform")
-            {
-                dropPlatformCollider = hit.collider;
-            }
-        }
-
         private void Gravity()
         {
-            m_velocity.y += m_currentGravity * Time.deltaTime;
+            m_velocity.y += m_gravity * Time.deltaTime;
 
-            if (!m_isJumping && characterController.isGrounded)
+            if (!m_isJumping && m_characterController.isGrounded)
             {
-                m_velocity.y = m_currentGravity * Time.deltaTime;
+                m_velocity.y = m_gravity * Time.deltaTime;
             }
         }
 
         private void Move()
         {
-            float horizontal = playerControlScheme.move.Value();
+            float horizontal = m_playerControlScheme.move.Value();
 
             horizontal = CheckStatModificators(horizontal);
 
-            Vector3 move = transform.forward * horizontal * stats.Get(StatType.SPEED) * Time.deltaTime;
+            Vector3 move = transform.forward * horizontal * m_stats.Get(StatType.SPEED) * Time.deltaTime;
 
             Vector3 speed = move + m_velocity * Time.deltaTime;
 
-            anim.SetFloat("xSpeed", Mathf.Abs(speed.x));
-            anim.SetFloat("timeToIdle", idleTimer);
+            m_animator.SetFloat("xSpeed", Mathf.Abs(speed.x));
+            m_animator.SetFloat("timeToIdle", m_idleTimer);
 
-            if ((facingRight && speed.x < 0) || (!facingRight && speed.x > 0))
+            if ((m_isFacingRight && speed.x < 0) || (!m_isFacingRight && speed.x > 0))
             {
                 Flip();
             }
 
             if(speed.x == 0)
             {
-                idleTimer += Time.deltaTime;
+                m_idleTimer += Time.deltaTime;
             }
             else
             {
-                idleTimer = 0.0f;
+                m_idleTimer = 0.0f;
             }
 
             MoveCharacterContoller(move + m_velocity * Time.deltaTime);
@@ -187,7 +169,7 @@ namespace Run4YourLife.Player
 
         private void MoveCharacterContoller(Vector3 movement)
         {
-            characterController.Move(movement);
+            m_characterController.Move(movement);
             float xScreenRight = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, 0, Math.Abs(Camera.main.transform.position.z - transform.position.z))).x;
             if (transform.position.x > xScreenRight)
             {
@@ -197,37 +179,31 @@ namespace Run4YourLife.Player
             }
         }
 
-        private void CheckForDrop()
-        {
-            if(playerControlScheme.vertical.Value() > 0.2 && dropPlatformCollider != null)//If press joystick down
-            {
-                Physics.IgnoreCollision(GetComponent<Collider>(), dropPlatformCollider);
-            }
-        }
+       
 
         private float CheckStatModificators(float controllerHorizontal)
         {
             float toReturn = controllerHorizontal;
 
-            if (stats.burned)
+            if (m_stats.burned)
             {
                 if (toReturn > 0.0f)
                 {
                     toReturn = 1.0f;
-                    burnedHorizontal = toReturn;
+                    m_burnedHorizontal = toReturn;
                 }
                 else if (toReturn < 0.0f)
                 {
                     toReturn = -1.0f;
-                    burnedHorizontal = toReturn;
+                    m_burnedHorizontal = toReturn;
                 }
                 else
                 {
-                    toReturn = burnedHorizontal;
+                    toReturn = m_burnedHorizontal;
                 }
             }
 
-            if (stats.windPush)
+            if (m_stats.windPush)
             {
                 toReturn -= 0.7f;
             }
@@ -244,17 +220,17 @@ namespace Run4YourLife.Player
 
         private float HeightToVelocity(float height)
         {
-            return Mathf.Sqrt(height * -2f * m_gravity);
+            return Mathf.Sqrt(height * -2f * m_baseGravity);
         }
 
         private IEnumerator JumpCoroutine()
         {
             PlaySFX(jumpClip);
             m_isJumping = true;
-            anim.SetTrigger("jump");
+            m_animator.SetTrigger("jump");
 
             //set vertical velocity to the velocity needed to reach maxJumpHeight
-            m_velocity.y = HeightToVelocity(stats.Get(StatType.JUMP_HEIGHT));
+            m_velocity.y = HeightToVelocity(m_stats.Get(StatType.JUMP_HEIGHT));
             yield return StartCoroutine(WaitUntilApexOfJumpOrReleaseButton());
 
             m_isJumping = false;
@@ -264,9 +240,9 @@ namespace Run4YourLife.Player
 
         private IEnumerator FallFaster()
         {
-            m_currentGravity += m_endOfJumpGravity;
-            yield return new WaitUntil(() => characterController.isGrounded || m_isBouncing || m_isJumping);
-            m_currentGravity -= m_endOfJumpGravity;
+            m_gravity += m_endOfJumpGravity;
+            yield return new WaitUntil(() => m_characterController.isGrounded || m_isBouncing || m_isJumping);
+            m_gravity -= m_endOfJumpGravity;
         }
 
         private IEnumerator WaitUntilApexOfJumpOrReleaseButton()
@@ -274,7 +250,7 @@ namespace Run4YourLife.Player
             float previousPositionY = transform.position.y;
             yield return null;
 
-            while (playerControlScheme.jump.Persists() && previousPositionY < transform.position.y)
+            while (m_playerControlScheme.jump.Persists() && previousPositionY < transform.position.y)
             {
                 previousPositionY = transform.position.y;
                 yield return null;
@@ -290,14 +266,14 @@ namespace Run4YourLife.Player
 
         internal void BounceOnMe()
         {
-            anim.SetTrigger("bump");
+            m_animator.SetTrigger("bump");
         }
 
         private void PlaySFX(AudioClip clip)
         {
             if (clip != null)
             {
-                audioCharacter.PlayOneShot(clip);
+                m_audioSource.PlayOneShot(clip);
             }
         }
 
@@ -337,7 +313,7 @@ namespace Run4YourLife.Player
         private void Flip()
         {
             graphics.transform.Rotate(Vector3.up, 180);
-            facingRight = !facingRight;
+            m_isFacingRight = !m_isFacingRight;
         }
 
         public void Kill()
@@ -350,11 +326,11 @@ namespace Run4YourLife.Player
 
         public void Root(int rootHardness)
         {
-            anim.SetTrigger("root");
-            anim.SetFloat("xSpeed", 0.0f);
+            m_animator.SetTrigger("root");
+            m_animator.SetFloat("xSpeed", 0.0f);
 
-            stats.root = true;
-            stats.rootHardness = rootHardness;
+            m_stats.root = true;
+            m_stats.rootHardness = rootHardness;
         }
 
         public void Impulse(Vector3 direction,float force)
@@ -364,9 +340,9 @@ namespace Run4YourLife.Player
 
         IEnumerator BeingPushed(Vector3 direction,float force)
         {
-            anim.SetTrigger("push");
-            anim.SetFloat("pushForce", direction.x);
-            beingPushed = true;
+            m_animator.SetTrigger("push");
+            m_animator.SetFloat("pushForce", direction.x);
+            m_isBeingPushed = true;
             bool isRight = direction.x > 0;
             Vector3 director = Quaternion.Euler(0,0,45) * Vector3.right;
             if (!isRight)
@@ -374,25 +350,25 @@ namespace Run4YourLife.Player
                 director.x = -director.x;
             }
             director *= force;
-            while(Mathf.Abs(director.x) > minPushMagnitude)
+            while(Mathf.Abs(director.x) > m_minPushMagnitude)
             {
                 MoveCharacterContoller(director * Time.deltaTime);
                 yield return null;
-                director.x = Mathf.Lerp(director.x,0,Time.deltaTime/pushReduction);
-                director.y += m_currentGravity * Time.deltaTime*gravityPushMuliplier;
+                director.x = Mathf.Lerp(director.x,0,Time.deltaTime/m_pushReduction);
+                director.y += m_gravity * Time.deltaTime*m_gravityPushMuliplier;
             }
             
-            beingPushed = false;
+            m_isBeingPushed = false;
         }
 
         public void Debuff(StatModifier statmodifier)
         {
-            stats.AddModifier(statmodifier);
+            m_stats.AddModifier(statmodifier);
         }
 
         public void Burned(int burnedTime)
         {
-            if (!stats.burned)
+            if (!m_stats.burned)
             {
                 StartCoroutine(BurnedCharacter(burnedTime));
             }
@@ -400,19 +376,19 @@ namespace Run4YourLife.Player
 
         public void ActivateWindPush()
         {
-            stats.windPush = true;
+            m_stats.windPush = true;
         }
 
         public void DeactivateWindPush()
         {
-            stats.windPush = false;
+            m_stats.windPush = false;
         }
 
         private IEnumerator BurnedCharacter(int value)
         {
-            stats.burned = true;
+            m_stats.burned = true;
             yield return new WaitForSeconds(value);
-            stats.burned = false;
+            m_stats.burned = false;
         }
 
         public Vector3 GetVelocity()
