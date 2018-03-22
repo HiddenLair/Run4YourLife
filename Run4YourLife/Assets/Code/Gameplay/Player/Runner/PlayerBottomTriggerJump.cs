@@ -4,11 +4,11 @@ namespace Run4YourLife.Player
 {
     public class PlayerBottomTriggerJump : MonoBehaviour
     {
-        private PlayerCharacterController characterController;
+        private RunnerCharacterController characterController;
 
         private void Awake()
         {
-            characterController = transform.parent.GetComponent<PlayerCharacterController>();
+            characterController = transform.parent.GetComponent<RunnerCharacterController>();
             Debug.Assert(characterController, "Objects needs a parent that has a player character controller");
         }
 

@@ -89,8 +89,8 @@ namespace Run4YourLife.GameManagement
             Debug.Assert(boss != null);
             Destroy(boss);
 
-            PlayerCharacterController[] players = FindObjectsOfType<PlayerCharacterController>();
-            foreach (PlayerCharacterController player in players)
+            RunnerCharacterController[] players = FindObjectsOfType<RunnerCharacterController>();
+            foreach (RunnerCharacterController player in players)
             {
                 Destroy(player.gameObject);
             }

@@ -39,8 +39,12 @@ public class RunnerController : MonoBehaviour {
     {
         if (collider.CompareTag(Tags.Interactable) && m_playerControlScheme.interact.Started())
         {
-            ExecuteEvents.Execute<IInteractableEvents>(collider.gameObject, null, (x, y) => x.Interact());
+            Interact(collider.gameObject);
         }
     }
 
+    private void Interact(GameObject gameObject)
+    {
+        ExecuteEvents.Execute<IInteractableEvents>(gameObject, null, (x, y) => x.Interact());
+    }
 }

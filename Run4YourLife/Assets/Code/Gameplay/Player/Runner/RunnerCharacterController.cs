@@ -10,7 +10,7 @@ using Run4YourLife.GameManagement;
 namespace Run4YourLife.Player
 {
     [RequireComponent(typeof(RunnerControlScheme))]
-    public class PlayerCharacterController : MonoBehaviour, ICharacterEvents
+    public class RunnerCharacterController : MonoBehaviour, ICharacterEvents
     {
         #region InspectorVariables
 
@@ -94,7 +94,7 @@ namespace Run4YourLife.Player
 
         void Update()
         {
-            if (!m_isBeingImpulsed && !m_stats.root)
+            if (!m_isBeingImpulsed)
             {
                 Gravity();
 
@@ -111,10 +111,13 @@ namespace Run4YourLife.Player
         private void Gravity()
         {
             m_velocity.y += m_gravity * Time.deltaTime;
+        }
 
+        private void OnControllerColliderHit(ControllerColliderHit hit)
+        {
             if (!m_isJumping && m_characterController.isGrounded)
             {
-                m_velocity.y = m_gravity * Time.deltaTime;
+                m_velocity.y = 0.0f;
             }
         }
 
@@ -125,21 +128,6 @@ namespace Run4YourLife.Player
             Vector3 totalMovement = inputMovement + m_velocity * Time.deltaTime;
 
             MoveCharacterContoller(totalMovement);
-        }
-
-        private void LookAtMovingSide()
-        {
-            if ((m_isFacingRight && m_playerControlScheme.move.Value() < 0) || (!m_isFacingRight && m_playerControlScheme.move.Value() > 0))
-            {
-                Flip();
-            }
-        }
-
-        private void UpdateIdleTimer(Vector3 totalMovement)
-        {
-            bool isMoving = totalMovement != Vector3.zero;
-            m_idleTimer = isMoving ? m_idleTimer + Time.deltaTime : 0.0f;
-            m_animator.SetFloat("timeToIdle", m_idleTimer);
         }
 
         private void MoveCharacterContoller(Vector3 movement)
@@ -156,6 +144,23 @@ namespace Run4YourLife.Player
             m_animator.SetFloat("xSpeed", Mathf.Abs(movement.x));
             LookAtMovingSide();
             UpdateIdleTimer(movement);
+        }
+
+        private void LookAtMovingSide()
+        {
+            bool shouldFaceTheOtherWay = (m_isFacingRight && m_playerControlScheme.move.Value() < 0) || (!m_isFacingRight && m_playerControlScheme.move.Value() > 0);
+            if (shouldFaceTheOtherWay)
+            {
+                graphics.transform.Rotate(Vector3.up, 180);
+                m_isFacingRight = !m_isFacingRight;
+            }
+        }
+
+        private void UpdateIdleTimer(Vector3 totalMovement)
+        {
+            bool isMoving = totalMovement != Vector3.zero;
+            m_idleTimer = isMoving ? m_idleTimer + Time.deltaTime : 0.0f;
+            m_animator.SetFloat("timeToIdle", m_idleTimer);
         }
 
         private float CheckStatModificators(float controllerHorizontal)
@@ -202,8 +207,9 @@ namespace Run4YourLife.Player
 
         private IEnumerator JumpCoroutine()
         {
-            PlaySFX(jumpClip);
             m_isJumping = true;
+
+            m_audioSource.PlayOneShot(jumpClip);
             m_animator.SetTrigger("jump");
 
             //set vertical velocity to the velocity needed to reach maxJumpHeight
@@ -241,20 +247,12 @@ namespace Run4YourLife.Player
             m_velocity += velocity;
         }
 
-        internal void BounceOnMe()
+        #region Bounce
+
+        public void BounceOnMe()
         {
             m_animator.SetTrigger("bump");
         }
-
-        private void PlaySFX(AudioClip clip)
-        {
-            if (clip != null)
-            {
-                m_audioSource.PlayOneShot(clip);
-            }
-        }
-
-        #region Bounce
 
         public void Bounce(float bounceForce)
         {
@@ -264,7 +262,7 @@ namespace Run4YourLife.Player
         IEnumerator BounceCoroutine(float bounceForce)
         {
             m_isBouncing = true;
-            PlaySFX(bounceClip);
+            m_audioSource.PlayOneShot(bounceClip);
             m_velocity.y = HeightToVelocity(bounceForce);
 
             yield return StartCoroutine(WaitUntilApexOfBounce());
@@ -286,12 +284,6 @@ namespace Run4YourLife.Player
         }
 
         #endregion
-
-        private void Flip()
-        {
-            graphics.transform.Rotate(Vector3.up, 180);
-            m_isFacingRight = !m_isFacingRight;
-        }
 
         public void Kill()
         {
@@ -316,6 +308,9 @@ namespace Run4YourLife.Player
             m_stats.root = true;
             m_stats.rootHardness = rootHardness;
 
+            m_playerControlScheme.Active = false;
+            m_playerControlScheme.interact.enabled = true;
+
             while(m_stats.root)
             {
                 yield return null;
@@ -327,6 +322,7 @@ namespace Run4YourLife.Player
 
                 m_stats.root = m_stats.rootHardness > 0;
             }
+            m_playerControlScheme.Active = true;
         }
 
         #endregion

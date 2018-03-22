@@ -25,7 +25,7 @@ public class MelePhase3 : MonoBehaviour {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         foreach(GameObject player in players)
         {
-            player.GetComponent<PlayerCharacterController>().AddVelocity(new Vector3(0, playerPushForce, 0));
+            player.GetComponent<RunnerCharacterController>().AddVelocity(new Vector3(0, playerPushForce, 0));
         }
         Camera.main.GetComponent<CameraBossFollow>().AddTrauma(cameraTraumaShake);
     }
