@@ -92,11 +92,6 @@ namespace Run4YourLife.Player
             m_gravity = m_baseGravity;
         }
 
-        private void Start()
-        {
-            m_playerControlScheme.Active = true;
-        }
-
         void Update()
         {
             if (!m_isBeingImpulsed && !m_stats.root)
@@ -109,17 +104,8 @@ namespace Run4YourLife.Player
                 }
 
                 Move();
-
-                m_animator.SetBool("ground", m_characterController.isGrounded);
             }
-        }
-
-        private void OnTriggerStay(Collider collider)
-        {
-            if (collider.CompareTag(Tags.Interactable) && m_playerControlScheme.interact.Started())
-            {
-                ExecuteEvents.Execute<IPropEvents>(collider.gameObject, null, (x, y) => x.OnInteraction());
-            }
+            m_animator.SetBool("ground", m_characterController.isGrounded);
         }
 
         private void Gravity()
@@ -134,32 +120,26 @@ namespace Run4YourLife.Player
 
         private void Move()
         {
-            float horizontal = m_playerControlScheme.move.Value();
+            float horizontal = CheckStatModificators(m_playerControlScheme.move.Value());
+            Vector3 inputMovement = transform.forward * horizontal * m_stats.Get(StatType.SPEED) * Time.deltaTime;
+            Vector3 totalMovement = inputMovement + m_velocity * Time.deltaTime;
 
-            horizontal = CheckStatModificators(horizontal);
+            MoveCharacterContoller(totalMovement);
+        }
 
-            Vector3 move = transform.forward * horizontal * m_stats.Get(StatType.SPEED) * Time.deltaTime;
-
-            Vector3 speed = move + m_velocity * Time.deltaTime;
-
-            m_animator.SetFloat("xSpeed", Mathf.Abs(speed.x));
-            m_animator.SetFloat("timeToIdle", m_idleTimer);
-
-            if ((m_isFacingRight && speed.x < 0) || (!m_isFacingRight && speed.x > 0))
+        private void LookAtMovingSide()
+        {
+            if ((m_isFacingRight && m_playerControlScheme.move.Value() < 0) || (!m_isFacingRight && m_playerControlScheme.move.Value() > 0))
             {
                 Flip();
             }
+        }
 
-            if(speed.x == 0)
-            {
-                m_idleTimer += Time.deltaTime;
-            }
-            else
-            {
-                m_idleTimer = 0.0f;
-            }
-
-            MoveCharacterContoller(move + m_velocity * Time.deltaTime);
+        private void UpdateIdleTimer(Vector3 totalMovement)
+        {
+            bool isMoving = totalMovement != Vector3.zero;
+            m_idleTimer = isMoving ? m_idleTimer + Time.deltaTime : 0.0f;
+            m_animator.SetFloat("timeToIdle", m_idleTimer);
         }
 
         private void MoveCharacterContoller(Vector3 movement)
@@ -172,6 +152,10 @@ namespace Run4YourLife.Player
                 tempPos.x = xScreenRight;
                 transform.position = tempPos;
             }
+
+            m_animator.SetFloat("xSpeed", Mathf.Abs(movement.x));
+            LookAtMovingSide();
+            UpdateIdleTimer(movement);
         }
 
         private float CheckStatModificators(float controllerHorizontal)
