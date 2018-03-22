@@ -99,33 +99,18 @@ namespace Run4YourLife.Player
 
         void Update()
         {
-            if (!m_isBeingImpulsed)
+            if (!m_isBeingImpulsed && !m_stats.root)
             {
                 Gravity();
 
+                if (m_characterController.isGrounded && m_playerControlScheme.jump.Started())
+                {
+                    Jump();
+                }
+
+                Move();
+
                 m_animator.SetBool("ground", m_characterController.isGrounded);
-
-                if (!m_stats.root)
-                {
-                    if (m_characterController.isGrounded && m_playerControlScheme.jump.Started())
-                    {
-                        Jump();
-                    }
-
-                    Move();
-                }
-                else
-                {
-                    if (m_playerControlScheme.interact.Started())
-                    {
-                        m_stats.rootHardness -= 1;
-                    }
-
-                    if (m_stats.rootHardness == 0)
-                    {
-                        m_stats.root = false;
-                    }
-                }
             }
         }
 
@@ -189,8 +174,6 @@ namespace Run4YourLife.Player
             }
         }
 
-       
-
         private float CheckStatModificators(float controllerHorizontal)
         {
             float toReturn = controllerHorizontal;
@@ -221,12 +204,12 @@ namespace Run4YourLife.Player
             return toReturn;
         }
 
+        #region Jump
+
         private void Jump()
         {
             StartCoroutine(JumpCoroutine());
         }
-
-        #region Jump Coroutines
 
         private float HeightToVelocity(float height)
         {
@@ -338,11 +321,28 @@ namespace Run4YourLife.Player
 
         public void Root(int rootHardness)
         {
+            StartCoroutine(RootCoroutine(rootHardness));
+        }
+
+        private IEnumerator RootCoroutine(int rootHardness)
+        {
             m_animator.SetTrigger("root");
             m_animator.SetFloat("xSpeed", 0.0f);
 
             m_stats.root = true;
             m_stats.rootHardness = rootHardness;
+
+            while(m_stats.root)
+            {
+                yield return null;
+
+                if (m_playerControlScheme.interact.Started())
+                {
+                    m_stats.rootHardness -= 1;
+                }
+
+                m_stats.root = m_stats.rootHardness > 0;
+            }
         }
 
         #endregion

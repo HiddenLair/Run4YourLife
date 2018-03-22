@@ -20,7 +20,7 @@ public class GoThroughPlattforms : MonoBehaviour
         Debug.Assert(m_controlScheme != null);
 
         m_runnerState = GetComponent<Stats>();
-        Debug.Log(m_runnerState != null);
+        Debug.Assert(m_runnerState != null);
 
         m_collider = GetComponent<Collider>();
         Debug.Assert(m_collider != null);
