@@ -37,6 +37,13 @@ namespace Run4YourLife.Player
 
         #endregion
 
+        #region Public Variable
+
+        public AudioClip jumpClip;
+        public AudioClip bounceClip;
+
+        #endregion
+
         #region References
 
         private CharacterController m_characterController;
@@ -52,14 +59,12 @@ namespace Run4YourLife.Player
 
         private bool m_isJumping;
         private bool m_isBouncing;
-        private bool m_isBeingPushed;
+        private bool m_isBeingImpulsed;
 
         private bool m_isFacingRight = true;
 
         private Vector3 m_velocity;
         private float m_gravity;
-
-
 
         private float m_burnedHorizontal = 1.0f;
 
@@ -67,9 +72,14 @@ namespace Run4YourLife.Player
 
         #endregion
 
-        #region Public Variable
-        public AudioClip jumpClip;
-        public AudioClip bounceClip;
+        #region Attributes
+        public Vector3 Velocity
+        {
+            get
+            {
+                return m_velocity;
+            }
+        }
         #endregion
 
         void Awake()
@@ -89,7 +99,7 @@ namespace Run4YourLife.Player
 
         void Update()
         {
-            if (!m_isBeingPushed)
+            if (!m_isBeingImpulsed)
             {
                 Gravity();
 
@@ -318,11 +328,13 @@ namespace Run4YourLife.Player
 
         public void Kill()
         {
-            GameObject temp = FindObjectOfType<PlayerStateManager>().gameObject;
-            PlayerDefinition playerDef = GetComponent<PlayerInstance>().PlayerDefinition;
-            ExecuteEvents.Execute<IPlayerStateEvents>(temp, null, (x, y) => x.OnPlayerDeath(playerDef));
+            GameObject playerStateManager = FindObjectOfType<PlayerStateManager>().gameObject;
+            PlayerDefinition playerDefinition = GetComponent<PlayerInstance>().PlayerDefinition;
+            ExecuteEvents.Execute<IPlayerStateEvents>(playerStateManager, null, (x, y) => x.OnPlayerDeath(playerDefinition));
             Destroy(gameObject);
         }
+
+        #region Root
 
         public void Root(int rootHardness)
         {
@@ -333,16 +345,20 @@ namespace Run4YourLife.Player
             m_stats.rootHardness = rootHardness;
         }
 
+        #endregion
+
+        #region Impulse
+
         public void Impulse(Vector3 direction,float force)
         {
-            StartCoroutine(BeingPushed(direction,force));
+            StartCoroutine(ImpulseCoroutine(direction,force));
         }
 
-        IEnumerator BeingPushed(Vector3 direction,float force)
+        IEnumerator ImpulseCoroutine(Vector3 direction,float force)
         {
             m_animator.SetTrigger("push");
             m_animator.SetFloat("pushForce", direction.x);
-            m_isBeingPushed = true;
+            m_isBeingImpulsed = true;
             bool isRight = direction.x > 0;
             Vector3 director = Quaternion.Euler(0,0,45) * Vector3.right;
             if (!isRight)
@@ -358,21 +374,36 @@ namespace Run4YourLife.Player
                 director.y += m_gravity * Time.deltaTime*m_gravityPushMuliplier;
             }
             
-            m_isBeingPushed = false;
+            m_isBeingImpulsed = false;
         }
+
+        #endregion
 
         public void Debuff(StatModifier statmodifier)
         {
             m_stats.AddModifier(statmodifier);
         }
 
+        #region Burned
+
         public void Burned(int burnedTime)
         {
             if (!m_stats.burned)
             {
-                StartCoroutine(BurnedCharacter(burnedTime));
+                StartCoroutine(BurnedCoroutine(burnedTime));
             }
         }
+
+        private IEnumerator BurnedCoroutine(int burnedTime)
+        {
+            m_stats.burned = true;
+            yield return new WaitForSeconds(burnedTime);
+            m_stats.burned = false;
+        }
+
+        #endregion
+
+        #region WindPush
 
         public void ActivateWindPush()
         {
@@ -384,16 +415,6 @@ namespace Run4YourLife.Player
             m_stats.windPush = false;
         }
 
-        private IEnumerator BurnedCharacter(int value)
-        {
-            m_stats.burned = true;
-            yield return new WaitForSeconds(value);
-            m_stats.burned = false;
-        }
-
-        public Vector3 GetVelocity()
-        {
-            return m_velocity;
-        }
+        #endregion
     }
 }

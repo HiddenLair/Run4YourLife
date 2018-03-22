@@ -14,7 +14,7 @@ namespace Run4YourLife.Player
 
         private void OnTriggerEnter(Collider other)
         {
-            if (characterController.GetVelocity().y < 0)
+            if (characterController.Velocity.y < 0)
             {
                 JumpOver otherJumpOver = other.GetComponent<JumpOver>();
                 if (otherJumpOver != null)

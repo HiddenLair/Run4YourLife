@@ -23,9 +23,9 @@ public class MelePhase3 : MonoBehaviour {
     private void Tremble()
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        foreach(GameObject g in players)
+        foreach(GameObject player in players)
         {
-            g.GetComponent<PlayerCharacterController>().AddVelocity(new Vector3(0, playerPushForce, 0));
+            player.GetComponent<PlayerCharacterController>().AddVelocity(new Vector3(0, playerPushForce, 0));
         }
         Camera.main.GetComponent<CameraBossFollow>().AddTrauma(cameraTraumaShake);
     }
