@@ -9,7 +9,11 @@ using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.Player
 {
+    [RequireComponent(typeof(AudioSource))]
     [RequireComponent(typeof(RunnerControlScheme))]
+    [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(Stats))]
+    [RequireComponent(typeof(Animator))]
     public class RunnerCharacterController : MonoBehaviour
     {
         #region InspectorVariables
