@@ -10,7 +10,7 @@ using Run4YourLife.GameManagement;
 namespace Run4YourLife.Player
 {
     [RequireComponent(typeof(RunnerControlScheme))]
-    public class RunnerCharacterController : MonoBehaviour, ICharacterEvents
+    public class RunnerCharacterController : MonoBehaviour
     {
         #region InspectorVariables
 
@@ -285,48 +285,6 @@ namespace Run4YourLife.Player
 
         #endregion
 
-        public void Kill()
-        {
-            GameObject playerStateManager = FindObjectOfType<PlayerStateManager>().gameObject;
-            PlayerDefinition playerDefinition = GetComponent<PlayerInstance>().PlayerDefinition;
-            ExecuteEvents.Execute<IPlayerStateEvents>(playerStateManager, null, (x, y) => x.OnPlayerDeath(playerDefinition));
-            Destroy(gameObject);
-        }
-
-        #region Root
-
-        public void Root(int rootHardness)
-        {
-            StartCoroutine(RootCoroutine(rootHardness));
-        }
-
-        private IEnumerator RootCoroutine(int rootHardness)
-        {
-            m_animator.SetTrigger("root");
-            m_animator.SetFloat("xSpeed", 0.0f);
-
-            m_stats.root = true;
-            m_stats.rootHardness = rootHardness;
-
-            m_playerControlScheme.Active = false;
-            m_playerControlScheme.interact.enabled = true;
-
-            while(m_stats.root)
-            {
-                yield return null;
-
-                if (m_playerControlScheme.interact.Started())
-                {
-                    m_stats.rootHardness -= 1;
-                }
-
-                m_stats.root = m_stats.rootHardness > 0;
-            }
-            m_playerControlScheme.Active = true;
-        }
-
-        #endregion
-
         #region Impulse
 
         public void Impulse(Vector3 direction,float force)
@@ -355,44 +313,6 @@ namespace Run4YourLife.Player
             }
             
             m_isBeingImpulsed = false;
-        }
-
-        #endregion
-
-        public void Debuff(StatModifier statmodifier)
-        {
-            m_stats.AddModifier(statmodifier);
-        }
-
-        #region Burned
-
-        public void Burned(int burnedTime)
-        {
-            if (!m_stats.burned)
-            {
-                StartCoroutine(BurnedCoroutine(burnedTime));
-            }
-        }
-
-        private IEnumerator BurnedCoroutine(int burnedTime)
-        {
-            m_stats.burned = true;
-            yield return new WaitForSeconds(burnedTime);
-            m_stats.burned = false;
-        }
-
-        #endregion
-
-        #region WindPush
-
-        public void ActivateWindPush()
-        {
-            m_stats.windPush = true;
-        }
-
-        public void DeactivateWindPush()
-        {
-            m_stats.windPush = false;
         }
 
         #endregion
