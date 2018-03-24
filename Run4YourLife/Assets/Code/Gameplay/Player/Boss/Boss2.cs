@@ -22,18 +22,18 @@ namespace Run4YourLife.Player
         public float reload;
         public AudioClip shootSFX;
 
-        //Mele
+        /* //Mele
         public GameObject mele;
         public float meleSpeed;
         public float meleReload;
-        public AudioClip meleeSFX;
+        public AudioClip meleeSFX; */
 
         //Trap Indicator
         public Transform trapIndicator;
 
         private float bulletTimer;
-        private float meleTimer;
-        private bool meleBeingPressed = false;
+        // private float meleTimer;
+        // private bool meleBeingPressed = false;
         private const float shootAnimTimeVariation = 0.2f;
 
         //Head rotation limits
@@ -52,7 +52,7 @@ namespace Run4YourLife.Player
             trapSetter = GetComponent<Laser>();
             bossControlScheme = GetComponent<BossControlScheme>();
             bulletTimer = reload;
-            meleTimer = meleReload;
+            // meleTimer = meleReload;
             anim = GetComponent<Animator>();
 
             uiManager = GameObject.FindGameObjectWithTag("UI");
@@ -68,17 +68,17 @@ namespace Run4YourLife.Player
 
             bulletTimer = Mathf.Min(bulletTimer + Time.deltaTime, reload);
 
-            meleTimer = Mathf.Min(meleTimer + Time.deltaTime, meleReload);
+            // meleTimer = Mathf.Min(meleTimer + Time.deltaTime, meleReload);
 
             if (trapSetter.isReadyForAction)
             {
                 ShootVerification();
             }
 
-            if (trapSetter.isReadyForAction)
+            /* if (trapSetter.isReadyForAction)
             {
                 MeleVerification();
-            }
+            } */
 
         }
 
@@ -138,7 +138,7 @@ namespace Run4YourLife.Player
             lastBulletShoot.GetComponent<Rigidbody>().velocity = lastBulletShoot.transform.right * bulletSpeed*Time.deltaTime;
         }
 
-        void MeleVerification()
+        /* void MeleVerification()
         {
             if (bossControlScheme.melee.Value() > 0.2)
             {
@@ -168,13 +168,13 @@ namespace Run4YourLife.Player
                 meleBeingPressed = false;
             }
             //meleTimer += Time.deltaTime;
-        }
+        } */
 
-        void MeleAtack(Vector3 pos,Quaternion rotation)
+        /* void MeleAtack(Vector3 pos,Quaternion rotation)
         {
             GameObject meleInst = Instantiate(mele, pos, rotation);
             meleInst.GetComponent<Rigidbody>().velocity = meleInst.transform.right * meleSpeed *Time.deltaTime;
-        }
+        } */
 
         private void PlaySFX(AudioClip clip)
         {

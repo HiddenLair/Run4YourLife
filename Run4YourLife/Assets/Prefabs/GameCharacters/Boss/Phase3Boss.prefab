@@ -499,9 +499,11 @@ GameObject:
   - component: {fileID: 114207125779255010}
   - component: {fileID: 114613523126294976}
   - component: {fileID: 82210215570875178}
+  - component: {fileID: 114249977608230936}
+  - component: {fileID: 114513434942918202}
   m_Layer: 0
   m_Name: Phase3Boss
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2305,6 +2307,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cec698f25fa65f47a9e9032dfde8efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114249977608230936
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1601248243005334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a758af56ddef8734abf63f53157a3017, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationReadyName: move
 --- !u!114 &114316029037101790
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2316,6 +2330,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67862ff6a22191f4bad73a5704bd6977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114513434942918202
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1601248243005334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bb98a8d3fec5b34eb515417b3723bbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  instance: {fileID: 1315485973087804, guid: 4bc7c742fa6016746bfa886fc556f401, type: 2}
+  reloadTimeS: 2
+  sfx: {fileID: 8300000, guid: 5a17a99919f460e4f961de3bb2f63aa7, type: 3}
+  instanceSpeed: 500
+  instancePos: {fileID: 4268297421430134}
 --- !u!114 &114516165838808018
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -21,15 +21,15 @@ namespace Run4YourLife.Player
         public Transform bulletStartingPoint;
         public float reload;
 
-        //Mele
+        /* //Mele
         public GameObject mele;
         public float meleSpeed;
         public Transform meleStartingPoint;
-        public float meleReload;
+        public float meleReload; */
 
         private float bulletTimer;
-        private float meleTimer;
-        private bool meleBeingPressed = false;
+        // private float meleTimer;
+        // private bool meleBeingPressed = false;
         private const float shootAnimTimeVariation = 0f;
 
         //Head rotation limits
@@ -46,7 +46,7 @@ namespace Run4YourLife.Player
         {
             bossControlScheme = GetComponent<BossControlScheme>();
             bulletTimer = reload;
-            meleTimer = meleReload;
+            // meleTimer = meleReload;
             anim = GetComponent<Animator>();
             trapSetter = GetComponent<Laser>();
 
@@ -62,17 +62,17 @@ namespace Run4YourLife.Player
         {
             bulletTimer = Mathf.Min(bulletTimer + Time.deltaTime, reload);
 
-            meleTimer = Mathf.Min(meleTimer + Time.deltaTime, meleReload);
+            // meleTimer = Mathf.Min(meleTimer + Time.deltaTime, meleReload);
 
             if (trapSetter.isReadyForAction)
             {
                 ShootVerification();
             }
 
-            if (trapSetter.isReadyForAction)
+            /* if (trapSetter.isReadyForAction)
             {
                 MeleVerification();
-            }
+            } */
 
         }
 
@@ -148,7 +148,7 @@ namespace Run4YourLife.Player
             g.SetActive(false);
         }
 
-        void MeleVerification()
+        /* void MeleVerification()
         {
             if (bossControlScheme.melee.Value() > 0.2)
             {
@@ -169,6 +169,6 @@ namespace Run4YourLife.Player
                 meleBeingPressed = false;
             }
             //meleTimer += Time.deltaTime;
-        }
+        } */
     }
 }

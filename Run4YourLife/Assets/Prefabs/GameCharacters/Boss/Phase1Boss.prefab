@@ -53,10 +53,11 @@ GameObject:
   - component: {fileID: 114353170889446630}
   - component: {fileID: 114348459806964342}
   - component: {fileID: 114667930363435536}
-  - component: {fileID: 114234153009688736}
   - component: {fileID: 114296215948268432}
   - component: {fileID: 114376479126380482}
   - component: {fileID: 82185490560951704}
+  - component: {fileID: 114763716259268730}
+  - component: {fileID: 114132567726893316}
   m_Layer: 12
   m_Name: Phase1Boss
   m_TagString: Boss
@@ -2232,6 +2233,21 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114132567726893316
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1034222424642850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e0812440c714ce4c9f0220e4854e473, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  instance: {fileID: 1744009354783980, guid: f6825d54fb1aa3346ab9e5adefa4cbd2, type: 2}
+  reloadTimeS: 2
+  sfx: {fileID: 8300000, guid: 5a17a99919f460e4f961de3bb2f63aa7, type: 3}
+  instancePos: {fileID: 4618924716037922}
 --- !u!114 &114178548623714474
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2241,17 +2257,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 412452455570aa44bac37005f9813a6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114234153009688736
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1034222424642850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67862ff6a22191f4bad73a5704bd6977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114296215948268432
@@ -2360,6 +2365,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cec698f25fa65f47a9e9032dfde8efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114763716259268730
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1034222424642850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a758af56ddef8734abf63f53157a3017, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  readyClip: {fileID: 7400000, guid: 269ba7a10d2b32e40b15460e98338e66, type: 3}
 --- !u!137 &137918724776550406
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

@@ -480,6 +480,8 @@ GameObject:
   - component: {fileID: 114582281687953202}
   - component: {fileID: 114888666313753424}
   - component: {fileID: 82911549256438540}
+  - component: {fileID: 114876030091722406}
+  - component: {fileID: 114282124932910778}
   m_Layer: 0
   m_Name: Phase2Boss
   m_TagString: Boss
@@ -2132,6 +2134,22 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114282124932910778
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1435242058213750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b2a5546d6c670e4480d5846db4e4bc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  instance: {fileID: 1316436286298340, guid: 69d16cc697016ce409429c4fb4cb0daa, type: 2}
+  reloadTimeS: 2
+  sfx: {fileID: 8300000, guid: 5a17a99919f460e4f961de3bb2f63aa7, type: 3}
+  instanceSpeed: 500
+  indicatorPos: {fileID: 4129931644911652}
 --- !u!114 &114466525614561070
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2167,6 +2185,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67862ff6a22191f4bad73a5704bd6977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114876030091722406
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1435242058213750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a758af56ddef8734abf63f53157a3017, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationReadyName: move
 --- !u!114 &114888666313753424
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -25,15 +25,15 @@ namespace Run4YourLife.Player
         public float reload;
         public AudioClip shootSFX;
 
-        //Mele
+        /* //Mele
         public GameObject mele;
         public Transform meleZone;
         public float meleReload;
-        public AudioClip meleeSFX;
+        public AudioClip meleeSFX; */
 
         private float bulletTimer;
-        private float meleTimer;
-        private bool meleBeingPressed = false;
+        // private float meleTimer;
+        // private bool meleBeingPressed = false;
         private float timeToChargedShoot;
         private const float chargedShootAnimTimeVariation = 0.4f;
         private const float shootAnimTimeVariation = 0.2f;
@@ -60,7 +60,7 @@ namespace Run4YourLife.Player
             trapSetter = GetComponent<Laser>();
             bossControlScheme = GetComponent<BossControlScheme>();
             bulletTimer = reload;
-            meleTimer = meleReload;
+            // meleTimer = meleReload;
             anim = GetComponent<Animator>();
             timeToChargedShoot = animChargedShoot.length -chargedShootAnimTimeVariation;//Substract a little of time, in order to fit more the times
 
@@ -76,17 +76,17 @@ namespace Run4YourLife.Player
         {
             bulletTimer = Mathf.Min(bulletTimer + Time.deltaTime, reload);
 
-            meleTimer = Mathf.Min(meleTimer + Time.deltaTime, meleReload);
+            // meleTimer = Mathf.Min(meleTimer + Time.deltaTime, meleReload);
 
             if (trapSetter.isReadyForAction || startingChargedShoot)
             {
                 ShootVerification();
             }
 
-            if (trapSetter.isReadyForAction)
+            /* if (trapSetter.isReadyForAction)
             {
                 MeleVerification();
-            }
+            } */
         }
 
         void ShootVerification()
@@ -202,7 +202,7 @@ namespace Run4YourLife.Player
             lastBulletShoot.GetComponent<ChargedBullet>().Explosion();
         }
 
-        void MeleVerification()
+        /* void MeleVerification()
         {
             if (bossControlScheme.melee.Value() > 0.2)
             {
@@ -224,7 +224,7 @@ namespace Run4YourLife.Player
             {
                 meleBeingPressed = false;
             }
-        }
+        } */
 
         public void SetShootStillAlive(bool value)
         {
