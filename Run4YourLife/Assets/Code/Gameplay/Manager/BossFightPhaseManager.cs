@@ -7,6 +7,8 @@ using Run4YourLife.UI;
 
 using Run4YourLife.Player;
 
+using Cinemachine;
+
 namespace Run4YourLife.GameManagement
 {
     public class BossFightPhaseManager : GamePhaseManager
@@ -14,7 +16,7 @@ namespace Run4YourLife.GameManagement
         #region Editor variables
 
         [SerializeField]
-        private CameraTargetCentered m_cameraTargetCentered;
+        private CinemachineVirtualCamera m_virtualCamera;
 
         [SerializeField]
         private Transform m_bossFightStartingCameraPositionDebug;
@@ -57,8 +59,10 @@ namespace Run4YourLife.GameManagement
         public override void StartPhase()
         {
             GameObject boss = m_playerSpawner.InstantiateBossPlayer();
-            m_cameraTargetCentered.m_target = boss.transform; // TODO: Temporal camera attachment
-            m_cameraTargetCentered.enabled = true;
+            m_virtualCamera.Follow = boss.transform;
+            m_virtualCamera.LookAt = boss.transform;
+            m_virtualCamera.gameObject.SetActive(true);
+
             ExecuteEvents.Execute<IUIEvents>(m_uiManager, null, (x, y) => x.OnCountdownSetted(m_timeOfPhase));
             StartCoroutine(StartNextPhaseInSeconds(m_timeOfPhase));
             m_triggerToPhase.SetActive(false);
@@ -75,8 +79,9 @@ namespace Run4YourLife.GameManagement
         {
             GameObject boss = GameObject.FindGameObjectWithTag("Boss");
             Destroy(boss);
-            m_cameraTargetCentered.enabled = false;
-            m_cameraTargetCentered.m_target = null;
+            m_virtualCamera.Follow = null;
+            m_virtualCamera.LookAt = null;
+            m_virtualCamera.gameObject.SetActive(false);
         }
 
         #endregion
@@ -85,13 +90,14 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugStartPhase()
         {
-            m_cameraTargetCentered.transform.position = m_bossFightStartingCameraPositionDebug.position;
+            m_virtualCamera.transform.position = m_bossFightStartingCameraPositionDebug.position;
 
             GameObject[] players = m_playerSpawner.InstantiatePlayers();
 
             GameObject boss = players.Where(x => x.CompareTag("Boss")).First();
-            m_cameraTargetCentered.m_target = boss.transform; // TODO: Temporal camera attachment
-            m_cameraTargetCentered.enabled = true;
+            m_virtualCamera.Follow = boss.transform;
+            m_virtualCamera.LookAt = boss.transform;
+            m_virtualCamera.gameObject.SetActive(true);
             ExecuteEvents.Execute<IUIEvents>(m_uiManager, null, (x, y) => x.OnCountdownSetted(m_timeOfPhase));
             StartCoroutine(StartNextPhaseInSeconds(m_timeOfPhase));
             m_triggerToPhase.SetActive(false);
@@ -109,7 +115,9 @@ namespace Run4YourLife.GameManagement
             {
                 Destroy(player.gameObject);
             }
-            m_cameraTargetCentered.enabled = false;
+            m_virtualCamera.Follow = null;
+            m_virtualCamera.LookAt = null;
+            m_virtualCamera.gameObject.SetActive(false);
             StopAllCoroutines();
         }
 

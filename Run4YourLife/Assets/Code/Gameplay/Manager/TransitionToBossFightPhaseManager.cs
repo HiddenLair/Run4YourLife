@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using Run4YourLife.Player;
-using System;
+using Cinemachine;
 
 namespace Run4YourLife.GameManagement
 {
@@ -20,7 +19,7 @@ namespace Run4YourLife.GameManagement
         private GameObject m_phase2StartTrigger;
 
         [SerializeField]
-        private CameraTargetCentered m_cameraTargetCentered;
+        private CinemachineVirtualCamera m_virtualCamera;
 
         [SerializeField]
         private GameObject cameraHandlePrefab;
@@ -54,8 +53,9 @@ namespace Run4YourLife.GameManagement
             Debug.Log("Camera should continue to move forward");
             Destroy(boss);
 
-            m_cameraTargetCentered.m_target = cameraHandleInstance.transform;
-            m_cameraTargetCentered.enabled = true;
+            m_virtualCamera.Follow = cameraHandleInstance.transform;
+            m_virtualCamera.LookAt = cameraHandleInstance.transform;
+            m_virtualCamera.gameObject.SetActive(true);
 
             m_transitionStartTrigger.SetActive(false);
             m_phase2StartTrigger.SetActive(true);
@@ -68,8 +68,10 @@ namespace Run4YourLife.GameManagement
 
         private IEnumerator EndPhaseCoroutine()
         {
-            m_cameraTargetCentered.enabled = false;
-            m_cameraTargetCentered.m_target = null;
+            m_virtualCamera.Follow = null;
+            m_virtualCamera.LookAt = null;
+            m_virtualCamera.gameObject.SetActive(false);
+
             m_phase2StartTrigger.SetActive(false);
             Destroy(cameraHandleInstance);
             cameraHandleInstance = null;
@@ -85,7 +87,9 @@ namespace Run4YourLife.GameManagement
         public override void DebugEndPhase()
         {
             StopAllCoroutines();
-            m_cameraTargetCentered.m_target = null;
+            m_virtualCamera.Follow = null;
+            m_virtualCamera.LookAt = null;
+            m_virtualCamera.gameObject.SetActive(false);
             m_phase2StartTrigger.SetActive(false);
             Destroy(cameraHandleInstance);
             cameraHandleInstance = null;
