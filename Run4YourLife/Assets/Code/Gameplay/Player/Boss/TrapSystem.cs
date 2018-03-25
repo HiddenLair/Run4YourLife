@@ -1,0 +1,215 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.EventSystems;
+using UnityEngine;
+using Run4YourLife.UI;
+using Run4YourLife.Input;
+
+namespace Run4YourLife.Player
+{
+    public class TrapSystem : MonoBehaviour
+    {
+
+        #region Enums
+
+        public enum Phase { Phase1, Phase2, Phase3 };
+        private enum Type { TRAP, SKILL };
+
+        #endregion
+
+        #region Inspector
+
+        [SerializeField]
+        private GameObject crossHair;
+
+        [SerializeField]
+        private float crossHairSpeed;
+
+        [SerializeField]
+        [Range(0,1)]
+        private float crossHairSensivility;
+
+        [SerializeField]
+        private Phase phase;
+
+        [SerializeField]
+        private GameObject skillA;
+        [SerializeField]
+        private GameObject trapA;
+        [SerializeField]
+        private GameObject skillX;
+        [SerializeField]
+        private GameObject trapX;
+        [SerializeField]
+        private GameObject skillY;
+        [SerializeField]
+        private GameObject trapY;
+        [SerializeField]
+        private GameObject skillB;
+        [SerializeField]
+        private GameObject trapB;
+        [SerializeField]
+        private float trapDelaySpawn;
+
+        #endregion
+
+        #region Variables
+
+        Type currentType = Type.TRAP;
+        Ready ready;
+        BossControlScheme bossControlScheme;
+        private Animator anim;
+        private GameObject uiManager;
+
+        #endregion
+
+        #region Timers
+
+        private float xButtonCooldown = 0.0f;
+        private float yButtonCooldown = 0.0f;
+        private float bButtonCooldown = 0.0f;
+        private float aButtonCooldown = 0.0f;
+
+        #endregion
+
+        private void Awake()
+        {
+            currentType = (Type)((int)phase % 2);
+            ready = GetComponent<Ready>();
+            anim = GetComponent<Animator>();
+            bossControlScheme = GetComponent<BossControlScheme>();
+            uiManager = GameObject.FindGameObjectWithTag("UI");
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            Move();
+
+            if (ready.Get()) {
+                CheckToSetElement();
+            }
+
+            if (phase == Phase.Phase3)
+            {
+                if (bossControlScheme.nextSet.Started())
+                {
+                    currentType = Type.TRAP;
+                }
+
+                if (bossControlScheme.previousSet.Started())
+                {
+                    currentType = Type.SKILL;
+                }
+            }
+        }
+
+        void Move()
+        {
+            float xInput = bossControlScheme.moveTrapIndicatorHorizontal.Value();
+            if(Mathf.Abs(xInput) >= crossHairSensivility)
+            {
+                if(xInput > 0)
+                {
+                    Vector3 temPos = crossHair.transform.position;
+                    temPos.x += crossHairSpeed * Time.deltaTime;
+                    crossHair.transform.position = temPos;
+                }
+                else
+                {
+                    Vector3 temPos = crossHair.transform.position;
+                    temPos.x -= crossHairSpeed * Time.deltaTime;
+                    crossHair.transform.position = temPos;
+                }
+            }
+
+            float yInput = bossControlScheme.moveTrapIndicatorVertical.Value();
+            if(Mathf.Abs(yInput) >= crossHairSensivility)
+            {
+                if(yInput > 0)
+                {
+                    Vector3 temPos = crossHair.transform.position;
+                    temPos.y += crossHairSpeed * Time.deltaTime;
+                    crossHair.transform.position = temPos;
+                }
+                else
+                {
+                    Vector3 temPos = crossHair.transform.position;
+                    temPos.y -= crossHairSpeed * Time.deltaTime;
+                    crossHair.transform.position = temPos;
+                }
+            }
+        }
+
+        void CheckToSetElement()
+        {
+            if (bossControlScheme.skill1.Started() && (aButtonCooldown <= Time.time))
+            {
+                float buttonCooldown = SetElement(trapA, skillA);
+                aButtonCooldown = Time.time + buttonCooldown;
+
+                ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.TRAP_A, aButtonCooldown));
+            }
+            else if (bossControlScheme.skill2.Started() && (xButtonCooldown <= Time.time))
+            {
+                float buttonCooldown = SetElement(trapX, skillX);
+                xButtonCooldown = Time.time + buttonCooldown;
+
+                ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.TRAP_X, buttonCooldown));
+            }
+            else if (bossControlScheme.skill3.Started() && (yButtonCooldown <= Time.time))
+            {
+                float buttonCooldown = SetElement(trapY, skillY);
+                yButtonCooldown = Time.time + buttonCooldown;
+
+                ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.TRAP_Y, buttonCooldown));
+            }
+            else if (bossControlScheme.skill4.Started() && (bButtonCooldown <= Time.time))
+            {
+                float buttonCooldown = SetElement(trapB, skillB);
+                bButtonCooldown = Time.time + buttonCooldown;
+
+                ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.TRAP_B, buttonCooldown));
+            }
+        }
+
+        float SetElement(GameObject trap, GameObject skill)
+        {
+            anim.SetTrigger("Casting");
+            float cooldown = 0.0f ;
+            if (currentType == Type.SKILL)
+            {
+                cooldown = skill.GetComponent<CooldownIndicator>().cooldown;
+                Vector3 temp = crossHair.transform.position;
+                var g = Instantiate(skill, temp, skill.GetComponent<Transform>().rotation);
+            }
+            else
+            {
+                cooldown = trap.GetComponent<CooldownIndicator>().cooldown;
+                Vector3 temp = crossHair.transform.position;
+                GameObject g = Instantiate(trap, temp, trap.GetComponent<Transform>().rotation);
+                g.GetComponentInChildren<Collider>().enabled = false;
+                Color actualC = g.GetComponentInChildren<Renderer>().material.color;
+                actualC.a = 0;
+                g.GetComponentInChildren<Renderer>().material.color = actualC;
+                StartCoroutine(SpawnTrapDelayed(g, trapDelaySpawn));
+            }
+            return cooldown;
+        }
+
+        IEnumerator SpawnTrapDelayed(GameObject g, float delay)
+        {
+            float fps = 1 / Time.deltaTime;
+            float alphaPerFrame = 1 / (delay * fps);
+            Color temp = g.GetComponentInChildren<Renderer>().material.color;
+            while (temp.a < 1)
+            {
+                temp.a += alphaPerFrame;
+                g.GetComponentInChildren<Renderer>().material.color = temp;
+                yield return 0;//Wait 1 frame
+            }
+            g.GetComponentInChildren<Collider>().enabled = true;
+        }
+
+    }
+}
