@@ -53,6 +53,7 @@ GameObject:
   - component: {fileID: 4379962237876684}
   - component: {fileID: 65646474464860190}
   - component: {fileID: 114330607493920500}
+  - component: {fileID: 114558471965765234}
   m_Layer: 0
   m_Name: FireSkill
   m_TagString: Untagged
@@ -126,6 +127,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   burningTime: 5
   timeToDie: 5
+--- !u!114 &114558471965765234
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1392325496747952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cde7015af7841514c923a9c3fa508138, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 2
 --- !u!198 &198375583826091296
 ParticleSystem:
   m_ObjectHideFlags: 1

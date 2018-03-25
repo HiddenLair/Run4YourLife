@@ -8,5 +8,10 @@ namespace Run4YourLife.DebuggingTools
         {
             return 1.0f / Time.deltaTime;
         }
+
+        public float GetMs()
+        {
+            return 1000.0f * Time.deltaTime;
+        }
     }
 }
