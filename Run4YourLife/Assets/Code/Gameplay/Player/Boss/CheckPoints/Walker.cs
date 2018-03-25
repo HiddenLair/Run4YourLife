@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+using Cinemachine;
+
 public class Walker : MonoBehaviour {
 
 
@@ -33,9 +35,9 @@ public class Walker : MonoBehaviour {
 
         checkPointManager.GetFloorHeightAndPositionOffset(id, speed, out fH, out pO);
 
-        CameraBossFollow cameraBossFollow = Camera.main.GetComponent<CameraBossFollow>();
+        CinemachineScreenTransposer cameraBossFollow = Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineScreenTransposer>();
 
-        cameraBossFollow.bossAndFloorHeight = fH;
-        cameraBossFollow.bossPositionOffset = pO;
+        cameraBossFollow.m_verticalHeight = fH;
+        cameraBossFollow.m_offsetFromTarget = pO;
     }
 }

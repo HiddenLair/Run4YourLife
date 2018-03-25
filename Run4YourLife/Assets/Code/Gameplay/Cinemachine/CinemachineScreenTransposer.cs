@@ -26,7 +26,10 @@ public class CinemachineScreenTransposer : CinemachineComponentBase
 
     public override void MutateCameraState(ref CameraState curState, float deltaTime)
     {
-        curState.RawPosition = CalculatePosition();
+        if(IsValid)
+        {
+            curState.RawPosition = CalculatePosition();
+        }
     }
 
     private Vector3 CalculatePosition()

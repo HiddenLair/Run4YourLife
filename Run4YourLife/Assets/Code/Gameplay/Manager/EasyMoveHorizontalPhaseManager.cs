@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 using Run4YourLife.Player;
+using Cinemachine;
 
 namespace Run4YourLife.GameManagement
 {
@@ -19,7 +20,7 @@ namespace Run4YourLife.GameManagement
         private GameObject m_phase2StartTrigger;
 
         [SerializeField]
-        private CameraBossFollow m_cameraBossFollow;
+        private CinemachineVirtualCamera m_virtualCamera;
 
         [SerializeField]
         private CheckPointManager m_checkPointManager;
@@ -50,9 +51,10 @@ namespace Run4YourLife.GameManagement
         {
             GameObject boss = GameObject.FindGameObjectWithTag("Boss"); //TODO make class with all tags and reference that
             Debug.Assert(boss != null);
-            m_cameraBossFollow.boss = boss.transform;
-            m_cameraBossFollow.enabled = true;
+            m_virtualCamera.Follow = boss.transform;
+            m_virtualCamera.LookAt = boss.transform;
 
+            m_virtualCamera.gameObject.SetActive(true);
             m_phase1to2Bridge.SetActive(true);
             m_phase2StartTrigger.SetActive(true);
         }
@@ -61,8 +63,9 @@ namespace Run4YourLife.GameManagement
         {
             m_checkPointManager.gameObject.SetActive(false);
 
-            m_cameraBossFollow.enabled = false;
-            m_cameraBossFollow.boss = null;
+            m_virtualCamera.Follow = null;
+            m_virtualCamera.LookAt = null;
+            m_virtualCamera.gameObject.SetActive(false);
         }
 
         #endregion
@@ -75,8 +78,10 @@ namespace Run4YourLife.GameManagement
             GameObject[] players = m_playerSpawner.InstantiatePlayers();
 
             GameObject boss = players.Where(x => x.CompareTag("Boss")).First();
-            m_cameraBossFollow.boss = boss.transform;
-            m_cameraBossFollow.enabled = true;
+            m_virtualCamera.Follow = boss.transform;
+            m_virtualCamera.LookAt = boss.transform;
+
+            m_virtualCamera.gameObject.SetActive(true);
 
             m_phase1to2Bridge.SetActive(true);
             m_phase2StartTrigger.SetActive(true);
@@ -94,9 +99,9 @@ namespace Run4YourLife.GameManagement
             {
                 Destroy(player.gameObject);
             }
-            m_cameraBossFollow.enabled = false;
-            m_cameraBossFollow.boss = null;
-
+            m_virtualCamera.Follow = null;
+            m_virtualCamera.LookAt = null;
+            m_virtualCamera.gameObject.SetActive(false);
         }
 
         #endregion
