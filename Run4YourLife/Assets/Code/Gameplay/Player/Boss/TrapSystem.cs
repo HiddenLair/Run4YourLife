@@ -61,12 +61,6 @@ namespace Run4YourLife.Player
         [SerializeField]
         private float trapDelaySpawn;
 
-        [SerializeField]
-        private float maxTrapWidth;
-
-        [SerializeField]
-        private float maxTrapHeight;
-
         #endregion
 
         #region Variables
@@ -76,10 +70,7 @@ namespace Run4YourLife.Player
         BossControlScheme bossControlScheme;
         private Animator anim;
         private GameObject uiManager;
-        private bool active = true;
-        private bool triggering = false;
-        private Color enabledColor;
-        private Material crossHairMat;
+
 
         #endregion
 
@@ -94,8 +85,6 @@ namespace Run4YourLife.Player
 
         private void Awake()
         {
-            crossHairMat = crossHair.GetComponent<Renderer>().material;
-            enabledColor = crossHairMat.color;
             currentType = (Type)((int)phase % 2);
             ready = GetComponent<Ready>();
             anim = GetComponent<Animator>();
@@ -103,22 +92,13 @@ namespace Run4YourLife.Player
             uiManager = GameObject.FindGameObjectWithTag("UI");
         }
 
-        private void OnDisable()
-        {
-            crossHairMat.color = enabledColor;
-        }
-
         // Update is called once per frame
         void Update()
         {
             Move();
             CheckForScreenLimits();
-            if (!triggering)
-            {
-                CheckIfSpaceAvailable();
-            }
 
-            if (ready.Get() && active) {
+            if (ready.Get() && crossHair.GetComponent<CrossHair>().GetActive()) {
                 CheckToSetElement();
             }
 
@@ -207,42 +187,6 @@ namespace Run4YourLife.Player
             }
         }
 
-        void CheckIfSpaceAvailable()
-        {
-            //Check if we have space to place the bigger trap
-            RaycastHit info;
-            if(Physics.Raycast(crossHair.transform.position, Vector3.up,out info, maxTrapHeight, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
-            {
-                Deactivate();
-            }
-            else if (Physics.Raycast(crossHair.transform.position, Vector3.right, out info, maxTrapWidth/2, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
-            {
-                Deactivate();
-            }
-            else if (Physics.Raycast(crossHair.transform.position, -Vector3.right, out info, maxTrapWidth / 2, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
-            {
-                Deactivate();
-            }
-            else
-            {
-                Activate();
-            }
-
-        }
-
-        void Deactivate()
-        {
-            //There is no space to place the trap
-            crossHairMat.color = Color.gray;
-            active = false;
-        }
-
-        void Activate()
-        {
-            crossHairMat.color = enabledColor;
-            active = true;
-        }
-
         void CheckToSetElement()
         {
             if (bossControlScheme.skill1.Started() && (aButtonCooldown <= Time.time))
@@ -311,18 +255,6 @@ namespace Run4YourLife.Player
                 yield return 0;//Wait 1 frame
             }
             g.GetComponentInChildren<Collider>().enabled = true;
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            Deactivate();
-            triggering = true;
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            Activate();
-            triggering = false;
         }
     }
 }
