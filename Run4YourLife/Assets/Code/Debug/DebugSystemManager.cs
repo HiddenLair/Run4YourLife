@@ -28,7 +28,7 @@ namespace Run4YourLife.DebuggingTools
 
         void Start()
         {
-            ToggleDebugging(); // TEST
+            // ToggleDebugging(); // TEST
         }
 
         void Update()
