@@ -38,7 +38,9 @@ GameObject:
   - component: {fileID: 4694216362574630}
   - component: {fileID: 114787679649463040}
   - component: {fileID: 114902593553862488}
+  - component: {fileID: 114342415570898938}
   - component: {fileID: 65338818036603442}
+  - component: {fileID: 54746004584542846}
   m_Layer: 11
   m_Name: ImpactTrap
   m_TagString: Trap
@@ -852,6 +854,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1536699636901036}
   m_Mesh: {fileID: 4300016, guid: c08d6417199442d45810da2b63b112e6, type: 3}
+--- !u!54 &54746004584542846
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1053646925812610}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 122
+  m_CollisionDetection: 0
 --- !u!65 &65338818036603442
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -881,6 +898,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114342415570898938
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1053646925812610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56edeefa29b384b468b659f4fa81aebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeInTime: 0.5
 --- !u!114 &114787679649463040
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -897,7 +926,7 @@ MonoBehaviour:
     type: 2}
   trapListener:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 65792
   blockingElement:
     serializedVersion: 2
     m_Bits: 1024

@@ -16,7 +16,7 @@ public class RootTrapControl : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.tag == "Player")
+        if (collider.tag == Tags.Player || collider.tag == Tags.Shoot)
         {
             ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.Root(rootHardness));
             toDelete = true;
@@ -25,7 +25,7 @@ public class RootTrapControl : MonoBehaviour {
         if (toDelete)
         {
             Instantiate(activationParticles, transform.position, transform.rotation);
-            Destroy(gameObject.transform.parent.gameObject);
+            Destroy(gameObject);
         }
     }
 }

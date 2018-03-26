@@ -34,7 +34,7 @@ public class PushTrapControl : MonoBehaviour {
         if (toDelete)
         {
             Instantiate(activationParticles, transform.position, transform.rotation);
-            Destroy(gameObject.transform.parent.gameObject);
+            Destroy(gameObject);
         }
     }
 

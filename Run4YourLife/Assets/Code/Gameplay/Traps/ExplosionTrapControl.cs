@@ -18,6 +18,7 @@ public class ExplosionTrapControl : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collider)
     {
+        Debug.Log("Entra");
         Collider[] collisions = Physics.OverlapSphere(transform.position, AOERadius, trapListener);
 
         foreach (Collider c in collisions)
@@ -32,7 +33,7 @@ public class ExplosionTrapControl : MonoBehaviour {
         if (toDelete)
         {
             Instantiate(activationParticles, transform.position, transform.rotation);
-            Destroy(gameObject.transform.parent.gameObject);
+            Destroy(gameObject);
         }
     }
 
