@@ -6,29 +6,25 @@ namespace Run4YourLife.Player
     {
         public GameObject explosion;
 
-        private Boss callback;
+        private float zValue;
 
-        private void OnTriggerEnter(Collider other)
+        private void Update()
         {
-            Explosion();
-        }
-
-        void OnBecameInvisible()
-        {
-            callback.SetShootStillAlive(false);
-            Destroy(gameObject);
+            if(transform.position.z <= zValue)
+            {
+                Explosion();
+            }
         }
 
         public void Explosion()
         {
             Instantiate(explosion, transform.position, transform.rotation);
-            callback.SetShootStillAlive(false);
             Destroy(gameObject);
         }
 
-        public void SetCallback(Boss boss)
+        public void SetZValue(float value)
         {
-            callback = boss;
+            zValue = value;
         }
     }
 }

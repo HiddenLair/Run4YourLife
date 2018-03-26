@@ -12,6 +12,10 @@ namespace Run4YourLife.Player
         #region Editor variables
 
         [SerializeField]
+        [Range(0, 1)]
+        private float triggerSensivility = 0.2f;
+
+        [SerializeField]
         protected GameObject instance;
 
         [SerializeField]
@@ -55,7 +59,7 @@ namespace Run4YourLife.Player
         {
             if(ready.Get())
             {
-                if(controlScheme.melee.Value() > 0.2f)
+                if(controlScheme.melee.Value() > triggerSensivility)
                 {
                     if(currentTimeS >= reloadTimeS && !alreadyPressed)
                     {

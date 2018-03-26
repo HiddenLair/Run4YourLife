@@ -7,6 +7,8 @@ using Run4YourLife.Input;
 
 namespace Run4YourLife.Player
 {
+    [RequireComponent(typeof(Ready))]
+    [RequireComponent(typeof(BossControlScheme))]
     public class TrapSystem : MonoBehaviour
     {
 
@@ -34,6 +36,10 @@ namespace Run4YourLife.Player
         private float screenLeftLimitPercentaje = 0.2f;
 
         [SerializeField]
+        [Range(0, 1)]
+        private float screenBottomLimitPercentaje = 0.2f;
+
+        [SerializeField]
         private Phase phase;
 
         [SerializeField]
@@ -55,6 +61,12 @@ namespace Run4YourLife.Player
         [SerializeField]
         private float trapDelaySpawn;
 
+        [SerializeField]
+        private float maxTrapWidth;
+
+        [SerializeField]
+        private float maxTrapHeight;
+
         #endregion
 
         #region Variables
@@ -64,6 +76,10 @@ namespace Run4YourLife.Player
         BossControlScheme bossControlScheme;
         private Animator anim;
         private GameObject uiManager;
+        private bool active = true;
+        private bool triggering = false;
+        private Color enabledColor;
+        private Material crossHairMat;
 
         #endregion
 
@@ -78,6 +94,8 @@ namespace Run4YourLife.Player
 
         private void Awake()
         {
+            crossHairMat = crossHair.GetComponent<Renderer>().material;
+            enabledColor = crossHairMat.color;
             currentType = (Type)((int)phase % 2);
             ready = GetComponent<Ready>();
             anim = GetComponent<Animator>();
@@ -85,13 +103,22 @@ namespace Run4YourLife.Player
             uiManager = GameObject.FindGameObjectWithTag("UI");
         }
 
+        private void OnDisable()
+        {
+            crossHairMat.color = enabledColor;
+        }
+
         // Update is called once per frame
         void Update()
         {
             Move();
             CheckForScreenLimits();
+            if (!triggering)
+            {
+                CheckIfSpaceAvailable();
+            }
 
-            if (ready.Get()) {
+            if (ready.Get() && active) {
                 CheckToSetElement();
             }
 
@@ -150,7 +177,7 @@ namespace Run4YourLife.Player
         {
 
             Vector2 screenTopRight = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, Mathf.Abs(Camera.main.transform.position.z - crossHair.transform.position.z)));
-            Vector2 screenBottomLeft = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth * screenLeftLimitPercentaje, 0, Mathf.Abs(Camera.main.transform.position.z - crossHair.transform.position.z)));
+            Vector2 screenBottomLeft = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth * screenLeftLimitPercentaje, Camera.main.pixelHeight * screenBottomLimitPercentaje, Mathf.Abs(Camera.main.transform.position.z - crossHair.transform.position.z)));
 
             //Horizontal
             if (crossHair.transform.position.x > screenTopRight.x)
@@ -178,6 +205,42 @@ namespace Run4YourLife.Player
                 tempPos.y = screenBottomLeft.y;
                 crossHair.transform.position = tempPos;
             }
+        }
+
+        void CheckIfSpaceAvailable()
+        {
+            //Check if we have space to place the bigger trap
+            RaycastHit info;
+            if(Physics.Raycast(crossHair.transform.position, Vector3.up,out info, maxTrapHeight, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
+            {
+                Deactivate();
+            }
+            else if (Physics.Raycast(crossHair.transform.position, Vector3.right, out info, maxTrapWidth/2, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
+            {
+                Deactivate();
+            }
+            else if (Physics.Raycast(crossHair.transform.position, -Vector3.right, out info, maxTrapWidth / 2, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
+            {
+                Deactivate();
+            }
+            else
+            {
+                Activate();
+            }
+
+        }
+
+        void Deactivate()
+        {
+            //There is no space to place the trap
+            crossHairMat.color = Color.gray;
+            active = false;
+        }
+
+        void Activate()
+        {
+            crossHairMat.color = enabledColor;
+            active = true;
         }
 
         void CheckToSetElement()
@@ -250,5 +313,16 @@ namespace Run4YourLife.Player
             g.GetComponentInChildren<Collider>().enabled = true;
         }
 
+        private void OnTriggerEnter(Collider other)
+        {
+            Deactivate();
+            triggering = true;
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            Activate();
+            triggering = false;
+        }
     }
 }

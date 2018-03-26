@@ -193,7 +193,7 @@ namespace Run4YourLife.Player
             lastBulletShoot.GetComponent<Rigidbody>().velocity = lastBulletShoot.GetComponent<Transform>().right * bulletSpeed * Time.deltaTime;
             if (lastBulletShoot.GetComponent<ChargedBullet>())
             {
-                lastBulletShoot.GetComponent<ChargedBullet>().SetCallback(this);
+                //lastBulletShoot.GetComponent<ChargedBullet>().SetCallback(this);
             }
         }
 
