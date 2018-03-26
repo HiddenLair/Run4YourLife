@@ -4,21 +4,31 @@ namespace Run4YourLife.DebuggingTools
 {
     public class DebugSystemManager : MonoBehaviour
     {
-        private GameObject mainCamera = null;
+        #region General
 
-        private VertexAndTriangleCounter vertexAndTriangleCounter = null;
+        private FPSCounter fpsCounter = null;
 
         private WireframeMode wireframeMode = null;
 
-        private FPSCounter fpsCounter = null;
+        private VertexAndTriangleCounter vertexAndTriangleCounter = null;
+
+        #endregion
+
+        #region Boss
+
+        private WalkerController walkerController = null;
+
+        #endregion
 
         private bool debugging = false;
 
         private bool drawWireframe = false;
 
-        void Awake()
+        private string walkerIncreaseSpeedText = "0";
+
+        void Start()
         {
-            mainCamera = Camera.main.gameObject;
+            ToggleDebugging(); // TEST
         }
 
         void Update()
@@ -56,13 +66,13 @@ namespace Run4YourLife.DebuggingTools
 
         private void ToggleGeneralDebugging()
         {
-            fpsCounter = ToggleMode<FPSCounter>(fpsCounter);
-            vertexAndTriangleCounter = ToggleMode<VertexAndTriangleCounter>(vertexAndTriangleCounter);
+            fpsCounter = ToggleMode<FPSCounter>(fpsCounter, gameObject);
+            vertexAndTriangleCounter = ToggleMode<VertexAndTriangleCounter>(vertexAndTriangleCounter, gameObject);
         }
 
         private void ToggleBossDebugging()
         {
-
+            walkerController = ToggleMode<WalkerController>(walkerController, gameObject);
         }
 
         private void ToggleRunnerDebugging()
@@ -75,13 +85,15 @@ namespace Run4YourLife.DebuggingTools
 
         }
 
-        private T ToggleMode<T>(MonoBehaviour mode) where T : Component
+        private T ToggleMode<T>(MonoBehaviour mode, GameObject attachToObject) where T : Component
         {
+            Debug.Assert(attachToObject != null); // TEST
+
             T ret = null;
 
             if(mode == null)
             {
-                ret = mainCamera.AddComponent<T>();
+                ret = attachToObject.AddComponent<T>();
             }
             else
             {
@@ -145,7 +157,7 @@ namespace Run4YourLife.DebuggingTools
 
             if(drawGeneral)
             {
-                GUILayout.Label("FPS: " + fpsCounter.GetFPS().ToString("0") + ", Ms: " + fpsCounter.GetMs().ToString("0"));
+                GUILayout.Label("Fps: " + fpsCounter.GetFPS().ToString("0") + ", Ms: " + fpsCounter.GetMs().ToString("0"));
                 GUILayout.Label("Num. Vertices: " + vertexAndTriangleCounter.GetVertexCount());
                 GUILayout.Label("Num. Triangles: " + vertexAndTriangleCounter.GetTriangleCount());
 
@@ -154,7 +166,7 @@ namespace Run4YourLife.DebuggingTools
                 if(drawWireframe != newDrawWireframe)
                 {
                     drawWireframe = newDrawWireframe;
-                    wireframeMode = ToggleMode<WireframeMode>(wireframeMode);
+                    wireframeMode = ToggleMode<WireframeMode>(wireframeMode, Camera.main.gameObject);
                 }
             }
 
@@ -173,7 +185,18 @@ namespace Run4YourLife.DebuggingTools
 
             if(drawBoss)
             {
-                GUILayout.Label("To define...");
+                if(walkerController.Exists())
+                {
+                    GUILayout.Label("Walker Speed: " + walkerController.Get().ToString("0.###"));
+
+                    GUILayout.BeginHorizontal();
+
+                    GUILayout.Label("Desired Walker Speed");
+                    walkerIncreaseSpeedText = GUILayout.TextField(walkerIncreaseSpeedText);
+                    walkerController.SetIncrease(walkerIncreaseSpeedText);
+
+                    GUILayout.EndHorizontal();
+                }
             }
 
             GUILayout.EndVertical();
