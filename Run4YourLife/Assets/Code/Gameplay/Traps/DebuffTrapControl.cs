@@ -16,7 +16,7 @@ public class DebuffTrapControl : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.tag == "Player")
+        if (collider.tag == Tags.Player || collider.tag == Tags.Shoot)
         {
             ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.Debuff(statModifier));
             toDelete = true;

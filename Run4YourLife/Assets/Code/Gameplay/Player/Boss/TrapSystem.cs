@@ -234,27 +234,8 @@ namespace Run4YourLife.Player
                 cooldown = trap.GetComponent<CooldownIndicator>().cooldown;
                 Vector3 temp = crossHair.transform.position;
                 GameObject g = Instantiate(trap, temp, trap.GetComponent<Transform>().rotation);
-                g.GetComponentInChildren<Collider>().enabled = false;
-                Color actualC = g.GetComponentInChildren<Renderer>().material.color;
-                actualC.a = 0;
-                g.GetComponentInChildren<Renderer>().material.color = actualC;
-                StartCoroutine(SpawnTrapDelayed(g, trapDelaySpawn));
             }
             return cooldown;
-        }
-
-        IEnumerator SpawnTrapDelayed(GameObject g, float delay)
-        {
-            float fps = 1 / Time.deltaTime;
-            float alphaPerFrame = 1 / (delay * fps);
-            Color temp = g.GetComponentInChildren<Renderer>().material.color;
-            while (temp.a < 1)
-            {
-                temp.a += alphaPerFrame;
-                g.GetComponentInChildren<Renderer>().material.color = temp;
-                yield return 0;//Wait 1 frame
-            }
-            g.GetComponentInChildren<Collider>().enabled = true;
         }
     }
 }

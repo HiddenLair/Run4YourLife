@@ -39,7 +39,9 @@ GameObject:
   - component: {fileID: 4719575584864958}
   - component: {fileID: 114345575965848032}
   - component: {fileID: 114998300014858648}
+  - component: {fileID: 114365003905680990}
   - component: {fileID: 65280241330903222}
+  - component: {fileID: 54890176982255332}
   m_Layer: 11
   m_Name: DebuffTrap
   m_TagString: Trap
@@ -126,7 +128,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1397588157857540}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.17367, y: 5.436245, z: 6.012}
+  m_LocalPosition: {x: -4.619561, y: 7.8367615, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4137174364365792}
@@ -176,6 +178,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1139221708405328}
   m_Mesh: {fileID: 4300000, guid: 728118e52467100499fedbdabe3b340b, type: 3}
+--- !u!54 &54890176982255332
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1397588157857540}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 122
+  m_CollisionDetection: 0
 --- !u!65 &65280241330903222
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -224,7 +241,7 @@ MonoBehaviour:
     buff: 0
     amount: 0.5
     endTime: 5
---- !u!114 &114998300014858648
+--- !u!114 &114365003905680990
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -236,6 +253,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 5
+--- !u!114 &114998300014858648
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1397588157857540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56edeefa29b384b468b659f4fa81aebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeInTime: 0.5
 --- !u!198 &198291080925434654
 ParticleSystem:
   m_ObjectHideFlags: 1

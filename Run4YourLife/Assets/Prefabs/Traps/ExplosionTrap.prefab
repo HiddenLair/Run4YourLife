@@ -21,7 +21,9 @@ GameObject:
   - component: {fileID: 4733664109319810}
   - component: {fileID: 114521536942929264}
   - component: {fileID: 114331164568281786}
+  - component: {fileID: 114374035786322822}
   - component: {fileID: 65687488831705326}
+  - component: {fileID: 54301486726897940}
   m_Layer: 11
   m_Name: ExplosionTrap
   m_TagString: Trap
@@ -175,6 +177,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1688405721681572}
   m_Mesh: {fileID: 4300000, guid: 1ba845ba9a017d544ade6b08d4ccee52, type: 3}
+--- !u!54 &54301486726897940
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1674844452342998}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 122
+  m_CollisionDetection: 0
 --- !u!65 &65687488831705326
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -216,6 +233,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 5
+--- !u!114 &114374035786322822
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1674844452342998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56edeefa29b384b468b659f4fa81aebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeInTime: 0.5
 --- !u!114 &114521536942929264
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -230,7 +259,7 @@ MonoBehaviour:
   AOERadius: 2
   trapListener:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 65792
   blockingElement:
     serializedVersion: 2
     m_Bits: 1024
