@@ -119,6 +119,11 @@ namespace Run4YourLife.Player
 
         private void OnControllerColliderHit(ControllerColliderHit hit)
         {
+            if(m_isJumping && !m_characterController.isGrounded)
+            {
+                //The character collided with something while jumping - STOP THE JUMP!! (Waiting for the new implementation...)
+            }
+
             if (!m_isJumping && m_characterController.isGrounded)
             {
                 m_velocity.y = 0.0f;
@@ -238,7 +243,7 @@ namespace Run4YourLife.Player
             yield return null;
 
             while (m_playerControlScheme.jump.Persists() && previousPositionY < transform.position.y)
-            {
+            {                
                 previousPositionY = transform.position.y;
                 yield return null;
             }
