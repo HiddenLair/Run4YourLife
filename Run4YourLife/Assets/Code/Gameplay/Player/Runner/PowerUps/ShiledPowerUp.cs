@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using Run4YourLife.Utils;
+using Run4YourLife.GameManagement;
+
 namespace Run4YourLife.Player
 {
     public class ShiledPowerUp : PowerUp
@@ -27,13 +30,15 @@ namespace Run4YourLife.Player
         {
             instanceShield = Instantiate(shield,g.transform.position,g.transform.rotation);
             instanceShield.transform.SetParent(g.transform);
-            StartCoroutine(DeactivateAfterTime());
+            // StartCoroutine(DeactivateAfterTime());
+
+            CoroutineManager.GetInstance().StartCoroutine(YieldHelper.WaitForSeconds(Destroy, instanceShield, time));
         }
 
-        IEnumerator DeactivateAfterTime()
+        /* IEnumerator DeactivateAfterTime()
         {
             yield return new WaitForSeconds(time);
             Destroy(instanceShield);
-        }
+        } */
     }
 }
