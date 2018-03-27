@@ -1,14 +1,9 @@
 ﻿using UnityEngine;
 
-public class PowerUp : MonoBehaviour
+namespace Run4YourLife.Player
 {
-    [SerializeField]
-    private StatModifier statModifier;
-
-    void OnTriggerEnter(Collider collider)
+    public abstract class PowerUp : MonoBehaviour
     {
-        collider.GetComponent<Stats>().AddModifier(statModifier);
-
-        Destroy(gameObject);
+        public abstract void Effect(GameObject g);
     }
 }
