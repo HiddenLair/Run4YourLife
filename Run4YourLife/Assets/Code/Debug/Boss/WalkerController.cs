@@ -26,24 +26,44 @@ namespace Run4YourLife.DebuggingTools
             return walker != null;
         }
 
-        public float Get()
+        public float GetSpeed()
         {
             return walker.speed;
         }
 
-        public void SetIncrease(float value)
+        public void SetSpeed(float value)
         {
-            walker.increaseValue = value;
-            walker.increaseSpeedOverTime = value != 0.0f;
+            walker.speed = value;
         }
 
-        public void SetIncrease(string value)
+        public void SetSpeed(string value)
         {
             float result;
 
             if(float.TryParse(value, out result))
             {
-                SetIncrease(result);
+                SetSpeed(result);
+            }
+        }
+
+        public float GetIncreaseSpeed()
+        {
+            return walker.increaseValue;
+        }
+
+        public void SetIncreaseSpeed(float value)
+        {
+            walker.increaseValue = value;
+            walker.increaseSpeedOverTime = value != 0.0f;
+        }
+
+        public void SetIncreaseSpeed(string value)
+        {
+            float result;
+
+            if(float.TryParse(value, out result))
+            {
+                SetIncreaseSpeed(result);
             }
         }
     }

@@ -24,7 +24,8 @@ namespace Run4YourLife.DebuggingTools
 
         private bool drawWireframe = false;
 
-        private string walkerIncreaseSpeedText = "0";
+        private string walkerSpeedText = string.Empty;
+        private string walkerIncreaseSpeedText = string.Empty;
 
         void Start()
         {
@@ -187,13 +188,31 @@ namespace Run4YourLife.DebuggingTools
             {
                 if(walkerController.Exists())
                 {
-                    GUILayout.Label("Walker Speed: " + walkerController.Get().ToString("0.###"));
+                    // Walker Speed
+
+                    GUILayout.Label("Current Walker Speed: " + walkerController.GetSpeed().ToString("0.###"));
 
                     GUILayout.BeginHorizontal();
 
-                    GUILayout.Label("Desired Walker Speed");
+                    GUILayout.Label("Walker Speed");
+                    walkerSpeedText = GUILayout.TextField(walkerSpeedText);
+                    if(GUILayout.Button("Apply"))
+                    {
+                        walkerController.SetSpeed(walkerSpeedText);
+                    }
+
+                    GUILayout.EndHorizontal();
+
+                    // Walker Increase Speed
+
+                    GUILayout.BeginHorizontal();
+
+                    GUILayout.Label("Walker Inc. Speed");
                     walkerIncreaseSpeedText = GUILayout.TextField(walkerIncreaseSpeedText);
-                    walkerController.SetIncrease(walkerIncreaseSpeedText);
+                    if(GUILayout.Button("Apply"))
+                    {
+                        walkerController.SetIncreaseSpeed(walkerIncreaseSpeedText);
+                    }
 
                     GUILayout.EndHorizontal();
                 }
