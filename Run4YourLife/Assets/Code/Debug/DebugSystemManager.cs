@@ -20,6 +20,12 @@ namespace Run4YourLife.DebuggingTools
 
         #endregion
 
+        #region Other
+
+        private PhaseSwitcher phaseSwitcher = null;
+
+        #endregion
+
         private bool debugging = false;
 
         private bool drawWireframe = false;
@@ -83,7 +89,7 @@ namespace Run4YourLife.DebuggingTools
 
         private void ToggleOtherDebugging()
         {
-
+            phaseSwitcher = ToggleMode<PhaseSwitcher>(phaseSwitcher, gameObject);
         }
 
         private T ToggleMode<T>(MonoBehaviour mode, GameObject attachToObject) where T : Component
@@ -251,7 +257,22 @@ namespace Run4YourLife.DebuggingTools
 
             if(drawOther)
             {
-                GUILayout.Label("To define...");
+                GUILayout.BeginHorizontal();
+
+                if(GUILayout.Button("Go Phase 1"))
+                {
+                    phaseSwitcher.GoPhase1();
+                }
+                else if(GUILayout.Button("Go Phase 2"))
+                {
+                    phaseSwitcher.GoPhase2();
+                }
+                else if(GUILayout.Button("Go Phase 3"))
+                {
+                    phaseSwitcher.GoPhase3();
+                }
+
+                GUILayout.EndHorizontal();
             }
 
             GUILayout.EndVertical();
