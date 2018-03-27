@@ -10,7 +10,7 @@ namespace Run4YourLife.Player
 
         #region Inspector
         [SerializeField]
-        GameObject crossHair;
+        GameObject crossHair = null;
 
         [SerializeField]
         private Color enabledColor;
@@ -19,11 +19,31 @@ namespace Run4YourLife.Player
         private Color disabledColor;
         #endregion
 
+        #region Variables
+
+        Image img;
+
+        #endregion
+
+        private void Awake()
+        {
+            img = GetComponent<Image>();
+        }
+
         private void Update()
         {
-            Move();
+            if (crossHair != null)
+            {
+                img.enabled = true;
 
-            CheckStatus();
+                Move();
+
+                CheckStatus();
+            }
+            else
+            {
+                img.enabled = false;
+            }
         }
 
         void Move()
@@ -35,12 +55,25 @@ namespace Run4YourLife.Player
         {
             if (crossHair.GetComponent<CrossHair>().GetActive())
             {
-                GetComponent<Image>().color = enabledColor;
+                img.color = enabledColor;
             }
             else
             {
-                GetComponent<Image>().color = disabledColor;
+                img.color = disabledColor;
             }
+        }
+
+        public void SubscribeWorldCrossHair(GameObject crossHair)
+        {
+            this.crossHair = crossHair;
+        }
+
+        public void UnsubscribeWorldCrossHair(GameObject crossHair)
+        {
+         if(this.crossHair == crossHair)
+            {
+                crossHair = null;
+            }   
         }
     }
 }

@@ -22,6 +22,16 @@ namespace Run4YourLife.Player
         private bool triggering = false;
         #endregion
 
+        private void Awake()
+        {
+            FindObjectOfType<UICrossHair>().SubscribeWorldCrossHair(gameObject);
+        }
+
+        private void OnDestroy()
+        {
+            FindObjectOfType<UICrossHair>().UnsubscribeWorldCrossHair(gameObject);
+        }
+
         private void Update()
         {
             if (!triggering)
