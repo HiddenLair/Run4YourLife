@@ -72,7 +72,7 @@ namespace Run4YourLife.GameManagement
             EndExecutingPhaseAndStartPhase(GamePhase.TransitionToEasyMoveHorizontal);
         }
 
-        public void OnAllRunnersDeath()
+        public void OnAllRunnersDied()
         {
             toMainMenuRequest.Execute();
         }

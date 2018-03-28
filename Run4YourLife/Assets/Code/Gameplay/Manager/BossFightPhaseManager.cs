@@ -35,9 +35,11 @@ namespace Run4YourLife.GameManagement
 
         #region Member variables
 
+        private GameplayPlayerManager m_gameplayPlayerManager;
         private PlayerSpawner m_playerSpawner;
 
         private GameObject m_uiManager;
+
 
         #endregion
 
@@ -48,7 +50,10 @@ namespace Run4YourLife.GameManagement
             m_playerSpawner = GetComponent<PlayerSpawner>();
             Debug.Assert(m_playerSpawner != null);
 
-            m_uiManager = GameObject.FindGameObjectWithTag("UI");
+            m_gameplayPlayerManager = FindObjectOfType<GameplayPlayerManager>();
+            Debug.Assert(m_gameplayPlayerManager != null);
+
+            m_uiManager = GameObject.FindGameObjectWithTag(Tags.UI);
 
             RegisterPhase(GamePhase.BossFight);
         }
@@ -59,16 +64,22 @@ namespace Run4YourLife.GameManagement
 
         public override void StartPhase()
         {
-            GameObject boss = m_playerSpawner.InstantiateBossPlayer();
+            m_playerSpawner.InstantiateBossPlayer();
+            StartPhaseCommon();
+        }
+
+        void StartPhaseCommon()
+        {
+            GameObject boss = m_gameplayPlayerManager.Boss;
             m_virtualCamera.Follow = boss.transform;
             m_virtualCamera.LookAt = boss.transform;
             m_virtualCamera.gameObject.SetActive(true);
 
-            ExecuteEvents.Execute<IUIEvents>(m_uiManager, null, (x, y) => x.OnCountdownSetted(m_timeOfPhase));
-            // StartCoroutine(StartNextPhaseInSeconds(m_timeOfPhase));
-            StartCoroutine(YieldHelper.WaitForSeconds(StartNextPhase, m_timeOfPhase));
             m_triggerToPhase.SetActive(false);
             m_backgroundTiling.SetActive(false);
+
+            ExecuteEvents.Execute<IUIEvents>(m_uiManager, null, (x, y) => x.OnCountdownSetted(m_timeOfPhase));
+            StartCoroutine(YieldHelper.WaitForSeconds(StartNextPhase, m_timeOfPhase));
         }
 
         private void StartNextPhase()
@@ -76,16 +87,16 @@ namespace Run4YourLife.GameManagement
             FindObjectOfType<GameManager>().EndExecutingPhaseAndStartPhase(GamePhase.TransitionToHardMoveHorizontal);
         }
 
-        /* IEnumerator StartNextPhaseInSeconds(float time)
-        {
-            yield return new WaitForSeconds(time);
-            FindObjectOfType<GameManager>().EndExecutingPhaseAndStartPhase(GamePhase.TransitionToHardMoveHorizontal);
-        } */
-
         public override void EndPhase()
         {
-            GameObject boss = GameObject.FindGameObjectWithTag("Boss");
+            GameObject boss = m_gameplayPlayerManager.Boss;
             Destroy(boss);
+
+            EndPhaseCommon();
+        }
+
+        private void EndPhaseCommon()
+        {
             m_virtualCamera.Follow = null;
             m_virtualCamera.LookAt = null;
             m_virtualCamera.gameObject.SetActive(false);
@@ -97,36 +108,19 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugStartPhase()
         {
+            m_playerSpawner.InstantiatePlayers();
             m_virtualCamera.transform.position = m_bossFightStartingCameraPositionDebug.position;
 
-            GameObject[] players = m_playerSpawner.InstantiatePlayers();
-
-            GameObject boss = players.Where(x => x.CompareTag("Boss")).First();
-            m_virtualCamera.Follow = boss.transform;
-            m_virtualCamera.LookAt = boss.transform;
-            m_virtualCamera.gameObject.SetActive(true);
-            ExecuteEvents.Execute<IUIEvents>(m_uiManager, null, (x, y) => x.OnCountdownSetted(m_timeOfPhase));
-            // StartCoroutine(StartNextPhaseInSeconds(m_timeOfPhase));
-            StartCoroutine(YieldHelper.WaitForSeconds(StartNextPhase, m_timeOfPhase));
-            m_triggerToPhase.SetActive(false);
-            m_backgroundTiling.SetActive(false);
+            StartPhaseCommon();
         }
 
         public override void DebugEndPhase()
         {
-            GameObject boss = FindObjectOfType<Boss2>().gameObject;
-            Debug.Assert(boss != null);
-            Destroy(boss);
-
-            RunnerCharacterController[] players = FindObjectsOfType<RunnerCharacterController>();
-            foreach (RunnerCharacterController player in players)
-            {
-                Destroy(player.gameObject);
-            }
-            m_virtualCamera.Follow = null;
-            m_virtualCamera.LookAt = null;
-            m_virtualCamera.gameObject.SetActive(false);
             StopAllCoroutines();
+
+            m_gameplayPlayerManager.DebugDestroyAllPlayers();
+
+            EndPhaseCommon();
         }
 
         #endregion

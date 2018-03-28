@@ -55,9 +55,7 @@ namespace Run4YourLife.Player
         public void Kill()
         {
             GameObject playerStateManager = FindObjectOfType<GameplayPlayerManager>().gameObject;
-            PlayerDefinition playerDefinition = GetComponent<PlayerInstance>().PlayerDefinition;
-            ExecuteEvents.Execute<IPlayerStateEvents>(playerStateManager, null, (x, y) => x.OnPlayerDeath(playerDefinition));
-            Destroy(gameObject);
+            ExecuteEvents.Execute<IGameplayPlayerEvents>(playerStateManager, null, (x, y) => x.OnRunnerDeath(gameObject));
         }
 
         public void Impulse(Vector3 direction, float force)

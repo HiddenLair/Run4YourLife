@@ -20,6 +20,13 @@ namespace Run4YourLife.GameManagement
         private Transform m_bossSpawn;
 
         private PlayerManager m_playerManager;
+        private GameplayPlayerManager m_gameplayPlayerManager;
+
+        private void Awake()
+        {
+            m_gameplayPlayerManager = FindObjectOfType<GameplayPlayerManager>();
+            Debug.Assert(m_gameplayPlayerManager != null);
+        }
 
         private void Start()
         {
@@ -63,12 +70,14 @@ namespace Run4YourLife.GameManagement
             if (playerDefinition.IsBoss)
             {
                 instance = Instantiate(m_bossPrefab, m_bossSpawn.position, m_bossSpawn.rotation);
+                m_gameplayPlayerManager.Boss = instance;
             }
             else
             {
                 // TODO implementation of spawn that requires 3 transforms instead of 4
                 Transform spawn = m_runnerSpawns[playerDefinition.ID - 1];
                 instance = Instantiate(m_playerPrefab, spawn.position, spawn.rotation);
+                m_gameplayPlayerManager.Runners.Add(instance);
             }
 
             return instance;
