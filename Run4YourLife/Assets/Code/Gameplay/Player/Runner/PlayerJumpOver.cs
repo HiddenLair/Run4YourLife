@@ -26,6 +26,11 @@ namespace Run4YourLife.Player
         {
             return bounceOverMeForce;
         }
+
+        public void SetBounceForce(float value)
+        {
+            bounceOverMeForce = value;
+        }
         #endregion
     }
 }
