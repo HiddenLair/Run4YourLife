@@ -6,6 +6,7 @@ using Run4YourLife.Input;
 using UnityEngine.EventSystems;
 
 using Run4YourLife.UI;
+using Run4YourLife.Utils;
 
 namespace Run4YourLife.Player
 {
@@ -139,14 +140,15 @@ namespace Run4YourLife.Player
             {
                 ExecuteEvents.Execute<ICharacterEvents>(r.transform.gameObject, null, (x, y) => x.Kill());
             }
-            StartCoroutine(DesactivateDelayed(laser,laserDuration));
+            // StartCoroutine(DesactivateDelayed(laser,laserDuration));
+            StartCoroutine(YieldHelper.WaitForSeconds(g => g.SetActive(false), laser, laserDuration));
         }
 
-        IEnumerator DesactivateDelayed(GameObject g, float time)
+        /* IEnumerator DesactivateDelayed(GameObject g, float time)
         {
             yield return new WaitForSeconds(time);
             g.SetActive(false);
-        }
+        } */
 
         /* void MeleVerification()
         {

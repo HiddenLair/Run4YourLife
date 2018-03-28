@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using Run4YourLife.SceneManagement;
 using Run4YourLife.Player;
+using Run4YourLife.Utils;
 using System;
 
 namespace Run4YourLife.GameManagement
@@ -97,28 +98,30 @@ namespace Run4YourLife.GameManagement
         public void EndExecutingPhaseAndStartPhase(GamePhase gamePhase)
         {
             PhaseEnd();
-            StartCoroutine(PhaseStartNextFrame(gamePhase));
+            // StartCoroutine(PhaseStartNextFrame(gamePhase));
+            StartCoroutine(YieldHelper.SkipFrame(PhaseStart, gamePhase));
         }
 
-        private IEnumerator PhaseStartNextFrame(GamePhase gamePhase)
+        /* private IEnumerator PhaseStartNextFrame(GamePhase gamePhase)
         {
             yield return null;
             PhaseStart(gamePhase);
-            onGamePhaseChanged.Invoke(gamePhase);
-        }
+            // onGamePhaseChanged.Invoke(gamePhase);
+        } */
 
         public void DebugEndExecutingPhaseAndDebugStartPhase(GamePhase gamePhase)
         {
             DebugPhaseEnd();
-            StartCoroutine(DebugPhaseStartNextFrame(gamePhase));
+            // StartCoroutine(DebugPhaseStartNextFrame(gamePhase));
+            StartCoroutine(YieldHelper.SkipFrame(DebugPhaseStart, gamePhase));
         }
 
-        private IEnumerator DebugPhaseStartNextFrame(GamePhase gamePhase)
+        /* private IEnumerator DebugPhaseStartNextFrame(GamePhase gamePhase)
         {
             yield return null;
             DebugPhaseStart(gamePhase);
-            onGamePhaseChanged.Invoke(gamePhase);
-        }
+            // onGamePhaseChanged.Invoke(gamePhase);
+        } */
 
         public void PhaseStart(GamePhase gamePhase)
         {
@@ -126,6 +129,8 @@ namespace Run4YourLife.GameManagement
 
             m_executingGamePhaseManager = gamePhases[gamePhase];
             m_executingGamePhaseManager.StartPhase();
+
+            onGamePhaseChanged.Invoke(gamePhase);
         }
 
         public void PhaseEnd()
@@ -143,6 +148,8 @@ namespace Run4YourLife.GameManagement
 
             m_executingGamePhaseManager = gamePhases[gamePhase];
             m_executingGamePhaseManager.DebugStartPhase();
+
+            onGamePhaseChanged.Invoke(gamePhase);
         }
 
         public void DebugPhaseEnd()

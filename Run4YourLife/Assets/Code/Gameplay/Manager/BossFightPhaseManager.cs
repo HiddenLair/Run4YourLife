@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using Run4YourLife.UI;
 
 using Run4YourLife.Player;
+using Run4YourLife.Utils;
 
 using Cinemachine;
 
@@ -64,16 +65,22 @@ namespace Run4YourLife.GameManagement
             m_virtualCamera.gameObject.SetActive(true);
 
             ExecuteEvents.Execute<IUIEvents>(m_uiManager, null, (x, y) => x.OnCountdownSetted(m_timeOfPhase));
-            StartCoroutine(StartNextPhaseInSeconds(m_timeOfPhase));
+            // StartCoroutine(StartNextPhaseInSeconds(m_timeOfPhase));
+            StartCoroutine(YieldHelper.WaitForSeconds(StartNextPhase, m_timeOfPhase));
             m_triggerToPhase.SetActive(false);
             m_backgroundTiling.SetActive(false);
         }
 
-        IEnumerator StartNextPhaseInSeconds(float time)
+        private void StartNextPhase()
+        {
+            FindObjectOfType<GameManager>().EndExecutingPhaseAndStartPhase(GamePhase.TransitionToHardMoveHorizontal);
+        }
+
+        /* IEnumerator StartNextPhaseInSeconds(float time)
         {
             yield return new WaitForSeconds(time);
             FindObjectOfType<GameManager>().EndExecutingPhaseAndStartPhase(GamePhase.TransitionToHardMoveHorizontal);
-        }
+        } */
 
         public override void EndPhase()
         {
@@ -99,7 +106,8 @@ namespace Run4YourLife.GameManagement
             m_virtualCamera.LookAt = boss.transform;
             m_virtualCamera.gameObject.SetActive(true);
             ExecuteEvents.Execute<IUIEvents>(m_uiManager, null, (x, y) => x.OnCountdownSetted(m_timeOfPhase));
-            StartCoroutine(StartNextPhaseInSeconds(m_timeOfPhase));
+            // StartCoroutine(StartNextPhaseInSeconds(m_timeOfPhase));
+            StartCoroutine(YieldHelper.WaitForSeconds(StartNextPhase, m_timeOfPhase));
             m_triggerToPhase.SetActive(false);
             m_backgroundTiling.SetActive(false);
         }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using Run4YourLife.Utils;
+
 public class ChangeRigidBodyOnCollision : MonoBehaviour {
 
 
@@ -19,7 +21,8 @@ public class ChangeRigidBodyOnCollision : MonoBehaviour {
     {
         if (!activatedFlag)
         {
-            StartCoroutine(ChangeDelayed());
+            // StartCoroutine(ChangeDelayed());
+            StartCoroutine(YieldHelper.WaitForSeconds(Change, delayActivation));
         }
         activatedFlag = true;
     }
@@ -28,15 +31,22 @@ public class ChangeRigidBodyOnCollision : MonoBehaviour {
     {
         if (!activatedFlag)
         {
-            StartCoroutine(ChangeDelayed());
+            // StartCoroutine(ChangeDelayed());
+            StartCoroutine(YieldHelper.WaitForSeconds(Change, delayActivation));
         }
         activatedFlag = true;
     }
 
-    IEnumerator ChangeDelayed()
+    private void Change()
+    {
+        body.useGravity = gravity;
+        body.isKinematic = kinematic;
+    }
+
+    /* IEnumerator ChangeDelayed()
     {
         yield return new WaitForSeconds(delayActivation);
         body.useGravity = gravity;
         body.isKinematic = kinematic;
-    }
+    } */
 }

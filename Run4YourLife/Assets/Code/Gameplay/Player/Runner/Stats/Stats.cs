@@ -3,6 +3,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+using Run4YourLife.Utils;
+
 public enum StatType
 {
     SPEED,
@@ -72,18 +74,25 @@ public class Stats : MonoBehaviour
     {
         if(time >= 0.0f)
         {
-            StartCoroutine(RemoveStatModifier(statModifier, time));
+            // StartCoroutine(RemoveStatModifier(statModifier, time));
+            StartCoroutine(YieldHelper.WaitForSeconds(RemoveStatModifier, statModifier, time));
         }
     }
 
-    private IEnumerator RemoveStatModifier(StatModifier statModifier, float time)
+    private void RemoveStatModifier(StatModifier statModifier)
+    {
+        statsModifiers.Remove(statModifier);
+        Compute();
+    }
+
+    /* private IEnumerator RemoveStatModifier(StatModifier statModifier, float time)
     {
         yield return new WaitForSeconds(time);
 
         statsModifiers.Remove(statModifier);
 
         Compute();
-    }
+    } */
 
     private void Clear()
     {

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using EzySlice;
 
+using Run4YourLife.Utils;
+
 public class CutTrigger : MonoBehaviour {
 
     CutPlane cuts;
@@ -50,7 +52,8 @@ public class CutTrigger : MonoBehaviour {
                         shape.shapeType = ParticleSystemShapeType.Mesh;
                         shape.mesh = g1.GetComponent<MeshFilter>().mesh;
                         Destroy(g1);
-                        StartCoroutine(DestroyDelayed(particle));
+                        // StartCoroutine(DestroyDelayed(particle));
+                        StartCoroutine(YieldHelper.WaitForSeconds(Destroy, particle, delayedDestroyTime));
 
 
                         Destroy(g);
@@ -80,11 +83,11 @@ public class CutTrigger : MonoBehaviour {
         g = null;
     }
 
-    IEnumerator DestroyDelayed(GameObject g)
+    /* IEnumerator DestroyDelayed(GameObject g)
     {
         yield return new WaitForSeconds(delayedDestroyTime);
         Destroy(g);
-    }
+    } */
 
     public GameObject[] SliceObjectRecursive(CutPlane plane, GameObject obj)
     {
