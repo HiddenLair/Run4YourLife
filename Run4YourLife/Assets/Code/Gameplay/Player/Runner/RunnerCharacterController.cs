@@ -132,7 +132,19 @@ namespace Run4YourLife.Player
 
         private void Move()
         {
-            float horizontal = CheckStatModificators(m_playerControlScheme.move.Value());
+            // float horizontal = CheckStatModificators(m_playerControlScheme.move.Value());
+
+            float horizontal = m_playerControlScheme.move.Value();
+
+            IRunnerInput[] iRunnerInputList = GetComponents<IRunnerInput>();
+
+            Array.Sort(iRunnerInputList, (x, y) => x.GetPriority().CompareTo(y.GetPriority()));
+
+            foreach(IRunnerInput iRunnerInput in iRunnerInputList)
+            {
+                iRunnerInput.Apply(ref horizontal);
+            }
+
             Vector3 inputMovement = transform.forward * horizontal * m_stats.Get(StatType.SPEED) * Time.deltaTime;
             Vector3 totalMovement = inputMovement + m_velocity * Time.deltaTime;
 
