@@ -29,19 +29,11 @@ namespace Run4YourLife.GameManagement
         public override void StartPhase()
         {
             m_playerSpawner.InstantiatePlayers();
-            GameObject boss = GameObject.FindGameObjectWithTag("Boss"); //TODO make class with all tags and reference that
-            Debug.Assert(boss != null);
             //We should make an animation play or somehting cool
 
             //Once the animation has ended and we are in a stable and easy to manage state,
             //we transition directly to the next state
-            StartCoroutine(StartNextFrame());
-        }
-
-        IEnumerator StartNextFrame()
-        {
-            yield return null;
-            m_gameManager.EndExecutingPhaseAndStartPhase(GamePhase.EasyMoveHorizontal); // last line of code, maybe execute next frame(?)
+            m_gameManager.EndExecutingPhaseAndStartPhase(GamePhase.EasyMoveHorizontal);
         }
 
         public override void EndPhase()
