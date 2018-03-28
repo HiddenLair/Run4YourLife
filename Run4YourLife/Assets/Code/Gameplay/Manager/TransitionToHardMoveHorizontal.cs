@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using Cinemachine;
+
 namespace Run4YourLife.GameManagement
 {
     public class TransitionToHardMoveHorizontal : GamePhaseManager
@@ -9,10 +11,7 @@ namespace Run4YourLife.GameManagement
         #region Editor variables
 
         [SerializeField]
-        private GameObject m_transitionToHardMoveHorizontalBrige;
-
-        [SerializeField]
-        private CameraTargetCentered m_cameraTargetCentered;
+        private CinemachineVirtualCamera m_virtualCamera;
 
         [SerializeField]
         private Transform m_cameraTargetHandle;
@@ -36,19 +35,23 @@ namespace Run4YourLife.GameManagement
 
         public override void StartPhase()
         {
-            m_transitionToHardMoveHorizontalBrige.SetActive(true);
-
-            m_cameraTargetCentered.m_target = m_cameraTargetHandle;
-            m_cameraTargetCentered.enabled = true;
+            m_virtualCamera.Follow = m_cameraTargetHandle;
+            m_virtualCamera.LookAt = m_cameraTargetHandle;
+            m_virtualCamera.gameObject.SetActive(true);
             m_hardMoveHorizontalStartTrigger.SetActive(true);
         }
 
         public override void EndPhase()
         {
-            m_cameraTargetCentered.m_target = null;
-            m_cameraTargetCentered.enabled = false;
-            m_hardMoveHorizontalStartTrigger.SetActive(false);
+            EndPhaseCommon();
+        }
 
+        private void EndPhaseCommon()
+        {
+            m_virtualCamera.Follow = null;
+            m_virtualCamera.LookAt = null;
+            m_virtualCamera.gameObject.SetActive(false);
+            m_hardMoveHorizontalStartTrigger.SetActive(false);
         }
 
         #endregion
@@ -57,12 +60,12 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugStartPhase()
         {
+            Debug.LogError("This method should never be called");
         }
 
         public override void DebugEndPhase()
         {
-            m_cameraTargetCentered.m_target = null;
-            m_cameraTargetCentered.enabled = false;
+            EndPhaseCommon();
         }
 
         #endregion
