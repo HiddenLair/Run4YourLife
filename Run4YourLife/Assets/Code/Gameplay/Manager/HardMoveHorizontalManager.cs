@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+using Cinemachine;
+
 namespace Run4YourLife.GameManagement
 {
     public class HardMoveHorizontalManager : GamePhaseManager
@@ -13,7 +15,7 @@ namespace Run4YourLife.GameManagement
         private CheckPointManager m_checkPointManager;
 
         [SerializeField]
-        private CameraBossFollow m_cameraBossFollow;
+        private CinemachineVirtualCamera m_virtualCamera;
 
         [SerializeField]
         private GameObject m_background;
@@ -26,6 +28,7 @@ namespace Run4YourLife.GameManagement
         #region Member Variables
 
         private PlayerSpawner m_playerSpawner;
+        private GameplayPlayerManager m_gameplayPlayerManager;
 
         #endregion
 
@@ -38,6 +41,9 @@ namespace Run4YourLife.GameManagement
             m_playerSpawner = GetComponent<PlayerSpawner>();
             Debug.Assert(m_playerSpawner != null);
 
+            m_gameplayPlayerManager = FindObjectOfType<GameplayPlayerManager>();
+            Debug.Assert(m_gameplayPlayerManager != null);
+
             RegisterPhase(GamePhase.HardMoveHorizontal);
         }
 
@@ -46,10 +52,17 @@ namespace Run4YourLife.GameManagement
         public override void StartPhase()
         {
             m_checkPointManager.gameObject.SetActive(true);
+            m_playerSpawner.InstantiateBossPlayer();
+            StartPhaseCommon();
+        }
 
-            GameObject boss = m_playerSpawner.InstantiateBossPlayer();
-            m_cameraBossFollow.boss = boss.transform;
-            m_cameraBossFollow.enabled = true;
+        private void StartPhaseCommon()
+        {
+
+            GameObject boss = m_gameplayPlayerManager.Boss;
+            m_virtualCamera.Follow = boss.transform;
+            m_virtualCamera.LookAt = boss.transform;
+            m_virtualCamera.gameObject.SetActive(true);
             m_background.GetComponent<Renderer>().material = m_newBackgroundMat;
             m_background.GetComponent<Tiling>().mat = m_newBackgroundMat;
             m_background.GetComponent<Tiling>().SetActive(true);
@@ -57,13 +70,19 @@ namespace Run4YourLife.GameManagement
 
         public override void EndPhase()
         {
+            GameObject boss = m_gameplayPlayerManager.Boss;
+            Destroy(boss);
+            m_gameplayPlayerManager.Boss = null;
+            EndPhaseCommon();
+        }
+
+        private void EndPhaseCommon()
+        {
             m_checkPointManager.gameObject.SetActive(false);
 
-            GameObject boss = GameObject.FindGameObjectWithTag("Boss");
-            Destroy(boss);
-
-            m_cameraBossFollow.boss = null;
-            m_cameraBossFollow.enabled = false;
+            m_virtualCamera.Follow = null;
+            m_virtualCamera.LookAt = null;
+            m_virtualCamera.gameObject.SetActive(false);
         }
 
         #endregion
@@ -73,26 +92,15 @@ namespace Run4YourLife.GameManagement
         public override void DebugStartPhase()
         {
             m_checkPointManager.gameObject.SetActive(true);
+            m_playerSpawner.InstantiatePlayers();
 
-            GameObject[] players = m_playerSpawner.InstantiatePlayers();
-
-            GameObject boss = players.Where(x => x.CompareTag("Boss")).First();
-            m_cameraBossFollow.boss = boss.transform;
-            m_cameraBossFollow.enabled = true;
-            m_background.GetComponent<Renderer>().material = m_newBackgroundMat;
-            m_background.GetComponent<Tiling>().mat = m_newBackgroundMat;
-            m_background.GetComponent<Tiling>().SetActive(true);
+            StartPhaseCommon();
         }
 
         public override void DebugEndPhase()
         {
-            m_checkPointManager.gameObject.SetActive(false);
-
-            GameObject boss = GameObject.FindGameObjectWithTag("Boss");
-            Destroy(boss);
-
-            m_cameraBossFollow.boss = null;
-            m_cameraBossFollow.enabled = false;
+            m_gameplayPlayerManager.DebugDestroyAllPlayersAndClear();
+            EndPhaseCommon();
         }
 
         #endregion

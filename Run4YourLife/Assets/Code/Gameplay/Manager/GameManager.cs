@@ -72,7 +72,7 @@ namespace Run4YourLife.GameManagement
             EndExecutingPhaseAndStartPhase(GamePhase.TransitionToEasyMoveHorizontal);
         }
 
-        public void OnAllRunnersDeath()
+        public void OnAllRunnersDied()
         {
             toMainMenuRequest.Execute();
         }
@@ -98,30 +98,16 @@ namespace Run4YourLife.GameManagement
         public void EndExecutingPhaseAndStartPhase(GamePhase gamePhase)
         {
             PhaseEnd();
-            // StartCoroutine(PhaseStartNextFrame(gamePhase));
-            StartCoroutine(YieldHelper.SkipFrame(PhaseStart, gamePhase));
-        }
-
-        /* private IEnumerator PhaseStartNextFrame(GamePhase gamePhase)
-        {
-            yield return null;
             PhaseStart(gamePhase);
-            // onGamePhaseChanged.Invoke(gamePhase);
-        } */
+            onGamePhaseChanged.Invoke(gamePhase);
+        }
 
         public void DebugEndExecutingPhaseAndDebugStartPhase(GamePhase gamePhase)
         {
             DebugPhaseEnd();
-            // StartCoroutine(DebugPhaseStartNextFrame(gamePhase));
-            StartCoroutine(YieldHelper.SkipFrame(DebugPhaseStart, gamePhase));
-        }
-
-        /* private IEnumerator DebugPhaseStartNextFrame(GamePhase gamePhase)
-        {
-            yield return null;
             DebugPhaseStart(gamePhase);
-            // onGamePhaseChanged.Invoke(gamePhase);
-        } */
+            onGamePhaseChanged.Invoke(gamePhase);
+        }
 
         public void PhaseStart(GamePhase gamePhase)
         {

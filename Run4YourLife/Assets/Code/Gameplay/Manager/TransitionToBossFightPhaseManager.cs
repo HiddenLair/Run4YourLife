@@ -9,8 +9,6 @@ namespace Run4YourLife.GameManagement
     public class TransitionToBossFightPhaseManager : GamePhaseManager
     {
         #region Editor variables
-        [SerializeField]
-        private GameObject m_phase1to2Bridge;
 
         [SerializeField]
         private GameObject m_transitionStartTrigger;
@@ -29,13 +27,17 @@ namespace Run4YourLife.GameManagement
 
         #endregion
 
-
         private GameObject cameraHandleInstance;
+
+        private GameplayPlayerManager m_gameplayPlayerManager;
 
         #region Initialization
 
         private void Awake()
         {
+            m_gameplayPlayerManager = FindObjectOfType<GameplayPlayerManager>();
+            Debug.Assert(m_gameplayPlayerManager != null);
+
             RegisterPhase(GamePhase.TransitionToBossFight);
         }
 
@@ -43,7 +45,7 @@ namespace Run4YourLife.GameManagement
 
         public override void StartPhase()
         {
-            GameObject boss = GameObject.FindGameObjectWithTag("Boss");
+            GameObject boss = m_gameplayPlayerManager.Boss;
             Debug.Assert(boss != null);
 
             cameraHandleInstance = Instantiate(cameraHandlePrefab, boss.transform.position, Quaternion.Euler(0,90,0));
@@ -52,6 +54,7 @@ namespace Run4YourLife.GameManagement
             Debug.Log("Boss should do something fancy");
             Debug.Log("Camera should continue to move forward");
             Destroy(boss);
+            m_gameplayPlayerManager.Boss = null;
 
             m_virtualCamera.Follow = cameraHandleInstance.transform;
             m_virtualCamera.LookAt = cameraHandleInstance.transform;
@@ -63,10 +66,10 @@ namespace Run4YourLife.GameManagement
 
         public override void EndPhase()
         {
-            StartCoroutine(EndPhaseCoroutine());
+            EndPhaseCommon();
         }
 
-        private IEnumerator EndPhaseCoroutine()
+        private void EndPhaseCommon()
         {
             m_virtualCamera.Follow = null;
             m_virtualCamera.LookAt = null;
@@ -75,8 +78,6 @@ namespace Run4YourLife.GameManagement
             m_phase2StartTrigger.SetActive(false);
             Destroy(cameraHandleInstance);
             cameraHandleInstance = null;
-            yield return new WaitForSeconds(4);
-            m_phase1to2Bridge.SetActive(false);
         }
 
         public override void DebugStartPhase()
@@ -86,15 +87,7 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugEndPhase()
         {
-            StopAllCoroutines();
-            m_virtualCamera.Follow = null;
-            m_virtualCamera.LookAt = null;
-            m_virtualCamera.gameObject.SetActive(false);
-            m_phase2StartTrigger.SetActive(false);
-            Destroy(cameraHandleInstance);
-            cameraHandleInstance = null;
-            m_phase2StartTrigger.SetActive(false);
-            m_phase1to2Bridge.SetActive(false);
+            EndPhaseCommon();
         }
     }
 }
