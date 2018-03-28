@@ -21,7 +21,7 @@ public class WindSkillControl : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.tag == "Player")
+        if (collider.CompareTag(Tags.Player))
         {
             colliders.Add(collider.gameObject);
             ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.ActivateWindPush());
@@ -30,7 +30,7 @@ public class WindSkillControl : MonoBehaviour {
 
     private void OnTriggerExit(Collider collider)
     {
-        if (collider.tag == "Player")
+        if (collider.CompareTag(Tags.Player))
         {
             colliders.Remove(collider.gameObject);
             ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.DeactivateWindPush());

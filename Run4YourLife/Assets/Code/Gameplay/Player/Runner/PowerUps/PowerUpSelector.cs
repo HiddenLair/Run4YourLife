@@ -32,7 +32,7 @@ namespace Run4YourLife.Player
            effect = GetComponent<PowerUp>();
            if(type == Type.GROUP)
             {
-                players = GameObject.FindGameObjectsWithTag("Player");
+                players = GameObject.FindGameObjectsWithTag(Tags.Player);
             } 
         }
 

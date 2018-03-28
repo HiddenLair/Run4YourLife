@@ -66,7 +66,7 @@ public class TortoiseShell : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if(other.CompareTag(Tags.Player))
         {
             players.Add(other.transform);
             if (triggerLogicActive)
@@ -88,7 +88,7 @@ public class TortoiseShell : MonoBehaviour {
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag(Tags.Player))
         {
             players.Remove(other.transform);
         }

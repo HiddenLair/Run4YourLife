@@ -22,7 +22,7 @@ public class MelePhase3 : MonoBehaviour {
 
     private void Tremble()
     {
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        GameObject[] players = GameObject.FindGameObjectsWithTag(Tags.Player);
         foreach(GameObject player in players)
         {
             player.GetComponent<RunnerCharacterController>().AddVelocity(new Vector3(0, playerPushForce, 0));
