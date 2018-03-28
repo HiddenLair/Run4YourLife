@@ -49,23 +49,35 @@ namespace Run4YourLife.GameManagement
 
         public override void StartPhase()
         {
-            GameObject boss = GameObject.FindGameObjectWithTag("Boss"); //TODO make class with all tags and reference that
+            StartPhaseCommon();
+        }
+
+        void StartPhaseCommon()
+        {
+            GameObject boss = GameObject.FindGameObjectWithTag(Tags.Boss);
             Debug.Assert(boss != null);
+
             m_virtualCamera.Follow = boss.transform;
             m_virtualCamera.LookAt = boss.transform;
+            m_virtualCamera.enabled = true;
 
-            m_virtualCamera.gameObject.SetActive(true);
+            m_checkPointManager.gameObject.SetActive(true);
             m_phase1to2Bridge.SetActive(true);
             m_phase2StartTrigger.SetActive(true);
         }
 
         public override void EndPhase()
         {
-            m_checkPointManager.gameObject.SetActive(false);
+            EndPhaseCommon();
+        }
 
+        void EndPhaseCommon()
+        {
             m_virtualCamera.Follow = null;
             m_virtualCamera.LookAt = null;
-            m_virtualCamera.gameObject.SetActive(false);
+            m_virtualCamera.enabled = false;
+
+            m_checkPointManager.gameObject.SetActive(false);
         }
 
         #endregion
@@ -74,34 +86,27 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugStartPhase()
         {
-            m_checkPointManager.gameObject.SetActive(true);
-            GameObject[] players = m_playerSpawner.InstantiatePlayers();
-
-            GameObject boss = players.Where(x => x.CompareTag("Boss")).First();
-            m_virtualCamera.Follow = boss.transform;
-            m_virtualCamera.LookAt = boss.transform;
-
-            m_virtualCamera.gameObject.SetActive(true);
-
-            m_phase1to2Bridge.SetActive(true);
-            m_phase2StartTrigger.SetActive(true);
+            m_playerSpawner.InstantiatePlayers();
+            StartPhaseCommon();
         }
 
         public override void DebugEndPhase()
         {
-            m_checkPointManager.gameObject.SetActive(false);
-            GameObject boss = FindObjectOfType<Boss>().gameObject;
+            DestroyPlayers();
+            EndPhaseCommon();
+        }
+
+        void DestroyPlayers()
+        {
+            GameObject boss = GameObject.FindGameObjectWithTag(Tags.Boss);
             Debug.Assert(boss != null);
             Destroy(boss);
 
-            RunnerCharacterController[] players = FindObjectsOfType<RunnerCharacterController>();
-            foreach (RunnerCharacterController player in players)
+            GameObject[] runners = GameObject.FindGameObjectsWithTag(Tags.Player);
+            foreach (GameObject runner in runners)
             {
-                Destroy(player.gameObject);
+                Destroy(runner);
             }
-            m_virtualCamera.Follow = null;
-            m_virtualCamera.LookAt = null;
-            m_virtualCamera.gameObject.SetActive(false);
         }
 
         #endregion
