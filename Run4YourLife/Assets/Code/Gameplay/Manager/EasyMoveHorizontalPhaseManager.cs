@@ -59,7 +59,7 @@ namespace Run4YourLife.GameManagement
 
             m_virtualCamera.Follow = boss.transform;
             m_virtualCamera.LookAt = boss.transform;
-            m_virtualCamera.enabled = true;
+            m_virtualCamera.gameObject.SetActive(true);
 
             m_checkPointManager.gameObject.SetActive(true);
             m_phase1to2Bridge.SetActive(true);
@@ -75,7 +75,7 @@ namespace Run4YourLife.GameManagement
         {
             m_virtualCamera.Follow = null;
             m_virtualCamera.LookAt = null;
-            m_virtualCamera.enabled = false;
+            m_virtualCamera.gameObject.SetActive(false);
 
             m_checkPointManager.gameObject.SetActive(false);
         }
