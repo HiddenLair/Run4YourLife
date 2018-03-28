@@ -68,33 +68,7 @@ namespace Run4YourLife.GameManagement
 
         private void Start()
         {
-            StartCoroutine(StartNextFrame());
-        }
-
-        private IEnumerator StartNextFrame()
-        {
-            yield return null;
             EndExecutingPhaseAndStartPhase(GamePhase.TransitionToEasyMoveHorizontal);
-        }
-
-        private void Update()
-        {
-            if (UnityEngine.Input.GetKeyDown(KeyCode.Keypad1))
-            {
-                DebugEndExecutingPhaseAndDebugStartPhase(GamePhase.EasyMoveHorizontal);
-            }
-            else if (UnityEngine.Input.GetKeyDown(KeyCode.Keypad2))
-            {
-                DebugEndExecutingPhaseAndDebugStartPhase(GamePhase.BossFight);
-            }
-            else if (UnityEngine.Input.GetKeyDown(KeyCode.Keypad3))
-            {
-                DebugEndExecutingPhaseAndDebugStartPhase(GamePhase.HardMoveHorizontal);
-            }
-            else if (UnityEngine.Input.GetKeyDown(KeyCode.Keypad4))
-            {
-                EndExecutingPhaseAndStartPhase(GamePhase.TransitionToHardMoveHorizontal);
-            }
         }
 
         public void OnAllRunnersDeath()
@@ -123,6 +97,12 @@ namespace Run4YourLife.GameManagement
         public void EndExecutingPhaseAndStartPhase(GamePhase gamePhase)
         {
             PhaseEnd();
+            StartCoroutine(PhaseStartNextFrame(gamePhase));
+        }
+
+        private IEnumerator PhaseStartNextFrame(GamePhase gamePhase)
+        {
+            yield return null;
             PhaseStart(gamePhase);
             onGamePhaseChanged.Invoke(gamePhase);
         }
@@ -130,6 +110,12 @@ namespace Run4YourLife.GameManagement
         public void DebugEndExecutingPhaseAndDebugStartPhase(GamePhase gamePhase)
         {
             DebugPhaseEnd();
+            StartCoroutine(DebugPhaseStartNextFrame(gamePhase));
+        }
+
+        private IEnumerator DebugPhaseStartNextFrame(GamePhase gamePhase)
+        {
+            yield return null;
             DebugPhaseStart(gamePhase);
             onGamePhaseChanged.Invoke(gamePhase);
         }
@@ -165,6 +151,33 @@ namespace Run4YourLife.GameManagement
             {
                 m_executingGamePhaseManager.DebugEndPhase();
                 m_executingGamePhaseManager = null;
+            }
+        }
+
+        #endregion
+
+        #region Debug
+
+        private void Update()
+        {
+            if(Debug.isDebugBuild)
+            {
+                if (UnityEngine.Input.GetKeyDown(KeyCode.Keypad1))
+                {
+                    DebugEndExecutingPhaseAndDebugStartPhase(GamePhase.EasyMoveHorizontal);
+                }
+                else if (UnityEngine.Input.GetKeyDown(KeyCode.Keypad2))
+                {
+                    DebugEndExecutingPhaseAndDebugStartPhase(GamePhase.BossFight);
+                }
+                else if (UnityEngine.Input.GetKeyDown(KeyCode.Keypad3))
+                {
+                    DebugEndExecutingPhaseAndDebugStartPhase(GamePhase.HardMoveHorizontal);
+                }
+                else if (UnityEngine.Input.GetKeyDown(KeyCode.Keypad4))
+                {
+                    EndExecutingPhaseAndStartPhase(GamePhase.TransitionToHardMoveHorizontal);
+                }
             }
         }
 
