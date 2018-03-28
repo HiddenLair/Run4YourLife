@@ -118,7 +118,7 @@ namespace Run4YourLife.GameManagement
         {
             StopAllCoroutines();
 
-            m_gameplayPlayerManager.DebugDestroyAllPlayers();
+            m_gameplayPlayerManager.DebugDestroyAllPlayersAndClear();
 
             EndPhaseCommon();
         }

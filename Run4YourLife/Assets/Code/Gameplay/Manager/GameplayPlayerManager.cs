@@ -59,13 +59,15 @@ namespace Run4YourLife.GameManagement {
             throw new System.NotImplementedException();
         }
 
-        public void DebugDestroyAllPlayers()
+        public void DebugDestroyAllPlayersAndClear()
         {
             Destroy(Boss);
             foreach(GameObject runner in Runners)
             {
                 Destroy(runner);
             }
+
+            m_deadPlayers.Clear();
         }
     }
 }

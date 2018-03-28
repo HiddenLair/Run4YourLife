@@ -96,7 +96,7 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugEndPhase()
         {
-            m_gameplayPlayerManager.DebugDestroyAllPlayers();
+            m_gameplayPlayerManager.DebugDestroyAllPlayersAndClear();
             EndPhaseCommon();
         }
 
