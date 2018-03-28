@@ -12,7 +12,7 @@ namespace Run4YourLife.GameManagement {
         void OnPlayerReviveRequest(Vector3 position);
     }
 
-    public class PlayerStateManager : MonoBehaviour, IPlayerStateEvents {
+    public class GameplayPlayerManager : MonoBehaviour, IPlayerStateEvents {
 
         #region Editor
 
@@ -28,14 +28,8 @@ namespace Run4YourLife.GameManagement {
 
         #endregion
 
-        // Use this for initialization
         void Start() {
             playerManager = FindObjectOfType<PlayerManager>();
-        }
-
-        // Update is called once per frame
-        void Update() {
-
         }
 
         public void OnPlayerDeath(PlayerDefinition player)
