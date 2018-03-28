@@ -69,7 +69,7 @@ namespace Run4YourLife.GameManagement
 
         private void Start()
         {
-            EndExecutingPhaseAndStartPhase(GamePhase.TransitionToEasyMoveHorizontal);
+            StartCoroutine(YieldHelper.SkipFrame(() => EndExecutingPhaseAndStartPhase(GamePhase.TransitionToEasyMoveHorizontal)));
         }
 
         public void OnAllRunnersDied()
