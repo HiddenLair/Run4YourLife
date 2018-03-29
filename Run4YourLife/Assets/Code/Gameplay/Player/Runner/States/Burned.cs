@@ -1,5 +1,4 @@
-﻿using Run4YourLife.Input;
-using UnityEngine;
+﻿using UnityEngine;
 public class Burned : RunnerState, IRunnerInput
 {
     private const float END_TIME = 5.0f;
@@ -61,15 +60,6 @@ public class Burned : RunnerState, IRunnerInput
 
     protected override void Apply()
     {
-        //float value = GetComponent<RunnerControlScheme>().move.Value();
-        //if(value >= 0.0f)
-        //{
-        //    lastInputSign = 1.0f;
-        //}
-        //else
-        //{
-        //    lastInputSign = -1.0f;
-        //}
         modifier = new StatModifier(StatType.SPEED, ModifierType.PERCENT, true, SPEED_BUFF_PERCENT, END_TIME);
         GetComponent<Stats>().AddModifier(modifier);
     }
