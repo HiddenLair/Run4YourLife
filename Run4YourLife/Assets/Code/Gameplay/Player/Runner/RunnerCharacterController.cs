@@ -184,36 +184,6 @@ namespace Run4YourLife.Player
             m_animator.SetFloat("timeToIdle", m_idleTimer);
         }
 
-        private float CheckStatModificators(float controllerHorizontal)
-        {
-            float toReturn = controllerHorizontal;
-
-            if (m_stats.burned)
-            {
-                if (toReturn > 0.0f)
-                {
-                    toReturn = 1.0f;
-                    m_burnedHorizontal = toReturn;
-                }
-                else if (toReturn < 0.0f)
-                {
-                    toReturn = -1.0f;
-                    m_burnedHorizontal = toReturn;
-                }
-                else
-                {
-                    toReturn = m_burnedHorizontal;
-                }
-            }
-
-            if (m_stats.windPush)
-            {
-                toReturn -= 0.7f;
-            }
-
-            return toReturn;
-        }
-
         #region Jump
 
         private void Jump()

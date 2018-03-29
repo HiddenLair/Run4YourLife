@@ -1,11 +1,14 @@
-﻿public class Burned : RunnerState, IRunnerInput
+﻿using Run4YourLife.Input;
+using UnityEngine;
+public class Burned : RunnerState, IRunnerInput
 {
     private const float END_TIME = 5.0f;
     private const float SPEED_BUFF_PERCENT = 1.0f / 3.0f;
 
     #region Variables
 
-    StatModifier modifier;
+    private StatModifier modifier;
+    private float timer = 0.0f;
 
     #endregion
 
@@ -40,9 +43,33 @@
         }
     }
 
+    private void Update()
+    {
+        timer += Time.deltaTime;
+        if(timer >= END_TIME)
+        {
+            Destroy(this);
+        }
+    }
+
+    public void Refresh()
+    {
+        timer = 0.0f;
+        GetComponent<Stats>().RemoveStatModifier(modifier);
+        GetComponent<Stats>().AddModifier(modifier);
+    }
+
     protected override void Apply()
     {
-        Destroy(this, END_TIME);
+        //float value = GetComponent<RunnerControlScheme>().move.Value();
+        //if(value >= 0.0f)
+        //{
+        //    lastInputSign = 1.0f;
+        //}
+        //else
+        //{
+        //    lastInputSign = -1.0f;
+        //}
         modifier = new StatModifier(StatType.SPEED, ModifierType.PERCENT, true, SPEED_BUFF_PERCENT, END_TIME);
         GetComponent<Stats>().AddModifier(modifier);
     }

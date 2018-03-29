@@ -103,9 +103,13 @@ namespace Run4YourLife.Player
             Burned oldInstance = gameObject.GetComponent<Burned>();
             if (oldInstance != null)
             {
-                Destroy(oldInstance);
+                oldInstance.Refresh();
             }
-            gameObject.AddComponent<Burned>();
+            else
+            {
+                gameObject.AddComponent<Burned>();
+            }
+
         }//TODO, shall we use burnedTime?
 
         #region WindLeft
