@@ -19,19 +19,15 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private Transform m_bossSpawn;
 
-        private PlayerManager m_playerManager;
         private GameplayPlayerManager m_gameplayPlayerManager;
+        private PlayerManager m_playerManager;
 
         private void Awake()
         {
             m_gameplayPlayerManager = FindObjectOfType<GameplayPlayerManager>();
             Debug.Assert(m_gameplayPlayerManager != null);
-        }
 
-        private void Start()
-        {
-            m_playerManager = FindObjectOfType<PlayerManager>();
-            Debug.Assert(m_playerManager != null);
+            m_playerManager = m_gameplayPlayerManager.PlayerManager;
         }
 
         public GameObject[] InstantiatePlayers()

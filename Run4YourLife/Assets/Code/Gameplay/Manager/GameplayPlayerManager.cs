@@ -21,22 +21,69 @@ namespace Run4YourLife.GameManagement {
 
         #endregion
 
-        #region Members
+        #region Members and properties
 
         private Queue<PlayerDefinition> m_deadPlayers = new Queue<PlayerDefinition>();
 
         private PlayerManager m_playerManager;
-
-        #endregion
+        public PlayerManager PlayerManager
+        {
+            get
+            {
+                if (m_playerManager == null)
+                {
+                    m_playerManager = GetOrCreateDefaultPlayerManagerIfNoneIsAviable();
+                    Debug.Assert(m_playerManager != null);
+                }
+                return m_playerManager;
+            }
+        }
 
         public GameObject Boss { get; set; }
 
         private List<GameObject> m_runners = new List<GameObject>();
         public List<GameObject> Runners { get { return m_runners; } set { m_runners = value; } }
 
-        void Start() {
-            m_playerManager = FindObjectOfType<PlayerManager>();
-            Debug.Assert(m_playerManager != null);
+        #endregion
+
+        private PlayerManager GetOrCreateDefaultPlayerManagerIfNoneIsAviable()
+        {
+            //TODO if no playermanager is found, create default player manager
+            //useful for debug opening the scene+
+            PlayerManager playerManager = FindObjectOfType<PlayerManager>();
+            if (playerManager == null)
+            {
+                playerManager = gameObject.AddComponent<PlayerManager>();
+                playerManager.AddPlayer(new PlayerDefinition()
+                {
+                    CharacterType = CharacterType.Red,
+                    ID = 1,
+                    inputDevice = new Input.InputDevice(1),
+                    IsBoss = false
+                });
+                playerManager.AddPlayer(new PlayerDefinition()
+                {
+                    CharacterType = CharacterType.Orange,
+                    ID = 2,
+                    inputDevice = new Input.InputDevice(2),
+                    IsBoss = true
+                });
+                playerManager.AddPlayer(new PlayerDefinition()
+                {
+                    CharacterType = CharacterType.Green,
+                    ID = 3,
+                    inputDevice = new Input.InputDevice(3),
+                    IsBoss = false
+                });
+                playerManager.AddPlayer(new PlayerDefinition()
+                {
+                    CharacterType = CharacterType.Blue,
+                    ID = 4,
+                    inputDevice = new Input.InputDevice(4),
+                    IsBoss = false
+                });
+            }
+            return playerManager;
         }
 
         public void OnRunnerDeath(GameObject player)

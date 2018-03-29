@@ -17,56 +17,6 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private SceneLoadRequest toMainMenuRequest;
 
-        #region Initialization
-
-        private void Awake()
-        {
-            PlayerManager playerManager = GetOrCreateDefaultPlayerManagerIfNoneIsAviable();
-            Debug.Assert(playerManager != null);
-        }
-
-        private PlayerManager GetOrCreateDefaultPlayerManagerIfNoneIsAviable()
-        {
-            //TODO if no playermanager is found, create default player manager
-            //useful for debug opening the scene+
-            PlayerManager playerManager = FindObjectOfType<PlayerManager>();
-            if(playerManager == null)
-            {
-                playerManager = gameObject.AddComponent<PlayerManager>();
-                playerManager.AddPlayer(new PlayerDefinition()
-                {
-                    CharacterType = CharacterType.Red,
-                    ID = 1,
-                    inputDevice = new Input.InputDevice(1),
-                    IsBoss = false
-                });
-                playerManager.AddPlayer(new PlayerDefinition()
-                {
-                    CharacterType = CharacterType.Orange,
-                    ID = 2,
-                    inputDevice = new Input.InputDevice(2),
-                    IsBoss = true
-                });
-                playerManager.AddPlayer(new PlayerDefinition()
-                {
-                    CharacterType = CharacterType.Green,
-                    ID = 3,
-                    inputDevice = new Input.InputDevice(3),
-                    IsBoss = false
-                });
-                playerManager.AddPlayer(new PlayerDefinition()
-                {
-                    CharacterType = CharacterType.Blue,
-                    ID = 4,
-                    inputDevice = new Input.InputDevice(4),
-                    IsBoss = false
-                });
-            }
-            return playerManager;
-        }
-
-        #endregion
-
         private void Start()
         {
             StartCoroutine(YieldHelper.SkipFrame(() => EndExecutingPhaseAndStartPhase(GamePhase.TransitionToEasyMoveHorizontal)));
@@ -166,10 +116,6 @@ namespace Run4YourLife.GameManagement
                 else if (UnityEngine.Input.GetKeyDown(KeyCode.Keypad3))
                 {
                     DebugEndExecutingPhaseAndDebugStartPhase(GamePhase.HardMoveHorizontal);
-                }
-                else if (UnityEngine.Input.GetKeyDown(KeyCode.Keypad4))
-                {
-                    EndExecutingPhaseAndStartPhase(GamePhase.TransitionToHardMoveHorizontal);
                 }
             }
         }
