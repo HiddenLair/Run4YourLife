@@ -8,6 +8,8 @@ public interface ICharacterEvents : IEventSystemHandler
     void Root(int rootHardness);
     void Debuff(StatModifier statsModifier);
     void Burned(int burningTime);
-    void ActivateWindPush();
-    void DeactivateWindPush();
+    void ActivateWindLeft();
+    void DeactivateWindLeft();
+    void ActivateWindRight();
+    void DeactivateWindRight();
 }

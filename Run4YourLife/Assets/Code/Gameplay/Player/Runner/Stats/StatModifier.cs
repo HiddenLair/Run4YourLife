@@ -5,6 +5,7 @@ public enum ModifierType
 {
     PLAIN,
     PERCENT,
+    SETTER,
 }
 
 [Serializable]
@@ -67,6 +68,14 @@ public class StatModifier
             value *= -1.0f;
         }
 
-        stats.Increase(statType, value);
+        if (modifierType == ModifierType.SETTER)
+        {
+            stats.Set(statType, value);
+        }
+        else
+        {
+            stats.Increase(statType, value);
+        }
+
     }
 }

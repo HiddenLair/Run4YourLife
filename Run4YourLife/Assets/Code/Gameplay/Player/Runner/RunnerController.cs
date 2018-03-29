@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using System;
 using Run4YourLife.Input;
 using Run4YourLife.Player;
 using Run4YourLife.GameManagement;
@@ -26,6 +26,12 @@ namespace Run4YourLife.Player
 
         #endregion
 
+        #region Input Variables
+
+        bool interactInput = false;
+
+        #endregion
+
         private void Awake()
         {
             m_playerControlScheme = GetComponent<RunnerControlScheme>();
@@ -41,9 +47,22 @@ namespace Run4YourLife.Player
 
         private void OnTriggerStay(Collider collider)
         {
-            if (collider.CompareTag(Tags.Interactable) && m_playerControlScheme.interact.Started())
+            if (collider.CompareTag(Tags.Interactable) && interactInput)
             {
                 Interact(collider.gameObject);
+            }
+        }
+
+        private void Update()
+        {           
+            interactInput = m_playerControlScheme.interact.Started();
+
+            IInteractInput[] iInteractInputList = GetComponents<IInteractInput>();
+
+            Array.Sort(iInteractInputList, (x, y) => x.GetPriority().CompareTo(y.GetPriority()));
+            foreach (IInteractInput iInteractInput in iInteractInputList)
+            {
+                iInteractInput.ModifyInteractInput(ref interactInput);
             }
         }
 
@@ -63,74 +82,56 @@ namespace Run4YourLife.Player
             m_runnerCharacterController.Impulse(direction, force);
         }
 
-        #region Root
-
         public void Root(int rootHardness)
         {
-            StartCoroutine(RootCoroutine(rootHardness));
-        }
-
-        private IEnumerator RootCoroutine(int rootHardness)
-        {
-            m_animator.SetTrigger("root");
-            m_animator.SetFloat("xSpeed", 0.0f);
-
-            m_stats.root = true;
-            m_stats.rootHardness = rootHardness;
-
-            m_playerControlScheme.Active = false;
-            m_playerControlScheme.interact.enabled = true;
-
-            while (m_stats.root)
+            Root oldInstance = gameObject.GetComponent<Root>();
+            if (oldInstance != null)
             {
-                yield return null;
-
-                if (m_playerControlScheme.interact.Started())
-                {
-                    m_stats.rootHardness -= 1;
-                }
-
-                m_stats.root = m_stats.rootHardness > 0;
+                Destroy(oldInstance);
             }
-            m_playerControlScheme.Active = true;
-        }
+            gameObject.AddComponent<Root>();
+        }//TODO, shall we use rootHardness?
 
-        #endregion
 
         public void Debuff(StatModifier statmodifier)
         {
             m_stats.AddModifier(statmodifier);
         }
 
-        #region Burned
-
         public void Burned(int burnedTime)
         {
-            if (!m_stats.burned)
+            Burned oldInstance = gameObject.GetComponent<Burned>();
+            if (oldInstance != null)
             {
-                StartCoroutine(BurnedCoroutine(burnedTime));
+                Destroy(oldInstance);
             }
+            gameObject.AddComponent<Burned>();
+        }//TODO, shall we use burnedTime?
+
+        #region WindLeft
+
+        public void ActivateWindLeft()
+        {
+            gameObject.AddComponent<WindLeft>();
         }
 
-        private IEnumerator BurnedCoroutine(int burnedTime)
+        public void DeactivateWindLeft()
         {
-            m_stats.burned = true;
-            yield return new WaitForSeconds(burnedTime);
-            m_stats.burned = false;
+            Destroy(gameObject.GetComponent<WindLeft>());
         }
 
         #endregion
 
-        #region WindPush
+        #region WindRight
 
-        public void ActivateWindPush()
+        public void ActivateWindRight()
         {
-            m_stats.windPush = true;
+            gameObject.AddComponent<WindRight>();
         }
 
-        public void DeactivateWindPush()
+        public void DeactivateWindRight()
         {
-            m_stats.windPush = false;
+            Destroy(gameObject.GetComponent<WindRight>());
         }
 
         #endregion

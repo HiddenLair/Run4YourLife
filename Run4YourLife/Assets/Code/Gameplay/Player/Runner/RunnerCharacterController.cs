@@ -142,7 +142,7 @@ namespace Run4YourLife.Player
 
             foreach(IRunnerInput iRunnerInput in iRunnerInputList)
             {
-                iRunnerInput.Apply(ref horizontal);
+                iRunnerInput.ModifyHorizontalInput(ref horizontal);
             }
 
             Vector3 inputMovement = transform.forward * horizontal * m_stats.Get(StatType.SPEED) * Time.deltaTime;

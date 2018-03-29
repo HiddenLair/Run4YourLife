@@ -6,11 +6,22 @@ using UnityEngine.EventSystems;
 
 public class WindSkillControl : MonoBehaviour {
 
-    #region Public Variables
-    public int timeToDie = 5;
+    #region Enumerators
+
+    public enum Direction { LEFT,RIGHT};
+
     #endregion
 
-    #region Private Variables
+    #region Inspector
+    [SerializeField]
+    private float timeToDie = 5;
+
+    [SerializeField]
+    private Direction direction; 
+
+    #endregion
+
+    #region Variables
     HashSet<GameObject> colliders = new HashSet<GameObject>();
     #endregion
 
@@ -24,7 +35,14 @@ public class WindSkillControl : MonoBehaviour {
         if (collider.CompareTag(Tags.Player))
         {
             colliders.Add(collider.gameObject);
-            ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.ActivateWindPush());
+            if (direction == Direction.LEFT)
+            {
+                ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.ActivateWindLeft());
+            }
+            else
+            {
+                ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.ActivateWindRight());
+            }
         }
     }
 
@@ -33,7 +51,14 @@ public class WindSkillControl : MonoBehaviour {
         if (collider.CompareTag(Tags.Player))
         {
             colliders.Remove(collider.gameObject);
-            ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.DeactivateWindPush());
+            if (direction == Direction.LEFT)
+            {
+                ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.DeactivateWindLeft());
+            }
+            else
+            {
+                ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.DeactivateWindRight());
+            }
         }
     }
 
@@ -41,7 +66,14 @@ public class WindSkillControl : MonoBehaviour {
     {
         foreach(GameObject gO in colliders)
         {
-            ExecuteEvents.Execute<ICharacterEvents>(gO, null, (x, y) => x.DeactivateWindPush());
+            if (direction == Direction.LEFT)
+            {
+                ExecuteEvents.Execute<ICharacterEvents>(gO, null, (x, y) => x.DeactivateWindLeft());
+            }
+            else
+            {
+                ExecuteEvents.Execute<ICharacterEvents>(gO, null, (x, y) => x.DeactivateWindRight());
+            }
         }
     }
 }

@@ -6,8 +6,6 @@ namespace Run4YourLife.Player
 {
     public class PlayerJumpOver : MonoBehaviour, JumpOver {
 
-        [SerializeField]
-        private float bounceOverMeForce;
         private RunnerCharacterController characterController;
 
         private void Awake()
@@ -24,12 +22,7 @@ namespace Run4YourLife.Player
 
         public float GetBounceForce()
         {
-            return bounceOverMeForce;
-        }
-
-        public void SetBounceForce(float value)
-        {
-            bounceOverMeForce = value;
+            return GetComponentInParent<Stats>().Get(StatType.BOUNCE_HEIGHT);
         }
         #endregion
     }

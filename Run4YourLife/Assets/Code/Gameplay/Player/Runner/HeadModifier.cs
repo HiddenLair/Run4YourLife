@@ -36,14 +36,20 @@ namespace Run4YourLife.Player
             headBumpCollider.transform.localScale -= temp;
         }
 
-        public void SetJumpOverMeValue(float value)
+        public void IncreaseHeadPercentual(float percent)
         {
-            headBumpCollider.GetComponent<PlayerJumpOver>().SetBounceForce(value);
+            Vector3 tempMesh = head.transform.localScale * percent;
+            Vector3 tempCollider = headBumpCollider.transform.localScale * percent;
+            head.transform.localScale += tempMesh;
+            headBumpCollider.transform.localScale += tempCollider;
         }
 
-        public float GetJumpOverMeValue()
+        public void DecreaseHeadPercentual(float percent)
         {
-            return headBumpCollider.GetComponent<PlayerJumpOver>().GetBounceForce();
+            Vector3 tempMesh = head.transform.localScale * percent;
+            Vector3 tempCollider = headBumpCollider.transform.localScale * percent;
+            head.transform.localScale -= tempMesh;
+            headBumpCollider.transform.localScale -= tempCollider;
         }
     }
 }

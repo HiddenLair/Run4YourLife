@@ -2,5 +2,5 @@
 {
     int GetPriority();
 
-    void Apply(ref float input);
+    void ModifyHorizontalInput(ref float input);
 }

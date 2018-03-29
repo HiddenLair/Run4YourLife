@@ -3,6 +3,12 @@
     private const float END_TIME = 5.0f;
     private const float SPEED_BUFF_PERCENT = 1.0f / 3.0f;
 
+    #region Variables
+
+    StatModifier modifier;
+
+    #endregion
+
     private float lastInputSign = 1.0f;
 
     int IRunnerInput.GetPriority()
@@ -10,7 +16,7 @@
         return 0;
     }
 
-    public void Apply(ref float input)
+    public void ModifyHorizontalInput(ref float input)
     {
         float inputSign = lastInputSign;
 
@@ -37,6 +43,12 @@
     protected override void Apply()
     {
         Destroy(this, END_TIME);
-        GetComponent<Stats>().AddModifier(new StatModifier(StatType.SPEED, ModifierType.PERCENT, true, SPEED_BUFF_PERCENT, END_TIME));
+        modifier = new StatModifier(StatType.SPEED, ModifierType.PERCENT, true, SPEED_BUFF_PERCENT, END_TIME);
+        GetComponent<Stats>().AddModifier(modifier);
+    }
+
+    protected override void Unapply()
+    {
+        GetComponent<Stats>().RemoveStatModifier(modifier);
     }
 }

@@ -9,6 +9,7 @@ public enum StatType
 {
     SPEED,
     JUMP_HEIGHT,
+    BOUNCE_HEIGHT
 }
 
 public class Stats : MonoBehaviour
@@ -20,6 +21,9 @@ public class Stats : MonoBehaviour
 
     [SerializeField]
     private float jumpHeight;
+
+    [SerializeField]
+    private float bounceHeight;
 
     #endregion
 
@@ -49,6 +53,7 @@ public class Stats : MonoBehaviour
     {
         initialStats.Add(StatType.SPEED, speed);
         initialStats.Add(StatType.JUMP_HEIGHT, jumpHeight);
+        initialStats.Add(StatType.BOUNCE_HEIGHT, bounceHeight);
         rootHardness = 0;
 
         Clear();
@@ -62,6 +67,11 @@ public class Stats : MonoBehaviour
     public void Increase(StatType statType, float value)
     {
         computedStats[statType] += value;
+    }
+
+    public void Set(StatType statType, float value)
+    {
+        computedStats[statType] = value;
     }
 
     public void AddModifier(StatModifier statModifier)
@@ -79,7 +89,7 @@ public class Stats : MonoBehaviour
         }
     }
 
-    private void RemoveStatModifier(StatModifier statModifier)
+    public void RemoveStatModifier(StatModifier statModifier)
     {
         statsModifiers.Remove(statModifier);
         Compute();
