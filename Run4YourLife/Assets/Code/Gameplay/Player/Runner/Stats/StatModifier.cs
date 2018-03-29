@@ -9,7 +9,7 @@ public enum ModifierType
 }
 
 [Serializable]
-public class StatModifier
+public abstract class StatModifier
 {
     #region InspectorVariables
 
@@ -36,7 +36,7 @@ public class StatModifier
 
     #endregion
 
-    public StatModifier(StatType statType, ModifierType modifierType, bool buff, float amount, float endTime)
+    protected StatModifier(StatType statType, ModifierType modifierType, bool buff, float amount, float endTime)
     {
         this.statType = statType;
         this.modifierType = modifierType;
@@ -78,4 +78,6 @@ public class StatModifier
         }
 
     }
+
+    public abstract int GetPriority();
 }

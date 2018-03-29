@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 using Run4YourLife.Utils;
@@ -29,11 +28,28 @@ public class Stats : MonoBehaviour
 
     #region Private Variables
 
+    private class StatModifierComparer : IComparer<StatModifier>
+    {
+        public int Compare(StatModifier x, StatModifier y)
+        {
+            int result = x.GetPriority().CompareTo(y.GetPriority());
+
+            if(result == 0)
+            {
+                result = x.GetHashCode() - y.GetHashCode();
+            }
+
+            return result;
+        }
+    }
+
     private Dictionary<StatType, float> initialStats = new Dictionary<StatType, float>();
 
     private Dictionary<StatType, float> computedStats = new Dictionary<StatType, float>();
 
-    private HashSet<StatModifier> statsModifiers = new HashSet<StatModifier>();
+    private List<StatModifier> statsModifiers = new List<StatModifier>();
+
+    // private HashSet<StatModifier> statsModifiers = new HashSet<StatModifier>();
 
     #endregion
 
@@ -54,6 +70,7 @@ public class Stats : MonoBehaviour
         initialStats.Add(StatType.SPEED, speed);
         initialStats.Add(StatType.JUMP_HEIGHT, jumpHeight);
         initialStats.Add(StatType.BOUNCE_HEIGHT, bounceHeight);
+
         rootHardness = 0;
 
         Clear();
@@ -76,15 +93,23 @@ public class Stats : MonoBehaviour
 
     public void AddModifier(StatModifier statModifier)
     {
-        statsModifiers.Add(statModifier);
-        statModifier.SetStats(this);
+        int index = statsModifiers.BinarySearch(statModifier, new StatModifierComparer());
+
+        // If index >= 0, statModifier has already been added
+
+        if(index < 0)
+        {
+            index = ~index;
+
+            statsModifiers.Insert(index, statModifier);
+            statModifier.SetStats(this);
+        }
     }
 
     public void RemoveAfter(StatModifier statModifier, float time)
     {
         if(time >= 0.0f)
         {
-            // StartCoroutine(RemoveStatModifier(statModifier, time));
             StartCoroutine(YieldHelper.WaitForSeconds(RemoveStatModifier, statModifier, time));
         }
     }
@@ -94,15 +119,6 @@ public class Stats : MonoBehaviour
         statsModifiers.Remove(statModifier);
         Compute();
     }
-
-    /* private IEnumerator RemoveStatModifier(StatModifier statModifier, float time)
-    {
-        yield return new WaitForSeconds(time);
-
-        statsModifiers.Remove(statModifier);
-
-        Compute();
-    } */
 
     private void Clear()
     {

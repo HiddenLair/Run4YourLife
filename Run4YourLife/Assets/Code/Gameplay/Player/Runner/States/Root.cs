@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Root : RunnerState,IInteractInput {
-
+﻿public class Root : RunnerState, IInteractInput
+{
     private const int HITS = 4;
 
     #region Variables
@@ -35,8 +31,8 @@ public class Root : RunnerState,IInteractInput {
 
     protected override void Apply()
     {
-        modifierSpeed = new StatModifier(StatType.SPEED, ModifierType.SETTER, true, 0, -1);
-        modifierJump = new StatModifier(StatType.JUMP_HEIGHT, ModifierType.SETTER, true, 0, -1);//TODO absorb also this input
+        modifierSpeed = new SpeedModifier(ModifierType.SETTER, true, 0, -1);
+        modifierJump = new JumpHeightModifier(ModifierType.SETTER, true, 0, -1); // TODO absorb also this input
         GetComponent<Stats>().AddModifier(modifierSpeed);
         GetComponent<Stats>().AddModifier(modifierJump);
     }

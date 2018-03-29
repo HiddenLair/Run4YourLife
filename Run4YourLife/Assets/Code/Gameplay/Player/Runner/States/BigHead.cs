@@ -15,7 +15,7 @@ public class BigHead : RunnerState {
     {
         GetComponent<HeadModifier>().IncreaseHeadPercentual(BOUNCE_BUFF_PERCENT);
         Destroy(this, END_TIME);
-        modifier = new StatModifier(StatType.BOUNCE_HEIGHT, ModifierType.PERCENT, true, BOUNCE_BUFF_PERCENT, END_TIME);
+        modifier = new BounceHeightModifier(ModifierType.PERCENT, true, BOUNCE_BUFF_PERCENT, END_TIME);
         GetComponent<Stats>().AddModifier(modifier);
     }
 

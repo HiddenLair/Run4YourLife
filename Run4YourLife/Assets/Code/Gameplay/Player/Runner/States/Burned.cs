@@ -60,7 +60,7 @@ public class Burned : RunnerState, IRunnerInput
 
     protected override void Apply()
     {
-        modifier = new StatModifier(StatType.SPEED, ModifierType.PERCENT, true, SPEED_BUFF_PERCENT, END_TIME);
+        modifier = new SpeedModifier(ModifierType.PERCENT, true, SPEED_BUFF_PERCENT, END_TIME);
         GetComponent<Stats>().AddModifier(modifier);
     }
 
