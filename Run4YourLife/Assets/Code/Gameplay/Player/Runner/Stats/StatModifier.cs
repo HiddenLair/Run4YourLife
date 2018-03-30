@@ -9,7 +9,7 @@ public enum ModifierType
 }
 
 [Serializable]
-public abstract class StatModifier
+public class StatModifier
 {
     #region InspectorVariables
 
@@ -79,5 +79,8 @@ public abstract class StatModifier
 
     }
 
-    public abstract int GetPriority();
+    public virtual int GetPriority()
+    {
+        return -1;
+    }
 }
