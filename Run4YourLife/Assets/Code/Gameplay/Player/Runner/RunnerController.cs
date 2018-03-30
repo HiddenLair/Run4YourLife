@@ -16,7 +16,6 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(Animator))]
     public class RunnerController : MonoBehaviour, ICharacterEvents
     {
-
         #region References
 
         private Stats m_stats;
@@ -89,7 +88,7 @@ namespace Run4YourLife.Player
             {
                 Destroy(oldInstance);
             }
-            gameObject.AddComponent<Root>();
+            gameObject.AddComponent<Root>().SetHardness(m_stats.rootHardness);
         }//TODO, shall we use rootHardness?
 
 

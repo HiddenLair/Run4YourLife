@@ -71,8 +71,6 @@ public class Stats : MonoBehaviour
         initialStats.Add(StatType.JUMP_HEIGHT, jumpHeight);
         initialStats.Add(StatType.BOUNCE_HEIGHT, bounceHeight);
 
-        rootHardness = 0;
-
         Clear();
     }
 

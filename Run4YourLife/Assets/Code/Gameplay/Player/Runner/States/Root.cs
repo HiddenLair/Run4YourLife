@@ -1,10 +1,12 @@
-﻿public class Root : RunnerState, IInteractInput
+﻿using System;
+
+public class Root : RunnerState, IInteractInput
 {
-    private const int HITS = 4;
+    //private int HITS = 4;
 
     #region Variables
 
-    int remainingHits = HITS;
+    private int remainingHits = 4;// = HITS;
 
     StatModifier modifierSpeed;
     StatModifier modifierJump;
@@ -41,5 +43,13 @@
     {
         GetComponent<Stats>().RemoveStatModifier(modifierSpeed);
         GetComponent<Stats>().RemoveStatModifier(modifierJump);
+    }
+
+    public void SetHardness(int rootHardness)
+    {
+        if (rootHardness > 0)
+        {
+            remainingHits = rootHardness;
+        }
     }
 }
