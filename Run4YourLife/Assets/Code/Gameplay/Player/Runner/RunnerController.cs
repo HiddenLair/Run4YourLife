@@ -70,6 +70,8 @@ namespace Run4YourLife.Player
             ExecuteEvents.Execute<IInteractableEvents>(gameObject, null, (x, y) => x.Interact());
         }
 
+        #region Character Effects
+
         public void Kill()
         {
             GameObject playerStateManager = FindObjectOfType<GameplayPlayerManager>().gameObject;
@@ -88,9 +90,8 @@ namespace Run4YourLife.Player
             {
                 Destroy(oldInstance);
             }
-            gameObject.AddComponent<Root>().SetHardness(m_stats.rootHardness);
-        }//TODO, shall we use rootHardness?
-
+            gameObject.AddComponent<Root>().SetHardness(rootHardness);
+        }
 
         public void Debuff(StatModifier statmodifier)
         {
@@ -106,10 +107,11 @@ namespace Run4YourLife.Player
             }
             else
             {
-                gameObject.AddComponent<Burned>();
+                gameObject.AddComponent<Burned>().SetBurningTime(burnedTime);
             }
+        }
 
-        }//TODO, shall we use burnedTime?
+        #endregion
 
         #region WindLeft
 

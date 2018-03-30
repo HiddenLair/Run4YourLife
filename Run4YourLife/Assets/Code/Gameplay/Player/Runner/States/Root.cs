@@ -2,11 +2,9 @@
 
 public class Root : RunnerState, IInteractInput
 {
-    //private int HITS = 4;
-
     #region Variables
 
-    private int remainingHits = 4;// = HITS;
+    private int remainingHits = 4;
 
     StatModifier modifierSpeed;
     StatModifier modifierJump;

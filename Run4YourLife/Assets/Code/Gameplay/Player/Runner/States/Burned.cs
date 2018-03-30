@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 public class Burned : RunnerState, IRunnerInput
 {
-    private const float END_TIME = 5.0f;
     private const float SPEED_BUFF_PERCENT = 1.0f / 3.0f;
+    private float END_TIME = 5.0f;
 
     #region Variables
 
@@ -67,5 +67,13 @@ public class Burned : RunnerState, IRunnerInput
     protected override void Unapply()
     {
         GetComponent<Stats>().RemoveStatModifier(modifier);
+    }
+
+    public void SetBurningTime(int burningTime)
+    {
+        if(burningTime > 0)
+        {
+            END_TIME = burningTime;
+        }
     }
 }
