@@ -65,6 +65,7 @@ namespace Run4YourLife.Player
         private bool m_isJumping;
         private bool m_isBouncing;
         private bool m_isBeingImpulsed;
+        private bool m_ceilingCollision = false;
 
         private bool m_isFacingRight = true;
 
@@ -123,7 +124,8 @@ namespace Run4YourLife.Player
         {
             if(m_isJumping && !m_characterController.isGrounded)
             {
-                //The character collided with something while jumping - STOP THE JUMP!! (Waiting for the new implementation...)
+                m_ceilingCollision = true;
+                m_velocity.y = 0;
             }
 
             if (!m_isJumping && m_characterController.isGrounded)
@@ -198,6 +200,7 @@ namespace Run4YourLife.Player
             m_velocity.y = HeightToVelocity(m_stats.Get(StatType.JUMP_HEIGHT));
             yield return StartCoroutine(WaitUntilApexOfJumpOrReleaseButton());
 
+            m_ceilingCollision = false;
             m_isJumping = false;
 
             yield return StartCoroutine(FallFaster());
@@ -215,7 +218,7 @@ namespace Run4YourLife.Player
             float previousPositionY = transform.position.y;
             yield return null;
 
-            while (m_playerControlScheme.jump.Persists() && previousPositionY < transform.position.y)
+            while (m_playerControlScheme.jump.Persists() && previousPositionY < transform.position.y && !m_ceilingCollision)
             {                
                 previousPositionY = transform.position.y;
                 yield return null;

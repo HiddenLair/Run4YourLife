@@ -6,23 +6,20 @@ using UnityEngine.EventSystems;
 
 public class WindSkillControl : MonoBehaviour {
 
-    #region Enumerators
-
-    public enum Direction { LEFT,RIGHT};
-
-    #endregion
-
     #region Inspector
+
     [SerializeField]
     private float timeToDie = 5;
 
     [SerializeField]
-    private Direction direction; 
+    private float windForce;
 
     #endregion
 
     #region Variables
-    HashSet<GameObject> colliders = new HashSet<GameObject>();
+
+    HashSet<GameObject> m_objectsInside = new HashSet<GameObject>();
+
     #endregion
 
     private void Awake()
@@ -34,15 +31,8 @@ public class WindSkillControl : MonoBehaviour {
     {
         if (collider.CompareTag(Tags.Player))
         {
-            colliders.Add(collider.gameObject);
-            if (direction == Direction.LEFT)
-            {
-                ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.ActivateWindLeft());
-            }
-            else
-            {
-                ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.ActivateWindRight());
-            }
+            m_objectsInside.Add(collider.gameObject);
+            ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.ActivateWind(windForce));
         }
     }
 
@@ -50,30 +40,16 @@ public class WindSkillControl : MonoBehaviour {
     {
         if (collider.CompareTag(Tags.Player))
         {
-            colliders.Remove(collider.gameObject);
-            if (direction == Direction.LEFT)
-            {
-                ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.DeactivateWindLeft());
-            }
-            else
-            {
-                ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.DeactivateWindRight());
-            }
+            m_objectsInside.Remove(collider.gameObject);
+            ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.DeactivateWind(windForce));
         }
     }
 
     private void OnDestroy()
     {
-        foreach(GameObject gO in colliders)
+        foreach(GameObject objectInside in m_objectsInside)
         {
-            if (direction == Direction.LEFT)
-            {
-                ExecuteEvents.Execute<ICharacterEvents>(gO, null, (x, y) => x.DeactivateWindLeft());
-            }
-            else
-            {
-                ExecuteEvents.Execute<ICharacterEvents>(gO, null, (x, y) => x.DeactivateWindRight());
-            }
+            ExecuteEvents.Execute<ICharacterEvents>(objectInside, null, (x, y) => x.DeactivateWind(windForce));
         }
     }
 }
