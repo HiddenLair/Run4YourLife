@@ -25,12 +25,6 @@ namespace Run4YourLife.Player
 
         #endregion
 
-        #region Input Variables
-
-        bool interactInput = false;
-
-        #endregion
-
         private void Awake()
         {
             m_playerControlScheme = GetComponent<RunnerControlScheme>();
@@ -46,15 +40,15 @@ namespace Run4YourLife.Player
 
         private void OnTriggerStay(Collider collider)
         {
-            if (collider.CompareTag(Tags.Interactable) && interactInput)
+            if (collider.CompareTag(Tags.Interactable) && GetInteractInput())
             {
                 Interact(collider.gameObject);
             }
         }
 
-        private void Update()
-        {           
-            interactInput = m_playerControlScheme.interact.Started();
+        private bool GetInteractInput()
+        {
+            bool interactInput = m_playerControlScheme.interact.Started();
 
             IInteractInput[] iInteractInputList = GetComponents<IInteractInput>();
 
@@ -63,6 +57,8 @@ namespace Run4YourLife.Player
             {
                 iInteractInput.ModifyInteractInput(ref interactInput);
             }
+
+            return interactInput;
         }
 
         private void Interact(GameObject gameObject)
