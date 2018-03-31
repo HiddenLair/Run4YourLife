@@ -19,48 +19,27 @@ namespace Run4YourLife.Player
         #region References
 
         private Stats m_stats;
-        private RunnerControlScheme m_playerControlScheme;
         private RunnerCharacterController m_runnerCharacterController;
         private Animator m_animator;
+        private RunnerInputStated inputPlayer;
 
         #endregion
 
         private void Awake()
         {
-            m_playerControlScheme = GetComponent<RunnerControlScheme>();
             m_runnerCharacterController = GetComponent<RunnerCharacterController>();
             m_stats = GetComponent<Stats>();
             m_animator = GetComponent<Animator>();
-        }
-
-        private void Start()
-        {
-            m_playerControlScheme.Active = true;
+            inputPlayer = GetComponent<RunnerInputStated>();
         }
 
         private void OnTriggerStay(Collider collider)
         {
-            if (collider.CompareTag(Tags.Interactable) && GetInteractInput())
+            if (collider.CompareTag(Tags.Interactable) && inputPlayer.GetInteractInput())
             {
                 Interact(collider.gameObject);
             }
         }
-
-        private bool GetInteractInput()
-        {
-            bool interactInput = m_playerControlScheme.interact.Started();
-
-            IInteractInput[] iInteractInputList = GetComponents<IInteractInput>();
-
-            Array.Sort(iInteractInputList, (x, y) => x.GetPriority().CompareTo(y.GetPriority()));
-            foreach (IInteractInput iInteractInput in iInteractInputList)
-            {
-                iInteractInput.ModifyInteractInput(ref interactInput);
-            }
-
-            return interactInput;
-        }
-
         private void Interact(GameObject gameObject)
         {
             ExecuteEvents.Execute<IInteractableEvents>(gameObject, null, (x, y) => x.Interact());

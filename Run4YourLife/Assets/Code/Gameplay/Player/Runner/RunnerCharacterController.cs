@@ -56,6 +56,7 @@ namespace Run4YourLife.Player
         private Animator m_animator;
         private Animation m_currentAnimation;
         private AudioSource m_audioSource;
+        private RunnerInputStated inputPlayer;
 
         #endregion
 
@@ -95,6 +96,7 @@ namespace Run4YourLife.Player
             m_stats = GetComponent<Stats>();
             m_animator = GetComponent<Animator>();
             m_gravity = m_baseGravity;
+            inputPlayer = GetComponent<RunnerInputStated>();
         }
 
         void Update()
@@ -103,7 +105,7 @@ namespace Run4YourLife.Player
             {
                 Gravity();
 
-                if (m_characterController.isGrounded && m_playerControlScheme.jump.Started())
+                if (m_characterController.isGrounded && inputPlayer.GetJumpInput())
                 {
                     Jump();
                 }
@@ -134,18 +136,7 @@ namespace Run4YourLife.Player
 
         private void Move()
         {
-            // float horizontal = CheckStatModificators(m_playerControlScheme.move.Value());
-
-            float horizontal = m_playerControlScheme.move.Value();
-
-            IRunnerInput[] iRunnerInputList = GetComponents<IRunnerInput>();
-
-            Array.Sort(iRunnerInputList, (x, y) => x.GetPriority().CompareTo(y.GetPriority()));
-
-            foreach(IRunnerInput iRunnerInput in iRunnerInputList)
-            {
-                iRunnerInput.ModifyHorizontalInput(ref horizontal);
-            }
+            float horizontal = inputPlayer.GetHorizontalInput();
 
             Vector3 inputMovement = transform.forward * horizontal * m_stats.Get(StatType.SPEED) * Time.deltaTime;
             Vector3 totalMovement = inputMovement + m_velocity * Time.deltaTime;
