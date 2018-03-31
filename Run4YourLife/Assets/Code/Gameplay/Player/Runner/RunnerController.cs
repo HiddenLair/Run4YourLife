@@ -45,32 +45,53 @@ namespace Run4YourLife.Player
             ExecuteEvents.Execute<IInteractableEvents>(gameObject, null, (x, y) => x.Interact());
         }
 
+        private bool CheckForShield()
+        {
+            bool ret = true;
+            /*
+            if (//BUFF == Shielded)
+            {
+             TODO:: fill it
+            }*/
+            return ret;
+        }
+
         #region Character Effects
 
         public void Kill()
         {
-            GameObject playerStateManager = FindObjectOfType<GameplayPlayerManager>().gameObject;
-            ExecuteEvents.Execute<IGameplayPlayerEvents>(playerStateManager, null, (x, y) => x.OnRunnerDeath(gameObject));
+            if (CheckForShield())
+            {
+                GameObject playerStateManager = FindObjectOfType<GameplayPlayerManager>().gameObject;
+                ExecuteEvents.Execute<IGameplayPlayerEvents>(playerStateManager, null, (x, y) => x.OnRunnerDeath(gameObject));
+            }
         }
 
         public void Impulse(Vector3 direction, float force)
         {
-            m_runnerCharacterController.Impulse(direction, force);
+            if (CheckForShield()) {
+                m_runnerCharacterController.Impulse(direction, force);
+            }
         }
 
         public void Root(int rootHardness)
         {
-            Root oldInstance = gameObject.GetComponent<Root>();
-            if (oldInstance != null)
+            if (CheckForShield())
             {
-                Destroy(oldInstance);
+                Root oldInstance = gameObject.GetComponent<Root>();
+                if (oldInstance != null)
+                {
+                    Destroy(oldInstance);
+                }
+                gameObject.AddComponent<Root>().SetHardness(rootHardness);
             }
-            gameObject.AddComponent<Root>().SetHardness(rootHardness);
         }
 
         public void Debuff(StatModifier statmodifier)
         {
-            m_stats.AddModifier(statmodifier);
+            if (CheckForShield()) {
+                m_stats.AddModifier(statmodifier);
+            }
         }
 
         public void Burned(int burnedTime)

@@ -25,6 +25,8 @@ namespace Run4YourLife.GameManagement {
 
         private Queue<PlayerDefinition> m_deadPlayers = new Queue<PlayerDefinition>();
 
+        private PlayerSpawner playerSpawner;
+
         private PlayerManager m_playerManager;
         public PlayerManager PlayerManager
         {
@@ -45,6 +47,11 @@ namespace Run4YourLife.GameManagement {
         public List<GameObject> Runners { get { return m_runners; } set { m_runners = value; } }
 
         #endregion
+
+        private void Awake()
+        {
+            playerSpawner = GetComponent<PlayerSpawner>();
+        }
 
         private PlayerManager GetOrCreateDefaultPlayerManagerIfNoneIsAviable()
         {
@@ -89,7 +96,7 @@ namespace Run4YourLife.GameManagement {
         public void OnRunnerDeath(GameObject player)
         {
             Runners.Remove(player);
-
+            
             PlayerDefinition playerDefinition = player.GetComponent<PlayerInstance>().PlayerDefinition;
             m_deadPlayers.Enqueue(playerDefinition);
 
@@ -103,7 +110,13 @@ namespace Run4YourLife.GameManagement {
 
         public void OnPlayerReviveRequest(Vector3 position)
         {
-            throw new System.NotImplementedException();
+            PlayerDefinition playerToRevive = m_deadPlayers.Dequeue();
+            playerSpawner.InstantiateRunner(playerToRevive,position);       
+        }
+
+        public void ReviveAllPlayers()
+        {
+            //TODO: fill the method
         }
 
         public void DebugDestroyAllPlayersAndClear()

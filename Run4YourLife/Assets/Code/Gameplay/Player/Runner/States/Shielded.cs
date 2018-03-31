@@ -1,16 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using Run4YourLife.Player;
 
-public class Shielded : MonoBehaviour {
+public class Shielded : RunnerState {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private const float END_TIME = 5.0f;
+
+    protected override void Apply()
+    {
+        GetComponent<BuffManager>().ActivateShield();
+        Destroy(this, END_TIME);
+    }
+
+    protected override void Unapply()
+    {
+        GetComponent<BuffManager>().DeactivateShield();
+    }
 }

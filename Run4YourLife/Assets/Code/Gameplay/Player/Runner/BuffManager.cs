@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Run4YourLife.Player
 {
-    public class HeadModifier : MonoBehaviour
+    public class BuffManager : MonoBehaviour
     {
 
         #region Inspector
@@ -14,6 +14,9 @@ namespace Run4YourLife.Player
 
         [SerializeField]
         private GameObject headBumpCollider;
+
+        [SerializeField]
+        private GameObject shield;
 
         #endregion
 
@@ -50,6 +53,16 @@ namespace Run4YourLife.Player
             Vector3 tempCollider = headBumpCollider.transform.localScale * percent;
             head.transform.localScale -= tempMesh;
             headBumpCollider.transform.localScale -= tempCollider;
+        }
+
+        public void ActivateShield()
+        {
+            shield.SetActive(true);
+        }
+
+        public void DeactivateShield()
+        {
+            shield.SetActive(false);
         }
     }
 }

@@ -78,6 +78,20 @@ namespace Run4YourLife.GameManagement
 
             return instance;
         }
+
+        public GameObject InstantiateRunner(PlayerDefinition playerDefinition, Vector3 instantiatePos)
+        {
+
+            Debug.Assert(!playerDefinition.IsBoss);
+
+            GameObject instance;
+          
+            instance = Instantiate(m_playerPrefab, instantiatePos, Quaternion.identity);
+            m_gameplayPlayerManager.Runners.Add(instance);
+            ExecuteEvents.Execute<IPlayerDefinitionEvents>(instance, null, (a, b) => a.OnPlayerDefinitionChanged(playerDefinition));
+
+            return instance;
+        }
     }
 }
 
