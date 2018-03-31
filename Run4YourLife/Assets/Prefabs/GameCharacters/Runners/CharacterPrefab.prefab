@@ -59,6 +59,8 @@ GameObject:
   - component: {fileID: 114459242405966914}
   - component: {fileID: 114540371618756184}
   - component: {fileID: 114469587828184810}
+  - component: {fileID: 114859211782106258}
+  - component: {fileID: 114022343692431878}
   m_Layer: 8
   m_Name: CharacterPrefab
   m_TagString: Player
@@ -1087,7 +1089,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1095223732133840}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 3.76, z: 0}
+  m_LocalPosition: {x: -0.47, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4540691455470320}
@@ -1172,7 +1174,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1502835247784896}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.996, z: 0}
+  m_LocalPosition: {x: 0, y: 0.807, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4583484698477256}
@@ -1874,6 +1876,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114022343692431878
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1095223732133840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 408bb568497f4fc468c5ee8caab60d03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114459242405966914
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1887,10 +1900,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   jumpHeight: 2
+  bounceHeight: 3
   root: 0
   burned: 0
   windPush: 0
-  rootHardness: 0
+  rootHardness: 5
 --- !u!114 &114469587828184810
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1945,6 +1959,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cec698f25fa65f47a9e9032dfde8efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114859211782106258
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1095223732133840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a33c8cb7c3b4ed5469f4f7d9b9e154ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  head: {fileID: 1581701610262278}
+  headBumpCollider: {fileID: 1502835247784896}
 --- !u!114 &114885800663105030
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1956,7 +1983,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 796661589eb16c34cafc228a3b528274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceOverMeForce: 3
 --- !u!114 &114970028009125270
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2002,7 +2028,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.2
-  m_Center: {x: 0, y: -0.2, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!137 &137403844594586994
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
