@@ -111,32 +111,14 @@ namespace Run4YourLife.Player
             }
         }
 
-        #endregion
-
-        #region WindLeft
-
-        public void ActivateWindLeft()
+        public void ActivateWind(float windForce)
         {
-            gameObject.AddComponent<WindLeft>();
+            GetComponent<Wind>().AddWindForce(windForce);
         }
 
-        public void DeactivateWindLeft()
+        public void DeactivateWind(float windForce)
         {
-            Destroy(gameObject.GetComponent<WindLeft>());
-        }
-
-        #endregion
-
-        #region WindRight
-
-        public void ActivateWindRight()
-        {
-            gameObject.AddComponent<WindRight>();
-        }
-
-        public void DeactivateWindRight()
-        {
-            Destroy(gameObject.GetComponent<WindRight>());
+            GetComponent<Wind>().RemoveWindForce(windForce);
         }
 
         #endregion
