@@ -45,6 +45,8 @@ public class TrapInit : MonoBehaviour {
                 transform.position = transform.position + Vector3.down * info.distance;
                 grounded = true;
                 Destroy(GetComponent<Rigidbody>());
+                //Set ground as parent
+                transform.SetParent(info.collider.gameObject.transform);
             }
             yield return 0;
         }
