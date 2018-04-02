@@ -20,6 +20,12 @@ namespace Run4YourLife.DebuggingTools
 
         #endregion
 
+        #region Camera
+
+        private DynamicCameraController dynamicCameraController = null;
+
+        #endregion
+
         #region Other
 
         private PhaseSwitcher phaseSwitcher = null;
@@ -29,6 +35,7 @@ namespace Run4YourLife.DebuggingTools
         private bool debugging = false;
 
         private bool drawWireframe = false;
+        private bool useDynamicCamera = false;
 
         private string walkerSpeedText = string.Empty;
         private string walkerIncreaseSpeedText = string.Empty;
@@ -65,6 +72,11 @@ namespace Run4YourLife.DebuggingTools
                 ToggleRunnerDebugging();
             }
 
+            if(drawCamera)
+            {
+                ToggleCameraDebugging();
+            }
+
             if(drawOther)
             {
                 ToggleOtherDebugging();
@@ -83,6 +95,11 @@ namespace Run4YourLife.DebuggingTools
         }
 
         private void ToggleRunnerDebugging()
+        {
+
+        }
+
+        private void ToggleCameraDebugging()
         {
 
         }
@@ -120,10 +137,12 @@ namespace Run4YourLife.DebuggingTools
         private Rect windowRect = new Rect(Screen.width - WINDOW_W - WINDOW_OFFSET_X, WINDOW_OFFSET_Y, WINDOW_W, WINDOW_H);
 
         private Vector2 scrollAreaPosition = Vector2.zero;
+        private Vector2 scrollDynamicCameraGoToPosition = Vector2.zero;
 
         private bool drawGeneral = true;
         private bool drawBoss = true;
         private bool drawRunner = true;
+        private bool drawCamera = true;
         private bool drawOther = true;
 
         #endregion
@@ -145,6 +164,7 @@ namespace Run4YourLife.DebuggingTools
             OnGUIGeneral();
             OnGUIBoss();
             OnGUIRunner();
+            OnGUICamera();
             OnGUIOther();
 
             GUILayout.EndScrollView();
@@ -240,6 +260,38 @@ namespace Run4YourLife.DebuggingTools
             if(drawRunner)
             {
                 GUILayout.Label("To define...");
+            }
+
+            GUILayout.EndVertical();
+        }
+
+        private void OnGUICamera()
+        {
+            GUILayout.BeginVertical();
+
+            if(GUILayout.Button(drawCamera ? "Camera" : "< Camera >"))
+            {
+                ToggleCameraDebugging();
+                drawCamera = !drawCamera;
+            }
+
+            if(drawCamera)
+            {
+                bool newUseDynamicCamera = GUILayout.Toggle(useDynamicCamera, " Dynamic Camera");
+
+                if(useDynamicCamera != newUseDynamicCamera)
+                {
+                    useDynamicCamera = newUseDynamicCamera;
+                    dynamicCameraController = ToggleMode<DynamicCameraController>(dynamicCameraController, gameObject);
+                }
+
+                if(dynamicCameraController != null)
+                {
+                    if(GUILayout.Button("Focus"))
+                    {
+                        dynamicCameraController.Focus();
+                    }
+                }
             }
 
             GUILayout.EndVertical();
