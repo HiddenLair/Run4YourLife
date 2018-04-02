@@ -1,11 +1,12 @@
 ﻿using System;
 using UnityEngine;
 using Cinemachine;
-using System.Collections;
+
+using Run4YourLife.Utils;
 
 namespace Run4YourLife.DebuggingTools
 {
-    public class DynamicCameraController : MonoBehaviour
+    public class DynamicCameraController : DebugFeature
     {
         private const float SPEED = 10.0f;
         private const float SHIFT_SPEED_MULTIPLIER = 5.0f;
@@ -13,33 +14,44 @@ namespace Run4YourLife.DebuggingTools
         private new Camera camera = null;
         private CinemachineBrain cinemachineBrain = null;
 
+        private bool dynamicCamera = false;
+
+        public override void OnDrawGUI()
+        {
+            dynamicCamera = GUILayout.Toggle(dynamicCamera, " Dynamic Camera");
+
+            if(dynamicCamera)
+            {
+                GUILayout.BeginHorizontal();
+
+                GUILayout.Label("Translate: Arrows\nZoom: W, S");
+                if(GUILayout.Button("Focus"))
+                {
+                    Focus();
+                }
+
+                GUILayout.EndHorizontal();
+            }
+        }
+
         void Awake()
         {
             camera = GetComponent<Camera>();
             cinemachineBrain = GetComponent<CinemachineBrain>();
-
-            cinemachineBrain.enabled = false;
         }
 
         void Update()
         {
-            bool shiftPressed = UnityEngine.Input.GetKey(KeyCode.LeftShift) || UnityEngine.Input.GetKey(KeyCode.RightShift);
-            float speed = SPEED * (shiftPressed ? SHIFT_SPEED_MULTIPLIER : 1.0f);
+            cinemachineBrain.enabled = !dynamicCamera;
 
-            Translate(speed);
-            Zoom(speed);
-        }
+            if(dynamicCamera)
+            {
+                bool shiftPressed = UnityEngine.Input.GetKey(KeyCode.LeftShift) || UnityEngine.Input.GetKey(KeyCode.RightShift);
+                float speed = SPEED * (shiftPressed ? SHIFT_SPEED_MULTIPLIER : 1.0f);
 
-        void OnDestroy()
-        {
-            cinemachineBrain.enabled = true;
-        }
-
-        public void Focus()
-        {
-            // Can this be done in a better way? Ideas?
-
-            StartCoroutine(EnableDisableCinemachine());
+                Translate(speed);
+                Zoom(speed);
+            }
         }
 
         private void Translate(float speed)
@@ -54,17 +66,11 @@ namespace Run4YourLife.DebuggingTools
             camera.transform.Translate(speed * Time.deltaTime * zoom);
         }
 
-        private IEnumerator EnableDisableCinemachine()
+        private void Focus()
         {
             // Can this be done in a better way? Ideas?
 
-            yield return null;
-
-            cinemachineBrain.enabled = true;
-
-            yield return null;
-
-            cinemachineBrain.enabled = false;
+            StartCoroutine(YieldHelper.SkipFrame(() => cinemachineBrain.enabled = true));
         }
     }
 }

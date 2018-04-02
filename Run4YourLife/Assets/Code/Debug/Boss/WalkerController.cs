@@ -2,11 +2,47 @@
 
 namespace Run4YourLife.DebuggingTools
 {
-    public class WalkerController : MonoBehaviour
+    public class WalkerController : DebugFeature
     {
         private Walker walker = null;
-
         private GameObject boss = null;
+
+        private string walkerSpeedText = string.Empty;
+        private string walkerIncreaseSpeedText = string.Empty;
+
+        public override void OnDrawGUI()
+        {
+            if(walker != null)
+            {
+                // Walker Speed
+
+                GUILayout.Label("Current Walker Speed: " + walker.speed.ToString("0.###"));
+
+                GUILayout.BeginHorizontal();
+
+                GUILayout.Label("Walker Speed");
+                walkerSpeedText = GUILayout.TextField(walkerSpeedText);
+                if(GUILayout.Button("Apply"))
+                {
+                    SetSpeed(walkerSpeedText);
+                }
+
+                GUILayout.EndHorizontal();
+
+                // Walker Increase Speed
+
+                GUILayout.BeginHorizontal();
+
+                GUILayout.Label("Walker Inc. Speed");
+                walkerIncreaseSpeedText = GUILayout.TextField(walkerIncreaseSpeedText);
+                if(GUILayout.Button("Apply"))
+                {
+                    SetIncreaseSpeed(walkerIncreaseSpeedText);
+                }
+
+                GUILayout.EndHorizontal();
+            }
+        }
 
         void Update()
         {
@@ -21,49 +57,24 @@ namespace Run4YourLife.DebuggingTools
             }
         }
 
-        public bool Exists()
+        private void SetSpeed(string value)
         {
-            return walker != null;
-        }
+            float speed;
 
-        public float GetSpeed()
-        {
-            return walker.speed;
-        }
-
-        public void SetSpeed(float value)
-        {
-            walker.speed = value;
-        }
-
-        public void SetSpeed(string value)
-        {
-            float result;
-
-            if(float.TryParse(value, out result))
+            if(float.TryParse(value, out speed))
             {
-                SetSpeed(result);
+                walker.speed = speed;
             }
         }
 
-        public float GetIncreaseSpeed()
+        private void SetIncreaseSpeed(string value)
         {
-            return walker.increaseValue;
-        }
+            float increaseSpeed;
 
-        public void SetIncreaseSpeed(float value)
-        {
-            walker.increaseValue = value;
-            walker.increaseSpeedOverTime = value != 0.0f;
-        }
-
-        public void SetIncreaseSpeed(string value)
-        {
-            float result;
-
-            if(float.TryParse(value, out result))
+            if(float.TryParse(value, out increaseSpeed))
             {
-                SetIncreaseSpeed(result);
+                walker.increaseValue = increaseSpeed;
+                walker.increaseSpeedOverTime = increaseSpeed != 0.0f;
             }
         }
     }

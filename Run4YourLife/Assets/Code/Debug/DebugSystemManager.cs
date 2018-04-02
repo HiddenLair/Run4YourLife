@@ -1,131 +1,16 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 namespace Run4YourLife.DebuggingTools
 {
     public class DebugSystemManager : MonoBehaviour
     {
-        #region General
-
-        private FPSCounter fpsCounter = null;
-
-        private WireframeMode wireframeMode = null;
-
-        private VertexAndTriangleCounter vertexAndTriangleCounter = null;
-
-        #endregion
-
-        #region Boss
-
-        private WalkerController walkerController = null;
-
-        #endregion
-
-        #region Camera
-
-        private DynamicCameraController dynamicCameraController = null;
-
-        #endregion
-
-        #region Other
-
-        private PhaseSwitcher phaseSwitcher = null;
-
-        #endregion
-
         private bool debugging = false;
 
-        private bool drawWireframe = false;
-        private bool useDynamicCamera = false;
-
-        private string walkerSpeedText = string.Empty;
-        private string walkerIncreaseSpeedText = string.Empty;
-
-        void Start()
-        {
-            // ToggleDebugging(); // TEST
-        }
-
-        void Update()
-        {
-            if(UnityEngine.Input.GetKeyDown(KeyCode.F1))
-            {
-                ToggleDebugging();
-            }
-        }
-
-        private void ToggleDebugging()
-        {
-            debugging = !debugging;
-
-            if(drawGeneral)
-            {
-                ToggleGeneralDebugging();
-            }
-
-            if(drawBoss)
-            {
-                ToggleBossDebugging();
-            }
-
-            if(drawRunner)
-            {
-                ToggleRunnerDebugging();
-            }
-
-            if(drawCamera)
-            {
-                ToggleCameraDebugging();
-            }
-
-            if(drawOther)
-            {
-                ToggleOtherDebugging();
-            }
-        }
-
-        private void ToggleGeneralDebugging()
-        {
-            fpsCounter = ToggleMode<FPSCounter>(fpsCounter, gameObject);
-            vertexAndTriangleCounter = ToggleMode<VertexAndTriangleCounter>(vertexAndTriangleCounter, gameObject);
-        }
-
-        private void ToggleBossDebugging()
-        {
-            walkerController = ToggleMode<WalkerController>(walkerController, gameObject);
-        }
-
-        private void ToggleRunnerDebugging()
-        {
-
-        }
-
-        private void ToggleCameraDebugging()
-        {
-
-        }
-
-        private void ToggleOtherDebugging()
-        {
-            phaseSwitcher = ToggleMode<PhaseSwitcher>(phaseSwitcher, gameObject);
-        }
-
-        private T ToggleMode<T>(MonoBehaviour mode, GameObject attachToObject) where T : Component
-        {
-            Debug.Assert(attachToObject != null); // TEST
-
-            T ret = null;
-
-            if(mode == null)
-            {
-                ret = attachToObject.AddComponent<T>();
-            }
-            else
-            {
-                Destroy(mode);
-            }
-
-            return ret;
-        }
+        private List<DebugFeature> generalDebugFeatures = new List<DebugFeature>();
+        private List<DebugFeature> bossDebugFeatures = new List<DebugFeature>();
+        private List<DebugFeature> cameraDebugFeatures = new List<DebugFeature>();
+        private List<DebugFeature> otherDebugFeatures = new List<DebugFeature>();
 
         #region GUI definitions Window
 
@@ -140,11 +25,53 @@ namespace Run4YourLife.DebuggingTools
 
         private bool drawGeneral = true;
         private bool drawBoss = true;
-        private bool drawRunner = true;
         private bool drawCamera = true;
         private bool drawOther = true;
 
         #endregion
+
+        void Awake()
+        {
+            AddDebugFeatures();
+        }
+
+        void Update()
+        {
+            if(UnityEngine.Input.GetKeyDown(KeyCode.F1))
+            {
+                debugging = !debugging;
+            }
+        }
+
+        private void AddDebugFeatures()
+        {
+            AddGeneralDebugFeatures();
+            AddBossDebugFeatures();
+            AddCameraDebugFeatures();
+            AddOtherDebugFeatures();
+        }
+
+        private void AddGeneralDebugFeatures()
+        {
+            generalDebugFeatures.Add(gameObject.AddComponent<FPSCounter>());
+            generalDebugFeatures.Add(gameObject.AddComponent<VertexAndTriangleCounter>());
+            generalDebugFeatures.Add(Camera.main.gameObject.AddComponent<WireframeMode>());
+        }
+
+        private void AddBossDebugFeatures()
+        {
+            bossDebugFeatures.Add(gameObject.AddComponent<WalkerController>());
+        }
+
+        private void AddCameraDebugFeatures()
+        {
+            cameraDebugFeatures.Add(Camera.main.gameObject.AddComponent<DynamicCameraController>());
+        }
+
+        private void AddOtherDebugFeatures()
+        {
+            otherDebugFeatures.Add(gameObject.AddComponent<PhaseSwitcher>());
+        }
 
         #region GUI
 
@@ -160,176 +87,31 @@ namespace Run4YourLife.DebuggingTools
         {
             scrollAreaPosition = GUILayout.BeginScrollView(scrollAreaPosition);
 
-            OnGUIGeneral();
-            OnGUIBoss();
-            OnGUIRunner();
-            OnGUICamera();
-            OnGUIOther();
+            OnDrawGUI(ref drawGeneral, "General", generalDebugFeatures);
+            OnDrawGUI(ref drawBoss, "Boss", bossDebugFeatures);
+            OnDrawGUI(ref drawCamera, "Camera", cameraDebugFeatures);
+            OnDrawGUI(ref drawOther, "Other", otherDebugFeatures);
 
             GUILayout.EndScrollView();
 
             GUI.DragWindow();
         }
 
-        private void OnGUIGeneral()
+        private void OnDrawGUI(ref bool draw, string name, List<DebugFeature> debuggingFeatures)
         {
             GUILayout.BeginVertical();
 
-            if(GUILayout.Button(drawGeneral ? "General" : "< General >"))
+            if(GUILayout.Button(draw ? name : "< " + name + " >"))
             {
-                ToggleGeneralDebugging();
-                drawGeneral = !drawGeneral;
+                draw = !draw;
             }
 
-            if(drawGeneral)
+            if(draw)
             {
-                GUILayout.Label("Fps: " + fpsCounter.GetFPS().ToString("0") + ", Ms: " + fpsCounter.GetMs().ToString("0"));
-                GUILayout.Label("Num. Vertices: " + vertexAndTriangleCounter.GetVertexCount());
-                GUILayout.Label("Num. Triangles: " + vertexAndTriangleCounter.GetTriangleCount());
-
-                bool newDrawWireframe = GUILayout.Toggle(drawWireframe, " Wireframe Mode");
-
-                if(drawWireframe != newDrawWireframe)
+                foreach(DebugFeature debugFeature in debuggingFeatures)
                 {
-                    drawWireframe = newDrawWireframe;
-                    wireframeMode = ToggleMode<WireframeMode>(wireframeMode, Camera.main.gameObject);
+                    debugFeature.OnDrawGUI();
                 }
-            }
-
-            GUILayout.EndVertical();
-        }
-
-        private void OnGUIBoss()
-        {
-            GUILayout.BeginVertical();
-
-            if(GUILayout.Button(drawBoss ? "Boss" : "< Boss >"))
-            {
-                ToggleBossDebugging();
-                drawBoss = !drawBoss;
-            }
-
-            if(drawBoss)
-            {
-                if(walkerController.Exists())
-                {
-                    // Walker Speed
-
-                    GUILayout.Label("Current Walker Speed: " + walkerController.GetSpeed().ToString("0.###"));
-
-                    GUILayout.BeginHorizontal();
-
-                    GUILayout.Label("Walker Speed");
-                    walkerSpeedText = GUILayout.TextField(walkerSpeedText);
-                    if(GUILayout.Button("Apply"))
-                    {
-                        walkerController.SetSpeed(walkerSpeedText);
-                    }
-
-                    GUILayout.EndHorizontal();
-
-                    // Walker Increase Speed
-
-                    GUILayout.BeginHorizontal();
-
-                    GUILayout.Label("Walker Inc. Speed");
-                    walkerIncreaseSpeedText = GUILayout.TextField(walkerIncreaseSpeedText);
-                    if(GUILayout.Button("Apply"))
-                    {
-                        walkerController.SetIncreaseSpeed(walkerIncreaseSpeedText);
-                    }
-
-                    GUILayout.EndHorizontal();
-                }
-            }
-
-            GUILayout.EndVertical();
-        }
-
-        private void OnGUIRunner()
-        {
-            GUILayout.BeginVertical();
-
-            if(GUILayout.Button(drawRunner ? "Runner" : "< Runner >"))
-            {
-                ToggleRunnerDebugging();
-                drawRunner = !drawRunner;
-            }
-
-            if(drawRunner)
-            {
-                GUILayout.Label("To define...");
-            }
-
-            GUILayout.EndVertical();
-        }
-
-        private void OnGUICamera()
-        {
-            GUILayout.BeginVertical();
-
-            if(GUILayout.Button(drawCamera ? "Camera" : "< Camera >"))
-            {
-                ToggleCameraDebugging();
-                drawCamera = !drawCamera;
-            }
-
-            if(drawCamera)
-            {
-                bool newUseDynamicCamera = GUILayout.Toggle(useDynamicCamera, " Dynamic Camera");
-
-                if(useDynamicCamera != newUseDynamicCamera)
-                {
-                    useDynamicCamera = newUseDynamicCamera;
-                    dynamicCameraController = ToggleMode<DynamicCameraController>(dynamicCameraController, gameObject);
-                }
-
-                if(dynamicCameraController != null)
-                {
-                    GUILayout.BeginHorizontal();
-
-                    GUILayout.Label("Translate: Arrows\nZoom: W, S");
-
-                    if(GUILayout.Button("Focus"))
-                    {
-                        dynamicCameraController.Focus();
-                    }
-
-                    GUILayout.EndHorizontal();
-                }
-            }
-
-            GUILayout.EndVertical();
-        }
-
-        private void OnGUIOther()
-        {
-            GUILayout.BeginVertical();
-
-            if(GUILayout.Button(drawOther ? "Other" : "< Other >"))
-            {
-                ToggleOtherDebugging();
-                drawOther = !drawOther;
-            }
-
-            if(drawOther)
-            {
-                GUILayout.BeginHorizontal();
-
-                if(GUILayout.Button("Go Phase 1"))
-                {
-                    phaseSwitcher.GoPhase1();
-                }
-                else if(GUILayout.Button("Go Phase 2"))
-                {
-                    phaseSwitcher.GoPhase2();
-                }
-                else if(GUILayout.Button("Go Phase 3"))
-                {
-                    phaseSwitcher.GoPhase3();
-                }
-
-                GUILayout.EndHorizontal();
             }
 
             GUILayout.EndVertical();

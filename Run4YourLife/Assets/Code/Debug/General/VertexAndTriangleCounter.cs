@@ -2,24 +2,17 @@
 
 namespace Run4YourLife.DebuggingTools
 {
-    public class VertexAndTriangleCounter : MonoBehaviour
+    public class VertexAndTriangleCounter : DebugFeature
     {
         private int vertexCount = 0;
         private int triangleCount = 0;
 
-        void Update()
+        public override void OnDrawGUI()
         {
             Count();
-        }
 
-        public int GetVertexCount()
-        {
-            return vertexCount;
-        }
-
-        public int GetTriangleCount()
-        {
-            return triangleCount;
+            GUILayout.Label("Num. Vertices: " + vertexCount);
+            GUILayout.Label("Num. Triangles: " + triangleCount);
         }
 
         private void Count()

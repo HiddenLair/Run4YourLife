@@ -2,14 +2,19 @@
 
 namespace Run4YourLife.DebuggingTools
 {
-    public class FPSCounter : MonoBehaviour
+    public class FPSCounter : DebugFeature
     {
-        public float GetFPS()
+        public override void OnDrawGUI()
+        {
+            GUILayout.Label("Fps: " + GetFPS().ToString("0") + ", Ms: " + GetMs().ToString("0"));
+        }
+
+        private float GetFPS()
         {
             return 1.0f / Time.deltaTime;
         }
 
-        public float GetMs()
+        private float GetMs()
         {
             return 1000.0f * Time.deltaTime;
         }

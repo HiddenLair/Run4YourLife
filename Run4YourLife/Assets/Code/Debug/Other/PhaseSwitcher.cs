@@ -5,28 +5,38 @@ using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.DebuggingTools
 {
-    public class PhaseSwitcher : MonoBehaviour
+    public class PhaseSwitcher : DebugFeature
     {
         private GameManager gameManager = null;
 
-        void Start()
+        public override void OnDrawGUI()
+        {
+            GUILayout.BeginHorizontal();
+
+            if(GUILayout.Button("Go Phase 1"))
+            {
+                GoPhase(GamePhase.EasyMoveHorizontal);
+            }
+            else if(GUILayout.Button("Go Phase 2"))
+            {
+                GoPhase(GamePhase.BossFight);
+            }
+            else if(GUILayout.Button("Go Phase 3"))
+            {
+                GoPhase(GamePhase.HardMoveHorizontal);
+            }
+
+            GUILayout.EndHorizontal();
+        }
+
+        void Awake()
         {
             gameManager = FindObjectOfType<GameManager>();
         }
 
-        public void GoPhase1()
+        private void GoPhase(GamePhase gamePhase)
         {
-            StartCoroutine(YieldHelper.SkipFrame(gameManager.DebugEndExecutingPhaseAndDebugStartPhase, GamePhase.EasyMoveHorizontal));
-        }
-
-        public void GoPhase2()
-        {
-            StartCoroutine(YieldHelper.SkipFrame(gameManager.DebugEndExecutingPhaseAndDebugStartPhase, GamePhase.BossFight));
-        }
-
-        public void GoPhase3()
-        {
-            StartCoroutine(YieldHelper.SkipFrame(gameManager.DebugEndExecutingPhaseAndDebugStartPhase, GamePhase.HardMoveHorizontal));
+            StartCoroutine(YieldHelper.SkipFrame(gameManager.DebugEndExecutingPhaseAndDebugStartPhase, gamePhase));
         }
     }
 }
