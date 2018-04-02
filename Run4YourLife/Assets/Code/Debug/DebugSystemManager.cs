@@ -137,7 +137,6 @@ namespace Run4YourLife.DebuggingTools
         private Rect windowRect = new Rect(Screen.width - WINDOW_W - WINDOW_OFFSET_X, WINDOW_OFFSET_Y, WINDOW_W, WINDOW_H);
 
         private Vector2 scrollAreaPosition = Vector2.zero;
-        private Vector2 scrollDynamicCameraGoToPosition = Vector2.zero;
 
         private bool drawGeneral = true;
         private bool drawBoss = true;
@@ -287,10 +286,16 @@ namespace Run4YourLife.DebuggingTools
 
                 if(dynamicCameraController != null)
                 {
+                    GUILayout.BeginHorizontal();
+
+                    GUILayout.Label("Translate: Arrows\nZoom: W, S");
+
                     if(GUILayout.Button("Focus"))
                     {
                         dynamicCameraController.Focus();
                     }
+
+                    GUILayout.EndHorizontal();
                 }
             }
 
