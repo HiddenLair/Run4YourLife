@@ -120,6 +120,12 @@ namespace Run4YourLife.Player
             GetComponent<Wind>().RemoveWindForce(windForce);
         }
 
+        public void AbsoluteKill()
+        {
+            GameObject playerStateManager = FindObjectOfType<GameplayPlayerManager>().gameObject;
+            ExecuteEvents.Execute<IGameplayPlayerEvents>(playerStateManager, null, (x, y) => x.OnRunnerDeath(gameObject));
+        }
+
         #endregion
     }
 }
