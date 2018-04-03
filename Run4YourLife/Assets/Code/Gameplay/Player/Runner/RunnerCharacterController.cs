@@ -260,10 +260,7 @@ namespace Run4YourLife.Player
             m_gravity = m_hoverGravity;
 
             float endTime = Time.time + m_hoverDuration;
-            while (Time.time < endTime && !m_characterController.isGrounded && !m_isBouncing)
-            {
-                yield return null;
-            }
+            yield return new WaitUntil(() => Time.time >= endTime || m_playerControlScheme.jump.Ended() || m_characterController.isGrounded || m_isBouncing);
 
             m_gravity = m_baseGravity;
         }
