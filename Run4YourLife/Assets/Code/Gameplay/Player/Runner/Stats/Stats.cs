@@ -53,18 +53,6 @@ public class Stats : MonoBehaviour
 
     #endregion
 
-    #region Public Variable
-
-    public bool root;
-
-    public bool burned;
-
-    public bool windPush;
-
-    public int rootHardness;
-
-    #endregion
-
     void Start()
     {
         initialStats.Add(StatType.SPEED, speed);

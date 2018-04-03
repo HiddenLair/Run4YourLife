@@ -12,12 +12,11 @@ public class GoThroughPlattforms : MonoBehaviour
 
     private Stats m_runnerState;
     private Collider m_collider;
-    private RunnerControlScheme m_controlScheme;
+    private RunnerInputStated playerInput;
 
     private void Awake()
     {
-        m_controlScheme = GetComponent<RunnerControlScheme>();
-        Debug.Assert(m_controlScheme != null);
+        playerInput = GetComponent<RunnerInputStated>();
 
         m_runnerState = GetComponent<Stats>();
         Debug.Assert(m_runnerState != null);
@@ -30,7 +29,7 @@ public class GoThroughPlattforms : MonoBehaviour
     {
         if (hit.collider.CompareTag(Tags.DropPlatform))
         {
-            if(!m_runnerState.root && m_controlScheme.vertical.Value() > m_inputThreshold)
+            if(playerInput.GetVerticalInput() > m_inputThreshold)
             {
                 Physics.IgnoreCollision(m_collider, hit.collider);
             }

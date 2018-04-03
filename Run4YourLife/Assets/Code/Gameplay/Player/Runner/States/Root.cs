@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class Root : RunnerState, IInteractInput, IJumpInput
+public class Root : RunnerState, IInteractInput, IJumpInput, IVerticalInput
 {
     #region Variables
 
@@ -24,6 +24,11 @@ public class Root : RunnerState, IInteractInput, IJumpInput
         return 1;
     }
 
+    int IVerticalInput.GetPriority()
+    {
+        return 1;
+    }
+
     public void ModifyInteractInput(ref bool input)
     {
         if (input)
@@ -35,6 +40,11 @@ public class Root : RunnerState, IInteractInput, IJumpInput
         }
 
         input = false;
+    }
+
+    public void ModifyVerticalInput(ref float input)
+    {
+        input = 0.0f;
     }
 
     public void ModifyJumpInput(ref bool input)

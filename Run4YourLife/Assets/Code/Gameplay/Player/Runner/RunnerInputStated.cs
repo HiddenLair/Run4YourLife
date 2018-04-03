@@ -10,6 +10,7 @@ namespace Run4YourLife.Input
         #region Inputs
 
         private float horizontalInput = 0.0f;
+        private float verticalInput = 0.0f;
         private bool interactInput = false;
         private bool jumpInput = false;
 
@@ -34,6 +35,11 @@ namespace Run4YourLife.Input
         public float GetHorizontalInput()
         {
             return horizontalInput;
+        }
+
+        public float GetVerticalInput()
+        {
+            return verticalInput;
         }
 
         public bool GetInteractInput()
@@ -83,6 +89,20 @@ namespace Run4YourLife.Input
             foreach (IRunnerInput iRunnerInput in iRunnerInputList)
             {
                 iRunnerInput.ModifyHorizontalInput(ref horizontalInput);
+            }
+
+            #endregion
+            #region Vertical Input
+
+            verticalInput = m_playerControlScheme.vertical.Value();
+
+            IVerticalInput[] iVerticalInputList = GetComponents<IVerticalInput>();
+
+            Array.Sort(iVerticalInputList, (x, y) => x.GetPriority().CompareTo(y.GetPriority()));
+
+            foreach (IVerticalInput iVerticalInput in iVerticalInputList)
+            {
+                iVerticalInput.ModifyVerticalInput(ref verticalInput);
             }
 
             #endregion
