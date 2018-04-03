@@ -31,6 +31,9 @@ namespace Run4YourLife.Player
         private float m_hoverDuration;
 
         [SerializeField]
+        private float m_hoverVelocityReductionFactor;
+
+        [SerializeField]
         private float m_endOfJumpGravity;
 
         [SerializeField]
@@ -248,11 +251,16 @@ namespace Run4YourLife.Player
 
         private IEnumerator JumpHover()
         {
-            m_velocity.y = 0f; // Remove small vertical velocity that may have leaked
+            while(m_velocity.y > 0f)
+            {
+                yield return null;
+                m_velocity.y = Mathf.Lerp(m_velocity.y, 0.0f, m_hoverVelocityReductionFactor * Time.deltaTime);
+            }
+
             m_gravity = m_hoverGravity;
 
             float endTime = Time.time + m_hoverDuration;
-            while (Time.time < endTime && m_playerControlScheme.jump.Persists() && !m_characterController.isGrounded && !m_isBouncing)
+            while (Time.time < endTime && !m_characterController.isGrounded && !m_isBouncing)
             {
                 yield return null;
             }
