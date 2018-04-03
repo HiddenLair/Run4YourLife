@@ -6,6 +6,10 @@ public class Wind : RunnerState, IRunnerInput
 {
     private float m_windForce;
 
+    public Wind() : base(State.Wind)
+    {
+    }
+
     public void AddWindForce(float windForce)
     {
         m_windForce += windForce;

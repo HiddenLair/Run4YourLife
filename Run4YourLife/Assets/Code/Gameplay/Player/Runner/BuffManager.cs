@@ -20,6 +20,36 @@ namespace Run4YourLife.Player
 
         #endregion
 
+        #region Variables
+
+        private RunnerState buff;
+
+        #endregion
+
+        #region Buff Management
+
+        public void SubscribeBuff(RunnerState newBuff)
+        {
+            Destroy(buff);
+            buff = newBuff;
+        }
+
+        public void UnsubscribeBuff(RunnerState newBuff)
+        {
+            if(buff == newBuff)
+            {
+                buff = null;
+            }
+        }
+
+        public RunnerState GetBuff()
+        {
+            return buff;
+        }
+
+        #endregion
+
+        #region Head buff
         public Vector3 GetHeadScale()
         {
             return head.transform.localScale;
@@ -49,12 +79,14 @@ namespace Run4YourLife.Player
 
         public void DecreaseHeadPercentual(float percent)
         {
-            Vector3 tempMesh = head.transform.localScale * percent;
-            Vector3 tempCollider = headBumpCollider.transform.localScale * percent;
-            head.transform.localScale -= tempMesh;
-            headBumpCollider.transform.localScale -= tempCollider;
+            Vector3 tempMesh = head.transform.localScale / (1 + percent);
+            Vector3 tempCollider = headBumpCollider.transform.localScale / (1 + percent);
+            head.transform.localScale = tempMesh;
+            headBumpCollider.transform.localScale = tempCollider;
         }
+        #endregion
 
+        #region Shield buff
         public void ActivateShield()
         {
             shield.SetActive(true);
@@ -64,5 +96,6 @@ namespace Run4YourLife.Player
         {
             shield.SetActive(false);
         }
+        #endregion
     }
 }

@@ -13,6 +13,10 @@ public class Burned : RunnerState, IRunnerInput
 
     private float lastInputSign = 1.0f;
 
+    public Burned() : base(State.Burned)
+    {
+    }
+
     int IRunnerInput.GetPriority()
     {
         return 0;

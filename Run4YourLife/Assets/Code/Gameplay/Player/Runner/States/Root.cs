@@ -10,6 +10,10 @@ public class Root : RunnerState, IInteractInput, IJumpInput
 
     #endregion
 
+    public Root() : base(State.Root)
+    {
+    }
+
     int IInteractInput.GetPriority()
     {
         return 1;
