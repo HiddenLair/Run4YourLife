@@ -51,7 +51,7 @@ public class DestroyByBossProximity : MonoBehaviour {
         while (time >= 0)
         {
             color.a = time / trasitionLenght;
-            GetComponentInChildren<Renderer>().material.color = color;
+            material.color = color;
             yield return null;
             time -= Time.deltaTime;
         }
