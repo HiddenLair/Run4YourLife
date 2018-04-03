@@ -25,6 +25,12 @@ namespace Run4YourLife.Player
         private float m_baseGravity;
 
         [SerializeField]
+        private float m_hoverGravity;
+
+        [SerializeField]
+        private float m_hoverDuration;
+
+        [SerializeField]
         private float m_endOfJumpGravity;
 
         [SerializeField]
@@ -38,6 +44,9 @@ namespace Run4YourLife.Player
 
         [SerializeField]
         private float m_minPushMagnitude;
+
+        [SerializeField]
+        private float m_playerHeadHeight;
 
         #endregion
 
@@ -122,16 +131,27 @@ namespace Run4YourLife.Player
 
         private void OnControllerColliderHit(ControllerColliderHit hit)
         {
-            if(m_isJumping && !m_characterController.isGrounded)
+            
+            if(m_isJumping && RunnerHitItsHead(hit)) //&& !m_characterController.isGrounded)
             {
-                m_ceilingCollision = true;
-                m_velocity.y = 0;
+                OnRunnerHitItsHead();
             }
 
             if (!m_isJumping && m_characterController.isGrounded)
             {
                 m_velocity.y = 0.0f;
             }
+        }
+
+        private bool RunnerHitItsHead(ControllerColliderHit hit)
+        {
+            return hit.point.y > transform.position.y + m_playerHeadHeight;
+        }
+
+        void OnRunnerHitItsHead()
+        {
+            m_ceilingCollision = true;
+            m_velocity.y = 0;
         }
 
         private void Move()
@@ -147,17 +167,22 @@ namespace Run4YourLife.Player
         private void MoveCharacterContoller(Vector3 movement)
         {
             m_characterController.Move(movement);
-            float xScreenRight = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, 0, Math.Abs(Camera.main.transform.position.z - transform.position.z))).x;
-            if (transform.position.x > xScreenRight)
-            {
-                Vector3 tempPos = transform.position;
-                tempPos.x = xScreenRight;
-                transform.position = tempPos;
-            }
+            TrimPlayerPositionInsideCameraView();
 
             m_animator.SetFloat("xSpeed", Mathf.Abs(movement.x));
             LookAtMovingSide();
             UpdateIdleTimer(movement);
+        }
+
+        private void TrimPlayerPositionInsideCameraView()
+        {
+            float xScreenRight = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, 0, Math.Abs(Camera.main.transform.position.z - transform.position.z))).x;
+            if (transform.position.x > xScreenRight)
+            {
+                Vector3 trimmedPosition = transform.position;
+                trimmedPosition.x = xScreenRight;
+                transform.position = trimmedPosition;
+            }
         }
 
         private void LookAtMovingSide()
@@ -200,16 +225,34 @@ namespace Run4YourLife.Player
             m_velocity.y = HeightToVelocity(m_stats.Get(StatType.JUMP_HEIGHT));
             yield return StartCoroutine(WaitUntilApexOfJumpOrReleaseButton());
 
+            if (m_playerControlScheme.jump.Persists())
+            {
+                yield return StartCoroutine(JumpHover());
+            }
+
             m_ceilingCollision = false;
             m_isJumping = false;
 
             yield return StartCoroutine(FallFaster());
         }
 
+        private IEnumerator JumpHover()
+        {
+            m_gravity = m_hoverGravity;
+
+            float endTime = Time.time + m_hoverDuration;
+            while (Time.time < endTime && m_playerControlScheme.jump.Persists() && !m_characterController.isGrounded && !m_isBouncing)
+            {
+                yield return null;
+            }
+
+            m_gravity = m_baseGravity;
+        }
+
         private IEnumerator FallFaster()
         {
             m_gravity += m_endOfJumpGravity;
-            yield return new WaitUntil(() => m_characterController.isGrounded || m_isBouncing || m_isJumping);
+            yield return new WaitUntil(() => m_characterController.isGrounded || m_isBouncing);
             m_gravity -= m_endOfJumpGravity;
         }
 
