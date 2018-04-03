@@ -3,52 +3,58 @@ using System.Collections.Generic;
 using UnityEngine;
 using Run4YourLife.GameManagement;
 
+[RequireComponent(typeof(Renderer))]
 public class DestroyByBossProximity : MonoBehaviour {
 
-    const float distanceFromBossToBeDestroyed = 2.0f;
+    private static readonly float DISTANCE_FROM_BOSSS_TO_DESTROY = 2.0f;
+    private static readonly float ALPHA_TRANSITION_LENGHT = 0.5f;
 
-    #region Variables
-
-    GameplayPlayerManager playerManager;
-    bool active = false;
-
-    #endregion
+    GameplayPlayerManager m_playerManager;
+    Renderer m_renderer;
 
     private void Awake()
     {
-        playerManager = FindObjectOfType<GameplayPlayerManager>();
+        m_playerManager = FindObjectOfType<GameplayPlayerManager>();
+        Debug.Assert(m_playerManager != null);
+        m_renderer = GetComponent<Renderer>();
+
+        enabled = false;
     }
 
     private void OnBecameVisible()
     {
-        active = true;
+        enabled = true;
     }
 
     private void Update()
     {
-        if (active)
+        if (GetHorizontalDistanceToBoss() < DISTANCE_FROM_BOSSS_TO_DESTROY)
         {
-            float limitPosX = playerManager.Boss.transform.position.x + distanceFromBossToBeDestroyed;
-            float itemPosX = transform.position.x - GetComponent<Renderer>().bounds.size.x / 2;
-            if (limitPosX > itemPosX)
-            {
-                StartCoroutine(BeautifullDestroy(0.5f));
-            }
+            StartCoroutine(BeautifullDestroy(ALPHA_TRANSITION_LENGHT));
         }
     }
 
-    IEnumerator BeautifullDestroy(float delay)
+    public float GetHorizontalDistanceToBoss()
     {
-        float fps = 1 / Time.deltaTime;
-        float alphaPerFrame = 1 / (delay * fps);
-        Color temp = GetComponentInChildren<Renderer>().material.color;
-        while (temp.a > 0)
+        float itemPosition = transform.position.x - (m_renderer.bounds.size.x / 2.0f);
+        float bossPosition = m_playerManager.Boss.transform.position.x;
+        return itemPosition - bossPosition;
+    }
+
+    IEnumerator BeautifullDestroy(float trasitionLenght)
+    {
+        enabled = false;
+
+        float time = trasitionLenght;
+        Material material = GetComponentInChildren<Renderer>().material;
+        Color color = material.color;
+        while (time >= 0)
         {
-            temp.a -= alphaPerFrame;
-            GetComponentInChildren<Renderer>().material.color = temp;
-            yield return 0;
+            color.a = time / trasitionLenght;
+            GetComponentInChildren<Renderer>().material.color = color;
+            yield return null;
+            time -= Time.deltaTime;
         }
         Destroy(gameObject);
     }
-
 }
