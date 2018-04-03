@@ -11,8 +11,13 @@ public class BigHead : RunnerState {
 
     #endregion
 
+    public BigHead():base(State.BigHead)
+    {
+    }
+
     protected override void Apply()
     {
+        GetComponent<BuffManager>().SubscribeBuff(this);
         GetComponent<BuffManager>().IncreaseHeadPercentual(BOUNCE_BUFF_PERCENT);
         Destroy(this, END_TIME);
         modifier = new BounceHeightModifier(ModifierType.PERCENT, true, BOUNCE_BUFF_PERCENT, END_TIME);
@@ -21,7 +26,8 @@ public class BigHead : RunnerState {
 
     protected override void Unapply()
     {
-        GetComponent<BuffManager>().DecreaseHeadPercentual(1/BOUNCE_BUFF_PERCENT);
+        GetComponent<BuffManager>().UnsubscribeBuff(this);
+        GetComponent<BuffManager>().DecreaseHeadPercentual(BOUNCE_BUFF_PERCENT);
         GetComponent<Stats>().RemoveStatModifier(modifier);
     }
 }

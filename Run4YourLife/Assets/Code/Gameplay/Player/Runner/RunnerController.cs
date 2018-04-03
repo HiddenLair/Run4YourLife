@@ -47,12 +47,15 @@ namespace Run4YourLife.Player
 
         private bool CheckForShield()
         {
-            bool ret = true;
-            /*
-            if (//BUFF == Shielded)
+            bool ret = false;
+
+            RunnerState buff = GetComponent<BuffManager>().GetBuff();
+            if (buff != null && buff.GetState() == RunnerState.State.Shielded)
             {
-             TODO:: fill it
-            }*/
+                ret = true;
+                Destroy(buff);
+            }
+
             return ret;
         }
 
@@ -60,7 +63,7 @@ namespace Run4YourLife.Player
 
         public void Kill()
         {
-            if (CheckForShield())
+            if (!CheckForShield())
             {
                 GameObject playerStateManager = FindObjectOfType<GameplayPlayerManager>().gameObject;
                 ExecuteEvents.Execute<IGameplayPlayerEvents>(playerStateManager, null, (x, y) => x.OnRunnerDeath(gameObject));
@@ -69,14 +72,14 @@ namespace Run4YourLife.Player
 
         public void Impulse(Vector3 direction, float force)
         {
-            if (CheckForShield()) {
+            if (!CheckForShield()) {
                 m_runnerCharacterController.Impulse(direction, force);
             }
         }
 
         public void Root(int rootHardness)
         {
-            if (CheckForShield())
+            if (!CheckForShield())
             {
                 Root oldInstance = gameObject.GetComponent<Root>();
                 if (oldInstance != null)
@@ -89,7 +92,7 @@ namespace Run4YourLife.Player
 
         public void Debuff(StatModifier statmodifier)
         {
-            if (CheckForShield()) {
+            if (!CheckForShield()) {
                 m_stats.AddModifier(statmodifier);
             }
         }
