@@ -34,14 +34,14 @@ public class DestroyByBossProximity : MonoBehaviour {
         }
     }
 
-    public float GetHorizontalDistanceToBoss()
+    private float GetHorizontalDistanceToBoss()
     {
         float itemPosition = transform.position.x - (m_renderer.bounds.size.x / 2.0f);
         float bossPosition = m_playerManager.Boss.transform.position.x;
         return itemPosition - bossPosition;
     }
 
-    IEnumerator BeautifullDestroy(float trasitionLenght)
+    private IEnumerator BeautifullDestroy(float trasitionLenght)
     {
         enabled = false;
 
