@@ -46,7 +46,12 @@ namespace Run4YourLife.Player
         private float m_minPushMagnitude;
 
         [SerializeField]
-        private float m_playerHeadHeight;
+        [Tooltip("Used for detecting when player has collided with it's head onto something. Must be smaller than character controller.height")]
+        private float m_runnerHeadSize;
+
+        [SerializeField]
+        [Tooltip("Used for detecting when player has collided with it's head onto something. Must be smaller than character controller.ratius.x")]
+        private float m_runnerHeadCollisionWidth;
 
         #endregion
 
@@ -132,7 +137,7 @@ namespace Run4YourLife.Player
         private void OnControllerColliderHit(ControllerColliderHit hit)
         {
             
-            if(m_isJumping && RunnerHitItsHead(hit)) //&& !m_characterController.isGrounded)
+            if(m_isJumping && RunnerHitItsHead(hit))
             {
                 OnRunnerHitItsHead();
             }
@@ -145,7 +150,8 @@ namespace Run4YourLife.Player
 
         private bool RunnerHitItsHead(ControllerColliderHit hit)
         {
-            return hit.point.y > transform.position.y + m_playerHeadHeight;
+            Vector3 hitVector = hit.point - transform.position;
+            return hitVector.y < m_characterController.height - m_runnerHeadSize && Mathf.Abs(hitVector.x) < m_runnerHeadCollisionWidth;
         }
 
         void OnRunnerHitItsHead()
@@ -223,21 +229,26 @@ namespace Run4YourLife.Player
 
             //set vertical velocity to the velocity needed to reach maxJumpHeight
             m_velocity.y = HeightToVelocity(m_stats.Get(StatType.JUMP_HEIGHT));
-            yield return StartCoroutine(WaitUntilApexOfJumpOrReleaseButton());
+            yield return StartCoroutine(WaitUntilApexOfJumpOrReleaseButtonOrCeiling());
 
-            if (m_playerControlScheme.jump.Persists())
+            m_isJumping = false;
+
+            if (!m_ceilingCollision)
             {
                 yield return StartCoroutine(JumpHover());
             }
+            else
+            {
+                m_ceilingCollision = false;
+            }
 
-            m_ceilingCollision = false;
-            m_isJumping = false;
 
             yield return StartCoroutine(FallFaster());
         }
 
         private IEnumerator JumpHover()
         {
+            m_velocity.y = 0f; // Remove small vertical velocity that may have leaked
             m_gravity = m_hoverGravity;
 
             float endTime = Time.time + m_hoverDuration;
@@ -256,7 +267,7 @@ namespace Run4YourLife.Player
             m_gravity -= m_endOfJumpGravity;
         }
 
-        private IEnumerator WaitUntilApexOfJumpOrReleaseButton()
+        private IEnumerator WaitUntilApexOfJumpOrReleaseButtonOrCeiling()
         {
             float previousPositionY = transform.position.y;
             yield return null;
