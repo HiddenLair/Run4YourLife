@@ -11,4 +11,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36baaa8bdcb9d8b49b9199833965d2c3, type: 3}
   m_Name: Main Camera Blends
   m_EditorClassIdentifier: 
-  m_CustomBlends: []
+  m_CustomBlends:
+  - m_From: CM_EasyBossHorizontalCamera
+    m_To: CM_TransitionToBossFightCamera
+    m_Blend:
+      m_Style: 1
+      m_Time: 2
+  - m_From: CM_TransitionToBossFightCamera
+    m_To: CM_BossFightCamera
+    m_Blend:
+      m_Style: 1
+      m_Time: 2
+  - m_From: CM_BossFightCamera
+    m_To: CM_TransitionToHardMoveHorizontal
+    m_Blend:
+      m_Style: 1
+      m_Time: 2
+  - m_From: CM_TransitionToHardMoveHorizontal
+    m_To: CM_HardBossHorizontalCamera
+    m_Blend:
+      m_Style: 1
+      m_Time: 2
