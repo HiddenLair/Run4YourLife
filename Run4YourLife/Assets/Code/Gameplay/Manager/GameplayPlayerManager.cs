@@ -51,6 +51,10 @@ namespace Run4YourLife.GameManagement {
         private void Awake()
         {
             playerSpawner = GetComponent<PlayerSpawner>();
+
+            GameManager gameManager = GetComponent<GameManager>();
+            Debug.Assert(gameManager != null);
+            gameManager.onGamePhaseChanged.AddListener(OnGamePhaseChanged);
         }
 
         private PlayerManager GetOrCreateDefaultPlayerManagerIfNoneIsAviable()
@@ -110,13 +114,50 @@ namespace Run4YourLife.GameManagement {
 
         public void OnPlayerReviveRequest(Vector3 position)
         {
-            PlayerDefinition playerToRevive = m_deadPlayers.Dequeue();
-            playerSpawner.InstantiateRunner(playerToRevive,position);       
+            if(m_deadPlayers.Count > 0)
+            { 
+                PlayerDefinition playerToRevive = m_deadPlayers.Dequeue();
+                playerSpawner.InstantiateRunner(playerToRevive,position);       
+            }
+        }
+
+        private void Update()
+        {
+            if (Debug.isDebugBuild)
+            {
+                if (UnityEngine.Input.GetKeyDown(KeyCode.R))
+                {
+                    ReviveAllPlayers();
+                }
+            }
+        }
+
+        public void OnGamePhaseChanged(GamePhase gamePhase)
+        {
+            if(gamePhase.Equals(GamePhase.TransitionToBossFight) || gamePhase.Equals(GamePhase.TransitionToHardMoveHorizontal))
+            {
+                ReviveAllPlayers(); 
+            }
         }
 
         public void ReviveAllPlayers()
         {
-            //TODO: fill the method
+            while(m_deadPlayers.Count > 0)
+            {
+                Vector3 position = GetRandomSpawnPosition();
+                OnPlayerReviveRequest(position);
+            }
+        }
+
+        private Vector3 GetRandomSpawnPosition()
+        {
+            Vector3 position = Camera.main.transform.position;
+
+            position.x += Random.Range(-3, 3);
+            position.y += Random.Range(-2, 2);
+            position.z = 0;
+
+            return position;
         }
 
         public void DebugDestroyAllPlayersAndClear()

@@ -14,7 +14,7 @@ public class InstantiateFromTransform : MonoBehaviour {
     {
         if(timer >= spawnPeriod && (timesToInstantiate > 0 || timesToInstantiate == -1))
         {
-            Instantiate(toInstantiate,transform.position,toInstantiate.transform.rotation);
+            Instantiate(toInstantiate,transform.position,toInstantiate.transform.rotation, transform);
             if (--timesToInstantiate < -1)
             {
                 timesToInstantiate = -1;
