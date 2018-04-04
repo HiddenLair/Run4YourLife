@@ -153,8 +153,8 @@ namespace Run4YourLife.GameManagement {
         {
             Vector3 position = Camera.main.transform.position;
 
-            position.x += Random.Range(-3, 3);
-            position.y += Random.Range(-2, 2);
+            position.x += Random.Range(-3, 6);
+            position.y += Random.Range(-2, 5);
             position.z = 0;
 
             return position;
