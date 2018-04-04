@@ -165,7 +165,7 @@ namespace Run4YourLife.Player
         {
             float horizontal = inputPlayer.GetHorizontalInput();
 
-            Vector3 inputMovement = transform.forward * horizontal * m_stats.Get(StatType.SPEED) * Time.deltaTime;
+            Vector3 inputMovement = transform.right * horizontal * m_stats.Get(StatType.SPEED) * Time.deltaTime;
             Vector3 totalMovement = inputMovement + m_velocity * Time.deltaTime;
 
             MoveCharacterContoller(totalMovement);
