@@ -89,8 +89,6 @@ namespace Run4YourLife.Player
         private Vector3 m_velocity;
         private float m_gravity;
 
-        private float m_burnedHorizontal = 1.0f;
-
         private float m_idleTimer = 0.0f;
 
         #endregion

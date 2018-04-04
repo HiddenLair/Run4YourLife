@@ -7,14 +7,14 @@ public class Tiling : MonoBehaviour {
     public Material mat;
     public Vector2 speed;
 
-    private Vector2 actualTiling;
+    //private Vector2 actualTiling;
     private Vector2 initialTiling;
     private bool active = true;
 
     private void Start()
     {
         initialTiling = mat.mainTextureOffset;
-        actualTiling = mat.mainTextureOffset;
+        //actualTiling = mat.mainTextureOffset;
     }
 
     private void OnDestroy()

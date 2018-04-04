@@ -108,7 +108,7 @@ public class CheckPointManager : MonoBehaviour {
 
             Vector3 point1 = checkpoints[inner.listOffset].position;
             Vector3 point2 = checkpoints[inner.listOffset+1].position;
-            float lerpSpeed = speed / Vector3.Distance(point1, point2);
+            //float lerpSpeed = speed / Vector3.Distance(point1, point2);
 
             /* inner.progressionOffset += lerpSpeed;
             if (inner.progressionOffset > 1 && inner.listOffset < checkpoints.Length-2)
@@ -155,7 +155,7 @@ public class CheckPointManager : MonoBehaviour {
             CameraAttributesDefinition cameraAttributesDefinition1 = checkpoints[index1].GetComponent<CameraAttributesDefinition>();
             CameraAttributesDefinition cameraAttributesDefinition2 = checkpoints[index2].GetComponent<CameraAttributesDefinition>();
 
-            CameraBossFollow cameraBossFollow = Camera.main.GetComponent<CameraBossFollow>();
+            //CameraBossFollow cameraBossFollow = Camera.main.GetComponent<CameraBossFollow>();
 
             float fH1 = cameraAttributesDefinition1.desiredFloorHeight;
             float fH2 = cameraAttributesDefinition2.desiredFloorHeight;

@@ -227,13 +227,13 @@ namespace Run4YourLife.Player
             {
                 cooldown = skill.GetComponent<CooldownIndicator>().cooldown;
                 Vector3 temp = crossHair.transform.position;
-                var g = Instantiate(skill, temp, skill.GetComponent<Transform>().rotation);
+                Instantiate(skill, temp, skill.GetComponent<Transform>().rotation);
             }
             else
             {
                 cooldown = trap.GetComponent<CooldownIndicator>().cooldown;
                 Vector3 temp = crossHair.transform.position;
-                GameObject g = Instantiate(trap, temp, trap.GetComponent<Transform>().rotation);
+                Instantiate(trap, temp, trap.GetComponent<Transform>().rotation);
             }
             return cooldown;
         }

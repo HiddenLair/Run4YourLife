@@ -20,7 +20,7 @@ namespace Run4YourLife.Player
 
         private Stats m_stats;
         private RunnerCharacterController m_runnerCharacterController;
-        private Animator m_animator;
+        //private Animator m_animator;
         private RunnerInputStated inputPlayer;
 
         #endregion
@@ -29,7 +29,7 @@ namespace Run4YourLife.Player
         {
             m_runnerCharacterController = GetComponent<RunnerCharacterController>();
             m_stats = GetComponent<Stats>();
-            m_animator = GetComponent<Animator>();
+            //m_animator = GetComponent<Animator>();
             inputPlayer = GetComponent<RunnerInputStated>();
         }
 
