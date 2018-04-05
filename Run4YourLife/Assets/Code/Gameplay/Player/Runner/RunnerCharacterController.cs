@@ -31,7 +31,7 @@ namespace Run4YourLife.Player
         private float m_hoverDuration;
 
         [SerializeField]
-        private float m_hoverVelocityReductionFactor;
+        private float m_releaseJumpButtonVelocityReductor;
 
         [SerializeField]
         private float m_endOfJumpGravity;
@@ -252,7 +252,7 @@ namespace Run4YourLife.Player
             while(m_velocity.y > 0f)
             {
                 yield return null;
-                m_velocity.y = Mathf.Lerp(m_velocity.y, 0.0f, m_hoverVelocityReductionFactor * Time.deltaTime);
+                m_velocity.y = Mathf.Lerp(m_velocity.y, 0.0f, m_releaseJumpButtonVelocityReductor * Time.deltaTime);
             }
 
             m_gravity = m_hoverGravity;
