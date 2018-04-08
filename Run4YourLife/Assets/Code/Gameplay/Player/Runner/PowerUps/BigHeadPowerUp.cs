@@ -9,7 +9,7 @@ namespace Run4YourLife.Player
 {
     public class BigHeadPowerUp : PowerUp
     {
-        public override void Effect(GameObject g)
+        public override void Apply(GameObject g)
         {
             g.AddComponent<BigHead>();
         }

@@ -6,20 +6,16 @@ using Run4YourLife.GameManagement;
 
 public class Revive : MonoBehaviour {
 
-    #region Variables
-
-    GameplayPlayerManager playerManager;
-
-    #endregion
+    private GameplayPlayerManager m_gameplayPlayerManager;
 
     private void Awake()
     {
-        playerManager = FindObjectOfType<GameplayPlayerManager>();
+        m_gameplayPlayerManager = FindObjectOfType<GameplayPlayerManager>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        ExecuteEvents.Execute<IGameplayPlayerEvents>(playerManager.gameObject, null, (x, y) => x.OnPlayerReviveRequest(transform.position));
+        ExecuteEvents.Execute<IGameplayPlayerEvents>(m_gameplayPlayerManager.gameObject, null, (x, y) => x.OnPlayerReviveRequest(transform.position));
         Destroy(gameObject);
     }
 }
