@@ -13,6 +13,7 @@ public class GoThroughPlatforms : MonoBehaviour
     private Stats m_runnerState;
     private Collider m_collider;
     private RunnerInputStated playerInput;
+    private PlatformGoThroughManager m_platformGoThroughManager;
 
     private void Awake()
     {
@@ -23,18 +24,16 @@ public class GoThroughPlatforms : MonoBehaviour
 
         m_collider = GetComponent<Collider>();
         Debug.Assert(m_collider != null);
+
+        m_platformGoThroughManager = FindObjectOfType<PlatformGoThroughManager>();
+        Debug.Assert(m_platformGoThroughManager != null);
     }
 
-    private void OnControllerColliderHit(ControllerColliderHit hit)
+    private void Update()
     {
-        if (hit.collider.CompareTag(Tags.DropPlatform))
+        if (playerInput.GetVerticalInput() > m_inputThreshold)
         {
-            if(playerInput.GetVerticalInput() > m_inputThreshold)
-            {
-                PlatformGoThroughController oneWayPlatform = hit.gameObject.GetComponent<PlatformGoThroughController>();
-                oneWayPlatform.IgnoreCollision(gameObject);
-                Physics.IgnoreCollision(m_collider, hit.collider);
-            }
+            m_platformGoThroughManager.IgnoreCollision(gameObject);
         }
     }
 }
