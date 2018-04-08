@@ -8,7 +8,7 @@ public class Tags : MonoBehaviour {
     public readonly static string Finish = "Finish";
     public readonly static string EditorOnly = "EditorOnly";
     public readonly static string MainCamera = "MainCamera";
-    public readonly static string Player = "Player";
+    public readonly static string Runner = "Player";
     public readonly static string GameController = "Destructible";
     public readonly static string Shoot = "Shoot";
     public readonly static string Ground = "Ground";

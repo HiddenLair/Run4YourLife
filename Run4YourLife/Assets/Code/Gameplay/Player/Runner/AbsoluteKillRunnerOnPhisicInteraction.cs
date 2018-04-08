@@ -7,7 +7,7 @@ public class AbsoluteKillRunnerOnPhisicInteraction : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.CompareTag(Tags.Player))
+        if (collider.CompareTag(Tags.Runner))
         {
             SendKillEvent(collider.gameObject);
         }
@@ -15,7 +15,7 @@ public class AbsoluteKillRunnerOnPhisicInteraction : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag(Tags.Player))
+        if (collision.gameObject.CompareTag(Tags.Runner))
         {
             SendKillEvent(collision.gameObject);
         }

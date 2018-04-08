@@ -17,7 +17,7 @@ public class FireSkillControl : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.CompareTag(Tags.Player))
+        if (collider.CompareTag(Tags.Runner))
         {
             ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.Burned(burningTime));
         }

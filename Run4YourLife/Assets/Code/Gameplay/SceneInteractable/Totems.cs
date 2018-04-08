@@ -26,7 +26,7 @@ public class Totems : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag(Tags.Player))
+        if(other.CompareTag(Tags.Runner))
         {
             triger.enabled = false;
             StartCoroutine(FallInTime());

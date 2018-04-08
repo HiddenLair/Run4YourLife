@@ -70,10 +70,10 @@ namespace Run4YourLife.Player
             }
         }
 
-        public void Impulse(Vector3 direction, float force)
+        public void Impulse(Vector3 force)
         {
             if (!CheckForShield()) {
-                m_runnerCharacterController.Impulse(direction, force);
+                m_runnerCharacterController.Impulse(force);
             }
         }
 
