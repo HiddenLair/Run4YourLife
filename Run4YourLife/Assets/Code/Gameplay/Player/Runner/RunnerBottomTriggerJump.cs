@@ -2,7 +2,7 @@
 
 namespace Run4YourLife.Player
 {
-    public class PlayerBottomTriggerJump : MonoBehaviour
+    public class RunnerBottomTriggerJump : MonoBehaviour
     {
         private RunnerCharacterController characterController;
 

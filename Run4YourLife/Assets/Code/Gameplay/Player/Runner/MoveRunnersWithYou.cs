@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovePlayersWithYou : MonoBehaviour {
+public class MoveRunnersWithYou : MonoBehaviour {
 
     private Vector3 m_previousPosition;
 

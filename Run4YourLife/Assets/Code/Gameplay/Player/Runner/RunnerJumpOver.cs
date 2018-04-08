@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Run4YourLife.Player
 {
-    public class PlayerJumpOver : MonoBehaviour, JumpOver {
+    public class RunnerJumpOver : MonoBehaviour, JumpOver {
 
         private RunnerCharacterController characterController;
 
