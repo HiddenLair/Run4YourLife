@@ -48,14 +48,6 @@ namespace Run4YourLife.Player
         [SerializeField]
         private float m_minPushMagnitude;
 
-        [SerializeField]
-        [Tooltip("Used for detecting when player has collided with it's head onto something. Must be smaller than character controller.height")]
-        private float m_runnerHeadSize;
-
-        [SerializeField]
-        [Tooltip("Used for detecting when player has collided with it's head onto something. Must be smaller than character controller.ratius.x")]
-        private float m_runnerHeadCollisionWidth;
-
         #endregion
 
         #region Public Variable
@@ -152,7 +144,7 @@ namespace Run4YourLife.Player
         private bool RunnerHitItsHead(ControllerColliderHit hit)
         {
             Vector3 hitVector = hit.point - transform.position;
-            return hitVector.y < m_characterController.height - m_runnerHeadSize && Mathf.Abs(hitVector.x) < m_runnerHeadCollisionWidth;
+            return hitVector.y > 0.3f && hitVector.x == 0;
         }
 
         void OnRunnerHitItsHead()
