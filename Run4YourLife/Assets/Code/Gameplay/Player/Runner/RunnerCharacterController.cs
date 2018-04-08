@@ -19,7 +19,13 @@ namespace Run4YourLife.Player
         #region InspectorVariables
 
         [SerializeField]
-        private GameObject graphics;
+        private GameObject m_graphics;
+
+        [SerializeField]
+        private float m_baseHorizontalDrag;
+
+        [SerializeField]
+        private float m_impulseHorizontalDrag;
 
         [SerializeField]
         private float m_baseGravity;
@@ -35,9 +41,6 @@ namespace Run4YourLife.Player
 
         [SerializeField]
         private float m_endOfJumpGravity;
-
-        [SerializeField]
-        private float m_gravityPushMuliplier;
 
         [SerializeField]
         private float m_timeToIdle;
@@ -80,6 +83,7 @@ namespace Run4YourLife.Player
 
         private Vector3 m_velocity;
         private float m_gravity;
+        private float m_horizontalDrag;
 
         private float m_idleTimer = 0.0f;
 
@@ -103,6 +107,7 @@ namespace Run4YourLife.Player
             m_stats = GetComponent<Stats>();
             m_animator = GetComponent<Animator>();
             m_gravity = m_baseGravity;
+            m_horizontalDrag = m_baseHorizontalDrag;
             inputPlayer = GetComponent<RunnerInputStated>();
         }
 
@@ -110,7 +115,13 @@ namespace Run4YourLife.Player
         {
             if (!m_isBeingImpulsed)
             {
-                Gravity();
+                if(UnityEngine.Input.GetKeyDown(KeyCode.X))
+                {
+                    Impulse(new Vector3(17,17,0));
+                }
+
+                GravityAndDrag();
+
 
                 if (m_characterController.isGrounded && inputPlayer.GetJumpInput())
                 {
@@ -122,9 +133,15 @@ namespace Run4YourLife.Player
             m_animator.SetBool("ground", m_characterController.isGrounded);
         }
 
-        private void Gravity()
+        private void GravityAndDrag()
         {
             m_velocity.y += m_gravity * Time.deltaTime;
+
+            m_velocity.x = Mathf.Lerp(m_velocity.x, 0.0f, m_horizontalDrag * Time.deltaTime);
+            if(Mathf.Abs(m_velocity.x) < 1.0f)
+            {
+                m_velocity.x = 0;
+            }
         }
 
         private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -189,7 +206,7 @@ namespace Run4YourLife.Player
             bool shouldFaceTheOtherWay = (m_isFacingRight && m_playerControlScheme.move.Value() < 0) || (!m_isFacingRight && m_playerControlScheme.move.Value() > 0);
             if (shouldFaceTheOtherWay)
             {
-                graphics.transform.Rotate(Vector3.up, 180);
+                m_graphics.transform.Rotate(Vector3.up, 180);
                 m_isFacingRight = !m_isFacingRight;
             }
         }
@@ -321,31 +338,31 @@ namespace Run4YourLife.Player
 
         #region Impulse
 
-        public void Impulse(Vector3 direction,float force)
+        public void Impulse(Vector3 force)
         {
-            StartCoroutine(ImpulseCoroutine(direction,force));
+            StartCoroutine(ImpulseCoroutine(force));
         }
 
-        IEnumerator ImpulseCoroutine(Vector3 direction,float force)
+        IEnumerator ImpulseCoroutine(Vector3 force)
         {
-            m_animator.SetTrigger("push");
-            m_animator.SetFloat("pushForce", direction.x);
             m_isBeingImpulsed = true;
-            bool isRight = direction.x > 0;
-            Vector3 director = Quaternion.Euler(0,0,45) * Vector3.right;
-            if (!isRight)
+            m_horizontalDrag = m_impulseHorizontalDrag;
+
+            m_animator.SetTrigger("push");
+            m_animator.SetFloat("pushForce", force.x);
+
+            AddVelocity(force);
+
+            while(m_velocity.x != 0.0f)
             {
-                director.x = -director.x;
-            }
-            director *= force;
-            while(Mathf.Abs(director.x) > m_minPushMagnitude)
-            {
-                MoveCharacterContoller(director * Time.deltaTime);
                 yield return null;
-                director.x = Mathf.Lerp(director.x,0,Time.deltaTime/m_pushReduction);
-                director.y += m_gravity * Time.deltaTime*m_gravityPushMuliplier;
+                GravityAndDrag();
+                MoveCharacterContoller(m_velocity * Time.deltaTime);
             }
-            
+
+            yield return new WaitForSeconds(0.5f);
+
+            m_horizontalDrag = m_baseHorizontalDrag;
             m_isBeingImpulsed = false;
         }
 
