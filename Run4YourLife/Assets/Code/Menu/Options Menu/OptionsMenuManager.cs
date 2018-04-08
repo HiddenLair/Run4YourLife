@@ -1,16 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class OptionsMenuManager : MonoBehaviour {
+using Run4YourLife.SceneManagement;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+namespace Run4YourLife.OptionsMenu
+{
+    public class OptionsMenuManager : MonoBehaviour
+    {
+        [SerializeField]
+        private SceneLoadRequest m_mainMenuLoadRequest;
+
+        public void OnExitButtonPressed()
+        {
+            m_mainMenuLoadRequest.Execute();
+        }
+    }
 }
