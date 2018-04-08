@@ -4,7 +4,7 @@ using UnityEngine;
 
 using Run4YourLife.Input;
 
-public class GoThroughPlattforms : MonoBehaviour
+public class GoThroughPlatforms : MonoBehaviour
 {
     [SerializeField]
     [Range(0f,1f)]
@@ -31,6 +31,8 @@ public class GoThroughPlattforms : MonoBehaviour
         {
             if(playerInput.GetVerticalInput() > m_inputThreshold)
             {
+                PlatformGoThroughController oneWayPlatform = hit.gameObject.GetComponent<PlatformGoThroughController>();
+                oneWayPlatform.IgnoreCollision(gameObject);
                 Physics.IgnoreCollision(m_collider, hit.collider);
             }
         }
