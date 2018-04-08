@@ -54,6 +54,7 @@ public class TrapInit : MonoBehaviour {
 
     IEnumerator FadeIn(float delay)
     {
+        //TODO: FIX THIS DO NOT USE CONSTATNT Time.deltaTime
         float fps = 1 / Time.deltaTime;
         float alphaPerFrame = 1 / (delay * fps);
         Color temp = GetComponentInChildren<Renderer>().material.color;

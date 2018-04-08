@@ -1,9 +1,41 @@
 ﻿using UnityEngine;
 
+using Run4YourLife.GameManagement;
+
 namespace Run4YourLife.Player
 {
     public abstract class PowerUp : MonoBehaviour
     {
-        public abstract void Effect(GameObject g);
+        public enum Type { SINGLE, GROUP };
+
+        [SerializeField]
+        private Type m_type;
+
+        public abstract void Apply(GameObject runner);
+
+        private void OnTriggerEnter(Collider other)
+        {
+            switch (m_type)
+            {
+                case Type.SINGLE:
+                    {
+                        Debug.Assert(other.CompareTag(Tags.Player));
+                        Apply(other.gameObject);
+                    }
+                    break;
+                case Type.GROUP:
+                    {
+                        GameplayPlayerManager gameplayPlayerManager = FindObjectOfType<GameplayPlayerManager>();
+                        Debug.Assert(gameplayPlayerManager != null);
+
+                        foreach (GameObject runner in gameplayPlayerManager.Runners)
+                        {
+                            Apply(runner);
+                        }
+                    }
+                    break;
+            }
+            Destroy(gameObject);
+        }
     }
 }

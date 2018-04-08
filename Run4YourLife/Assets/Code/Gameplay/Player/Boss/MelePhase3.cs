@@ -27,6 +27,6 @@ public class MelePhase3 : MonoBehaviour {
         {
             player.GetComponent<RunnerCharacterController>().AddVelocity(new Vector3(0, playerPushForce, 0));
         }
-        Camera.main.GetComponent<CameraBossFollow>().AddTrauma(cameraTraumaShake);
+        //Camera.main.GetComponent<CameraBossFollow>().AddTrauma(cameraTraumaShake);
     }
 }

@@ -9,9 +9,9 @@ namespace Run4YourLife.Player
 {
     public class ShiledPowerUp : PowerUp
     {
-        public override void Effect(GameObject g)
+        public override void Apply(GameObject runner)
         {
-            g.AddComponent<Shielded>();
+            runner.AddComponent<Shielded>();
         }
     }
 }
