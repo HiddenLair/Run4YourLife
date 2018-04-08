@@ -12,6 +12,9 @@ namespace Run4YourLife.MainMenu
         [SerializeField]
         private SceneLoadRequest m_characterSelectionLoadRequest;
 
+        [SerializeField]
+        private SceneLoadRequest m_optionsMenuLoadRequest;
+
         public void OnPlayButtonPressed()
         {
             m_characterSelectionLoadRequest.Execute();
@@ -19,7 +22,7 @@ namespace Run4YourLife.MainMenu
 
         public void OnOptionsButtonPressed()
         {
-            Debug.LogWarning("OnOptionsButtonPressed not yet implemented");
+            m_optionsMenuLoadRequest.Execute();
         }
 
         public void OnExitButtonPressed()
