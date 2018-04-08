@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4039834384433152}
   - component: {fileID: 114904339147353822}
   m_Layer: 0
-  m_Name: PlatformGenerator
+  m_Name: MovingPlatformUpGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d2b8a3a13868e74f87ad3d15a4b63d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPeriod: 1.75
-  timesToInstantiate: -1
-  toInstantiate: {fileID: 1537240287240400, guid: 7568a6f8fa328014c82f112fa9412403,
-    type: 2}
+  m_timeBetweenInstantiations: 1
+  m_isInfinite: 1
+  m_instantiationCount: 0
+  m_prefab: {fileID: 1425064099692006, guid: 858f8f8ef94a22e4299f223c0b3eb8cf, type: 2}
