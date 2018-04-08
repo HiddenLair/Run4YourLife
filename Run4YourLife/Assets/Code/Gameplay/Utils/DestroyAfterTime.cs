@@ -11,14 +11,5 @@ public class DestroyAfterTime : MonoBehaviour {
     private void Start()
     {
         Destroy(gameObject, timeAlive);
-
-        // StartCoroutine(DestroyAfterSeconds(timeAlive));
-        // StartCoroutine(YieldHelper.WaitForSeconds(Destroy, gameObject, timeAlive));
     }
-
-    /* private IEnumerator DestroyAfterSeconds(float timeAlive)
-    {
-        yield return new WaitForSeconds(timeAlive);
-        Destroy(gameObject);
-    } */
 }
