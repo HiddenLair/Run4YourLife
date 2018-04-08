@@ -19,7 +19,7 @@ namespace Run4YourLife.Player
             {
                 case Type.SINGLE:
                     {
-                        Debug.Assert(other.CompareTag(Tags.Player));
+                        Debug.Assert(other.CompareTag(Tags.Runner));
                         Apply(other.gameObject);
                     }
                     break;
