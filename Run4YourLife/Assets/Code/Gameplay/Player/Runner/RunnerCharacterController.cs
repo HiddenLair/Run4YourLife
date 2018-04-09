@@ -22,6 +22,9 @@ namespace Run4YourLife.Player
         private GameObject m_graphics;
 
         [SerializeField]
+        private float m_coyoteGroundedTime;
+
+        [SerializeField]
         private float m_baseHorizontalDrag;
 
         [SerializeField]
@@ -44,12 +47,6 @@ namespace Run4YourLife.Player
 
         [SerializeField]
         private float m_timeToIdle;
-
-        [SerializeField]
-        private float m_pushReduction;
-
-        [SerializeField]
-        private float m_minPushMagnitude;
 
         #endregion
 
@@ -74,18 +71,20 @@ namespace Run4YourLife.Player
 
         #region Private Variables
 
+        private bool m_isGroundedOrCoyoteGrounded;
         private bool m_isJumping;
         private bool m_isBouncing;
         private bool m_isBeingImpulsed;
-        private bool m_ceilingCollision = false;
-
+        private bool m_ceilingCollision;
         private bool m_isFacingRight = true;
 
         private Vector3 m_velocity;
         private float m_gravity;
         private float m_horizontalDrag;
 
-        private float m_idleTimer = 0.0f;
+        private float m_idleTimer;
+
+        private Coroutine m_checkCoyoteGroundedCoroutine;
 
         #endregion
 
@@ -111,19 +110,44 @@ namespace Run4YourLife.Player
             inputPlayer = GetComponent<RunnerInputStated>();
         }
 
+        private void OnEnable()
+        {
+            m_checkCoyoteGroundedCoroutine = StartCoroutine(CheckCoyoteGroundedCoroutine());
+        }
+
+        private void OnDisable()
+        {
+            StopCoroutine(m_checkCoyoteGroundedCoroutine);
+        }
+
+        private IEnumerator CheckCoyoteGroundedCoroutine()
+        {
+            while(true)
+            {
+                if (m_characterController.isGrounded)
+                {
+                    m_isGroundedOrCoyoteGrounded = true;
+                }
+                else
+                {
+                    if(m_isGroundedOrCoyoteGrounded)
+                    {
+                        yield return new WaitForSeconds(m_coyoteGroundedTime);
+                        m_isGroundedOrCoyoteGrounded = false;
+                    }
+                }
+                yield return null;
+            }
+        }
+
         void Update()
         {
             if (!m_isBeingImpulsed)
             {
-                if(UnityEngine.Input.GetKeyDown(KeyCode.X))
-                {
-                    Impulse(new Vector3(17,17,0));
-                }
-
                 GravityAndDrag();
 
 
-                if (m_characterController.isGrounded && inputPlayer.GetJumpInput())
+                if (m_isGroundedOrCoyoteGrounded && inputPlayer.GetJumpInput())
                 {
                     Jump();
                 }
@@ -222,6 +246,7 @@ namespace Run4YourLife.Player
 
         private void Jump()
         {
+            m_isGroundedOrCoyoteGrounded = false;
             StartCoroutine(JumpCoroutine());
         }
 
