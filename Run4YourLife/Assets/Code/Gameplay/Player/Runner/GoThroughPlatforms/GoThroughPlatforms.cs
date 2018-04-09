@@ -7,8 +7,8 @@ using Run4YourLife.Input;
 public class GoThroughPlatforms : MonoBehaviour
 {
     [SerializeField]
-    [Range(0f,1f)]
-    private float m_inputThreshold = 0.9f;
+    [Range(-1f,1f)]
+    private float m_inputThreshold = -0.9f;
 
     private Stats m_runnerState;
     private Collider m_collider;
@@ -31,7 +31,7 @@ public class GoThroughPlatforms : MonoBehaviour
 
     private void Update()
     {
-        if (playerInput.GetVerticalInput() > m_inputThreshold)
+        if (playerInput.GetVerticalInput() < m_inputThreshold)
         {
             m_platformGoThroughManager.IgnoreCollision(gameObject);
         }
