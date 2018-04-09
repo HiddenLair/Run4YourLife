@@ -62,6 +62,7 @@ GameObject:
   - component: {fileID: 114469587828184810}
   - component: {fileID: 114859211782106258}
   - component: {fileID: 114022343692431878}
+  - component: {fileID: 114470966280678836}
   m_Layer: 8
   m_Name: CharacterPrefab
   m_TagString: Player
@@ -1121,7 +1122,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1095223732133840}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.878, y: 0.357, z: 0}
+  m_LocalPosition: {x: 97.5, y: 2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4540691455470320}
@@ -1985,7 +1986,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b0df537c06d4c4ea4bb0fb29379284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_inputThreshold: 0.9
+  m_inputThreshold: -0.9
+--- !u!114 &114470966280678836
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1095223732133840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad41c695ac37484d8da877c45017abe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_rockPrefab: {fileID: 1859296258977212, guid: d0708a5fb3adb4847b37627c5b5c7b49,
+    type: 2}
+  m_rockInstantiationTransform: {fileID: 4072489587312748}
+  m_graphics: {fileID: 4540691455470320}
+  m_angle:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 10
+      inSlope: 58.67608
+      outSlope: 58.67608
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 50
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  m_force:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 10
+      inSlope: 17.236328
+      outSlope: 17.236328
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 20
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  m_timeToFullyChargeThrow: 1.5
 --- !u!114 &114538691397763578
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2009,16 +2062,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_graphics: {fileID: 1329669962546220}
-  m_horizontalDrag: 2
+  m_coyoteGroundedTime: 0.1
+  m_baseHorizontalDrag: 2
+  m_impulseHorizontalDrag: 5
   m_baseGravity: -40
   m_hoverGravity: -10
   m_hoverDuration: 0.1
   m_releaseJumpButtonVelocityReductor: 10
   m_endOfJumpGravity: -35
-  m_gravityPushMuliplier: 0
   m_timeToIdle: 5
-  m_pushReduction: 0.8
-  m_minPushMagnitude: 0.1
   jumpClip: {fileID: 8300000, guid: 8bc5dbb3f916c7d4bb404c8a010f4106, type: 3}
   bounceClip: {fileID: 8300000, guid: 4c27b064170a56b48907e5a15905f521, type: 3}
 --- !u!114 &114780470167536698
