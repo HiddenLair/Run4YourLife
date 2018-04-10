@@ -5,7 +5,10 @@ using UnityEngine.EventSystems;
 public class CustomButton : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
     [SerializeField]
-    private float scaleMultiplierOnFocus = 1.25f;
+    private float buttonScaleMultiplierOnFocus = 1.25f;
+
+    [SerializeField]
+    private float textScaleMultiplierOnFocus = 1.25f;
 
     [SerializeField]
     private Color32 colorNormal = new Color32(151, 255, 1, 255);
@@ -26,9 +29,13 @@ public class CustomButton : MonoBehaviour, ISelectHandler, IDeselectHandler
     private Vector2 initialButtonTransformSizeDelta;
     private Vector3 initialTextMeshScale;
 
-    // Scale smooth transition
-    private float currentScaleMultiplierOnFocus = 1.0f;
-    private float currentTargetScaleMultiplierOnFocus = 1.0f;
+    // Button scale smooth transition
+    private float currentButtonScaleMultiplierOnFocus = 1.0f;
+    private float currentTargetButtonScaleMultiplierOnFocus = 1.0f;
+
+    // Text scale smooth transition
+    private float currentTextScaleMultiplierOnFocus = 1.0f;
+    private float currentTargetTextScaleMultiplierOnFocus = 1.0f;
 
     // Color smooth transition
     private Color32 currentColor;
@@ -48,13 +55,15 @@ public class CustomButton : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     void Update()
     {
-        currentScaleMultiplierOnFocus = Mathf.Lerp(currentScaleMultiplierOnFocus, currentTargetScaleMultiplierOnFocus, scaleTransitionSpeed * Time.deltaTime);
+        currentButtonScaleMultiplierOnFocus = Mathf.Lerp(currentButtonScaleMultiplierOnFocus, currentTargetButtonScaleMultiplierOnFocus, scaleTransitionSpeed * Time.deltaTime);
+        currentTextScaleMultiplierOnFocus = Mathf.Lerp(currentTextScaleMultiplierOnFocus, currentTargetTextScaleMultiplierOnFocus, scaleTransitionSpeed * Time.deltaTime);
+
         currentColor = Color32.Lerp(currentColor, currentTargetColor, colorTransitionSpeed * Time.deltaTime);
 
-        rectTransform.sizeDelta = currentScaleMultiplierOnFocus * initialButtonTransformSizeDelta;
+        rectTransform.sizeDelta = currentButtonScaleMultiplierOnFocus * initialButtonTransformSizeDelta;
 
         textMeshProUGUI.color = currentColor;
-        textMeshProUGUI.transform.localScale = currentScaleMultiplierOnFocus * initialTextMeshScale;
+        textMeshProUGUI.transform.localScale = currentTextScaleMultiplierOnFocus * initialTextMeshScale;
     }
 
     public void OnSelect(BaseEventData eventData)
@@ -69,7 +78,9 @@ public class CustomButton : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     private void SetFocus(bool focus)
     {
-        currentTargetScaleMultiplierOnFocus = focus ? scaleMultiplierOnFocus : 1.0f;
+        currentTargetButtonScaleMultiplierOnFocus = focus ? buttonScaleMultiplierOnFocus : 1.0f;
+        currentTargetTextScaleMultiplierOnFocus = focus ? textScaleMultiplierOnFocus : 1.0f;
+
         currentTargetColor = focus ? colorOnFocus : colorNormal;
     }
 }
