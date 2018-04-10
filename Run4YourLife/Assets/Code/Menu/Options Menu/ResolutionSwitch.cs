@@ -40,7 +40,7 @@ namespace Run4YourLife.OptionsMenu
         {
             if (eventData.moveDir == MoveDirection.Right)
             {
-                if (resolutionIndex < availableResolutions.Length)
+                if (resolutionIndex < availableResolutions.Length-1)
                 {
                     resolutionIndex++;
                 }
