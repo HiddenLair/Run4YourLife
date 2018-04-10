@@ -29,5 +29,10 @@
         {
             return enabled ? inputSource.Value() : 0.0f;
         }
+
+        public bool Triggered(float percentage)
+        {
+            return enabled && inputSource.Value() >= percentage;
+        }
     }
 }
