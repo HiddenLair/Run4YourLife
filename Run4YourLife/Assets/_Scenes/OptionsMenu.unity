@@ -311,7 +311,7 @@ GameObject:
   - component: {fileID: 236369290}
   - component: {fileID: 236369291}
   m_Layer: 5
-  m_Name: Sections
+  m_Name: Options
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -372,7 +372,6 @@ GameObject:
   - component: {fileID: 328503091}
   - component: {fileID: 328503090}
   - component: {fileID: 328503093}
-  - component: {fileID: 328503094}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -456,20 +455,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &328503094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 328503089}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fd68aefa6e324c459310a91bf6fcfb3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resolutionText: {fileID: 525036735}
-  fullscreenText: {fileID: 1599697288}
-  graphicsText: {fileID: 233602428}
 --- !u!1001 &344969907
 Prefab:
   m_ObjectHideFlags: 0
@@ -650,6 +635,7 @@ GameObject:
   - component: {fileID: 476040554}
   - component: {fileID: 476040555}
   - component: {fileID: 476040556}
+  - component: {fileID: 476040557}
   m_Layer: 5
   m_Name: Fullscreen
   m_TagString: Untagged
@@ -735,6 +721,18 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1599697288}
+--- !u!114 &476040557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 476040553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3154589bf8a0844fbb61ffa22e40dcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fullscreenText: {fileID: 1599697288}
 --- !u!1 &525036733
 GameObject:
   m_ObjectHideFlags: 0
@@ -1312,6 +1310,7 @@ GameObject:
   - component: {fileID: 1266634931}
   - component: {fileID: 1266634932}
   - component: {fileID: 1266634933}
+  - component: {fileID: 1266634934}
   m_Layer: 5
   m_Name: Resolution
   m_TagString: Untagged
@@ -1397,6 +1396,18 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 525036735}
+--- !u!114 &1266634934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1266634930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a7a30d6e5be4c244b5710406b5e637e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resolutionText: {fileID: 525036735}
 --- !u!1001 &1310942537
 Prefab:
   m_ObjectHideFlags: 0
@@ -2101,6 +2112,87 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 400, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1850629340
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1850629344}
+  - component: {fileID: 1850629343}
+  - component: {fileID: 1850629342}
+  - component: {fileID: 1850629341}
+  m_Layer: 0
+  m_Name: Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!81 &1850629341
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1850629340}
+  m_Enabled: 1
+--- !u!124 &1850629342
+Behaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1850629340}
+  m_Enabled: 1
+--- !u!20 &1850629343
+Camera:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1850629340}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &1850629344
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1850629340}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 855.7132, y: 241.06906, z: 825.7219}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1875323949
 GameObject:
   m_ObjectHideFlags: 0
@@ -2111,6 +2203,7 @@ GameObject:
   - component: {fileID: 1875323950}
   - component: {fileID: 1875323951}
   - component: {fileID: 1875323952}
+  - component: {fileID: 1875323953}
   m_Layer: 5
   m_Name: Graphics
   m_TagString: Untagged
@@ -2196,6 +2289,18 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 233602428}
+--- !u!114 &1875323953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1875323949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4b60a1194eca564fb3566c47e90c4d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graphicsText: {fileID: 233602428}
 --- !u!1 &2011075830
 GameObject:
   m_ObjectHideFlags: 0
@@ -2300,7 +2405,7 @@ MonoBehaviour:
   m_Script: {fileID: -619905303, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 1769747338}
+  m_FirstSelected: {fileID: 1875323949}
   m_sendNavigationEvents: 1
   m_DragThreshold: 5
 --- !u!114 &2116310427
