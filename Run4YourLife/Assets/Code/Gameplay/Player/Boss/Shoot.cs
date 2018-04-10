@@ -71,15 +71,20 @@ namespace Run4YourLife.Player
 
         void Update()
         {
-            //head.LookAt(crossHair);
-
             Verify();
         }
 
         private void LateUpdate()
         {
-            Quaternion lookRotation = Quaternion.LookRotation(crossHair.position - head.position);
-            head.rotation = lookRotation * initialRotation;
+            head.LookAt(crossHair);
+            head.rotation *= initialRotation;
+            /*Quaternion lookRotation = Quaternion.LookRotation(crossHair.position - head.position);
+            head.rotation = lookRotation * initialRotation;*/
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawLine(crossHair.position, head.position);
         }
 
         private void Verify()

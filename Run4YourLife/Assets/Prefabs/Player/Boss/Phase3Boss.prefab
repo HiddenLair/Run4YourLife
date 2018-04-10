@@ -227,23 +227,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1214646737415988
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4955371520121594}
-  - component: {fileID: 33228825690840244}
-  - component: {fileID: 23814553838123328}
-  m_Layer: 0
-  m_Name: LaserOff
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
 --- !u!1 &1227103842057994
 GameObject:
   m_ObjectHideFlags: 1
@@ -492,15 +475,15 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4409677428275636}
-  - component: {fileID: 95877531626471364}
-  - component: {fileID: 114726323070717378}
-  - component: {fileID: 114024369185683166}
-  - component: {fileID: 114316029037101790}
-  - component: {fileID: 114207125779255010}
-  - component: {fileID: 114613523126294976}
   - component: {fileID: 82210215570875178}
-  - component: {fileID: 114249977608230936}
+  - component: {fileID: 95877531626471364}
+  - component: {fileID: 114207125779255010}
+  - component: {fileID: 114316029037101790}
+  - component: {fileID: 114119978022129832}
+  - component: {fileID: 114147036543295586}
   - component: {fileID: 114513434942918202}
+  - component: {fileID: 114613523126294976}
+  - component: {fileID: 114249977608230936}
   m_Layer: 0
   m_Name: Phase3Boss
   m_TagString: Boss
@@ -726,10 +709,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4552385947597814}
-  - component: {fileID: 33684894158756000}
-  - component: {fileID: 23355714306228128}
+  - component: {fileID: 114790689763085804}
   m_Layer: 0
-  m_Name: Laser
+  m_Name: CrossHairWorld
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1435,7 +1417,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1601248243005334}
   m_LocalRotation: {x: -0.00000009735359, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.5463295, y: -0.35085022, z: -0.5}
+  m_LocalPosition: {x: 321.99634, y: -0.59000087, z: -0.5055192}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4336117528379726}
@@ -1443,7 +1425,6 @@ Transform:
   - {fileID: 4191579237389838}
   - {fileID: 4268297421430134}
   - {fileID: 4552385947597814}
-  - {fileID: 4955371520121594}
   - {fileID: 4856222427490842}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1798,7 +1779,7 @@ Transform:
   m_Children:
   - {fileID: 4122000167750252}
   m_Father: {fileID: 4409677428275636}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4883637421604738
 Transform:
@@ -1912,19 +1893,6 @@ Transform:
   m_Father: {fileID: 4482000494074842}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4955371520121594
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1214646737415988}
-  m_LocalRotation: {x: 0.00000009735359, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.724922, y: 2.664, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
-  m_Children: []
-  m_Father: {fileID: 4409677428275636}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4960194799995746
 Transform:
   m_ObjectHideFlags: 1
@@ -2013,40 +1981,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!23 &23355714306228128
-MeshRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1754053146011326}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_Materials:
-  - {fileID: 2100000, guid: 8e61ddee64c4a034a9338adaf932af3b, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
 --- !u!23 &23795600967324532
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -2081,47 +2015,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!23 &23814553838123328
-MeshRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1214646737415988}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_Materials:
-  - {fileID: 2100000, guid: 670263a626a27864993d6203d0ec54dc, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!33 &33228825690840244
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1214646737415988}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!33 &33431458163652792
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -2136,13 +2029,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1884087641852232}
   m_Mesh: {fileID: 4300002, guid: 269ba7a10d2b32e40b15460e98338e66, type: 3}
---- !u!33 &33684894158756000
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1754053146011326}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!65 &65071463920014598
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -2264,7 +2150,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114024369185683166
+--- !u!114 &114119978022129832
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -2272,30 +2158,46 @@ MonoBehaviour:
   m_GameObject: {fileID: 1601248243005334}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f15efb8258bfabc4ba2ae1dd6d904d55, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ddc099e4c91e5946b11c1b1741d90a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laser: {fileID: 4552385947597814}
-  laserOff: {fileID: 4955371520121594}
-  timeBetweenY: 0.5
-  xSpeed: 10
+  crossHair: {fileID: 1754053146011326}
+  crossHairSpeed: 5
+  crossHairSensivility: 0.2
+  screenLeftLimitPercentaje: 0.2
+  screenBottomLimitPercentaje: 0.2
   phase: 2
   skillA: {fileID: 1392325496747952, guid: 51ca4f89786442b43970d93af24d9878, type: 2}
   trapA: {fileID: 1674844452342998, guid: 824cd44351d62dd4898f4369812cf9dd, type: 2}
   skillX: {fileID: 1919952662679816, guid: 0e0278c361a7ea340a30ade8fded1ab1, type: 2}
-  trapX: {fileID: 1053646925812610, guid: 6891dd8f950938046ba0d059588dd1d4, type: 2}
+  trapX: {fileID: 1397588157857540, guid: 63d71b658400a024b9a9b989a4975592, type: 2}
   skillY: {fileID: 1705394957324018, guid: 6419794bc2429ea43b90d76b1153e827, type: 2}
-  trapY: {fileID: 1244499117138228, guid: e7e661a6bdf2b734497407d3c1e47138, type: 2}
-  skillB: {fileID: 1919952662679816, guid: 0e0278c361a7ea340a30ade8fded1ab1, type: 2}
-  trapB: {fileID: 1397588157857540, guid: 63d71b658400a024b9a9b989a4975592, type: 2}
-  trapDelaySpawn: 0.25
-  trapCastSFX: {fileID: 8300000, guid: 4a235b16048326246adf6fdd4f2cecee, type: 3}
-  globalTrapCD: 1.5
-  trapACD: 5
-  trapBCD: 5
-  trapYCD: 5
-  trapXCD: 5
-  isReadyForAction: 1
+  trapY: {fileID: 1053646925812610, guid: 6891dd8f950938046ba0d059588dd1d4, type: 2}
+  skillB: {fileID: 1886052310789850, guid: 27ae666a4b29adb48841c4f7f48302fd, type: 2}
+  trapB: {fileID: 1244499117138228, guid: e7e661a6bdf2b734497407d3c1e47138, type: 2}
+  trapDelaySpawn: 1
+--- !u!114 &114147036543295586
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1601248243005334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f60e24d963f6d5145812a2b310284b6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  head: {fileID: 4354999001959072}
+  shootInitZone: {fileID: 4424678723774586}
+  crossHair: {fileID: 4552385947597814}
+  triggerSensivility: 0.2
+  reloadTimeS: 1
+  sfx: {fileID: 8300000, guid: c3833cf9a9803f145bb95bbf5defe584, type: 3}
+  animShoot: {fileID: 7400008, guid: 269ba7a10d2b32e40b15460e98338e66, type: 3}
+  shootAnimTimeVariation: 0
+  laser: {fileID: 1897983130793434}
+  maxLaserDistance: 50
+  laserDuration: 0.5
 --- !u!114 &114207125779255010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2341,6 +2243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bb98a8d3fec5b34eb515417b3723bbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triggerSensivility: 0.2
   instance: {fileID: 1315485973087804, guid: 4bc7c742fa6016746bfa886fc556f401, type: 2}
   reloadTimeS: 2
   sfx: {fileID: 8300000, guid: 5a17a99919f460e4f961de3bb2f63aa7, type: 3}
@@ -2383,28 +2286,19 @@ MonoBehaviour:
   speed: 0.05
   increaseSpeedOverTime: 1
   increaseValue: 0.0005
---- !u!114 &114726323070717378
+--- !u!114 &114790689763085804
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1601248243005334}
+  m_GameObject: {fileID: 1754053146011326}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb3c1614712cb5d4c83ace594c76aaf8, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d67487b577a63a40b0d38773955ab3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laser: {fileID: 1897983130793434}
-  laserDuration: 0.25
-  rotationSpeed: 100
-  animShoot: {fileID: 7400008, guid: 269ba7a10d2b32e40b15460e98338e66, type: 3}
-  shootMarker: {fileID: 4424678723774586}
-  bulletStartingPoint: {fileID: 4772266455672516}
-  reload: 3
-  mele: {fileID: 1315485973087804, guid: 4bc7c742fa6016746bfa886fc556f401, type: 2}
-  meleSpeed: 500
-  meleStartingPoint: {fileID: 4268297421430134}
-  meleReload: 2
+  maxTrapWidth: 2.5
+  maxTrapHeight: 5
 --- !u!137 &137430432807459206
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

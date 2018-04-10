@@ -9,32 +9,36 @@ namespace Run4YourLife.Player
     {
 
         #region Inspector
+
         [SerializeField]
-        GameObject crossHair = null;
+        private Transform crossHairUi;
 
         [SerializeField]
         private Color enabledColor;
 
         [SerializeField]
         private Color disabledColor;
+
         #endregion
 
         #region Variables
 
-        Image img;
+        private GameObject crossHair = null;
+        private Image crosshairImage;
 
         #endregion
 
         private void Awake()
         {
-            img = GetComponent<Image>();
+            crosshairImage = crossHairUi.GetComponent<Image>();
+            Debug.Assert(crosshairImage != null);
         }
 
         private void Update()
         {
             if (crossHair != null)
             {
-                img.enabled = true;
+                crosshairImage.enabled = true;
 
                 Move();
 
@@ -42,24 +46,24 @@ namespace Run4YourLife.Player
             }
             else
             {
-                img.enabled = false;
+                crosshairImage.enabled = false;
             }
         }
 
         void Move()
         {
-            transform.position = Camera.main.WorldToScreenPoint(crossHair.transform.position);
+            crossHairUi.position = Camera.main.WorldToScreenPoint(crossHair.transform.position);
         }
 
         void CheckStatus()
         {
             if (crossHair.GetComponent<CrossHair>().GetActive())
             {
-                img.color = enabledColor;
+                crosshairImage.color = enabledColor;
             }
             else
             {
-                img.color = disabledColor;
+                crosshairImage.color = disabledColor;
             }
         }
 
@@ -70,10 +74,10 @@ namespace Run4YourLife.Player
 
         public void UnsubscribeWorldCrossHair(GameObject crossHair)
         {
-         if(this.crossHair == crossHair)
+            if(this.crossHair == crossHair)
             {
                 crossHair = null;
-            }   
+            }
         }
     }
 }

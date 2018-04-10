@@ -20,16 +20,20 @@ namespace Run4YourLife.Player
         #region Variables
         private bool active = true;
         private bool triggering = false;
+        private UICrossHair uICrossHair;
         #endregion
 
         private void Awake()
         {
-            FindObjectOfType<UICrossHair>().SubscribeWorldCrossHair(gameObject);
+            uICrossHair = FindObjectOfType<UICrossHair>();
+            Debug.Assert(uICrossHair != null);
+
+            uICrossHair.SubscribeWorldCrossHair(gameObject);
         }
 
         private void OnDestroy()
         {
-            FindObjectOfType<UICrossHair>().UnsubscribeWorldCrossHair(gameObject);
+            uICrossHair.UnsubscribeWorldCrossHair(gameObject);
         }
 
         private void Update()
@@ -88,6 +92,11 @@ namespace Run4YourLife.Player
         public bool GetActive()
         {
             return active;
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawWireSphere(transform.position, 0.2f);
         }
     }
 }

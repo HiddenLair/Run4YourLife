@@ -47,16 +47,18 @@ namespace Run4YourLife.GameManagement
 
         public void EndExecutingPhaseAndStartPhase(GamePhase gamePhase)
         {
+            onGamePhaseChanged.Invoke(gamePhase);
+
             PhaseEnd();
             PhaseStart(gamePhase);
-            onGamePhaseChanged.Invoke(gamePhase);
         }
 
         public void DebugEndExecutingPhaseAndDebugStartPhase(GamePhase gamePhase)
         {
+            onGamePhaseChanged.Invoke(gamePhase);
+
             DebugPhaseEnd();
             DebugPhaseStart(gamePhase);
-            onGamePhaseChanged.Invoke(gamePhase);
         }
 
         public void PhaseStart(GamePhase gamePhase)
@@ -65,8 +67,6 @@ namespace Run4YourLife.GameManagement
 
             m_executingGamePhaseManager = gamePhases[gamePhase];
             m_executingGamePhaseManager.StartPhase();
-
-            onGamePhaseChanged.Invoke(gamePhase);
         }
 
         public void PhaseEnd()
@@ -84,8 +84,6 @@ namespace Run4YourLife.GameManagement
 
             m_executingGamePhaseManager = gamePhases[gamePhase];
             m_executingGamePhaseManager.DebugStartPhase();
-
-            onGamePhaseChanged.Invoke(gamePhase);
         }
 
         public void DebugPhaseEnd()
