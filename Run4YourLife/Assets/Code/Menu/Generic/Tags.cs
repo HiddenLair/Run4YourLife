@@ -9,13 +9,9 @@ public class Tags : MonoBehaviour {
     public readonly static string EditorOnly = "EditorOnly";
     public readonly static string MainCamera = "MainCamera";
     public readonly static string Runner = "Player";
-    public readonly static string GameController = "Destructible";
     public readonly static string Shoot = "Shoot";
-    public readonly static string Ground = "Ground";
     public readonly static string Trap = "Trap";
     public readonly static string Boss = "Boss";
-    public readonly static string Floor = "Floor";
     public readonly static string Interactable = "Interactable";
-    public readonly static string DropPlatform = "DropPlatform";
     public readonly static string UI = "UI";
 }
