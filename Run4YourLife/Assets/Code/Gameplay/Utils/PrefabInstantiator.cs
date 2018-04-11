@@ -19,6 +19,12 @@ public class PrefabInstantiator : MonoBehaviour {
     [SerializeField]
     private GameObject m_prefab;
 
+    [SerializeField]
+    private bool destroyOnTime = false;
+
+    [SerializeField]
+    private float destroyTime = 1.0f;
+
     #endregion
 
     #region Private Fields
@@ -38,7 +44,11 @@ public class PrefabInstantiator : MonoBehaviour {
         while(m_isInfinite || m_instantiationCount-- > 0)
         {
             yield return delayBetweenInstantiations;
-            Instantiate(m_prefab, transform.position, transform.rotation, transform);
+            GameObject temp = Instantiate(m_prefab, transform.position, transform.rotation, transform);
+            if (destroyOnTime)
+            {
+                Destroy(temp, destroyTime);
+            }
         }
     }
 }

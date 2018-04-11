@@ -11,7 +11,7 @@ public class LeafJumpOver : MonoBehaviour, JumpOver {
 
     private void Awake()
     {
-        anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
     }
 
     #region JumpOver
