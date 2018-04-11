@@ -8,11 +8,18 @@ using UnityEngine.EventSystems;
 
 namespace Run4YourLife.OptionsMenu
 {
-    class FullscreenSwitch : MonoBehaviour, IMoveHandler
+    class FullscreenSwitch : MonoBehaviour, IMoveHandler, ISelectHandler, IDeselectHandler
     {
         #region Public Variables
         public TextMeshProUGUI fullscreenText;
+        public GameObject leftSwitch;
+        public GameObject rightSwitch;
         #endregion
+
+        private void UpdateUI()
+        {
+            fullscreenText.text = Screen.fullScreen ? "ON" : "OFF";
+        }
 
         public void OnMove(AxisEventData eventData)
         {
@@ -28,9 +35,30 @@ namespace Run4YourLife.OptionsMenu
             }
         }
 
-        private void UpdateUI()
+        public void OnSelect(BaseEventData eventData)
         {
-            fullscreenText.text = Screen.fullScreen ? "ON" : "OFF";
+            if(leftSwitch != null)
+            {
+                leftSwitch.SetActive(true);
+            }
+
+            if(rightSwitch != null)
+            {
+                rightSwitch.SetActive(true);
+            }
+        }
+
+        public void OnDeselect(BaseEventData eventData)
+        {
+            if (leftSwitch != null)
+            {
+                leftSwitch.SetActive(false);
+            }
+
+            if (rightSwitch != null)
+            {
+                rightSwitch.SetActive(false);
+            }
         }
     }
 }
