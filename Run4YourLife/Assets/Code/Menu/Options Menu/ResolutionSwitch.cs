@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Run4YourLife.OptionsMenu
 {
-    class ResolutionSwitch : MonoBehaviour, IMoveHandler
+    class ResolutionSwitch : MonoBehaviour, IMoveHandler, ISelectHandler, IDeselectHandler
     {
         #region Private Variables
         private Resolution[] availableResolutions;
@@ -18,6 +18,8 @@ namespace Run4YourLife.OptionsMenu
 
         #region Public Variables
         public TextMeshProUGUI resolutionText;
+        public GameObject leftSwitch;
+        public GameObject rightSwitch;
         #endregion
 
         public void Awake()
@@ -43,6 +45,7 @@ namespace Run4YourLife.OptionsMenu
                 if (resolutionIndex < availableResolutions.Length-1)
                 {
                     resolutionIndex++;
+                    SetResolution(resolutionIndex);
                 }
 
                 UpdateUI();
@@ -52,15 +55,47 @@ namespace Run4YourLife.OptionsMenu
                 if (resolutionIndex > 0)
                 {
                     resolutionIndex--;
+                    SetResolution(resolutionIndex);
                 }
 
                 UpdateUI();
             }
         }
 
+        private void SetResolution(int resIndex)
+        {
+            Screen.SetResolution(availableResolutions[resIndex].width, availableResolutions[resIndex].height, Screen.fullScreen);
+        }
+
         private void UpdateUI()
         {
             resolutionText.text = availableResolutions[resolutionIndex].width + " x " + availableResolutions[resolutionIndex].height;
+        }
+
+        public void OnSelect(BaseEventData eventData)
+        {
+            if (leftSwitch != null)
+            {
+                leftSwitch.SetActive(true);
+            }
+
+            if (rightSwitch != null)
+            {
+                rightSwitch.SetActive(true);
+            }
+        }
+
+        public void OnDeselect(BaseEventData eventData)
+        {
+            if (leftSwitch != null)
+            {
+                leftSwitch.SetActive(false);
+            }
+
+            if (rightSwitch != null)
+            {
+                rightSwitch.SetActive(false);
+            }
         }
     }
 }

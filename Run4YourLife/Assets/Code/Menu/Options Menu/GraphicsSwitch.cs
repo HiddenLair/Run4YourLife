@@ -8,13 +8,15 @@ using UnityEngine.EventSystems;
 
 namespace Run4YourLife.OptionsMenu
 {
-    class GraphicsSwitch : MonoBehaviour, IMoveHandler
+    class GraphicsSwitch : MonoBehaviour, IMoveHandler, ISelectHandler, IDeselectHandler
     {
         #region Public Variables
         public TextMeshProUGUI graphicsText;
+        public GameObject leftSwitch;
+        public GameObject rightSwitch;
         #endregion
 
-        public void Start()
+        public void Awake()
         {
             UpdateUI();
         }
@@ -36,6 +38,32 @@ namespace Run4YourLife.OptionsMenu
         private void UpdateUI()
         {
             graphicsText.SetText(QualitySettings.names[QualitySettings.GetQualityLevel()]);
+        }
+
+        public void OnSelect(BaseEventData eventData)
+        {
+            if (leftSwitch != null)
+            {
+                leftSwitch.SetActive(true);
+            }
+
+            if (rightSwitch != null)
+            {
+                rightSwitch.SetActive(true);
+            }
+        }
+
+        public void OnDeselect(BaseEventData eventData)
+        {
+            if (leftSwitch != null)
+            {
+                leftSwitch.SetActive(false);
+            }
+
+            if (rightSwitch != null)
+            {
+                rightSwitch.SetActive(false);
+            }
         }
     }
 }

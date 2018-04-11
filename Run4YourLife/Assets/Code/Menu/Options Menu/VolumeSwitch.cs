@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 namespace Run4YourLife.OptionsMenu
 {
-    class VolumeSwitch : MonoBehaviour, IMoveHandler
+    class VolumeSwitch : MonoBehaviour, IMoveHandler, ISelectHandler, IDeselectHandler
     {
         #region Private Variables
         private int volumeLevel = 3;
@@ -20,6 +20,8 @@ namespace Run4YourLife.OptionsMenu
         public Sprite activeMusicalNote;
         public Sprite unactiveMusicalNote;
         public GameObject[] musicalNotes;
+        public GameObject leftSwitch;
+        public GameObject rightSwitch;
         #endregion
 
         public void Awake()
@@ -70,6 +72,32 @@ namespace Run4YourLife.OptionsMenu
         private void ActivateNote(GameObject note)
         {
             note.GetComponent<Image>().sprite = activeMusicalNote;
+        }
+
+        public void OnSelect(BaseEventData eventData)
+        {
+            if (leftSwitch != null)
+            {
+                leftSwitch.SetActive(true);
+            }
+
+            if (rightSwitch != null)
+            {
+                rightSwitch.SetActive(true);
+            }
+        }
+
+        public void OnDeselect(BaseEventData eventData)
+        {
+            if (leftSwitch != null)
+            {
+                leftSwitch.SetActive(false);
+            }
+
+            if (rightSwitch != null)
+            {
+                rightSwitch.SetActive(false);
+            }
         }
     }
 }
