@@ -69,6 +69,7 @@ namespace Run4YourLife.DebuggingTools
         private void AddCameraDebugFeatures()
         {
             cameraDebugFeatures.Add(Camera.main.gameObject.AddComponent<DynamicCameraController>());
+            cameraDebugFeatures.Add(Camera.main.gameObject.AddComponent<FollowRunnerCameraController>());
         }
 
         private void AddOtherDebugFeatures()
