@@ -42,7 +42,7 @@ public class CononutLauncher : MonoBehaviour {
 
     private void Shoot()
     {
-        GameObject g = Instantiate(bullet,shootInitZone.position,transform.rotation*bullet.transform.rotation);
+        GameObject g = Instantiate(bullet,shootInitZone.position,transform.rotation*bullet.transform.rotation, transform);
         g.GetComponent<Rigidbody>().AddForce(g.transform.up * shootForce);
     }
 }
