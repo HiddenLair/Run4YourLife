@@ -268,11 +268,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4718166853848898}
-  - component: {fileID: 114538691397763578}
   - component: {fileID: 135529307988074332}
   m_Layer: 9
-  m_Name: BottomPlayerTrigger
-  m_TagString: Untagged
+  m_Name: RunnerFeetTrigger
+  m_TagString: RunnerFeet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1122,7 +1121,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1095223732133840}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 97.5, y: 2.5, z: 0}
+  m_LocalPosition: {x: 63.046715, y: 2.5, z: -0.30559868}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4540691455470320}
@@ -2039,17 +2038,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 0
   m_timeToFullyChargeThrow: 1.5
---- !u!114 &114538691397763578
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1320545998595308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f2f3ade14c4d8a40baa0fdd2c558d7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114540371618756184
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2063,7 +2051,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_graphics: {fileID: 1329669962546220}
   m_coyoteGroundedTime: 0.1
-  m_baseHorizontalDrag: 2
   m_impulseHorizontalDrag: 5
   m_baseGravity: -40
   m_hoverGravity: -10
@@ -2073,6 +2060,7 @@ MonoBehaviour:
   m_timeToIdle: 5
   jumpClip: {fileID: 8300000, guid: 8bc5dbb3f916c7d4bb404c8a010f4106, type: 3}
   bounceClip: {fileID: 8300000, guid: 4c27b064170a56b48907e5a15905f521, type: 3}
+  dragVelocity: 0
 --- !u!114 &114780470167536698
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2120,6 +2108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 796661589eb16c34cafc228a3b528274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  falling: 1
 --- !u!114 &114970028009125270
 MonoBehaviour:
   m_ObjectHideFlags: 1
