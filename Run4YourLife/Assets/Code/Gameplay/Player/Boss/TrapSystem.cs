@@ -227,7 +227,7 @@ namespace Run4YourLife.Player
             if (currentType == Type.SKILL)
             {
                 cooldown = skill.GetComponent<CooldownIndicator>().cooldown;
-                WaitForAnim(skill);
+                StartCoroutine(WaitForAnim(skill));
             }
             else
             {

@@ -32,12 +32,6 @@ namespace Run4YourLife.Player
         [SerializeField]
         protected AudioClip sfx;
 
-        [SerializeField]
-        private AnimationClip animShoot;
-
-        [SerializeField]
-        private float shootAnimTimeVariation;
-
         #endregion
 
         private float currentTimeS = 0;

@@ -11,16 +11,28 @@ namespace Run4YourLife.Player
         private float instanceSpeed;
 
         [SerializeField]
-        private Transform indicatorPos;
+        private Transform crossHairPos;
+
+        [SerializeField]
+        private GameObject handL;
+
+        [SerializeField]
+        private GameObject handR;
 
         #endregion
 
         private AudioSource audioSource;
+        private Animator anim;
+
+        Vector3 trapPos;
+        Quaternion rotation;
+        bool right = false;
 
         protected override void GetComponents()
         {
             base.GetComponents();
 
+            anim = GetComponent<Animator>();
             audioSource = GetComponent<AudioSource>();
         }
 
@@ -28,25 +40,39 @@ namespace Run4YourLife.Player
         {
             audioSource.PlayOneShot(sfx);
 
-            Vector3 trapPos = indicatorPos.position;
+            trapPos = crossHairPos.position;
             Vector3 screenPos = Camera.main.WorldToScreenPoint(trapPos);
 
             if(screenPos.x <= 0.5f * Camera.main.pixelWidth)
             {
+                anim.SetTrigger("MeleR");
                 trapPos.x = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, 0, Camera.main.transform.position.z - trapPos.z)).x;
-                Instantiate(trapPos, Quaternion.Euler(0, 0, 0));
+                rotation = Quaternion.Euler(0, 0, 0);
+                right = true;
             }
             else
             {
+                anim.SetTrigger("MeleL");
                 trapPos.x = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, Camera.main.transform.position.z - trapPos.z)).x;
-                Instantiate(trapPos, Quaternion.Euler(0, 180, 0));
+                rotation = Quaternion.Euler(0, 180, 0);
+                right = false;
             }
         }
 
-        void Instantiate(Vector3 position, Quaternion rotation)
+        void ArmInstantiate()
         {
-            GameObject meleeInst = Instantiate(instance, position, rotation);
+            GameObject meleeInst = Instantiate(instance, trapPos, rotation);
             meleeInst.GetComponent<Rigidbody>().velocity = meleeInst.transform.right * instanceSpeed * Time.deltaTime;
+            if (right)
+            {
+                meleeInst.GetComponent<RegenerateHand>().SetHandToRecover(handR);
+                handR.SetActive(false);
+            }
+            else
+            {
+                meleeInst.GetComponent<RegenerateHand>().SetHandToRecover(handL);
+                handL.SetActive(false);
+            }
         }
     }
 }
