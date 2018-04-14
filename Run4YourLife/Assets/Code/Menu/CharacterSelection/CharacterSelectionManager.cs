@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
-using Run4YourLife.Player;
 using Run4YourLife.Input;
-using System;
-
+using Run4YourLife.Player;
 using Run4YourLife.SceneManagement;
 
 namespace Run4YourLife.CharacterSelection
@@ -33,7 +30,10 @@ namespace Run4YourLife.CharacterSelection
 
         public void OnControllerDetected(InputDevice controller)
         {
-            CreatePlayerForController(controller);
+            if(m_playerManager.GetPlayers().Count < 4)
+            {
+                CreatePlayerForController(controller);
+            }
         }
 
         private void CreatePlayerForController(InputDevice inputDevice)
@@ -41,7 +41,7 @@ namespace Run4YourLife.CharacterSelection
             PlayerDefinition playerDefinition = new PlayerDefinition();
 
             playerDefinition.inputDevice = inputDevice;
-            if (m_playerManager.GetPlayers().Count == 0)
+            if(m_playerManager.GetPlayers().Count == 0)
             {
                 m_playerManager.SetPlayerAsBoss(playerDefinition);
             }
@@ -53,10 +53,10 @@ namespace Run4YourLife.CharacterSelection
 
         private CharacterType GetFirstAviablePlayerCharacterType()
         {
-            CharacterType ret = CharacterType.Red;
-            foreach (CharacterType characterType in Enum.GetValues(typeof(CharacterType)))
+            CharacterType ret = CharacterType.Purple;
+            foreach(CharacterType characterType in Enum.GetValues(typeof(CharacterType)))
             {
-                if (!PlayerHasCharacterType(characterType))
+                if(!PlayerHasCharacterType(characterType))
                 {
                     ret = characterType;
                     break;
@@ -69,7 +69,7 @@ namespace Run4YourLife.CharacterSelection
         {
             foreach(PlayerDefinition player in m_playerManager.GetPlayers())
             {
-                if (player.CharacterType.Equals(characterType))
+                if(player.CharacterType.Equals(characterType))
                 {
                     return true;
                 }
@@ -79,7 +79,7 @@ namespace Run4YourLife.CharacterSelection
 
         public void OnGameStart()
         {
-            foreach (SceneLoadRequest request in m_gameLoadRequest.GetComponents<SceneLoadRequest>())
+            foreach(SceneLoadRequest request in m_gameLoadRequest.GetComponents<SceneLoadRequest>())
             {
                 request.Execute();
             }

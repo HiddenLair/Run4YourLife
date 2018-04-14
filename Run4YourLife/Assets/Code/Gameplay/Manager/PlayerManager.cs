@@ -1,17 +1,22 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
+using System.Collections.Generic;
 
 namespace Run4YourLife.Player
 {
     public class PlayerManager : MonoBehaviour
     {
+        public class PlayerChangedEvent : UnityEvent<PlayerDefinition>
+        { }
+
+        public class PlayerLeftEvent : UnityEvent<PlayerDefinition>
+        { }
+
         private List<PlayerDefinition> players = new List<PlayerDefinition>();
         private List<PlayerDefinition> playersToDelete = new List<PlayerDefinition>();
 
-        public UnityEvent OnPlayerChanged = new UnityEvent();
+        public PlayerChangedEvent OnPlayerChanged = new PlayerChangedEvent();
+        public PlayerLeftEvent OnPlayerLeft = new PlayerLeftEvent();
 
         void LateUpdate()
         {
@@ -20,10 +25,9 @@ namespace Run4YourLife.Player
                 foreach (PlayerDefinition player in playersToDelete)
                 {
                     players.Remove(player);
+                    OnPlayerLeft.Invoke(player);
                 }
                 playersToDelete.Clear();
-
-                OnPlayerChanged.Invoke();
             }
         }
 
@@ -61,20 +65,20 @@ namespace Run4YourLife.Player
 
         public void SetPlayerAsBoss(PlayerDefinition player)
         {
-            foreach (PlayerDefinition p in players)
-            {
-                p.IsBoss = false;
-            }
-
             player.IsBoss = true;
+            OnPlayerChanged.Invoke(player);
+        }
 
-            OnPlayerChanged.Invoke();
+        public void SetPlayerAsRunner(PlayerDefinition player)
+        {
+            player.IsBoss = false;
+            OnPlayerChanged.Invoke(player);
         }
 
         public void AddPlayer(PlayerDefinition playerDefinition)
         {
             players.Add(playerDefinition);
-            OnPlayerChanged.Invoke();
+            OnPlayerChanged.Invoke(playerDefinition);
         }
 
         public void RemovePlayer(PlayerDefinition player)

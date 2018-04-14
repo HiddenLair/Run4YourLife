@@ -39,7 +39,7 @@ namespace Run4YourLife.Player
         {
             return new PlayerDefinition()
             {
-                CharacterType = CharacterType.Blue,
+                CharacterType = CharacterType.Purple,
                 ID = 1,
                 IsBoss = false,
                 inputDevice = new InputDevice(1)
