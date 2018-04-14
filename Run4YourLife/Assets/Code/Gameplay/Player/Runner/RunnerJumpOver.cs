@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Run4YourLife.Player
 {
-    public class RunnerJumpOver : MonoBehaviour, JumpOver {
+    public class RunnerJumpOver : RunnerBounceDetection {
 
         private RunnerCharacterController characterController;
 
@@ -15,14 +15,14 @@ namespace Run4YourLife.Player
         }
 
         #region JumpOver
-        public void JumpedOn()
+        protected override void JumpedOn()
         {
             characterController.BounceOnMe();
         }
 
-        public float GetBounceForce()
+        protected override Vector3 GetBounceForce()
         {
-            return GetComponentInParent<Stats>().Get(StatType.BOUNCE_HEIGHT);
+            return new Vector3(0,GetComponentInParent<Stats>().Get(StatType.BOUNCE_HEIGHT),0);
         }
         #endregion
     }

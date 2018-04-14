@@ -255,6 +255,11 @@ namespace Run4YourLife.Player
             return Mathf.Sqrt(height * -2f * m_baseGravity);
         }
 
+        private float DragToVelocity(float dragDistance)
+        {
+            return Mathf.Sign(dragDistance)*Mathf.Sqrt(Mathf.Abs(dragDistance) * 2f * m_baseHorizontalDrag);
+        }
+
         private IEnumerator JumpCoroutine()
         {
             m_isJumping = true;
@@ -330,16 +335,18 @@ namespace Run4YourLife.Player
             m_animator.SetTrigger("bump");
         }
 
-        public void Bounce(float bounceForce)
+        public void Bounce(Vector3 bounceForce)
         {
             StartCoroutine(BounceCoroutine(bounceForce));
         }
 
-        IEnumerator BounceCoroutine(float bounceForce)
+        IEnumerator BounceCoroutine(Vector3 bounceForce)
         {
             m_isBouncing = true;
             m_audioSource.PlayOneShot(bounceClip);
-            m_velocity.y = HeightToVelocity(bounceForce);
+            m_velocity.x = DragToVelocity(bounceForce.x);
+            m_velocity.y = HeightToVelocity(bounceForce.y);
+            Debug.Log("X: "+ m_velocity.x + " Y: "+ m_velocity.y);
 
             yield return StartCoroutine(WaitUntilApexOfBounce());
             m_isBouncing = false;

@@ -1,28 +1,42 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Run4YourLife.Player;
 
-public class LeafJumpOver : MonoBehaviour, JumpOver {
-
-    [SerializeField]
-    private float bounceOverMeForce;
-
-    private Animator anim;
-
-    private void Awake()
+namespace Run4YourLife.Interactables
+{
+    public class LeafJumpOver : RunnerBounceDetection
     {
-        anim = GetComponentInChildren<Animator>();
-    }
 
-    #region JumpOver
-    public void JumpedOn()
-    {
-        anim.SetTrigger("bump");
-    }
+        [SerializeField]
+        private Vector3 direction;
 
-    public float GetBounceForce()
-    {
-        return bounceOverMeForce;
+        [SerializeField]
+        private float bounceOverMeForce;
+
+        private Animator anim;
+
+        private void Awake()
+        {
+            anim = GetComponentInChildren<Animator>();
+        }
+
+        #region JumpOver
+        protected override void JumpedOn()
+        {
+            anim.SetTrigger("bump");
+        }
+
+        protected override Vector3 GetBounceForce()
+        {
+            return bounceOverMeForce * direction.normalized;
+        }
+        #endregion
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, transform.position + direction.normalized * 5);
+        }
     }
-    #endregion
 }
