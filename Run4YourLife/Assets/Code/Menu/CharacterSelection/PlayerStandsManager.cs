@@ -1,55 +1,187 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 using Run4YourLife.Player;
-using System;
 
 namespace Run4YourLife.CharacterSelection
 {
     public class PlayerStandsManager : MonoBehaviour
     {
-        PlayerManager playerManager;
+        [SerializeField]
+        private BossStandController bossStandController;
 
         [SerializeField]
-        private PlayerStandController[] standControllers;
+        private RunnerStandController[] runnerStandControllers;
 
-        private void Awake()
+        private PlayerManager playerManager;
+        private CharacterSelectionManager characterSelectionManager;
+
+        private bool ready = true;
+        private bool gameHasStarted = false;
+
+        void Awake()
         {
-            playerManager = Component.FindObjectOfType<PlayerManager>();
+            playerManager = FindObjectOfType<PlayerManager>();
             Debug.Assert(playerManager != null);
+
+            characterSelectionManager = FindObjectOfType<CharacterSelectionManager>();
+            Debug.Assert(characterSelectionManager != null);
+
             playerManager.OnPlayerChanged.AddListener(OnPlayerChanged);
+            playerManager.OnPlayerLeft.AddListener(OnPlayerLeft);
         }
 
-        private void Start()
+        void Update()
         {
-            OnPlayerChanged();
-        }
-
-        void OnPlayerChanged()
-        {
-            DestroyCurrentStants();
-            SpawnNewStands();
-        }
-
-        private void DestroyCurrentStants()
-        {
-            foreach (PlayerStandController stand in standControllers)
+            if(CheckGoGame())
             {
-                ExecuteEvents.Execute<IPlayerDefinitionEvents>(stand.gameObject, null, (a, b) => a.OnPlayerDefinitionChanged(null));
+                GoGame();
             }
         }
 
-        private void SpawnNewStands()
+        void LateUpdate()
         {
-            List<PlayerDefinition> players = playerManager.GetPlayers();
-            Debug.Assert(players.Count <= standControllers.Length);
+            ready = true;
+        }
 
-            for (int i = 0; i < players.Count; i++)
+        void OnPlayerChanged(PlayerDefinition playerDefinition)
+        {
+            DestroyStand(playerDefinition);
+            CreateStand(playerDefinition);
+        }
+
+        void OnPlayerLeft(PlayerDefinition playerDefinition)
+        {
+            DestroyStand(playerDefinition);
+        }
+
+        private void DestroyStand(PlayerDefinition playerDefinition)
+        {
+            PlayerStandController playerStandController = null;
+
+            if(bossStandController.GetPlayerDefinition() == playerDefinition)
             {
-                ExecuteEvents.Execute<IPlayerDefinitionEvents>(standControllers[i].gameObject, null, (a, b) => a.OnPlayerDefinitionChanged(players[i]));
+                playerStandController = bossStandController;
+            }
+            else
+            {
+                foreach(RunnerStandController runnerStandController in runnerStandControllers)
+                {
+                    if(runnerStandController.GetPlayerDefinition() == playerDefinition)
+                    {
+                        playerStandController = runnerStandController;
+                        break;
+                    }
+                }
+            }
+
+            if(playerStandController != null)
+            {
+                ExecuteEvents.Execute<IPlayerDefinitionEvents>(playerStandController.gameObject, null, (a, b) => a.OnPlayerDefinitionChanged(null));
             }
         }
+
+        private void CreateStand(PlayerDefinition playerDefinition)
+        {
+            PlayerStandController playerStandController = null;
+
+            if(playerDefinition.IsBoss)
+            {
+                Debug.Assert(bossStandController.GetPlayerDefinition() == null);
+
+                playerStandController = bossStandController;
+            }
+            else
+            {
+                foreach(RunnerStandController runnerStandController in runnerStandControllers)
+                {
+                    if(runnerStandController.GetPlayerDefinition() == null)
+                    {
+                        playerStandController = runnerStandController;
+                        break;
+                    }
+                }
+            }
+
+            Debug.Assert(playerStandController != null);
+
+            ExecuteEvents.Execute<IPlayerDefinitionEvents>(playerStandController.gameObject, null, (a, b) => a.OnPlayerDefinitionChanged(playerDefinition));
+        }
+
+        #region Boss And Runner StandController Management
+
+        public void Leave(PlayerStandController playerStandController)
+        {
+            playerManager.RemovePlayer(playerStandController.GetPlayerDefinition());
+        }
+
+        public void SetAsBoss(RunnerStandController runnerStandController)
+        {
+            if(!ready) return;
+            ready = false;
+
+            if(bossStandController.GetPlayerDefinition() == null)
+            {
+                playerManager.SetPlayerAsBoss(runnerStandController.GetPlayerDefinition());
+            }
+        }
+
+        public void SetAsRunner(BossStandController bossStandController)
+        {
+            if(!ready) return;
+            ready = false;
+
+            playerManager.SetPlayerAsRunner(bossStandController.GetPlayerDefinition());
+        }
+
+        public void GoMainMenu()
+        {
+            characterSelectionManager.OnMainMenuStart();
+        }
+
+        private bool CheckGoGame()
+        {
+            if(gameHasStarted)
+            {
+                return false;
+            }
+
+            if(bossStandController.GetPlayerDefinition() == null)
+            {
+                return false;
+            }
+
+            bool existsReadyRunner = false;
+
+            foreach(RunnerStandController runnerStandController in runnerStandControllers)
+            {
+                if(runnerStandController.GetPlayerDefinition() != null)
+                {
+                    if(!runnerStandController.GetReady())
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        existsReadyRunner = true;
+                    }
+                }
+            }
+
+            if(!existsReadyRunner)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private void GoGame()
+        {
+            gameHasStarted = true;
+            characterSelectionManager.OnGameStart();
+        }
+
+        #endregion
     }
 }
