@@ -96,7 +96,6 @@ namespace Run4YourLife.Player
                     if (currentTimeS <= Time.time && !alreadyPressed)
                     {
                         animator.SetTrigger("Shoot");
-                        Invoke("OnSuccess", animShoot.length - shootAnimTimeVariation);
 
                         currentTimeS = Time.time + reloadTimeS;
                         alreadyPressed = true;
@@ -119,6 +118,6 @@ namespace Run4YourLife.Player
             audioSource = GetComponent<AudioSource>();
         }
 
-        protected abstract void OnSuccess();
+        public abstract void ShootByAnim();
     }
 }

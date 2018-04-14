@@ -70,6 +70,7 @@ namespace Run4YourLife.Player
         BossControlScheme bossControlScheme;
         private Animator anim;
         private GameObject uiManager;
+        private bool animTriggerSetElement = false;
 
 
         #endregion
@@ -226,16 +227,27 @@ namespace Run4YourLife.Player
             if (currentType == Type.SKILL)
             {
                 cooldown = skill.GetComponent<CooldownIndicator>().cooldown;
-                Vector3 temp = crossHair.transform.position;
-                Instantiate(skill, temp, skill.GetComponent<Transform>().rotation);
+                WaitForAnim(skill);
             }
             else
             {
                 cooldown = trap.GetComponent<CooldownIndicator>().cooldown;
-                Vector3 temp = crossHair.transform.position;
-                Instantiate(trap, temp, trap.GetComponent<Transform>().rotation);
+                StartCoroutine(WaitForAnim(trap));
             }
             return cooldown;
+        }
+
+        IEnumerator WaitForAnim(GameObject g)
+        {
+            yield return new WaitUntil(() => animTriggerSetElement);
+            Vector3 temp = crossHair.transform.position;
+            Instantiate(g, temp, g.GetComponent<Transform>().rotation);
+            animTriggerSetElement = false;
+        }
+
+        public void SetElementTriggered()
+        {
+            animTriggerSetElement = true;
         }
     }
 }
