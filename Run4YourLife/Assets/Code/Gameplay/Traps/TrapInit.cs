@@ -23,7 +23,6 @@ public class TrapInit : MonoBehaviour {
         actualC.a = 0;
         GetComponentInChildren<Renderer>().material.color = actualC;
         StartCoroutine(FadeIn(fadeInTime));
-        StartCoroutine(Fall());
     }
 
     // Update is called once per frame
@@ -37,6 +36,7 @@ public class TrapInit : MonoBehaviour {
 
     IEnumerator Fall()
     {
+        GetComponent<Rigidbody>().useGravity = true;
         while (!grounded)
         {
             RaycastHit info;
@@ -65,5 +65,6 @@ public class TrapInit : MonoBehaviour {
             yield return 0;
         }
         faded = true;
+        StartCoroutine(Fall());
     }
 }

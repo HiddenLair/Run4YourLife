@@ -27,11 +27,7 @@ namespace Run4YourLife.Player
         protected override void OnSuccess()
         {
             animator.SetTrigger("Mele");
-            audioSource.PlayOneShot(sfx);
-
-            GameObject meleeInst = Instantiate(instance, instancePos.position, instance.GetComponent<Transform>().rotation);
-            meleeInst.transform.SetParent(transform);
-            Destroy(meleeInst, 1.0f);
+            audioSource.PlayOneShot(sfx);    
         }
     }
 }

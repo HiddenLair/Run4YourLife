@@ -18,7 +18,7 @@ namespace Run4YourLife.Player
 
         #endregion
 
-        protected override void OnSuccess()
+        public override void ShootByAnim()
         {
             audioSource.PlayOneShot(sfx);
 
