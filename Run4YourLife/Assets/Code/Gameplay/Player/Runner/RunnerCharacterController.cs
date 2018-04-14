@@ -25,9 +25,6 @@ namespace Run4YourLife.Player
         private float m_coyoteGroundedTime;
 
         [SerializeField]
-        private float m_baseHorizontalDrag;
-
-        [SerializeField]
         private float m_impulseHorizontalDrag;
 
         [SerializeField]
@@ -85,6 +82,8 @@ namespace Run4YourLife.Player
         private float m_idleTimer;
 
         private Coroutine m_checkCoyoteGroundedCoroutine;
+
+        private float m_baseHorizontalDrag = 2f;
 
         #endregion
 
@@ -256,7 +255,7 @@ namespace Run4YourLife.Player
 
         private float DragToVelocity(float dragDistance)
         {
-            return Mathf.Sign(dragDistance)*Mathf.Sqrt(Mathf.Abs(dragDistance) * 2f * m_baseHorizontalDrag);
+            return 2.1129f * dragDistance;
         }
 
         private IEnumerator JumpCoroutine()
@@ -339,13 +338,13 @@ namespace Run4YourLife.Player
             StartCoroutine(BounceCoroutine(bounceForce));
         }
 
+        public float dragVelocity;
         IEnumerator BounceCoroutine(Vector3 bounceForce)
         {
             m_isBouncing = true;
             m_audioSource.PlayOneShot(bounceClip);
             m_velocity.x = DragToVelocity(bounceForce.x);
             m_velocity.y = HeightToVelocity(bounceForce.y);
-            Debug.Log("X: "+ m_velocity.x + " Y: "+ m_velocity.y);
 
             yield return StartCoroutine(WaitUntilApexOfBounce());
             m_isBouncing = false;
