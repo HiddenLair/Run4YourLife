@@ -67,28 +67,28 @@ namespace Run4YourLife.GameManagement {
                 playerManager = gameObject.AddComponent<PlayerManager>();
                 playerManager.AddPlayer(new PlayerDefinition()
                 {
-                    CharacterType = CharacterType.Red,
+                    CharacterType = CharacterType.Purple,
                     ID = 1,
                     inputDevice = new Input.InputDevice(1),
                     IsBoss = false
                 });
                 playerManager.AddPlayer(new PlayerDefinition()
                 {
-                    CharacterType = CharacterType.Orange,
+                    CharacterType = CharacterType.Green,
                     ID = 2,
                     inputDevice = new Input.InputDevice(2),
                     IsBoss = true
                 });
                 playerManager.AddPlayer(new PlayerDefinition()
                 {
-                    CharacterType = CharacterType.Green,
+                    CharacterType = CharacterType.Orange,
                     ID = 3,
                     inputDevice = new Input.InputDevice(3),
                     IsBoss = false
                 });
                 playerManager.AddPlayer(new PlayerDefinition()
                 {
-                    CharacterType = CharacterType.Blue,
+                    CharacterType = CharacterType.Orange,
                     ID = 4,
                     inputDevice = new Input.InputDevice(4),
                     IsBoss = false
