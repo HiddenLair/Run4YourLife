@@ -2,95 +2,48 @@
 using UnityEngine.EventSystems;
 
 using Run4YourLife.Player;
+using System;
 
 namespace Run4YourLife.GameManagement
 {
     public class PlayerSpawner : MonoBehaviour
     {
         [SerializeField]
-        private GameObject m_playerPrefab;
-
-        [SerializeField]
-        private GameObject m_bossPrefab;
-
-        [SerializeField]
         private Transform[] m_runnerSpawns;
+
+        [SerializeField]
+        private GamePhase m_bossGameObjectPhase;
 
         [SerializeField]
         private Transform m_bossSpawn;
 
         private GameplayPlayerManager m_gameplayPlayerManager;
-        private PlayerManager m_playerManager;
 
         private void Awake()
         {
             m_gameplayPlayerManager = FindObjectOfType<GameplayPlayerManager>();
             Debug.Assert(m_gameplayPlayerManager != null);
-
-            m_playerManager = m_gameplayPlayerManager.PlayerManager;
         }
 
-        public GameObject[] InstantiatePlayers()
+        public GameObject[] ActivatePlayers()
         {
-            GameObject[] players = new GameObject[m_playerManager.GetPlayers().Count];
+            GameObject[] players = new GameObject[m_gameplayPlayerManager.PlayerCount];
             uint index = 0;
 
-            foreach (PlayerDefinition playerDefinition in m_playerManager.GetPlayers())
+            foreach (PlayerDefinition runnerPlayerDefinition in m_gameplayPlayerManager.RunnerPlayerDefinitions)
             {
-                players[index] = InstantiatePlayer(playerDefinition);
+                players[index] = m_gameplayPlayerManager.ActivateRunner(runnerPlayerDefinition, m_runnerSpawns[index].position);
                 index++;
             }
+
+            players[index] = ActivateBoss();
 
             return players;
         }
 
-        public GameObject InstantiateBossPlayer()
+        public GameObject ActivateBoss()
         {
-            PlayerDefinition bossPlayerDefinition = m_playerManager.GetPlayers().Find(x => x.IsBoss);
-            Debug.Assert(bossPlayerDefinition != null);
-
-            return InstantiatePlayer(bossPlayerDefinition);
-        }
-
-        private GameObject InstantiatePlayer(PlayerDefinition playerDefinition)
-        {
-            GameObject player = InstantiatePlayerByType(playerDefinition);
-            ExecuteEvents.Execute<IPlayerDefinitionEvents>(player, null, (a, b) => a.OnPlayerDefinitionChanged(playerDefinition));
-            return player;
-        }
-
-        private GameObject InstantiatePlayerByType(PlayerDefinition playerDefinition)
-        {
-            GameObject instance;
-
-            if (playerDefinition.IsBoss)
-            {
-                instance = Instantiate(m_bossPrefab, m_bossSpawn.position, m_bossSpawn.rotation);
-                m_gameplayPlayerManager.Boss = instance;
-            }
-            else
-            {
-                // TODO implementation of spawn that requires 3 transforms instead of 4
-                Transform spawn = m_runnerSpawns[playerDefinition.ID - 1];
-                instance = Instantiate(m_playerPrefab, spawn.position, spawn.rotation);
-                m_gameplayPlayerManager.Runners.Add(instance);
-            }
-
-            return instance;
-        }
-
-        public GameObject InstantiateRunner(PlayerDefinition playerDefinition, Vector3 instantiatePos)
-        {
-
-            Debug.Assert(!playerDefinition.IsBoss);
-
-            GameObject instance;
-          
-            instance = Instantiate(m_playerPrefab, instantiatePos, Quaternion.identity);
-            m_gameplayPlayerManager.Runners.Add(instance);
-            ExecuteEvents.Execute<IPlayerDefinitionEvents>(instance, null, (a, b) => a.OnPlayerDefinitionChanged(playerDefinition));
-
-            return instance;
+            return m_gameplayPlayerManager.ActivateBoss(m_bossGameObjectPhase, m_bossSpawn.position);
         }
     }
 }

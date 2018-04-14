@@ -14,14 +14,16 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(RunnerCharacterController))]
     [RequireComponent(typeof(Stats))]
     [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(Wind))]
     public class RunnerController : MonoBehaviour, ICharacterEvents
     {
         #region References
 
+        private GameplayPlayerManager m_gameplayPlayerManager;
         private Stats m_stats;
         private RunnerCharacterController m_runnerCharacterController;
-        //private Animator m_animator;
         private RunnerInputStated inputPlayer;
+        private Wind m_wind;
 
         #endregion
 
@@ -29,8 +31,8 @@ namespace Run4YourLife.Player
         {
             m_runnerCharacterController = GetComponent<RunnerCharacterController>();
             m_stats = GetComponent<Stats>();
-            //m_animator = GetComponent<Animator>();
             inputPlayer = GetComponent<RunnerInputStated>();
+            m_wind = GetComponent<Wind>();
         }
 
         private void OnTriggerStay(Collider collider)
@@ -65,8 +67,7 @@ namespace Run4YourLife.Player
         {
             if (!CheckForShield())
             {
-                GameObject playerStateManager = FindObjectOfType<GameplayPlayerManager>().gameObject;
-                ExecuteEvents.Execute<IGameplayPlayerEvents>(playerStateManager, null, (x, y) => x.OnRunnerDeath(gameObject));
+                m_gameplayPlayerManager.OnRunnerDeath(gameObject);
             }
         }
 
@@ -112,18 +113,17 @@ namespace Run4YourLife.Player
 
         public void ActivateWind(float windForce)
         {
-            GetComponent<Wind>().AddWindForce(windForce);
+            m_wind.AddWindForce(windForce);
         }
 
         public void DeactivateWind(float windForce)
         {
-            GetComponent<Wind>().RemoveWindForce(windForce);
+            m_wind.RemoveWindForce(windForce);
         }
 
         public void AbsoluteKill()
         {
-            GameObject playerStateManager = FindObjectOfType<GameplayPlayerManager>().gameObject;
-            ExecuteEvents.Execute<IGameplayPlayerEvents>(playerStateManager, null, (x, y) => x.OnRunnerDeath(gameObject));
+            m_gameplayPlayerManager.OnRunnerDeath(gameObject);
         }
 
         #endregion

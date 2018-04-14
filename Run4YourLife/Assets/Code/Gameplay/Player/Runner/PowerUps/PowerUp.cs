@@ -28,7 +28,7 @@ namespace Run4YourLife.Player
                         GameplayPlayerManager gameplayPlayerManager = FindObjectOfType<GameplayPlayerManager>();
                         Debug.Assert(gameplayPlayerManager != null);
 
-                        foreach (GameObject runner in gameplayPlayerManager.Runners)
+                        foreach (GameObject runner in gameplayPlayerManager.RunnersAlive)
                         {
                             Apply(runner);
                         }

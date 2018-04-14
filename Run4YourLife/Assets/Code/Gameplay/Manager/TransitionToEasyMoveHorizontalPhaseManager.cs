@@ -29,7 +29,7 @@ namespace Run4YourLife.GameManagement
 
         public override void StartPhase()
         {
-            m_playerSpawner.InstantiatePlayers();
+            m_playerSpawner.ActivatePlayers();
             //We should make an animation play or somehting cool
 
             //Once the animation has ended and we are in a stable and easy to manage state,

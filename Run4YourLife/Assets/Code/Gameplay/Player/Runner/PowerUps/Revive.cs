@@ -15,7 +15,7 @@ public class Revive : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        ExecuteEvents.Execute<IGameplayPlayerEvents>(m_gameplayPlayerManager.gameObject, null, (x, y) => x.OnPlayerReviveRequest(transform.position));
+        ExecuteEvents.Execute<IGameplayPlayerEvents>(m_gameplayPlayerManager.gameObject, null, (x, y) => x.OnRunnerReviveRequest(transform.position));
         Destroy(gameObject);
     }
 }

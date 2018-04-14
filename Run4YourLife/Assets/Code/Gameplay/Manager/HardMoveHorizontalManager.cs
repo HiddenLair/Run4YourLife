@@ -52,7 +52,7 @@ namespace Run4YourLife.GameManagement
         public override void StartPhase()
         {
             m_checkPointManager.gameObject.SetActive(true);
-            m_playerSpawner.InstantiateBossPlayer();
+            m_playerSpawner.ActivateBoss();
             StartPhaseCommon();
         }
 
@@ -70,9 +70,6 @@ namespace Run4YourLife.GameManagement
 
         public override void EndPhase()
         {
-            GameObject boss = m_gameplayPlayerManager.Boss;
-            Destroy(boss);
-            m_gameplayPlayerManager.Boss = null;
             EndPhaseCommon();
         }
 
@@ -92,14 +89,14 @@ namespace Run4YourLife.GameManagement
         public override void DebugStartPhase()
         {
             m_checkPointManager.gameObject.SetActive(true);
-            m_playerSpawner.InstantiatePlayers();
+            m_playerSpawner.ActivatePlayers();
 
             StartPhaseCommon();
         }
 
         public override void DebugEndPhase()
         {
-            m_gameplayPlayerManager.DebugDestroyAllPlayersAndClear();
+            m_gameplayPlayerManager.DebugClearAllPlayers();
             EndPhaseCommon();
         }
 

@@ -7,22 +7,11 @@ namespace Run4YourLife.Player
 {
     public class PlayerInstance : MonoBehaviour, IPlayerDefinitionEvents
     {
-
-        private PlayerDefinition m_playerDefinition;
-
-        public PlayerDefinition PlayerDefinition {
-            get {
-                return m_playerDefinition;
-            }
-
-            private set {
-                m_playerDefinition = value;
-            }
-        }
+        public PlayerDefinition PlayerDefinition { get; private set; }
 
         void Start()
         {
-            if (m_playerDefinition == null)
+            if (PlayerDefinition == null)
             {
                 Debug.LogWarning("Player does not have player definition, creating an instance using the default properties");
                 PlayerDefinition defaultPlayerDefinition = CreateDefaultPlayerDefinition();

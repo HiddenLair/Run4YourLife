@@ -60,6 +60,11 @@ public class CheckPointManager : MonoBehaviour {
         return ret;
     }
 
+    public void Unsubscribe(int id)
+    {
+        idMap.Remove(id);
+    }
+
     public void Compute(int id, float speed)
     {
         if(idMap.ContainsKey(id))

@@ -15,12 +15,10 @@ namespace Run4YourLife.Player {
         private void OnTriggerEnter(Collider other)
         {
             RunnerCharacterController characterController = other.transform.parent.GetComponent<RunnerCharacterController>();
-            if (falling && characterController.Velocity.y < 0 || !falling)
+            if (other.CompareTag(Tags.RunnerFeet) && (falling && characterController.Velocity.y < 0 || !falling))
             {
-                if (other.tag == Tags.RunnerFeet) {
-                    characterController.Bounce(GetBounceForce());
-                    JumpedOn();
-                }
+                characterController.Bounce(GetBounceForce());
+                JumpedOn();
             }
         }
 

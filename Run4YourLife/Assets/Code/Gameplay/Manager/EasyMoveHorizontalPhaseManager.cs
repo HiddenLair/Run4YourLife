@@ -86,13 +86,13 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugStartPhase()
         {
-            m_playerSpawner.InstantiatePlayers();
+            m_playerSpawner.ActivatePlayers();
             StartPhaseCommon();
         }
 
         public override void DebugEndPhase()
         {
-            m_gameplayPlayerManager.DebugDestroyAllPlayersAndClear();
+            m_gameplayPlayerManager.DebugClearAllPlayers();
             EndPhaseCommon();
         }
 

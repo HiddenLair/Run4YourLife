@@ -64,7 +64,7 @@ namespace Run4YourLife.GameManagement
 
         public override void StartPhase()
         {
-            m_playerSpawner.InstantiateBossPlayer();
+            m_playerSpawner.ActivateBoss();
             StartPhaseCommon();
         }
 
@@ -108,7 +108,7 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugStartPhase()
         {
-            m_playerSpawner.InstantiatePlayers();
+            m_playerSpawner.ActivatePlayers();
             m_virtualCamera.transform.position = m_bossFightStartingCameraPositionDebug.position;
 
             StartPhaseCommon();
@@ -118,7 +118,7 @@ namespace Run4YourLife.GameManagement
         {
             StopAllCoroutines();
 
-            m_gameplayPlayerManager.DebugDestroyAllPlayersAndClear();
+            m_gameplayPlayerManager.DebugClearAllPlayers();
 
             EndPhaseCommon();
         }

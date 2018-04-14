@@ -20,6 +20,16 @@ public class Walker : MonoBehaviour {
         id = checkPointManager.Subscribe();
     }
 
+    private void OnEnable()
+    {
+        id = checkPointManager.Subscribe();
+    }
+
+    private void OnDisable()
+    {
+        checkPointManager.Unsubscribe(id);
+    }
+
     void Update()
     {
         if (increaseSpeedOverTime)

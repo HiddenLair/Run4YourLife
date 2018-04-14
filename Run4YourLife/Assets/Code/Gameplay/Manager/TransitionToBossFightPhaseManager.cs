@@ -53,8 +53,6 @@ namespace Run4YourLife.GameManagement
 
             Debug.Log("Boss should do something fancy");
             Debug.Log("Camera should continue to move forward");
-            Destroy(boss);
-            m_gameplayPlayerManager.Boss = null;
 
             m_virtualCamera.Follow = cameraHandleInstance.transform;
             m_virtualCamera.LookAt = cameraHandleInstance.transform;
