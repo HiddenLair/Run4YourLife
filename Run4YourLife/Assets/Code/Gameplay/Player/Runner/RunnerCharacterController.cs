@@ -160,9 +160,8 @@ namespace Run4YourLife.Player
         private void GravityAndDrag()
         {
             m_velocity.y += m_gravity * Time.deltaTime;
-
-            m_velocity.x = Mathf.Lerp(m_velocity.x, 0.0f, m_horizontalDrag * Time.deltaTime);
-            if(Mathf.Abs(m_velocity.x) < 1.0f)
+            m_velocity.x = m_velocity.x * (1 - m_horizontalDrag * Time.deltaTime);
+            if (Mathf.Abs(m_velocity.x) < 1.0f)
             {
                 m_velocity.x = 0;
             }
@@ -392,7 +391,13 @@ namespace Run4YourLife.Player
                 MoveCharacterContoller(m_velocity * Time.deltaTime);
             }
 
-            yield return new WaitForSeconds(0.5f);
+            float endOfMovement = Time.time + 0.5f;
+            while (Time.time < endOfMovement)
+            {
+                yield return null;
+                GravityAndDrag();
+                MoveCharacterContoller(m_velocity * Time.deltaTime);
+            }
 
             m_horizontalDrag = m_baseHorizontalDrag;
             m_isBeingImpulsed = false;
