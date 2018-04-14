@@ -4,9 +4,8 @@ namespace Run4YourLife.Player
 {
     public enum CharacterType
     {
-        Red,
+        Purple,
         Green,
-        Blue,
         Orange
     }
 

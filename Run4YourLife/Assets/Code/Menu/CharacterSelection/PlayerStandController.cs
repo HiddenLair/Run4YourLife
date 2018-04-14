@@ -1,54 +1,78 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using TMPro;
 using UnityEngine;
 
-using Run4YourLife.Player;
 using Run4YourLife.Input;
-using System;
+using Run4YourLife.Player;
 
 namespace Run4YourLife.CharacterSelection
 {
-    [RequireComponent(typeof(PlayerStandControllerControlScheme))]
-    public class PlayerStandController : MonoBehaviour, IPlayerDefinitionEvents
+    public abstract class PlayerStandController : MonoBehaviour, IPlayerDefinitionEvents
     {
-
         #region References
 
-        private CharacterSelectionManager m_characterSelectionManager;
-        private PlayerDefinition m_playerDefinition;
-        private PlayerManager m_playerManager;
-        private PlayerStandControllerControlScheme m_controlScheme;
+        protected PlayerStandsManager playerStandsManager;
+        protected PlayerDefinition playerDefinition;
+        protected PlayerManager playerManager;
+        protected PlayerStandControllerControlScheme controlScheme;
 
         #endregion
 
         #region Stands
 
-        [SerializeField]
-        private GameObject redRunner;
-
-        [SerializeField]
-        private GameObject greenRunner;
-
-        [SerializeField]
-        private GameObject blueRunner;
-
-        [SerializeField]
-        private GameObject orangeRunner;
-
-        private GameObject m_activeStand;
+        protected GameObject activeStand;
 
         #endregion
 
+        [SerializeField]
+        protected GameObject ui;
+
+        [SerializeField]
+        protected TextMeshPro readyText;
+
+        [SerializeField]
+        protected Transform spawnTransform;
+
+        protected bool ready = false;
+
+        protected float rotationY = 0.0f;
 
         void Awake()
         {
-            m_characterSelectionManager = Component.FindObjectOfType<CharacterSelectionManager>();
-            Debug.Assert(m_characterSelectionManager != null);
+            playerStandsManager = FindObjectOfType<PlayerStandsManager>();
+            Debug.Assert(playerStandsManager != null);
 
-            m_playerManager = Component.FindObjectOfType<PlayerManager>();
-            Debug.Assert(m_playerManager != null);
+            playerManager = FindObjectOfType<PlayerManager>();
+            Debug.Assert(playerManager != null);
 
-            m_controlScheme = GetComponent<PlayerStandControllerControlScheme>();
+            controlScheme = GetComponent<PlayerStandControllerControlScheme>();
+            Debug.Assert(controlScheme != null);
+        }
+
+        void Update()
+        {
+            if(playerDefinition != null)
+            {
+                UpdatePlayer();
+            }
+            else
+            {
+                rotationY = 0.0f;
+            }
+
+            if(activeStand != null)
+            {
+                activeStand.transform.rotation = Quaternion.AngleAxis(rotationY, Vector3.up);
+            }
+        }
+
+        public bool GetReady()
+        {
+            return ready;
+        }
+
+        public PlayerDefinition GetPlayerDefinition()
+        {
+            return playerDefinition;
         }
 
         public void OnPlayerDefinitionChanged(PlayerDefinition playerDefinition)
@@ -63,113 +87,60 @@ namespace Run4YourLife.CharacterSelection
             }
         }
 
-        public void SetPlayerDefinition(PlayerDefinition playerDefinition)
+        protected void SetPlayerDefinition(PlayerDefinition playerDefinition)
         {
-            m_playerDefinition = playerDefinition;
-            m_activeStand = SpawnPlayerStand(playerDefinition);
-            m_controlScheme.Active = true;
+            this.playerDefinition = playerDefinition;
+            activeStand = SpawnPlayerStand(playerDefinition);
+            controlScheme.Active = true;
+            ui.SetActive(true);
         }
 
-        public void ClearPlayerDefinition()
+        protected void ClearPlayerDefinition()
         {
-            m_playerDefinition = null;
-            Destroy(m_activeStand);
-            m_activeStand = null;
-            m_controlScheme.Active = false;
+            playerDefinition = null;
+            Destroy(activeStand);
+            activeStand = null;
+            controlScheme.Active = false;
+            ui.SetActive(false);
         }
 
-        private GameObject SpawnPlayerStand(PlayerDefinition player)
+        private GameObject SpawnPlayerStand(PlayerDefinition playerDefinition)
         {
-            GameObject prefab = GetStandPrefabForPlayer(player);
-            GameObject instance = Instantiate(prefab, transform, false);
-            if (player.IsBoss)
-            {
-                //TODO
-                //BossDecoration bossDecoration = instance.GetComponent<BossDecoration>();
-                //bossDecoration.enable
-            }
+            GameObject prefab = GetStandPrefabForPlayer(playerDefinition);
+            GameObject instance = Instantiate(prefab, spawnTransform, false);
+
             return instance;
         }
 
-        private GameObject GetStandPrefabForPlayer(PlayerDefinition player)
+        protected abstract GameObject GetStandPrefabForPlayer(PlayerDefinition playerDefinition);
+
+        protected virtual void UpdatePlayer()
         {
-            GameObject prefab = null;
-            switch (player.CharacterType)
+            if(controlScheme.ready.Started())
             {
-                case CharacterType.Blue:
-                    prefab = blueRunner;
-                    break;
-                case CharacterType.Red:
-                    prefab = redRunner;
-                    break;
-                case CharacterType.Orange:
-                    prefab = orangeRunner;
-                    break;
-                case CharacterType.Green:
-                    prefab = greenRunner;
-                    break;
+                ready = true;
+                readyText.gameObject.SetActive(true);
             }
-
-            Debug.Assert(prefab != null);
-
-            return prefab;
-        }
-
-        void Update()
-        {
-            if (m_playerDefinition != null)
+            else if(controlScheme.leave.Started())
             {
-                UpdatePlayer();
+                if(ready)
+                {
+                    ready = false;
+                    readyText.gameObject.SetActive(false);
+                }
+                else
+                {
+                    playerStandsManager.Leave(this);
+                }
             }
-        }
-
-        private void UpdatePlayer()
-        {            
-            if (m_controlScheme.getBoss.Started())
+            else if(controlScheme.exit.Started())
             {
-                m_playerManager.SetPlayerAsBoss(m_playerDefinition);
+                playerStandsManager.GoMainMenu();
             }
-            else if (m_controlScheme.leaveGame.Started())
+            else if(Mathf.Abs(controlScheme.rotate.Value()) > 0.5f)
             {
-                m_playerManager.RemovePlayer(m_playerDefinition);
+                rotationY += -200.0f * controlScheme.rotate.Value() * Time.deltaTime;
             }
-            else if (m_controlScheme.nextStand.Started())
-            {
-                ChangePlayerCharacter(AdvanceType.Next);
-            }
-            else if(m_controlScheme.previousStand.Started())
-            {
-                ChangePlayerCharacter(AdvanceType.Previous);
-            }
-            else if(m_controlScheme.startGame.Started())
-            {
-                m_characterSelectionManager.OnGameStart();
-            }
-            else if(m_controlScheme.mainMenu.Started())
-            {
-                m_characterSelectionManager.OnMainMenuStart();
-            }
-        }
-
-        private enum AdvanceType
-        {
-            Next = 1,
-            Previous = -1
-        }
-
-        private void ChangePlayerCharacter(AdvanceType advanceType)
-        {
-            PlayerDefinition playerDefinition = this.m_playerDefinition;
-            ClearPlayerDefinition();
-            playerDefinition.CharacterType = GetDeltaCharacterType(playerDefinition.CharacterType, (int)advanceType);
-            SetPlayerDefinition(playerDefinition);
-        }
-
-        private CharacterType GetDeltaCharacterType(CharacterType characterType, int delta)
-        {
-            int nEnumElements = Enum.GetValues(typeof(CharacterType)).Length;
-            int newCharacterTypeIndex = (nEnumElements + ((int)characterType) + delta) % nEnumElements;
-            return (CharacterType)newCharacterTypeIndex;
         }
     }
 }
