@@ -22,12 +22,18 @@ public class Walker : MonoBehaviour {
 
     private void OnEnable()
     {
-        id = checkPointManager.Subscribe();
+        if(checkPointManager != null)
+        {
+            id = checkPointManager.Subscribe();
+        }
     }
 
     private void OnDisable()
     {
-        checkPointManager.Unsubscribe(id);
+        if (checkPointManager != null)
+        {
+            checkPointManager.Unsubscribe(id);
+        }
     }
 
     void Update()
