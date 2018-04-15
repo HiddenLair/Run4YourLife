@@ -1,5 +1,4 @@
-﻿using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 
 using Run4YourLife.Input;
 using Run4YourLife.Player;
@@ -27,7 +26,10 @@ namespace Run4YourLife.CharacterSelection
         protected GameObject ui;
 
         [SerializeField]
-        protected TextMeshPro readyText;
+        protected ScaleTick readyBoxScaleTick;
+
+        [SerializeField]
+        protected ScaleTick readyTextScaleTick;
 
         [SerializeField]
         protected Transform spawnTransform;
@@ -118,15 +120,21 @@ namespace Run4YourLife.CharacterSelection
         {
             if(controlScheme.Ready.Started())
             {
+                if(!ready)
+                {
+                    readyBoxScaleTick.Tick();
+                    readyTextScaleTick.Tick();
+                }
+
                 ready = true;
-                readyText.gameObject.SetActive(true);
+                readyTextScaleTick.gameObject.SetActive(true);
             }
             else if(controlScheme.Leave.Started())
             {
                 if(ready)
                 {
                     ready = false;
-                    readyText.gameObject.SetActive(false);
+                    readyTextScaleTick.gameObject.SetActive(false);
                 }
                 else
                 {

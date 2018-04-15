@@ -55,6 +55,7 @@ GameObject:
   - component: {fileID: 23572751509548242}
   - component: {fileID: 222545303945342652}
   - component: {fileID: 114015469747117826}
+  - component: {fileID: 114487345422533756}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -87,6 +88,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4016642173523254}
   - component: {fileID: 212743699875420814}
+  - component: {fileID: 114766194689242696}
   m_Layer: 0
   m_Name: WoodenBox
   m_TagString: Untagged
@@ -345,6 +347,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adf25c6c58f3a0d4a86016c96d5ec62c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114487345422533756
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1557967148600036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13d7566159036fb418b21e5885f52e9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleMultiplier: 1.5
+  timeS: 0.1
+--- !u!114 &114766194689242696
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1630461478798856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13d7566159036fb418b21e5885f52e9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleMultiplier: 1.5
+  timeS: 0.1
 --- !u!114 &114779331646570680
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -357,7 +385,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ui: {fileID: 1011374967317024}
-  readyText: {fileID: 114015469747117826}
+  readyBoxScaleTick: {fileID: 114766194689242696}
+  readyTextScaleTick: {fileID: 114487345422533756}
   spawnTransform: {fileID: 4986715368185946}
   boss: {fileID: 1952039067271902, guid: 20073b34bb10fcd4d88c135b833d71da, type: 2}
 --- !u!212 &212743699875420814
