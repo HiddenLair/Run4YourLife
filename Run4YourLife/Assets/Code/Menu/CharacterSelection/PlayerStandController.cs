@@ -120,17 +120,6 @@ namespace Run4YourLife.CharacterSelection
         {
             if(controlScheme.Ready.Started())
             {
-                if(!ready)
-                {
-                    readyBoxScaleTick.Tick();
-                    readyTextScaleTick.Tick();
-                }
-
-                ready = true;
-                readyTextScaleTick.gameObject.SetActive(true);
-            }
-            else if(controlScheme.Leave.Started())
-            {
                 if(ready)
                 {
                     ready = false;
@@ -138,7 +127,10 @@ namespace Run4YourLife.CharacterSelection
                 }
                 else
                 {
-                    playerStandsManager.Leave(this);
+                    ready = true;
+                    readyBoxScaleTick.Tick();
+                    readyTextScaleTick.Tick();
+                    readyTextScaleTick.gameObject.SetActive(true);
                 }
             }
             else if(controlScheme.Exit.Started())

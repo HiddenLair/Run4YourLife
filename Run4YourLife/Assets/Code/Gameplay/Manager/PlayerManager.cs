@@ -9,27 +9,9 @@ namespace Run4YourLife.Player
         public class PlayerChangedEvent : UnityEvent<PlayerDefinition>
         { }
 
-        public class PlayerLeftEvent : UnityEvent<PlayerDefinition>
-        { }
-
         private List<PlayerDefinition> players = new List<PlayerDefinition>();
-        private List<PlayerDefinition> playersToDelete = new List<PlayerDefinition>();
 
         public PlayerChangedEvent OnPlayerChanged = new PlayerChangedEvent();
-        public PlayerLeftEvent OnPlayerLeft = new PlayerLeftEvent();
-
-        void LateUpdate()
-        {
-            if (playersToDelete.Count > 0)
-            {
-                foreach (PlayerDefinition player in playersToDelete)
-                {
-                    players.Remove(player);
-                    OnPlayerLeft.Invoke(player);
-                }
-                playersToDelete.Clear();
-            }
-        }
 
         public List<PlayerDefinition> GetPlayers()
         {
@@ -79,11 +61,6 @@ namespace Run4YourLife.Player
         {
             players.Add(playerDefinition);
             OnPlayerChanged.Invoke(playerDefinition);
-        }
-
-        public void RemovePlayer(PlayerDefinition player)
-        {
-            playersToDelete.Add(player);
         }
     }
 }

@@ -28,7 +28,6 @@ namespace Run4YourLife.CharacterSelection
             Debug.Assert(characterSelectionManager != null);
 
             playerManager.OnPlayerChanged.AddListener(OnPlayerChanged);
-            playerManager.OnPlayerLeft.AddListener(OnPlayerLeft);
         }
 
         void Update()
@@ -109,11 +108,6 @@ namespace Run4YourLife.CharacterSelection
         }
 
         #region Boss And Runner StandController Management
-
-        public void Leave(PlayerStandController playerStandController)
-        {
-            playerManager.RemovePlayer(playerStandController.GetPlayerDefinition());
-        }
 
         public void SetAsBoss(RunnerStandController runnerStandController)
         {
