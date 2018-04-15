@@ -22,7 +22,8 @@ GameObject:
   - component: {fileID: 33066804509302534}
   - component: {fileID: 135970226726335762}
   - component: {fileID: 23712116497717872}
-  m_Layer: 0
+  - component: {fileID: 114898743560498886}
+  m_Layer: 9
   m_Name: ReboteAngular
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,6 +84,20 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1238561240481746}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114898743560498886
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1238561240481746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd7144b7e13849f46acba789926c0302, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  falling: 0
+  direction: {x: -1.09, y: 1, z: 0}
+  bounceOverMeForce: 4
 --- !u!135 &135970226726335762
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -90,7 +105,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1238561240481746}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5

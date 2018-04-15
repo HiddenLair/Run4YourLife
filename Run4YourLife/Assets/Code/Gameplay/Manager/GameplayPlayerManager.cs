@@ -106,7 +106,7 @@ namespace Run4YourLife.GameManagement {
                 });
                 playerManager.AddPlayer(new PlayerDefinition()
                 {
-                    CharacterType = CharacterType.Orange,
+                    CharacterType = CharacterType.Green,
                     ID = 4,
                     inputDevice = new Input.InputDevice(4),
                     IsBoss = false
@@ -148,7 +148,7 @@ namespace Run4YourLife.GameManagement {
 
         private GameObject GetRunnerForPlayer(PlayerDefinition playerDefinition)
         {
-            return m_sceneRunners[playerDefinition.ID - 1];
+            return m_sceneRunners[(int)playerDefinition.CharacterType];
         }
 
         private void InitializeBoss(PlayerDefinition playerDefinition)

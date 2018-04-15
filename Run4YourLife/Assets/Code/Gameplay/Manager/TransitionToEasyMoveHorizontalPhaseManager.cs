@@ -39,9 +39,10 @@ namespace Run4YourLife.GameManagement
         private IEnumerator StartPhaseCoroutine()
         {
             m_playerSpawner.ActivateRunners();
-            m_startingCutscene.Play();
-            yield return new WaitUntil(() => m_startingCutscene.state != PlayState.Playing); // wait until cutscene has completed
+            //m_startingCutscene.Play();
+            //yield return new WaitUntil(() => m_startingCutscene.state != PlayState.Playing); // wait until cutscene has completed
             m_playerSpawner.ActivateBoss();
+            yield return null;
             m_gameManager.EndExecutingPhaseAndStartPhase(GamePhase.EasyMoveHorizontal);
         }
 

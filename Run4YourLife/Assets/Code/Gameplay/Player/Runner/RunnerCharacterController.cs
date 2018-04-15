@@ -112,11 +112,13 @@ namespace Run4YourLife.Player
         private void OnEnable()
         {
             m_checkCoyoteGroundedCoroutine = StartCoroutine(CheckCoyoteGroundedCoroutine());
+            m_playerControlScheme.Active = true;
         }
 
         private void OnDisable()
         {
             StopCoroutine(m_checkCoyoteGroundedCoroutine);
+            m_playerControlScheme.Active = false;
         }
 
         private IEnumerator CheckCoyoteGroundedCoroutine()
