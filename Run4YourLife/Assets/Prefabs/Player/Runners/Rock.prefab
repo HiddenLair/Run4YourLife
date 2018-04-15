@@ -23,7 +23,9 @@ GameObject:
   - component: {fileID: 135075286858855792}
   - component: {fileID: 23326476624750156}
   - component: {fileID: 54292389946996392}
-  - component: {fileID: 114172688203833288}
+  - component: {fileID: 114989720861498776}
+  - component: {fileID: 114345628602076570}
+  - component: {fileID: 114014172224337828}
   m_Layer: 0
   m_Name: Rock
   m_TagString: Untagged
@@ -100,7 +102,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
---- !u!114 &114172688203833288
+--- !u!114 &114014172224337828
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -108,10 +110,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 1859296258977212}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e8ba3d6aa5a14549b20a1099c174481, type: 3}
+  m_Script: {fileID: 11500000, guid: 63050f1f1f820b7469d10252c9744db2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeAlive: 5
+  points: 10
+--- !u!114 &114345628602076570
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1859296258977212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a209290dd529d7949b8bdc0f67ce24e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114989720861498776
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1859296258977212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4bff627ec8fec4586c2d3764a5adca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &135075286858855792
 SphereCollider:
   m_ObjectHideFlags: 1

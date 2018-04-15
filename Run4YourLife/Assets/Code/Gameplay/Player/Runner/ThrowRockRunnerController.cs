@@ -22,18 +22,26 @@ namespace Run4YourLife.Player {
         [SerializeField]
         private float angle;
 
+        [SerializeField]
+        private float Reload;
+
         private RunnerInputStated inputPlayer;
+        private float timer;
+        private PlayerDefinition myDefinition;
 
         private void Awake()
         {
             inputPlayer = GetComponent<RunnerInputStated>();
+            timer = Time.time;
+            myDefinition = GetComponent<PlayerInstance>().PlayerDefinition;
         }
 
         private void Update()
         {
-            if (inputPlayer.GetRockInput())
+            if (inputPlayer.GetRockInput() && timer <= Time.time)
             {
                 ThrowRock();
+                timer = Time.time + Reload;
             }
         }
 
@@ -42,6 +50,7 @@ namespace Run4YourLife.Player {
             GameObject rock = Instantiate(m_rockPrefab, m_rockInstantiationTransform.position, Quaternion.identity);
             Rigidbody rigidbody = rock.GetComponent<Rigidbody>();
             rigidbody.velocity = GetThrowVelocity(force, angle);
+            rock.GetComponent<RockPoints>().SetPlayerDefinition(myDefinition);
         }
 
         private Vector3 GetThrowVelocity(float force, float angle)

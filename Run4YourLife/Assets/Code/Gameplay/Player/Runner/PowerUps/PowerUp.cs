@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-
+using Run4YourLife.Player;
+using UnityEngine.EventSystems;
 using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.Player
@@ -11,6 +12,9 @@ namespace Run4YourLife.Player
         [SerializeField]
         private Type m_type;
 
+        [SerializeField]
+        private float points;
+
         public abstract void Apply(GameObject runner);
 
         private void OnTriggerEnter(Collider other)
@@ -21,6 +25,8 @@ namespace Run4YourLife.Player
                     {
                         Debug.Assert(other.CompareTag(Tags.Runner));
                         Apply(other.gameObject);
+                        PlayerDefinition player = other.gameObject.GetComponent<PlayerInstance>().PlayerDefinition;
+                        ExecuteEvents.Execute<IScoreEvents>(other.gameObject, null, (x, y) => x.OnAddPoints(player, points));
                     }
                     break;
                 case Type.GROUP:
