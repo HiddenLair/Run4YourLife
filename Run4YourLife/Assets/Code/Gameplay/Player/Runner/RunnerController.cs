@@ -33,6 +33,8 @@ namespace Run4YourLife.Player
             m_stats = GetComponent<Stats>();
             inputPlayer = GetComponent<RunnerInputStated>();
             m_wind = GetComponent<Wind>();
+            m_gameplayPlayerManager = FindObjectOfType<GameplayPlayerManager>();
+            Debug.Assert(m_gameplayPlayerManager != null);
         }
 
         private void OnTriggerStay(Collider collider)

@@ -30,15 +30,29 @@ namespace Run4YourLife.GameManagement
             GameObject[] players = new GameObject[m_gameplayPlayerManager.PlayerCount];
             uint index = 0;
 
+            ActivateRunners(players, ref index);
+            players[index] = ActivateBoss();
+
+            return players;
+        }
+
+        public GameObject[] ActivateRunners()
+        {
+            GameObject[] runners = new GameObject[m_gameplayPlayerManager.Runners.Count];
+            uint index = 0;
+
+            ActivateRunners(runners, ref index);
+
+            return runners;
+        }
+
+        private void ActivateRunners(GameObject[] players, ref uint index)
+        {
             foreach (PlayerDefinition runnerPlayerDefinition in m_gameplayPlayerManager.RunnerPlayerDefinitions)
             {
                 players[index] = m_gameplayPlayerManager.ActivateRunner(runnerPlayerDefinition, m_runnerSpawns[index].position);
                 index++;
             }
-
-            players[index] = ActivateBoss();
-
-            return players;
         }
 
         public GameObject ActivateBoss()

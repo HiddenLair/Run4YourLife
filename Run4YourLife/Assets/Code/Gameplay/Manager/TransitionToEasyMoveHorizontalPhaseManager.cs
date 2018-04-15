@@ -1,16 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
-using Run4YourLife.Player;
+using UnityEngine.Playables;
 
 namespace Run4YourLife.GameManagement
 {
     public class TransitionToEasyMoveHorizontalPhaseManager : GamePhaseManager
     {
+        [SerializeField]
+        private PlayableDirector m_startingCutscene;
+
         private GameManager m_gameManager;
         private PlayerSpawner m_playerSpawner;
 
+        private Coroutine m_startPhaseCoroutine;
 
         #region Initialization
 
@@ -29,11 +33,15 @@ namespace Run4YourLife.GameManagement
 
         public override void StartPhase()
         {
-            m_playerSpawner.ActivatePlayers();
-            //We should make an animation play or somehting cool
+            m_startPhaseCoroutine = StartCoroutine(StartPhaseCoroutine());
+        }
 
-            //Once the animation has ended and we are in a stable and easy to manage state,
-            //we transition directly to the next state
+        private IEnumerator StartPhaseCoroutine()
+        {
+            m_playerSpawner.ActivateRunners();
+            m_startingCutscene.Play();
+            yield return new WaitUntil(() => m_startingCutscene.state != PlayState.Playing); // wait until cutscene has completed
+            m_playerSpawner.ActivateBoss();
             m_gameManager.EndExecutingPhaseAndStartPhase(GamePhase.EasyMoveHorizontal);
         }
 
@@ -48,6 +56,9 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugEndPhase()
         {
+            StopCoroutine(m_startPhaseCoroutine);
+            m_startingCutscene.Stop();
+            m_startPhaseCoroutine = null;
         }
     }
 }

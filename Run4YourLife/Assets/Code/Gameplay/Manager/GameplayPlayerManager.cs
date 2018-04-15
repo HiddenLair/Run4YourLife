@@ -138,7 +138,11 @@ namespace Run4YourLife.GameManagement {
             OnPlayerDefinitionChanged(runner, playerDefinition);
 
 
-            m_runners.Add(runner);
+            if(!m_runnersAlive.Contains(runner))
+            {
+                m_runners.Add(runner);
+            }
+
             m_runnerGameObject[playerDefinition] = runner;
         }
 
@@ -197,6 +201,7 @@ namespace Run4YourLife.GameManagement {
 
             runner.transform.position = position;
             runner.SetActive(true);
+            m_runnersAlive.Add(runner);
             return runner;
         }
 
