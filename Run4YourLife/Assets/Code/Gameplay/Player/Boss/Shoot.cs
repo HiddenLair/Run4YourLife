@@ -53,8 +53,6 @@ namespace Run4YourLife.Player
             GetComponents();
 
             uiManager = GameObject.FindGameObjectWithTag("UI");
-
-            head.LookAt(crossHair);
         }
 
         private void Start()
@@ -69,8 +67,9 @@ namespace Run4YourLife.Player
         }
 
         private void LateUpdate()
-        {
-            head.LookAt(crossHair);
+        {            
+            head.LookAt(crossHair.position);
+            head.Rotate(0, -90, 0);
             head.rotation *= initialRotation;
             /*Quaternion lookRotation = Quaternion.LookRotation(crossHair.position - head.position);
             head.rotation = lookRotation * initialRotation;*/
