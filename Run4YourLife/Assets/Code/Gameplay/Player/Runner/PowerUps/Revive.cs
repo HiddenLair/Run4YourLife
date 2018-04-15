@@ -11,6 +11,7 @@ public class Revive : MonoBehaviour {
     private void Awake()
     {
         m_gameplayPlayerManager = FindObjectOfType<GameplayPlayerManager>();
+        Debug.Assert(m_gameplayPlayerManager);
     }
 
     private void OnTriggerEnter(Collider other)
