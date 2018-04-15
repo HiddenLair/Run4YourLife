@@ -1121,7 +1121,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1095223732133840}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.7985597, y: 0, z: -0.062942505}
+  m_LocalPosition: {x: 0.58, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4540691455470320}
@@ -2001,43 +2001,8 @@ MonoBehaviour:
     type: 2}
   m_rockInstantiationTransform: {fileID: 4072489587312748}
   m_graphics: {fileID: 4540691455470320}
-  m_angle:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 10
-      inSlope: 58.67608
-      outSlope: 58.67608
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1
-      value: 50
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  m_force:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 10
-      inSlope: 17.236328
-      outSlope: 17.236328
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1
-      value: 20
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  m_timeToFullyChargeThrow: 1.5
+  force: 0
+  angle: 0
 --- !u!114 &114540371618756184
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2057,6 +2022,9 @@ MonoBehaviour:
   m_hoverDuration: 0.1
   m_releaseJumpButtonVelocityReductor: 10
   m_endOfJumpGravity: -35
+  m_dashCooldown: 2
+  m_dashDistance: 15
+  m_dashHorizontalDrag: 10
   m_timeToIdle: 5
   jumpClip: {fileID: 8300000, guid: 8bc5dbb3f916c7d4bb404c8a010f4106, type: 3}
   bounceClip: {fileID: 8300000, guid: 4c27b064170a56b48907e5a15905f521, type: 3}

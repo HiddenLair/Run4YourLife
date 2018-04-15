@@ -38,7 +38,7 @@ namespace Run4YourLife.Input
             return verticalInput;
         }
 
-        public bool GetInteractInput()
+        public bool GetDashInput()
         {
             return dashInput;
         }
