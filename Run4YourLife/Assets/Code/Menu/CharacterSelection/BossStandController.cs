@@ -28,7 +28,7 @@ namespace Run4YourLife.CharacterSelection
 
             if(!ready)
             {
-                if(controlScheme.setAsRunner.Started())
+                if(controlScheme.SetAsRunner.Started())
                 {
                     playerStandsManager.SetAsRunner(this);
                 }

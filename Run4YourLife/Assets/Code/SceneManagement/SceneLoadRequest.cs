@@ -15,6 +15,7 @@ namespace Run4YourLife.SceneManagement
     [System.Serializable]
     public class SceneLoadRequestData
     {
+        public bool loadScene = true;
         public string sceneName;
         public LoadSceneMode loadSceneMode = LoadSceneMode.Additive;
         public LoadEvent loadEvent = LoadEvent.Custom;

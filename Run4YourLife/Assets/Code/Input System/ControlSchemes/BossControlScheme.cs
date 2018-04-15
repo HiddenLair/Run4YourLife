@@ -8,42 +8,41 @@ namespace Run4YourLife.Input
 {
     public class BossControlScheme : ControlScheme
     {
-        public Action moveTrapIndicatorVertical;
-        public Action moveTrapIndicatorHorizontal;
+        public Action MoveTrapIndicatorVertical { get; private set; }
+        public Action MoveTrapIndicatorHorizontal { get; private set; }
 
-        public Action skill1;
-        public Action skill2;
-        public Action skill3;
-        public Action skill4;
+        public Action Skill1 { get; private set; }
+        public Action Skill2 { get; private set; }
+        public Action Skill3 { get; private set; }
+        public Action Skill4 { get; private set; }
 
-        public Action nextSet;
-        public Action previousSet;
+        public Action NextSet { get; private set; }
+        public Action PreviousSet { get; private set; }
 
-        public Action shoot;
-        public Action melee;
+        public Action Shoot { get; private set; }
+        public Action Melee { get; private set; }
 
-        public Action moveLaserVertical;
-        public Action moveLaserHorizontal;
-
+        public Action MoveLaserVertical { get; private set; }
+        public Action MoveLaserHorizontal { get; private set; }
 
         public BossControlScheme()
         {
-            actions.Add(moveTrapIndicatorVertical = new Action(new InputSource(Axis.LEFT_VERTICAL)));
-            actions.Add(moveTrapIndicatorHorizontal = new Action(new InputSource(Axis.LEFT_HORIZONTAL)));
+            actions.Add(MoveTrapIndicatorVertical = new Action(new InputSource(Axis.LEFT_VERTICAL)));
+            actions.Add(MoveTrapIndicatorHorizontal = new Action(new InputSource(Axis.LEFT_HORIZONTAL)));
 
-            actions.Add(skill1 = new Action(new InputSource(Button.A)));
-            actions.Add(skill2 = new Action(new InputSource(Button.X)));
-            actions.Add(skill3 = new Action(new InputSource(Button.Y)));
-            actions.Add(skill4 = new Action(new InputSource(Button.B)));
+            actions.Add(Skill1 = new Action(new InputSource(Button.A)));
+            actions.Add(Skill2 = new Action(new InputSource(Button.X)));
+            actions.Add(Skill3 = new Action(new InputSource(Button.Y)));
+            actions.Add(Skill4 = new Action(new InputSource(Button.B)));
 
-            actions.Add(nextSet = new Action(new InputSource(Button.RB)));
-            actions.Add(previousSet = new Action(new InputSource(Button.LB)));
+            actions.Add(NextSet = new Action(new InputSource(Button.RB)));
+            actions.Add(PreviousSet = new Action(new InputSource(Button.LB)));
 
-            actions.Add(shoot = new Action(new InputSource(Trigger.RIGHT)));
-            actions.Add(melee = new Action(new InputSource(Trigger.LEFT)));
+            actions.Add(Shoot = new Action(new InputSource(Trigger.RIGHT)));
+            actions.Add(Melee = new Action(new InputSource(Trigger.LEFT)));
 
-            actions.Add(moveLaserVertical = new Action(new InputSource(Axis.RIGHT_VERTICAL)));
-            actions.Add(moveLaserHorizontal = new Action(new InputSource(Axis.RIGHT_HORIZONTAL)));
+            actions.Add(MoveLaserVertical = new Action(new InputSource(Axis.RIGHT_VERTICAL)));
+            actions.Add(MoveLaserHorizontal = new Action(new InputSource(Axis.RIGHT_HORIZONTAL)));
         }
     }
 }

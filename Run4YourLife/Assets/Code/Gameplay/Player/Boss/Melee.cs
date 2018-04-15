@@ -59,7 +59,7 @@ namespace Run4YourLife.Player
         {
             if(ready.Get())
             {
-                if(controlScheme.melee.Value() > triggerSensivility)
+                if(controlScheme.Melee.Value() > triggerSensivility)
                 {
                     if(currentTimeS >= reloadTimeS && !alreadyPressed)
                     {

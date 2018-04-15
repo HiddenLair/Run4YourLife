@@ -2,11 +2,11 @@
 {
     public class BossStandControllerControlScheme : PlayerStandControllerControlScheme
     {
-        public Action setAsRunner;
+        public Action SetAsRunner { get; private set; }
 
         public BossStandControllerControlScheme()
         {
-            actions.Add(setAsRunner = new Action(new InputSource(Button.X)));
+            actions.Add(SetAsRunner = new Action(new InputSource(Button.X)));
         }
     }
 }

@@ -116,12 +116,12 @@ namespace Run4YourLife.CharacterSelection
 
         protected virtual void UpdatePlayer()
         {
-            if(controlScheme.ready.Started())
+            if(controlScheme.Ready.Started())
             {
                 ready = true;
                 readyText.gameObject.SetActive(true);
             }
-            else if(controlScheme.leave.Started())
+            else if(controlScheme.Leave.Started())
             {
                 if(ready)
                 {
@@ -133,13 +133,13 @@ namespace Run4YourLife.CharacterSelection
                     playerStandsManager.Leave(this);
                 }
             }
-            else if(controlScheme.exit.Started())
+            else if(controlScheme.Exit.Started())
             {
                 playerStandsManager.GoMainMenu();
             }
-            else if(Mathf.Abs(controlScheme.rotate.Value()) > 0.5f)
+            else if(Mathf.Abs(controlScheme.Rotate.Value()) > 0.5f)
             {
-                rotationY += -200.0f * controlScheme.rotate.Value() * Time.deltaTime;
+                rotationY += -200.0f * controlScheme.Rotate.Value() * Time.deltaTime;
             }
         }
     }

@@ -105,12 +105,12 @@ namespace Run4YourLife.Player
 
             if (phase == Phase.Phase3)
             {
-                if (bossControlScheme.nextSet.Started())
+                if (bossControlScheme.NextSet.Started())
                 {
                     currentType = Type.TRAP;
                 }
 
-                if (bossControlScheme.previousSet.Started())
+                if (bossControlScheme.PreviousSet.Started())
                 {
                     currentType = Type.SKILL;
                 }
@@ -119,7 +119,7 @@ namespace Run4YourLife.Player
 
         void Move()
         {
-            float xInput = bossControlScheme.moveTrapIndicatorHorizontal.Value();
+            float xInput = bossControlScheme.MoveTrapIndicatorHorizontal.Value();
             if(Mathf.Abs(xInput) >= crossHairSensivility)
             {
                 if(xInput > 0)
@@ -136,7 +136,7 @@ namespace Run4YourLife.Player
                 }
             }
 
-            float yInput = bossControlScheme.moveTrapIndicatorVertical.Value();
+            float yInput = bossControlScheme.MoveTrapIndicatorVertical.Value();
             if(Mathf.Abs(yInput) >= crossHairSensivility)
             {
                 if(yInput > 0)
@@ -190,28 +190,28 @@ namespace Run4YourLife.Player
 
         void CheckToSetElement()
         {
-            if (bossControlScheme.skill1.Started() && (aButtonCooldown <= Time.time))
+            if (bossControlScheme.Skill1.Started() && (aButtonCooldown <= Time.time))
             {
                 float buttonCooldown = SetElement(trapA, skillA);
                 aButtonCooldown = Time.time + buttonCooldown;
 
                 ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.TRAP_A, aButtonCooldown));
             }
-            else if (bossControlScheme.skill2.Started() && (xButtonCooldown <= Time.time))
+            else if (bossControlScheme.Skill2.Started() && (xButtonCooldown <= Time.time))
             {
                 float buttonCooldown = SetElement(trapX, skillX);
                 xButtonCooldown = Time.time + buttonCooldown;
 
                 ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.TRAP_X, buttonCooldown));
             }
-            else if (bossControlScheme.skill3.Started() && (yButtonCooldown <= Time.time))
+            else if (bossControlScheme.Skill3.Started() && (yButtonCooldown <= Time.time))
             {
                 float buttonCooldown = SetElement(trapY, skillY);
                 yButtonCooldown = Time.time + buttonCooldown;
 
                 ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.TRAP_Y, buttonCooldown));
             }
-            else if (bossControlScheme.skill4.Started() && (bButtonCooldown <= Time.time))
+            else if (bossControlScheme.Skill4.Started() && (bButtonCooldown <= Time.time))
             {
                 float buttonCooldown = SetElement(trapB, skillB);
                 bButtonCooldown = Time.time + buttonCooldown;

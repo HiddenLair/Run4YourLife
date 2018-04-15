@@ -43,6 +43,15 @@ namespace Run4YourLife.Player
         private float m_endOfJumpGravity;
 
         [SerializeField]
+        private float m_dashCooldown;
+
+        [SerializeField]
+        private float m_dashDistance;
+
+        [SerializeField]
+        private float m_dashHorizontalDrag;
+
+        [SerializeField]
         private float m_timeToIdle;
 
         #endregion
@@ -61,7 +70,7 @@ namespace Run4YourLife.Player
         private RunnerControlScheme m_runnerControlScheme;
         private Animator m_animator;
         private AudioSource m_audioSource;
-        private RunnerInputStated inputPlayer;
+        private RunnerInputStated m_inputPlayer;
 
         #endregion
 
@@ -71,6 +80,8 @@ namespace Run4YourLife.Player
         private bool m_isJumping;
         private bool m_isBouncing;
         private bool m_isBeingImpulsed;
+        private bool m_isDashing;
+        private bool m_isReadyToDash = true;
         private bool m_ceilingCollision;
         private bool m_isFacingRight = true;
 
@@ -105,7 +116,7 @@ namespace Run4YourLife.Player
             m_animator = GetComponent<Animator>();
             m_gravity = m_baseGravity;
             m_horizontalDrag = m_baseHorizontalDrag;
-            inputPlayer = GetComponent<RunnerInputStated>();
+            m_inputPlayer = GetComponent<RunnerInputStated>();
         }
 
         private void OnEnable()
@@ -147,9 +158,14 @@ namespace Run4YourLife.Player
                 GravityAndDrag();
 
 
-                if (m_isGroundedOrCoyoteGrounded && inputPlayer.GetJumpInput())
+                if (m_isGroundedOrCoyoteGrounded && m_inputPlayer.GetJumpInput())
                 {
                     Jump();
+                }
+
+                if (m_inputPlayer.GetDashInput())
+                {
+                    Dash();
                 }
 
                 Move();
@@ -157,9 +173,49 @@ namespace Run4YourLife.Player
             m_animator.SetBool("ground", m_characterController.isGrounded);
         }
 
+        private void Dash()
+        {
+            StartCoroutine(DashCoroutine());
+        }
+
+        private IEnumerator DashCoroutine()
+        {
+            enabled = false;
+            m_isDashing = true;
+            m_isReadyToDash = false;
+
+            m_horizontalDrag = m_dashHorizontalDrag;
+            float facingRight = m_isFacingRight ? 1 : -1;
+            m_velocity.x = facingRight * DragToVelocity(m_dashDistance);
+            m_velocity.y = 0.0f;
+            while (m_velocity.x != 0)
+            {
+                Drag();
+                MoveCharacterContoller(m_velocity * Time.deltaTime);
+                yield return null;
+            }
+
+            m_horizontalDrag = m_baseHorizontalDrag;
+
+            m_isDashing = false;
+            enabled = true;
+            yield return new WaitForSeconds(m_dashCooldown);
+            m_isReadyToDash = true;
+        }
+
         private void GravityAndDrag()
         {
+            Gravity();
+            Drag();
+        }
+
+        private void Gravity()
+        {
             m_velocity.y += m_gravity * Time.deltaTime;
+        }
+
+        private void Drag()
+        {
             m_velocity.x = m_velocity.x * (1 - m_horizontalDrag * Time.deltaTime);
             if (Mathf.Abs(m_velocity.x) < 1.0f)
             {
@@ -195,7 +251,7 @@ namespace Run4YourLife.Player
 
         private void Move()
         {
-            float horizontal = inputPlayer.GetHorizontalInput();
+            float horizontal = m_inputPlayer.GetHorizontalInput();
 
             Vector3 inputMovement = transform.right * horizontal * m_stats.Get(StatType.SPEED) * Time.deltaTime;
             Vector3 totalMovement = inputMovement + m_velocity * Time.deltaTime;
@@ -226,7 +282,7 @@ namespace Run4YourLife.Player
 
         private void LookAtMovingSide()
         {
-            bool shouldFaceTheOtherWay = (m_isFacingRight && m_runnerControlScheme.move.Value() < 0) || (!m_isFacingRight && m_runnerControlScheme.move.Value() > 0);
+            bool shouldFaceTheOtherWay = (m_isFacingRight && m_runnerControlScheme.Move.Value() < 0) || (!m_isFacingRight && m_runnerControlScheme.Move.Value() > 0);
             if (shouldFaceTheOtherWay)
             {
                 m_graphics.transform.Rotate(Vector3.up, 180);
@@ -296,7 +352,7 @@ namespace Run4YourLife.Player
             m_gravity = m_hoverGravity;
 
             float endTime = Time.time + m_hoverDuration;
-            yield return new WaitUntil(() => Time.time >= endTime || m_runnerControlScheme.jump.Ended() || m_characterController.isGrounded || m_isBouncing);
+            yield return new WaitUntil(() => Time.time >= endTime || m_runnerControlScheme.Jump.Ended() || m_characterController.isGrounded || m_isBouncing);
 
             m_gravity = m_baseGravity;
         }
@@ -313,7 +369,7 @@ namespace Run4YourLife.Player
             float previousPositionY = transform.position.y;
             yield return null;
 
-            while (m_runnerControlScheme.jump.Persists() && previousPositionY < transform.position.y && !m_ceilingCollision)
+            while (m_runnerControlScheme.Jump.Persists() && previousPositionY < transform.position.y && !m_ceilingCollision)
             {                
                 previousPositionY = transform.position.y;
                 yield return null;

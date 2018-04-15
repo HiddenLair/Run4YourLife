@@ -38,7 +38,7 @@ namespace Run4YourLife.Player
 
         private void OnTriggerStay(Collider collider)
         {
-            if (collider.CompareTag(Tags.Interactable) && inputPlayer.GetInteractInput())
+            if (collider.CompareTag(Tags.Interactable) && inputPlayer.GetDashInput())
             {
                 Interact(collider.gameObject);
             }
