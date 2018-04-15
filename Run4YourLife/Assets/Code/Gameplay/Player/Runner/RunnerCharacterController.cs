@@ -226,7 +226,7 @@ namespace Run4YourLife.Player
 
         private void LookAtMovingSide()
         {
-            bool shouldFaceTheOtherWay = (m_isFacingRight && m_runnerControlScheme.move.Value() < 0) || (!m_isFacingRight && m_runnerControlScheme.move.Value() > 0);
+            bool shouldFaceTheOtherWay = (m_isFacingRight && m_runnerControlScheme.Move.Value() < 0) || (!m_isFacingRight && m_runnerControlScheme.Move.Value() > 0);
             if (shouldFaceTheOtherWay)
             {
                 m_graphics.transform.Rotate(Vector3.up, 180);
@@ -296,7 +296,7 @@ namespace Run4YourLife.Player
             m_gravity = m_hoverGravity;
 
             float endTime = Time.time + m_hoverDuration;
-            yield return new WaitUntil(() => Time.time >= endTime || m_runnerControlScheme.jump.Ended() || m_characterController.isGrounded || m_isBouncing);
+            yield return new WaitUntil(() => Time.time >= endTime || m_runnerControlScheme.Jump.Ended() || m_characterController.isGrounded || m_isBouncing);
 
             m_gravity = m_baseGravity;
         }
@@ -313,7 +313,7 @@ namespace Run4YourLife.Player
             float previousPositionY = transform.position.y;
             yield return null;
 
-            while (m_runnerControlScheme.jump.Persists() && previousPositionY < transform.position.y && !m_ceilingCollision)
+            while (m_runnerControlScheme.Jump.Persists() && previousPositionY < transform.position.y && !m_ceilingCollision)
             {                
                 previousPositionY = transform.position.y;
                 yield return null;

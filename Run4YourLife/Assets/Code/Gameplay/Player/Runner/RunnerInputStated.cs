@@ -17,7 +17,7 @@ namespace Run4YourLife.Input
 
         private float horizontalInput = 0.0f;
         private float verticalInput = 0.0f;
-        private bool interactInput = false;
+        private bool dashInput = false;
         private bool jumpInput = false;
         private bool rockInput = false;
 
@@ -40,7 +40,7 @@ namespace Run4YourLife.Input
 
         public bool GetInteractInput()
         {
-            return interactInput;
+            return dashInput;
         }
 
         public bool GetJumpInput()
@@ -55,29 +55,29 @@ namespace Run4YourLife.Input
 
         private void Update()
         {
-            Interact();
+            Dash();
             Jump();
             HorizontalInput();
             VerticalInput();
             Rock();
         }
 
-        private void Interact()
+        private void Dash()
         {
-            interactInput = m_playerControlScheme.interact.Started();
+            dashInput = m_playerControlScheme.Dash.Started();
 
             IInteractInput[] iInteractInputList = GetComponents<IInteractInput>();
 
             Array.Sort(iInteractInputList, (x, y) => x.GetPriority().CompareTo(y.GetPriority()));
             foreach (IInteractInput iInteractInput in iInteractInputList)
             {
-                iInteractInput.ModifyInteractInput(ref interactInput);
+                iInteractInput.ModifyInteractInput(ref dashInput);
             }
         }
 
         private void Jump()
         {
-            jumpInput = m_playerControlScheme.jump.Started();
+            jumpInput = m_playerControlScheme.Jump.Started();
 
             IJumpInput[] iJumpInputList = GetComponents<IJumpInput>();
 
@@ -90,7 +90,7 @@ namespace Run4YourLife.Input
 
         private void HorizontalInput()
         {
-            horizontalInput = m_playerControlScheme.move.Value();
+            horizontalInput = m_playerControlScheme.Move.Value();
 
             IRunnerInput[] iRunnerInputList = GetComponents<IRunnerInput>();
 
@@ -104,7 +104,7 @@ namespace Run4YourLife.Input
 
         private void VerticalInput()
         {
-            verticalInput = m_playerControlScheme.vertical.Value();
+            verticalInput = m_playerControlScheme.Vertical.Value();
 
             IVerticalInput[] iVerticalInputList = GetComponents<IVerticalInput>();
 
@@ -118,7 +118,7 @@ namespace Run4YourLife.Input
 
         private void Rock()
         {
-            rockInput = m_playerControlScheme.rock.Started();
+            rockInput = m_playerControlScheme.Rock.Started();
 
             IRockInput[] iRockInputList = GetComponents<IRockInput>();
 

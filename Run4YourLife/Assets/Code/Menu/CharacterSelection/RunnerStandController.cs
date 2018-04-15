@@ -58,17 +58,17 @@ namespace Run4YourLife.CharacterSelection
 
             if(!ready)
             {
-                if(controlScheme.nextStand.Started())
+                if(controlScheme.NextStand.Started())
                 {
                     scaleTickArrowRight.Tick();
                     ChangePlayerCharacter(AdvanceType.Next);
                 }
-                else if(controlScheme.previousStand.Started())
+                else if(controlScheme.PreviousStand.Started())
                 {
                     scaleTickArrowLeft.Tick();
                     ChangePlayerCharacter(AdvanceType.Previous);
                 }
-                else if(controlScheme.setAsBoss.Started())
+                else if(controlScheme.SetAsBoss.Started())
                 {
                     playerStandsManager.SetAsBoss(this);
                 }

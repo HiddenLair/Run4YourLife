@@ -84,7 +84,7 @@ namespace Run4YourLife.Player
 
         void ShootVerification()
         {
-            float xInput = bossControlScheme.moveLaserHorizontal.Value();
+            float xInput = bossControlScheme.MoveLaserHorizontal.Value();
             if (Mathf.Abs(xInput) > 0.2)
             {
                 if (leftHeadRotation >= shootMarker.localEulerAngles.x || 360 + rightHeadRotation <= shootMarker.localEulerAngles.x) {
@@ -111,7 +111,7 @@ namespace Run4YourLife.Player
                 }
             }
 
-            if (bossControlScheme.shoot.Value() > 0.2)
+            if (bossControlScheme.Shoot.Value() > 0.2)
             {
                 if (bulletTimer >= reload)
                 {

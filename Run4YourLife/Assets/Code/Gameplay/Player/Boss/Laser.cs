@@ -102,12 +102,12 @@ public class Laser : MonoBehaviour {
 
         if (phase == Phase.Phase3)
         {
-            if (bossControlScheme.nextSet.Started())
+            if (bossControlScheme.NextSet.Started())
             {
                 setIndex = (setIndex - 1 + sets.Length) % sets.Length;
             }
 
-            if (bossControlScheme.previousSet.Started())
+            if (bossControlScheme.PreviousSet.Started())
             {
                 setIndex = (setIndex + 1) % sets.Length;
             }
@@ -116,7 +116,7 @@ public class Laser : MonoBehaviour {
 
     void MoveX(Transform t)
     {
-        float xInput = bossControlScheme.moveTrapIndicatorHorizontal.Value();
+        float xInput = bossControlScheme.MoveTrapIndicatorHorizontal.Value();
         if (Mathf.Abs(xInput) > 0.2)
         {
             if (xInput > 0)
@@ -148,7 +148,7 @@ public class Laser : MonoBehaviour {
 
             bool changed = false;
             laser.gameObject.SetActive(true);
-            float yInput = bossControlScheme.moveTrapIndicatorVertical.Value();
+            float yInput = bossControlScheme.MoveTrapIndicatorVertical.Value();
             if (Mathf.Abs(yInput) > 0.2)
             {
                 if (timerChangeBetweenY >= timeBetweenY)
@@ -198,28 +198,28 @@ public class Laser : MonoBehaviour {
     {
         if (globalTrapCD_Timer >= globalTrapCD)
         {
-            if (bossControlScheme.skill1.Started() && (trapACD_Timer >= trapACD))
+            if (bossControlScheme.Skill1.Started() && (trapACD_Timer >= trapACD))
             {
                 trapACD_Timer = 0.0f;
                 SetElement(trapA, skillA);
 
                 ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.TRAP_A, trapACD));
             }
-            else if (bossControlScheme.skill2.Started() && (trapXCD_Timer >= trapXCD))
+            else if (bossControlScheme.Skill2.Started() && (trapXCD_Timer >= trapXCD))
             {
                 trapXCD_Timer = 0.0f;
                 SetElement(trapX, skillX);
 
                 ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.TRAP_X, trapXCD));
             }
-            else if (bossControlScheme.skill3.Started() && (trapYCD_Timer >= trapYCD))
+            else if (bossControlScheme.Skill3.Started() && (trapYCD_Timer >= trapYCD))
             {
                 trapYCD_Timer = 0.0f;
                 SetElement(trapY, skillY);
 
                 ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.TRAP_Y, trapYCD));
             }
-            else if (bossControlScheme.skill4.Started() && (trapBCD_Timer >= trapBCD))
+            else if (bossControlScheme.Skill4.Started() && (trapBCD_Timer >= trapBCD))
             {
                 trapBCD_Timer = 0.0f;
                 SetElement(trapB, skillB);

@@ -85,7 +85,7 @@ namespace Run4YourLife.Player
         {
             if (ready.Get())
             {
-                if (controlScheme.shoot.Value() > triggerSensivility)
+                if (controlScheme.Shoot.Value() > triggerSensivility)
                 {
                     if (currentTimeS <= Time.time && !alreadyPressed)
                     {
