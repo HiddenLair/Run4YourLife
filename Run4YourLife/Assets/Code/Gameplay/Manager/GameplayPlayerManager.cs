@@ -106,7 +106,7 @@ namespace Run4YourLife.GameManagement {
                 });
                 playerManager.AddPlayer(new PlayerDefinition()
                 {
-                    CharacterType = CharacterType.Green,
+                    CharacterType = CharacterType.Orange,
                     ID = 4,
                     inputDevice = new Input.InputDevice(4),
                     IsBoss = false

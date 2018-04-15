@@ -17,16 +17,15 @@ namespace Run4YourLife.GameManagement
 
         #region Variables
 
-        Dictionary<PlayerDefinition, float> pointDictionary;
+        Dictionary<PlayerDefinition, float> pointDictionary = new Dictionary<PlayerDefinition, float>();
 
         #endregion
 
-        private void Start()
+        void Start()
         {
-            List<PlayerDefinition> runnersDefinitions = FindObjectOfType<GameplayPlayerManager>().RunnerPlayerDefinitions;
-            foreach(PlayerDefinition def in runnersDefinitions)
+            foreach(PlayerDefinition playerDefinition in FindObjectOfType<PlayerManager>().GetRunners())
             {
-                pointDictionary[def] = 0;
+                pointDictionary[playerDefinition] = 0;
             }
         }
 
