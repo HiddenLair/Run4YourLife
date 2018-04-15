@@ -10,7 +10,6 @@ using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.Player
 {
-    [RequireComponent(typeof(RunnerControlScheme))]
     [RequireComponent(typeof(RunnerCharacterController))]
     [RequireComponent(typeof(Stats))]
     [RequireComponent(typeof(Animator))]

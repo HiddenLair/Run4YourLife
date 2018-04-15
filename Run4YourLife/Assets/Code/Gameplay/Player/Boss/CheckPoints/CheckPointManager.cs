@@ -10,10 +10,18 @@ public class CheckPointManager : MonoBehaviour {
         public float progressionOffset;
     }
 
-    [SerializeField]
     private Transform[] checkpoints;
     private Dictionary<int, InnerPos> idMap = new Dictionary<int, InnerPos>();
     static private int idSetter = 0;
+
+    private void Awake()
+    {
+        checkpoints = new Transform[transform.childCount];
+        for(int i = 0; i < transform.childCount; i++)
+        {
+            checkpoints[i] = transform.GetChild(i);
+        }
+    }
 
     /*private static CheckPointManager instance;
 

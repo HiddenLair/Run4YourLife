@@ -28,10 +28,15 @@ namespace Run4YourLife.Player
             uICrossHair = FindObjectOfType<UICrossHair>();
             Debug.Assert(uICrossHair != null);
 
+            
+        }
+
+        private void OnEnable()
+        {
             uICrossHair.SubscribeWorldCrossHair(gameObject);
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             uICrossHair.UnsubscribeWorldCrossHair(gameObject);
         }
