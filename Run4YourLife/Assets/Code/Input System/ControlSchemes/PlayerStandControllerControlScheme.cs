@@ -7,16 +7,12 @@
         public Action exit;
         public Action rotate;
 
-        private void Awake()
+        public PlayerStandControllerControlScheme()
         {
             actions.Add(ready = new Action(new InputSource(Button.START)));
             actions.Add(leave = new Action(new InputSource(Button.B)));
             actions.Add(exit = new Action(new InputSource(Button.Y)));
             actions.Add(rotate = new Action(new InputSource(Axis.LEFT_HORIZONTAL)));
-
-            OnAwake();
         }
-
-        protected virtual void OnAwake() { }
     }
 }

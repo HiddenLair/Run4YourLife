@@ -9,7 +9,7 @@ namespace Run4YourLife.Input
         public Action jump;
         public Action interact;
 
-        private void Awake()
+        public RunnerControlScheme()
         {
             actions.Add(vertical = new Action(new InputSource(Axis.LEFT_VERTICAL)));
             actions.Add(move = new Action(new InputSource(Axis.LEFT_HORIZONTAL)));

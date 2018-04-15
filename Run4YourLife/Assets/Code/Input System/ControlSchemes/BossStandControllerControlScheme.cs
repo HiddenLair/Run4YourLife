@@ -4,7 +4,7 @@
     {
         public Action setAsRunner;
 
-        protected override void OnAwake()
+        public BossStandControllerControlScheme()
         {
             actions.Add(setAsRunner = new Action(new InputSource(Button.X)));
         }

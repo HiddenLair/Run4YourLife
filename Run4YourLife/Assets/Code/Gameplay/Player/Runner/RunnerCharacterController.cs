@@ -58,9 +58,8 @@ namespace Run4YourLife.Player
 
         private CharacterController m_characterController;
         private Stats m_stats;
-        private RunnerControlScheme m_playerControlScheme;
+        private RunnerControlScheme m_runnerControlScheme;
         private Animator m_animator;
-        private Animation m_currentAnimation;
         private AudioSource m_audioSource;
         private RunnerInputStated inputPlayer;
 
@@ -100,7 +99,7 @@ namespace Run4YourLife.Player
         void Awake()
         {
             m_audioSource = GetComponent<AudioSource>();
-            m_playerControlScheme = GetComponent<RunnerControlScheme>();
+            m_runnerControlScheme = GetComponent<RunnerControlScheme>();
             m_characterController = GetComponent<CharacterController>();
             m_stats = GetComponent<Stats>();
             m_animator = GetComponent<Animator>();
@@ -112,13 +111,13 @@ namespace Run4YourLife.Player
         private void OnEnable()
         {
             m_checkCoyoteGroundedCoroutine = StartCoroutine(CheckCoyoteGroundedCoroutine());
-            m_playerControlScheme.Active = true;
+            m_runnerControlScheme.Active = true;
         }
 
         private void OnDisable()
         {
             StopCoroutine(m_checkCoyoteGroundedCoroutine);
-            m_playerControlScheme.Active = false;
+            m_runnerControlScheme.Active = false;
         }
 
         private IEnumerator CheckCoyoteGroundedCoroutine()
@@ -227,7 +226,7 @@ namespace Run4YourLife.Player
 
         private void LookAtMovingSide()
         {
-            bool shouldFaceTheOtherWay = (m_isFacingRight && m_playerControlScheme.move.Value() < 0) || (!m_isFacingRight && m_playerControlScheme.move.Value() > 0);
+            bool shouldFaceTheOtherWay = (m_isFacingRight && m_runnerControlScheme.move.Value() < 0) || (!m_isFacingRight && m_runnerControlScheme.move.Value() > 0);
             if (shouldFaceTheOtherWay)
             {
                 m_graphics.transform.Rotate(Vector3.up, 180);
@@ -297,7 +296,7 @@ namespace Run4YourLife.Player
             m_gravity = m_hoverGravity;
 
             float endTime = Time.time + m_hoverDuration;
-            yield return new WaitUntil(() => Time.time >= endTime || m_playerControlScheme.jump.Ended() || m_characterController.isGrounded || m_isBouncing);
+            yield return new WaitUntil(() => Time.time >= endTime || m_runnerControlScheme.jump.Ended() || m_characterController.isGrounded || m_isBouncing);
 
             m_gravity = m_baseGravity;
         }
@@ -314,7 +313,7 @@ namespace Run4YourLife.Player
             float previousPositionY = transform.position.y;
             yield return null;
 
-            while (m_playerControlScheme.jump.Persists() && previousPositionY < transform.position.y && !m_ceilingCollision)
+            while (m_runnerControlScheme.jump.Persists() && previousPositionY < transform.position.y && !m_ceilingCollision)
             {                
                 previousPositionY = transform.position.y;
                 yield return null;
@@ -340,7 +339,6 @@ namespace Run4YourLife.Player
             StartCoroutine(BounceCoroutine(bounceForce));
         }
 
-        public float dragVelocity;
         IEnumerator BounceCoroutine(Vector3 bounceForce)
         {
             m_isBouncing = true;

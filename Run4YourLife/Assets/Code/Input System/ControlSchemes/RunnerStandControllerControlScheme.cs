@@ -6,7 +6,7 @@
         public Action previousStand;
         public Action setAsBoss;
 
-        protected override void OnAwake()
+        public RunnerStandControllerControlScheme()
         {
             actions.Add(nextStand = new Action(new InputSource(Button.RB)));
             actions.Add(previousStand = new Action(new InputSource(Button.LB)));

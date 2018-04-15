@@ -26,7 +26,7 @@ namespace Run4YourLife.Input
         public Action moveLaserHorizontal;
 
 
-        private void Awake()
+        public BossControlScheme()
         {
             actions.Add(moveTrapIndicatorVertical = new Action(new InputSource(Axis.LEFT_VERTICAL)));
             actions.Add(moveTrapIndicatorHorizontal = new Action(new InputSource(Axis.LEFT_HORIZONTAL)));

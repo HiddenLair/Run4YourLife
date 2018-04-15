@@ -4,6 +4,7 @@ using System;
 
 namespace Run4YourLife.Input
 {
+    [RequireComponent(typeof(RunnerControlScheme))]
     public class RunnerInputStated : MonoBehaviour
     {
         #region References
