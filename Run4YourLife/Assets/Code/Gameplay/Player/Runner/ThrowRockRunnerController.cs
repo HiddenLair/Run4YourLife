@@ -2,69 +2,63 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Run4YourLife.Input;
 
-using Run4YourLife.Player;
+namespace Run4YourLife.Player {
+    public class ThrowRockRunnerController : MonoBehaviour {
 
-public class ThrowRockRunnerController : MonoBehaviour {
+        [SerializeField]
+        private GameObject m_rockPrefab;
 
-    [SerializeField]
-    private GameObject m_rockPrefab;
+        [SerializeField]
+        private Transform m_rockInstantiationTransform;
 
-    [SerializeField]
-    private Transform m_rockInstantiationTransform;
+        [SerializeField]
+        private Transform m_graphics;
 
-    [SerializeField]
-    private Transform m_graphics;
+        [SerializeField]
+        private float force;
 
-    [SerializeField]
-    [Tooltip("Only values ranging from [0,1] can be used")]
-    private AnimationCurve m_angle;
+        [SerializeField]
+        private float angle;
 
-    [SerializeField]
-    [Tooltip("Only values ranging from [0,1] can be used")]
-    private AnimationCurve m_force;
+        private RunnerInputStated inputPlayer;
 
-    [SerializeField]
-    private float m_timeToFullyChargeThrow;
-
-     
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.E))
+        private void Awake()
         {
-            ThrowRock();
+            inputPlayer = GetComponent<RunnerInputStated>();
         }
-    }
 
-    private void ThrowRock()
-    {
-        StartCoroutine(ThrowRockCoroutine());
-    }
+        private void Update()
+        {
+            if (inputPlayer.GetRockInput())
+            {
+                ThrowRock();
+            }
+        }
 
-    private IEnumerator ThrowRockCoroutine()
-    {
-        float startingTime = Time.time;
-        yield return new WaitUntil(() => Input.GetKeyUp(KeyCode.E) || Time.time >= startingTime + m_timeToFullyChargeThrow);
+        private void ThrowRock()
+        {
+            GameObject rock = Instantiate(m_rockPrefab, m_rockInstantiationTransform.position, Quaternion.identity);
+            Rigidbody rigidbody = rock.GetComponent<Rigidbody>();
+            rigidbody.velocity = GetThrowVelocity(force, angle);
+        }
 
-        float normalizedExecutionTime = Mathf.Min(Time.time - startingTime, m_timeToFullyChargeThrow) / m_timeToFullyChargeThrow;
+        private Vector3 GetThrowVelocity(float force, float angle)
+        {
+            return GetQuaternionforFacingDirection(angle) * Vector3.right * force;
+        }
 
-        float force = m_force.Evaluate(normalizedExecutionTime);
-        float angle = m_angle.Evaluate(normalizedExecutionTime);
+        private Quaternion GetQuaternionforFacingDirection(float angle)
+        {
+            float facingDirectionAngle = m_graphics.eulerAngles.y == 90 ? angle : 180 - angle;
+            return Quaternion.Euler(0, 0, facingDirectionAngle);
+        }
 
-        GameObject rock = Instantiate(m_rockPrefab, m_rockInstantiationTransform.position, Quaternion.identity);
-        Rigidbody rigidbody = rock.GetComponent<Rigidbody>();
-        rigidbody.velocity = GetThrowVelocity(force, angle);
-    }
-
-    private Vector3 GetThrowVelocity(float force, float angle)
-    {
-        return GetQuaternionforFacingDirection(angle) * Vector3.right * force;
-    }
-
-    private Quaternion GetQuaternionforFacingDirection(float angle)
-    {
-        float facingDirectionAngle = m_graphics.eulerAngles.y == 90 ? angle : 180 - angle;
-        return Quaternion.Euler(0, 0, facingDirectionAngle);
+        private void OnDrawGizmosSelected()
+        {
+            Vector3 director = Quaternion.Euler(0, 0, angle) * Vector3.right;
+            Gizmos.DrawLine(m_rockInstantiationTransform.position, m_rockInstantiationTransform.position + director*5);
+        }
     }
 }

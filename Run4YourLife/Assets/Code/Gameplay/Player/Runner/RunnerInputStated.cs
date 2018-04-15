@@ -19,6 +19,7 @@ namespace Run4YourLife.Input
         private float verticalInput = 0.0f;
         private bool interactInput = false;
         private bool jumpInput = false;
+        private bool rockInput = false;
 
         #endregion
 
@@ -47,12 +48,18 @@ namespace Run4YourLife.Input
             return jumpInput;
         }
 
+        public bool GetRockInput()
+        {
+            return rockInput;
+        }
+
         private void Update()
         {
             Interact();
             Jump();
             HorizontalInput();
             VerticalInput();
+            Rock();
         }
 
         private void Interact()
@@ -106,6 +113,20 @@ namespace Run4YourLife.Input
             foreach (IVerticalInput iVerticalInput in iVerticalInputList)
             {
                 iVerticalInput.ModifyVerticalInput(ref verticalInput);
+            }
+        }
+
+        private void Rock()
+        {
+            rockInput = m_playerControlScheme.rock.Started();
+
+            IRockInput[] iRockInputList = GetComponents<IRockInput>();
+
+            Array.Sort(iRockInputList, (x, y) => x.GetPriority().CompareTo(y.GetPriority()));
+
+            foreach (IRockInput irockInput in iRockInputList)
+            {
+                irockInput.ModifyRockInput(ref rockInput);
             }
         }
     }
