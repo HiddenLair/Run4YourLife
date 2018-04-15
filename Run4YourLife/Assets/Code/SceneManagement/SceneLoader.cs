@@ -40,12 +40,7 @@ namespace Run4YourLife.SceneManagement
 
         private IEnumerator LoadUnloadScene(SceneLoadRequestData data)
         {
-            AsyncOperation unloadSceneAsync = null;
-
-            if (data.unloadScene)
-            {
-                unloadSceneAsync = SceneManager.UnloadSceneAsync(data.unloadedSceneName);
-            }
+            AsyncOperation unloadSceneAsync = SceneManager.UnloadSceneAsync(data.unloadedSceneName);
 
             AsyncOperation loadSceneAsync = SceneManager.LoadSceneAsync(data.sceneName, data.loadSceneMode);
             loadSceneAsync.allowSceneActivation = false;
@@ -58,10 +53,7 @@ namespace Run4YourLife.SceneManagement
                 // scene has loaded as much as possible, the last 10% can't be multi-threaded
                 if (loadSceneAsync.progress >= 0.9f)
                 {
-                    if (unloadSceneAsync != null)
-                    {
-                        yield return new WaitUntil(() => unloadSceneAsync.isDone);
-                    }
+                    yield return new WaitUntil(() => unloadSceneAsync.isDone);
                     loadSceneAsync.allowSceneActivation = true;
                 }
 
