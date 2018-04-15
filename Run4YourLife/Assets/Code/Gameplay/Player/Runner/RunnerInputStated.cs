@@ -6,8 +6,13 @@ namespace Run4YourLife.Input
 {
     public class RunnerInputStated : MonoBehaviour
     {
+        #region References
 
-        #region Inputs
+        private RunnerControlScheme m_playerControlScheme;
+
+        #endregion
+
+        #region Member variables
 
         private float horizontalInput = 0.0f;
         private float verticalInput = 0.0f;
@@ -16,20 +21,9 @@ namespace Run4YourLife.Input
 
         #endregion
 
-        #region Variables
-
-        private RunnerControlScheme m_playerControlScheme;
-
-        #endregion
-
         private void Awake()
         {
             m_playerControlScheme = GetComponent<RunnerControlScheme>();
-        }
-
-        private void Start()
-        {
-            m_playerControlScheme.Active = true;
         }
 
         public float GetHorizontalInput()
@@ -54,7 +48,14 @@ namespace Run4YourLife.Input
 
         private void Update()
         {
-            #region Interact
+            Interact();
+            Jump();
+            HorizontalInput();
+            VerticalInput();
+        }
+
+        private void Interact()
+        {
             interactInput = m_playerControlScheme.interact.Started();
 
             IInteractInput[] iInteractInputList = GetComponents<IInteractInput>();
@@ -64,9 +65,10 @@ namespace Run4YourLife.Input
             {
                 iInteractInput.ModifyInteractInput(ref interactInput);
             }
-            #endregion
-            #region Jump
+        }
 
+        private void Jump()
+        {
             jumpInput = m_playerControlScheme.jump.Started();
 
             IJumpInput[] iJumpInputList = GetComponents<IJumpInput>();
@@ -76,10 +78,10 @@ namespace Run4YourLife.Input
             {
                 iJumpInput.ModifyJumpInput(ref jumpInput);
             }
+        }
 
-            #endregion
-            #region Horizontal Input
-
+        private void HorizontalInput()
+        {
             horizontalInput = m_playerControlScheme.move.Value();
 
             IRunnerInput[] iRunnerInputList = GetComponents<IRunnerInput>();
@@ -90,10 +92,10 @@ namespace Run4YourLife.Input
             {
                 iRunnerInput.ModifyHorizontalInput(ref horizontalInput);
             }
+        }
 
-            #endregion
-            #region Vertical Input
-
+        private void VerticalInput()
+        {
             verticalInput = m_playerControlScheme.vertical.Value();
 
             IVerticalInput[] iVerticalInputList = GetComponents<IVerticalInput>();
@@ -104,8 +106,6 @@ namespace Run4YourLife.Input
             {
                 iVerticalInput.ModifyVerticalInput(ref verticalInput);
             }
-
-            #endregion
         }
     }
 }
