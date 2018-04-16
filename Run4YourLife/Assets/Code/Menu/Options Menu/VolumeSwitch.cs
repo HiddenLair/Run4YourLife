@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -22,6 +23,7 @@ namespace Run4YourLife.OptionsMenu
         public GameObject[] musicalNotes;
         public GameObject leftSwitch;
         public GameObject rightSwitch;
+        public AudioMixer audioMixer;
         #endregion
 
         public void Awake()
@@ -60,6 +62,9 @@ namespace Run4YourLife.OptionsMenu
             {
                 DeactivateNote(musicalNotes[i]);
             }
+
+            float volumeOffset = 20.0f * (float)volumeValue;
+            audioMixer.SetFloat("Volume", -80.0f + volumeOffset);
 
             //Musical Notes could do something fancy when increased :( - (Ask Xavi and Gerard)
         }
