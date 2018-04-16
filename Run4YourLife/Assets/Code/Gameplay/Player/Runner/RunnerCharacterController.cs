@@ -165,7 +165,7 @@ namespace Run4YourLife.Player
                     Jump();
                 }
 
-                if (m_inputPlayer.GetDashInput())
+                if (m_isReadyToDash && m_inputPlayer.GetDashInput())
                 {
                     Dash();
                 }
@@ -199,6 +199,7 @@ namespace Run4YourLife.Player
             m_horizontalDrag = m_baseHorizontalDrag;
 
             m_isDashing = false;
+            yield return new WaitUntil(() => m_characterController.isGrounded);
             yield return new WaitForSeconds(m_dashCooldown);
             m_isReadyToDash = true;
         }
