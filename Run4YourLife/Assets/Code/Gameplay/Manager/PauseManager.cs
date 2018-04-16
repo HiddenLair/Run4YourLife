@@ -1,16 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class PauseManager : MonoBehaviour {
+public class PauseManager : MonoBehaviour
+{
 
 	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public void onPausePressed()
+    {
+        Time.timeScale = 0;
+    }
 }
