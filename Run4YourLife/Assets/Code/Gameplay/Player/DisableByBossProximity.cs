@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Run4YourLife.GameManagement;
 
-[RequireComponent(typeof(Renderer))]
-public class DestroyByBossProximity : MonoBehaviour {
+public class DisableByBossProximity : MonoBehaviour,IActivateByRender {
 
     private static readonly float DISTANCE_FROM_BOSSS_TO_DESTROY = 2.0f;
     private static readonly float ALPHA_TRANSITION_LENGHT = 0.5f;
@@ -16,14 +15,9 @@ public class DestroyByBossProximity : MonoBehaviour {
     {
         m_playerManager = FindObjectOfType<GameplayPlayerManager>();
         Debug.Assert(m_playerManager != null);
-        m_renderer = GetComponent<Renderer>();
+        m_renderer = GetComponentInChildren<Renderer>();
 
         enabled = false;
-    }
-
-    private void OnBecameVisible()
-    {
-        enabled = true;
     }
 
     private void Update()
@@ -46,7 +40,7 @@ public class DestroyByBossProximity : MonoBehaviour {
         enabled = false;
 
         float time = trasitionLenght;
-        Material material = GetComponentInChildren<Renderer>().material;
+        Material material = m_renderer.material;
         Color color = material.color;
         while (time >= 0)
         {
@@ -55,6 +49,11 @@ public class DestroyByBossProximity : MonoBehaviour {
             yield return null;
             time -= Time.deltaTime;
         }
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+    }
+
+    public void Activate()
+    {
+        enabled = true;
     }
 }
