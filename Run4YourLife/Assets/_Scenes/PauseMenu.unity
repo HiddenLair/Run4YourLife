@@ -216,6 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneLoadRequestData:
+    loadScene: 1
     sceneName: NewGameScene
     loadSceneMode: 1
     loadEvent: 0
@@ -399,6 +400,7 @@ GameObject:
   - component: {fileID: 341321259}
   - component: {fileID: 341321258}
   - component: {fileID: 341321261}
+  - component: {fileID: 341321262}
   m_Layer: 5
   m_Name: OptionsButton
   m_TagString: Untagged
@@ -497,7 +499,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 341321258}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 341321262}
+        m_MethodName: Execute
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &341321261
@@ -521,6 +534,25 @@ MonoBehaviour:
     rgba: 4294669603
   scaleTransitionSpeed: 0
   colorTransitionSpeed: 15
+--- !u!114 &341321262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 341321256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b54b125ffc0a6ec46b3f2eecc0eff95c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneLoadRequestData:
+    loadScene: 1
+    sceneName: OptionsMenu
+    loadSceneMode: 1
+    loadEvent: 0
+    setLoadedSceneAsActiveScene: 1
+    unloadScene: 0
+    unloadedSceneName: 
 --- !u!224 &384427769 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224532512713771464, guid: f0bb5bfe89276aa47a1c2f1c646c4c2e,
@@ -538,6 +570,7 @@ GameObject:
   - component: {fileID: 456276666}
   - component: {fileID: 456276665}
   - component: {fileID: 456276667}
+  - component: {fileID: 456276668}
   m_Layer: 5
   m_Name: ContinueButton
   m_TagString: Untagged
@@ -604,12 +637,12 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 2fe2b67a751192640a7202e65be8cd29, type: 3}
-        m_MethodName: 
+      - m_Target: {fileID: 456276668}
+        m_MethodName: Execute
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -671,6 +704,25 @@ MonoBehaviour:
     rgba: 4294669603
   scaleTransitionSpeed: 0
   colorTransitionSpeed: 15
+--- !u!114 &456276668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 456276662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b54b125ffc0a6ec46b3f2eecc0eff95c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneLoadRequestData:
+    loadScene: 0
+    sceneName: 
+    loadSceneMode: 1
+    loadEvent: 0
+    setLoadedSceneAsActiveScene: 1
+    unloadScene: 1
+    unloadedSceneName: PauseMenu
 --- !u!1001 &611262560
 Prefab:
   m_ObjectHideFlags: 0
@@ -908,6 +960,8 @@ GameObject:
   - component: {fileID: 708653054}
   - component: {fileID: 708653053}
   - component: {fileID: 708653052}
+  - component: {fileID: 708653057}
+  - component: {fileID: 708653056}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -991,6 +1045,39 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &708653056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 708653051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: 670263a626a27864993d6203d0ec54dc, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &708653057
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 708653051}
 --- !u!1 &992684326
 GameObject:
   m_ObjectHideFlags: 0
@@ -1003,6 +1090,7 @@ GameObject:
   - component: {fileID: 992684329}
   - component: {fileID: 992684328}
   - component: {fileID: 992684331}
+  - component: {fileID: 992684332}
   m_Layer: 5
   m_Name: ExitButton
   m_TagString: Untagged
@@ -1101,7 +1189,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 992684328}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 992684332}
+        m_MethodName: Execute
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &992684331
@@ -1125,6 +1224,25 @@ MonoBehaviour:
     rgba: 4294669603
   scaleTransitionSpeed: 0
   colorTransitionSpeed: 15
+--- !u!114 &992684332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 992684326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b54b125ffc0a6ec46b3f2eecc0eff95c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneLoadRequestData:
+    loadScene: 1
+    sceneName: MainMenu
+    loadSceneMode: 0
+    loadEvent: 0
+    setLoadedSceneAsActiveScene: 1
+    unloadScene: 0
+    unloadedSceneName: 
 --- !u!1 &1175063967
 GameObject:
   m_ObjectHideFlags: 0
@@ -1266,6 +1384,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneLoadRequestData:
+    loadScene: 1
     sceneName: OptionsMenu
     loadSceneMode: 1
     loadEvent: 0
@@ -1313,6 +1432,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneLoadRequestData:
+    loadScene: 1
     sceneName: MainMenu
     loadSceneMode: 0
     loadEvent: 0
