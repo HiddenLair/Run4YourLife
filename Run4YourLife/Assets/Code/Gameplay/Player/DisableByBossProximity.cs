@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Run4YourLife.GameManagement;
+using UnityEngine.Rendering;
 
 public class DisableByBossProximity : MonoBehaviour,IActivateByRender {
 
@@ -24,6 +25,7 @@ public class DisableByBossProximity : MonoBehaviour,IActivateByRender {
     {
         if (GetHorizontalDistanceToBoss() < DISTANCE_FROM_BOSSS_TO_DESTROY)
         {
+            SetToTransparent(m_renderer.material);
             StartCoroutine(BeautifullDestroy(ALPHA_TRANSITION_LENGHT));
         }
     }
@@ -55,5 +57,17 @@ public class DisableByBossProximity : MonoBehaviour,IActivateByRender {
     public void Activate()
     {
         enabled = true;
+    }
+
+    public void SetToTransparent(Material material)
+    {
+        material.SetFloat("_Mode", 3);
+        material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+        material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        material.SetInt("_ZWrite", 0);
+        material.DisableKeyword("_ALPHATEST_ON");
+        material.DisableKeyword("_ALPHABLEND_ON");
+        material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
+        material.renderQueue = 3000;
     }
 }
