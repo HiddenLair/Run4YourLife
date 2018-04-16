@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using Run4YourLife;
+
 public class MoveRunnersWithYou : MonoBehaviour {
 
     private Vector3 m_previousPosition;

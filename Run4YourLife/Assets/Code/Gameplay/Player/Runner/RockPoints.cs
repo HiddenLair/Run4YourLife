@@ -1,9 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Run4YourLife.GameManagement;
 using Run4YourLife.Player;
 using UnityEngine.EventSystems;
+
+using Run4YourLife;
 
 public class RockPoints : MonoBehaviour {
 

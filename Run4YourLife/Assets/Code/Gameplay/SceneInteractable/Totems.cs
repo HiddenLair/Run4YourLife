@@ -1,6 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+using Run4YourLife;
 
 public class Totems : MonoBehaviour {
 

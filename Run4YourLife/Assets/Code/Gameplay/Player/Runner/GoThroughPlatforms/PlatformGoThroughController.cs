@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-using Run4YourLife.GameManagement;
+using Run4YourLife;
 
 public class PlatformGoThroughController : MonoBehaviour {
 

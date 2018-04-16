@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
+using Run4YourLife;
+
 public class KillRunnerOnPhisicInteraction : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collider)

@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+using Run4YourLife;
 using Run4YourLife.Player;
 
 public class MelePhase3 : MonoBehaviour {
