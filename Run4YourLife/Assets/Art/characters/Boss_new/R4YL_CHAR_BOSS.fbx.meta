@@ -71,6 +71,13 @@ ModelImporter:
     100126: test:Head
     100128: test:L_Hand
     100130: test:R_Hand
+    100132: Boss_Body
+    100134: Boss_eyebows
+    100136: Boss_Feathers
+    100138: Boss_Head
+    100140: Boss_L_Hand
+    100142: Boss_Neckless
+    100144: Boss_R_Hand
     400000: //RootNode
     400002: CenterFoot
     400004: CenterFoot 1
@@ -137,11 +144,20 @@ ModelImporter:
     400126: test:Head
     400128: test:L_Hand
     400130: test:R_Hand
+    400132: Boss_Body
+    400134: Boss_eyebows
+    400136: Boss_Feathers
+    400138: Boss_Head
+    400140: Boss_L_Hand
+    400142: Boss_Neckless
+    400144: Boss_R_Hand
     2100000: lambert2
     2100002: neckless2_defaultMat1
     2100004: Cororna_Plumas1_Material__3
     2300000: neckless2:collar
+    2300002: Boss_Neckless
     3300000: neckless2:collar
+    3300002: Boss_Neckless
     4300000: test:Body
     4300002: test:L_Hand
     4300004: test:R_Hand
@@ -149,6 +165,13 @@ ModelImporter:
     4300008: test:ceja
     4300010: neckless2:collar
     4300012: Cororna_Plumas1:corona_plumas
+    4300014: Boss_Body
+    4300016: Boss_L_Hand
+    4300018: Boss_R_Hand
+    4300020: Boss_Head
+    4300022: Boss_eyebows
+    4300024: Boss_Neckless
+    4300026: Boss_Feathers
     7400000: move
     7400002: melee_phase1
     7400004: transition
@@ -160,6 +183,7 @@ ModelImporter:
     7400016: melee_Phase3
     7400018: Load_loaded_shot
     7400020: Shot_loaded_shot
+    7400022: idle_phase_2
     9500000: //RootNode
     13700000: Cororna_Plumas1:corona_plumas
     13700002: test:Body
@@ -167,6 +191,12 @@ ModelImporter:
     13700006: test:Head
     13700008: test:L_Hand
     13700010: test:R_Hand
+    13700012: Boss_Body
+    13700014: Boss_eyebows
+    13700016: Boss_Feathers
+    13700018: Boss_Head
+    13700020: Boss_L_Hand
+    13700022: Boss_R_Hand
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -191,7 +221,7 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleCurves: 1
+    resampleCurves: 0
     optimizeGameObjects: 0
     motionNodeName: 
     rigImportErrors: 
@@ -201,7 +231,7 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
-    animationCompression: 1
+    animationCompression: 0
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -212,8 +242,8 @@ ModelImporter:
     - serializedVersion: 16
       name: move
       takeName: Take 001
-      firstFrame: 0
-      lastFrame: 100
+      firstFrame: 515
+      lastFrame: 615
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -553,6 +583,34 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: idle_phase_2
+      takeName: Take 001
+      firstFrame: 515
+      lastFrame: 615
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
