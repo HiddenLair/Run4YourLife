@@ -14,6 +14,7 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(Stats))]
     [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(RunnerInputStated))]
     public class RunnerCharacterController : MonoBehaviour
     {
         #region InspectorVariables
@@ -114,9 +115,10 @@ namespace Run4YourLife.Player
             m_characterController = GetComponent<CharacterController>();
             m_stats = GetComponent<Stats>();
             m_animator = GetComponent<Animator>();
+            m_inputPlayer = GetComponent<RunnerInputStated>();
+
             m_gravity = m_baseGravity;
             m_horizontalDrag = m_baseHorizontalDrag;
-            m_inputPlayer = GetComponent<RunnerInputStated>();
         }
 
         private void OnEnable()
@@ -153,7 +155,7 @@ namespace Run4YourLife.Player
 
         void Update()
         {
-            if (!m_isBeingImpulsed)
+            if (!m_isBeingImpulsed && !m_isDashing)
             {
                 GravityAndDrag();
 
@@ -180,7 +182,6 @@ namespace Run4YourLife.Player
 
         private IEnumerator DashCoroutine()
         {
-            enabled = false;
             m_isDashing = true;
             m_isReadyToDash = false;
 
@@ -198,7 +199,6 @@ namespace Run4YourLife.Player
             m_horizontalDrag = m_baseHorizontalDrag;
 
             m_isDashing = false;
-            enabled = true;
             yield return new WaitForSeconds(m_dashCooldown);
             m_isReadyToDash = true;
         }
