@@ -5,7 +5,7 @@ using UnityEngine;
 using Run4YourLife.Input;
 
 namespace Run4YourLife.Player {
-    public class ThrowRockRunnerController : MonoBehaviour {
+    public class ThrowRockRunnerController : MonoBehaviour,IPlayerDefinitionEvents {
 
         [SerializeField]
         private GameObject m_rockPrefab;
@@ -28,12 +28,13 @@ namespace Run4YourLife.Player {
         private RunnerInputStated inputPlayer;
         private float timer;
         private PlayerDefinition myDefinition;
+        private Collider collider;
 
         private void Awake()
         {
             inputPlayer = GetComponent<RunnerInputStated>();
             timer = Time.time;
-            myDefinition = GetComponent<PlayerInstance>().PlayerDefinition;
+            collider = GetComponent<Collider>();
         }
 
         private void Update()
@@ -48,6 +49,7 @@ namespace Run4YourLife.Player {
         private void ThrowRock()
         {
             GameObject rock = Instantiate(m_rockPrefab, m_rockInstantiationTransform.position, Quaternion.identity);
+            Physics.IgnoreCollision(rock.GetComponent<Collider>(), collider);
             Rigidbody rigidbody = rock.GetComponent<Rigidbody>();
             rigidbody.velocity = GetThrowVelocity(force, angle);
             rock.GetComponent<RockPoints>().SetPlayerDefinition(myDefinition);
@@ -68,6 +70,11 @@ namespace Run4YourLife.Player {
         {
             Vector3 director = Quaternion.Euler(0, 0, angle) * Vector3.right;
             Gizmos.DrawLine(m_rockInstantiationTransform.position, m_rockInstantiationTransform.position + director*5);
+        }
+
+        public void OnPlayerDefinitionChanged(PlayerDefinition playerDefinition)
+        {
+            myDefinition = playerDefinition;
         }
     }
 }

@@ -49,7 +49,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1039433132418386
 GameObject:
   m_ObjectHideFlags: 1
@@ -857,9 +857,11 @@ GameObject:
   - component: {fileID: 4027407771884848}
   - component: {fileID: 82061766554962238}
   - component: {fileID: 95269397522174916}
+  - component: {fileID: 65917799664061106}
+  - component: {fileID: 65163107176093154}
   m_Layer: 0
   m_Name: R4YL_CHAR_BOSS
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1300,8 +1302,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1034222424642850}
-  m_LocalRotation: {x: -0.00000009735359, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.586, y: 0.486, z: -0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.05, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4027407771884848}
@@ -2311,6 +2313,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1690385004467370}
   m_Mesh: {fileID: 4300010, guid: 944e1442b3e07ce4087d5f720134b474, type: 3}
+--- !u!65 &65163107176093154
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1793872114690388}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.1613638, y: 1.1858163, z: 1}
+  m_Center: {x: 1.0622829, y: 3.9161441, z: 0}
 --- !u!65 &65249341147095576
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -2335,6 +2349,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.39, y: 20, z: 1}
   m_Center: {x: 0, y: 5, z: 0}
+--- !u!65 &65917799664061106
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1793872114690388}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.9502978, y: 5.194466, z: 5.1334567}
+  m_Center: {x: -0.12770534, y: 2.0972326, z: 0.07409835}
 --- !u!82 &82061766554962238
 AudioSource:
   m_ObjectHideFlags: 1

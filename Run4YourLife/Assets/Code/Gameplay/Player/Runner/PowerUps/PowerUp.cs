@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Run4YourLife.Player;
 using UnityEngine.EventSystems;
 using Run4YourLife.GameManagement;
 

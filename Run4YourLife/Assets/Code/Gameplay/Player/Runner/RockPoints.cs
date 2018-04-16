@@ -16,7 +16,7 @@ public class RockPoints : MonoBehaviour {
     {
         if(other.tag == Tags.Boss)
         {
-            ExecuteEvents.Execute<IScoreEvents>(other.gameObject, null, (x, y) => x.OnAddPoints(playerWhoThrew,points));
+            ExecuteEvents.Execute<IScoreEvents>(FindObjectOfType<ScoreManager>().gameObject, null, (x, y) => x.OnAddPoints(playerWhoThrew, points));
         }
     }
 
