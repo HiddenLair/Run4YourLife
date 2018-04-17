@@ -6,17 +6,27 @@ using Run4YourLife;
 
 public class TortoiseShell : MonoBehaviour {
 
-    public float sinkDelay = 0.5f;
-    public float emergeDelay = 0.5f;
-    public float speed = 10.0f;
-    public float timeAction = 0.5f;
+    #region Inspector
+    [SerializeField]
+    private float sinkDelay = 0.5f;
+    [SerializeField]
+    private float emergeDelay = 0.5f;
+    [SerializeField]
+    private float acceleration = 10.0f;
+    [SerializeField]
+    private float sinkMaxDistance = 5.0f;
+    #endregion
 
+    #region Variables
     List<Transform> players = new List<Transform>();
-    private float timer= 0.0f;
+    private float currentSpeed = 0.0f;
+    private float movementOffset = 0.0f;
+    private float actionTime = 0.0f;
     private enum State{ SINKING,EMERGING,NONE };
     private State state = State.NONE;
     private bool triggerLogicActive = true;
     private bool changingStateFlag = false;
+    #endregion
 
     // Update is called once per frame
     void Update () {
@@ -24,26 +34,25 @@ public class TortoiseShell : MonoBehaviour {
         {
             case State.EMERGING:
                 {
-                    if (timer <= timeAction)
+                    if (movementOffset <= sinkMaxDistance)
                     {
-                        MovePlayers(speed);
-                        transform.Translate(new Vector3(0,0 , speed * Time.deltaTime));
-                        timer += Time.deltaTime;
+                        actionTime += Time.deltaTime;
+                        currentSpeed = Mathf.Pow(acceleration,actionTime) ;
+                        Move();
                     }
                     else
                     {
                         triggerLogicActive = true;
                         state = State.NONE;
-                        timer = 0.0f;
                     }
                 }
                 break;
             case State.SINKING:
-                if (timer <= timeAction)
+                if (movementOffset <= sinkMaxDistance)
                 {
-                    MovePlayers(-speed);
-                    transform.Translate(new Vector3(0, 0 , -speed * Time.deltaTime));
-                    timer += Time.deltaTime;
+                    actionTime += Time.deltaTime;
+                    currentSpeed = -Mathf.Pow(acceleration, actionTime);
+                    Move();
                 }
                 else
                 {
@@ -57,6 +66,21 @@ public class TortoiseShell : MonoBehaviour {
                 break;
         }
 	}
+
+    private void Move()
+    {
+        MovePlayers(currentSpeed);
+        float offset = Mathf.Abs(currentSpeed * Time.deltaTime);
+        movementOffset += offset;
+        if (movementOffset >= sinkMaxDistance)
+        {
+            transform.Translate(new Vector3(0, 0, Mathf.Sign(currentSpeed) * (sinkMaxDistance - (movementOffset - offset))));
+        }
+        else
+        {
+            transform.Translate(new Vector3(0, 0, currentSpeed * Time.deltaTime));
+        }
+    }
 
     private void MovePlayers(float speedValue)
     {
@@ -84,7 +108,9 @@ public class TortoiseShell : MonoBehaviour {
         changingStateFlag = true;
         yield return new WaitForSeconds(delay);
         changingStateFlag = false;
-        timer = 0.0f;
+        currentSpeed = 0.0f;
+        movementOffset = 0.0f;
+        actionTime = 0.0f;
         state = s;
     }
 
