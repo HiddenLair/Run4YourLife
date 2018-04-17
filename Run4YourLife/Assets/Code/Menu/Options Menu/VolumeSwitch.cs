@@ -28,7 +28,7 @@ namespace Run4YourLife.OptionsMenu
 
         public void Awake()
         {
-            SetVolume(3); 
+            SetVolume(3, true); 
         }
 
         public void OnMove(AxisEventData eventData)
@@ -40,6 +40,8 @@ namespace Run4YourLife.OptionsMenu
                     volumeLevel++;
                     SetVolume(volumeLevel);
                 }
+
+                rightSwitch.GetComponent<ScaleTick>().Tick();
             }
             else if (eventData.moveDir == MoveDirection.Left)
             {
@@ -48,14 +50,16 @@ namespace Run4YourLife.OptionsMenu
                     volumeLevel--;
                     SetVolume(volumeLevel);
                 }
+
+                leftSwitch.GetComponent<ScaleTick>().Tick();
             }
         }
 
-        private void SetVolume(int volumeValue)
+        private void SetVolume(int volumeValue, bool ignoreNoteScaleTick = false)
         {
             for(int i = 0; i < volumeLevel; i++)
             {
-                ActivateNote(musicalNotes[i]);               
+                ActivateNote(musicalNotes[i]);
             }
 
             for (int i = volumeLevel; i < musicalNotes.Length; i++)
@@ -67,6 +71,11 @@ namespace Run4YourLife.OptionsMenu
             audioMixer.SetFloat("Volume", -80.0f + volumeOffset);
 
             //Musical Notes could do something fancy when increased :( - (Ask Xavi and Gerard)
+
+            if(!ignoreNoteScaleTick && volumeValue > 0)
+            {
+                musicalNotes[volumeValue - 1].GetComponent<ScaleTick>().Tick();
+            }
         }
 
         private void DeactivateNote(GameObject note)

@@ -27,11 +27,15 @@ namespace Run4YourLife.OptionsMenu
             {
                 QualitySettings.IncreaseLevel();
                 UpdateUI();
+
+                rightSwitch.GetComponent<ScaleTick>().Tick();
             }
             else if(eventData.moveDir == MoveDirection.Left)
             {
                 QualitySettings.DecreaseLevel();
                 UpdateUI();
+
+                leftSwitch.GetComponent<ScaleTick>().Tick();
             }
         }
 

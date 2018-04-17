@@ -49,6 +49,8 @@ namespace Run4YourLife.OptionsMenu
                 }
 
                 UpdateUI();
+
+                rightSwitch.GetComponent<ScaleTick>().Tick();
             }
             else if (eventData.moveDir == MoveDirection.Left)
             {
@@ -59,6 +61,8 @@ namespace Run4YourLife.OptionsMenu
                 }
 
                 UpdateUI();
+
+                leftSwitch.GetComponent<ScaleTick>().Tick();
             }
         }
 
