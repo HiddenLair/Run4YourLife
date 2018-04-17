@@ -70,8 +70,6 @@ namespace Run4YourLife.OptionsMenu
             float volumeOffset = 20.0f * (float)volumeValue;
             audioMixer.SetFloat("Volume", -80.0f + volumeOffset);
 
-            //Musical Notes could do something fancy when increased :( - (Ask Xavi and Gerard)
-
             if(!ignoreNoteScaleTick && volumeValue > 0)
             {
                 musicalNotes[volumeValue - 1].GetComponent<ScaleTick>().Tick();

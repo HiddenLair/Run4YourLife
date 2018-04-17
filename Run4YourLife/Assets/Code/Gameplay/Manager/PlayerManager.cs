@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
+using System;
 
 namespace Run4YourLife.Player
 {
@@ -43,6 +44,11 @@ namespace Run4YourLife.Player
                 }
             }
             return runners;
+        }
+
+        public void ClearPlayers()
+        {
+            players.Clear();
         }
 
         public void SetPlayerAsBoss(PlayerDefinition player)

@@ -28,6 +28,11 @@ namespace Run4YourLife.CharacterSelection
             controllerDetector.OncontrollerDetected.AddListener(OnControllerDetected);
         }
 
+        private void Start()
+        {
+            m_playerManager.ClearPlayers();
+        }
+
         public void OnControllerDetected(InputDevice controller)
         {
             if(m_playerManager.GetPlayers().Count < 4)

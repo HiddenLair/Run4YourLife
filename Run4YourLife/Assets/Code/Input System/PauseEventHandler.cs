@@ -9,25 +9,23 @@ namespace Run4YourLife.Input
     [RequireComponent(typeof(PlayerControlScheme))]
     class PauseEventHandler : MonoBehaviour
     {
+        private GameObject gameManager = null;
         private PlayerControlScheme m_playerControlScheme;
+        private bool pauseReq = false;
 
         void Awake()
         {
+            gameManager = GameObject.FindGameObjectWithTag(Tags.GameController);
             m_playerControlScheme = GetComponent<PlayerControlScheme>();
         }
 
         private void Update()
         {
-            CheckForPauseRequest();
-        }
+            pauseReq = m_playerControlScheme.Pause.Started();
 
-        private void CheckForPauseRequest()
-        {
-            bool pauseReq = m_playerControlScheme.Pause.Started();
-
-            if(pauseReq)
+            if (pauseReq)
             {
-                ExecuteEvents.Execute<IPauseEvent>(gameObject, null, (x, y) => x.OnPauseInput());
+                ExecuteEvents.Execute<IPauseEvent>(gameManager, null, (x, y) => x.OnPauseInput());
             }
         }
     }

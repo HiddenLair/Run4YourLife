@@ -20,7 +20,7 @@ namespace Run4YourLife.GameManagement
 
         private void Awake()
         {
-            mainCameraCinemachine = GetComponent<CinemachineBrain>();
+            mainCameraCinemachine = Camera.main.GetComponent<CinemachineBrain>();
         }
 
         public void OnPauseInput()

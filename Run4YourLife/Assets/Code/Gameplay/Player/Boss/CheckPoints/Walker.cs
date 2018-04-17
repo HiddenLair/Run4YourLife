@@ -38,22 +38,25 @@ public class Walker : MonoBehaviour {
 
     void Update()
     {
-        if (increaseSpeedOverTime)
+        if (Time.timeScale != 0)
         {
-            speed += increaseValue * Time.deltaTime;
+            if (increaseSpeedOverTime)
+            {
+                speed += increaseValue * Time.deltaTime;
+            }
+            checkPointManager.Compute(id, speed);
+
+            transform.position = checkPointManager.GetPosition(id, speed);
+
+            float fH;
+            Vector3 pO;
+
+            checkPointManager.GetFloorHeightAndPositionOffset(id, speed, out fH, out pO);
+
+            //CinemachineScreenTransposer cameraBossFollow = Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineScreenTransposer>();
+
+            //cameraBossFollow.m_verticalHeight = fH;
+            //cameraBossFollow.m_offsetFromTarget = pO;
         }
-        checkPointManager.Compute(id, speed);
-
-        transform.position = checkPointManager.GetPosition(id,speed);
-
-        float fH;
-        Vector3 pO;
-
-        checkPointManager.GetFloorHeightAndPositionOffset(id, speed, out fH, out pO);
-
-        CinemachineScreenTransposer cameraBossFollow = Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineScreenTransposer>();
-
-        cameraBossFollow.m_verticalHeight = fH;
-        cameraBossFollow.m_offsetFromTarget = pO;
     }
 }

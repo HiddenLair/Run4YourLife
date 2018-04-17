@@ -38,7 +38,7 @@ namespace Run4YourLife.Input
                 return m_inputDevice;
             }
 
-            private set
+            set
             {
                 UpdateInputDevice(value);
             }

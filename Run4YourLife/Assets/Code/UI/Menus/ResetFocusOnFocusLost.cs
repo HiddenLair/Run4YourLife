@@ -6,12 +6,14 @@ public class ResetFocusOnFocusLost : MonoBehaviour
     [SerializeField]
     private GameObject gameObjectOnUnableToResetFocus;
 
+    [SerializeField]
     private EventSystem eventSystem;
     private GameObject lastGameObjectFocus;
 
-    void Awake()
+    void Start()
     {
         eventSystem = EventSystem.current;
+        eventSystem.SetSelectedGameObject(gameObjectOnUnableToResetFocus);
     }
 
     void Update()

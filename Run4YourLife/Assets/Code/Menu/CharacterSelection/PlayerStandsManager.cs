@@ -145,6 +145,11 @@ namespace Run4YourLife.CharacterSelection
                 return false;
             }
 
+            if(!bossStandController.GetReady())
+            {
+                return false;
+            }
+
             bool existsReadyRunner = false;
 
             foreach(RunnerStandController runnerStandController in runnerStandControllers)

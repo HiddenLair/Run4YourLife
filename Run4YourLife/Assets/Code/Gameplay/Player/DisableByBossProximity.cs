@@ -23,10 +23,13 @@ public class DisableByBossProximity : MonoBehaviour,IActivateByRender {
 
     private void Update()
     {
-        if (GetHorizontalDistanceToBoss() < DISTANCE_FROM_BOSSS_TO_DESTROY)
+        if (m_playerManager.Boss != null)
         {
-            SetToTransparent(m_renderer.material);
-            StartCoroutine(BeautifullDestroy(ALPHA_TRANSITION_LENGHT));
+            if (GetHorizontalDistanceToBoss() < DISTANCE_FROM_BOSSS_TO_DESTROY)
+            {
+                SetToTransparent(m_renderer.material);
+                StartCoroutine(BeautifullDestroy(ALPHA_TRANSITION_LENGHT));
+            }
         }
     }
 
