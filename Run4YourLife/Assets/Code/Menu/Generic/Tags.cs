@@ -24,6 +24,7 @@ namespace Run4YourLife
         public readonly static string Destructible = "Destructible";
         public readonly static string UI = "UI";
         public readonly static string Bounceable = "Bounceable";
+        public readonly static string BossRockScore = "BossRockScore";
 
         #endregion
 
