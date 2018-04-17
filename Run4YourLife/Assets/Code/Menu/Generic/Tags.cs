@@ -21,9 +21,9 @@ namespace Run4YourLife
 
         public readonly static string Shoot = "Shoot";
         public readonly static string Boss = "Boss";
-        public readonly static string Interactable = "Interactable";
+        public readonly static string Destructible = "Destructible";
         public readonly static string UI = "UI";
-        public readonly static string RunnerFeet = "RunnerFeet";
+        public readonly static string Bounceable = "Bounceable";
 
         #endregion
 

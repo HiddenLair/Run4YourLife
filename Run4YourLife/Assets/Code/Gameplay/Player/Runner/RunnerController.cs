@@ -18,7 +18,7 @@ namespace Run4YourLife.Player
     {
         #region References
 
-        private GameplayPlayerManager m_gameplayPlayerManager;
+        private GameObject m_gameplayManagerGameObject;
         private Stats m_stats;
         private RunnerCharacterController m_runnerCharacterController;
         private RunnerInputStated inputPlayer;
@@ -32,17 +32,11 @@ namespace Run4YourLife.Player
             m_stats = GetComponent<Stats>();
             inputPlayer = GetComponent<RunnerInputStated>();
             m_wind = GetComponent<Wind>();
-            m_gameplayPlayerManager = FindObjectOfType<GameplayPlayerManager>();
-            Debug.Assert(m_gameplayPlayerManager != null);
+            m_gameplayManagerGameObject = GameObject.FindGameObjectWithTag(Tags.GameController);
+            if (m_gameplayManagerGameObject == null)
+                Debug.LogWarning("Gameplay Manager GameObject Not fund");
         }
 
-        private void OnTriggerStay(Collider collider)
-        {
-            if (collider.CompareTag(Tags.Interactable) && inputPlayer.GetDashInput())
-            {
-                Interact(collider.gameObject);
-            }
-        }
         private void Interact(GameObject gameObject)
         {
             ExecuteEvents.Execute<IInteractableEvents>(gameObject, null, (x, y) => x.Interact());
@@ -68,7 +62,7 @@ namespace Run4YourLife.Player
         {
             if (!CheckForShield())
             {
-                m_gameplayPlayerManager.OnRunnerDeath(gameObject);
+                ExecuteEvents.Execute<IGameplayPlayerEvents>(m_gameplayManagerGameObject, null, (x, y) => x.OnRunnerDeath(gameObject));
             }
         }
 
@@ -124,7 +118,7 @@ namespace Run4YourLife.Player
 
         public void AbsoluteKill()
         {
-            m_gameplayPlayerManager.OnRunnerDeath(gameObject);
+            ExecuteEvents.Execute<IGameplayPlayerEvents>(m_gameplayManagerGameObject, null, (x, y) => x.OnRunnerDeath(gameObject));
         }
 
         #endregion

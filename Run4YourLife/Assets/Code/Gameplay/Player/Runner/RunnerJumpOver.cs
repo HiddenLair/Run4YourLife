@@ -6,23 +6,26 @@ namespace Run4YourLife.Player
 {
     public class RunnerJumpOver : RunnerBounceDetection {
 
-        private RunnerCharacterController characterController;
+        private RunnerCharacterController m_runnerCharacterController;
 
         private void Awake()
         {
-            characterController = transform.parent.GetComponent<RunnerCharacterController>();
-            Debug.Assert(characterController, "Objects needs a parent that has a player character controller");
+            m_runnerCharacterController = transform.parent.GetComponent<RunnerCharacterController>();
+            Debug.Assert(m_runnerCharacterController, "Objects needs a parent that has a player character controller");
+            Physics.IgnoreCollision(GetComponent<Collider>(), m_runnerCharacterController.GetComponent<Collider>());
         }
 
         #region JumpOver
         protected override void JumpedOn()
         {
-            characterController.BounceOnMe();
+            m_runnerCharacterController.BounceOnMe();
         }
 
         protected override Vector3 GetBounceForce()
         {
-            return new Vector3(0,GetComponentInParent<Stats>().Get(StatType.BOUNCE_HEIGHT),0);
+            Stats stats = GetComponentInParent<Stats>();
+            float height = stats.Get(StatType.BOUNCE_HEIGHT);
+            return Vector3.up * height;
         }
         #endregion
     }

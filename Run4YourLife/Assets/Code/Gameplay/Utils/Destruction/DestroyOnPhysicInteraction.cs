@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DestroyMeOnCollision : MonoBehaviour {
+public class DestroyOnPhysicInteraction : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {

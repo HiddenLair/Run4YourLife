@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4486657896019428}
   - component: {fileID: 198693366939746586}
   - component: {fileID: 199606239385320768}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4293095363249298}
   - component: {fileID: 114777525224094196}
   - component: {fileID: 114737646211377712}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ExplosiveBulletExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 4494735680174646}
   - component: {fileID: 198288551521416384}
   - component: {fileID: 199058068233456816}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,10 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3ac85323984f8b4091867050a1fd2ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AOERadius: 0.7
-  layersListener:
-    serializedVersion: 2
-    m_Bits: 256
+  m_explosionRadius: 0.7
 --- !u!198 &198288551521416384
 ParticleSystem:
   m_ObjectHideFlags: 1

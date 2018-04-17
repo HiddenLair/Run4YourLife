@@ -7,7 +7,6 @@ using Run4YourLife;
 
 public class RockPoints : MonoBehaviour {
 
-
     [SerializeField]
     private float points;
     private PlayerDefinition playerWhoThrew;

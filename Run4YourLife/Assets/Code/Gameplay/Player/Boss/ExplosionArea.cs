@@ -1,15 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
+
+using Run4YourLife;
 
 public class ExplosionArea : MonoBehaviour {
 
-    public float AOERadius;
-    public LayerMask layersListener;
+    [SerializeField]
+    private float m_explosionRadius;
 
     void Update () {
-        Collider[] collisions = Physics.OverlapSphere(transform.position, AOERadius, layersListener);
+        Collider[] collisions = Physics.OverlapSphere(transform.position, m_explosionRadius, Layers.Runner);
         foreach (Collider c in collisions)
         {
             ExecuteEvents.Execute<ICharacterEvents>(c.gameObject, null, (x, y) => x.Kill());
@@ -19,6 +19,6 @@ public class ExplosionArea : MonoBehaviour {
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, AOERadius);
+        Gizmos.DrawWireSphere(transform.position, m_explosionRadius);
     }
 }
