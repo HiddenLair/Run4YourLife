@@ -27,11 +27,15 @@ namespace Run4YourLife.OptionsMenu
             {
                 Screen.fullScreen = true;
                 UpdateUI();
+
+                rightSwitch.GetComponent<ScaleTick>().Tick();
             }
             else if (eventData.moveDir == MoveDirection.Left)
             {
                 Screen.fullScreen = false;
                 UpdateUI();
+
+                leftSwitch.GetComponent<ScaleTick>().Tick();
             }
         }
 
