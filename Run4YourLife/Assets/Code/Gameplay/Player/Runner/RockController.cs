@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 using Run4YourLife;
 
-public class RockPoints : MonoBehaviour {
+public class RockController : MonoBehaviour {
 
     [SerializeField]
     private float points;
@@ -13,7 +13,7 @@ public class RockPoints : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == Tags.Boss)
+        if(other.CompareTag(Tags.Boss))
         {
             ExecuteEvents.Execute<IScoreEvents>(FindObjectOfType<ScoreManager>().gameObject, null, (x, y) => x.OnAddPoints(playerWhoThrew, points));
         }

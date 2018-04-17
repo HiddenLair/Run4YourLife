@@ -21,7 +21,6 @@ namespace Run4YourLife.Player
         private GameObject m_gameplayManagerGameObject;
         private Stats m_stats;
         private RunnerCharacterController m_runnerCharacterController;
-        private RunnerInputStated inputPlayer;
         private Wind m_wind;
 
         #endregion
@@ -30,7 +29,6 @@ namespace Run4YourLife.Player
         {
             m_runnerCharacterController = GetComponent<RunnerCharacterController>();
             m_stats = GetComponent<Stats>();
-            inputPlayer = GetComponent<RunnerInputStated>();
             m_wind = GetComponent<Wind>();
             m_gameplayManagerGameObject = GameObject.FindGameObjectWithTag(Tags.GameController);
             if (m_gameplayManagerGameObject == null)

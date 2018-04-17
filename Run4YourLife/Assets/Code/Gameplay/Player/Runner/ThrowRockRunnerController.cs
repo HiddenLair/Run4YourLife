@@ -28,7 +28,7 @@ namespace Run4YourLife.Player {
         private RunnerInputStated inputPlayer;
         private float timer;
         private PlayerDefinition myDefinition;
-        private Collider collider;
+        private new Collider collider;
 
         private void Awake()
         {
@@ -52,7 +52,7 @@ namespace Run4YourLife.Player {
             Physics.IgnoreCollision(rock.GetComponent<Collider>(), collider);
             Rigidbody rigidbody = rock.GetComponent<Rigidbody>();
             rigidbody.velocity = GetThrowVelocity(force, angle);
-            rock.GetComponent<RockPoints>().SetPlayerDefinition(myDefinition);
+            rock.GetComponent<RockController>().SetPlayerDefinition(myDefinition);
         }
 
         private Vector3 GetThrowVelocity(float force, float angle)

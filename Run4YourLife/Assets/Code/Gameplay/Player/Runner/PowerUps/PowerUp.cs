@@ -18,29 +18,32 @@ namespace Run4YourLife.Player
 
         private void OnTriggerEnter(Collider other)
         {
-            switch (m_type)
+            if(other.CompareTag(Tags.Runner))
             {
-                case Type.SINGLE:
-                    {
-                        Debug.Assert(other.CompareTag(Tags.Runner));
-                        Apply(other.gameObject);
-                        PlayerDefinition player = other.gameObject.GetComponent<PlayerInstance>().PlayerDefinition;
-                        ExecuteEvents.Execute<IScoreEvents>(FindObjectOfType<ScoreManager>().gameObject, null, (x, y) => x.OnAddPoints(player, points));
-                    }
-                    break;
-                case Type.GROUP:
-                    {
-                        GameplayPlayerManager gameplayPlayerManager = FindObjectOfType<GameplayPlayerManager>();
-                        Debug.Assert(gameplayPlayerManager != null);
-
-                        foreach (GameObject runner in gameplayPlayerManager.RunnersAlive)
+                switch (m_type)
+                {
+                    case Type.SINGLE:
                         {
-                            Apply(runner);
+                            Debug.Assert(other.CompareTag(Tags.Runner));
+                            Apply(other.gameObject);
+                            PlayerDefinition player = other.gameObject.GetComponent<PlayerInstance>().PlayerDefinition;
+                            ExecuteEvents.Execute<IScoreEvents>(FindObjectOfType<ScoreManager>().gameObject, null, (x, y) => x.OnAddPoints(player, points));
                         }
-                    }
-                    break;
+                        break;
+                    case Type.GROUP:
+                        {
+                            GameplayPlayerManager gameplayPlayerManager = FindObjectOfType<GameplayPlayerManager>();
+                            Debug.Assert(gameplayPlayerManager != null);
+
+                            foreach (GameObject runner in gameplayPlayerManager.RunnersAlive)
+                            {
+                                Apply(runner);
+                            }
+                        }
+                        break;
+                }
+                Destroy(gameObject);
             }
-            Destroy(gameObject);
         }
     }
 }
