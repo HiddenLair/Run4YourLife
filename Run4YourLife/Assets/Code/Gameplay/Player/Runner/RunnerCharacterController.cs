@@ -460,5 +460,14 @@ namespace Run4YourLife.Player
         }
 
         #endregion
+
+        #region Getters
+
+        public bool IsDashing()
+        {
+            return m_isDashing;
+        }
+
+        #endregion
     }
 }
