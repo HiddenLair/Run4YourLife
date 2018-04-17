@@ -19,6 +19,7 @@ public class ResetFocusOnFocusLost : MonoBehaviour
     void Update()
     {
         GameObject currentSelectedGameObject = eventSystem.currentSelectedGameObject;
+        Debug.Log(currentSelectedGameObject);
 
         if(currentSelectedGameObject != null)
         {

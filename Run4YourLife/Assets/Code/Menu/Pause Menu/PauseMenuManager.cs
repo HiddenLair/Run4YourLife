@@ -17,9 +17,5 @@ namespace Run4YourLife.PauseMenu
         [SerializeField]
         private SceneLoadRequest m_optionsMenuLoadRequest;
 
-        public void OnExitButtonPressed()
-        {
-            m_mainMenuLoadRequest.Execute();
-        }
     }
 }

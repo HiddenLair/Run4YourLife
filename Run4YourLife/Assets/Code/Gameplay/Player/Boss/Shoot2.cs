@@ -27,5 +27,12 @@ namespace Run4YourLife.Player
             tempInstance.GetComponent<Rigidbody>().velocity = director * bulletSpeed * Time.deltaTime;
             tempInstance.GetComponent<ChargedBullet>().SetZValue(crossHair.position.z);
         }
+
+        public override void RotateHead()
+        {
+            head.LookAt(crossHair.position);
+            head.Rotate(0, -180, 0);
+            head.rotation *= initialRotation;
+        }
     }
 }

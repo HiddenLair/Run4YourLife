@@ -14,7 +14,7 @@ namespace Run4YourLife.Player
         #region Inspector
 
         [SerializeField]
-        private Transform head;
+        protected Transform head;
 
         [SerializeField]
         protected Transform shootInitZone;
@@ -36,7 +36,7 @@ namespace Run4YourLife.Player
 
         private float currentTimeS = 0;
         private bool alreadyPressed = false;
-        private Quaternion initialRotation;
+        protected Quaternion initialRotation;
 
         private Ready ready;
         private BossControlScheme controlScheme;
@@ -66,11 +66,16 @@ namespace Run4YourLife.Player
             Verify();
         }
 
-        private void LateUpdate()
-        {            
+        public virtual void RotateHead()
+        {
             head.LookAt(crossHair.position);
             head.Rotate(0, -90, 0);
             head.rotation *= initialRotation;
+        }
+
+        private void LateUpdate()
+        {
+            RotateHead();         
             /*Quaternion lookRotation = Quaternion.LookRotation(crossHair.position - head.position);
             head.rotation = lookRotation * initialRotation;*/
         }
