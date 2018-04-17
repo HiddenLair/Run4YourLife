@@ -5991,6 +5991,7 @@ Transform:
   m_Children:
   - {fileID: 168087526}
   - {fileID: 1052364814}
+  - {fileID: 1937127592}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9451,6 +9452,18 @@ Transform:
   m_PrefabParentObject: {fileID: 4583484698477256, guid: 1cd7ef716acc5674d8d6033592171016,
     type: 2}
   m_PrefabInternal: {fileID: 1322103746}
+--- !u!114 &1148277878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1148277876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49c7d8f17d10c58458a43781add05430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_pauseMenuLoader: {fileID: 1937127593}
 --- !u!1 &1151029550
 GameObject:
   m_ObjectHideFlags: 0
@@ -9503,6 +9516,18 @@ Transform:
   m_PrefabParentObject: {fileID: 4583484698477256, guid: 1cd7ef716acc5674d8d6033592171016,
     type: 2}
   m_PrefabInternal: {fileID: 1721678942}
+--- !u!114 &1151524638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1151524636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49c7d8f17d10c58458a43781add05430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_pauseMenuLoader: {fileID: 1937127593}
 --- !u!1001 &1155535167
 Prefab:
   m_ObjectHideFlags: 0
@@ -12448,6 +12473,18 @@ Transform:
   m_PrefabParentObject: {fileID: 4142356125656562, guid: b566f5c526f5ed042a45e74da4b918c0,
     type: 2}
   m_PrefabInternal: {fileID: 1399624677}
+--- !u!114 &1532828311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1532828309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49c7d8f17d10c58458a43781add05430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_pauseMenuLoader: {fileID: 1937127593}
 --- !u!1001 &1535228453
 Prefab:
   m_ObjectHideFlags: 0
@@ -15379,6 +15416,54 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   desiredFloorHeight: 10
   desiredPositionOffset: {x: -1.5, y: 0, z: 0}
+--- !u!1 &1937127591
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1937127592}
+  - component: {fileID: 1937127593}
+  m_Layer: 0
+  m_Name: PauseMenuLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1937127592
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1937127591}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 618985662}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1937127593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1937127591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b54b125ffc0a6ec46b3f2eecc0eff95c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneLoadRequestData:
+    loadScene: 1
+    sceneName: PauseMenu
+    loadSceneMode: 1
+    loadEvent: 0
+    setLoadedSceneAsActiveScene: 1
+    unloadScene: 0
+    unloadedSceneName: 
 --- !u!1 &1940952501
 GameObject:
   m_ObjectHideFlags: 0
@@ -15682,6 +15767,18 @@ Transform:
   m_PrefabParentObject: {fileID: 4583484698477256, guid: 1cd7ef716acc5674d8d6033592171016,
     type: 2}
   m_PrefabInternal: {fileID: 234491951}
+--- !u!114 &1951497693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1951497691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49c7d8f17d10c58458a43781add05430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_pauseMenuLoader: {fileID: 1937127593}
 --- !u!1 &1961234628
 GameObject:
   m_ObjectHideFlags: 0

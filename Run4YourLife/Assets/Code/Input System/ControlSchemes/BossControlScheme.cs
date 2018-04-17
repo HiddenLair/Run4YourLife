@@ -6,7 +6,7 @@ using Run4YourLife.Player;
 
 namespace Run4YourLife.Input
 {
-    public class BossControlScheme : ControlScheme
+    public class BossControlScheme : PlayerControlScheme
     {
         public Action MoveTrapIndicatorVertical { get; private set; }
         public Action MoveTrapIndicatorHorizontal { get; private set; }

@@ -2,7 +2,7 @@
 
 namespace Run4YourLife.Input
 {
-    public class RunnerControlScheme : ControlScheme
+    public class RunnerControlScheme : PlayerControlScheme
     {
         public Action Vertical { get; private set; }
         public Action Move { get; private set; }
