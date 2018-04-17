@@ -11,7 +11,7 @@ public class MelePhase3 : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        if (other.gameObject.layer == Layers.Stage)
         {
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             Tremble();

@@ -134,8 +134,7 @@ namespace Run4YourLife.Player
             laser.SetActive(true);
             float distance = 50.0f;
             float thickness = laser.GetComponent<ParticleSystem>().shape.boxThickness.y; //<-- Desired thickness here.
-            LayerMask layers = LayerMask.GetMask("Player") | LayerMask.GetMask("Trap");
-            targetLocation = Physics.SphereCastAll(bulletStartingPoint.position,thickness,bulletStartingPoint.right,distance,layers);
+            targetLocation = Physics.SphereCastAll(bulletStartingPoint.position,thickness,bulletStartingPoint.right,distance, Layers.Runner | Layers.Trap);
             foreach(RaycastHit r in targetLocation)
             {
                 ExecuteEvents.Execute<ICharacterEvents>(r.transform.gameObject, null, (x, y) => x.Kill());

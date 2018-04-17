@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+using Run4YourLife;
 using Run4YourLife.Utils;
 
 namespace Run4YourLife.Player
@@ -32,8 +33,7 @@ namespace Run4YourLife.Player
 
             laser.SetActive(true);
             float thickness = laser.GetComponent<ParticleSystem>().shape.boxThickness.y; //<-- Desired thickness here.
-            LayerMask layers = LayerMask.GetMask("Player") | LayerMask.GetMask("Trap");
-            targetLocation = Physics.SphereCastAll(shootInitZone.position, thickness, shootInitZone.right, maxLaserDistance, layers);
+            targetLocation = Physics.SphereCastAll(shootInitZone.position, thickness, shootInitZone.right, maxLaserDistance, Layers.Runner | Layers.Trap);
             foreach (RaycastHit r in targetLocation)
             {
                 ExecuteEvents.Execute<ICharacterEvents>(r.transform.gameObject, null, (x, y) => x.Kill());

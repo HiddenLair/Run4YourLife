@@ -4,8 +4,8 @@ using UnityEngine;
 
 using UnityEngine.EventSystems;
 
+using Run4YourLife;
 using Run4YourLife.UI;
-
 using Run4YourLife.Input;
 
 public class Laser : MonoBehaviour {
@@ -287,7 +287,7 @@ public class Laser : MonoBehaviour {
          */
         float zDistance =laser.position.z - Camera.main.transform.position.z;
         Vector3 pos = new Vector3(laser.position.x,Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, zDistance)).y, laser.position.z);
-        targetLocation = Physics.RaycastAll(pos,Vector3.down,distance,LayerMask.GetMask("Ground"),QueryTriggerInteraction.Ignore);
+        targetLocation = Physics.RaycastAll(pos,Vector3.down,distance,Layers.Stage,QueryTriggerInteraction.Ignore);
 
         return targetLocation;
     }

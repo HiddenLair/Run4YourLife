@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using Run4YourLife;
+
 public class TrapInit : MonoBehaviour {
 
     #region Inspector
@@ -40,7 +42,7 @@ public class TrapInit : MonoBehaviour {
         while (!grounded)
         {
             RaycastHit info;
-            if (Physics.Raycast(transform.position, Vector3.down,out info, 0.5f, LayerMask.GetMask("Ground"), QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(transform.position, Vector3.down,out info, 0.5f, Layers.Stage, QueryTriggerInteraction.Ignore))
             {
                 transform.position = transform.position + Vector3.down * info.distance;
                 grounded = true;
