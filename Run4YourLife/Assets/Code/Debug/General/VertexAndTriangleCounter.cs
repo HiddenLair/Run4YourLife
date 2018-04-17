@@ -24,7 +24,9 @@ namespace Run4YourLife.DebuggingTools
 
             foreach(MeshRenderer mesh in meshes)
             {
-                if(mesh.isVisible)
+                // Vertex and triangle count does not work with static game objects
+
+                if(!mesh.gameObject.isStatic && mesh.isVisible)
                 {
                     MeshFilter filter = mesh.GetComponent<MeshFilter>();
 
