@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 
 namespace Run4YourLife.OptionsMenu
 {
-    class GraphicsSwitch : MonoBehaviour, IMoveHandler, ISelectHandler, IDeselectHandler
+    public class GraphicsSwitch : MonoBehaviour, IMoveHandler, ISelectHandler, IDeselectHandler
     {
         #region Public Variables
         public TextMeshProUGUI graphicsText;

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Run4YourLife.OptionsMenu
 {
-    class ResolutionSwitch : MonoBehaviour, IMoveHandler, ISelectHandler, IDeselectHandler
+    public class ResolutionSwitch : MonoBehaviour, IMoveHandler, ISelectHandler, IDeselectHandler
     {
         #region Private Variables
         private Resolution[] availableResolutions;
