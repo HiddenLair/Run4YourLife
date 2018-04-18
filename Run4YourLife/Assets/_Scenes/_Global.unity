@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 420573255}
   - component: {fileID: 420573259}
   - component: {fileID: 420573260}
+  - component: {fileID: 420573261}
   m_Layer: 0
   m_Name: GlobalManager
   m_TagString: Untagged
@@ -168,11 +169,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01cb0bb6c13e4ca48813aaec87f7c581, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnPlayerChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &420573258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,6 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneLoadRequestData:
+    loadScene: 1
     sceneName: MainMenu
     loadSceneMode: 0
     loadEvent: 1
@@ -211,5 +208,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d4f141c614704f499d0e863d1dc4356, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &420573261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 420573254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42ec9d54d9fa59948ac55cb18c8bccb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

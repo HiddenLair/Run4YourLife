@@ -1,4 +1,5 @@
-﻿using Run4YourLife.SceneManagement;
+﻿using Cinemachine;
+using Run4YourLife.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,5 +18,21 @@ namespace Run4YourLife.PauseMenu
         [SerializeField]
         private SceneLoadRequest m_optionsMenuLoadRequest;
 
+        private CinemachineBrain mainCameraCinemachine;
+
+        private void Awake()
+        {
+            mainCameraCinemachine = Camera.main.GetComponent<CinemachineBrain>();
+        }
+
+        private void OnDestroy()
+        {
+            if (mainCameraCinemachine != null)
+            {
+                mainCameraCinemachine.enabled = true;
+            }
+
+            Time.timeScale = 1;
+        }
     }
 }
