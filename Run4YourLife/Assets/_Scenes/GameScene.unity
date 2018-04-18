@@ -280,7 +280,7 @@ GameObject:
   - component: {fileID: 36245280}
   - component: {fileID: 36245279}
   - component: {fileID: 36245278}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -424,7 +424,7 @@ GameObject:
   - component: {fileID: 47819485}
   - component: {fileID: 47819484}
   - component: {fileID: 47819483}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3613,7 +3613,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_virtualCamera: {fileID: 929414561}
   m_bossFightStartingCameraPositionDebug: {fileID: 1598673559}
-  m_timeOfPhase: 2
+  m_timeOfPhase: 20
   m_triggerToPhase: {fileID: 0}
   m_backgroundTiling: {fileID: 1825750981}
   phase2Spawns:
@@ -5989,6 +5989,11 @@ Prefab:
       propertyPath: m_Name
       value: R4YL_PROP_bouncy_platform (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 114786842801940676, guid: ed100ab12e096854ea85d5c391bde264,
+        type: 2}
+      propertyPath: bounceOverMeForce
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ed100ab12e096854ea85d5c391bde264, type: 2}
   m_IsPrefabParent: 0
@@ -6459,7 +6464,7 @@ GameObject:
   - component: {fileID: 807048994}
   - component: {fileID: 807048993}
   - component: {fileID: 807048992}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6888,7 +6893,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4428404465085170, guid: 5eaafedb748a6574484a13d6f1eb6de7, type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5eaafedb748a6574484a13d6f1eb6de7, type: 2}
@@ -8550,7 +8555,7 @@ GameObject:
   - component: {fileID: 1108181953}
   - component: {fileID: 1108181952}
   - component: {fileID: 1108181951}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10295,22 +10300,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 4350504664586080, guid: 9cea68c59de8bde429c5f0e490ad43ad, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4350504664586080, guid: 9cea68c59de8bde429c5f0e490ad43ad, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4350504664586080, guid: 9cea68c59de8bde429c5f0e490ad43ad, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4343039242991148, guid: 9cea68c59de8bde429c5f0e490ad43ad, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0.03
-      objectReference: {fileID: 0}
     - target: {fileID: 1496112649186604, guid: 9cea68c59de8bde429c5f0e490ad43ad, type: 2}
       propertyPath: m_Name
       value: PlataformaConPinchos (1)
@@ -11316,7 +11305,7 @@ GameObject:
   - component: {fileID: 1501392802}
   - component: {fileID: 1501392801}
   - component: {fileID: 1501392800}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Floor (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15260,7 +15249,7 @@ GameObject:
   - component: {fileID: 1998741597}
   - component: {fileID: 1998741596}
   - component: {fileID: 1998741595}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15795,6 +15784,7 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114667143532375950, guid: 82e5f869fd23d8747ba74e09e03e38da, type: 2}
+    - {fileID: 114985449046005792, guid: 82e5f869fd23d8747ba74e09e03e38da, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 82e5f869fd23d8747ba74e09e03e38da, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &2055977595 stripped
@@ -15834,7 +15824,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2055977596}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f7c48d64f747224c84dbbba1c8c8bc4, type: 3}
+  m_Script: {fileID: 11500000, guid: bf883fc8784a0b04da091549fc48df02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   loadRequest: {fileID: 2055977597}
@@ -16105,6 +16095,23 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c33604b8415d8d2438a6d0df91c0c127, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &2112018328 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1339922860416116, guid: c33604b8415d8d2438a6d0df91c0c127,
+    type: 2}
+  m_PrefabInternal: {fileID: 2112018327}
+--- !u!135 &2112018329
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2112018328}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.65
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &2118880317 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4376854564913058, guid: 6c681cfaa923ab645a39a529a825f2de,

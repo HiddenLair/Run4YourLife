@@ -26,7 +26,7 @@ namespace Run4YourLife.OptionsMenu
 
         private void Start()
         {
-            exitScheme.InputDevice = new InputDevice(1);
+            exitScheme.InputDevice = new InputDevice(0);
             exitScheme.Active = true;
             EventSystem.current.firstSelectedGameObject.GetComponent<ISelectHandler>().OnSelect(null);
         }
