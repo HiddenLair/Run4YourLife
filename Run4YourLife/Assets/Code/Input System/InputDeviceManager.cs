@@ -8,35 +8,31 @@ namespace Run4YourLife.Input
 {
     public class InputDeviceManager : MonoBehaviour
     {
-        List<InputDevice> m_inputDevices = new List<InputDevice>();
+        InputDevice m_defaultInputDevice = new InputDevice(0);
+        List<InputDevice> m_inputDevices = new List<InputDevice>(new InputDevice[] {
+                        new InputDevice(1),
+                        new InputDevice(2),
+                        new InputDevice(3),
+                        new InputDevice(4),
+                        new InputDevice(5),
+                    });
+
         List<InputDevice> m_inactiveInputDevices = new List<InputDevice>();
         List<InputDevice> m_activeInputDevices = new List<InputDevice>();
 
+        public InputDevice DefaultInputDevice { get { return m_defaultInputDevice; } }
+        public List<InputDevice> InputDevices { get { return m_inputDevices; } }
         public List<InputDevice> ActiveInputDevices { get { return m_activeInputDevices; } }
         public List<InputDevice> InactiveInputDevices { get { return m_activeInputDevices; } }
 
         public InputDeviceManager()
         {
-            m_inputDevices.AddRange(
-                    new InputDevice[] {
-                        new InputDevice(1),
-                        new InputDevice(2),
-                        new InputDevice(3),
-                        new InputDevice(4),
-                    }
-                );
-
             ResetInputDevices();
         }
 
         private void Awake()
         {
             enabled = false;
-        }
-
-        public List<InputDevice> InputDevices()
-        {
-            return m_inputDevices;
         }
 
         public void ResetInputDevices()
@@ -59,7 +55,7 @@ namespace Run4YourLife.Input
         {
             foreach(InputDevice inputDevice in m_inactiveInputDevices)
             {
-                if(DetectInputDeviceInput(inputDevice))
+                if(inputDevice.HasInput())
                 {
                     m_activeInputDevices.Add(inputDevice);
                 }
@@ -67,40 +63,5 @@ namespace Run4YourLife.Input
 
             m_inactiveInputDevices.RemoveAll((x) => m_activeInputDevices.Contains(x));
         }
-
-        private bool DetectInputDeviceInput(InputDevice inputDevice)
-        {
-            InputSource inputSource = new InputSource(inputDevice);
-
-            foreach (Trigger trigger in Trigger.TRIGGERS)
-            {
-                inputSource.input = trigger.ID;
-                if(inputSource.Value() != 0)
-                {
-                    return true;
-                }
-            }
-
-            foreach (Axis axis in Axis.AXES)
-            {
-                inputSource.input = axis.ID;
-                if (inputSource.Value() != 0)
-                {
-                    return true;
-                }
-            }
-
-            foreach (Button button in Button.BUTTONS)
-            {
-                inputSource.input = button.ID;
-                if (inputSource.ButtonDown())
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
     }
 }
-
