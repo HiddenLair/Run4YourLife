@@ -53,10 +53,10 @@ public class Walker : MonoBehaviour {
 
             checkPointManager.GetFloorHeightAndPositionOffset(id, speed, out fH, out pO);
 
-            //CinemachineScreenTransposer cameraBossFollow = Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineScreenTransposer>();
+            CinemachineScreenTransposer cameraBossFollow = Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineScreenTransposer>();
 
-            //cameraBossFollow.m_verticalHeight = fH;
-            //cameraBossFollow.m_offsetFromTarget = pO;
+            cameraBossFollow.m_verticalHeight = fH;
+            cameraBossFollow.m_offsetFromTarget = pO;
         }
     }
 }

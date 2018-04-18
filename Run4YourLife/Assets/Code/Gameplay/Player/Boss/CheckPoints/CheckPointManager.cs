@@ -87,6 +87,11 @@ public class CheckPointManager : MonoBehaviour {
             Vector3 point1 = checkpoints[inner.listOffset].position;
             Vector3 point2 = checkpoints[inner.listOffset + 1].position;
 
+            BossSlowPoint slow = checkpoints[inner.listOffset].GetComponent<BossSlowPoint>();
+            if (slow) {
+                speed = speed - speed * slow.percentSpeedReduction;
+            }
+
             float lerpSpeed = speed / Vector3.Distance(point1, point2);
             inner.progressionOffset += lerpSpeed;
 
