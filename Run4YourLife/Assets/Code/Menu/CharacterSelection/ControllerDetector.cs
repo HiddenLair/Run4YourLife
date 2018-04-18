@@ -23,21 +23,13 @@ namespace Run4YourLife.CharacterSelection
             Debug.Assert(playerManager != null);
         }
 
-        void Start()
-        {
-            inputDeviceManager.StartInputDeviceDetection();
-        }
-
-        private void OnDestroy()
-        {
-            inputDeviceManager.StopInputDeviceDetection();
-        }
-
         void Update()
-        {            
-            foreach (InputDevice inputDevice in inputDeviceManager.ActiveInputDevices) 
+        {
+            InputSource joinGameInput = new InputSource(Button.A);
+            foreach (InputDevice inputDevice in inputDeviceManager.InputDevices) 
             {
-                if (new InputSource(Button.A, inputDevice).ButtonDown() && !IsAssignedToAPlayer(inputDevice))
+                joinGameInput.inputDevice = inputDevice;
+                if (joinGameInput.ButtonDown() && !IsAssignedToAPlayer(inputDevice))
                 {
                     OncontrollerDetected.Invoke(inputDevice);
                 }
