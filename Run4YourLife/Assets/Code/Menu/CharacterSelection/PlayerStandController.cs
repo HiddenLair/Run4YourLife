@@ -48,6 +48,8 @@ namespace Run4YourLife.CharacterSelection
 
             controlScheme = GetComponent<PlayerStandControllerControlScheme>();
             Debug.Assert(controlScheme != null);
+
+            OnAwake();
         }
 
         void Update()
@@ -142,5 +144,7 @@ namespace Run4YourLife.CharacterSelection
                 rotationY += -200.0f * controlScheme.Rotate.Value() * Time.deltaTime;
             }
         }
+
+        protected virtual void OnAwake() { }
     }
 }
