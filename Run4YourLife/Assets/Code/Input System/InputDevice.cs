@@ -31,7 +31,7 @@ namespace Run4YourLife.Input
 
         public string InputString(string input)
         {
-            return "joy" + id + input;
+            return id + input;
         }
 
         public bool HasInput()
