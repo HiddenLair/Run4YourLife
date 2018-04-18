@@ -23,9 +23,19 @@ namespace Run4YourLife.CharacterSelection
             Debug.Assert(playerManager != null);
         }
 
+        void Start()
+        {
+            inputDeviceManager.StartInputDeviceDetection();
+        }
+
+        private void OnDestroy()
+        {
+            inputDeviceManager.StopInputDeviceDetection();
+        }
+
         void Update()
         {            
-            foreach (InputDevice inputDevice in inputDeviceManager.InputDevices()) 
+            foreach (InputDevice inputDevice in inputDeviceManager.ActiveInputDevices) 
             {
                 if (new InputSource(Button.A, inputDevice).ButtonDown() && !IsAssignedToAPlayer(inputDevice))
                 {
