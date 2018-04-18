@@ -31,7 +31,41 @@ namespace Run4YourLife.Input
 
         public string InputString(string input)
         {
-            return "joy" + id + input;
+            return id + input;
+        }
+
+        public bool HasInput()
+        {
+            InputSource inputSource = new InputSource(this);
+
+            foreach (Trigger trigger in Trigger.TRIGGERS)
+            {
+                inputSource.input = trigger.ID;
+                if (inputSource.Value() != 0)
+                {
+                    return true;
+                }
+            }
+
+            foreach (Axis axis in Axis.AXES)
+            {
+                inputSource.input = axis.ID;
+                if (inputSource.Value() != 0)
+                {
+                    return true;
+                }
+            }
+
+            foreach (Button button in Button.BUTTONS)
+            {
+                inputSource.input = button.ID;
+                if (inputSource.ButtonDown() || inputSource.Button() || inputSource.ButtonUp())
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
