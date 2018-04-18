@@ -15,7 +15,7 @@ namespace Run4YourLife.GameManagement
         public GamePhaseEvent onGamePhaseChanged;
 
         [SerializeField]
-        private SceneLoadRequest toMainMenuRequest;
+        private SceneLoadRequest bossWin;
 
         private void Start()
         {
@@ -24,7 +24,7 @@ namespace Run4YourLife.GameManagement
 
         public void OnAllRunnersDied()
         {
-            toMainMenuRequest.Execute();
+            bossWin.Execute();
         }
 
         #region Phase Execution

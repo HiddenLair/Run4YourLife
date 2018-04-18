@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using Run4YourLife.Player;
+using UnityEngine.SceneManagement;
 
 namespace Run4YourLife.GameManagement
 {
@@ -21,13 +22,27 @@ namespace Run4YourLife.GameManagement
 
         #endregion
 
-        void Start()
+        void OnEnable()
         {
-            foreach(PlayerDefinition playerDefinition in FindObjectOfType<PlayerManager>().GetRunners())
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            if (scene.name == "GameScene")
             {
-                pointDictionary[playerDefinition] = 0;
+                foreach (PlayerDefinition playerDefinition in FindObjectOfType<PlayerManager>().GetRunners())
+                {
+                    pointDictionary[playerDefinition] = 0;
+                }
             }
         }
+
+        void OnDisable()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+
 
         public void OnAddPoints(PlayerDefinition playerDefinition,float points)
         {
