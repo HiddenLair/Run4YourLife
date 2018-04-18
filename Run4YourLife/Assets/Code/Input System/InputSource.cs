@@ -33,10 +33,10 @@
 
         private Button(string id) { ID = id; }
 
-        public static readonly Button DPAD_LEFT = new Button("dleft");
-        public static readonly Button DPAD_RIGHT = new Button("dright");
-        public static readonly Button DPAD_UP = new Button("dup");
-        public static readonly Button DPAD_DOWN = new Button("ddown");
+        //public static readonly Button DPAD_LEFT = new Button("dleft");
+        //public static readonly Button DPAD_RIGHT = new Button("dright");
+        //public static readonly Button DPAD_UP = new Button("dup");
+        //public static readonly Button DPAD_DOWN = new Button("ddown");
         public static readonly Button START = new Button("start");
         public static readonly Button SELECT = new Button("select");
         public static readonly Button A = new Button("A");
@@ -46,7 +46,7 @@
         public static readonly Button RB = new Button("RB");
         public static readonly Button LB = new Button("LB");
 
-        public static readonly Button[] BUTTONS = new Button[] { DPAD_LEFT, DPAD_RIGHT, DPAD_UP, DPAD_DOWN, START, SELECT, A, B, X, Y, RB, LB };
+        public static readonly Button[] BUTTONS = new Button[] { /*DPAD_LEFT, DPAD_RIGHT, DPAD_UP, DPAD_DOWN,*/ START, SELECT, A, B, X, Y, RB, LB };
     }
 
     public class InputSource
