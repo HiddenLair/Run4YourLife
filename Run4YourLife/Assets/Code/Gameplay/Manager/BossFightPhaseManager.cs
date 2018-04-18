@@ -31,6 +31,9 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private Tiling m_backgroundTiling;
 
+        [SerializeField]
+        private Transform[] phase2Spawns;
+
         #endregion
 
         #region Member variables
@@ -75,16 +78,25 @@ namespace Run4YourLife.GameManagement
             m_virtualCamera.LookAt = boss.transform;
             m_virtualCamera.gameObject.SetActive(true);
 
-            m_triggerToPhase.SetActive(false);
+            StartCoroutine(YieldHelper.SkipFrame(()=>MoveRunners()));
+
             m_backgroundTiling.SetActive(false);
 
             ExecuteEvents.Execute<IUIEvents>(m_uiManager, null, (x, y) => x.OnCountdownSetted(m_timeOfPhase));
             StartCoroutine(YieldHelper.WaitForSeconds(StartNextPhase, m_timeOfPhase));
         }
 
+        private void MoveRunners()
+        {
+            for (int i = 0; i < m_gameplayPlayerManager.Runners.Count; i++)
+            {
+                m_gameplayPlayerManager.Runners[i].transform.position = phase2Spawns[i].position;
+            }
+        }
+
         private void StartNextPhase()
         {
-            FindObjectOfType<GameManager>().EndExecutingPhaseAndStartPhase(GamePhase.TransitionToHardMoveHorizontal);
+            FindObjectOfType<GameManager>().EndExecutingPhaseAndStartPhase(GamePhase.BossFightRockTransition);
         }
 
         public override void EndPhase()
