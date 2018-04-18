@@ -27,9 +27,12 @@ namespace Run4YourLife.Input
                 );
 
             ResetInputDevices();
-            enabled = false;
         }
 
+        private void Awake()
+        {
+            enabled = false;
+        }
 
         public List<InputDevice> InputDevices()
         {
