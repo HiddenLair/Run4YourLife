@@ -23,6 +23,13 @@ namespace Run4YourLife.GameManagement
 
         void Start()
         {
+            Initialize();
+        }
+
+        public void Initialize()
+        {
+            pointDictionary.Clear();
+
             foreach(PlayerDefinition playerDefinition in FindObjectOfType<PlayerManager>().GetRunners())
             {
                 pointDictionary[playerDefinition] = 0;
