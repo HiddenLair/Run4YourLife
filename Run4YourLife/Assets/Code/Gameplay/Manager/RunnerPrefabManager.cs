@@ -14,7 +14,7 @@ namespace Run4YourLife.Player
     public class RunnerPrefabManager : MonoBehaviour
     {
         [Serializable]
-        private class RunnerPrefab
+        public class RunnerPrefab
         {
             public CharacterType characterType;
             public GameObject gameObject;

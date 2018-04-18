@@ -69,8 +69,6 @@ namespace Run4YourLife.GameManagement
 
             StartCoroutine(YieldHelper.SkipFrame(() => MoveRunners()));
 
-            m_background.GetComponent<Renderer>().material = m_newBackgroundMat;
-            m_background.GetComponent<Tiling>().mat = m_newBackgroundMat;
             m_background.GetComponent<Tiling>().SetActive(true);
         }
 

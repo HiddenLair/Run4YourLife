@@ -28,6 +28,9 @@ namespace Run4YourLife.GameManagement {
         [Tooltip("Event that will be fired when a playerIsRevived")]
         private UnityEvent<GameObject> m_onPlayerRevived;
 
+        [SerializeField]
+        private GameObject[] runnerSlot;
+
         #endregion
 
         #region Properties
@@ -58,6 +61,8 @@ namespace Run4YourLife.GameManagement {
         private List<PlayerDefinition> m_runnerPlayerDefinitions = new List<PlayerDefinition>();
 
         private RunnerPrefabManager runnerPrefabManager;
+
+        private int runnerIndex = 0;
 
         #endregion
 
@@ -135,7 +140,10 @@ namespace Run4YourLife.GameManagement {
         {
             m_runnerPlayerDefinitions.Add(playerDefinition);
 
-            GameObject runner = GetRunnerForPlayer(playerDefinition);
+            GameObject runner = Instantiate(GetRunnerForPlayer(playerDefinition), runnerSlot[runnerIndex].transform, false);
+
+            runnerIndex++;
+            runner.SetActive(false);
             OnPlayerDefinitionChanged(runner, playerDefinition);
 
             if(!m_runnersAlive.Contains(runner))

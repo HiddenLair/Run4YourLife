@@ -4,29 +4,26 @@ using UnityEngine;
 
 public class Tiling : MonoBehaviour {
 
-    public Material mat;
+    public new Renderer renderer;
     public Vector2 speed;
-
-    //private Vector2 actualTiling;
-    private Vector2 initialTiling;
     private bool active = true;
+    private Material sharedMaterial;
 
-    private void Start()
+    private void Awake()
     {
-        initialTiling = mat.mainTextureOffset;
-        //actualTiling = mat.mainTextureOffset;
+        sharedMaterial = renderer.sharedMaterial;
     }
 
     private void OnDestroy()
     {
-        mat.mainTextureOffset = initialTiling;
+       renderer.sharedMaterial = sharedMaterial;
     }
 
     // Update is called once per frame
     void Update () {
         if (active)
         {
-            mat.mainTextureOffset += speed * Time.deltaTime;
+            renderer.material.mainTextureOffset += speed * Time.deltaTime;
         }
 	}
 
