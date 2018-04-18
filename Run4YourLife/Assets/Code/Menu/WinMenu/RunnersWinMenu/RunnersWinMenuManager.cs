@@ -13,9 +13,6 @@ namespace Run4YourLife.WinMenu
         private GameObject runnerSlotPrefab;
 
         [SerializeField]
-        private GameObject runnerPrefab;
-
-        [SerializeField]
         private GameObject[] spawnPoints;
 
         [SerializeField]
@@ -30,14 +27,18 @@ namespace Run4YourLife.WinMenu
         [SerializeField]
         private string othersAnimation = "idle";
 
+        private RunnerPrefabManager runnerPrefabManager;
+
         void Awake()
         {
+            runnerPrefabManager = FindObjectOfType<RunnerPrefabManager>();
+
             // SetUpFakePlayers(3); // TEST
             // SetUpFakeScores(); // TEST
             SpawnRunners();
         }
 
-        private void SetUpFakePlayers(uint numRunners)
+        /* private void SetUpFakePlayers(uint numRunners)
         {
             PlayerManager playerManager = FindObjectOfType<PlayerManager>();
 
@@ -56,9 +57,9 @@ namespace Run4YourLife.WinMenu
                     IsBoss = false
                 });
             }
-        }
+        } */
 
-        private void SetUpFakeScores()
+        /* private void SetUpFakeScores()
         {
             ScoreManager scoreManager = FindObjectOfType<ScoreManager>();
 
@@ -73,7 +74,7 @@ namespace Run4YourLife.WinMenu
             {
                 scoreManager.OnAddPoints(playerDefinition, Random.Range(0.0f, 50.0f));
             }
-        }
+        } */
 
         private void SpawnRunners()
         {
@@ -94,10 +95,7 @@ namespace Run4YourLife.WinMenu
             for(int i = 0; i < points.Count; ++i)
             {
                 GameObject runnerSlot = Instantiate(runnerSlotPrefab, spawnPoints[i].transform, false);
-
-                // Use sorted PlayerDefinition to instantiate the proper runner
-
-                GameObject runner = Instantiate(runnerPrefab, runnerSlot.transform, false);
+                GameObject runner = Instantiate(runnerPrefabManager.Get(RunnerPrefabType.RunnersWin, points[i].Value.CharacterType), runnerSlot.transform, false);
 
                 float scale = othersScale;
 

@@ -127,6 +127,7 @@ GameObject:
   - component: {fileID: 420573259}
   - component: {fileID: 420573260}
   - component: {fileID: 420573261}
+  - component: {fileID: 420573262}
   m_Layer: 0
   m_Name: GlobalManager
   m_TagString: Untagged
@@ -221,3 +222,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42ec9d54d9fa59948ac55cb18c8bccb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &420573262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 420573254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3a97c63f108b014ea1331a0e1d3685d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gamePrefabs:
+  - characterType: 0
+    gameObject: {fileID: 1095223732133840, guid: 1cd7ef716acc5674d8d6033592171016,
+      type: 2}
+  - characterType: 2
+    gameObject: {fileID: 1299185812857776, guid: 186e999919821e84aacd80619694440b,
+      type: 2}
+  - characterType: 1
+    gameObject: {fileID: 1389302491664256, guid: d4d4b74438d30d2479c85981b22f539c,
+      type: 2}
+  characterSelectionPrefabs:
+  - characterType: 0
+    gameObject: {fileID: 1095223732133840, guid: 6732512d628ebe84298f835b9b095f94,
+      type: 2}
+  - characterType: 2
+    gameObject: {fileID: 1095223732133840, guid: 5cb7b88d599ad06418b58ac71884c9ec,
+      type: 2}
+  - characterType: 1
+    gameObject: {fileID: 1095223732133840, guid: 2049fba8a053b054db6efee114641732,
+      type: 2}
+  runnersWinPrefabs:
+  - characterType: 0
+    gameObject: {fileID: 1095223732133840, guid: aaa05936afaa17b439e2be5d0a7f4109,
+      type: 2}
+  - characterType: 2
+    gameObject: {fileID: 1993643662835586, guid: 37efb1a7fcce34040981906a07e13e23,
+      type: 2}
+  - characterType: 1
+    gameObject: {fileID: 1773483497333602, guid: 1dce51945a5411446abc08e734576717,
+      type: 2}

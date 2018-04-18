@@ -9,45 +9,23 @@ namespace Run4YourLife.CharacterSelection
     [RequireComponent(typeof(RunnerStandControllerControlScheme))]
     public class RunnerStandController : PlayerStandController
     {
-        #region Stands
-
-        [SerializeField]
-        private GameObject purpleRunner;
-
-        [SerializeField]
-        private GameObject greenRunner;
-
-        [SerializeField]
-        private GameObject orangeRunner;
-
-        #endregion
-
         [SerializeField]
         private ScaleTick scaleTickArrowLeft;
 
         [SerializeField]
         private ScaleTick scaleTickArrowRight;
 
+        private RunnerPrefabManager runnerPrefabManager;
+
+        protected override void OnAwake()
+        {
+            runnerPrefabManager = FindObjectOfType<RunnerPrefabManager>();
+            Debug.Assert(runnerPrefabManager != null);
+        }
+
         protected override GameObject GetStandPrefabForPlayer(PlayerDefinition playerDefinition)
         {
-            GameObject prefab = null;
-
-            switch(playerDefinition.CharacterType)
-            {
-                case CharacterType.Purple:
-                    prefab = purpleRunner;
-                    break;
-                case CharacterType.Green:
-                    prefab = greenRunner;
-                    break;
-                case CharacterType.Orange:
-                    prefab = orangeRunner;
-                    break;
-            }
-
-            Debug.Assert(prefab != null);
-
-            return prefab;
+            return runnerPrefabManager.Get(RunnerPrefabType.CharacterSelection, playerDefinition.CharacterType);
         }
 
         protected override void UpdatePlayer()

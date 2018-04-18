@@ -17,10 +17,6 @@ namespace Run4YourLife.GameManagement {
         #region Editor
 
         [SerializeField]
-        [Tooltip("All the runners that can be used in the game")]
-        private GameObject[] m_sceneRunners;
-
-        [SerializeField]
         [Tooltip("All the phase bosses that can be used in the game")]
         private List<GameObject> m_sceneBosses;
 
@@ -61,6 +57,8 @@ namespace Run4YourLife.GameManagement {
         private PlayerDefinition m_bossPlayerDefinition;
         private List<PlayerDefinition> m_runnerPlayerDefinitions = new List<PlayerDefinition>();
 
+        private RunnerPrefabManager runnerPrefabManager;
+
         #endregion
 
         #region Initialize
@@ -70,6 +68,9 @@ namespace Run4YourLife.GameManagement {
             GameManager gameManager = GetComponent<GameManager>();
             Debug.Assert(gameManager != null);
             gameManager.onGamePhaseChanged.AddListener(OnGamePhaseChanged);
+
+            runnerPrefabManager = FindObjectOfType<RunnerPrefabManager>();
+            Debug.Assert(runnerPrefabManager != null);
 
             m_playerManager = GetOrCreateDefaultPlayerManagerIfNoneIsAviable();
             InitializePlayers();
@@ -137,7 +138,6 @@ namespace Run4YourLife.GameManagement {
             GameObject runner = GetRunnerForPlayer(playerDefinition);
             OnPlayerDefinitionChanged(runner, playerDefinition);
 
-
             if(!m_runnersAlive.Contains(runner))
             {
                 m_runners.Add(runner);
@@ -148,7 +148,7 @@ namespace Run4YourLife.GameManagement {
 
         private GameObject GetRunnerForPlayer(PlayerDefinition playerDefinition)
         {
-            return m_sceneRunners[(int)playerDefinition.CharacterType];
+            return runnerPrefabManager.Get(RunnerPrefabType.Game, playerDefinition.CharacterType);
         }
 
         private void InitializeBoss(PlayerDefinition playerDefinition)
