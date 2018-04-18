@@ -13,18 +13,15 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private CinemachineVirtualCamera m_virtualCamera;
 
-        [SerializeField]
-        private Transform m_cameraTargetHandle;
-
-        [SerializeField]
-        private GameObject m_hardMoveHorizontalStartTrigger;
-
         #endregion
+
+        private GameManager gameManager;
 
         #region Initialization
 
         private void Awake()
         {
+            gameManager = FindObjectOfType<GameManager>();
             RegisterPhase(GamePhase.TransitionToHardMoveHorizontal);
         }
 
@@ -35,11 +32,8 @@ namespace Run4YourLife.GameManagement
 
         public override void StartPhase()
         {
-            m_virtualCamera.Follow = m_cameraTargetHandle;
-            m_virtualCamera.LookAt = m_cameraTargetHandle;
-            m_virtualCamera.gameObject.SetActive(true);
-            m_hardMoveHorizontalStartTrigger.SetActive(true);
-        }
+            gameManager.EndExecutingPhaseAndStartPhase(GamePhase.HardMoveHorizontal);
+        }       
 
         public override void EndPhase()
         {
@@ -51,7 +45,6 @@ namespace Run4YourLife.GameManagement
             m_virtualCamera.Follow = null;
             m_virtualCamera.LookAt = null;
             m_virtualCamera.gameObject.SetActive(false);
-            m_hardMoveHorizontalStartTrigger.SetActive(false);
         }
 
         #endregion

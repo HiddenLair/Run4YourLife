@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 namespace Run4YourLife.OptionsMenu
 {
-    class VolumeSwitch : MonoBehaviour, IMoveHandler, ISelectHandler, IDeselectHandler
+    public class VolumeSwitch : MonoBehaviour, IMoveHandler, ISelectHandler, IDeselectHandler
     {
         #region Private Variables
         private int volumeLevel = 3;

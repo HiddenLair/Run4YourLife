@@ -14,9 +14,6 @@ namespace Run4YourLife.GameManagement
         #region Editor variables
 
         [SerializeField]
-        private GameObject m_phase2StartTrigger;
-
-        [SerializeField]
         private CinemachineVirtualCamera m_virtualCamera;
 
         [SerializeField]
@@ -63,7 +60,6 @@ namespace Run4YourLife.GameManagement
             m_virtualCamera.gameObject.SetActive(true);
 
             m_checkPointManager.gameObject.SetActive(true);
-            m_phase2StartTrigger.SetActive(true);
         }
 
         public override void EndPhase()

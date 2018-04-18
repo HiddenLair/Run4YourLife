@@ -11,6 +11,7 @@ namespace Run4YourLife.GameManagement
         EasyMoveHorizontal,
         TransitionToBossFight,
         BossFight,
+        BossFightRockTransition,
         TransitionToHardMoveHorizontal,
         HardMoveHorizontal,
         End

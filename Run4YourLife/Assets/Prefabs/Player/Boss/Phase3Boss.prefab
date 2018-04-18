@@ -648,6 +648,7 @@ GameObject:
   - component: {fileID: 114363967355449896}
   - component: {fileID: 114118069789253484}
   - component: {fileID: 65465648802462346}
+  - component: {fileID: 114318061847534666}
   m_Layer: 11
   m_Name: Phase3Boss
   m_TagString: Boss
@@ -2620,6 +2621,17 @@ MonoBehaviour:
   skillB: {fileID: 1886052310789850, guid: 27ae666a4b29adb48841c4f7f48302fd, type: 2}
   trapB: {fileID: 1244499117138228, guid: e7e661a6bdf2b734497407d3c1e47138, type: 2}
   trapDelaySpawn: 1
+--- !u!114 &114318061847534666
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1601248243005334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff4e6999a7f30fe4aa9f4d8d89f65bd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114363967355449896
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7086,7 +7098,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 1, y: 1, z: 1}
+    m_Scale: {x: 1, y: 1, z: 0.5}
     placementMode: 1
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0

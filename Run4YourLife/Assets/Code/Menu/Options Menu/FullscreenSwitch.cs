@@ -8,12 +8,17 @@ using UnityEngine.EventSystems;
 
 namespace Run4YourLife.OptionsMenu
 {
-    class FullscreenSwitch : MonoBehaviour, IMoveHandler, ISelectHandler, IDeselectHandler
+    public class  FullscreenSwitch : MonoBehaviour, IMoveHandler, ISelectHandler, IDeselectHandler
     {
         #region Public Variables
-        public TextMeshProUGUI fullscreenText;
-        public GameObject leftSwitch;
-        public GameObject rightSwitch;
+        [SerializeField]
+        private TextMeshProUGUI fullscreenText;
+
+        [SerializeField]
+        private GameObject leftSwitch;
+
+        [SerializeField]
+        private GameObject rightSwitch;
         #endregion
 
         private void UpdateUI()
