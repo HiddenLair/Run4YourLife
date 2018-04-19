@@ -31,7 +31,7 @@ namespace Run4YourLife.Player
                 CharacterType = CharacterType.Purple,
                 ID = 1,
                 IsBoss = false,
-                inputDevice = new InputDevice(1)
+                inputDevice = new InputDevice(2)
             };
         }
     }

@@ -23,18 +23,21 @@ public class CononutLauncher : MonoBehaviour {
     #region Variables
 
     private float timer=0.0f;
+    private Animator anim;
 
     #endregion
 
     private void Awake()
     {
         timer = Time.time + timeBetweenShoots;
+        anim = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
     void Update () {
 		if(timer <= Time.time)
         {
+            anim.SetTrigger("Shoot");
             Shoot();
             timer = Time.time + timeBetweenShoots;
         }
@@ -42,7 +45,7 @@ public class CononutLauncher : MonoBehaviour {
 
     private void Shoot()
     {
-        GameObject g = Instantiate(bullet,shootInitZone.position,transform.rotation*bullet.transform.rotation, transform);
+        GameObject g = Instantiate(bullet,shootInitZone.position,shootInitZone.rotation*bullet.transform.rotation, transform);
         g.GetComponent<Rigidbody>().AddForce(g.transform.up * shootForce);
     }
 }
