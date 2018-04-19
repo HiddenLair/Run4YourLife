@@ -20,12 +20,15 @@ namespace Run4YourLife.GameManagement
         void OnPauseInput();
     }
 
+    public class PauseStateChangeEvent : UnityEvent<PauseState> { }
+
     public class PauseManager : MonoBehaviour, IPauseEvent
     {
         private PauseState actualGameState = PauseState.UNPAUSED;
         private CinemachineBrain mainCameraCinemachine;
         public SceneLoadRequest m_pauseSceneLoader;
-        public UnityEvent<PauseState> PauseChangeEvent;
+        public SceneLoadRequest m_pauseSceneUnloader;
+        public PauseStateChangeEvent PauseChangeEvent = new PauseStateChangeEvent();
 
         private void Awake()
         {
@@ -44,6 +47,7 @@ namespace Run4YourLife.GameManagement
                         }
                         Time.timeScale = 1;
                         actualGameState = PauseState.UNPAUSED;
+                        m_pauseSceneUnloader.Execute();
                     }
                     break;
                 case PauseState.UNPAUSED:

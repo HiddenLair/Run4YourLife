@@ -9,7 +9,7 @@ namespace Run4YourLife.Input
     [RequireComponent(typeof(PlayerControlScheme))]
     class PauseEventHandler : MonoBehaviour
     {
-        private GameObject gameManager = null;
+        public GameObject gameManager = null;
         public PlayerControlScheme m_playerControlScheme;
         private bool pauseReq = false;
 
