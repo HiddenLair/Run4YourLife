@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Run4YourLife.Player;
+using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.Input
 {
@@ -43,6 +44,28 @@ namespace Run4YourLife.Input
 
             actions.Add(MoveLaserVertical = new Action(new InputSource(Axis.RIGHT_VERTICAL)));
             actions.Add(MoveLaserHorizontal = new Action(new InputSource(Axis.RIGHT_HORIZONTAL)));
+        }
+
+        public override void ActionsReactOnPause(PauseState pauseState)
+        {
+            bool pauseValue = false;
+            if (pauseState == PauseState.UNPAUSED)
+            {
+                pauseValue = true;
+            }
+
+            Skill1.enabled = pauseValue;
+            Skill2.enabled = pauseValue;
+            Skill3.enabled = pauseValue;
+            Skill4.enabled = pauseValue;
+            NextSet.enabled = pauseValue;
+            PreviousSet.enabled = pauseValue;
+            Shoot.enabled = pauseValue;
+            Melee.enabled = pauseValue;
+            MoveLaserHorizontal.enabled = pauseValue;
+            MoveLaserVertical.enabled = pauseValue;
+            MoveTrapIndicatorHorizontal.enabled = pauseValue;
+            MoveTrapIndicatorVertical.enabled = pauseValue;
         }
     }
 }

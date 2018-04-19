@@ -1,4 +1,5 @@
-﻿using Run4YourLife.Player;
+﻿using Run4YourLife.GameManagement;
+using Run4YourLife.Player;
 
 namespace Run4YourLife.Input
 {
@@ -17,6 +18,21 @@ namespace Run4YourLife.Input
             actions.Add(Jump = new Action(new InputSource(Button.A)));
             actions.Add(Dash = new Action(new InputSource(Button.X)));
             actions.Add(Rock = new Action(new InputSource(Button.B)));
+        }
+
+        public override void ActionsReactOnPause(PauseState pauseState)
+        {
+            bool pauseValue = false;
+            if(pauseState == PauseState.UNPAUSED)
+            {
+                pauseValue = true;
+            }
+
+            Move.enabled = pauseValue;
+            Jump.enabled = pauseValue;
+            Dash.enabled = pauseValue;
+            Rock.enabled = pauseValue;
+            Vertical.enabled = pauseValue;
         }
     }
 }

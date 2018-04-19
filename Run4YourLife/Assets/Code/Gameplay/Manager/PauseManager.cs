@@ -4,10 +4,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 namespace Run4YourLife.GameManagement
 {
+    public enum PauseState
+    {
+        PAUSED,
+        UNPAUSED
+    }
+
     public interface IPauseEvent : IEventSystemHandler
     {
         void OnPauseInput();
@@ -15,8 +22,10 @@ namespace Run4YourLife.GameManagement
 
     public class PauseManager : MonoBehaviour, IPauseEvent
     {
+        private PauseState actualGameState = PauseState.UNPAUSED;
         private CinemachineBrain mainCameraCinemachine;
         public SceneLoadRequest m_pauseSceneLoader;
+        public UnityEvent<PauseState> PauseChangeEvent;
 
         private void Awake()
         {
@@ -25,13 +34,32 @@ namespace Run4YourLife.GameManagement
 
         public void OnPauseInput()
         {
-            if (mainCameraCinemachine != null)
+            switch(actualGameState)
             {
-                mainCameraCinemachine.enabled = false;
+                case PauseState.PAUSED:
+                    {
+                        if (mainCameraCinemachine != null)
+                        {
+                            mainCameraCinemachine.enabled = true;
+                        }
+                        Time.timeScale = 1;
+                        actualGameState = PauseState.UNPAUSED;
+                    }
+                    break;
+                case PauseState.UNPAUSED:
+                    {
+                        if (mainCameraCinemachine != null)
+                        {
+                            mainCameraCinemachine.enabled = false;
+                        }
+                        Time.timeScale = 0;
+                        actualGameState = PauseState.PAUSED;
+                        m_pauseSceneLoader.Execute();
+                    }
+                    break;
             }
 
-            Time.timeScale = 0;
-            m_pauseSceneLoader.Execute();
+            PauseChangeEvent.Invoke(actualGameState);
         }
     }
 }
