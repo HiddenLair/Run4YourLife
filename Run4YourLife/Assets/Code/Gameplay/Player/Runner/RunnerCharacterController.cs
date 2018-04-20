@@ -390,7 +390,7 @@ namespace Run4YourLife.Player
 
         public void BounceOnMe()
         {
-            m_animator.SetTrigger("bump");
+            GetComponent<BumpController>().Bump();
         }
 
         public void Bounce(Vector3 bounceForce)
