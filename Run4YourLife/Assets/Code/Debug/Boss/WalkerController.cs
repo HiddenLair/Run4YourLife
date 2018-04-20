@@ -46,13 +46,27 @@ namespace Run4YourLife.DebuggingTools
 
         void Update()
         {
-            if(boss == null)
+            if(boss == null || !boss.activeInHierarchy)
             {
-                boss = GameObject.FindGameObjectWithTag(Tags.Boss);
+                FindBoss();
 
-                if(boss)
+                if(boss != null)
                 {
                     walker = boss.GetComponent<Walker>();
+                }
+            }
+        }
+
+        private void FindBoss()
+        {
+            GameObject[] bosses = GameObject.FindGameObjectsWithTag(Tags.Boss);
+
+            foreach(GameObject currentBoss in bosses)
+            {
+                if(currentBoss.activeInHierarchy)
+                {
+                    boss = currentBoss;
+                    break;
                 }
             }
         }
