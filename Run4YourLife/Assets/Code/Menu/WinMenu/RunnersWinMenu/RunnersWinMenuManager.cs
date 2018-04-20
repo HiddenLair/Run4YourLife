@@ -22,7 +22,7 @@ namespace Run4YourLife.WinMenu
         private float othersScale = 3.0f;
 
         [SerializeField]
-        private string winnerAnimation = "correr";
+        private string winnerAnimation = "dance";
 
         [SerializeField]
         private string othersAnimation = "idle";
