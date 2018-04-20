@@ -37,7 +37,7 @@ public class ProgressManager : MonoBehaviour
 
     void Update()
     {
-        if(boss == null)
+        if(boss == null || !boss.activeInHierarchy)
         {
             // The boss will be destroyed once a phase is ended
             // Find the new boss if needed
@@ -69,7 +69,16 @@ public class ProgressManager : MonoBehaviour
 
     private void FindBoss()
     {
-        boss = GameObject.FindGameObjectWithTag(Tags.Boss);
+        GameObject[] bosses = GameObject.FindGameObjectsWithTag(Tags.Boss);
+
+        foreach(GameObject currentBoss in bosses)
+        {
+            if(currentBoss.activeInHierarchy)
+            {
+                boss = currentBoss;
+                break;
+            }
+        }
     }
 
     private void UpdateStartEndPoints()
