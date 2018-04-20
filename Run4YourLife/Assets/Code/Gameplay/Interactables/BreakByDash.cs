@@ -15,10 +15,26 @@ namespace Run4YourLife.Interactables
             {
                 if (other.GetComponent<RunnerCharacterController>().IsDashing())
                 {
-                    Instantiate(destroyParticles,transform.position,destroyParticles.transform.rotation);
-                    Destroy(gameObject);
+                    Hit();
                 }
             }
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+            if (other.CompareTag(Tags.Runner))
+            {
+                if (other.GetComponent<RunnerCharacterController>().IsDashing())
+                {
+                    Hit();
+                }
+            }
+        }
+
+        private void Hit()
+        {
+            Instantiate(destroyParticles, transform.position, destroyParticles.transform.rotation);
+            Destroy(gameObject);
         }
     }
 }

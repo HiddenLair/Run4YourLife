@@ -3494,6 +3494,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1756941101}
   - component: {fileID: 1756941102}
+  - component: {fileID: 1756941103}
   m_Layer: 0
   m_Name: RunnersWinManager
   m_TagString: Untagged
@@ -3541,6 +3542,27 @@ MonoBehaviour:
   othersScale: 3
   winnerAnimation: dance
   othersAnimation: idle
+--- !u!114 &1756941103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1756941100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3a97c63f108b014ea1331a0e1d3685d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_runnerPrefabs:
+  - characterType: 0
+    gameObject: {fileID: 1095223732133840, guid: aaa05936afaa17b439e2be5d0a7f4109,
+      type: 2}
+  - characterType: 2
+    gameObject: {fileID: 1993643662835586, guid: 37efb1a7fcce34040981906a07e13e23,
+      type: 2}
+  - characterType: 1
+    gameObject: {fileID: 1773483497333602, guid: 1dce51945a5411446abc08e734576717,
+      type: 2}
 --- !u!1 &1763057839
 GameObject:
   m_ObjectHideFlags: 0

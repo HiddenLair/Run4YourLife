@@ -33,19 +33,7 @@ namespace Run4YourLife.Interactables
 
         public void Hit()
         {
-            switch (direction)
-            {
-                case Direction.Left:
-                    {
-                        anim.SetTrigger("Left");
-                    }
-                    break;
-                case Direction.Right:
-                    {
-                        anim.SetTrigger("Right");
-                    }
-                    break;
-            }
+            anim.SetTrigger("Hit");
         }
 
         private void OnTriggerEnter(Collider other)
