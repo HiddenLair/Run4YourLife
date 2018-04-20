@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-
 using UnityEngine.EventSystems;
 
+using Run4YourLife;
 using Run4YourLife.UI;
 
 public class ProgressManager : MonoBehaviour
@@ -30,7 +30,7 @@ public class ProgressManager : MonoBehaviour
 
     void Awake()
     {
-        uiManager = GameObject.FindGameObjectWithTag("UI");
+        uiManager = GameObject.FindGameObjectWithTag(Tags.UI);
 
         FindBoss();
     }
@@ -69,7 +69,7 @@ public class ProgressManager : MonoBehaviour
 
     private void FindBoss()
     {
-        boss = GameObject.FindGameObjectWithTag("Boss");
+        boss = GameObject.FindGameObjectWithTag(Tags.Boss);
     }
 
     private void UpdateStartEndPoints()

@@ -71,7 +71,7 @@ public class Laser : MonoBehaviour {
         trapXCD_Timer = trapXCD;
         trapYCD_Timer = trapYCD;
 
-        uiManager = GameObject.FindGameObjectWithTag("UI");
+        uiManager = GameObject.FindGameObjectWithTag(Tags.UI);
     }
 
     void Update ()

@@ -90,7 +90,7 @@ namespace Run4YourLife.Player
             ready = GetComponent<Ready>();
             anim = GetComponent<Animator>();
             bossControlScheme = GetComponent<BossControlScheme>();
-            uiManager = GameObject.FindGameObjectWithTag("UI");
+            uiManager = GameObject.FindGameObjectWithTag(Tags.UI);
         }
 
         // Update is called once per frame

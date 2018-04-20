@@ -48,7 +48,7 @@ namespace Run4YourLife.DebuggingTools
         {
             if(boss == null)
             {
-                boss = GameObject.FindGameObjectWithTag("Boss");
+                boss = GameObject.FindGameObjectWithTag(Tags.Boss);
 
                 if(boss)
                 {

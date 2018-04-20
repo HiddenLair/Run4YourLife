@@ -51,7 +51,7 @@ namespace Run4YourLife.Player
             anim = GetComponent<Animator>();
             trapSetter = GetComponent<Laser>();
 
-            uiManager = GameObject.FindGameObjectWithTag("UI");
+            uiManager = GameObject.FindGameObjectWithTag(Tags.UI);
         }
 
         private void Start()

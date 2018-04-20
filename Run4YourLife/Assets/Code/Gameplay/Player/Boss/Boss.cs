@@ -64,7 +64,7 @@ namespace Run4YourLife.Player
             anim = GetComponent<Animator>();
             timeToChargedShoot = animChargedShoot.length -chargedShootAnimTimeVariation;//Substract a little of time, in order to fit more the times
 
-            uiManager = GameObject.FindGameObjectWithTag("UI");
+            uiManager = GameObject.FindGameObjectWithTag(Tags.UI);
         }
 
         private void Start()
