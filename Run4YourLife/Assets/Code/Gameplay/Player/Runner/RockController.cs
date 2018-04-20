@@ -16,11 +16,7 @@ public class RockController : MonoBehaviour {
     {
         if(other.CompareTag(Tags.BossRockScore))
         {
-            ExecuteEvents.Execute<IScoreEvents>(GameObject.FindGameObjectWithTag(Tags.GameController), null, (x, y) => x.OnAddPoints(playerWhoThrew, points));
-        }
-
-        if(!other.CompareTag(Tags.Boss))
-        {
+            ExecuteEvents.Execute<IScoreEvents>(GameObject.FindObjectOfType<ScoreManager>().gameObject, null, (x, y) => x.OnAddPoints(playerWhoThrew, points));
             Destroy(gameObject);
         }
     }
