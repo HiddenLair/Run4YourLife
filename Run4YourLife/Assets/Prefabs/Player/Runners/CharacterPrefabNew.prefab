@@ -184,6 +184,7 @@ GameObject:
   - component: {fileID: 114589429275964138}
   - component: {fileID: 114033240377035464}
   - component: {fileID: 114699221370750574}
+  - component: {fileID: 114796697429773708}
   m_Layer: 8
   m_Name: CharacterPrefabNew
   m_TagString: Player
@@ -2189,6 +2190,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67d256071968d944793b20e43cfc5a0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114796697429773708
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1190572292703128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b3cd483c39bac489970d4829d62b13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightEye: {fileID: 137728942213378444}
+  leftEye: {fileID: 137277988568473372}
+  head: {fileID: 137614534889149522}
+  bumpTime: 0.25
 --- !u!114 &114833089619696824
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2275,7 +2291,8 @@ SkinnedMeshRenderer:
   m_SkinnedMotionVectors: 1
   m_Mesh: {fileID: 4300004, guid: d589542e646d6a245a6163f7941851b1, type: 3}
   m_Bones: []
-  m_BlendShapeWeights: []
+  m_BlendShapeWeights:
+  - 0
   m_RootBone: {fileID: 0}
   m_AABB:
     m_Center: {x: 0.008878714, y: 0.00045562442, z: -0.0033964599}
@@ -2350,7 +2367,8 @@ SkinnedMeshRenderer:
   - {fileID: 4165824700061474}
   - {fileID: 4680756218074270}
   - {fileID: 4949076782418100}
-  m_BlendShapeWeights: []
+  m_BlendShapeWeights:
+  - 0
   m_RootBone: {fileID: 4136216720271504}
   m_AABB:
     m_Center: {x: -0.0184668, y: 0.613399, z: 0.13347048}
@@ -2396,7 +2414,8 @@ SkinnedMeshRenderer:
   m_SkinnedMotionVectors: 1
   m_Mesh: {fileID: 4300002, guid: d589542e646d6a245a6163f7941851b1, type: 3}
   m_Bones: []
-  m_BlendShapeWeights: []
+  m_BlendShapeWeights:
+  - 0
   m_RootBone: {fileID: 0}
   m_AABB:
     m_Center: {x: -0.00698788, y: -0.0010381471, z: -0.00184571}
