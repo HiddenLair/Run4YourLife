@@ -18,7 +18,7 @@ public class RunnersScoreController : MonoBehaviour
 
 	void Start()
     {
-        foreach(PlayerDefinition playerDefinition in FindObjectOfType<PlayerManager>().GetRunners())
+        foreach(PlayerHandle playerDefinition in FindObjectOfType<PlayerManager>().GetRunners())
         {
             GameObject scoreText = Instantiate(scoreTextPrefab);
             scoreText.transform.SetParent(scoreTexts.transform);

@@ -48,7 +48,7 @@ namespace Run4YourLife.GameManagement
 
         private void ActivateRunners(GameObject[] players, ref uint index)
         {
-            foreach (PlayerDefinition runnerPlayerDefinition in m_gameplayPlayerManager.RunnerPlayerDefinitions)
+            foreach (PlayerHandle runnerPlayerDefinition in m_gameplayPlayerManager.RunnerPlayerDefinitions)
             {
                 players[index] = m_gameplayPlayerManager.ActivateRunner(runnerPlayerDefinition, m_runnerSpawns[index].position);
                 index++;

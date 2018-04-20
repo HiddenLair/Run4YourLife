@@ -26,8 +26,8 @@ namespace Run4YourLife.GameManagement
     {
         private PauseState actualGameState = PauseState.UNPAUSED;
         private CinemachineBrain mainCameraCinemachine;
-        public SceneLoadRequest m_pauseSceneLoader;
-        public SceneLoadRequest m_pauseSceneUnloader;
+        public SceneTransitionRequest m_pauseSceneLoader;
+        public SceneTransitionRequest m_pauseSceneUnloader;
         public PauseStateChangeEvent PauseChangeEvent = new PauseStateChangeEvent();
 
         private void Awake()

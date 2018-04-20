@@ -10,14 +10,14 @@ namespace Run4YourLife.WinMenu
         private GameObject gameLoadRequest;
 
         [SerializeField]
-        private SceneLoadRequest characterSelectionLoadRequest;
+        private SceneTransitionRequest characterSelectionLoadRequest;
 
         [SerializeField]
-        private SceneLoadRequest mainMenuLoadRequest;
+        private SceneTransitionRequest mainMenuLoadRequest;
 
         public void OnPlayAgainPressed()
         {
-            foreach(SceneLoadRequest request in gameLoadRequest.GetComponents<SceneLoadRequest>())
+            foreach(SceneTransitionRequest request in gameLoadRequest.GetComponents<SceneTransitionRequest>())
             {
                 request.Execute();
             }

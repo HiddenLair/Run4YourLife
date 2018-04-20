@@ -10,7 +10,7 @@ namespace Run4YourLife.Player
     public class GeneralPlayerActions : MonoBehaviour
     {        
         private PlayerControlScheme controlScheme;
-        public SceneLoadRequest m_pauseMenuLoader;
+        public SceneTransitionRequest m_pauseMenuLoader;
 
         private void Awake()
         {

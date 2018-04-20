@@ -81,11 +81,11 @@ namespace Run4YourLife.WinMenu
             ScoreManager scoreManager = FindObjectOfType<ScoreManager>();
             PlayerManager playerManager = FindObjectOfType<PlayerManager>();
 
-            List<KeyValuePair<float, PlayerDefinition>> points = new List<KeyValuePair<float, PlayerDefinition>>();
+            List<KeyValuePair<float, PlayerHandle>> points = new List<KeyValuePair<float, PlayerHandle>>();
 
-            foreach(PlayerDefinition playerDefinition in playerManager.GetRunners())
+            foreach(PlayerHandle playerDefinition in playerManager.GetRunners())
             {
-                points.Add(new KeyValuePair<float, PlayerDefinition>(scoreManager.GetPointsByPlayerDefinition(playerDefinition), playerDefinition));
+                points.Add(new KeyValuePair<float, PlayerHandle>(scoreManager.GetPointsByPlayerDefinition(playerDefinition), playerDefinition));
             }
 
             points.Sort((a, b) => b.Key.CompareTo(a.Key));

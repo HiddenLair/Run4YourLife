@@ -16,7 +16,7 @@ namespace Run4YourLife.DebuggingTools
 
             foreach(PlayerInstance playerInstance in FindObjectsOfType<PlayerInstance>())
             {
-                PlayerDefinition playerDefinition = playerInstance.PlayerDefinition;
+                PlayerHandle playerDefinition = playerInstance.PlayerHandle;
 
                 if(!playerDefinition.IsBoss)
                 {

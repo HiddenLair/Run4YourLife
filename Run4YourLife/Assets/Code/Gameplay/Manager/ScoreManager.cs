@@ -10,7 +10,7 @@ namespace Run4YourLife.GameManagement
 {
     public interface IScoreEvents : IEventSystemHandler
     {
-        void OnAddPoints(PlayerDefinition playerDefinition,float points);
+        void OnAddPoints(PlayerHandle playerDefinition,float points);
     }
 
     public class ScoreManager : MonoBehaviour,IScoreEvents
@@ -18,7 +18,7 @@ namespace Run4YourLife.GameManagement
 
         #region Variables
 
-        Dictionary<PlayerDefinition, float> pointDictionary = new Dictionary<PlayerDefinition, float>();
+        Dictionary<PlayerHandle, float> pointDictionary = new Dictionary<PlayerHandle, float>();
 
         #endregion
 
@@ -26,7 +26,7 @@ namespace Run4YourLife.GameManagement
         {
             pointDictionary.Clear();
 
-            foreach(PlayerDefinition playerDefinition in FindObjectOfType<PlayerManager>().GetRunners())
+            foreach(PlayerHandle playerDefinition in FindObjectOfType<PlayerManager>().GetRunners())
             {
                 pointDictionary[playerDefinition] = 0;
             }
@@ -50,12 +50,12 @@ namespace Run4YourLife.GameManagement
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }
 
-        public void OnAddPoints(PlayerDefinition playerDefinition,float points)
+        public void OnAddPoints(PlayerHandle playerDefinition,float points)
         {
             pointDictionary[playerDefinition] += points;
         }
 
-        public float GetPointsByPlayerDefinition(PlayerDefinition playerDefinition)
+        public float GetPointsByPlayerDefinition(PlayerHandle playerDefinition)
         {
             return pointDictionary[playerDefinition];
         }

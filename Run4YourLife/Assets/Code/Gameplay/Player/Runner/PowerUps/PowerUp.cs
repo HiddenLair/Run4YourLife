@@ -26,7 +26,7 @@ namespace Run4YourLife.Player
                         {
                             Debug.Assert(other.CompareTag(Tags.Runner));
                             Apply(other.gameObject);
-                            PlayerDefinition player = other.gameObject.GetComponent<PlayerInstance>().PlayerDefinition;
+                            PlayerHandle player = other.gameObject.GetComponent<PlayerInstance>().PlayerHandle;
                             ExecuteEvents.Execute<IScoreEvents>(FindObjectOfType<ScoreManager>().gameObject, null, (x, y) => x.OnAddPoints(player, points));
                         }
                         break;

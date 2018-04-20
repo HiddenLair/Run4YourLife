@@ -5,12 +5,12 @@ using Run4YourLife.Player;
 
 namespace Run4YourLife.CharacterSelection
 {
-    public abstract class PlayerStandController : MonoBehaviour, IPlayerDefinitionEvents
+    public abstract class PlayerStandController : MonoBehaviour, IPlayerHandleEvent
     {
         #region References
 
         protected PlayerStandsManager playerStandsManager;
-        protected PlayerDefinition playerDefinition;
+        protected PlayerHandle playerDefinition;
         protected PlayerManager playerManager;
         protected PlayerStandControllerControlScheme controlScheme;
 
@@ -74,12 +74,12 @@ namespace Run4YourLife.CharacterSelection
             return ready;
         }
 
-        public PlayerDefinition GetPlayerDefinition()
+        public PlayerHandle GetPlayerDefinition()
         {
             return playerDefinition;
         }
 
-        public void OnPlayerDefinitionChanged(PlayerDefinition playerDefinition)
+        public void OnPlayerDefinitionChanged(PlayerHandle playerDefinition)
         {
             if(playerDefinition == null)
             {
@@ -91,7 +91,7 @@ namespace Run4YourLife.CharacterSelection
             }
         }
 
-        protected void SetPlayerDefinition(PlayerDefinition playerDefinition)
+        protected void SetPlayerDefinition(PlayerHandle playerDefinition)
         {
             this.playerDefinition = playerDefinition;
             activeStand = SpawnPlayerStand(playerDefinition);
@@ -108,7 +108,7 @@ namespace Run4YourLife.CharacterSelection
             ui.SetActive(false);
         }
 
-        private GameObject SpawnPlayerStand(PlayerDefinition playerDefinition)
+        private GameObject SpawnPlayerStand(PlayerHandle playerDefinition)
         {
             GameObject prefab = GetStandPrefabForPlayer(playerDefinition);
             GameObject instance = Instantiate(prefab, spawnTransform, false);
@@ -116,7 +116,7 @@ namespace Run4YourLife.CharacterSelection
             return instance;
         }
 
-        protected abstract GameObject GetStandPrefabForPlayer(PlayerDefinition playerDefinition);
+        protected abstract GameObject GetStandPrefabForPlayer(PlayerHandle playerDefinition);
 
         protected virtual void UpdatePlayer()
         {

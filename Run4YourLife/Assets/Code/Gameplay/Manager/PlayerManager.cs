@@ -7,22 +7,22 @@ namespace Run4YourLife.Player
 {
     public class PlayerManager : MonoBehaviour
     {
-        public class PlayerChangedEvent : UnityEvent<PlayerDefinition>
+        public class PlayerChangedEvent : UnityEvent<PlayerHandle>
         { }
 
-        private List<PlayerDefinition> players = new List<PlayerDefinition>();
+        private List<PlayerHandle> players = new List<PlayerHandle>();
 
         public PlayerChangedEvent OnPlayerChanged = new PlayerChangedEvent();
 
-        public List<PlayerDefinition> GetPlayers()
+        public List<PlayerHandle> GetPlayers()
         {
             return players;
         }
 
-        public PlayerDefinition GetBoss()
+        public PlayerHandle GetBoss()
         {
-            PlayerDefinition boss = null;
-            foreach(PlayerDefinition p in players)
+            PlayerHandle boss = null;
+            foreach(PlayerHandle p in players)
             {
                 if (p.IsBoss)
                 {
@@ -33,10 +33,10 @@ namespace Run4YourLife.Player
             return boss;
         }
 
-        public List<PlayerDefinition> GetRunners()
+        public List<PlayerHandle> GetRunners()
         {
-            List<PlayerDefinition> runners = new List<PlayerDefinition>();
-            foreach (PlayerDefinition p in players)
+            List<PlayerHandle> runners = new List<PlayerHandle>();
+            foreach (PlayerHandle p in players)
             {
                 if (!p.IsBoss)
                 {
@@ -51,19 +51,19 @@ namespace Run4YourLife.Player
             players.Clear();
         }
 
-        public void SetPlayerAsBoss(PlayerDefinition player)
+        public void SetPlayerAsBoss(PlayerHandle player)
         {
             player.IsBoss = true;
             OnPlayerChanged.Invoke(player);
         }
 
-        public void SetPlayerAsRunner(PlayerDefinition player)
+        public void SetPlayerAsRunner(PlayerHandle player)
         {
             player.IsBoss = false;
             OnPlayerChanged.Invoke(player);
         }
 
-        public void AddPlayer(PlayerDefinition playerDefinition)
+        public void AddPlayer(PlayerHandle playerDefinition)
         {
             players.Add(playerDefinition);
             OnPlayerChanged.Invoke(playerDefinition);

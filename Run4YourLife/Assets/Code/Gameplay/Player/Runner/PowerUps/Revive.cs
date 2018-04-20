@@ -17,7 +17,7 @@ public class Revive : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        PlayerDefinition player = other.gameObject.GetComponent<PlayerInstance>().PlayerDefinition;
+        PlayerHandle player = other.gameObject.GetComponent<PlayerInstance>().PlayerHandle;
         ExecuteEvents.Execute<IScoreEvents>(FindObjectOfType<ScoreManager>().gameObject, null, (x, y) => x.OnAddPoints(player, points));
         ExecuteEvents.Execute<IGameplayPlayerEvents>(m_gameplayPlayerManager.gameObject, null, (x, y) => x.OnRunnerReviveRequest(transform.position));
         Destroy(gameObject);

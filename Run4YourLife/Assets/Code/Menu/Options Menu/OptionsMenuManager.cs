@@ -13,7 +13,7 @@ namespace Run4YourLife.OptionsMenu
     public class OptionsMenuManager : MonoBehaviour
     {
         [SerializeField]
-        private SceneLoadRequest m_mainMenuLoadRequest;
+        private SceneTransitionRequest m_mainMenuLoadRequest;
 
         private ExitButtonControlScheme exitScheme;
 

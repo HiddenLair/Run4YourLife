@@ -23,7 +23,7 @@ namespace Run4YourLife.CharacterSelection
             Debug.Assert(runnerPrefabManager != null);
         }
 
-        protected override GameObject GetStandPrefabForPlayer(PlayerDefinition playerDefinition)
+        protected override GameObject GetStandPrefabForPlayer(PlayerHandle playerDefinition)
         {
             return runnerPrefabManager.Get(RunnerPrefabType.CharacterSelection, playerDefinition.CharacterType);
         }
@@ -61,7 +61,7 @@ namespace Run4YourLife.CharacterSelection
 
         private void ChangePlayerCharacter(AdvanceType advanceType)
         {
-            PlayerDefinition playerDefinition = this.playerDefinition;
+            PlayerHandle playerDefinition = this.playerDefinition;
             ClearPlayerDefinition();
             playerDefinition.CharacterType = GetDeltaCharacterType(playerDefinition.CharacterType, (int)advanceType);
             SetPlayerDefinition(playerDefinition);

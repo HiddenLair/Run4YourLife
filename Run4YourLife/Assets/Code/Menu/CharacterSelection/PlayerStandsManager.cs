@@ -43,18 +43,18 @@ namespace Run4YourLife.CharacterSelection
             ready = true;
         }
 
-        void OnPlayerChanged(PlayerDefinition playerDefinition)
+        void OnPlayerChanged(PlayerHandle playerDefinition)
         {
             DestroyStand(playerDefinition);
             CreateStand(playerDefinition);
         }
 
-        void OnPlayerLeft(PlayerDefinition playerDefinition)
+        void OnPlayerLeft(PlayerHandle playerDefinition)
         {
             DestroyStand(playerDefinition);
         }
 
-        private void DestroyStand(PlayerDefinition playerDefinition)
+        private void DestroyStand(PlayerHandle playerDefinition)
         {
             PlayerStandController playerStandController = null;
 
@@ -76,11 +76,11 @@ namespace Run4YourLife.CharacterSelection
 
             if(playerStandController != null)
             {
-                ExecuteEvents.Execute<IPlayerDefinitionEvents>(playerStandController.gameObject, null, (a, b) => a.OnPlayerDefinitionChanged(null));
+                ExecuteEvents.Execute<IPlayerHandleEvent>(playerStandController.gameObject, null, (a, b) => a.OnPlayerDefinitionChanged(null));
             }
         }
 
-        private void CreateStand(PlayerDefinition playerDefinition)
+        private void CreateStand(PlayerHandle playerDefinition)
         {
             PlayerStandController playerStandController = null;
 
@@ -104,7 +104,7 @@ namespace Run4YourLife.CharacterSelection
 
             Debug.Assert(playerStandController != null);
 
-            ExecuteEvents.Execute<IPlayerDefinitionEvents>(playerStandController.gameObject, null, (a, b) => a.OnPlayerDefinitionChanged(playerDefinition));
+            ExecuteEvents.Execute<IPlayerHandleEvent>(playerStandController.gameObject, null, (a, b) => a.OnPlayerDefinitionChanged(playerDefinition));
         }
 
         #region Boss And Runner StandController Management

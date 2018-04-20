@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 
 namespace Run4YourLife.SceneManagement
 {
-    public class SceneLoader : MonoBehaviour
+    public class SceneTransitionManager : MonoBehaviour
     {
-        public void ExecuteRequest(SceneLoadRequestData data)
+        public void ExecuteRequest(SceneTransitionRequestData data)
         {
             if (data.loadScene && data.unloadScene)
             {
@@ -28,17 +28,17 @@ namespace Run4YourLife.SceneManagement
             }
         }
         
-        private void UnloadScene(SceneLoadRequestData data)
+        private void UnloadScene(SceneTransitionRequestData data)
         {
             SceneManager.UnloadSceneAsync(data.unloadedSceneName);
         }
 
-        private void LoadScene(SceneLoadRequestData data)
+        private void LoadScene(SceneTransitionRequestData data)
         {
             SceneManager.LoadSceneAsync(data.sceneName, data.loadSceneMode);
         }
 
-        private IEnumerator LoadUnloadScene(SceneLoadRequestData data)
+        private IEnumerator LoadUnloadScene(SceneTransitionRequestData data)
         {
             AsyncOperation unloadSceneAsync = SceneManager.UnloadSceneAsync(data.unloadedSceneName);
 

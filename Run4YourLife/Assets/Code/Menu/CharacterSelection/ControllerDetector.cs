@@ -38,7 +38,7 @@ namespace Run4YourLife.CharacterSelection
 
         private bool IsAssignedToAPlayer(InputDevice controller)
         {
-            foreach (PlayerDefinition p in playerManager.GetPlayers())
+            foreach (PlayerHandle p in playerManager.GetPlayers())
             {
                 if (p.inputDevice.Equals(controller))
                 {

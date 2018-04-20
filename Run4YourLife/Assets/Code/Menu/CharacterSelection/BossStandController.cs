@@ -15,7 +15,7 @@ namespace Run4YourLife.CharacterSelection
 
         #endregion
 
-        protected override GameObject GetStandPrefabForPlayer(PlayerDefinition playerDefinition)
+        protected override GameObject GetStandPrefabForPlayer(PlayerHandle playerDefinition)
         {
             return boss;
         }

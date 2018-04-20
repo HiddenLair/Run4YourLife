@@ -9,7 +9,7 @@ namespace Run4YourLife.SceneManagement
     {
 
         [SerializeField]
-        private SceneLoadRequest loadRequest;
+        private SceneTransitionRequest loadRequest;
 
         private void OnTriggerEnter(Collider other)
         {

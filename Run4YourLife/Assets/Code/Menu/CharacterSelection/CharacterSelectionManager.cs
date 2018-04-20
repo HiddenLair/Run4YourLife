@@ -16,7 +16,7 @@ namespace Run4YourLife.CharacterSelection
         private GameObject m_gameLoadRequest;
 
         [SerializeField]
-        private SceneLoadRequest m_mainMenuLoadRequest;
+        private SceneTransitionRequest m_mainMenuLoadRequest;
 
         void Awake()
         {
@@ -43,7 +43,7 @@ namespace Run4YourLife.CharacterSelection
 
         private void CreatePlayerForController(InputDevice inputDevice)
         {
-            PlayerDefinition playerDefinition = new PlayerDefinition();
+            PlayerHandle playerDefinition = new PlayerHandle();
 
             playerDefinition.inputDevice = inputDevice;
             if(m_playerManager.GetPlayers().Count == 0)
@@ -72,7 +72,7 @@ namespace Run4YourLife.CharacterSelection
 
         private bool PlayerHasCharacterType(CharacterType characterType)
         {
-            foreach(PlayerDefinition player in m_playerManager.GetPlayers())
+            foreach(PlayerHandle player in m_playerManager.GetPlayers())
             {
                 if(player.CharacterType.Equals(characterType))
                 {
@@ -84,7 +84,7 @@ namespace Run4YourLife.CharacterSelection
 
         public void OnGameStart()
         {
-            foreach(SceneLoadRequest request in m_gameLoadRequest.GetComponents<SceneLoadRequest>())
+            foreach(SceneTransitionRequest request in m_gameLoadRequest.GetComponents<SceneTransitionRequest>())
             {
                 request.Execute();
             }

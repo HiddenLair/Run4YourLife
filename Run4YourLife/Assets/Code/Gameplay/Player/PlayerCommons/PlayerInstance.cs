@@ -5,34 +5,23 @@ using Run4YourLife.Input;
 
 namespace Run4YourLife.Player
 {
-    public class PlayerInstance : MonoBehaviour, IPlayerDefinitionEvents
+    public class PlayerInstance : MonoBehaviour, IPlayerHandleEvent
     {
-        public PlayerDefinition PlayerDefinition { get; private set; }
+        public PlayerHandle PlayerHandle { get; private set; }
 
         void Start()
         {
-            if (PlayerDefinition == null)
+            if (PlayerHandle == null)
             {
                 Debug.LogWarning("Player does not have player definition, creating an instance using the default properties");
-                PlayerDefinition defaultPlayerDefinition = CreateDefaultPlayerDefinition();
-                ExecuteEvents.Execute<IPlayerDefinitionEvents>(gameObject, null, (a, b) => a.OnPlayerDefinitionChanged(defaultPlayerDefinition));
+                PlayerHandle defaultPlayerDefinition = PlayerHandle.DebugDefaultPlayerHandle;
+                ExecuteEvents.Execute<IPlayerHandleEvent>(gameObject, null, (a, b) => a.OnPlayerDefinitionChanged(defaultPlayerDefinition));
             }
         }
 
-        public void OnPlayerDefinitionChanged(PlayerDefinition playerDefinition)
+        public void OnPlayerDefinitionChanged(PlayerHandle playerDefinition)
         {
-            PlayerDefinition = playerDefinition;
-        }
-
-        private PlayerDefinition CreateDefaultPlayerDefinition()
-        {
-            return new PlayerDefinition()
-            {
-                CharacterType = CharacterType.Purple,
-                ID = 1,
-                IsBoss = false,
-                inputDevice = new InputDevice(2)
-            };
+            PlayerHandle = playerDefinition;
         }
     }
 }

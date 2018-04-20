@@ -9,7 +9,7 @@ public class RunnerScoreController : MonoBehaviour
     private ScaleTick scaleTick;
     private ScoreManager scoreManager;
     private TextMeshProUGUI scoreText;
-    private PlayerDefinition playerDefinitionTarget;
+    private PlayerHandle playerDefinitionTarget;
 
     private float previousPoints = 0.0f;
 
@@ -41,7 +41,7 @@ public class RunnerScoreController : MonoBehaviour
         }
 	}
 
-    public void SetPlayerDefinition(PlayerDefinition playerDefinition)
+    public void SetPlayerDefinition(PlayerHandle playerDefinition)
     {
         playerDefinitionTarget = playerDefinition;
     }

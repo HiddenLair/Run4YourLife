@@ -5,7 +5,7 @@ using UnityEngine;
 using Run4YourLife.Input;
 
 namespace Run4YourLife.Player {
-    public class ThrowRockRunnerController : MonoBehaviour,IPlayerDefinitionEvents {
+    public class ThrowRockRunnerController : MonoBehaviour,IPlayerHandleEvent {
 
         [SerializeField]
         private GameObject m_rockPrefab;
@@ -27,7 +27,7 @@ namespace Run4YourLife.Player {
 
         private RunnerInputStated inputPlayer;
         private float timer;
-        private PlayerDefinition myDefinition;
+        private PlayerHandle myDefinition;
         private new Collider collider;
 
         private void Awake()
@@ -72,7 +72,7 @@ namespace Run4YourLife.Player {
             Gizmos.DrawLine(m_rockInstantiationTransform.position, m_rockInstantiationTransform.position + director*5);
         }
 
-        public void OnPlayerDefinitionChanged(PlayerDefinition playerDefinition)
+        public void OnPlayerDefinitionChanged(PlayerHandle playerDefinition)
         {
             myDefinition = playerDefinition;
         }

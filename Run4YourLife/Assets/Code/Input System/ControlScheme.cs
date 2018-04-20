@@ -6,7 +6,7 @@ using Run4YourLife.Player;
 
 namespace Run4YourLife.Input
 {
-    public abstract class ControlScheme : MonoBehaviour, IPlayerDefinitionEvents
+    public abstract class ControlScheme : MonoBehaviour, IPlayerHandleEvent
     {
         protected List<Action> actions = new List<Action>();
 
@@ -44,7 +44,7 @@ namespace Run4YourLife.Input
             }
         }
 
-        public void OnPlayerDefinitionChanged(PlayerDefinition playerDefinition)
+        public void OnPlayerDefinitionChanged(PlayerHandle playerDefinition)
         {
             InputDevice = playerDefinition != null ? playerDefinition.inputDevice : null;
         }

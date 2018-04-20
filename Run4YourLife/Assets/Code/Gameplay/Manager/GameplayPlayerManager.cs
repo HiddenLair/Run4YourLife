@@ -38,11 +38,11 @@ namespace Run4YourLife.GameManagement {
         public GameObject Boss { get { return m_boss; } }
         public List<GameObject> Runners { get { return m_runners; } }
         public List<GameObject> RunnersAlive { get { return m_runnersAlive; } }
-        public Queue<PlayerDefinition> DeadRunners { get { return m_deadRunners; } }
-        public Dictionary<PlayerDefinition, GameObject> RunnerGameObject { get { return m_runnerGameObject; } }
+        public Queue<PlayerHandle> DeadRunners { get { return m_deadRunners; } }
+        public Dictionary<PlayerHandle, GameObject> RunnerGameObject { get { return m_runnerGameObject; } }
 
-        public PlayerDefinition BossPlayerDefinition { get { return m_bossPlayerDefinition; } }
-        public List<PlayerDefinition> RunnerPlayerDefinitions { get { return m_runnerPlayerDefinitions; } }
+        public PlayerHandle BossPlayerDefinition { get { return m_bossPlayerDefinition; } }
+        public List<PlayerHandle> RunnerPlayerDefinitions { get { return m_runnerPlayerDefinitions; } }
         public int PlayerCount { get { return m_runnerPlayerDefinitions.Count + 1; } }
 
         #endregion
@@ -54,11 +54,11 @@ namespace Run4YourLife.GameManagement {
         private GameObject m_boss;
         private List<GameObject> m_runners = new List<GameObject>();
         private List<GameObject> m_runnersAlive = new List<GameObject>();
-        private Queue<PlayerDefinition> m_deadRunners = new Queue<PlayerDefinition>();
-        private Dictionary<PlayerDefinition, GameObject> m_runnerGameObject = new Dictionary<PlayerDefinition, GameObject>();
+        private Queue<PlayerHandle> m_deadRunners = new Queue<PlayerHandle>();
+        private Dictionary<PlayerHandle, GameObject> m_runnerGameObject = new Dictionary<PlayerHandle, GameObject>();
 
-        private PlayerDefinition m_bossPlayerDefinition;
-        private List<PlayerDefinition> m_runnerPlayerDefinitions = new List<PlayerDefinition>();
+        private PlayerHandle m_bossPlayerDefinition;
+        private List<PlayerHandle> m_runnerPlayerDefinitions = new List<PlayerHandle>();
 
         private RunnerPrefabManager runnerPrefabManager;
 
@@ -89,28 +89,28 @@ namespace Run4YourLife.GameManagement {
             if (playerManager == null)
             {
                 playerManager = gameObject.AddComponent<PlayerManager>();
-                playerManager.AddPlayer(new PlayerDefinition()
+                playerManager.AddPlayer(new PlayerHandle()
                 {
                     CharacterType = CharacterType.Purple,
                     ID = 1,
                     inputDevice = new Input.InputDevice(1),
                     IsBoss = false
                 });
-                playerManager.AddPlayer(new PlayerDefinition()
+                playerManager.AddPlayer(new PlayerHandle()
                 {
                     CharacterType = CharacterType.Green,
                     ID = 2,
                     inputDevice = new Input.InputDevice(2),
                     IsBoss = true
                 });
-                playerManager.AddPlayer(new PlayerDefinition()
+                playerManager.AddPlayer(new PlayerHandle()
                 {
                     CharacterType = CharacterType.Orange,
                     ID = 3,
                     inputDevice = new Input.InputDevice(3),
                     IsBoss = false
                 });
-                playerManager.AddPlayer(new PlayerDefinition()
+                playerManager.AddPlayer(new PlayerHandle()
                 {
                     CharacterType = CharacterType.Green,
                     ID = 4,
@@ -124,7 +124,7 @@ namespace Run4YourLife.GameManagement {
 
         private void InitializePlayers()
         {
-            foreach (PlayerDefinition playerDefinition in m_playerManager.GetPlayers())
+            foreach (PlayerHandle playerDefinition in m_playerManager.GetPlayers())
             {
                 if(playerDefinition.IsBoss)
                 {
@@ -136,7 +136,7 @@ namespace Run4YourLife.GameManagement {
             }
         }
 
-        private void InitializeRunner(PlayerDefinition playerDefinition)
+        private void InitializeRunner(PlayerHandle playerDefinition)
         {
             m_runnerPlayerDefinitions.Add(playerDefinition);
 
@@ -154,12 +154,12 @@ namespace Run4YourLife.GameManagement {
             m_runnerGameObject[playerDefinition] = runner;
         }
 
-        private GameObject GetRunnerForPlayer(PlayerDefinition playerDefinition)
+        private GameObject GetRunnerForPlayer(PlayerHandle playerDefinition)
         {
             return runnerPrefabManager.Get(RunnerPrefabType.Game, playerDefinition.CharacterType);
         }
 
-        private void InitializeBoss(PlayerDefinition playerDefinition)
+        private void InitializeBoss(PlayerHandle playerDefinition)
         {
             m_bossPlayerDefinition = playerDefinition;
 
@@ -169,10 +169,10 @@ namespace Run4YourLife.GameManagement {
             }
         }
 
-        public void OnPlayerDefinitionChanged(GameObject player, PlayerDefinition playerDefinition)
+        public void OnPlayerDefinitionChanged(GameObject player, PlayerHandle playerDefinition)
         {
             player.SetActive(true);
-            ExecuteEvents.Execute<IPlayerDefinitionEvents>(player, null, (a, b) => a.OnPlayerDefinitionChanged(playerDefinition));
+            ExecuteEvents.Execute<IPlayerHandleEvent>(player, null, (a, b) => a.OnPlayerDefinitionChanged(playerDefinition));
             player.SetActive(false);
         }
 
@@ -182,7 +182,7 @@ namespace Run4YourLife.GameManagement {
         {
             m_runnersAlive.Remove(runner);
             
-            PlayerDefinition playerDefinition = runner.GetComponent<PlayerInstance>().PlayerDefinition;
+            PlayerHandle playerDefinition = runner.GetComponent<PlayerInstance>().PlayerHandle;
 
             m_deadRunners.Enqueue(playerDefinition);
 
@@ -198,13 +198,13 @@ namespace Run4YourLife.GameManagement {
         {
             if(m_deadRunners.Count > 0)
             { 
-                PlayerDefinition playerDefinition = m_deadRunners.Dequeue();
+                PlayerHandle playerDefinition = m_deadRunners.Dequeue();
                 GameObject runner = ActivateRunner(playerDefinition, position);
                 m_onPlayerRevived.Invoke(runner);
             }
         }
 
-        public GameObject ActivateRunner(PlayerDefinition playerDefinition, Vector3 position)
+        public GameObject ActivateRunner(PlayerHandle playerDefinition, Vector3 position)
         {
             GameObject runner = m_runnerGameObject[playerDefinition];
 

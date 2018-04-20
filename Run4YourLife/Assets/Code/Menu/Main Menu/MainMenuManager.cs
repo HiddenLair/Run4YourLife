@@ -10,10 +10,10 @@ namespace Run4YourLife.MainMenu
     public class MainMenuManager : MonoBehaviour
     {
         [SerializeField]
-        private SceneLoadRequest m_characterSelectionLoadRequest;
+        private SceneTransitionRequest m_characterSelectionLoadRequest;
 
         [SerializeField]
-        private SceneLoadRequest m_optionsMenuLoadRequest;
+        private SceneTransitionRequest m_optionsMenuLoadRequest;
 
         public void OnPlayButtonPressed()
         {

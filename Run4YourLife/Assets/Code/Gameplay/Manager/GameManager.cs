@@ -15,7 +15,7 @@ namespace Run4YourLife.GameManagement
         public GamePhaseEvent onGamePhaseChanged;
 
         [SerializeField]
-        private SceneLoadRequest bossWin;
+        private SceneTransitionRequest bossWin;
 
         private void Start()
         {

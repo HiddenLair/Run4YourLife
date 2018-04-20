@@ -10,7 +10,7 @@ public class RockController : MonoBehaviour {
     [SerializeField]
     private float points;
 
-    private PlayerDefinition playerWhoThrew;
+    private PlayerHandle playerWhoThrew;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -35,7 +35,7 @@ public class RockController : MonoBehaviour {
         Destroy(gameObject);
     }
 
-    public void SetPlayerDefinition(PlayerDefinition def)
+    public void SetPlayerDefinition(PlayerHandle def)
     {
         playerWhoThrew = def;
     }
