@@ -184,6 +184,7 @@ namespace Run4YourLife.Player
         {
             m_isDashing = true;
             m_isReadyToDash = false;
+            m_animator.SetTrigger("dash");
 
             m_horizontalDrag = m_dashHorizontalDrag;
             float facingRight = m_isFacingRight ? 1 : -1;
