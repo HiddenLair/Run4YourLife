@@ -11,7 +11,7 @@ namespace Run4YourLife.Interactables
         private GameObject destroyParticles;
         private void OnTriggerEnter(Collider other)
         {
-            if(other.tag == Tags.Runner)
+            if(other.CompareTag(Tags.Runner))
             {
                 if (other.GetComponent<RunnerCharacterController>().IsDashing())
                 {
