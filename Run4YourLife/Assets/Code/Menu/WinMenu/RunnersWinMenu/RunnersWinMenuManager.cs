@@ -7,6 +7,7 @@ using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.WinMenu
 {
+    [RequireComponent(typeof(RunnerPrefabManager))]
     public class RunnersWinMenuManager : WinMenuManager
     {
         [SerializeField]
@@ -31,14 +32,14 @@ namespace Run4YourLife.WinMenu
 
         void Awake()
         {
-            runnerPrefabManager = FindObjectOfType<RunnerPrefabManager>();
+            runnerPrefabManager = GetComponent<RunnerPrefabManager>();
 
-            // SetUpFakePlayers(3); // TEST
-            // SetUpFakeScores(); // TEST
+            //SetUpFakePlayers(3); // TEST
+            //SetUpFakeScores(); // TEST
             SpawnRunners();
         }
 
-        /* private void SetUpFakePlayers(uint numRunners)
+        private void SetUpFakePlayers(uint numRunners)
         {
             PlayerManager playerManager = FindObjectOfType<PlayerManager>();
 
@@ -49,17 +50,17 @@ namespace Run4YourLife.WinMenu
 
             for(uint i = 0; i < numRunners; ++i)
             {
-                playerManager.AddPlayer(new PlayerDefinition()
+                playerManager.AddPlayer(new PlayerHandle()
                 {
-                    CharacterType = CharacterType.Purple,
+                    CharacterType = (CharacterType)i,
                     ID = i + 1,
                     inputDevice = new Input.InputDevice(i + 1),
                     IsBoss = false
                 });
             }
-        } */
+        }
 
-        /* private void SetUpFakeScores()
+        private void SetUpFakeScores()
         {
             ScoreManager scoreManager = FindObjectOfType<ScoreManager>();
 
@@ -70,11 +71,11 @@ namespace Run4YourLife.WinMenu
 
             scoreManager.Initialize();
 
-            foreach(PlayerDefinition playerDefinition in FindObjectOfType<PlayerManager>().GetRunners())
+            foreach(PlayerHandle playerDefinition in FindObjectOfType<PlayerManager>().GetRunners())
             {
                 scoreManager.OnAddPoints(playerDefinition, Random.Range(0.0f, 50.0f));
             }
-        } */
+        }
 
         private void SpawnRunners()
         {
