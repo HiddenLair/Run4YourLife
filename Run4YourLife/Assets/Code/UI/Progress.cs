@@ -29,7 +29,7 @@ namespace Run4YourLife.UI
         [SerializeField]
         private Image bossIcon;
 
-        private Vector3 currentStart, currentEnd;
+        private Transform currentStart, currentEnd;
 
         void Awake()
         {
@@ -42,18 +42,18 @@ namespace Run4YourLife.UI
             {
                 case PhaseType.FIRST:
                     bossIcon.sprite = bossIconPhase1;
-                    currentStart = pointStart.position;
-                    currentEnd = pointMiddle0.position;
+                    currentStart = pointStart;
+                    currentEnd = pointMiddle0;
                     break;
                 /* case PhaseType.SECOND:
                     bossIcon.sprite = bossIconPhase2;
-                    currentStart = pointMiddle0.position;
-                    currentEnd = pointMiddle1.position;
+                    currentStart = pointMiddle0;
+                    currentEnd = pointMiddle1;
                     break; */
                 case PhaseType.THIRD:
                     bossIcon.sprite = bossIconPhase3;
-                    currentStart = pointMiddle1.position;
-                    currentEnd = pointEnd.position;
+                    currentStart = pointMiddle1;
+                    currentEnd = pointEnd;
                     break;
             }
 
@@ -62,7 +62,7 @@ namespace Run4YourLife.UI
 
         public void SetPercent(float percent)
         {
-            bossIcon.transform.position = Vector3.Lerp(currentStart, currentEnd, percent);
+            bossIcon.transform.position = Vector3.Lerp(currentStart.position, currentEnd.position, percent);
         }
     }
 }
