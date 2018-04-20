@@ -62,7 +62,7 @@ namespace Run4YourLife.Player {
 
         private Quaternion GetQuaternionforFacingDirection(float angle)
         {
-            float facingDirectionAngle = m_graphics.eulerAngles.y == 90 ? angle : 180 - angle;
+            float facingDirectionAngle = m_graphics.eulerAngles.y == 90 ? 180 - angle : angle;
             return Quaternion.Euler(0, 0, facingDirectionAngle);
         }
 
