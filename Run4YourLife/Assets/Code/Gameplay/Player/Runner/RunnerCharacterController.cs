@@ -172,6 +172,7 @@ namespace Run4YourLife.Player
 
                 Move();
             }
+            m_animator.SetFloat("ySpeed",m_velocity.y);
             m_animator.SetBool("ground", m_characterController.isGrounded);
         }
 
