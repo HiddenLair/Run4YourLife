@@ -1472,6 +1472,7 @@ GameObject:
   - component: {fileID: 168087528}
   - component: {fileID: 168087533}
   - component: {fileID: 168087534}
+  - component: {fileID: 168087527}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameController
@@ -1499,6 +1500,27 @@ Transform:
   m_Father: {fileID: 618985662}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &168087527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 168087525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3a97c63f108b014ea1331a0e1d3685d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_runnerPrefabs:
+  - characterType: 0
+    gameObject: {fileID: 1095223732133840, guid: 1cd7ef716acc5674d8d6033592171016,
+      type: 2}
+  - characterType: 1
+    gameObject: {fileID: 1389302491664256, guid: d4d4b74438d30d2479c85981b22f539c,
+      type: 2}
+  - characterType: 2
+    gameObject: {fileID: 1299185812857776, guid: 186e999919821e84aacd80619694440b,
+      type: 2}
 --- !u!114 &168087528
 MonoBehaviour:
   m_ObjectHideFlags: 0
