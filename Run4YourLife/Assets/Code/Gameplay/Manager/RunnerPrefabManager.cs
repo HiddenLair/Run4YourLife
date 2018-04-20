@@ -1,16 +1,9 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace Run4YourLife.Player
 {
-    public enum RunnerPrefabType
-    {
-        Game,
-        CharacterSelection,
-        RunnersWin
-    }
-
     public class RunnerPrefabManager : MonoBehaviour
     {
         [Serializable]
@@ -21,39 +14,11 @@ namespace Run4YourLife.Player
         }
 
         [SerializeField]
-        private RunnerPrefab[] gamePrefabs;
+        private RunnerPrefab[] m_runnerPrefabs;
 
-        [SerializeField]
-        private RunnerPrefab[] characterSelectionPrefabs;
-
-        [SerializeField]
-        private RunnerPrefab[] runnersWinPrefabs;
-
-        private Dictionary<KeyValuePair<RunnerPrefabType, CharacterType>, GameObject> runnerPrefabs = new Dictionary<KeyValuePair<RunnerPrefabType, CharacterType>, GameObject>();
-
-        void Awake()
+        public GameObject Get(CharacterType characterType)
         {
-            Build();
-        }
-
-        public GameObject Get(RunnerPrefabType runnerPrefabType, CharacterType characterType)
-        {
-            return runnerPrefabs[new KeyValuePair<RunnerPrefabType, CharacterType>(runnerPrefabType, characterType)];
-        }
-
-        private void Build()
-        {
-            Build(RunnerPrefabType.Game, gamePrefabs);
-            Build(RunnerPrefabType.CharacterSelection, characterSelectionPrefabs);
-            Build(RunnerPrefabType.RunnersWin, runnersWinPrefabs);
-        }
-
-        private void Build(RunnerPrefabType runnerPrefabType, RunnerPrefab[] prefabs)
-        {
-            foreach(RunnerPrefab runnerPrefab in prefabs)
-            {
-                runnerPrefabs[new KeyValuePair<RunnerPrefabType, CharacterType>(runnerPrefabType, runnerPrefab.characterType)] = runnerPrefab.gameObject;
-            }
+            return m_runnerPrefabs.Where((x) => x.characterType == characterType).First().gameObject;
         }
     }
 }

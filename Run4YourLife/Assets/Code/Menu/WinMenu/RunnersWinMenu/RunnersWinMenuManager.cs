@@ -95,7 +95,7 @@ namespace Run4YourLife.WinMenu
             for(int i = 0; i < points.Count; ++i)
             {
                 GameObject runnerSlot = Instantiate(runnerSlotPrefab, spawnPoints[i].transform, false);
-                GameObject runner = Instantiate(runnerPrefabManager.Get(RunnerPrefabType.RunnersWin, points[i].Value.CharacterType), runnerSlot.transform, false);
+                GameObject runner = Instantiate(runnerPrefabManager.Get(points[i].Value.CharacterType), runnerSlot.transform, false);
 
                 float scale = othersScale;
 

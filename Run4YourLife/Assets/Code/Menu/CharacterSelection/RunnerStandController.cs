@@ -10,22 +10,22 @@ namespace Run4YourLife.CharacterSelection
     public class RunnerStandController : PlayerStandController
     {
         [SerializeField]
-        private ScaleTick scaleTickArrowLeft;
+        private ScaleTick m_scaleTickArrowLeft;
 
         [SerializeField]
-        private ScaleTick scaleTickArrowRight;
+        private ScaleTick m_scaleTickArrowRight;
 
-        private RunnerPrefabManager runnerPrefabManager;
+        private RunnerPrefabManager m_runnerPrefabManager;
 
         protected override void OnAwake()
         {
-            runnerPrefabManager = FindObjectOfType<RunnerPrefabManager>();
-            Debug.Assert(runnerPrefabManager != null);
+            m_runnerPrefabManager = FindObjectOfType<RunnerPrefabManager>();
+            Debug.Assert(m_runnerPrefabManager != null);
         }
 
         protected override GameObject GetStandPrefabForPlayer(PlayerHandle playerDefinition)
         {
-            return runnerPrefabManager.Get(RunnerPrefabType.CharacterSelection, playerDefinition.CharacterType);
+            return m_runnerPrefabManager.Get(playerDefinition.CharacterType);
         }
 
         protected override void UpdatePlayer()
@@ -38,12 +38,12 @@ namespace Run4YourLife.CharacterSelection
             {
                 if(controlScheme.NextStand.Started())
                 {
-                    scaleTickArrowRight.Tick();
+                    m_scaleTickArrowRight.Tick();
                     ChangePlayerCharacter(AdvanceType.Next);
                 }
                 else if(controlScheme.PreviousStand.Started())
                 {
-                    scaleTickArrowLeft.Tick();
+                    m_scaleTickArrowLeft.Tick();
                     ChangePlayerCharacter(AdvanceType.Previous);
                 }
                 else if(controlScheme.SetAsBoss.Started())

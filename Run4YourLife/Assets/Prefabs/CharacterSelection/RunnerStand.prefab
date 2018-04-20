@@ -36,6 +36,7 @@ GameObject:
   - component: {fileID: 4745700278705608}
   - component: {fileID: 114200811715896846}
   - component: {fileID: 114196617789809928}
+  - component: {fileID: 114721248575192576}
   m_Layer: 0
   m_Name: RunnerStand
   m_TagString: Untagged
@@ -222,7 +223,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1073336735829158}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -9, y: -4.5, z: 0}
   m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_Children:
   - {fileID: 4496260503599260}
@@ -312,14 +313,8 @@ MonoBehaviour:
   readyBoxScaleTick: {fileID: 114270863191617390}
   readyTextScaleTick: {fileID: 114047808341341124}
   spawnTransform: {fileID: 4036777957868922}
-  purpleRunner: {fileID: 1095223732133840, guid: 6732512d628ebe84298f835b9b095f94,
-    type: 2}
-  greenRunner: {fileID: 1095223732133840, guid: 5cb7b88d599ad06418b58ac71884c9ec,
-    type: 2}
-  orangeRunner: {fileID: 1095223732133840, guid: 2049fba8a053b054db6efee114641732,
-    type: 2}
-  scaleTickArrowLeft: {fileID: 114374921861983338}
-  scaleTickArrowRight: {fileID: 114426058309681092}
+  m_scaleTickArrowLeft: {fileID: 114374921861983338}
+  m_scaleTickArrowRight: {fileID: 114426058309681092}
 --- !u!114 &114200811715896846
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -484,6 +479,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scaleMultiplier: 1.5
   timeS: 0.1
+--- !u!114 &114721248575192576
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1073336735829158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3a97c63f108b014ea1331a0e1d3685d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_runnerPrefabs:
+  - characterType: 0
+    gameObject: {fileID: 1095223732133840, guid: 6732512d628ebe84298f835b9b095f94,
+      type: 2}
+  - characterType: 2
+    gameObject: {fileID: 1095223732133840, guid: 5cb7b88d599ad06418b58ac71884c9ec,
+      type: 2}
+  - characterType: 1
+    gameObject: {fileID: 1095223732133840, guid: 2049fba8a053b054db6efee114641732,
+      type: 2}
 --- !u!212 &212429360902517978
 SpriteRenderer:
   m_ObjectHideFlags: 1

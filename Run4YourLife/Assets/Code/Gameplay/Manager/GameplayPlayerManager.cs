@@ -12,6 +12,8 @@ namespace Run4YourLife.GameManagement {
         void OnRunnerReviveRequest(Vector3 position);
     }
 
+    [RequireComponent(typeof(GameManager))]
+    [RequireComponent(typeof(RunnerPrefabManager))]
     public class GameplayPlayerManager : MonoBehaviour, IGameplayPlayerEvents {
 
         #region Editor
@@ -60,7 +62,7 @@ namespace Run4YourLife.GameManagement {
         private PlayerHandle m_bossPlayerDefinition;
         private List<PlayerHandle> m_runnerPlayerDefinitions = new List<PlayerHandle>();
 
-        private RunnerPrefabManager runnerPrefabManager;
+        private RunnerPrefabManager m_runnerPrefabManager;
 
         private int runnerIndex = 0;
 
@@ -71,11 +73,9 @@ namespace Run4YourLife.GameManagement {
         private void Awake()
         {
             GameManager gameManager = GetComponent<GameManager>();
-            Debug.Assert(gameManager != null);
             gameManager.onGamePhaseChanged.AddListener(OnGamePhaseChanged);
 
-            runnerPrefabManager = FindObjectOfType<RunnerPrefabManager>();
-            Debug.Assert(runnerPrefabManager != null);
+            m_runnerPrefabManager = GetComponent<RunnerPrefabManager>();
 
             m_playerManager = GetOrCreateDefaultPlayerManagerIfNoneIsAviable();
             InitializePlayers();
@@ -156,7 +156,7 @@ namespace Run4YourLife.GameManagement {
 
         private GameObject GetRunnerForPlayer(PlayerHandle playerDefinition)
         {
-            return runnerPrefabManager.Get(RunnerPrefabType.Game, playerDefinition.CharacterType);
+            return m_runnerPrefabManager.Get(playerDefinition.CharacterType);
         }
 
         private void InitializeBoss(PlayerHandle playerDefinition)
