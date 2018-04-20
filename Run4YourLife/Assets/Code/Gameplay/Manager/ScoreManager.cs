@@ -10,25 +10,26 @@ namespace Run4YourLife.GameManagement
 {
     public interface IScoreEvents : IEventSystemHandler
     {
-        void OnAddPoints(PlayerHandle playerDefinition,float points);
+        void OnAddPoints(PlayerHandle playerDefinition, float points);
     }
+
+    [System.Serializable]
+    public class ScoreChangeEvent : UnityEvent<PlayerHandle, float> { }
 
     public class ScoreManager : MonoBehaviour,IScoreEvents
     {
+        private ScoreChangeEvent m_onPlayerScoreChanged = new ScoreChangeEvent();
+        public ScoreChangeEvent OnPlayerScoreChanged { get { return m_onPlayerScoreChanged; } }
 
-        #region Variables
-
-        Dictionary<PlayerHandle, float> pointDictionary = new Dictionary<PlayerHandle, float>();
-
-        #endregion
+        private Dictionary<PlayerHandle, float> m_playerScore = new Dictionary<PlayerHandle, float>();
 
         public void Initialize()
         {
-            pointDictionary.Clear();
+            m_playerScore.Clear();
 
             foreach(PlayerHandle playerDefinition in FindObjectOfType<PlayerManager>().GetRunners())
             {
-                pointDictionary[playerDefinition] = 0;
+                m_playerScore[playerDefinition] = 0;
             }
         }
 
@@ -52,12 +53,13 @@ namespace Run4YourLife.GameManagement
 
         public void OnAddPoints(PlayerHandle playerDefinition,float points)
         {
-            pointDictionary[playerDefinition] += points;
+            float score = (m_playerScore[playerDefinition] += points);
+            m_onPlayerScoreChanged.Invoke(playerDefinition, score);
         }
 
         public float GetPointsByPlayerDefinition(PlayerHandle playerDefinition)
         {
-            return pointDictionary[playerDefinition];
+            return m_playerScore[playerDefinition];
         }
     }
 }
