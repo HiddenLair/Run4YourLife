@@ -18,6 +18,8 @@ public class RunnerScoreController : MonoBehaviour
         m_scoreText = GetComponent<TextMeshProUGUI>();
         m_scoreManager = FindObjectOfType<ScoreManager>();
         m_scoreManager.OnPlayerScoreChanged.AddListener(OnPlayerScoreChanged);
+
+        SetScore(0);
     }
 
     private void OnDestroy()
@@ -28,11 +30,6 @@ public class RunnerScoreController : MonoBehaviour
     public void SetPlayerDefinition(PlayerHandle playerDefinition)
     {
         m_playerHandle = playerDefinition;
-    }
-
-    private void Start()
-    {
-        SetScore(0);
     }
 
     private void OnPlayerScoreChanged(PlayerHandle playerHandle, float score)
