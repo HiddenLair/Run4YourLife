@@ -34,6 +34,7 @@ public class ScaleTick : MonoBehaviour
                 if(currentTimeS >= timeS)
                 {
                     on = false;
+                    transform.localScale = initialScale;
                 }
             }
 

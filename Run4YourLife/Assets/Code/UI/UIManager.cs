@@ -72,6 +72,28 @@ namespace Run4YourLife.UI
 
         #endregion
 
+        #region ScaleTicks
+
+        [SerializeField]
+        private ScaleTick scaleTickMele;
+
+        [SerializeField]
+        private ScaleTick scaleTickShoot;
+
+        [SerializeField]
+        private ScaleTick scaleTickTrapA;
+
+        [SerializeField]
+        private ScaleTick scaleTickTrapB;
+
+        [SerializeField]
+        private ScaleTick scaleTickTrapX;
+
+        [SerializeField]
+        private ScaleTick scaleTickTrapY;
+
+        #endregion
+
         #region Progress
 
         [SerializeField]
@@ -90,6 +112,8 @@ namespace Run4YourLife.UI
 
         private List<ImageUpdater> imageUpdaters = new List<ImageUpdater>();
 
+        private List<ScaleTick> scaleTicks = new List<ScaleTick>();
+
         void Awake()
         {
             textUpdaters.Add(textUpdaterMele);
@@ -105,6 +129,13 @@ namespace Run4YourLife.UI
             imageUpdaters.Add(imageUpdaterTrapB);
             imageUpdaters.Add(imageUpdaterTrapX);
             imageUpdaters.Add(imageUpdaterTrapY);
+
+            scaleTicks.Add(scaleTickMele);
+            scaleTicks.Add(scaleTickShoot);
+            scaleTicks.Add(scaleTickTrapA);
+            scaleTicks.Add(scaleTickTrapB);
+            scaleTicks.Add(scaleTickTrapX);
+            scaleTicks.Add(scaleTickTrapY);
 
             FindObjectOfType<GameManager>().onGamePhaseChanged.AddListener(x => ConversorTemporal(x));
         }
@@ -137,6 +168,7 @@ namespace Run4YourLife.UI
         {
             textUpdaters[(int)actionType].Use(time);
             imageUpdaters[(int)actionType].Use(time);
+            scaleTicks[(int)actionType].Tick();
         }
 
         public void OnSetSetted(SetType setType)
