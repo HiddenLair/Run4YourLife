@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Run4YourLife.GameManagement
 {
     public class ForceGlobalManager : MonoBehaviour
-    { 
+    {
         [SerializeField]
         private GameObject m_globalManagerPrefab;
 
