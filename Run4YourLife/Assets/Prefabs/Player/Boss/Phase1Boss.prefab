@@ -88,16 +88,16 @@ GameObject:
   - component: {fileID: 114008252704443998}
   - component: {fileID: 114621279175771534}
   - component: {fileID: 114695852306806128}
-  - component: {fileID: 114406781300196392}
   - component: {fileID: 65919466109941810}
   - component: {fileID: 114102374727877472}
+  - component: {fileID: 114409557748637370}
   m_Layer: 11
   m_Name: Phase1Boss
   m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1049337970085736
 GameObject:
   m_ObjectHideFlags: 1
@@ -828,7 +828,7 @@ GameObject:
   - component: {fileID: 65397105121493168}
   m_Layer: 11
   m_Name: R4YL_CHAR_BOSS
-  m_TagString: Untagged
+  m_TagString: BossRockScore
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2528,7 +2528,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxTrapWidth: 2.5
   maxTrapHeight: 5
---- !u!114 &114406781300196392
+--- !u!114 &114409557748637370
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -2536,10 +2536,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1034222424642850}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49c7d8f17d10c58458a43781add05430, type: 3}
+  m_Script: {fileID: 11500000, guid: ff4e6999a7f30fe4aa9f4d8d89f65bd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_pauseMenuLoader: {fileID: 0}
+  gameManager: {fileID: 0}
+  m_playerControlScheme: {fileID: 0}
 --- !u!114 &114444634482438770
 MonoBehaviour:
   m_ObjectHideFlags: 1
