@@ -6,43 +6,47 @@ using Run4YourLife.GameManagement;
 
 public class RunnerScoreController : MonoBehaviour
 {
-    private ScaleTick scaleTick;
-    private ScoreManager scoreManager;
-    private TextMeshProUGUI scoreText;
-    private PlayerHandle playerDefinitionTarget;
+    private ScaleTick m_scaleTick;
+    private ScoreManager m_scoreManager;
+    private TextMeshProUGUI m_scoreText;
+    private PlayerHandle m_playerHandle;
+    private float m_score;
 
-    private float previousPoints = 0.0f;
-
-    void Awake()
+    private void Awake()
     {
-        scaleTick = GetComponent<ScaleTick>();
-        scoreText = GetComponent<TextMeshProUGUI>();
-        scoreManager = FindObjectOfType<ScoreManager>();
-    }
-	
-    void Start()
-    {
-        float points = scoreManager.GetPointsByPlayerDefinition(playerDefinitionTarget);
-        scoreText.text = ((int)Mathf.Round(points)).ToString();
+        m_scaleTick = GetComponent<ScaleTick>();
+        m_scoreText = GetComponent<TextMeshProUGUI>();
+        m_scoreManager = FindObjectOfType<ScoreManager>();
+        m_scoreManager.OnPlayerScoreChanged.AddListener(OnPlayerScoreChanged);
     }
 
-	void Update()
+    private void OnDestroy()
     {
-		if(playerDefinitionTarget != null)
-        {
-            float points = scoreManager.GetPointsByPlayerDefinition(playerDefinitionTarget);
-
-            if(points != previousPoints)
-            {
-                scaleTick.Tick();
-                previousPoints = points;
-                scoreText.text = ((int)Mathf.Round(points)).ToString();
-            }
-        }
-	}
+        m_scoreManager.OnPlayerScoreChanged.RemoveListener(OnPlayerScoreChanged);
+    }
 
     public void SetPlayerDefinition(PlayerHandle playerDefinition)
     {
-        playerDefinitionTarget = playerDefinition;
+        m_playerHandle = playerDefinition;
+    }
+
+    private void Start()
+    {
+        SetScore(0);
+    }
+
+    private void OnPlayerScoreChanged(PlayerHandle playerHandle, float score)
+    {
+        if(playerHandle == m_playerHandle)
+        {
+            SetScore(score);
+        }
+    }
+
+    private void SetScore(float score)
+    {
+        m_scaleTick.Tick();
+        m_score = score;
+        m_scoreText.text = ((int)Mathf.Round(score)).ToString();
     }
 }
