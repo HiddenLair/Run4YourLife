@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace Run4YourLife.GameManagement
 {
-    public class NextPhaseOnDestroy : MonoBehaviour
+    public class NextPhaseOnEvent : MonoBehaviour
     {
         [SerializeField]
         private GamePhase m_nextGamePhase;
 
-        private void OnDestroy()
+        public void ExecuteNextPhase()
         {
             GameManager.Instance.EndExecutingPhaseAndStartPhase(m_nextGamePhase);
         }

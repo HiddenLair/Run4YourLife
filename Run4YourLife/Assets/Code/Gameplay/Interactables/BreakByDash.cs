@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Run4YourLife.Player;
+using UnityEngine.Events;
 
 namespace Run4YourLife.Interactables
 {
@@ -9,13 +10,18 @@ namespace Run4YourLife.Interactables
     {
         [SerializeField]
         private GameObject destroyParticles;
+
+        [SerializeField]
+        private UnityEvent m_onBrokenByDash;
+
+
         private void OnTriggerEnter(Collider other)
         {
             if(other.CompareTag(Tags.Runner))
             {
                 if (other.GetComponent<RunnerCharacterController>().IsDashing())
                 {
-                    Hit();
+                    Break();
                 }
             }
         }
@@ -26,13 +32,14 @@ namespace Run4YourLife.Interactables
             {
                 if (other.GetComponent<RunnerCharacterController>().IsDashing())
                 {
-                    Hit();
+                    Break();
                 }
             }
         }
 
-        private void Hit()
+        private void Break()
         {
+            m_onBrokenByDash.Invoke();
             Instantiate(destroyParticles, transform.position, destroyParticles.transform.rotation);
             Destroy(gameObject);
         }
