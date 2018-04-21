@@ -53,7 +53,6 @@ public class FallAndRefill : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("coconuthit");
         ExecuteEvents.Execute<ICharacterEvents>(other.gameObject, null, (x, y) => x.Kill());
 
         StartCoroutine(Refill(refillTimer));

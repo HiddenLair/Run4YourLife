@@ -35,7 +35,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4187550700473160}
   - component: {fileID: 114379115502403308}
-  - component: {fileID: 65500251531975204}
   - component: {fileID: 65619952428619978}
   m_Layer: 9
   m_Name: Destructible
@@ -62,6 +61,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1883687194800938
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4500450688017124}
+  - component: {fileID: 65817692372257344}
+  m_Layer: 10
+  m_Name: StageCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &4087975287069558
 Transform:
   m_ObjectHideFlags: 1
@@ -81,13 +96,27 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1764071149093888}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.32, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4572118891055146}
+  - {fileID: 4500450688017124}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4500450688017124
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1883687194800938}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4187550700473160}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4572118891055146
 Transform:
@@ -144,18 +173,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1802470447473968}
   m_Mesh: {fileID: 4300000, guid: faf68adfc4a1b8a49b6c3d98508e1e25, type: 3}
---- !u!65 &65500251531975204
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1764071149093888}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.75, y: 3, z: 1}
-  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!65 &65619952428619978
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -167,6 +184,18 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.25, y: 3, z: 1}
+  m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!65 &65817692372257344
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1883687194800938}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.75, y: 3, z: 1}
   m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!95 &95692693267436374
 Animator:
@@ -198,3 +227,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyParticles: {fileID: 1230101138075350, guid: 7212caca91c358048947d36ac7208485,
     type: 2}
+  m_onBrokenByDash:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
