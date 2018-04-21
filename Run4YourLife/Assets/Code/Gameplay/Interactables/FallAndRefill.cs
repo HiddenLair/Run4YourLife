@@ -36,13 +36,12 @@ public class FallAndRefill : MonoBehaviour {
         refillTimer = refillTime;
     }
 
-    // Update is called once per frame
     void FixedUpdate () {
         if (falling)
         {
-            velocity += gravity * Time.deltaTime;
-            transform.Translate(new Vector3(0,-velocity * Time.deltaTime,0));
-            refillTimer -= Time.deltaTime;
+            velocity += gravity * Time.fixedDeltaTime;
+            transform.Translate(new Vector3(0,-velocity * Time.fixedDeltaTime, 0));
+            refillTimer -= Time.fixedDeltaTime;
         }
 	}
 
@@ -54,18 +53,19 @@ public class FallAndRefill : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("coconuthit");
         ExecuteEvents.Execute<ICharacterEvents>(other.gameObject, null, (x, y) => x.Kill());
 
         StartCoroutine(Refill(refillTimer));
-        graphics.SetActive(false);
-        this.enabled = false;
-        hitTrigger.enabled = false;
-        
     }
 
     private IEnumerator Refill(float time)
     {
+        graphics.SetActive(false);
+        this.enabled = false;
+        hitTrigger.enabled = false;
         yield return new WaitForSeconds(time);
+
         transform.localPosition = new Vector3(0, 0, 0);
         refillTimer = refillTime;
         falling = false;

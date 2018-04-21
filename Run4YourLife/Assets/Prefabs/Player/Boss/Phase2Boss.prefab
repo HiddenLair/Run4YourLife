@@ -601,7 +601,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1440341958070536
 GameObject:
   m_ObjectHideFlags: 1
@@ -825,7 +825,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4129931644911652}
   - component: {fileID: 114709486038714712}
-  m_Layer: 11
+  - component: {fileID: 65771960714022694}
+  - component: {fileID: 54795731908632580}
+  m_Layer: 12
   m_Name: CrossHairWorld
   m_TagString: Untagged
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
@@ -2248,6 +2250,33 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1173798651902960}
   m_Mesh: {fileID: 4300024, guid: 944e1442b3e07ce4087d5f720134b474, type: 3}
+--- !u!54 &54795731908632580
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1652950656869090}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 120
+  m_CollisionDetection: 0
+--- !u!65 &65771960714022694
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1652950656869090}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!82 &82009177394902138
 AudioSource:
   m_ObjectHideFlags: 1
