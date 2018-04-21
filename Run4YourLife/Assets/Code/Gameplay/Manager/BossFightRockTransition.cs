@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using Run4YourLife.Player;
 
 namespace Run4YourLife.GameManagement
 {
@@ -32,6 +33,17 @@ namespace Run4YourLife.GameManagement
             m_virtualCamera.LookAt=cameraLookAtThis.transform;
             m_virtualCamera.Follow = cameraLookAtThis.transform;
             m_virtualCamera.gameObject.SetActive(true);
+
+            List<GameObject> runners = GameplayPlayerManager.Instance.Runners;
+
+            foreach (GameObject g in runners)
+            {
+                RunnerCharacterController tempController = g.GetComponent<RunnerCharacterController>();
+                tempController.SetLimitScreenRight(true);
+                tempController.SetLimitScreenLeft(true);
+                tempController.SetCheckOutScreen(true);
+            }
+
             Vector3 bossPos = bossRockToMove.transform.position;
             StartCoroutine(SlowMove(bossRockToMove, new Vector3(bossPos.x, 0, 0), time));
         }
@@ -59,6 +71,16 @@ namespace Run4YourLife.GameManagement
             m_virtualCamera.Follow = null;
             m_virtualCamera.LookAt = null;
             m_virtualCamera.gameObject.SetActive(false);
+
+            List<GameObject> runners = GameplayPlayerManager.Instance.Runners;
+
+            foreach (GameObject g in runners)
+            {
+                RunnerCharacterController tempController = g.GetComponent<RunnerCharacterController>();
+                tempController.SetLimitScreenRight(false);
+                tempController.SetLimitScreenLeft(false);
+                tempController.SetCheckOutScreen(false);
+            }
         }
 
         public override void DebugStartPhase()

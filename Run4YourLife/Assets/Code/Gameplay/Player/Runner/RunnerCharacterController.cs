@@ -15,7 +15,7 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(Stats))]
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(RunnerInputStated))]
-    public class RunnerCharacterController : MonoBehaviour
+    public class RunnerCharacterController : MonoBehaviour,IDeactivateByInvisible
     {
         #region InspectorVariables
 
@@ -61,6 +61,7 @@ namespace Run4YourLife.Player
 
         public AudioClip jumpClip;
         public AudioClip bounceClip;
+        public GameObject deathParticles;
 
         #endregion
 
@@ -89,6 +90,10 @@ namespace Run4YourLife.Player
         private Vector3 m_velocity;
         private float m_gravity;
         private float m_horizontalDrag;
+
+        private bool limitRight = false;
+        private bool limitLeft = false;
+        private bool checkOutOfScreen = false;
 
         private float m_idleTimer;
 
@@ -131,6 +136,14 @@ namespace Run4YourLife.Player
         {
             StopCoroutine(m_checkCoyoteGroundedCoroutine);
             m_runnerControlScheme.Active = false;
+        }
+
+        public void Deactivate()
+        {
+            if (checkOutOfScreen)
+            {
+                GetComponent<RunnerController>().AbsoluteKill();
+            }
         }
 
         private IEnumerator CheckCoyoteGroundedCoroutine()
@@ -265,20 +278,38 @@ namespace Run4YourLife.Player
         private void MoveCharacterContoller(Vector3 movement)
         {
             m_characterController.Move(movement);
-            TrimPlayerPositionInsideCameraView();
+            if (limitRight)
+            {
+                TrimPlayerPositionInsideCameraViewRight();
+            }
+            if (limitLeft)
+            {
+                TrimPlayerPositionInsideCameraViewLeft();
+            }
 
             m_animator.SetFloat("xSpeed", Mathf.Abs(movement.x));
             LookAtMovingSide();
             UpdateIdleTimer(movement);
         }
 
-        private void TrimPlayerPositionInsideCameraView()
+        private void TrimPlayerPositionInsideCameraViewRight()
         {
             float xScreenRight = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, 0, Math.Abs(Camera.main.transform.position.z - transform.position.z))).x;
             if (transform.position.x > xScreenRight)
             {
                 Vector3 trimmedPosition = transform.position;
                 trimmedPosition.x = xScreenRight;
+                transform.position = trimmedPosition;
+            }
+        }
+
+        private void TrimPlayerPositionInsideCameraViewLeft()
+        {
+            float xScreenLeft = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, Math.Abs(Camera.main.transform.position.z - transform.position.z))).x;
+            if (transform.position.x < xScreenLeft)
+            {
+                Vector3 trimmedPosition = transform.position;
+                trimmedPosition.x = xScreenLeft;
                 transform.position = trimmedPosition;
             }
         }
@@ -468,6 +499,25 @@ namespace Run4YourLife.Player
         public bool IsDashing()
         {
             return m_isDashing;
+        }
+
+        #endregion
+
+        #region Setters
+
+        public void SetLimitScreenRight(bool value)
+        {
+            limitRight = value;
+        }
+
+        public void SetLimitScreenLeft(bool value)
+        {
+            limitLeft = value;
+        }
+
+        public void SetCheckOutScreen(bool value)
+        {
+            checkOutOfScreen = value;
         }
 
         #endregion

@@ -87,6 +87,10 @@ namespace Run4YourLife.GameManagement
             for (int i = 0; i < GameplayPlayerManager.Instance.Runners.Count; i++)
             {
                 GameplayPlayerManager.Instance.Runners[i].transform.position = phase2Spawns[i].position;
+                RunnerCharacterController tempController = GameplayPlayerManager.Instance.Runners[i].GetComponent<RunnerCharacterController>();
+                tempController.SetLimitScreenLeft(true);
+                tempController.SetLimitScreenRight(true);
+                tempController.SetCheckOutScreen(true);
             }
         }
 
@@ -108,6 +112,16 @@ namespace Run4YourLife.GameManagement
             m_virtualCamera.Follow = null;
             m_virtualCamera.LookAt = null;
             m_virtualCamera.gameObject.SetActive(false);
+
+            List<GameObject> runners = GameplayPlayerManager.Instance.Runners;
+
+            foreach (GameObject g in runners)
+            {
+                RunnerCharacterController tempController = g.GetComponent<RunnerCharacterController>();
+                tempController.SetLimitScreenRight(false);
+                tempController.SetLimitScreenLeft(false);
+                tempController.SetCheckOutScreen(false);
+            }
         }
 
         #endregion
