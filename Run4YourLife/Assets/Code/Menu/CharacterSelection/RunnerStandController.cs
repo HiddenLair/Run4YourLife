@@ -79,15 +79,8 @@ namespace Run4YourLife.CharacterSelection
         {
             PlayerHandle playerDefinition = this.playerDefinition;
             ClearPlayerDefinition();
-            playerDefinition.CharacterType = GetDeltaCharacterType(playerDefinition.CharacterType, (int)advanceType);
+            playerDefinition.CharacterType = PlayerManager.Instance.GetFirstAviableCharacterType(playerDefinition.CharacterType, (int)advanceType);
             SetPlayerDefinition(playerDefinition);
-        }
-
-        private CharacterType GetDeltaCharacterType(CharacterType characterType, int delta)
-        {
-            int nEnumElements = Enum.GetValues(typeof(CharacterType)).Length;
-            int newCharacterTypeIndex = (nEnumElements + ((int)characterType) + delta) % nEnumElements;
-            return (CharacterType)newCharacterTypeIndex;
         }
     }
 }

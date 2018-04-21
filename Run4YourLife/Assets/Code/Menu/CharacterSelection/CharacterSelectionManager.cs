@@ -28,6 +28,15 @@ namespace Run4YourLife.CharacterSelection
             PlayerManager.Instance.ClearPlayers();
         }
 
+        /* // TEST
+        void Update()
+        {
+            if(UnityEngine.Input.GetKeyDown(KeyCode.Keypad1))
+            {
+                OnControllerDetected(new InputDevice((uint)PlayerManager.Instance.GetPlayers().Count + 1));
+            }
+        } */
+
         public void OnControllerDetected(InputDevice controller)
         {
             if(PlayerManager.Instance.GetPlayers().Count < 4)
@@ -45,36 +54,10 @@ namespace Run4YourLife.CharacterSelection
             {
                 PlayerManager.Instance.SetPlayerAsBoss(playerDefinition);
             }
-            playerDefinition.CharacterType = GetFirstAviablePlayerCharacterType();
+            playerDefinition.CharacterType = PlayerManager.Instance.GetFirstAviablePlayerCharacterType();
             playerDefinition.ID = inputDevice.ID;
 
             PlayerManager.Instance.AddPlayer(playerDefinition);
-        }
-
-        private CharacterType GetFirstAviablePlayerCharacterType()
-        {
-            CharacterType ret = CharacterType.Purple;
-            foreach(CharacterType characterType in Enum.GetValues(typeof(CharacterType)))
-            {
-                if(!PlayerHasCharacterType(characterType))
-                {
-                    ret = characterType;
-                    break;
-                }
-            }
-            return ret;
-        }
-
-        private bool PlayerHasCharacterType(CharacterType characterType)
-        {
-            foreach(PlayerHandle player in PlayerManager.Instance.GetPlayers())
-            {
-                if(player.CharacterType.Equals(characterType))
-                {
-                    return true;
-                }
-            }
-            return false;
         }
 
         public void OnGameStart()
