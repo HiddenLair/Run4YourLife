@@ -7,7 +7,6 @@ using Run4YourLife.GameManagement;
 public class RunnerScoreController : MonoBehaviour
 {
     private ScaleTick m_scaleTick;
-    private ScoreManager m_scoreManager;
     private TextMeshProUGUI m_scoreText;
     private PlayerHandle m_playerHandle;
     private float m_score;
@@ -16,15 +15,18 @@ public class RunnerScoreController : MonoBehaviour
     {
         m_scaleTick = GetComponent<ScaleTick>();
         m_scoreText = GetComponent<TextMeshProUGUI>();
-        m_scoreManager = FindObjectOfType<ScoreManager>();
-        m_scoreManager.OnPlayerScoreChanged.AddListener(OnPlayerScoreChanged);
 
         SetScore(0);
     }
 
+    private void Start()
+    {
+        ScoreManager.Instance.OnPlayerScoreChanged.AddListener(OnPlayerScoreChanged);
+    }
+
     private void OnDestroy()
     {
-        m_scoreManager.OnPlayerScoreChanged.RemoveListener(OnPlayerScoreChanged);
+        ScoreManager.Instance.OnPlayerScoreChanged.RemoveListener(OnPlayerScoreChanged);
     }
 
     public void SetPlayerDefinition(PlayerHandle playerDefinition)

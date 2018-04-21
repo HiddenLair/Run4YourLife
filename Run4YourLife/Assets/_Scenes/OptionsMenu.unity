@@ -687,7 +687,7 @@ GameObject:
   - component: {fileID: 315658647}
   - component: {fileID: 315658648}
   m_Layer: 0
-  m_Name: MainMenuLoadRequest
+  m_Name: UnloadOptionsMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -717,12 +717,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b54b125ffc0a6ec46b3f2eecc0eff95c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneLoadRequestData:
+  m_loadEvent: 0
+  m_sceneLoadRequestData:
     loadScene: 0
     sceneName: 
-    loadSceneMode: 1
-    loadEvent: 0
-    setLoadedSceneAsActiveScene: 1
+    loadSceneMode: 0
+    setLoadedSceneAsActiveScene: 0
     unloadScene: 1
     unloadedSceneName: OptionsMenu
 --- !u!1 &328503089
@@ -1756,7 +1756,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d5f481ef22f0d4e96ed9b627c3b132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_mainMenuLoadRequest: {fileID: 315658648}
+  m_unloadOptionsMenu: {fileID: 315658648}
 --- !u!114 &562453591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4117,7 +4117,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &1850629341
 AudioListener:
   m_ObjectHideFlags: 0

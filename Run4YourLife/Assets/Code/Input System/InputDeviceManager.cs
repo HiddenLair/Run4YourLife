@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Run4YourLife.Input
 {
-    public class InputDeviceManager : MonoBehaviour
+    public class InputDeviceManager : SingletonMonoBehaviour<InputDeviceManager>
     {
         private InputDevice m_defaultInputDevice = new InputDevice(0);
         private List<InputDevice> m_inputDevices = new List<InputDevice>(new InputDevice[] {

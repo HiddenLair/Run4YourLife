@@ -10,12 +10,12 @@ using System;
 
 namespace Run4YourLife.GameManagement
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         public GamePhaseEvent onGamePhaseChanged;
 
         [SerializeField]
-        private SceneTransitionRequest bossWin;
+        private SceneTransitionRequest m_loadBossWinsMenu;
 
         private void Start()
         {
@@ -24,7 +24,7 @@ namespace Run4YourLife.GameManagement
 
         public void OnAllRunnersDied()
         {
-            bossWin.Execute();
+            m_loadBossWinsMenu.Execute();
         }
 
         #region Phase Execution

@@ -5,10 +5,9 @@ using System;
 
 namespace Run4YourLife.Player
 {
-    public class PlayerManager : MonoBehaviour
+    public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
     {
-        public class PlayerChangedEvent : UnityEvent<PlayerHandle>
-        { }
+        public class PlayerChangedEvent : UnityEvent<PlayerHandle> { }
 
         private List<PlayerHandle> players = new List<PlayerHandle>();
 

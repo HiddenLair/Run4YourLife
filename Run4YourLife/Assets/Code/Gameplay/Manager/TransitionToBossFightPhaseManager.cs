@@ -15,18 +15,12 @@ namespace Run4YourLife.GameManagement
 
         #endregion
 
-        private GameplayPlayerManager m_gameplayPlayerManager;
         private GameManager gameManager;
 
         #region Initialization
 
         private void Awake()
         {
-            gameManager = FindObjectOfType<GameManager>();
-            Debug.Assert(gameManager != null);
-            m_gameplayPlayerManager = FindObjectOfType<GameplayPlayerManager>();
-            Debug.Assert(m_gameplayPlayerManager != null);
-
             RegisterPhase(GamePhase.TransitionToBossFight);
         }
 
@@ -38,7 +32,7 @@ namespace Run4YourLife.GameManagement
             m_virtualCamera.LookAt = null;
             m_virtualCamera.gameObject.SetActive(false);
            
-            gameManager.EndExecutingPhaseAndStartPhase(GamePhase.BossFight);
+            GameManager.Instance.EndExecutingPhaseAndStartPhase(GamePhase.BossFight);
         }
 
         public override void EndPhase()

@@ -15,13 +15,10 @@ namespace Run4YourLife.GameManagement
 
         #endregion
 
-        private GameManager gameManager;
-
         #region Initialization
 
         private void Awake()
         {
-            gameManager = FindObjectOfType<GameManager>();
             RegisterPhase(GamePhase.TransitionToHardMoveHorizontal);
         }
 
@@ -32,7 +29,7 @@ namespace Run4YourLife.GameManagement
 
         public override void StartPhase()
         {
-            gameManager.EndExecutingPhaseAndStartPhase(GamePhase.HardMoveHorizontal);
+            GameManager.Instance.EndExecutingPhaseAndStartPhase(GamePhase.HardMoveHorizontal);
         }       
 
         public override void EndPhase()

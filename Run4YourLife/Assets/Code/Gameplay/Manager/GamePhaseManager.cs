@@ -28,7 +28,7 @@ namespace Run4YourLife.GameManagement
         public void RegisterPhase(GamePhase gamePhase)
         {
             GamePhase = gamePhase;
-            FindObjectOfType<GameManager>().RegisterPhase(this.GamePhase,this);
+            GameManager.Instance.RegisterPhase(this.GamePhase,this);
         }
 
         public abstract void StartPhase();

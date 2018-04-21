@@ -16,7 +16,7 @@ namespace Run4YourLife.GameManagement
     [System.Serializable]
     public class ScoreChangeEvent : UnityEvent<PlayerHandle, float> { }
 
-    public class ScoreManager : MonoBehaviour,IScoreEvents
+    public class ScoreManager : SingletonMonoBehaviour<ScoreManager>, IScoreEvents
     {
         private ScoreChangeEvent m_onPlayerScoreChanged = new ScoreChangeEvent();
         public ScoreChangeEvent OnPlayerScoreChanged { get { return m_onPlayerScoreChanged; } }
@@ -26,11 +26,6 @@ namespace Run4YourLife.GameManagement
         public void Initialize()
         {
             m_playerScore.Clear();
-
-            foreach(PlayerHandle playerDefinition in FindObjectOfType<PlayerManager>().GetRunners())
-            {
-                m_playerScore[playerDefinition] = 0;
-            }
         }
 
         void OnEnable()
@@ -53,6 +48,11 @@ namespace Run4YourLife.GameManagement
 
         public void OnAddPoints(PlayerHandle playerDefinition,float points)
         {
+            if(!m_playerScore.ContainsKey(playerDefinition))
+            {
+                m_playerScore.Add(playerDefinition, 0);
+            }
+
             float score = (m_playerScore[playerDefinition] += points);
             m_onPlayerScoreChanged.Invoke(playerDefinition, score);
         }

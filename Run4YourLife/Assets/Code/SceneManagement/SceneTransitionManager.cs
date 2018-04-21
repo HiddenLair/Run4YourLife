@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 namespace Run4YourLife.SceneManagement
 {
-    public class SceneTransitionManager : MonoBehaviour
+    public class SceneTransitionManager : SingletonMonoBehaviour<SceneTransitionManager>
     {
         public void ExecuteRequest(SceneTransitionRequestData data)
         {

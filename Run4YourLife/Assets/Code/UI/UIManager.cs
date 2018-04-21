@@ -137,7 +137,7 @@ namespace Run4YourLife.UI
             scaleTicks.Add(scaleTickTrapX);
             scaleTicks.Add(scaleTickTrapY);
 
-            FindObjectOfType<GameManager>().onGamePhaseChanged.AddListener(x => ConversorTemporal(x));
+            GameManager.Instance.onGamePhaseChanged.AddListener(ConversorTemporal);
         }
 
         public void ConversorTemporal(GamePhase phase)//TODO: REFACTOR THIS

@@ -30,7 +30,7 @@ namespace Run4YourLife.CharacterSelection
             {
                 if(controlScheme.SetAsRunner.Started())
                 {
-                    playerStandsManager.SetAsRunner(this);
+                    PlayerStandsManager.Instance.SetAsRunner(this);
                 }
             }
         }

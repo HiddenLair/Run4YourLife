@@ -10,16 +10,9 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private GamePhase m_nextGamePhase;
 
-        private GameManager gameManager;
-
-        private void Awake()
-        {
-            gameManager = FindObjectOfType<GameManager>();   
-        }
-
         public void Transition()
         {
-            gameManager.EndExecutingPhaseAndStartPhase(m_nextGamePhase);
+            GameManager.Instance.EndExecutingPhaseAndStartPhase(m_nextGamePhase);
         }
     }
 }

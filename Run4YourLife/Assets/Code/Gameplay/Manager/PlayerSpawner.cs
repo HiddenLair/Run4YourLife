@@ -17,17 +17,9 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private Transform m_bossSpawn;
 
-        private GameplayPlayerManager m_gameplayPlayerManager;
-
-        private void Awake()
-        {
-            m_gameplayPlayerManager = FindObjectOfType<GameplayPlayerManager>();
-            Debug.Assert(m_gameplayPlayerManager != null);
-        }
-
         public GameObject[] ActivatePlayers()
         {
-            GameObject[] players = new GameObject[m_gameplayPlayerManager.PlayerCount];
+            GameObject[] players = new GameObject[GameplayPlayerManager.Instance.PlayerCount];
             uint index = 0;
 
             ActivateRunners(players, ref index);
@@ -38,7 +30,7 @@ namespace Run4YourLife.GameManagement
 
         public GameObject[] ActivateRunners()
         {
-            GameObject[] runners = new GameObject[m_gameplayPlayerManager.Runners.Count];
+            GameObject[] runners = new GameObject[GameplayPlayerManager.Instance.Runners.Count];
             uint index = 0;
 
             ActivateRunners(runners, ref index);
@@ -48,16 +40,16 @@ namespace Run4YourLife.GameManagement
 
         private void ActivateRunners(GameObject[] players, ref uint index)
         {
-            foreach (PlayerHandle runnerPlayerDefinition in m_gameplayPlayerManager.RunnerPlayerDefinitions)
+            foreach (PlayerHandle runnerPlayerDefinition in GameplayPlayerManager.Instance.RunnerPlayerHandles)
             {
-                players[index] = m_gameplayPlayerManager.ActivateRunner(runnerPlayerDefinition, m_runnerSpawns[index].position);
+                players[index] = GameplayPlayerManager.Instance.ActivateRunner(runnerPlayerDefinition, m_runnerSpawns[index].position);
                 index++;
             }
         }
 
         public GameObject ActivateBoss()
         {
-            return m_gameplayPlayerManager.ActivateBoss(m_bossGameObjectPhase, m_bossSpawn.position);
+            return GameplayPlayerManager.Instance.ActivateBoss(m_bossGameObjectPhase, m_bossSpawn.position);
         }
     }
 }

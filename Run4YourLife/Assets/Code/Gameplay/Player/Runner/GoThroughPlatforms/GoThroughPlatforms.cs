@@ -4,36 +4,34 @@ using UnityEngine;
 
 using Run4YourLife.Input;
 
-public class GoThroughPlatforms : MonoBehaviour
+namespace Run4YourLife.Player
 {
-    [SerializeField]
-    [Range(-1f,1f)]
-    private float m_inputThreshold = -0.9f;
-
-    private Stats m_runnerState;
-    private Collider m_collider;
-    private RunnerInputStated playerInput;
-    private PlatformGoThroughManager m_platformGoThroughManager;
-
-    private void Awake()
+    [RequireComponent(typeof(Stats))]
+    [RequireComponent(typeof(Collider))]
+    [RequireComponent(typeof(RunnerInputStated))]
+    public class GoThroughPlatforms : MonoBehaviour
     {
-        playerInput = GetComponent<RunnerInputStated>();
+        [SerializeField]
+        [Range(-1f,1f)]
+        private float m_inputThreshold = -0.9f;
 
-        m_runnerState = GetComponent<Stats>();
-        Debug.Assert(m_runnerState != null);
+        private Stats m_runnerState;
+        private Collider m_collider;
+        private RunnerInputStated playerInput;
 
-        m_collider = GetComponent<Collider>();
-        Debug.Assert(m_collider != null);
-
-        m_platformGoThroughManager = FindObjectOfType<PlatformGoThroughManager>();
-        Debug.Assert(m_platformGoThroughManager != null);
-    }
-
-    private void Update()
-    {
-        if (playerInput.GetVerticalInput() < m_inputThreshold)
+        private void Awake()
         {
-            m_platformGoThroughManager.IgnoreCollision(gameObject);
+            playerInput = GetComponent<RunnerInputStated>();
+            m_runnerState = GetComponent<Stats>();
+            m_collider = GetComponent<Collider>();
+        }
+
+        private void Update()
+        {
+            if (playerInput.GetVerticalInput() < m_inputThreshold)
+            {
+                PlatformGoThroughManager.Instance.IgnoreCollision(gameObject);
+            }
         }
     }
 }

@@ -26,16 +26,13 @@ namespace Run4YourLife.Player
                         {
                             Debug.Assert(other.CompareTag(Tags.Runner));
                             Apply(other.gameObject);
-                            PlayerHandle player = other.gameObject.GetComponent<PlayerInstance>().PlayerHandle;
-                            ExecuteEvents.Execute<IScoreEvents>(FindObjectOfType<ScoreManager>().gameObject, null, (x, y) => x.OnAddPoints(player, points));
+                            PlayerHandle player = other.GetComponent<PlayerInstance>().PlayerHandle;
+                            ExecuteEvents.Execute<IScoreEvents>(ScoreManager.InstanceGameObject, null, (x, y) => x.OnAddPoints(player, points));
                         }
                         break;
                     case Type.GROUP:
                         {
-                            GameplayPlayerManager gameplayPlayerManager = FindObjectOfType<GameplayPlayerManager>();
-                            Debug.Assert(gameplayPlayerManager != null);
-
-                            foreach (GameObject runner in gameplayPlayerManager.RunnersAlive)
+                            foreach (GameObject runner in GameplayPlayerManager.Instance.RunnersAlive)
                             {
                                 Apply(runner);
                             }

@@ -5,9 +5,8 @@ using UnityEngine.UI;
 
 namespace Run4YourLife.Player
 {
-    public class UICrossHair : MonoBehaviour
+    public class UICrossHair : SingletonMonoBehaviour<UICrossHair>
     {
-
         #region Inspector
 
         [SerializeField]

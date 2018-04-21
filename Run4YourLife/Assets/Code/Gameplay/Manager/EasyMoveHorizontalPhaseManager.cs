@@ -24,7 +24,6 @@ namespace Run4YourLife.GameManagement
         #region Member variables
 
         private PlayerSpawner m_playerSpawner;
-        private GameplayPlayerManager m_gameplayPlayerManager;
 
         #endregion
 
@@ -34,9 +33,6 @@ namespace Run4YourLife.GameManagement
         {
             m_playerSpawner = GetComponent<PlayerSpawner>();
             Debug.Assert(m_playerSpawner != null);
-
-            m_gameplayPlayerManager = FindObjectOfType<GameplayPlayerManager>();
-            Debug.Assert(m_gameplayPlayerManager != null);
 
             RegisterPhase(GamePhase.EasyMoveHorizontal);
         }
@@ -52,7 +48,7 @@ namespace Run4YourLife.GameManagement
 
         void StartPhaseCommon()
         {
-            GameObject boss = m_gameplayPlayerManager.Boss;
+            GameObject boss = GameplayPlayerManager.Instance.Boss;
             Debug.Assert(boss != null);
 
             m_virtualCamera.Follow = boss.transform;
@@ -88,7 +84,7 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugEndPhase()
         {
-            m_gameplayPlayerManager.DebugClearAllPlayers();
+            GameplayPlayerManager.Instance.DebugClearAllPlayers();
             EndPhaseCommon();
         }
 

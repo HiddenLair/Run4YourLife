@@ -5,7 +5,7 @@ using Run4YourLife.Player;
 
 namespace Run4YourLife.CharacterSelection
 {
-    public class PlayerStandsManager : MonoBehaviour
+    public class PlayerStandsManager : SingletonMonoBehaviour<PlayerStandsManager>
     {
         [SerializeField]
         private BossStandController bossStandController;
@@ -13,21 +13,12 @@ namespace Run4YourLife.CharacterSelection
         [SerializeField]
         private RunnerStandController[] runnerStandControllers;
 
-        private PlayerManager playerManager;
-        private CharacterSelectionManager characterSelectionManager;
-
         private bool ready = true;
         private bool gameHasStarted = false;
 
-        void Awake()
+        private void Start()
         {
-            playerManager = FindObjectOfType<PlayerManager>();
-            Debug.Assert(playerManager != null);
-
-            characterSelectionManager = FindObjectOfType<CharacterSelectionManager>();
-            Debug.Assert(characterSelectionManager != null);
-
-            playerManager.OnPlayerChanged.AddListener(OnPlayerChanged);
+            PlayerManager.Instance.OnPlayerChanged.AddListener(OnPlayerChanged);
         }
 
         void Update()
@@ -116,7 +107,7 @@ namespace Run4YourLife.CharacterSelection
 
             if(bossStandController.GetPlayerDefinition() == null)
             {
-                playerManager.SetPlayerAsBoss(runnerStandController.GetPlayerDefinition());
+                PlayerManager.Instance.SetPlayerAsBoss(runnerStandController.GetPlayerDefinition());
             }
         }
 
@@ -125,12 +116,12 @@ namespace Run4YourLife.CharacterSelection
             if(!ready) return;
             ready = false;
 
-            playerManager.SetPlayerAsRunner(bossStandController.GetPlayerDefinition());
+            PlayerManager.Instance.SetPlayerAsRunner(bossStandController.GetPlayerDefinition());
         }
 
         public void GoMainMenu()
         {
-            characterSelectionManager.OnMainMenuStart();
+            CharacterSelectionManager.Instance.OnMainMenuStart();
         }
 
         private bool CheckGoGame()
@@ -178,7 +169,7 @@ namespace Run4YourLife.CharacterSelection
         private void GoGame()
         {
             gameHasStarted = true;
-            characterSelectionManager.OnGameStart();
+            CharacterSelectionManager.Instance.OnGameStart();
         }
 
         #endregion

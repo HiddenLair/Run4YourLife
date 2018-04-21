@@ -38,7 +38,6 @@ namespace Run4YourLife.GameManagement
 
         #region Member variables
 
-        private GameplayPlayerManager m_gameplayPlayerManager;
         private PlayerSpawner m_playerSpawner;
 
         private GameObject m_uiManager;
@@ -52,9 +51,6 @@ namespace Run4YourLife.GameManagement
         {
             m_playerSpawner = GetComponent<PlayerSpawner>();
             Debug.Assert(m_playerSpawner != null);
-
-            m_gameplayPlayerManager = FindObjectOfType<GameplayPlayerManager>();
-            Debug.Assert(m_gameplayPlayerManager != null);
 
             m_uiManager = GameObject.FindGameObjectWithTag(Tags.UI);
 
@@ -73,7 +69,7 @@ namespace Run4YourLife.GameManagement
 
         void StartPhaseCommon()
         {
-            GameObject boss = m_gameplayPlayerManager.Boss;
+            GameObject boss = GameplayPlayerManager.Instance.Boss;
             m_virtualCamera.Follow = boss.transform;
             m_virtualCamera.LookAt = boss.transform;
             m_virtualCamera.gameObject.SetActive(true);
@@ -88,20 +84,20 @@ namespace Run4YourLife.GameManagement
 
         private void MoveRunners()
         {
-            for (int i = 0; i < m_gameplayPlayerManager.Runners.Count; i++)
+            for (int i = 0; i < GameplayPlayerManager.Instance.Runners.Count; i++)
             {
-                m_gameplayPlayerManager.Runners[i].transform.position = phase2Spawns[i].position;
+                GameplayPlayerManager.Instance.Runners[i].transform.position = phase2Spawns[i].position;
             }
         }
 
         private void StartNextPhase()
         {
-            FindObjectOfType<GameManager>().EndExecutingPhaseAndStartPhase(GamePhase.BossFightRockTransition);
+            GameManager.Instance.EndExecutingPhaseAndStartPhase(GamePhase.BossFightRockTransition);
         }
 
         public override void EndPhase()
         {
-            GameObject boss = m_gameplayPlayerManager.Boss;
+            GameObject boss = GameplayPlayerManager.Instance.Boss;
             Destroy(boss);
 
             EndPhaseCommon();
@@ -130,7 +126,7 @@ namespace Run4YourLife.GameManagement
         {
             StopAllCoroutines();
 
-            m_gameplayPlayerManager.DebugClearAllPlayers();
+            GameplayPlayerManager.Instance.DebugClearAllPlayers();
 
             EndPhaseCommon();
         }

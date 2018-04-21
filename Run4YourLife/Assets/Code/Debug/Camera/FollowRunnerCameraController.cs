@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 using Run4YourLife.Player;
+using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.DebuggingTools
 {
@@ -14,15 +15,14 @@ namespace Run4YourLife.DebuggingTools
         {
             GUILayout.BeginHorizontal();
 
-            foreach(PlayerInstance playerInstance in FindObjectsOfType<PlayerInstance>())
+            foreach(GameObject runner in GameplayPlayerManager.Instance.RunnersAlive)
             {
-                PlayerHandle playerDefinition = playerInstance.PlayerHandle;
-
-                if(!playerDefinition.IsBoss)
+                PlayerHandle runnerHandle = runner.GetComponent<PlayerInstance>().PlayerHandle;
+                if(!runnerHandle.IsBoss)
                 {
-                    if(GUILayout.Button("Runner " + playerDefinition.ID))
+                    if(GUILayout.Button("Runner " + runnerHandle.ID))
                     {
-                        Follow(playerInstance.gameObject);
+                        Follow(runner);
                     }
                 }
             }

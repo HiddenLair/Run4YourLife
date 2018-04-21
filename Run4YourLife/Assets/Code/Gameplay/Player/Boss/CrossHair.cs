@@ -20,25 +20,16 @@ namespace Run4YourLife.Player
         #region Variables
         private bool active = true;
         private bool triggering = false;
-        private UICrossHair uICrossHair;
         #endregion
-
-        private void Awake()
-        {
-            uICrossHair = FindObjectOfType<UICrossHair>();
-            Debug.Assert(uICrossHair != null);
-
-            
-        }
 
         private void OnEnable()
         {
-            uICrossHair.SubscribeWorldCrossHair(gameObject);
+            UICrossHair.Instance.SubscribeWorldCrossHair(gameObject);
         }
 
         private void OnDisable()
         {
-            uICrossHair.UnsubscribeWorldCrossHair(gameObject);
+            UICrossHair.Instance.UnsubscribeWorldCrossHair(gameObject);
         }
 
         private void Update()

@@ -833,11 +833,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b54b125ffc0a6ec46b3f2eecc0eff95c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneLoadRequestData:
+  m_loadEvent: 0
+  m_sceneLoadRequestData:
     loadScene: 1
     sceneName: OptionsMenu
     loadSceneMode: 1
-    loadEvent: 0
     setLoadedSceneAsActiveScene: 1
     unloadScene: 0
     unloadedSceneName: 
@@ -2198,11 +2198,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b54b125ffc0a6ec46b3f2eecc0eff95c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneLoadRequestData:
+  m_loadEvent: 0
+  m_sceneLoadRequestData:
     loadScene: 1
     sceneName: CharacterSelection
     loadSceneMode: 0
-    loadEvent: 0
     setLoadedSceneAsActiveScene: 1
     unloadScene: 0
     unloadedSceneName: 
@@ -4424,6 +4424,10 @@ Prefab:
     - target: {fileID: 4119140015825398, guid: 1ae433a6975db1540a7375beaa733738, type: 2}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1454794731801270, guid: 1ae433a6975db1540a7375beaa733738, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1ae433a6975db1540a7375beaa733738, type: 2}

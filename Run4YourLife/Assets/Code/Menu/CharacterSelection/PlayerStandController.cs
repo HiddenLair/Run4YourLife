@@ -7,21 +7,6 @@ namespace Run4YourLife.CharacterSelection
 {
     public abstract class PlayerStandController : MonoBehaviour, IPlayerHandleEvent
     {
-        #region References
-
-        protected PlayerStandsManager playerStandsManager;
-        protected PlayerHandle playerDefinition;
-        protected PlayerManager playerManager;
-        protected PlayerStandControllerControlScheme controlScheme;
-
-        #endregion
-
-        #region Stands
-
-        protected GameObject activeStand;
-
-        #endregion
-
         [SerializeField]
         protected GameObject ui;
 
@@ -38,14 +23,21 @@ namespace Run4YourLife.CharacterSelection
 
         protected float rotationY = 0.0f;
 
+        #region Stands
+
+        protected GameObject activeStand;
+
+        #endregion
+
+        #region References
+
+        protected PlayerHandle playerDefinition;
+        protected PlayerStandControllerControlScheme controlScheme;
+
+        #endregion
+
         void Awake()
         {
-            playerStandsManager = FindObjectOfType<PlayerStandsManager>();
-            Debug.Assert(playerStandsManager != null);
-
-            playerManager = FindObjectOfType<PlayerManager>();
-            Debug.Assert(playerManager != null);
-
             controlScheme = GetComponent<PlayerStandControllerControlScheme>();
             Debug.Assert(controlScheme != null);
 
@@ -137,7 +129,7 @@ namespace Run4YourLife.CharacterSelection
             }
             else if(controlScheme.Exit.Started())
             {
-                playerStandsManager.GoMainMenu();
+                PlayerStandsManager.Instance.GoMainMenu();
             }
             else if(Mathf.Abs(controlScheme.Rotate.Value()) > 0.5f)
             {

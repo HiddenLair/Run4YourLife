@@ -8,10 +8,8 @@ using Run4YourLife.SceneManagement;
 namespace Run4YourLife.CharacterSelection
 {
     [RequireComponent(typeof(ControllerDetector))]
-    public class CharacterSelectionManager : MonoBehaviour
+    public class CharacterSelectionManager : SingletonMonoBehaviour<CharacterSelectionManager>
     {
-        private PlayerManager m_playerManager;
-
         [SerializeField]
         private GameObject m_gameLoadRequest;
 
@@ -20,9 +18,6 @@ namespace Run4YourLife.CharacterSelection
 
         void Awake()
         {
-            m_playerManager = Component.FindObjectOfType<PlayerManager>();
-            Debug.Assert(m_playerManager != null);
-
             ControllerDetector controllerDetector = GetComponent<ControllerDetector>();
             Debug.Assert(controllerDetector != null);
             controllerDetector.OncontrollerDetected.AddListener(OnControllerDetected);
@@ -30,12 +25,12 @@ namespace Run4YourLife.CharacterSelection
 
         private void Start()
         {
-            m_playerManager.ClearPlayers();
+            PlayerManager.Instance.ClearPlayers();
         }
 
         public void OnControllerDetected(InputDevice controller)
         {
-            if(m_playerManager.GetPlayers().Count < 4)
+            if(PlayerManager.Instance.GetPlayers().Count < 4)
             {
                 CreatePlayerForController(controller);
             }
@@ -46,14 +41,14 @@ namespace Run4YourLife.CharacterSelection
             PlayerHandle playerDefinition = new PlayerHandle();
 
             playerDefinition.inputDevice = inputDevice;
-            if(m_playerManager.GetPlayers().Count == 0)
+            if(PlayerManager.Instance.GetPlayers().Count == 0)
             {
-                m_playerManager.SetPlayerAsBoss(playerDefinition);
+                PlayerManager.Instance.SetPlayerAsBoss(playerDefinition);
             }
             playerDefinition.CharacterType = GetFirstAviablePlayerCharacterType();
             playerDefinition.ID = inputDevice.ID;
 
-            m_playerManager.AddPlayer(playerDefinition);
+            PlayerManager.Instance.AddPlayer(playerDefinition);
         }
 
         private CharacterType GetFirstAviablePlayerCharacterType()
@@ -72,7 +67,7 @@ namespace Run4YourLife.CharacterSelection
 
         private bool PlayerHasCharacterType(CharacterType characterType)
         {
-            foreach(PlayerHandle player in m_playerManager.GetPlayers())
+            foreach(PlayerHandle player in PlayerManager.Instance.GetPlayers())
             {
                 if(player.CharacterType.Equals(characterType))
                 {

@@ -9,13 +9,10 @@ public class DisableByBossProximity : MonoBehaviour,IActivateByRender {
     private static readonly float DISTANCE_FROM_BOSSS_TO_DESTROY = 2.0f;
     private static readonly float ALPHA_TRANSITION_LENGHT = 0.5f;
 
-    GameplayPlayerManager m_playerManager;
-    Renderer m_renderer;
+    private Renderer m_renderer;
 
     private void Awake()
     {
-        m_playerManager = FindObjectOfType<GameplayPlayerManager>();
-        Debug.Assert(m_playerManager != null);
         m_renderer = GetComponentInChildren<Renderer>();
 
         enabled = false;
@@ -23,7 +20,7 @@ public class DisableByBossProximity : MonoBehaviour,IActivateByRender {
 
     private void Update()
     {
-        if (m_playerManager.Boss != null)
+        if (GameplayPlayerManager.Instance.Boss != null)
         {
             if (GetHorizontalDistanceToBoss() < DISTANCE_FROM_BOSSS_TO_DESTROY)
             {
@@ -36,7 +33,7 @@ public class DisableByBossProximity : MonoBehaviour,IActivateByRender {
     private float GetHorizontalDistanceToBoss()
     {
         float itemPosition = transform.position.x - (m_renderer.bounds.size.x / 2.0f);
-        float bossPosition = m_playerManager.Boss.transform.position.x;
+        float bossPosition = GameplayPlayerManager.Instance.Boss.transform.position.x;
         return itemPosition - bossPosition;
     }
 

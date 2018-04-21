@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using Run4YourLife.Player;
+using Run4YourLife.Input;
 
 namespace Run4YourLife.GameManagement {
     public interface IGameplayPlayerEvents : IEventSystemHandler
@@ -14,7 +15,7 @@ namespace Run4YourLife.GameManagement {
 
     [RequireComponent(typeof(GameManager))]
     [RequireComponent(typeof(RunnerPrefabManager))]
-    public class GameplayPlayerManager : MonoBehaviour, IGameplayPlayerEvents {
+    public class GameplayPlayerManager : SingletonMonoBehaviour<GameplayPlayerManager>, IGameplayPlayerEvents {
 
         #region Editor
 
@@ -44,7 +45,7 @@ namespace Run4YourLife.GameManagement {
         public Dictionary<PlayerHandle, GameObject> RunnerGameObject { get { return m_runnerGameObject; } }
 
         public PlayerHandle BossPlayerDefinition { get { return m_bossPlayerDefinition; } }
-        public List<PlayerHandle> RunnerPlayerDefinitions { get { return m_runnerPlayerDefinitions; } }
+        public List<PlayerHandle> RunnerPlayerHandles { get { return m_runnerPlayerDefinitions; } }
         public int PlayerCount { get { return m_runnerPlayerDefinitions.Count + 1; } }
 
         #endregion
@@ -76,55 +77,21 @@ namespace Run4YourLife.GameManagement {
             gameManager.onGamePhaseChanged.AddListener(OnGamePhaseChanged);
 
             m_runnerPrefabManager = GetComponent<RunnerPrefabManager>();
+        }
 
-            m_playerManager = GetOrCreateDefaultPlayerManagerIfNoneIsAviable();
+        private void Start()
+        {
             InitializePlayers();
         }
 
-        private PlayerManager GetOrCreateDefaultPlayerManagerIfNoneIsAviable()
-        {
-            //TODO if no playermanager is found, create default player manager
-            //useful for debug opening the scene+
-            PlayerManager playerManager = FindObjectOfType<PlayerManager>();
-            if (playerManager == null)
-            {
-                playerManager = gameObject.AddComponent<PlayerManager>();
-                playerManager.AddPlayer(new PlayerHandle()
-                {
-                    CharacterType = CharacterType.Purple,
-                    ID = 1,
-                    inputDevice = new Input.InputDevice(1),
-                    IsBoss = false
-                });
-                playerManager.AddPlayer(new PlayerHandle()
-                {
-                    CharacterType = CharacterType.Green,
-                    ID = 2,
-                    inputDevice = new Input.InputDevice(2),
-                    IsBoss = true
-                });
-                playerManager.AddPlayer(new PlayerHandle()
-                {
-                    CharacterType = CharacterType.Orange,
-                    ID = 3,
-                    inputDevice = new Input.InputDevice(3),
-                    IsBoss = false
-                });
-                playerManager.AddPlayer(new PlayerHandle()
-                {
-                    CharacterType = CharacterType.Green,
-                    ID = 4,
-                    inputDevice = new Input.InputDevice(4),
-                    IsBoss = false
-                });
-            }
-            return playerManager;
-        }
-
-
         private void InitializePlayers()
         {
-            foreach (PlayerHandle playerDefinition in m_playerManager.GetPlayers())
+            if(PlayerManager.Instance.GetPlayers().Count == 0)
+            {
+                CreateDebugPlayers();
+            }
+
+            foreach (PlayerHandle playerDefinition in PlayerManager.Instance.GetPlayers())
             {
                 if(playerDefinition.IsBoss)
                 {
@@ -133,6 +100,44 @@ namespace Run4YourLife.GameManagement {
                 {
                     InitializeRunner(playerDefinition);
                 }
+            }
+        }
+
+        private void CreateDebugPlayers()
+        {
+            Debug.Log("Creating debug player handles for game");
+
+            PlayerHandle[] playerHandles = new PlayerHandle[]
+            {
+                new PlayerHandle() {
+                    CharacterType = CharacterType.Purple,
+                    ID = 1,
+                    inputDevice = InputDeviceManager.Instance.InputDevices[1],
+                    IsBoss = false
+                },
+                new PlayerHandle() {
+                    CharacterType = CharacterType.Green,
+                    ID = 2,
+                    inputDevice = InputDeviceManager.Instance.InputDevices[0],
+                    IsBoss = true
+                },
+                new PlayerHandle() {
+                    CharacterType = CharacterType.Orange,
+                    ID = 3,
+                    inputDevice = InputDeviceManager.Instance.InputDevices[2],
+                    IsBoss = false
+                },
+                new PlayerHandle() {
+                    CharacterType = CharacterType.Green,
+                    ID = 4,
+                    inputDevice = InputDeviceManager.Instance.InputDevices[3],
+                    IsBoss = false
+                }
+            };
+
+            foreach (PlayerHandle playerHandle in playerHandles)
+            {
+                PlayerManager.Instance.AddPlayer(playerHandle);
             }
         }
 

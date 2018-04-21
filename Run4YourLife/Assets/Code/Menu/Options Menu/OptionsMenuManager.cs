@@ -13,11 +13,9 @@ namespace Run4YourLife.OptionsMenu
     public class OptionsMenuManager : MonoBehaviour
     {
         [SerializeField]
-        private SceneTransitionRequest m_mainMenuLoadRequest;
+        private SceneTransitionRequest m_unloadOptionsMenu;
 
         private ExitButtonControlScheme exitScheme;
-
-        private bool exitRequest = false;
 
         private void Awake()
         {
@@ -26,18 +24,16 @@ namespace Run4YourLife.OptionsMenu
 
         private void Start()
         {
-            exitScheme.InputDevice = new InputDevice(0);
+            exitScheme.InputDevice = new InputDevice(0); //TODO use inputDeviceManager.DefaultInputDevice instead
             exitScheme.Active = true;
             EventSystem.current.firstSelectedGameObject.GetComponent<ISelectHandler>().OnSelect(null);
         }
 
         private void Update()
         {
-            exitRequest = exitScheme.exitAction.Started();
-
-            if(exitRequest)
+            if(exitScheme.exitAction.Started())
             {
-                m_mainMenuLoadRequest.Execute();
+                m_unloadOptionsMenu.Execute();
             }
         }
     }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using Run4YourLife.Player;
 using Run4YourLife.GameManagement;
+using Run4YourLife.Input;
 
 namespace Run4YourLife.WinMenu
 {
@@ -33,28 +34,27 @@ namespace Run4YourLife.WinMenu
         void Awake()
         {
             runnerPrefabManager = GetComponent<RunnerPrefabManager>();
-
-            //SetUpFakePlayers(3); // TEST
-            //SetUpFakeScores(); // TEST
             SpawnRunners();
+        }
+
+        private void Start()
+        {
+            if(PlayerManager.Instance.GetPlayers().Count == 0)
+            {
+                SetUpFakePlayers(3);
+                SetUpFakeScores();
+            }
         }
 
         private void SetUpFakePlayers(uint numRunners)
         {
-            PlayerManager playerManager = FindObjectOfType<PlayerManager>();
-
-            if(playerManager == null)
-            {
-                playerManager = gameObject.AddComponent<PlayerManager>();
-            }
-
             for(uint i = 0; i < numRunners; ++i)
             {
-                playerManager.AddPlayer(new PlayerHandle()
+                PlayerManager.Instance.AddPlayer(new PlayerHandle()
                 {
                     CharacterType = (CharacterType)i,
                     ID = i + 1,
-                    inputDevice = new Input.InputDevice(i + 1),
+                    inputDevice = InputDeviceManager.Instance.InputDevices[(int)i],
                     IsBoss = false
                 });
             }
@@ -62,31 +62,21 @@ namespace Run4YourLife.WinMenu
 
         private void SetUpFakeScores()
         {
-            ScoreManager scoreManager = FindObjectOfType<ScoreManager>();
+            ScoreManager.Instance.Initialize();
 
-            if(scoreManager == null)
+            foreach(PlayerHandle playerDefinition in PlayerManager.Instance.GetRunners())
             {
-                scoreManager = gameObject.AddComponent<ScoreManager>();
-            }
-
-            scoreManager.Initialize();
-
-            foreach(PlayerHandle playerDefinition in FindObjectOfType<PlayerManager>().GetRunners())
-            {
-                scoreManager.OnAddPoints(playerDefinition, Random.Range(0.0f, 50.0f));
+                ScoreManager.Instance.OnAddPoints(playerDefinition, Random.Range(0.0f, 50.0f));
             }
         }
 
         private void SpawnRunners()
         {
-            ScoreManager scoreManager = FindObjectOfType<ScoreManager>();
-            PlayerManager playerManager = FindObjectOfType<PlayerManager>();
-
             List<KeyValuePair<float, PlayerHandle>> points = new List<KeyValuePair<float, PlayerHandle>>();
 
-            foreach(PlayerHandle playerDefinition in playerManager.GetRunners())
+            foreach(PlayerHandle playerDefinition in PlayerManager.Instance.GetRunners())
             {
-                points.Add(new KeyValuePair<float, PlayerHandle>(scoreManager.GetPointsByPlayerDefinition(playerDefinition), playerDefinition));
+                points.Add(new KeyValuePair<float, PlayerHandle>(ScoreManager.Instance.GetPointsByPlayerDefinition(playerDefinition), playerDefinition));
             }
 
             points.Sort((a, b) => b.Key.CompareTo(a.Key));

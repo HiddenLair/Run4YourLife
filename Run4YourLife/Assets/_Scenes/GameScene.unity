@@ -532,7 +532,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &63136160
 Transform:
@@ -1468,7 +1468,6 @@ GameObject:
   - component: {fileID: 168087532}
   - component: {fileID: 168087531}
   - component: {fileID: 168087530}
-  - component: {fileID: 168087529}
   - component: {fileID: 168087528}
   - component: {fileID: 168087533}
   - component: {fileID: 168087534}
@@ -1532,25 +1531,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bd39dc4f6f1935409dbf9adbb46da59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &168087529
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 168087525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b54b125ffc0a6ec46b3f2eecc0eff95c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneLoadRequestData:
-    loadScene: 1
-    sceneName: BossWinsMenu
-    loadSceneMode: 0
-    loadEvent: 0
-    setLoadedSceneAsActiveScene: 1
-    unloadScene: 0
-    unloadedSceneName: 
 --- !u!114 &168087530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1617,7 +1597,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Run4YourLife.GameManagement.GamePhaseEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  bossWin: {fileID: 168087529}
+  m_loadBossWinsMenu: {fileID: 1915366743}
 --- !u!114 &168087533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2351,7 +2331,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &278857718
 Transform:
@@ -3569,7 +3549,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &440002490
 Transform:
@@ -3595,12 +3575,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b54b125ffc0a6ec46b3f2eecc0eff95c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneLoadRequestData:
+  m_loadEvent: 0
+  m_sceneLoadRequestData:
     loadScene: 0
     sceneName: 
-    loadSceneMode: 1
-    loadEvent: 0
-    setLoadedSceneAsActiveScene: 1
+    loadSceneMode: 0
+    setLoadedSceneAsActiveScene: 0
     unloadScene: 1
     unloadedSceneName: PauseMenu
 --- !u!1001 &445028746
@@ -7642,6 +7622,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1454794731801270, guid: 1ae433a6975db1540a7375beaa733738, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1ae433a6975db1540a7375beaa733738, type: 2}
   m_IsPrefabParent: 0
@@ -8526,7 +8510,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &981402711
 Transform:
@@ -10063,7 +10047,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1132782364
 Transform:
@@ -10077,6 +10061,7 @@ Transform:
   m_Children:
   - {fileID: 1937127592}
   - {fileID: 440002490}
+  - {fileID: 1915366742}
   m_Father: {fileID: 618985662}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12518,7 +12503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e48dbd855fff8e6489f2e3912b92803a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_offsetFromTarget: {x: -1.987042, y: -0.5, z: 0}
+  m_offsetFromTarget: {x: -1.947749, y: -0.5, z: 0}
   m_verticalHeight: 10
   m_screenX: 0
   m_screenY: 1
@@ -15807,32 +15792,9 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114306253467069694, guid: a32fa57db87ccde49962d609812f0a5f, type: 2}
+    - {fileID: 114632144096049040, guid: a32fa57db87ccde49962d609812f0a5f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: a32fa57db87ccde49962d609812f0a5f, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1662970080 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1607582914678852, guid: a32fa57db87ccde49962d609812f0a5f,
-    type: 2}
-  m_PrefabInternal: {fileID: 1662970079}
---- !u!224 &1662970081 stripped
-RectTransform:
-  m_PrefabParentObject: {fileID: 224900194833445934, guid: a32fa57db87ccde49962d609812f0a5f,
-    type: 2}
-  m_PrefabInternal: {fileID: 1662970079}
---- !u!114 &1662970082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1662970080}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bea8ff2fffbe0a4283385f595b8eb41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  crossHairUi: {fileID: 1662970081}
-  enabledColor: {r: 1, g: 1, b: 1, a: 1}
-  disabledColor: {r: 0.49264705, g: 0.49264705, b: 0.49264705, a: 1}
 --- !u!1 &1662970083 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1929708684072834, guid: a32fa57db87ccde49962d609812f0a5f,
@@ -18033,7 +17995,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1893499345
 Transform:
@@ -18351,6 +18313,54 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ed100ab12e096854ea85d5c391bde264, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1915366741
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1915366742}
+  - component: {fileID: 1915366743}
+  m_Layer: 0
+  m_Name: BossWinLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &1915366742
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1915366741}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1132782364}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1915366743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1915366741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b54b125ffc0a6ec46b3f2eecc0eff95c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_loadEvent: 0
+  m_sceneLoadRequestData:
+    loadScene: 1
+    sceneName: BossWinsMenu
+    loadSceneMode: 0
+    setLoadedSceneAsActiveScene: 1
+    unloadScene: 0
+    unloadedSceneName: 
 --- !u!1001 &1919801513
 Prefab:
   m_ObjectHideFlags: 0
@@ -18558,7 +18568,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1937127592
 Transform:
@@ -18584,11 +18594,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b54b125ffc0a6ec46b3f2eecc0eff95c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneLoadRequestData:
+  m_loadEvent: 0
+  m_sceneLoadRequestData:
     loadScene: 1
     sceneName: PauseMenu
     loadSceneMode: 1
-    loadEvent: 0
     setLoadedSceneAsActiveScene: 1
     unloadScene: 0
     unloadedSceneName: 
@@ -19577,11 +19587,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b54b125ffc0a6ec46b3f2eecc0eff95c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneLoadRequestData:
+  m_loadEvent: 0
+  m_sceneLoadRequestData:
     loadScene: 1
     sceneName: RunnersWinMenu
     loadSceneMode: 0
-    loadEvent: 0
     setLoadedSceneAsActiveScene: 1
     unloadScene: 0
     unloadedSceneName: 

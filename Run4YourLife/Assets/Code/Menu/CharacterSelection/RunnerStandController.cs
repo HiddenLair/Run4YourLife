@@ -48,7 +48,7 @@ namespace Run4YourLife.CharacterSelection
                 }
                 else if(controlScheme.SetAsBoss.Started())
                 {
-                    playerStandsManager.SetAsBoss(this);
+                    PlayerStandsManager.Instance.SetAsBoss(this);
                 }
             }
         }

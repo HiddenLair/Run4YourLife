@@ -23,43 +23,6 @@ public class CheckPointManager : MonoBehaviour {
         }
     }
 
-    /*private static CheckPointManager instance;
-
-    public static CheckPointManager Instance()
-    {
-        if (instance == null)
-        {
-            instance = (CheckPointManager)FindObjectOfType(typeof(CheckPointManager));
-
-            if (FindObjectsOfType(typeof(CheckPointManager)).Length > 1)
-            {
-                Debug.LogError("[Singleton] Something went really wrong " +
-                    " - there should never be more than 1 singleton!" +
-                    " Reopenning the scene might fix it.");
-                return instance;
-            }
-
-            if (instance == null)
-            {
-                GameObject singleton = new GameObject();
-                instance = singleton.AddComponent<CheckPointManager>();
-                singleton.name = "(singleton) " + typeof(CheckPointManager).ToString();
-
-                DontDestroyOnLoad(singleton);
-
-                Debug.Log("[Singleton] An instance of " + typeof(CheckPointManager) +
-                    " is needed in the scene, so '" + singleton +
-                    "' was created with DontDestroyOnLoad.");
-            }
-        }
-        return instance;
-    }
-
-    void Awake()
-    {
-        instance = this;
-    }*/
-
     public int Subscribe()
     {
         int ret = idSetter;

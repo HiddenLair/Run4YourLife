@@ -11,7 +11,6 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private PlayableDirector m_startingCutscene;
 
-        private GameManager m_gameManager;
         private PlayerSpawner m_playerSpawner;
 
         private Coroutine m_startPhaseCoroutine;
@@ -20,9 +19,6 @@ namespace Run4YourLife.GameManagement
 
         private void Awake()
         {
-            m_gameManager = FindObjectOfType<GameManager>();
-            Debug.Assert(m_gameManager != null);
-
             m_playerSpawner = GetComponent<PlayerSpawner>();
             Debug.Assert(m_playerSpawner != null);
 
@@ -43,7 +39,7 @@ namespace Run4YourLife.GameManagement
             //yield return new WaitUntil(() => m_startingCutscene.state != PlayState.Playing); // wait until cutscene has completed
             m_playerSpawner.ActivateBoss();
             yield return null;
-            m_gameManager.EndExecutingPhaseAndStartPhase(GamePhase.EasyMoveHorizontal);
+            GameManager.Instance.EndExecutingPhaseAndStartPhase(GamePhase.EasyMoveHorizontal);
         }
 
         public override void EndPhase()

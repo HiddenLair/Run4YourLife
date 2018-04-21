@@ -10,21 +10,13 @@ public class Revive : MonoBehaviour {
     [SerializeField]
     private float points;
 
-    private GameplayPlayerManager m_gameplayPlayerManager;
-
-    private void Awake()
-    {
-        m_gameplayPlayerManager = FindObjectOfType<GameplayPlayerManager>();
-        Debug.Assert(m_gameplayPlayerManager);
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag(Tags.Runner))
         {
-            PlayerHandle player = other.gameObject.GetComponent<PlayerInstance>().PlayerHandle;
-            ExecuteEvents.Execute<IScoreEvents>(FindObjectOfType<ScoreManager>().gameObject, null, (x, y) => x.OnAddPoints(player, points));
-            ExecuteEvents.Execute<IGameplayPlayerEvents>(m_gameplayPlayerManager.gameObject, null, (x, y) => x.OnRunnerReviveRequest(transform.position));
+            PlayerHandle playerHandle = other.gameObject.GetComponent<PlayerInstance>().PlayerHandle;
+            ExecuteEvents.Execute<IScoreEvents>(ScoreManager.InstanceGameObject, null, (x, y) => x.OnAddPoints(playerHandle, points));
+            ExecuteEvents.Execute<IGameplayPlayerEvents>(GameplayPlayerManager.InstanceGameObject, null, (x, y) => x.OnRunnerReviveRequest(transform.position));
             Destroy(gameObject);
         }
     }

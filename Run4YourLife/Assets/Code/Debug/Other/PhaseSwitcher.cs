@@ -7,8 +7,6 @@ namespace Run4YourLife.DebuggingTools
 {
     public class PhaseSwitcher : DebugFeature
     {
-        private GameManager gameManager = null;
-
         public override void OnDrawGUI()
         {
             GUILayout.BeginHorizontal();
@@ -29,14 +27,9 @@ namespace Run4YourLife.DebuggingTools
             GUILayout.EndHorizontal();
         }
 
-        void Awake()
-        {
-            gameManager = FindObjectOfType<GameManager>();
-        }
-
         private void GoPhase(GamePhase gamePhase)
         {
-            StartCoroutine(YieldHelper.SkipFrame(gameManager.DebugEndExecutingPhaseAndDebugStartPhase, gamePhase));
+            StartCoroutine(YieldHelper.SkipFrame(GameManager.Instance.DebugEndExecutingPhaseAndDebugStartPhase, gamePhase));
         }
     }
 }
