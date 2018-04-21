@@ -42,11 +42,4 @@ public class ChangeRigidBodyOnCollision : MonoBehaviour {
         body.useGravity = gravity;
         body.isKinematic = kinematic;
     }
-
-    /* IEnumerator ChangeDelayed()
-    {
-        yield return new WaitForSeconds(delayActivation);
-        body.useGravity = gravity;
-        body.isKinematic = kinematic;
-    } */
 }
