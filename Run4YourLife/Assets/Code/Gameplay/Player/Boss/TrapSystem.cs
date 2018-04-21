@@ -97,7 +97,6 @@ namespace Run4YourLife.Player
         void Update()
         {
             Move();
-            CheckForScreenLimits();
 
             if (ready.Get() && crossHair.GetComponent<CrossHair>().GetActive()) {
                 CheckToSetElement();
@@ -120,72 +119,22 @@ namespace Run4YourLife.Player
         void Move()
         {
             float xInput = bossControlScheme.MoveTrapIndicatorHorizontal.Value();
-            if(Mathf.Abs(xInput) >= crossHairSensivility)
-            {
-                if(xInput > 0)
-                {
-                    Vector3 temPos = crossHair.transform.position;
-                    temPos.x += crossHairSpeed * Time.deltaTime;
-                    crossHair.transform.position = temPos;
-                }
-                else
-                {
-                    Vector3 temPos = crossHair.transform.position;
-                    temPos.x -= crossHairSpeed * Time.deltaTime;
-                    crossHair.transform.position = temPos;
-                }
-            }
-
             float yInput = bossControlScheme.MoveTrapIndicatorVertical.Value();
-            if(Mathf.Abs(yInput) >= crossHairSensivility)
-            {
-                if(yInput > 0)
-                {
-                    Vector3 temPos = crossHair.transform.position;
-                    temPos.y += crossHairSpeed * Time.deltaTime;
-                    crossHair.transform.position = temPos;
-                }
-                else
-                {
-                    Vector3 temPos = crossHair.transform.position;
-                    temPos.y -= crossHairSpeed * Time.deltaTime;
-                    crossHair.transform.position = temPos;
-                }
-            }
+            Vector3 input = new Vector3(xInput, yInput);
+
+            crossHair.transform.Translate(input * crossHairSpeed * Time.deltaTime);
+            ClampPositionInsideScreen();
         }
 
-        void CheckForScreenLimits()
+        void ClampPositionInsideScreen()
         {
-
             Vector2 screenTopRight = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, Mathf.Abs(Camera.main.transform.position.z - crossHair.transform.position.z)));
             Vector2 screenBottomLeft = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth * screenLeftLimitPercentaje, Camera.main.pixelHeight * screenBottomLimitPercentaje, Mathf.Abs(Camera.main.transform.position.z - crossHair.transform.position.z)));
 
-            //Horizontal
-            if (crossHair.transform.position.x > screenTopRight.x)
-            {
-                Vector3 tempPos = crossHair.transform.position;
-                tempPos.x = screenTopRight.x;
-                crossHair.transform.position = tempPos;
-            }
-            else if (crossHair.transform.position.x < screenBottomLeft.x)
-            {
-                Vector3 tempPos = crossHair.transform.position;
-                tempPos.x = screenBottomLeft.x;
-                crossHair.transform.position = tempPos;
-            }
-
-            //Vertical
-            if(crossHair.transform.position.y > screenTopRight.y)
-            {
-                Vector3 tempPos = crossHair.transform.position;
-                tempPos.y = screenTopRight.y;
-                crossHair.transform.position = tempPos;
-            }else if (crossHair.transform.position.y < screenBottomLeft.y)
-            {
-                Vector3 tempPos = crossHair.transform.position;
-                tempPos.y = screenBottomLeft.y;
-                crossHair.transform.position = tempPos;
-            }
+            Vector3 clampedPosition = crossHair.transform.position;
+            clampedPosition.x = Mathf.Clamp(crossHair.transform.position.x, screenBottomLeft.x, screenTopRight.x);
+            clampedPosition.y = Mathf.Clamp(crossHair.transform.position.y, screenBottomLeft.y, screenTopRight.y);
+            crossHair.transform.position = clampedPosition;
         }
 
         void CheckToSetElement()
