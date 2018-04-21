@@ -61,6 +61,7 @@ namespace Run4YourLife.Player
 
         public AudioClip jumpClip;
         public AudioClip bounceClip;
+        public GameObject deathParticles;
 
         #endregion
 
