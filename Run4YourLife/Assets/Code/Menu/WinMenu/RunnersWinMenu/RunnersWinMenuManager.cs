@@ -33,8 +33,7 @@ namespace Run4YourLife.WinMenu
 
         void Awake()
         {
-            runnerPrefabManager = GetComponent<RunnerPrefabManager>();
-            SpawnRunners();
+            runnerPrefabManager = GetComponent<RunnerPrefabManager>();         
         }
 
         private void Start()
@@ -44,6 +43,7 @@ namespace Run4YourLife.WinMenu
                 SetUpFakePlayers(3);
                 SetUpFakeScores();
             }
+            SpawnRunners();
         }
 
         private void SetUpFakePlayers(uint numRunners)
