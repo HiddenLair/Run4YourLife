@@ -32,11 +32,15 @@ namespace Run4YourLife.CharacterSelection
         protected override void OnReady()
         {
             activeStand.GetComponent<Animator>().Play(animationReady);
+            m_scaleTickArrowLeft.gameObject.SetActive(false);
+            m_scaleTickArrowRight.gameObject.SetActive(false);
         }
 
         protected override void OnNotReady()
         {
             activeStand.GetComponent<Animator>().Play(animationNotReady);
+            m_scaleTickArrowLeft.gameObject.SetActive(true);
+            m_scaleTickArrowRight.gameObject.SetActive(true);
         }
 
         protected override GameObject GetStandPrefabForPlayer(PlayerHandle playerDefinition)
