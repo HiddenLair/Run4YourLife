@@ -294,9 +294,9 @@ namespace Run4YourLife.GameManagement {
         {
             m_boss.SetActive(false);
             m_boss = null;
-            foreach(GameObject runner in m_runnersAlive)
+            for(int i = 0; i< m_runnersAlive.Count;i++)
             {
-                runner.SetActive(false);
+                m_runnersAlive[i].SetActive(false);
             }
 
             m_deadRunners.Clear();
