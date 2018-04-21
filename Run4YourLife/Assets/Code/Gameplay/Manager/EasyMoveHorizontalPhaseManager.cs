@@ -55,6 +55,16 @@ namespace Run4YourLife.GameManagement
             m_virtualCamera.LookAt = boss.transform;
             m_virtualCamera.gameObject.SetActive(true);
 
+            List<GameObject> runners = GameplayPlayerManager.Instance.Runners;
+
+            foreach (GameObject g in runners)
+            {
+                RunnerCharacterController tempController = g.GetComponent<RunnerCharacterController>();
+                tempController.SetLimitScreenRight(true);
+                tempController.SetLimitScreenLeft(true);
+                tempController.SetCheckOutScreen(true);
+            }
+
             m_checkPointManager.gameObject.SetActive(true);
         }
 
@@ -68,6 +78,16 @@ namespace Run4YourLife.GameManagement
             m_virtualCamera.Follow = null;
             m_virtualCamera.LookAt = null;
             m_virtualCamera.gameObject.SetActive(false);
+
+            List<GameObject> runners = GameplayPlayerManager.Instance.Runners;
+
+            foreach (GameObject g in runners)
+            {
+                RunnerCharacterController tempController = g.GetComponent<RunnerCharacterController>();
+                tempController.SetLimitScreenRight(false);
+                tempController.SetLimitScreenLeft(false);
+                tempController.SetCheckOutScreen(false);
+            }
 
             m_checkPointManager.gameObject.SetActive(false);
         }

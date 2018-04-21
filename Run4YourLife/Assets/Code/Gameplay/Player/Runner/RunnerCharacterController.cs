@@ -142,7 +142,7 @@ namespace Run4YourLife.Player
         {
             if (checkOutOfScreen)
             {
-                gameObject.SetActive(false);
+                GetComponent<RunnerController>().AbsoluteKill();
             }
         }
 
