@@ -74,11 +74,11 @@ public class TortoiseShell : MonoBehaviour {
         movementOffset += offset;
         if (movementOffset >= sinkMaxDistance)
         {
-            transform.Translate(new Vector3(0, 0, Mathf.Sign(currentSpeed) * (sinkMaxDistance - (movementOffset - offset))));
+            transform.Translate(new Vector3(0, Mathf.Sign(currentSpeed) * (sinkMaxDistance - (movementOffset - offset)), 0));
         }
         else
         {
-            transform.Translate(new Vector3(0, 0, currentSpeed * Time.deltaTime));
+            transform.Translate(new Vector3(0, currentSpeed * Time.deltaTime,0 ));
         }
     }
 
