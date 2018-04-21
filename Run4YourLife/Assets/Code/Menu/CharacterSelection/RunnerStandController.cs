@@ -15,12 +15,28 @@ namespace Run4YourLife.CharacterSelection
         [SerializeField]
         private ScaleTick m_scaleTickArrowRight;
 
+        [SerializeField]
+        private string animationNotReady = "idle";
+
+        [SerializeField]
+        private string animationReady = "correr";
+
         private RunnerPrefabManager m_runnerPrefabManager;
 
         protected override void OnAwake()
         {
             m_runnerPrefabManager = FindObjectOfType<RunnerPrefabManager>();
             Debug.Assert(m_runnerPrefabManager != null);
+        }
+
+        protected override void OnReady()
+        {
+            activeStand.GetComponent<Animator>().Play(animationReady);
+        }
+
+        protected override void OnNotReady()
+        {
+            activeStand.GetComponent<Animator>().Play(animationNotReady);
         }
 
         protected override GameObject GetStandPrefabForPlayer(PlayerHandle playerDefinition)

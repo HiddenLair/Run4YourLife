@@ -118,6 +118,7 @@ namespace Run4YourLife.CharacterSelection
                 {
                     ready = false;
                     readyTextScaleTick.gameObject.SetActive(false);
+                    OnNotReady();
                 }
                 else
                 {
@@ -125,6 +126,7 @@ namespace Run4YourLife.CharacterSelection
                     readyBoxScaleTick.Tick();
                     readyTextScaleTick.Tick();
                     readyTextScaleTick.gameObject.SetActive(true);
+                    OnReady();
                 }
             }
             else if(controlScheme.Exit.Started())
@@ -138,5 +140,9 @@ namespace Run4YourLife.CharacterSelection
         }
 
         protected virtual void OnAwake() { }
+
+        protected virtual void OnReady() { }
+
+        protected virtual void OnNotReady() { }
     }
 }
