@@ -19,9 +19,14 @@ namespace Run4YourLife.CharacterSelection
         [SerializeField]
         protected Transform spawnTransform;
 
+        [SerializeField]
+        private float scaleMultiplierReady = 1.1f;
+
         protected bool ready = false;
 
         protected float rotationY = 0.0f;
+
+        private Vector3 initialScale;
 
         #region Stands
 
@@ -40,6 +45,8 @@ namespace Run4YourLife.CharacterSelection
         {
             controlScheme = GetComponent<PlayerStandControllerControlScheme>();
             Debug.Assert(controlScheme != null);
+
+            initialScale = transform.localScale;
 
             OnAwake();
         }
@@ -119,6 +126,7 @@ namespace Run4YourLife.CharacterSelection
                     ready = false;
                     readyTextScaleTick.gameObject.SetActive(false);
                     OnNotReady();
+                    transform.localScale = initialScale;
                 }
                 else
                 {
@@ -127,6 +135,7 @@ namespace Run4YourLife.CharacterSelection
                     readyTextScaleTick.Tick();
                     readyTextScaleTick.gameObject.SetActive(true);
                     OnReady();
+                    transform.localScale = scaleMultiplierReady * initialScale;
                 }
             }
             else if(controlScheme.Exit.Started())
