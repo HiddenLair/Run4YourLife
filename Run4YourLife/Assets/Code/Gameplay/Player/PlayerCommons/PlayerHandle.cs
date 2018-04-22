@@ -24,11 +24,11 @@ namespace Run4YourLife.Player
         public bool IsBoss { get; set; }
         public CharacterType CharacterType { get; set; }
 
-        public static readonly PlayerHandle DebugDefaultPlayerHandle = new PlayerHandle() { 
-                CharacterType = CharacterType.Purple,
-                ID = 1,
-                IsBoss = false,
-                inputDevice = new InputDevice(2)
+        public static readonly PlayerHandle DebugDefaultPlayerHandle = new PlayerHandle() {
+            CharacterType = CharacterType.Purple,
+            ID = 1,
+            IsBoss = false,
+            inputDevice = Run4YourLife.Input.InputDeviceManager.Instance.DefaultInputDevice
             };
     }
 }
