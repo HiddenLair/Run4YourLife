@@ -9,11 +9,11 @@ public class DisableByBossProximity : MonoBehaviour,IActivateByRender {
     private static readonly float DISTANCE_FROM_BOSSS_TO_DESTROY = 2.0f;
     private static readonly float ALPHA_TRANSITION_LENGHT = 0.5f;
 
-    private Renderer m_renderer;
+    private Renderer[] m_renderer;
 
     private void Awake()
     {
-        m_renderer = GetComponentInChildren<Renderer>();
+        m_renderer = GetComponentsInChildren<Renderer>();
 
         enabled = false;
     }
@@ -22,32 +22,40 @@ public class DisableByBossProximity : MonoBehaviour,IActivateByRender {
     {
         if (GameplayPlayerManager.Instance.Boss != null)
         {
-            if (GetHorizontalDistanceToBoss() < DISTANCE_FROM_BOSSS_TO_DESTROY)
+            if (CheckHorizontalDistanceToBoss())
             {
-                SetToTransparent(m_renderer.material);
-                StartCoroutine(BeautifullDestroy(ALPHA_TRANSITION_LENGHT));
+                foreach(Renderer r in m_renderer) {
+                    SetToTransparent(r.material);
+                    StartCoroutine(BeautifullDestroy(ALPHA_TRANSITION_LENGHT, r.material));
+                }
             }
         }
     }
 
-    private float GetHorizontalDistanceToBoss()
+    private bool CheckHorizontalDistanceToBoss()
     {
-        float itemPosition = transform.position.x - (m_renderer.bounds.size.x / 2.0f);
-        float bossPosition = GameplayPlayerManager.Instance.Boss.transform.position.x;
-        return itemPosition - bossPosition;
+        foreach (Renderer r in m_renderer)
+        {
+            float itemPosition = transform.position.x - (r.bounds.size.x / 2.0f);
+            float bossPosition = GameplayPlayerManager.Instance.Boss.transform.position.x;
+            if(itemPosition - bossPosition < DISTANCE_FROM_BOSSS_TO_DESTROY)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
-    private IEnumerator BeautifullDestroy(float trasitionLenght)
+    private IEnumerator BeautifullDestroy(float trasitionLenght,Material mat)
     {
         enabled = false;
 
         float time = trasitionLenght;
-        Material material = m_renderer.material;
-        Color color = material.color;
+        Color color = mat.color;
         while (time >= 0)
         {
             color.a = time / trasitionLenght;
-            material.color = color;
+            mat.color = color;
             yield return null;
             time -= Time.deltaTime;
         }
