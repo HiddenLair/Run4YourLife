@@ -41,7 +41,7 @@ namespace Run4YourLife.Interactables
         {
             m_onBrokenByDash.Invoke();
             Instantiate(destroyParticles, transform.position, destroyParticles.transform.rotation);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

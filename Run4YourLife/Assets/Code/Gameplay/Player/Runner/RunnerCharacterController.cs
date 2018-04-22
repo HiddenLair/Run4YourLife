@@ -55,8 +55,12 @@ namespace Run4YourLife.Player
         [SerializeField]
         private float m_timeToIdle;
 
+        [SerializeField]
+        private GameObject m_dashTrail;
+
         #endregion
 
+        //TODO: Move to Inspector Variables
         #region Public Variable
 
         public AudioClip jumpClip;
@@ -200,6 +204,8 @@ namespace Run4YourLife.Player
             m_isReadyToDash = false;
             m_animator.SetTrigger("dash");
 
+            m_dashTrail.SetActive(true);
+
             m_horizontalDrag = m_dashHorizontalDrag;
             float facingRight = m_isFacingRight ? 1 : -1;
             m_velocity.x = facingRight * DragToVelocity(m_dashDistance);
@@ -212,6 +218,8 @@ namespace Run4YourLife.Player
             }
 
             m_horizontalDrag = m_baseHorizontalDrag;
+
+            m_dashTrail.SetActive(false);
 
             m_isDashing = false;
             yield return new WaitUntil(() => m_characterController.isGrounded);

@@ -15,8 +15,6 @@ namespace Run4YourLife.GameManagement
 
         #endregion
 
-        private GameManager gameManager;
-
         #region Initialization
 
         private void Awake()

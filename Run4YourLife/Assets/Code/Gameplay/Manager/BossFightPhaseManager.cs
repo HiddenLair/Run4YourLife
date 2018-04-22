@@ -26,9 +26,6 @@ namespace Run4YourLife.GameManagement
         private float m_timeOfPhase;
 
         [SerializeField]
-        private GameObject m_triggerToPhase;
-
-        [SerializeField]
         private Tiling m_backgroundTiling;
 
         [SerializeField]
@@ -74,11 +71,10 @@ namespace Run4YourLife.GameManagement
             m_virtualCamera.LookAt = boss.transform;
             m_virtualCamera.gameObject.SetActive(true);
 
-            StartCoroutine(YieldHelper.SkipFrame(()=>MoveRunners()));
-
             m_backgroundTiling.SetActive(false);
-
             ExecuteEvents.Execute<IUIEvents>(m_uiManager, null, (x, y) => x.OnCountdownSetted(m_timeOfPhase));
+
+            StartCoroutine(YieldHelper.SkipFrame(()=>MoveRunners()));           
             StartCoroutine(YieldHelper.WaitForSeconds(StartNextPhase, m_timeOfPhase));
         }
 

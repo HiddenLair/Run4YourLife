@@ -13,6 +13,9 @@ namespace Run4YourLife.GameManagement {
         void OnRunnerReviveRequest(Vector3 position);
     }
 
+    [System.Serializable]
+    public class OnPlayerReviveEvent : UnityEvent<GameObject> { }
+
     [RequireComponent(typeof(GameManager))]
     [RequireComponent(typeof(RunnerPrefabManager))]
     public class GameplayPlayerManager : SingletonMonoBehaviour<GameplayPlayerManager>, IGameplayPlayerEvents {
@@ -29,7 +32,7 @@ namespace Run4YourLife.GameManagement {
 
         [SerializeField]
         [Tooltip("Event that will be fired when a playerIsRevived")]
-        private UnityEvent<GameObject> m_onPlayerRevived;
+        private OnPlayerReviveEvent m_onPlayerRevived;
 
         [SerializeField]
         private GameObject[] runnerSlot;
@@ -184,11 +187,9 @@ namespace Run4YourLife.GameManagement {
         #endregion
 
         public void OnRunnerDeath(GameObject runner)
-        {
+        {            
             m_runnersAlive.Remove(runner);
-            
             PlayerHandle playerDefinition = runner.GetComponent<PlayerInstance>().PlayerHandle;
-
             m_deadRunners.Enqueue(playerDefinition);
 
             runner.SetActive(false);
@@ -299,6 +300,7 @@ namespace Run4YourLife.GameManagement {
                 m_runnersAlive[i].SetActive(false);
             }
 
+            m_runnersAlive.Clear();
             m_deadRunners.Clear();
         }
     }

@@ -45,7 +45,7 @@ namespace Run4YourLife.GameManagement
             }
 
             Vector3 bossPos = bossRockToMove.transform.position;
-            StartCoroutine(SlowMove(bossRockToMove, new Vector3(bossPos.x, 0, 0), time));
+            StartCoroutine(SlowMove(bossRockToMove, new Vector3(bossPos.x, 0.5f, 0), time));
         }
 
         IEnumerator SlowMove(GameObject g, Vector3 destination, float time)

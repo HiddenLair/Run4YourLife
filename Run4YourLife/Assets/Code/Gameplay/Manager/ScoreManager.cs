@@ -59,7 +59,10 @@ namespace Run4YourLife.GameManagement
 
         public float GetPointsByPlayerDefinition(PlayerHandle playerDefinition)
         {
-            return m_playerScore[playerDefinition];
+            float playerScore;
+            m_playerScore.TryGetValue(playerDefinition, out playerScore);
+
+            return playerScore;
         }
     }
 }
