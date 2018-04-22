@@ -67,6 +67,19 @@ public class TrapInit : MonoBehaviour {
             yield return 0;
         }
         faded = true;
+
+        SetToOpaque(gameObject.GetComponentInChildren<Renderer>().material);
         StartCoroutine(Fall());
+    }
+
+    public void SetToOpaque(Material material)
+    {
+        material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+        material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
+        material.SetInt("_ZWrite", 1);
+        material.DisableKeyword("_ALPHATEST_ON");
+        material.DisableKeyword("_ALPHABLEND_ON");
+        material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        material.renderQueue = -1;
     }
 }
