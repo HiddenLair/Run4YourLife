@@ -3,6 +3,11 @@ using System.Collections.Generic;
 
 namespace Run4YourLife.DebuggingTools
 {
+    [RequireComponent(typeof(FPSCounter))]
+    [RequireComponent(typeof(VertexAndTriangleCounter))]
+    [RequireComponent(typeof(WalkerController))]
+    [RequireComponent(typeof(PhaseSwitcher))]
+    [RequireComponent(typeof(RunnerGodMode))]
     public class DebugSystemManager : MonoBehaviour
     {
         private bool debugging = false;
@@ -56,14 +61,14 @@ namespace Run4YourLife.DebuggingTools
 
         private void AddGeneralDebugFeatures()
         {
-            generalDebugFeatures.Add(gameObject.AddComponent<FPSCounter>());
-            generalDebugFeatures.Add(gameObject.AddComponent<VertexAndTriangleCounter>());
+            generalDebugFeatures.Add(GetComponent<FPSCounter>());
+            generalDebugFeatures.Add(GetComponent<VertexAndTriangleCounter>());
             generalDebugFeatures.Add(Camera.main.gameObject.AddComponent<WireframeMode>());
         }
 
         private void AddBossDebugFeatures()
         {
-            bossDebugFeatures.Add(gameObject.AddComponent<WalkerController>());
+            bossDebugFeatures.Add(GetComponent<WalkerController>());
         }
 
         private void AddCameraDebugFeatures()
@@ -74,7 +79,8 @@ namespace Run4YourLife.DebuggingTools
 
         private void AddOtherDebugFeatures()
         {
-            otherDebugFeatures.Add(gameObject.AddComponent<PhaseSwitcher>());
+            otherDebugFeatures.Add(GetComponent<PhaseSwitcher>());
+            otherDebugFeatures.Add(GetComponent<RunnerGodMode>());
         }
 
         #region GUI
