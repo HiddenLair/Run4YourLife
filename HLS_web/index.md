@@ -298,19 +298,24 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-12 text-center">
-            <h2 class="section-heading text-uppercase">Our Amazing Team</h2>
-            <h3 class="section-subheading text-muted">4 Programmes and 3 Artists</h3>
+			<h1 class="section-heading text-uppercase">The Team</h2>           
           </div>
         </div>
+		
         <div class="row">
-          <div class="col-sm-4">
-            
+        </div>
+		
+		<div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">Programmers</h2>
           </div>
-          <div class="col-sm-4">
+        </div>
+		<div class="row">
+		  <div class="col-sm-4">
             <div class="team-member">
               <img class="mx-auto rounded-circle" src="img/team/2.jpg" alt="">
               <h4>Xavi Bravo</h4>
-              <p class="text-muted">Team Lead</p>
+              <p class="text-muted">Team Lead and Coder</p>
               <ul class="list-inline social-buttons">
                 <li class="list-inline-item">
                   <a href="#">
@@ -331,95 +336,10 @@
             </div>
           </div>
           <div class="col-sm-4">
-            
-			
-			
-          </div>
-        </div>
-		
-		<div class="row">
-          <div class="col-sm-4">
-            <div class="team-member">
-              <img class="mx-auto rounded-circle" src="img/team/1.jpg" alt="">
-              <h4>Pau Sánchez</h4>
-              <p class="text-muted">Lead Artist</p>
-              <ul class="list-inline social-buttons">
-                <li class="list-inline-item">
-                  <a href="#">
-                    <i class="fa fa-twitter"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item">
-                  <a href="https://www.facebook.com/pau.ete.12345">
-                    <i class="fa fa-facebook"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item">
-                  <a href="#">
-                    <i class="fa fa-linkedin"></i>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="team-member">
-              <img class="mx-auto rounded-circle" src="img/team/4.jpg" alt="">
-              <h4>M.Angeles Almansa</h4>
-              <p class="text-muted">Audio</p>
-              <ul class="list-inline social-buttons">
-                <li class="list-inline-item">
-                  <a href="#">
-                    <i class="fa fa-twitter"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item">
-                  <a href="https://www.facebook.com/m.angeles.a.rodriguez">
-                    <i class="fa fa-facebook"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item">
-                  <a href="#">
-                    <i class="fa fa-linkedin"></i>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="team-member">
-              <img class="mx-auto rounded-circle" src="img/team/3.jpg" alt="">
-              <h4>Marta Florido</h4>
-              <p class="text-muted">Management</p>
-              <ul class="list-inline social-buttons">
-                <li class="list-inline-item">
-                  <a href="#">
-                    <i class="fa fa-twitter"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item">
-                  <a href="https://www.facebook.com/marta.floridomartin.3">
-                    <i class="fa fa-facebook"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item">
-                  <a href="#">
-                    <i class="fa fa-linkedin"></i>
-                  </a>
-                </li>
-              </ul>
-            </div>
-			
-			
-          </div>
-        </div>
-		
-		<div class="row">
-          <div class="col-sm-4">
             <div class="team-member">
               <img class="mx-auto rounded-circle" src="img/team/anonimus.png" alt="">
               <h4>Adrián Leroy</h4>
-              <p class="text-muted">Game Designer</p>
+              <p class="text-muted">Game and Level Designer and Coder</p>
               <ul class="list-inline social-buttons">
                 <li class="list-inline-item">
                   <a href="#">
@@ -443,7 +363,7 @@
             <div class="team-member">
               <img class="mx-auto rounded-circle" src="img/team/pere.png" alt="">
               <h4>Pere Viader</h4>
-              <p class="text-muted">Code and QA Lead</p>
+              <p class="text-muted">Lead Programmer and QA Manager</p>
               <ul class="list-inline social-buttons">
                 <li class="list-inline-item">
                   <a href="#">
@@ -467,7 +387,7 @@
             <div class="team-member">
               <img class="mx-auto rounded-circle" src="img/team/anonimus.png" alt="">
               <h4>Gerard Pros</h4>
-              <p class="text-muted">UI designer</p>
+              <p class="text-muted">Coder and UI Manager</p>
               <ul class="list-inline social-buttons">
                 <li class="list-inline-item">
                   <a href="#">
@@ -490,6 +410,87 @@
 			
           </div>
         </div>
+		
+		<div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">Artists</h2>
+          </div>
+        </div>
+		<div class="row">
+          <div class="col-sm-4">
+            <div class="team-member">
+              <img class="mx-auto rounded-circle" src="img/team/1.jpg" alt="">
+              <h4>Pau Sánchez</h4>
+              <p class="text-muted">Lead Artist and Animator</p>
+              <ul class="list-inline social-buttons">
+                <li class="list-inline-item">
+                  <a href="#">
+                    <i class="fa fa-twitter"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="https://www.facebook.com/pau.ete.12345">
+                    <i class="fa fa-facebook"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="#">
+                    <i class="fa fa-linkedin"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="team-member">
+              <img class="mx-auto rounded-circle" src="img/team/4.jpg" alt="">
+              <h4>M.Angeles Almansa</h4>
+              <p class="text-muted">Concept Artist and Audio Manager</p>
+              <ul class="list-inline social-buttons">
+                <li class="list-inline-item">
+                  <a href="#">
+                    <i class="fa fa-twitter"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="https://www.facebook.com/m.angeles.a.rodriguez">
+                    <i class="fa fa-facebook"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="#">
+                    <i class="fa fa-linkedin"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="team-member">
+              <img class="mx-auto rounded-circle" src="img/team/3.jpg" alt="">
+              <h4>Marta Florido</h4>
+              <p class="text-muted">Team Management and Modeling</p>
+              <ul class="list-inline social-buttons">
+                <li class="list-inline-item">
+                  <a href="#">
+                    <i class="fa fa-twitter"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="https://www.facebook.com/marta.floridomartin.3">
+                    <i class="fa fa-facebook"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="#">
+                    <i class="fa fa-linkedin"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>		
+          </div>
+        </div>
+		
         <div class="row">
           <div class="col-lg-8 mx-auto text-center">
             <p class="large text-muted">We are a small team, so everybody tries to help each other and we are not focused on a single discipline</p>
