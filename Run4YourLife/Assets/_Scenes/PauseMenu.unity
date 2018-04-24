@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -480,12 +480,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b54b125ffc0a6ec46b3f2eecc0eff95c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneLoadRequestData:
-    loadScene: 1
-    sceneName: OptionsMenu
-    loadSceneMode: 1
-    loadEvent: 0
-    setLoadedSceneAsActiveScene: 1
+  m_loadEvent: 0
+  m_sceneLoadRequestData:
+    loadScene: 0
+    sceneName: 
+    loadSceneMode: 0
+    setLoadedSceneAsActiveScene: 0
     unloadScene: 0
     unloadedSceneName: 
 --- !u!224 &384427769 stripped
@@ -628,14 +628,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b54b125ffc0a6ec46b3f2eecc0eff95c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneLoadRequestData:
+  m_loadEvent: 0
+  m_sceneLoadRequestData:
     loadScene: 0
     sceneName: 
-    loadSceneMode: 1
-    loadEvent: 0
-    setLoadedSceneAsActiveScene: 1
-    unloadScene: 1
-    unloadedSceneName: PauseMenu
+    loadSceneMode: 0
+    setLoadedSceneAsActiveScene: 0
+    unloadScene: 0
+    unloadedSceneName: 
 --- !u!1001 &611262560
 Prefab:
   m_ObjectHideFlags: 0
@@ -861,9 +861,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fe2b67a751192640a7202e65be8cd29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_mainMenuLoadRequest: {fileID: 0}
-  m_gameSceneLoadRequest: {fileID: 0}
-  m_optionsMenuLoadRequest: {fileID: 0}
 --- !u!1 &708653051
 GameObject:
   m_ObjectHideFlags: 0
@@ -1100,11 +1097,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b54b125ffc0a6ec46b3f2eecc0eff95c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneLoadRequestData:
+  m_loadEvent: 0
+  m_sceneLoadRequestData:
     loadScene: 1
     sceneName: MainMenu
     loadSceneMode: 0
-    loadEvent: 0
     setLoadedSceneAsActiveScene: 1
     unloadScene: 0
     unloadedSceneName: 
@@ -1258,12 +1255,12 @@ Prefab:
     - target: {fileID: 114204635548604548, guid: f0bb5bfe89276aa47a1c2f1c646c4c2e,
         type: 2}
       propertyPath: m_text
-      value: Exit
+      value: Main Menu
       objectReference: {fileID: 0}
     - target: {fileID: 114204635548604548, guid: f0bb5bfe89276aa47a1c2f1c646c4c2e,
         type: 2}
       propertyPath: m_textInfo.characterCount
-      value: 4
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 114204635548604548, guid: f0bb5bfe89276aa47a1c2f1c646c4c2e,
         type: 2}
@@ -1299,6 +1296,36 @@ Prefab:
         type: 2}
       propertyPath: m_enableVertexGradient
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114204635548604548, guid: f0bb5bfe89276aa47a1c2f1c646c4c2e,
+        type: 2}
+      propertyPath: m_firstOverflowCharacterIndex
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114204635548604548, guid: f0bb5bfe89276aa47a1c2f1c646c4c2e,
+        type: 2}
+      propertyPath: m_textInfo.lineCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114204635548604548, guid: f0bb5bfe89276aa47a1c2f1c646c4c2e,
+        type: 2}
+      propertyPath: m_textInfo.spaceCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114204635548604548, guid: f0bb5bfe89276aa47a1c2f1c646c4c2e,
+        type: 2}
+      propertyPath: m_textInfo.wordCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114204635548604548, guid: f0bb5bfe89276aa47a1c2f1c646c4c2e,
+        type: 2}
+      propertyPath: m_fontSize
+      value: 38.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 114204635548604548, guid: f0bb5bfe89276aa47a1c2f1c646c4c2e,
+        type: 2}
+      propertyPath: m_fontSizeBase
+      value: 38.36
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f0bb5bfe89276aa47a1c2f1c646c4c2e, type: 2}
