@@ -24,11 +24,14 @@ namespace Run4YourLife.Player {
 
         private void Start()
         {
+            Vector3 tempPos = transform.position;
+            tempPos.y = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, Mathf.Abs(Camera.main.transform.position.z - transform.position.z))).y;
+            transform.position = tempPos;
             StartCoroutine(Flash());
         }
 
         IEnumerator Flash()
-        {
+        {       
             Transform flashBody = flashEffect.transform;
             Vector3 newSize = Vector3.one;
             newSize.x = newSize.z = width;
