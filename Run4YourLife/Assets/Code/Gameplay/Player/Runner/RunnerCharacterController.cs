@@ -143,7 +143,6 @@ namespace Run4YourLife.Player
             m_isDashing = false;
             m_isReadyToDash = true;
             m_ceilingCollision = false;
-            m_isFacingRight = true;
 
             m_animator.Rebind();
 
