@@ -70,4 +70,9 @@ public class Root : RunnerState, IInteractInput, IJumpInput, IVerticalInput
             remainingHits = rootHardness;
         }
     }
+
+    public void Destroy()
+    {
+        Destroy(this);
+    }
 }

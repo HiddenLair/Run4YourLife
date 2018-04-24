@@ -106,7 +106,7 @@ public class Stats : MonoBehaviour
         Compute();
     }
 
-    private void Clear()
+    public void Clear()
     {
         foreach(StatType statType in Enum.GetValues(typeof(StatType)))
         {

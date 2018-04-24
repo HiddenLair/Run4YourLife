@@ -19,6 +19,7 @@ public class WindSkillControl : MonoBehaviour {
     #region Variables
 
     HashSet<GameObject> m_objectsInside = new HashSet<GameObject>();
+    private Wind component;
 
     #endregion
 
@@ -32,7 +33,7 @@ public class WindSkillControl : MonoBehaviour {
         if (collider.CompareTag(Tags.Runner))
         {
             m_objectsInside.Add(collider.gameObject);
-            ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.ActivateWind(windForce));
+            ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.ActivateWind(windForce,ref component));
         }
     }
 
@@ -41,7 +42,7 @@ public class WindSkillControl : MonoBehaviour {
         if (collider.CompareTag(Tags.Runner))
         {
             m_objectsInside.Remove(collider.gameObject);
-            ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.DeactivateWind(windForce));
+            ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.DeactivateWind(windForce, component));
         }
     }
 
@@ -49,7 +50,7 @@ public class WindSkillControl : MonoBehaviour {
     {
         foreach(GameObject objectInside in m_objectsInside)
         {
-            ExecuteEvents.Execute<ICharacterEvents>(objectInside, null, (x, y) => x.DeactivateWind(windForce));
+            ExecuteEvents.Execute<ICharacterEvents>(objectInside, null, (x, y) => x.DeactivateWind(windForce, component));
         }
     }
 }

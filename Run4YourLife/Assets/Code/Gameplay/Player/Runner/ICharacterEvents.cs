@@ -9,6 +9,6 @@ public interface ICharacterEvents : IEventSystemHandler
     void Root(int rootHardness);
     void Debuff(StatModifier statsModifier);
     void Burned(int burningTime);
-    void ActivateWind(float windForce);
-    void DeactivateWind(float windForce);
+    void ActivateWind(float windForce, ref Wind component);
+    void DeactivateWind(float windForce, Wind component);
 }

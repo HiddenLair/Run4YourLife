@@ -28,6 +28,35 @@ namespace Run4YourLife.Input
             m_playerControlScheme = GetComponent<RunnerControlScheme>();
         }
 
+        public void Clear()
+        {
+            IInteractInput[] iInteractInputList = GetComponents<IInteractInput>();
+            foreach (IInteractInput i in iInteractInputList)
+            {
+                i.Destroy();
+            }
+            IJumpInput[] iJumpInputList = GetComponents<IJumpInput>();
+            foreach(IJumpInput i in iJumpInputList)
+            {
+                i.Destroy();
+            }
+            IRunnerInput[] iRunnerInputList = GetComponents<IRunnerInput>();
+            foreach(IRunnerInput i in iRunnerInputList)
+            {
+                i.Destroy();
+            }
+            IVerticalInput[] iVerticalInputList = GetComponents<IVerticalInput>();
+            foreach (IVerticalInput i in iVerticalInputList)
+            {
+                i.Destroy();
+            }
+            IRockInput[] iRockInputList = GetComponents<IRockInput>();
+            foreach(IRockInput i in iRockInputList)
+            {
+                i.Destroy();
+            }
+        }
+
         public float GetHorizontalInput()
         {
             return horizontalInput;

@@ -3,4 +3,5 @@
     int GetPriority();
 
     void ModifyHorizontalInput(ref float input);
+    void Destroy();
 }

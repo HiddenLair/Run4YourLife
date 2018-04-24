@@ -13,7 +13,6 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(RunnerCharacterController))]
     [RequireComponent(typeof(Stats))]
     [RequireComponent(typeof(Animator))]
-    [RequireComponent(typeof(Wind))]
     public class RunnerController : MonoBehaviour, ICharacterEvents
     {
         #region References
@@ -21,7 +20,6 @@ namespace Run4YourLife.Player
         private GameObject m_gameplayManagerGameObject;
         private Stats m_stats;
         private RunnerCharacterController m_runnerCharacterController;
-        private Wind m_wind;
 
         #endregion
 
@@ -29,7 +27,6 @@ namespace Run4YourLife.Player
         {
             m_runnerCharacterController = GetComponent<RunnerCharacterController>();
             m_stats = GetComponent<Stats>();
-            m_wind = GetComponent<Wind>();
             m_gameplayManagerGameObject = GameObject.FindGameObjectWithTag(Tags.GameController);
             if (m_gameplayManagerGameObject == null)
                 Debug.LogWarning("Gameplay Manager GameObject Not fund");
@@ -105,14 +102,15 @@ namespace Run4YourLife.Player
             }
         }
 
-        public void ActivateWind(float windForce)
+        public void ActivateWind(float windForce,ref Wind component)
         {
-            m_wind.AddWindForce(windForce);
+            component = gameObject.AddComponent<Wind>();
+            component.AddWindForce(windForce);
         }
 
-        public void DeactivateWind(float windForce)
+        public void DeactivateWind(float windForce,Wind component)
         {
-            m_wind.RemoveWindForce(windForce);
+            Destroy(component);
         }
 
         public void AbsoluteKill()

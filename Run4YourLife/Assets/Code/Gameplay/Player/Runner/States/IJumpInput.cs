@@ -3,4 +3,5 @@
     int GetPriority();
 
     void ModifyJumpInput(ref bool input);
+    void Destroy();
 }

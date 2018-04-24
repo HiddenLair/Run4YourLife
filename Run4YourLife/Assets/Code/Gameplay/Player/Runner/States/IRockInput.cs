@@ -3,4 +3,5 @@
     int GetPriority();
 
     void ModifyRockInput(ref bool input);
+    void Destroy();
 }

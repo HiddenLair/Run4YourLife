@@ -80,4 +80,9 @@ public class Burned : RunnerState, IRunnerInput
             END_TIME = burningTime;
         }
     }
+
+    public void Destroy()
+    {
+        Destroy(this);
+    }
 }

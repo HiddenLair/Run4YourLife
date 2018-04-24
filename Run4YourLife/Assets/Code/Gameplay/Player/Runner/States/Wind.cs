@@ -29,4 +29,9 @@ public class Wind : RunnerState, IRunnerInput
     {
         input += m_windForce;
     }
+
+    public void Destroy()
+    {
+        Destroy(this);
+    }
 }
