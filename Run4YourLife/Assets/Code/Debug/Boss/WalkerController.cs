@@ -10,7 +10,12 @@ namespace Run4YourLife.DebuggingTools
         private string walkerSpeedText = string.Empty;
         private string walkerIncreaseSpeedText = string.Empty;
 
-        public override void OnDrawGUI()
+        protected override string GetPanelName()
+        {
+            return "Boss walker";
+        }
+
+        protected override void OnCustomDrawGUI()
         {
             if(walker != null)
             {

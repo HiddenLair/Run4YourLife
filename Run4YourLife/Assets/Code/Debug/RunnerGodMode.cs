@@ -11,7 +11,12 @@ namespace Run4YourLife.DebuggingTools
         [SerializeField]
         private GameObject runnerGodModePrefab;
 
-        public override void OnDrawGUI()
+        protected override string GetPanelName()
+        {
+            return "Runner god mode";
+        }
+
+        protected override void OnCustomDrawGUI()
         {
             GUILayout.BeginHorizontal();
 

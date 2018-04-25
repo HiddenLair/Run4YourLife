@@ -10,10 +10,15 @@ namespace Run4YourLife.DebuggingTools
         private const float SPEED = 10.0f;
         private const float SHIFT_SPEED_MULTIPLIER = 5.0f;
 
-        public override void OnDrawGUI()
+        protected override string GetPanelName()
+        {
+            return "Dynamic camera";
+        }
+
+        protected override void OnCustomDrawGUI()
         {
             bool tmpActive = active;
-            active = GUILayout.Toggle(active, " Dynamic Camera");
+            active = GUILayout.Toggle(active, " Active");
 
             if(!tmpActive && active)
             {

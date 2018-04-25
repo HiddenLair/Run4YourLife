@@ -6,9 +6,14 @@ namespace Run4YourLife.DebuggingTools
     {
         private bool wireframe = false;
 
-        public override void OnDrawGUI()
+        protected override string GetPanelName()
         {
-            wireframe = GUILayout.Toggle(wireframe, " Wireframe Mode");
+            return "Wireframe mode";
+        }
+
+        protected override void OnCustomDrawGUI()
+        {
+            wireframe = GUILayout.Toggle(wireframe, " Active");
         }
 
         void OnPreRender()

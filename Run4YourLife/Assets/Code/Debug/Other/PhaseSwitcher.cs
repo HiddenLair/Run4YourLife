@@ -7,7 +7,12 @@ namespace Run4YourLife.DebuggingTools
 {
     public class PhaseSwitcher : DebugFeature
     {
-        public override void OnDrawGUI()
+        protected override string GetPanelName()
+        {
+            return "Phase switcher";
+        }
+
+        protected override void OnCustomDrawGUI()
         {
             GUILayout.BeginHorizontal();
 

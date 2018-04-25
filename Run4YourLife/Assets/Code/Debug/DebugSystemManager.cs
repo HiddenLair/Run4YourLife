@@ -10,12 +10,14 @@ namespace Run4YourLife.DebuggingTools
     [RequireComponent(typeof(RunnerGodMode))]
     public class DebugSystemManager : MonoBehaviour
     {
-        private bool debugging = false;
-
         private List<DebugFeature> generalDebugFeatures = new List<DebugFeature>();
         private List<DebugFeature> bossDebugFeatures = new List<DebugFeature>();
         private List<DebugFeature> cameraDebugFeatures = new List<DebugFeature>();
         private List<DebugFeature> otherDebugFeatures = new List<DebugFeature>();
+
+        private bool debugging = false;
+        private int currentDebugFeaturesSetIndex = 0;
+        private List<KeyValuePair<List<DebugFeature>, string>> debugFeatures = new List<KeyValuePair<List<DebugFeature>, string>>();
 
         #region GUI definitions Window
 
@@ -25,13 +27,6 @@ namespace Run4YourLife.DebuggingTools
         private const float WINDOW_H = 300.0f;
 
         private Rect windowRect = new Rect(Screen.width - WINDOW_W - WINDOW_OFFSET_X, WINDOW_OFFSET_Y, WINDOW_W, WINDOW_H);
-
-        private Vector2 scrollAreaPosition = Vector2.zero;
-
-        private bool drawGeneral = true;
-        private bool drawBoss = true;
-        private bool drawCamera = true;
-        private bool drawOther = true;
 
         #endregion
 
@@ -57,6 +52,11 @@ namespace Run4YourLife.DebuggingTools
             AddBossDebugFeatures();
             AddCameraDebugFeatures();
             AddOtherDebugFeatures();
+
+            debugFeatures.Add(new KeyValuePair<List<DebugFeature>, string>(generalDebugFeatures, "General"));
+            debugFeatures.Add(new KeyValuePair<List<DebugFeature>, string>(bossDebugFeatures, "Boss"));
+            debugFeatures.Add(new KeyValuePair<List<DebugFeature>, string>(cameraDebugFeatures, "Camera"));
+            debugFeatures.Add(new KeyValuePair<List<DebugFeature>, string>(otherDebugFeatures, "Other"));
         }
 
         private void AddGeneralDebugFeatures()
@@ -95,36 +95,32 @@ namespace Run4YourLife.DebuggingTools
 
         private void OnGUIWindow(int windowID)
         {
-            scrollAreaPosition = GUILayout.BeginScrollView(scrollAreaPosition);
+            GUILayout.BeginHorizontal();
 
-            OnDrawGUI(ref drawGeneral, "General", generalDebugFeatures);
-            OnDrawGUI(ref drawBoss, "Boss", bossDebugFeatures);
-            OnDrawGUI(ref drawCamera, "Camera", cameraDebugFeatures);
-            OnDrawGUI(ref drawOther, "Other", otherDebugFeatures);
-
-            GUILayout.EndScrollView();
-
-            GUI.DragWindow();
-        }
-
-        private void OnDrawGUI(ref bool draw, string name, List<DebugFeature> debuggingFeatures)
-        {
-            GUILayout.BeginVertical();
-
-            if(GUILayout.Button(draw ? name : "< " + name + " >"))
+            for(int i = 0; i < debugFeatures.Count; ++i)
             {
-                draw = !draw;
-            }
+                GUI.color = currentDebugFeaturesSetIndex == i ? Color.green : Color.red;
 
-            if(draw)
-            {
-                foreach(DebugFeature debugFeature in debuggingFeatures)
+                if(GUILayout.Button(debugFeatures[i].Value))
                 {
-                    debugFeature.OnDrawGUI();
+                    currentDebugFeaturesSetIndex = i;
                 }
             }
 
+            GUILayout.EndHorizontal();
+
+            GUI.color = Color.white;
+
+            GUILayout.BeginVertical();
+
+            foreach(DebugFeature debugFeature in debugFeatures[currentDebugFeaturesSetIndex].Key)
+            {
+                debugFeature.OnDrawGUI();
+            }
+
             GUILayout.EndVertical();
+
+            GUI.DragWindow();
         }
 
         #endregion

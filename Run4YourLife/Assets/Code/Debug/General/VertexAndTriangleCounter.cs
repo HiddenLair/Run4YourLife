@@ -7,7 +7,12 @@ namespace Run4YourLife.DebuggingTools
         private int vertexCount = 0;
         private int triangleCount = 0;
 
-        public override void OnDrawGUI()
+        protected override string GetPanelName()
+        {
+            return "Vertex and triangle counter";
+        }
+
+        protected override void OnCustomDrawGUI()
         {
             Count();
 

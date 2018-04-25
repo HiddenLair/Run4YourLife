@@ -4,7 +4,12 @@ namespace Run4YourLife.DebuggingTools
 {
     public class FPSCounter : DebugFeature
     {
-        public override void OnDrawGUI()
+        protected override string GetPanelName()
+        {
+            return "Fps counter";
+        }
+
+        protected override void OnCustomDrawGUI()
         {
             GUILayout.Label("Fps: " + GetFPS().ToString("0") + ", Ms: " + GetMs().ToString("0"));
         }

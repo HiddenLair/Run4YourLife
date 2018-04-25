@@ -11,7 +11,12 @@ namespace Run4YourLife.DebuggingTools
 
         private GameObject followRunner = null;
 
-        public override void OnDrawGUI()
+        protected override string GetPanelName()
+        {
+            return "Follow runner camera";
+        }
+
+        protected override void OnCustomDrawGUI()
         {
             GUILayout.BeginHorizontal();
 
