@@ -1,45 +1,75 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Playables;
+
 using Run4YourLife.GameManagement;
+using System;
+using System.Collections;
 
 namespace Run4YourLife.Player
 {
+    [RequireComponent(typeof(PlayableDirector))]
     public abstract class PowerUp : MonoBehaviour
     {
-        public enum Type { SINGLE, GROUP };
-
         [SerializeField]
-        private Type m_type;
+        private float m_score;
 
-        [SerializeField]
-        private float points;
+        protected enum PowerUpType { Void, Single, Shared };
+
+        protected abstract PowerUpType Type { get; }
+
+        private bool activated = false;
+        private PlayableDirector m_playableDirector;
 
         public abstract void Apply(GameObject runner);
 
+        protected virtual void Awake()
+        {
+            m_playableDirector = GetComponent<PlayableDirector>();
+        }
+
         private void OnTriggerEnter(Collider other)
         {
-            if(other.CompareTag(Tags.Runner))
+            if(!activated && other.CompareTag(Tags.Runner))
             {
-                switch (m_type)
-                {
-                    case Type.SINGLE:
+                activated = true;
+                ExecutePowerUp(other.gameObject);
+                StartCoroutine(PlayAndHide());
+            }
+        }
+
+        private IEnumerator PlayAndHide()
+        {
+            m_playableDirector.Play();
+            yield return new WaitUntil(() => m_playableDirector.state == PlayState.Paused);
+            gameObject.SetActive(false);
+        }
+
+        private void ExecutePowerUp(GameObject runner)
+        {
+            PlayerHandle playerHandle = runner.GetComponent<PlayerInstance>().PlayerHandle;
+            ExecuteEvents.Execute<IScoreEvents>(ScoreManager.InstanceGameObject, null, (x, y) => x.OnAddPoints(playerHandle, m_score));
+
+            switch (Type)
+            {
+                case PowerUpType.Void:
+                    {
+                        Apply(null);
+                    }
+                    break;
+                case PowerUpType.Single:
+                    {
+                        Apply(runner);
+                    }
+                    break;
+                case PowerUpType.Shared:
+                    {
+                        foreach (GameObject runnerGameObject in GameplayPlayerManager.Instance.RunnersAlive)
                         {
-                            Debug.Assert(other.CompareTag(Tags.Runner));
-                            Apply(other.gameObject);
-                            PlayerHandle player = other.GetComponent<PlayerInstance>().PlayerHandle;
-                            ExecuteEvents.Execute<IScoreEvents>(ScoreManager.InstanceGameObject, null, (x, y) => x.OnAddPoints(player, points));
+                            Apply(runnerGameObject);
                         }
-                        break;
-                    case Type.GROUP:
-                        {
-                            foreach (GameObject runner in GameplayPlayerManager.Instance.RunnersAlive)
-                            {
-                                Apply(runner);
-                            }
-                        }
-                        break;
-                }
-                Destroy(gameObject);
+                    }
+                    break;
             }
         }
     }
