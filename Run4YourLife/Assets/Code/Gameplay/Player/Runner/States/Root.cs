@@ -12,9 +12,7 @@ namespace Run4YourLife.Player
 
         #endregion
 
-        public Root() : base(State.Root)
-        {
-        }
+        public override Type StateType { get { return Type.Root; } }
 
         int IInteractInput.GetPriority()
         {

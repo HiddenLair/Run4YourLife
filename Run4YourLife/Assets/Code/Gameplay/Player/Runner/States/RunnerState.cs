@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class RunnerState : MonoBehaviour
+public abstract class RunnerState : MonoBehaviour
 {
-    public enum State
+    public enum Type
     {
         Burned,
         Root,
@@ -11,33 +11,19 @@ public class RunnerState : MonoBehaviour
         Shielded
     }
 
-    private State identifier;
+    public abstract Type StateType { get; }
 
-    public RunnerState(State id) {
-        identifier = id;
-    }
-
-    void Awake()
+    protected virtual void Awake()
     {
         Apply();
     }
 
-    void OnDestroy()
+    protected virtual void OnDestroy()
     {
         Unapply();
     }
 
-    protected virtual void Apply() { }
+    protected abstract void Apply();
 
-    protected virtual void Unapply() { }
-
-    public virtual State GetState()
-    {
-        return identifier;
-    }
-
-    public virtual void SetState(State id)
-    {
-        identifier = id;
-    }
+    protected abstract void Unapply();
 }

@@ -1,23 +1,35 @@
-﻿using Run4YourLife.Player;
+﻿using UnityEngine;
 
-public class Shielded : RunnerState {
-
-    private const float END_TIME = 5.0f;
-
-    public Shielded() : base(State.Shielded)
+namespace Run4YourLife.Player
+{
+    [RequireComponent(typeof(BuffManager))]
+    public class Shielded : RunnerState
     {
-    }
+        private const float END_TIME = 5.0f;
 
-    protected override void Apply()
-    {
-        GetComponent<BuffManager>().SubscribeBuff(this);
-        GetComponent<BuffManager>().ActivateShield();
-        Destroy(this, END_TIME);
-    }
+        private BuffManager m_buffManager;
 
-    protected override void Unapply()
-    {
-        GetComponent<BuffManager>().UnsubscribeBuff(this);
-        GetComponent<BuffManager>().DeactivateShield();
+        public override Type StateType { get { return Type.Shielded; } }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            m_buffManager = GetComponent<BuffManager>();
+        }
+
+        protected override void Apply()
+        {
+            m_buffManager.SubscribeBuff(this);
+            m_buffManager.ActivateShield();
+            Destroy(this, END_TIME);
+        }
+
+        protected override void Unapply()
+        {
+            m_buffManager.UnsubscribeBuff(this);
+            m_buffManager.DeactivateShield();
+        }
     }
 }
+
+

@@ -6,9 +6,7 @@ public class Wind : RunnerState, IRunnerInput
 {
     private float m_windForce;
 
-    public Wind() : base(State.Wind)
-    {
-    }
+    public override Type StateType { get { return Type.Wind; } }
 
     public void AddWindForce(float windForce)
     {
@@ -33,5 +31,13 @@ public class Wind : RunnerState, IRunnerInput
     public void Destroy()
     {
         Destroy(this);
+    }
+
+    protected override void Apply()
+    {
+    }
+
+    protected override void Unapply()
+    {
     }
 }
