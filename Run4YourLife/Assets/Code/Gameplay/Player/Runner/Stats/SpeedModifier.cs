@@ -1,11 +1,14 @@
-﻿public class SpeedModifier : StatModifier
+﻿namespace Run4YourLife.Player
 {
-    public SpeedModifier(ModifierType modifierType, bool buff, float amount, float endTime) :
-        base(StatType.SPEED, modifierType, buff, amount, endTime)
-    { }
-
-    public override int GetPriority()
+    public class SpeedModifier : StatModifier
     {
-        return 0;
+        public SpeedModifier(ModifierType modifierType, bool buff, float amount, float endTime) :
+            base(StatType.SPEED, modifierType, buff, amount, endTime)
+        { }
+
+        public override int GetPriority()
+        {
+            return 0;
+        }
     }
 }

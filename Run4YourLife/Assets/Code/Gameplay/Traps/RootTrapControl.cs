@@ -1,16 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 using Run4YourLife;
+using Run4YourLife.Player;
 
-public class RootTrapControl : MonoBehaviour {
-
-    #region Private Variables
-    private bool toDelete = false;
-    #endregion
-
+public class RootTrapControl : MonoBehaviour
+{
     #region Public variables
     public GameObject activationParticles;
     public int rootHardness = 5;
@@ -18,14 +13,9 @@ public class RootTrapControl : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.tag == Tags.Runner || collider.tag == Tags.Shoot)
+        if (collider.CompareTag(Tags.Runner) || collider.CompareTag(Tags.Shoot))
         {
             ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.Root(rootHardness));
-            toDelete = true;
-        }
-
-        if (toDelete)
-        {
             Instantiate(activationParticles, transform.position, transform.rotation);
             Destroy(gameObject);
         }

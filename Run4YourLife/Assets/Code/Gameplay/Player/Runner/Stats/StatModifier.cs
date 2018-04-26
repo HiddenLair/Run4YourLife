@@ -1,86 +1,101 @@
 ﻿using System;
 using UnityEngine;
 
-public enum ModifierType
+namespace Run4YourLife.Player
 {
-    PLAIN,
-    PERCENT,
-    SETTER,
-}
-
-[Serializable]
-public class StatModifier
-{
-    #region InspectorVariables
-
-    [SerializeField]
-    private StatType statType;
-
-    [SerializeField]
-    private ModifierType modifierType;
-
-    [SerializeField]
-    private bool buff;
-
-    [SerializeField]
-    private float amount;
-
-    [SerializeField]
-    private float endTime;
-
-    #endregion
-
-    #region Private Variables
-
-    private Stats stats;
-
-    #endregion
-
-    protected StatModifier(StatType statType, ModifierType modifierType, bool buff, float amount, float endTime)
+    public enum ModifierType
     {
-        this.statType = statType;
-        this.modifierType = modifierType;
-        this.buff = buff;
-        this.amount = amount;
-        this.endTime = endTime;
+        PLAIN,
+        PERCENT,
+        SETTER,
     }
 
-    public void SetStats(Stats stats)
+    [Serializable]
+    public class StatModifier : IComparable<StatModifier>
     {
-        this.stats = stats;
+        #region InspectorVariables
 
-        Apply();
+        [SerializeField]
+        private StatType statType;
 
-        stats.RemoveAfter(this, endTime);
-    }
+        [SerializeField]
+        private ModifierType modifierType;
 
-    public void Apply()
-    {
-        float value = amount;
+        [SerializeField]
+        private bool buff;
 
-        if(modifierType == ModifierType.PERCENT)
+        [SerializeField]
+        private float amount;
+
+        [SerializeField]
+        private float endTime;
+
+        #endregion
+
+        #region Private Variables
+
+        private Stats stats;
+
+        #endregion
+
+        protected StatModifier(StatType statType, ModifierType modifierType, bool buff, float amount, float endTime)
         {
-            value *= stats.Get(statType, true);
+            this.statType = statType;
+            this.modifierType = modifierType;
+            this.buff = buff;
+            this.amount = amount;
+            this.endTime = endTime;
         }
 
-        if(!buff)
+        public void SetStats(Stats stats)
         {
-            value *= -1.0f;
+            this.stats = stats;
+
+            Apply();
+
+            stats.RemoveAfter(this, endTime);
         }
 
-        if (modifierType == ModifierType.SETTER)
+        public void Apply()
         {
-            stats.Set(statType, value);
-        }
-        else
-        {
-            stats.Increase(statType, value);
+            float value = amount;
+
+            if (modifierType == ModifierType.PERCENT)
+            {
+                value *= stats.Get(statType, true);
+            }
+
+            if (!buff)
+            {
+                value *= -1.0f;
+            }
+
+            if (modifierType == ModifierType.SETTER)
+            {
+                stats.Set(statType, value);
+            }
+            else
+            {
+                stats.Increase(statType, value);
+            }
+
         }
 
-    }
+        public virtual int GetPriority()
+        {
+            return -1;
+        }
 
-    public virtual int GetPriority()
-    {
-        return -1;
+        public int CompareTo(StatModifier other)
+        {
+            int result = this.GetPriority().CompareTo(other.GetPriority());
+
+            if (result == 0)
+            {
+                result = this.GetHashCode() - other.GetHashCode();
+            }
+
+            return result;
+        }
     }
 }

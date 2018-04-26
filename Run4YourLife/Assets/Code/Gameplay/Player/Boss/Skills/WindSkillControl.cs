@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 using Run4YourLife;
+using Run4YourLife.Player;
 
 public class WindSkillControl : MonoBehaviour {
 

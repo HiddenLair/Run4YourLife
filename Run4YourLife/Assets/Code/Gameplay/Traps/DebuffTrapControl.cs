@@ -3,29 +3,21 @@ using UnityEngine.EventSystems;
 
 using Run4YourLife;
 
-public class DebuffTrapControl : MonoBehaviour {
-
-    #region Private variables
-    private bool toDelete = false;
-    #endregion
-
-    #region Public variables
-    public GameObject activationParticles;
-    public StatModifier statModifier;
-    #endregion
-
-    private void OnTriggerEnter(Collider collider)
+namespace Run4YourLife.Player
+{
+    public class DebuffTrapControl : MonoBehaviour
     {
-        if (collider.CompareTag(Tags.Runner) || collider.CompareTag(Tags.Shoot))
-        {
-            ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.Debuff(statModifier));
-            toDelete = true;
-        }
+        public GameObject activationParticles;
+        public StatModifier statModifier;
 
-        if (toDelete)
+        private void OnTriggerEnter(Collider collider)
         {
-            Instantiate(activationParticles, transform.position, transform.rotation);
-            Destroy(gameObject);
+            if (collider.CompareTag(Tags.Runner) || collider.CompareTag(Tags.Shoot))
+            {
+                ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.Debuff(statModifier));
+                Instantiate(activationParticles, transform.position, transform.rotation);
+                Destroy(gameObject);
+            }
         }
     }
 }

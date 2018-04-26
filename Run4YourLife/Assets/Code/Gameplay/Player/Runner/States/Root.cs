@@ -1,78 +1,81 @@
 ﻿using System;
 
-public class Root : RunnerState, IInteractInput, IJumpInput, IVerticalInput
+namespace Run4YourLife.Player
 {
-    #region Variables
-
-    private int remainingHits = 4;
-
-    StatModifier modifierSpeed;
-
-    #endregion
-
-    public Root() : base(State.Root)
+    public class Root : RunnerState, IInteractInput, IJumpInput, IVerticalInput
     {
-    }
+        #region Variables
 
-    int IInteractInput.GetPriority()
-    {
-        return 1;
-    }
+        private int remainingHits = 4;
 
-    int IJumpInput.GetPriority()
-    {
-        return 1;
-    }
+        StatModifier modifierSpeed;
 
-    int IVerticalInput.GetPriority()
-    {
-        return 1;
-    }
+        #endregion
 
-    public void ModifyInteractInput(ref bool input)
-    {
-        if (input)
+        public Root() : base(State.Root)
         {
-            if(--remainingHits == 0)
+        }
+
+        int IInteractInput.GetPriority()
+        {
+            return 1;
+        }
+
+        int IJumpInput.GetPriority()
+        {
+            return 1;
+        }
+
+        int IVerticalInput.GetPriority()
+        {
+            return 1;
+        }
+
+        public void ModifyInteractInput(ref bool input)
+        {
+            if (input)
             {
-                Destroy(this);
+                if (--remainingHits == 0)
+                {
+                    Destroy(this);
+                }
+            }
+
+            input = false;
+        }
+
+        public void ModifyVerticalInput(ref float input)
+        {
+            input = 0.0f;
+        }
+
+        public void ModifyJumpInput(ref bool input)
+        {
+            input = false;
+        }
+
+        protected override void Apply()
+        {
+            modifierSpeed = new SpeedModifier(ModifierType.SETTER, true, 0, -1);
+            GetComponent<Stats>().AddModifier(modifierSpeed);
+        }
+
+        protected override void Unapply()
+        {
+            GetComponent<Stats>().RemoveStatModifier(modifierSpeed);
+        }
+
+        public void SetHardness(int rootHardness)
+        {
+            if (rootHardness > 0)
+            {
+                remainingHits = rootHardness;
             }
         }
 
-        input = false;
-    }
-
-    public void ModifyVerticalInput(ref float input)
-    {
-        input = 0.0f;
-    }
-
-    public void ModifyJumpInput(ref bool input)
-    {
-        input = false;
-    }
-
-    protected override void Apply()
-    {
-        modifierSpeed = new SpeedModifier(ModifierType.SETTER, true, 0, -1);
-        GetComponent<Stats>().AddModifier(modifierSpeed);
-    }
-
-    protected override void Unapply()
-    {
-        GetComponent<Stats>().RemoveStatModifier(modifierSpeed);
-    }
-
-    public void SetHardness(int rootHardness)
-    {
-        if (rootHardness > 0)
+        public void Destroy()
         {
-            remainingHits = rootHardness;
+            Destroy(this);
         }
-    }
-
-    public void Destroy()
-    {
-        Destroy(this);
     }
 }
