@@ -35,7 +35,7 @@ namespace Run4YourLife.GameManagement {
         private OnPlayerReviveEvent m_onPlayerRevived;
 
         [SerializeField]
-        private GameObject[] runnerSlot;
+        private GameObject[] m_runnerSlot;
 
         #endregion
 
@@ -46,10 +46,6 @@ namespace Run4YourLife.GameManagement {
         public List<GameObject> RunnersAlive { get { return m_runnersAlive; } }
         public Queue<PlayerHandle> DeadRunners { get { return m_deadRunners; } }
         public Dictionary<PlayerHandle, GameObject> RunnerGameObject { get { return m_runnerGameObject; } }
-
-        public PlayerHandle BossPlayerDefinition { get { return m_bossPlayerDefinition; } }
-        public List<PlayerHandle> RunnerPlayerHandles { get { return m_runnerPlayerDefinitions; } }
-        public int PlayerCount { get { return m_runnerPlayerDefinitions.Count + 1; } }
 
         #endregion
 
@@ -76,10 +72,10 @@ namespace Run4YourLife.GameManagement {
 
         private void Awake()
         {
+            m_runnerPrefabManager = GetComponent<RunnerPrefabManager>();
+
             GameManager gameManager = GetComponent<GameManager>();
             gameManager.onGamePhaseChanged.AddListener(OnGamePhaseChanged);
-
-            m_runnerPrefabManager = GetComponent<RunnerPrefabManager>();
         }
 
         private void Start()
@@ -89,19 +85,19 @@ namespace Run4YourLife.GameManagement {
 
         private void InitializePlayers()
         {
-            if(PlayerManager.Instance.GetPlayers().Count == 0)
+            if(PlayerManager.Instance.PlayerHandles.Count == 0)
             {
                 CreateDebugPlayers();
             }
 
-            foreach (PlayerHandle playerDefinition in PlayerManager.Instance.GetPlayers())
+            foreach (PlayerHandle playerHandle in PlayerManager.Instance.PlayerHandles)
             {
-                if(playerDefinition.IsBoss)
+                if(playerHandle.IsBoss)
                 {
-                    InitializeBoss(playerDefinition);
+                    InitializeBoss(playerHandle);
                 } else
                 {
-                    InitializeRunner(playerDefinition);
+                    InitializeRunner(playerHandle);
                 }
             }
         }
@@ -148,7 +144,7 @@ namespace Run4YourLife.GameManagement {
         {
             m_runnerPlayerDefinitions.Add(playerDefinition);
 
-            GameObject runner = Instantiate(GetRunnerForPlayer(playerDefinition), runnerSlot[runnerIndex].transform, false);
+            GameObject runner = Instantiate(GetRunnerForPlayer(playerDefinition), m_runnerSlot[runnerIndex].transform, false);
 
             runnerIndex++;
             runner.SetActive(false);
@@ -169,8 +165,6 @@ namespace Run4YourLife.GameManagement {
 
         private void InitializeBoss(PlayerHandle playerDefinition)
         {
-            m_bossPlayerDefinition = playerDefinition;
-
             foreach (GameObject boss in m_sceneBosses)
             {
                 OnPlayerDefinitionChanged(boss, playerDefinition);

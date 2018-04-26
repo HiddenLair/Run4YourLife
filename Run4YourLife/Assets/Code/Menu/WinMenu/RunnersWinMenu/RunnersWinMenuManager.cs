@@ -38,7 +38,7 @@ namespace Run4YourLife.WinMenu
 
         private void Start()
         {
-            if(PlayerManager.Instance.GetPlayers().Count == 0)
+            if(PlayerManager.Instance.PlayerHandles.Count == 0)
             {
                 SetUpFakePlayers(3);
                 SetUpFakeScores();
@@ -64,7 +64,7 @@ namespace Run4YourLife.WinMenu
         {
             ScoreManager.Instance.Initialize();
 
-            foreach(PlayerHandle playerDefinition in PlayerManager.Instance.GetRunners())
+            foreach(PlayerHandle playerDefinition in PlayerManager.Instance.RunnerPlayerHandles)
             {
                 ScoreManager.Instance.OnAddPoints(playerDefinition, Random.Range(0.0f, 50.0f));
             }
@@ -74,7 +74,7 @@ namespace Run4YourLife.WinMenu
         {
             List<KeyValuePair<float, PlayerHandle>> points = new List<KeyValuePair<float, PlayerHandle>>();
 
-            foreach(PlayerHandle playerDefinition in PlayerManager.Instance.GetRunners())
+            foreach(PlayerHandle playerDefinition in PlayerManager.Instance.RunnerPlayerHandles)
             {
                 points.Add(new KeyValuePair<float, PlayerHandle>(ScoreManager.Instance.GetPointsByPlayerDefinition(playerDefinition), playerDefinition));
             }

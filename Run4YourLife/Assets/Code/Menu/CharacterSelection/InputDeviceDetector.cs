@@ -8,7 +8,7 @@ using Run4YourLife.Input;
 
 namespace Run4YourLife.CharacterSelection
 {
-    public class ControllerDetector : MonoBehaviour {
+    public class InputDeviceDetector : MonoBehaviour {
         public InputDeviceEvent OncontrollerDetected;
 
         void Update()
@@ -24,11 +24,11 @@ namespace Run4YourLife.CharacterSelection
             }
         }
 
-        private bool IsAssignedToAPlayer(InputDevice controller)
+        private bool IsAssignedToAPlayer(InputDevice inputDevice)
         {
-            foreach (PlayerHandle p in PlayerManager.Instance.GetPlayers())
+            foreach (PlayerHandle playerHandle in PlayerManager.Instance.PlayerHandles)
             {
-                if (p.inputDevice.Equals(controller))
+                if (playerHandle.inputDevice.Equals(inputDevice))
                 {
                     return true;
                 }

@@ -25,7 +25,7 @@ namespace Run4YourLife.CharacterSelection
         {
             if(CheckGoGame())
             {
-                GoGame();
+                StartGame();
             }
         }
 
@@ -166,7 +166,7 @@ namespace Run4YourLife.CharacterSelection
             return true;
         }
 
-        private void GoGame()
+        private void StartGame()
         {
             gameHasStarted = true;
             CharacterSelectionManager.Instance.OnGameStart();

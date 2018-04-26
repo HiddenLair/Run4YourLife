@@ -19,7 +19,7 @@ namespace Run4YourLife.GameManagement
 
         public GameObject[] ActivatePlayers()
         {
-            GameObject[] players = new GameObject[GameplayPlayerManager.Instance.PlayerCount];
+            GameObject[] players = new GameObject[PlayerManager.Instance.PlayerCount];
             uint index = 0;
 
             ActivateRunners(players, ref index);
@@ -40,7 +40,7 @@ namespace Run4YourLife.GameManagement
 
         private void ActivateRunners(GameObject[] players, ref uint index)
         {
-            foreach (PlayerHandle runnerPlayerDefinition in GameplayPlayerManager.Instance.RunnerPlayerHandles)
+            foreach (PlayerHandle runnerPlayerDefinition in PlayerManager.Instance.RunnerPlayerHandles)
             {
                 players[index] = GameplayPlayerManager.Instance.ActivateRunner(runnerPlayerDefinition, m_runnerSpawns[index].position);
                 index++;

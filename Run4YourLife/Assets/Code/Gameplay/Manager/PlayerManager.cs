@@ -9,45 +9,47 @@ namespace Run4YourLife.Player
     {
         public class PlayerChangedEvent : UnityEvent<PlayerHandle> { }
 
-        private List<PlayerHandle> players = new List<PlayerHandle>();
-
         public PlayerChangedEvent OnPlayerChanged = new PlayerChangedEvent();
 
-        public List<PlayerHandle> GetPlayers()
-        {
-            return players;
+        private List<PlayerHandle> m_playerHandles = new List<PlayerHandle>();
+
+        public List<PlayerHandle> PlayerHandles { get { return m_playerHandles; } }
+        public int PlayerCount { get { return m_playerHandles.Count; } }
+
+        public List<PlayerHandle> RunnerPlayerHandles {
+            get {
+                List<PlayerHandle> runners = new List<PlayerHandle>();
+                foreach (PlayerHandle p in m_playerHandles)
+                {
+                    if (!p.IsBoss)
+                    {
+                        runners.Add(p);
+                    }
+                }
+                return runners;
+            }
         }
 
-        public PlayerHandle GetBoss()
+        public PlayerHandle BossPlayerHandle
         {
-            PlayerHandle boss = null;
-            foreach(PlayerHandle p in players)
+            get
             {
-                if (p.IsBoss)
+                PlayerHandle boss = null;
+                foreach (PlayerHandle p in m_playerHandles)
                 {
-                    boss = p;
-                    break;
+                    if (p.IsBoss)
+                    {
+                        boss = p;
+                        break;
+                    }
                 }
+                return boss;
             }
-            return boss;
-        }
-
-        public List<PlayerHandle> GetRunners()
-        {
-            List<PlayerHandle> runners = new List<PlayerHandle>();
-            foreach (PlayerHandle p in players)
-            {
-                if (!p.IsBoss)
-                {
-                    runners.Add(p);
-                }
-            }
-            return runners;
         }
 
         public void ClearPlayers()
         {
-            players.Clear();
+            m_playerHandles.Clear();
         }
 
         public void SetPlayerAsBoss(PlayerHandle player)
@@ -99,7 +101,7 @@ namespace Run4YourLife.Player
 
         private bool PlayerHasCharacterType(CharacterType characterType)
         {
-            foreach(PlayerHandle player in GetRunners())
+            foreach(PlayerHandle player in RunnerPlayerHandles)
             {
                 if(player.CharacterType.Equals(characterType))
                 {
@@ -111,7 +113,7 @@ namespace Run4YourLife.Player
 
         public void AddPlayer(PlayerHandle playerDefinition)
         {
-            players.Add(playerDefinition);
+            m_playerHandles.Add(playerDefinition);
             OnPlayerChanged.Invoke(playerDefinition);
         }
     }

@@ -19,9 +19,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4376854564913058}
-  - component: {fileID: 114111682491738406}
-  - component: {fileID: 135241776353378942}
   - component: {fileID: 95210090185307026}
+  - component: {fileID: 135241776353378942}
+  - component: {fileID: 114111682491738406}
+  - component: {fileID: 320367781428893810}
   m_Layer: 9
   m_Name: ShieldPowerUp
   m_TagString: Untagged
@@ -261,8 +262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e7acaefe3b339843bab5cba7a1d171a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_type: 0
-  points: 5
+  m_score: 5
 --- !u!135 &135241776353378942
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -275,3 +275,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.35
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!320 &320367781428893810
+PlayableDirector:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1456726114399792}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: dfbff56a1f095d845953c0d20b8c7ab3, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 114621078353396200, guid: dfbff56a1f095d845953c0d20b8c7ab3, type: 2}
+    value: {fileID: 1456726114399792}
+  m_ExposedReferences:
+    m_References: []

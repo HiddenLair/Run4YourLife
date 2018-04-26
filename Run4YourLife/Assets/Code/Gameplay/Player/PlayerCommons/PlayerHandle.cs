@@ -29,6 +29,6 @@ namespace Run4YourLife.Player
             ID = 1,
             IsBoss = false,
             inputDevice = Run4YourLife.Input.InputDeviceManager.Instance.DefaultInputDevice
-            };
+        };
     }
 }
