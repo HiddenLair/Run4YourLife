@@ -14,14 +14,14 @@ namespace Run4YourLife.Player
             if (PlayerHandle == null)
             {
                 Debug.LogWarning("Player does not have player definition, creating an instance using the default properties");
-                PlayerHandle defaultPlayerDefinition = PlayerHandle.DebugDefaultPlayerHandle;
-                ExecuteEvents.Execute<IPlayerHandleEvent>(gameObject, null, (a, b) => a.OnPlayerDefinitionChanged(defaultPlayerDefinition));
+                PlayerHandle defaultplayerHandle = PlayerHandle.DebugDefaultPlayerHandle;
+                ExecuteEvents.Execute<IPlayerHandleEvent>(gameObject, null, (a, b) => a.OnPlayerHandleChanged(defaultplayerHandle));
             }
         }
 
-        public void OnPlayerDefinitionChanged(PlayerHandle playerDefinition)
+        public void OnPlayerHandleChanged(PlayerHandle playerHandle)
         {
-            PlayerHandle = playerDefinition;
+            PlayerHandle = playerHandle;
         }
     }
 }

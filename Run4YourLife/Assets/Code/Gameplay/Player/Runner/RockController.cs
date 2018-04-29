@@ -31,8 +31,8 @@ public class RockController : MonoBehaviour {
         Destroy(gameObject);
     }
 
-    public void SetPlayerDefinition(PlayerHandle def)
+    public void SetplayerHandle(PlayerHandle playerHandle)
     {
-        playerWhoThrew = def;
+        playerWhoThrew = playerHandle;
     }
 }

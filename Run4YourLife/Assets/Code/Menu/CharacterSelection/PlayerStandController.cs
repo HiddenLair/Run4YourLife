@@ -36,7 +36,7 @@ namespace Run4YourLife.CharacterSelection
 
         #region References
 
-        protected PlayerHandle playerDefinition;
+        protected PlayerHandle playerHandle;
         protected PlayerStandControllerControlScheme controlScheme;
 
         #endregion
@@ -53,7 +53,7 @@ namespace Run4YourLife.CharacterSelection
 
         void Update()
         {
-            if(playerDefinition != null)
+            if(playerHandle != null)
             {
                 UpdatePlayer();
             }
@@ -73,49 +73,49 @@ namespace Run4YourLife.CharacterSelection
             return ready;
         }
 
-        public PlayerHandle GetPlayerDefinition()
+        public PlayerHandle GetplayerHandle()
         {
-            return playerDefinition;
+            return playerHandle;
         }
 
-        public void OnPlayerDefinitionChanged(PlayerHandle playerDefinition)
+        public void OnPlayerHandleChanged(PlayerHandle playerHandle)
         {
-            if(playerDefinition == null)
+            if(playerHandle == null)
             {
-                ClearPlayerDefinition();
+                ClearplayerHandle();
             }
             else
             {
-                SetPlayerDefinition(playerDefinition);
+                SetplayerHandle(playerHandle);
             }
         }
 
-        protected void SetPlayerDefinition(PlayerHandle playerDefinition)
+        protected void SetplayerHandle(PlayerHandle playerHandle)
         {
-            this.playerDefinition = playerDefinition;
-            activeStand = SpawnPlayerStand(playerDefinition);
+            this.playerHandle = playerHandle;
+            activeStand = SpawnPlayerStand(playerHandle);
             controlScheme.Active = true;
             ui.SetActive(true);
         }
 
-        protected void ClearPlayerDefinition()
+        protected void ClearplayerHandle()
         {
-            playerDefinition = null;
+            playerHandle = null;
             Destroy(activeStand);
             activeStand = null;
             controlScheme.Active = false;
             ui.SetActive(false);
         }
 
-        private GameObject SpawnPlayerStand(PlayerHandle playerDefinition)
+        private GameObject SpawnPlayerStand(PlayerHandle playerHandle)
         {
-            GameObject prefab = GetStandPrefabForPlayer(playerDefinition);
+            GameObject prefab = GetStandPrefabForPlayer(playerHandle);
             GameObject instance = Instantiate(prefab, spawnTransform, false);
 
             return instance;
         }
 
-        protected abstract GameObject GetStandPrefabForPlayer(PlayerHandle playerDefinition);
+        protected abstract GameObject GetStandPrefabForPlayer(PlayerHandle playerHandle);
 
         protected virtual void UpdatePlayer()
         {

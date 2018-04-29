@@ -12,7 +12,7 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(AudioSource))]
     [RequireComponent(typeof(RunnerControlScheme))]
     [RequireComponent(typeof(CharacterController))]
-    [RequireComponent(typeof(Stats))]
+    [RequireComponent(typeof(RunnerAttributeController))]
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(RunnerInputStated))]
     public class RunnerCharacterController : MonoBehaviour,IDeactivateByInvisible
@@ -72,7 +72,7 @@ namespace Run4YourLife.Player
         #region References
 
         private CharacterController m_characterController;
-        private Stats m_stats;
+        private RunnerAttributeController m_stats;
         private RunnerControlScheme m_runnerControlScheme;
         private Animator m_animator;
         private AudioSource m_audioSource;
@@ -95,9 +95,9 @@ namespace Run4YourLife.Player
         private float m_gravity;
         private float m_horizontalDrag;
 
-        private bool limitRight = false;
-        private bool limitLeft = false;
-        private bool checkOutOfScreen = false;
+        private bool m_limitRight = false;
+        private bool m_limitLeft = false;
+        private bool m_checkOutOfScreen = false;
 
         private float m_idleTimer;
 
@@ -122,7 +122,7 @@ namespace Run4YourLife.Player
             m_audioSource = GetComponent<AudioSource>();
             m_runnerControlScheme = GetComponent<RunnerControlScheme>();
             m_characterController = GetComponent<CharacterController>();
-            m_stats = GetComponent<Stats>();
+            m_stats = GetComponent<RunnerAttributeController>();
             m_animator = GetComponent<Animator>();
             m_inputPlayer = GetComponent<RunnerInputStated>();
 
@@ -132,6 +132,8 @@ namespace Run4YourLife.Player
 
         public void Clear()
         {
+            StopAllCoroutines();
+
             m_gravity = m_baseGravity;
             m_horizontalDrag = m_baseHorizontalDrag;
             m_velocity = Vector3.zero;
@@ -146,7 +148,6 @@ namespace Run4YourLife.Player
 
             m_animator.Rebind();
 
-            StopAllCoroutines();
             m_runnerControlScheme.Active = false;
         }
 
@@ -163,7 +164,7 @@ namespace Run4YourLife.Player
 
         public void Deactivate()
         {
-            if (checkOutOfScreen)
+            if (m_checkOutOfScreen)
             {
                 GetComponent<RunnerController>().AbsoluteKill();
             }
@@ -296,7 +297,7 @@ namespace Run4YourLife.Player
         {
             float horizontal = m_inputPlayer.GetHorizontalInput();
 
-            Vector3 inputMovement = transform.right * horizontal * m_stats.Get(StatType.SPEED) * Time.deltaTime;
+            Vector3 inputMovement = transform.right * horizontal * m_stats.Get(AttributeType.SPEED) * Time.deltaTime;
             Vector3 totalMovement = inputMovement + m_velocity * Time.deltaTime;
 
             MoveCharacterContoller(totalMovement);
@@ -305,11 +306,11 @@ namespace Run4YourLife.Player
         private void MoveCharacterContoller(Vector3 movement)
         {
             m_characterController.Move(movement);
-            if (limitRight)
+            if (m_limitRight)
             {
                 TrimPlayerPositionInsideCameraViewRight();
             }
-            if (limitLeft)
+            if (m_limitLeft)
             {
                 TrimPlayerPositionInsideCameraViewLeft();
             }
@@ -384,7 +385,7 @@ namespace Run4YourLife.Player
             m_animator.SetTrigger("jump");
 
             //set vertical velocity to the velocity needed to reach maxJumpHeight
-            m_velocity.y = HeightToVelocity(m_stats.Get(StatType.JUMP_HEIGHT));
+            m_velocity.y = HeightToVelocity(m_stats.Get(AttributeType.JUMP_HEIGHT));
             yield return StartCoroutine(WaitUntilApexOfJumpOrReleaseButtonOrCeiling());
 
             m_isJumping = false;
@@ -534,17 +535,17 @@ namespace Run4YourLife.Player
 
         public void SetLimitScreenRight(bool value)
         {
-            limitRight = value;
+            m_limitRight = value;
         }
 
         public void SetLimitScreenLeft(bool value)
         {
-            limitLeft = value;
+            m_limitLeft = value;
         }
 
         public void SetCheckOutScreen(bool value)
         {
-            checkOutOfScreen = value;
+            m_checkOutOfScreen = value;
         }
 
         #endregion

@@ -111,10 +111,10 @@ namespace Run4YourLife.Player
             return false;
         }
 
-        public void AddPlayer(PlayerHandle playerDefinition)
+        public void AddPlayer(PlayerHandle playerHandle)
         {
-            m_playerHandles.Add(playerDefinition);
-            OnPlayerChanged.Invoke(playerDefinition);
+            m_playerHandles.Add(playerHandle);
+            OnPlayerChanged.Invoke(playerHandle);
         }
     }
 }

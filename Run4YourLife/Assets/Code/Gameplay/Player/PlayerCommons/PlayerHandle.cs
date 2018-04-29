@@ -6,7 +6,7 @@ namespace Run4YourLife.Player
 {
     public interface IPlayerHandleEvent : IEventSystemHandler
     {
-        void OnPlayerDefinitionChanged(PlayerHandle playerDefinition);
+        void OnPlayerHandleChanged(PlayerHandle playerHandle);
     }
 
     public enum CharacterType

@@ -29,9 +29,9 @@ public class RunnerScoreController : MonoBehaviour
         ScoreManager.Instance.OnPlayerScoreChanged.RemoveListener(OnPlayerScoreChanged);
     }
 
-    public void SetPlayerDefinition(PlayerHandle playerDefinition)
+    public void SetplayerHandle(PlayerHandle playerHandle)
     {
-        m_playerHandle = playerDefinition;
+        m_playerHandle = playerHandle;
     }
 
     private void OnPlayerScoreChanged(PlayerHandle playerHandle, float score)

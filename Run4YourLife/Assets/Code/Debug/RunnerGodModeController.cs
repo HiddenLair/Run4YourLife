@@ -33,7 +33,7 @@ public class RunnerGodModeController : MonoBehaviour
         this.runner = runner;
         transform.position = runner.transform.position;
 
-        ExecuteEvents.Execute<IPlayerHandleEvent>(gameObject, null, (x, y) => x.OnPlayerDefinitionChanged(runner.GetComponent<PlayerInstance>().PlayerHandle));
+        ExecuteEvents.Execute<IPlayerHandleEvent>(gameObject, null, (x, y) => x.OnPlayerHandleChanged(runner.GetComponent<PlayerInstance>().PlayerHandle));
         StartCoroutine(YieldHelper.SkipFrame(() => { runnerGodModeControlScheme.Active = true; }));
     }
 

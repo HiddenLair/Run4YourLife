@@ -44,9 +44,9 @@ namespace Run4YourLife.Input
             }
         }
 
-        public void OnPlayerDefinitionChanged(PlayerHandle playerDefinition)
+        public void OnPlayerHandleChanged(PlayerHandle playerHandle)
         {
-            InputDevice = playerDefinition != null ? playerDefinition.inputDevice : null;
+            InputDevice = playerHandle != null ? playerHandle.inputDevice : null;
         }
 
         protected void UpdateInputDevice(InputDevice inputDevice)

@@ -18,11 +18,11 @@ public class RunnersScoreController : MonoBehaviour
 
 	void Start()
     {
-        foreach(PlayerHandle playerDefinition in PlayerManager.Instance.RunnerPlayerHandles)
+        foreach(PlayerHandle playerHandle in PlayerManager.Instance.RunnerPlayerHandles)
         {
             GameObject scoreText = Instantiate(scoreTextPrefab);
             scoreText.transform.SetParent(scoreTexts.transform);
-            scoreText.GetComponent<RunnerScoreController>().SetPlayerDefinition(playerDefinition);
+            scoreText.GetComponent<RunnerScoreController>().SetplayerHandle(playerHandle);
         }
 	}
 }

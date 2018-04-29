@@ -59,8 +59,8 @@ namespace Run4YourLife.GameManagement {
         private Queue<PlayerHandle> m_deadRunners = new Queue<PlayerHandle>();
         private Dictionary<PlayerHandle, GameObject> m_runnerGameObject = new Dictionary<PlayerHandle, GameObject>();
 
-        private PlayerHandle m_bossPlayerDefinition;
-        private List<PlayerHandle> m_runnerPlayerDefinitions = new List<PlayerHandle>();
+        private PlayerHandle m_bossPlayerHandle;
+        private List<PlayerHandle> m_runnerPlayerHandles = new List<PlayerHandle>();
 
         private RunnerPrefabManager m_runnerPrefabManager;
 
@@ -140,41 +140,41 @@ namespace Run4YourLife.GameManagement {
             }
         }
 
-        private void InitializeRunner(PlayerHandle playerDefinition)
+        private void InitializeRunner(PlayerHandle playerHandle)
         {
-            m_runnerPlayerDefinitions.Add(playerDefinition);
+            m_runnerPlayerHandles.Add(playerHandle);
 
-            GameObject runner = Instantiate(GetRunnerForPlayer(playerDefinition), m_runnerSlot[runnerIndex].transform, false);
+            GameObject runner = Instantiate(GetRunnerForPlayer(playerHandle), m_runnerSlot[runnerIndex].transform, false);
 
             runnerIndex++;
             runner.SetActive(false);
-            OnPlayerDefinitionChanged(runner, playerDefinition);
+            OnplayerHandleChanged(runner, playerHandle);
 
             if(!m_runnersAlive.Contains(runner))
             {
                 m_runners.Add(runner);
             }
 
-            m_runnerGameObject[playerDefinition] = runner;
+            m_runnerGameObject[playerHandle] = runner;
         }
 
-        private GameObject GetRunnerForPlayer(PlayerHandle playerDefinition)
+        private GameObject GetRunnerForPlayer(PlayerHandle playerHandle)
         {
-            return m_runnerPrefabManager.Get(playerDefinition.CharacterType);
+            return m_runnerPrefabManager.Get(playerHandle.CharacterType);
         }
 
-        private void InitializeBoss(PlayerHandle playerDefinition)
+        private void InitializeBoss(PlayerHandle playerHandle)
         {
             foreach (GameObject boss in m_sceneBosses)
             {
-                OnPlayerDefinitionChanged(boss, playerDefinition);
+                OnplayerHandleChanged(boss, playerHandle);
             }
         }
 
-        public void OnPlayerDefinitionChanged(GameObject player, PlayerHandle playerDefinition)
+        public void OnplayerHandleChanged(GameObject player, PlayerHandle playerHandle)
         {
             player.SetActive(true);
-            ExecuteEvents.Execute<IPlayerHandleEvent>(player, null, (a, b) => a.OnPlayerDefinitionChanged(playerDefinition));
+            ExecuteEvents.Execute<IPlayerHandleEvent>(player, null, (a, b) => a.OnPlayerHandleChanged(playerHandle));
             player.SetActive(false);
         }
 
@@ -183,8 +183,8 @@ namespace Run4YourLife.GameManagement {
         public void OnRunnerDeath(GameObject runner)
         {            
             m_runnersAlive.Remove(runner);
-            PlayerHandle playerDefinition = runner.GetComponent<PlayerInstance>().PlayerHandle;
-            m_deadRunners.Enqueue(playerDefinition);
+            PlayerHandle playerHandle = runner.GetComponent<PlayerInstance>().PlayerHandle;
+            m_deadRunners.Enqueue(playerHandle);
 
             runner.SetActive(false);
 
@@ -198,15 +198,15 @@ namespace Run4YourLife.GameManagement {
         {
             if(m_deadRunners.Count > 0)
             { 
-                PlayerHandle playerDefinition = m_deadRunners.Dequeue();
-                GameObject runner = ActivateRunner(playerDefinition, position);
+                PlayerHandle playerHandle = m_deadRunners.Dequeue();
+                GameObject runner = ActivateRunner(playerHandle, position);
                 m_onPlayerRevived.Invoke(runner);
             }
         }
 
-        public GameObject ActivateRunner(PlayerHandle playerDefinition, Vector3 position)
+        public GameObject ActivateRunner(PlayerHandle playerHandle, Vector3 position)
         {
-            GameObject runner = m_runnerGameObject[playerDefinition];
+            GameObject runner = m_runnerGameObject[playerHandle];
 
             runner.transform.position = position;
             runner.SetActive(true);

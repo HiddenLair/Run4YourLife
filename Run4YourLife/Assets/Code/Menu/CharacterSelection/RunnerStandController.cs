@@ -43,9 +43,9 @@ namespace Run4YourLife.CharacterSelection
             m_scaleTickArrowRight.gameObject.SetActive(true);
         }
 
-        protected override GameObject GetStandPrefabForPlayer(PlayerHandle playerDefinition)
+        protected override GameObject GetStandPrefabForPlayer(PlayerHandle playerHandle)
         {
-            return m_runnerPrefabManager.Get(playerDefinition.CharacterType);
+            return m_runnerPrefabManager.Get(playerHandle.CharacterType);
         }
 
         protected override void UpdatePlayer()
@@ -81,10 +81,10 @@ namespace Run4YourLife.CharacterSelection
 
         private void ChangePlayerCharacter(AdvanceType advanceType)
         {
-            PlayerHandle playerDefinition = this.playerDefinition;
-            ClearPlayerDefinition();
-            playerDefinition.CharacterType = PlayerManager.Instance.GetFirstAviableCharacterType(playerDefinition.CharacterType, (int)advanceType);
-            SetPlayerDefinition(playerDefinition);
+            PlayerHandle playerHandle = this.playerHandle;
+            ClearplayerHandle();
+            playerHandle.CharacterType = PlayerManager.Instance.GetFirstAviableCharacterType(playerHandle.CharacterType, (int)advanceType);
+            SetplayerHandle(playerHandle);
         }
     }
 }

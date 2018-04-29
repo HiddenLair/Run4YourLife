@@ -1,9 +1,11 @@
 ﻿namespace Run4YourLife.Player
 {
-    public class JumpHeightModifier : StatModifier
+    public class JumpHeightModifier : AttributeModifier
     {
-        public JumpHeightModifier(ModifierType modifierType, bool buff, float amount, float endTime) :
-            base(StatType.JUMP_HEIGHT, modifierType, buff, amount, endTime)
+        protected override AttributeType AttributeType { get { return AttributeType.JUMP_HEIGHT; } }
+
+        public JumpHeightModifier(AttributeModifierType modifierType, bool buff, float amount, float endTime) :
+            base(modifierType, buff, amount, endTime)
         { }
 
         public override int GetPriority()

@@ -2,14 +2,14 @@
 
 namespace Run4YourLife.Player
 {
-    [RequireComponent(typeof(Stats))]
+    [RequireComponent(typeof(RunnerAttributeController))]
     public class Burned : RunnerState, IRunnerInput
     {
         private const float SPEED_BUFF_PERCENT = 1.0f / 3.0f;
 
 
-        private StatModifier m_modifier;
-        private Stats m_stats;
+        private AttributeModifier m_modifier;
+        private RunnerAttributeController m_stats;
 
         private float lastInputSign = 1.0f;
         private float m_destructionTime;
@@ -21,7 +21,7 @@ namespace Run4YourLife.Player
         protected override void Awake()
         {
             base.Awake();
-            m_stats = GetComponent<Stats>();
+            m_stats = GetComponent<RunnerAttributeController>();
         }
 
         int IRunnerInput.GetPriority()
@@ -55,13 +55,13 @@ namespace Run4YourLife.Player
             m_destructionTime = Time.time + m_burnDuration;
 
             //TODO: Why do we remove it and re-add it?
-            m_stats.RemoveStatModifier(m_modifier);
+            m_stats.RemoveAttributeModifier(m_modifier);
             m_stats.AddModifier(m_modifier);
         }
 
         protected override void Apply()
         {
-            m_modifier = new SpeedModifier(ModifierType.PERCENT, true, SPEED_BUFF_PERCENT, m_burnDuration);
+            m_modifier = new SpeedModifier(AttributeModifierType.PERCENT, true, SPEED_BUFF_PERCENT, m_burnDuration);
             m_stats.AddModifier(m_modifier);
 
             m_destructionTime = Time.time + m_burnDuration;
@@ -69,7 +69,7 @@ namespace Run4YourLife.Player
 
         protected override void Unapply()
         {
-            m_stats.RemoveStatModifier(m_modifier);
+            m_stats.RemoveAttributeModifier(m_modifier);
         }
 
         public void SetBurningTime(int burningTime)

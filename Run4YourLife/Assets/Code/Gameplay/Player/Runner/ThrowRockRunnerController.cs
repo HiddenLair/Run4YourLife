@@ -52,7 +52,7 @@ namespace Run4YourLife.Player {
             Physics.IgnoreCollision(rock.GetComponent<Collider>(), collider);
             Rigidbody rigidbody = rock.GetComponent<Rigidbody>();
             rigidbody.velocity = GetThrowVelocity(force, angle);
-            rock.GetComponent<RockController>().SetPlayerDefinition(myDefinition);
+            rock.GetComponent<RockController>().SetplayerHandle(myDefinition);
         }
 
         private Vector3 GetThrowVelocity(float force, float angle)
@@ -72,9 +72,9 @@ namespace Run4YourLife.Player {
             Gizmos.DrawLine(m_rockInstantiationTransform.position, m_rockInstantiationTransform.position + director*5);
         }
 
-        public void OnPlayerDefinitionChanged(PlayerHandle playerDefinition)
+        public void OnPlayerHandleChanged(PlayerHandle playerHandle)
         {
-            myDefinition = playerDefinition;
+            myDefinition = playerHandle;
         }
     }
 }

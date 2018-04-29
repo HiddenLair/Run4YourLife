@@ -11,14 +11,14 @@ using Run4YourLife.GameManagement;
 namespace Run4YourLife.Player
 {
     [RequireComponent(typeof(RunnerCharacterController))]
-    [RequireComponent(typeof(Stats))]
+    [RequireComponent(typeof(RunnerAttributeController))]
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(BuffManager))]
     public class RunnerController : MonoBehaviour, ICharacterEvents
     {
         #region References
 
-        private Stats m_stats;
+        private RunnerAttributeController m_stats;
         private RunnerCharacterController m_runnerCharacterController;
         private BuffManager m_buffManager;
         #endregion
@@ -26,7 +26,7 @@ namespace Run4YourLife.Player
         private void Awake()
         {
             m_runnerCharacterController = GetComponent<RunnerCharacterController>();
-            m_stats = GetComponent<Stats>();
+            m_stats = GetComponent<RunnerAttributeController>();
             m_buffManager = GetComponent<BuffManager>();
         }
 
@@ -77,10 +77,10 @@ namespace Run4YourLife.Player
             }
         }
 
-        public void Debuff(StatModifier statmodifier)
+        public void Debuff(AttributeModifier attributeModifier)
         {
             if (!ConsumeShieldIfAviable()) {
-                m_stats.AddModifier(statmodifier);
+                m_stats.AddModifier(attributeModifier);
             }
         }
 

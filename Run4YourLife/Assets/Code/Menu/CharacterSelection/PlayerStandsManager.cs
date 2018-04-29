@@ -34,22 +34,22 @@ namespace Run4YourLife.CharacterSelection
             ready = true;
         }
 
-        void OnPlayerChanged(PlayerHandle playerDefinition)
+        void OnPlayerChanged(PlayerHandle playerHandle)
         {
-            DestroyStand(playerDefinition);
-            CreateStand(playerDefinition);
+            DestroyStand(playerHandle);
+            CreateStand(playerHandle);
         }
 
-        void OnPlayerLeft(PlayerHandle playerDefinition)
+        void OnPlayerLeft(PlayerHandle playerHandle)
         {
-            DestroyStand(playerDefinition);
+            DestroyStand(playerHandle);
         }
 
-        private void DestroyStand(PlayerHandle playerDefinition)
+        private void DestroyStand(PlayerHandle playerHandle)
         {
             PlayerStandController playerStandController = null;
 
-            if(bossStandController.GetPlayerDefinition() == playerDefinition)
+            if(bossStandController.GetplayerHandle() == playerHandle)
             {
                 playerStandController = bossStandController;
             }
@@ -57,7 +57,7 @@ namespace Run4YourLife.CharacterSelection
             {
                 foreach(RunnerStandController runnerStandController in runnerStandControllers)
                 {
-                    if(runnerStandController.GetPlayerDefinition() == playerDefinition)
+                    if(runnerStandController.GetplayerHandle() == playerHandle)
                     {
                         playerStandController = runnerStandController;
                         break;
@@ -67,17 +67,17 @@ namespace Run4YourLife.CharacterSelection
 
             if(playerStandController != null)
             {
-                ExecuteEvents.Execute<IPlayerHandleEvent>(playerStandController.gameObject, null, (a, b) => a.OnPlayerDefinitionChanged(null));
+                ExecuteEvents.Execute<IPlayerHandleEvent>(playerStandController.gameObject, null, (a, b) => a.OnPlayerHandleChanged(null));
             }
         }
 
-        private void CreateStand(PlayerHandle playerDefinition)
+        private void CreateStand(PlayerHandle playerHandle)
         {
             PlayerStandController playerStandController = null;
 
-            if(playerDefinition.IsBoss)
+            if(playerHandle.IsBoss)
             {
-                Debug.Assert(bossStandController.GetPlayerDefinition() == null);
+                Debug.Assert(bossStandController.GetplayerHandle() == null);
 
                 playerStandController = bossStandController;
             }
@@ -85,7 +85,7 @@ namespace Run4YourLife.CharacterSelection
             {
                 foreach(RunnerStandController runnerStandController in runnerStandControllers)
                 {
-                    if(runnerStandController.GetPlayerDefinition() == null)
+                    if(runnerStandController.GetplayerHandle() == null)
                     {
                         playerStandController = runnerStandController;
                         break;
@@ -95,7 +95,7 @@ namespace Run4YourLife.CharacterSelection
 
             Debug.Assert(playerStandController != null);
 
-            ExecuteEvents.Execute<IPlayerHandleEvent>(playerStandController.gameObject, null, (a, b) => a.OnPlayerDefinitionChanged(playerDefinition));
+            ExecuteEvents.Execute<IPlayerHandleEvent>(playerStandController.gameObject, null, (a, b) => a.OnPlayerHandleChanged(playerHandle));
         }
 
         #region Boss And Runner StandController Management
@@ -105,9 +105,9 @@ namespace Run4YourLife.CharacterSelection
             if(!ready) return;
             ready = false;
 
-            if(bossStandController.GetPlayerDefinition() == null)
+            if(bossStandController.GetplayerHandle() == null)
             {
-                PlayerManager.Instance.SetPlayerAsBoss(runnerStandController.GetPlayerDefinition());
+                PlayerManager.Instance.SetPlayerAsBoss(runnerStandController.GetplayerHandle());
             }
         }
 
@@ -116,7 +116,7 @@ namespace Run4YourLife.CharacterSelection
             if(!ready) return;
             ready = false;
 
-            PlayerManager.Instance.SetPlayerAsRunner(bossStandController.GetPlayerDefinition());
+            PlayerManager.Instance.SetPlayerAsRunner(bossStandController.GetplayerHandle());
         }
 
         public void GoMainMenu()
@@ -131,7 +131,7 @@ namespace Run4YourLife.CharacterSelection
                 return false;
             }
 
-            if(bossStandController.GetPlayerDefinition() == null)
+            if(bossStandController.GetplayerHandle() == null)
             {
                 return false;
             }
@@ -145,7 +145,7 @@ namespace Run4YourLife.CharacterSelection
 
             foreach(RunnerStandController runnerStandController in runnerStandControllers)
             {
-                if(runnerStandController.GetPlayerDefinition() != null)
+                if(runnerStandController.GetplayerHandle() != null)
                 {
                     if(!runnerStandController.GetReady())
                     {

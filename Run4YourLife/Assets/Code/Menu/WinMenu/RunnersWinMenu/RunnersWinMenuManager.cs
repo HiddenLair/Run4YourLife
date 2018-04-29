@@ -64,9 +64,9 @@ namespace Run4YourLife.WinMenu
         {
             ScoreManager.Instance.Initialize();
 
-            foreach(PlayerHandle playerDefinition in PlayerManager.Instance.RunnerPlayerHandles)
+            foreach(PlayerHandle playerHandle in PlayerManager.Instance.RunnerPlayerHandles)
             {
-                ScoreManager.Instance.OnAddPoints(playerDefinition, Random.Range(0.0f, 50.0f));
+                ScoreManager.Instance.OnAddPoints(playerHandle, Random.Range(0.0f, 50.0f));
             }
         }
 
@@ -74,9 +74,9 @@ namespace Run4YourLife.WinMenu
         {
             List<KeyValuePair<float, PlayerHandle>> points = new List<KeyValuePair<float, PlayerHandle>>();
 
-            foreach(PlayerHandle playerDefinition in PlayerManager.Instance.RunnerPlayerHandles)
+            foreach(PlayerHandle playerHandle in PlayerManager.Instance.RunnerPlayerHandles)
             {
-                points.Add(new KeyValuePair<float, PlayerHandle>(ScoreManager.Instance.GetPointsByPlayerDefinition(playerDefinition), playerDefinition));
+                points.Add(new KeyValuePair<float, PlayerHandle>(ScoreManager.Instance.GetPointsByplayerHandle(playerHandle), playerHandle));
             }
 
             points.Sort((a, b) => b.Key.CompareTo(a.Key));

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Run4YourLife.Player
 {
-    public enum ModifierType
+    public enum AttributeModifierType
     {
         PLAIN,
         PERCENT,
@@ -11,58 +11,41 @@ namespace Run4YourLife.Player
     }
 
     [Serializable]
-    public class StatModifier : IComparable<StatModifier>
+    public abstract class AttributeModifier : IComparable<AttributeModifier>
     {
-        #region InspectorVariables
+        protected abstract AttributeType AttributeType { get; }
 
-        [SerializeField]
-        private StatType statType;
-
-        [SerializeField]
-        private ModifierType modifierType;
-
-        [SerializeField]
+        private AttributeModifierType modifierType;
         private bool buff;
-
-        [SerializeField]
         private float amount;
-
-        [SerializeField]
         private float endTime;
 
-        #endregion
+        private RunnerAttributeController m_runnerAttributeController;
 
-        #region Private Variables
-
-        private Stats stats;
-
-        #endregion
-
-        protected StatModifier(StatType statType, ModifierType modifierType, bool buff, float amount, float endTime)
+        protected AttributeModifier(AttributeModifierType modifierType, bool buff, float amount, float endTime)
         {
-            this.statType = statType;
             this.modifierType = modifierType;
             this.buff = buff;
             this.amount = amount;
             this.endTime = endTime;
         }
 
-        public void SetStats(Stats stats)
+        public void SetRunnerAttributeController(RunnerAttributeController runnerAttributeController)
         {
-            this.stats = stats;
+            this.m_runnerAttributeController = runnerAttributeController;
 
             Apply();
 
-            stats.RemoveAfter(this, endTime);
+            runnerAttributeController.RemoveAfter(this, endTime);
         }
 
         public void Apply()
         {
             float value = amount;
 
-            if (modifierType == ModifierType.PERCENT)
+            if (modifierType == AttributeModifierType.PERCENT)
             {
-                value *= stats.Get(statType, true);
+                value *= m_runnerAttributeController.Get(AttributeType, true);
             }
 
             if (!buff)
@@ -70,13 +53,13 @@ namespace Run4YourLife.Player
                 value *= -1.0f;
             }
 
-            if (modifierType == ModifierType.SETTER)
+            if (modifierType == AttributeModifierType.SETTER)
             {
-                stats.Set(statType, value);
+                m_runnerAttributeController.Set(AttributeType, value);
             }
             else
             {
-                stats.Increase(statType, value);
+                m_runnerAttributeController.Increase(AttributeType, value);
             }
 
         }
@@ -86,7 +69,7 @@ namespace Run4YourLife.Player
             return -1;
         }
 
-        public int CompareTo(StatModifier other)
+        public int CompareTo(AttributeModifier other)
         {
             int result = this.GetPriority().CompareTo(other.GetPriority());
 

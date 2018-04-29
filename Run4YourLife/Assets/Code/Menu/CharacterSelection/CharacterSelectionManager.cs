@@ -37,7 +37,7 @@ namespace Run4YourLife.CharacterSelection
 
         private void CreatePlayerForController(InputDevice inputDevice)
         {
-            PlayerHandle playerDefinition = new PlayerHandle
+            PlayerHandle playerHandle = new PlayerHandle
             {
                 inputDevice = inputDevice,
                 CharacterType = PlayerManager.Instance.GetFirstAviablePlayerCharacterType(),
@@ -46,10 +46,10 @@ namespace Run4YourLife.CharacterSelection
 
             if (PlayerManager.Instance.PlayerHandles.Count == 0)
             {
-                PlayerManager.Instance.SetPlayerAsBoss(playerDefinition);
+                PlayerManager.Instance.SetPlayerAsBoss(playerHandle);
             }
 
-            PlayerManager.Instance.AddPlayer(playerDefinition);
+            PlayerManager.Instance.AddPlayer(playerHandle);
         }
 
         public void OnGameStart()

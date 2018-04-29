@@ -10,7 +10,7 @@ namespace Run4YourLife.Player {
         {
             GetComponent<RunnerInputStated>().Clear();
             GetComponent<BuffManager>().Clear();
-            GetComponent<Stats>().Clear();
+            GetComponent<RunnerAttributeController>().ResetAttributes();
             GetComponent<RunnerCharacterController>().Clear();
         }
     }

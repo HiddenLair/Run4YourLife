@@ -10,7 +10,7 @@ namespace Run4YourLife.GameManagement
 {
     public interface IScoreEvents : IEventSystemHandler
     {
-        void OnAddPoints(PlayerHandle playerDefinition, float points);
+        void OnAddPoints(PlayerHandle playerHandle, float points);
     }
 
     [System.Serializable]
@@ -46,21 +46,21 @@ namespace Run4YourLife.GameManagement
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }
 
-        public void OnAddPoints(PlayerHandle playerDefinition,float points)
+        public void OnAddPoints(PlayerHandle playerHandle,float points)
         {
-            if(!m_playerScore.ContainsKey(playerDefinition))
+            if(!m_playerScore.ContainsKey(playerHandle))
             {
-                m_playerScore.Add(playerDefinition, 0);
+                m_playerScore.Add(playerHandle, 0);
             }
 
-            float score = (m_playerScore[playerDefinition] += points);
-            m_onPlayerScoreChanged.Invoke(playerDefinition, score);
+            float score = (m_playerScore[playerHandle] += points);
+            m_onPlayerScoreChanged.Invoke(playerHandle, score);
         }
 
-        public float GetPointsByPlayerDefinition(PlayerHandle playerDefinition)
+        public float GetPointsByplayerHandle(PlayerHandle playerHandle)
         {
             float playerScore;
-            m_playerScore.TryGetValue(playerDefinition, out playerScore);
+            m_playerScore.TryGetValue(playerHandle, out playerScore);
 
             return playerScore;
         }
