@@ -1,10 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using System;
-using Run4YourLife.Input;
-using Run4YourLife.Player;
+
 using Run4YourLife.GameManagement;
 
 
