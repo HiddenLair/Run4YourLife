@@ -11,22 +11,16 @@ using Run4YourLife.GameManagement;
 namespace Run4YourLife.Player
 {
     [RequireComponent(typeof(RunnerCharacterController))]
-    [RequireComponent(typeof(RunnerAttributeController))]
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(BuffManager))]
     public class RunnerController : MonoBehaviour, ICharacterEvents
     {
-        #region References
-
-        private RunnerAttributeController m_stats;
         private RunnerCharacterController m_runnerCharacterController;
         private BuffManager m_buffManager;
-        #endregion
 
         private void Awake()
         {
             m_runnerCharacterController = GetComponent<RunnerCharacterController>();
-            m_stats = GetComponent<RunnerAttributeController>();
             m_buffManager = GetComponent<BuffManager>();
         }
 

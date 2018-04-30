@@ -101,8 +101,6 @@ namespace Run4YourLife.Player
 
         private float m_idleTimer;
 
-        private Coroutine m_checkCoyoteGroundedCoroutine;
-
         private float m_baseHorizontalDrag = 2f;
 
         #endregion
@@ -155,7 +153,7 @@ namespace Run4YourLife.Player
 
         private void OnEnable()
         {
-            m_checkCoyoteGroundedCoroutine = StartCoroutine(CheckCoyoteGroundedCoroutine());
+            StartCoroutine(CheckCoyoteGroundedCoroutine());
             m_runnerControlScheme.Active = true;
         }
 

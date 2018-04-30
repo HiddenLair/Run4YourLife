@@ -14,6 +14,7 @@ public class InputStatusEffect : StatusEffect
 {
     public override StatusEffectType StatusEffectType { get { return StatusEffectType.Input; } }
     public InputModifierType inputModifierType;
+    public string actionName;
     public float float_value;
     public bool bool_value;
 

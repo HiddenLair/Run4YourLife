@@ -80,21 +80,17 @@ public class InputController : MonoBehaviour {
         return value;
     }
 
-    public void Remove(InputStatusEffect inputStatusEffect)
-    {
-        Action action = m_controlScheme.GetByName(inputStatusEffect.name);
-        Debug.Assert(action != null);
-        List<InputStatusEffect> inputStatusEffects = m_inputStatusEffects[action];
-        Debug.Assert(inputStatusEffects != null);
-        inputStatusEffects.Remove(inputStatusEffect);
-    }
-
     public void Add(InputStatusEffect inputStatusEffect)
     {
-        Action action = m_controlScheme.GetByName(inputStatusEffect.name);
+        Action action = m_controlScheme.GetByName(inputStatusEffect.actionName);
         Debug.Assert(action != null);
-        List<InputStatusEffect> inputStatusEffects = m_inputStatusEffects[action];
-        Debug.Assert(inputStatusEffects != null);
-        inputStatusEffects.Remove(inputStatusEffect);
+        m_inputStatusEffects[action].Add(inputStatusEffect);
+    }
+
+    public void Remove(InputStatusEffect inputStatusEffect)
+    {
+        Action action = m_controlScheme.GetByName(inputStatusEffect.actionName);
+        Debug.Assert(action != null);
+        m_inputStatusEffects[action].Remove(inputStatusEffect);
     }
 }

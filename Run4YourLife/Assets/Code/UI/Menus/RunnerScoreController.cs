@@ -9,7 +9,6 @@ public class RunnerScoreController : MonoBehaviour
     private ScaleTick m_scaleTick;
     private TextMeshProUGUI m_scoreText;
     private PlayerHandle m_playerHandle;
-    private float m_score;
 
     private void Awake()
     {
@@ -45,7 +44,6 @@ public class RunnerScoreController : MonoBehaviour
     private void SetScore(float score)
     {
         m_scaleTick.Tick();
-        m_score = score;
         m_scoreText.text = ((int)Mathf.Round(score)).ToString();
     }
 }

@@ -2,10 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
+[Serializable]
+public class StatusEffectEvent : UnityEvent<StatusEffect> { }
 
 public class StatusEffectController : MonoBehaviour {
 
     private Dictionary<StatusEffectType, List<StatusEffect>> m_statusEffects;
+
+    public StatusEffectEvent OnStatusEffectAdded;
+    public StatusEffectEvent OnStatusEffectRemoved;
 
     public StatusEffectController()
     {
@@ -20,6 +27,7 @@ public class StatusEffectController : MonoBehaviour {
     {
         m_statusEffects[statusEffect.StatusEffectType].Add(statusEffect);
         statusEffect.Apply(gameObject);
+        OnStatusEffectAdded.Invoke(statusEffect);
     }
 
     public void Add(StatusEffectSet statusEffectSet)
@@ -34,6 +42,7 @@ public class StatusEffectController : MonoBehaviour {
     {
         m_statusEffects[statusEffect.StatusEffectType].Remove(statusEffect);
         statusEffect.Unapply(gameObject);
+        OnStatusEffectRemoved.Invoke(statusEffect);
     }
 
     public void Remove(StatusEffectSet statusEffectSet)
@@ -47,17 +56,5 @@ public class StatusEffectController : MonoBehaviour {
     public List<StatusEffect> Get(StatusEffectType statusEffectType)
     {
         return m_statusEffects[statusEffectType];
-    }
-
-    public void AddAndRemoveAfterTime(StatusEffect statusEffect, float time)
-    {
-        Add(statusEffect);
-        StartCoroutine(RemoveAfterTime(statusEffect, time));
-    }
-
-    private IEnumerator RemoveAfterTime(StatusEffect statusEffect, float time)
-    {
-        yield return new WaitForSeconds(time);
-        Remove(statusEffect);
     }
 }

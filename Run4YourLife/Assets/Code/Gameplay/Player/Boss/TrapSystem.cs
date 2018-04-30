@@ -28,10 +28,6 @@ namespace Run4YourLife.Player
         private float crossHairSpeed;
 
         [SerializeField]
-        [Range(0,1)]
-        private float crossHairSensivility = 0.2f;
-
-        [SerializeField]
         [Range(0, 1)]
         private float screenLeftLimitPercentaje = 0.2f;
 

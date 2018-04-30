@@ -19,7 +19,6 @@ namespace Run4YourLife.Player
 
         #region Variables
         private bool active = true;
-        private bool triggering = false;
         #endregion
 
         private void OnEnable()

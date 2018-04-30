@@ -31,7 +31,7 @@ public class FireSkillControl : MonoBehaviour {
             Burned burned = runner.gameObject.GetComponent<Burned>();
             if (burned == null)
             {
-                burned = gameObject.AddComponent<Burned>();
+                burned = runner.AddComponent<Burned>();
                 burned.Init(m_burnTime, m_burnStatusEffectSet);
             }
             
