@@ -6,29 +6,26 @@ using Run4YourLife.Input;
 
 namespace Run4YourLife.Player
 {
-    [RequireComponent(typeof(RunnerAttributeController))]
-    [RequireComponent(typeof(Collider))]
-    [RequireComponent(typeof(RunnerInputStated))]
+    [RequireComponent(typeof(InputController))]
+    [RequireComponent(typeof(RunnerControlScheme))]
     public class RunnerGoThroughPlatformsController : MonoBehaviour
     {
         [SerializeField]
         [Range(-1f,1f)]
         private float m_inputThreshold = -0.9f;
 
-        private RunnerAttributeController m_runnerState;
-        private Collider m_collider;
-        private RunnerInputStated playerInput;
+        private InputController m_inputController;
+        private RunnerControlScheme m_runnerControlScheme;
 
         private void Awake()
         {
-            playerInput = GetComponent<RunnerInputStated>();
-            m_runnerState = GetComponent<RunnerAttributeController>();
-            m_collider = GetComponent<Collider>();
+            m_inputController = GetComponent<InputController>();
+            m_runnerControlScheme = GetComponent<RunnerControlScheme>();
         }
 
         private void Update()
         {
-            if (playerInput.GetVerticalInput() < m_inputThreshold)
+            if (m_inputController.Value(m_runnerControlScheme.Vertical) < m_inputThreshold)
             {
                 PlatformGoThroughManager.Instance.IgnoreCollision(gameObject);
             }

@@ -14,7 +14,7 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(RunnerAttributeController))]
     [RequireComponent(typeof(Animator))]
-    [RequireComponent(typeof(RunnerInputStated))]
+    [RequireComponent(typeof(InputController))]
     public class RunnerCharacterController : MonoBehaviour,IDeactivateByInvisible
     {
         #region InspectorVariables
@@ -76,7 +76,7 @@ namespace Run4YourLife.Player
         private RunnerControlScheme m_runnerControlScheme;
         private Animator m_animator;
         private AudioSource m_audioSource;
-        private RunnerInputStated m_inputPlayer;
+        private InputController m_inputController;
 
         #endregion
 
@@ -124,7 +124,7 @@ namespace Run4YourLife.Player
             m_characterController = GetComponent<CharacterController>();
             m_stats = GetComponent<RunnerAttributeController>();
             m_animator = GetComponent<Animator>();
-            m_inputPlayer = GetComponent<RunnerInputStated>();
+            m_inputController = GetComponent<InputController>();
 
             m_gravity = m_baseGravity;
             m_horizontalDrag = m_baseHorizontalDrag;
@@ -197,12 +197,12 @@ namespace Run4YourLife.Player
                 GravityAndDrag();
 
 
-                if (m_isGroundedOrCoyoteGrounded && m_inputPlayer.GetJumpInput())
+                if (m_isGroundedOrCoyoteGrounded && m_inputController.Started(m_runnerControlScheme.Jump))
                 {
                     Jump();
                 }
 
-                if (m_isReadyToDash && m_inputPlayer.GetDashInput())
+                if (m_isReadyToDash && m_inputController.Started(m_runnerControlScheme.Dash))
                 {
                     Dash();
                 }
@@ -295,7 +295,7 @@ namespace Run4YourLife.Player
 
         private void Move()
         {
-            float horizontal = m_inputPlayer.GetHorizontalInput();
+            float horizontal = m_inputController.Value(m_runnerControlScheme.Move);
 
             Vector3 inputMovement = transform.right * horizontal * m_stats.Get(AttributeType.SPEED) * Time.deltaTime;
             Vector3 totalMovement = inputMovement + m_velocity * Time.deltaTime;
