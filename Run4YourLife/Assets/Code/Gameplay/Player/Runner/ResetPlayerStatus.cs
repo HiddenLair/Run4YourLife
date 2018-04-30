@@ -8,7 +8,7 @@ namespace Run4YourLife.Player {
 
         public void Reset()
         {
-            GetComponent<RunnerInputStated>().Clear();
+            //GetComponent<RunnerInputStated>().Clear();
             GetComponent<BuffManager>().Clear();
             GetComponent<RunnerAttributeController>().ResetAttributes();
             GetComponent<RunnerCharacterController>().Clear();

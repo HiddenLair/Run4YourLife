@@ -5,7 +5,10 @@ using UnityEngine;
 using Run4YourLife.Input;
 
 namespace Run4YourLife.Player {
-    public class ThrowRockRunnerController : MonoBehaviour,IPlayerHandleEvent {
+    [RequireComponent(typeof(InputController))]
+    [RequireComponent(typeof(PlayerInstance))]
+    [RequireComponent(typeof(Collider))]
+    public class ThrowRockRunnerController : MonoBehaviour {
 
         [SerializeField]
         private GameObject m_rockPrefab;
@@ -25,21 +28,27 @@ namespace Run4YourLife.Player {
         [SerializeField]
         private float Reload;
 
-        private RunnerInputStated inputPlayer;
-        private float timer;
-        private PlayerHandle myDefinition;
+
+        private PlayerInstance m_playerInstance;
+        private InputController m_inputController;
+        private RunnerControlScheme m_runnerControlScheme;
         private new Collider collider;
+
+        private float timer;
 
         private void Awake()
         {
-            inputPlayer = GetComponent<RunnerInputStated>();
-            timer = Time.time;
+            m_playerInstance = GetComponent<PlayerInstance>();
+            m_inputController = GetComponent<InputController>();
+            m_runnerControlScheme = GetComponent<RunnerControlScheme>();
             collider = GetComponent<Collider>();
+
+            timer = Time.time;
         }
 
         private void Update()
         {
-            if (inputPlayer.GetRockInput() && timer <= Time.time)
+            if (m_inputController.Started(m_runnerControlScheme.Rock) && timer <= Time.time)
             {
                 ThrowRock();
                 timer = Time.time + Reload;
@@ -52,7 +61,8 @@ namespace Run4YourLife.Player {
             Physics.IgnoreCollision(rock.GetComponent<Collider>(), collider);
             Rigidbody rigidbody = rock.GetComponent<Rigidbody>();
             rigidbody.velocity = GetThrowVelocity(force, angle);
-            rock.GetComponent<RockController>().SetplayerHandle(myDefinition);
+
+            rock.GetComponent<RockController>().SetplayerHandle(m_playerInstance.PlayerHandle);
         }
 
         private Vector3 GetThrowVelocity(float force, float angle)
@@ -70,11 +80,6 @@ namespace Run4YourLife.Player {
         {
             Vector3 director = Quaternion.Euler(0, 0, angle) * Vector3.right;
             Gizmos.DrawLine(m_rockInstantiationTransform.position, m_rockInstantiationTransform.position + director*5);
-        }
-
-        public void OnPlayerHandleChanged(PlayerHandle playerHandle)
-        {
-            myDefinition = playerHandle;
         }
     }
 }
