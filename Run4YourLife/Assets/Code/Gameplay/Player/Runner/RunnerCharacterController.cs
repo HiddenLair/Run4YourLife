@@ -15,7 +15,7 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(RunnerAttributeController))]
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(InputController))]
-    public class RunnerCharacterController : MonoBehaviour,IDeactivateByInvisible
+    public class RunnerCharacterController : MonoBehaviour, IDeactivateByInvisible
     {
         #region InspectorVariables
 

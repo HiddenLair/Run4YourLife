@@ -13,11 +13,15 @@ namespace Run4YourLife.Player
         [SerializeField]
         private AttributeStatusEffect m_attributeStatusEffect;
 
+        [SerializeField]
+        private float m_slowTime;
+
         private void OnTriggerEnter(Collider collider)
         {
             if (collider.CompareTag(Tags.Runner) || collider.CompareTag(Tags.Shoot))
             {
-                ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.StatusEffect(m_attributeStatusEffect));
+                StatusEffectController statusEffectController = collider.GetComponent<StatusEffectController>();
+                statusEffectController.AddAndRemoveAfterTime(m_attributeStatusEffect, m_slowTime);
                 Instantiate(m_activationParticles, transform.position, transform.rotation);
                 Destroy(gameObject);
             }

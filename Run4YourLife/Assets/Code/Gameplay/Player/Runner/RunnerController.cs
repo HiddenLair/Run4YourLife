@@ -67,13 +67,6 @@ namespace Run4YourLife.Player
             }
         }
 
-        public void StatusEffect(StatusEffect statusEffect)
-        {
-            /*if (!ConsumeShieldIfAviable()) {
-                m_stats.AddModifier(statusEffect);
-            }*/
-        }
-
         public void AbsoluteKill()
         {
             ExecuteEvents.Execute<IGameplayPlayerEvents>(GameplayPlayerManager.InstanceGameObject, null, (x, y) => x.OnRunnerDeath(gameObject));

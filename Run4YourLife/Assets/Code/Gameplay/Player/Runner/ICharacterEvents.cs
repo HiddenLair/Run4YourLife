@@ -9,6 +9,5 @@ namespace Run4YourLife.Player
         void AbsoluteKill();
         void Impulse(Vector3 force);
         void Root(int rootHardness);
-        void StatusEffect(StatusEffect statusEffect);
     }
 }
