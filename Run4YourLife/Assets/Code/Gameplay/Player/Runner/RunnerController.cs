@@ -77,35 +77,11 @@ namespace Run4YourLife.Player
             }
         }
 
-        public void Debuff(AttributeModifier attributeModifier)
+        public void StatusEffect(StatusEffect statusEffect)
         {
-            if (!ConsumeShieldIfAviable()) {
-                m_stats.AddModifier(attributeModifier);
-            }
-        }
-
-        public void Burned(int burnedTime)
-        {
-            Burned oldInstance = gameObject.GetComponent<Burned>();
-            if (oldInstance != null)
-            {
-                oldInstance.Refresh();
-            }
-            else
-            {
-                gameObject.AddComponent<Burned>().SetBurningTime(burnedTime);
-            }
-        }
-
-        public void ActivateWind(float windForce,ref Wind component)
-        {
-            component = gameObject.AddComponent<Wind>();
-            component.AddWindForce(windForce);
-        }
-
-        public void DeactivateWind(float windForce,Wind component)
-        {
-            Destroy(component);
+            /*if (!ConsumeShieldIfAviable()) {
+                m_stats.AddModifier(statusEffect);
+            }*/
         }
 
         public void AbsoluteKill()

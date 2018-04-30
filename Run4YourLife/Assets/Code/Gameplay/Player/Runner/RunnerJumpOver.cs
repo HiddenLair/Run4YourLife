@@ -24,7 +24,7 @@ namespace Run4YourLife.Player
         protected override Vector3 GetBounceForce()
         {
             RunnerAttributeController stats = GetComponentInParent<RunnerAttributeController>();
-            float height = stats.Get(AttributeType.BOUNCE_HEIGHT);
+            float height = stats.GetAttribute(RunnerAttribute.BounceHeight);
             return Vector3.up * height;
         }
         #endregion

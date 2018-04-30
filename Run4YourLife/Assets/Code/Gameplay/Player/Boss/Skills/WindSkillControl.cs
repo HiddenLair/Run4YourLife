@@ -4,10 +4,10 @@ using UnityEngine.EventSystems;
 
 using Run4YourLife;
 using Run4YourLife.Player;
+using System;
 
+[RequireComponent(typeof(RunnerCharacterController))]
 public class WindSkillControl : MonoBehaviour {
-
-    #region Inspector
 
     [SerializeField]
     private float timeToDie = 5;
@@ -15,17 +15,13 @@ public class WindSkillControl : MonoBehaviour {
     [SerializeField]
     private float windForce;
 
-    #endregion
-
-    #region Variables
-
-    HashSet<GameObject> m_objectsInside = new HashSet<GameObject>();
-    private Wind component;
-
-    #endregion
+    private RunnerCharacterController m_runnerCharacterController;
 
     private void Awake()
     {
+        m_runnerCharacterController = GetComponent<RunnerCharacterController>();
+        Debug.Assert(m_runnerCharacterController != null);
+
         Destroy(gameObject, timeToDie);
     }
 
@@ -33,25 +29,27 @@ public class WindSkillControl : MonoBehaviour {
     {
         if (collider.CompareTag(Tags.Runner))
         {
-            m_objectsInside.Add(collider.gameObject);
-            ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.ActivateWind(windForce,ref component));
+            Wind wind = collider.gameObject.GetComponent<Wind>();
+            if(wind == null)
+            {
+                wind = collider.gameObject.AddComponent<Wind>();
+            }
+
+            wind.EnterWindArea(this);
         }
+    }
+
+    public float GetWindForce()
+    {
+        return windForce;
     }
 
     private void OnTriggerExit(Collider collider)
     {
         if (collider.CompareTag(Tags.Runner))
         {
-            m_objectsInside.Remove(collider.gameObject);
-            ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.DeactivateWind(windForce, component));
-        }
-    }
-
-    private void OnDestroy()
-    {
-        foreach(GameObject objectInside in m_objectsInside)
-        {
-            ExecuteEvents.Execute<ICharacterEvents>(objectInside, null, (x, y) => x.DeactivateWind(windForce, component));
+            Wind wind = collider.gameObject.GetComponent<Wind>();
+            wind.ExitWindArea(this);
         }
     }
 }

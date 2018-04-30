@@ -6,7 +6,7 @@ public class AttributeStatusEffect : StatusEffect, IComparable<AttributeStatusEf
 
     public override StatusEffectType StatusEffectType { get { return StatusEffectType.Attribute; } }
 
-    public Attribute attribute;
+    public RunnerAttribute runnerAttribute;
     public AttributeModifierType attributeModifierType;
     public float value;
 
@@ -29,7 +29,7 @@ public class AttributeStatusEffect : StatusEffect, IComparable<AttributeStatusEf
 
     private void RecalculateAttributes(GameObject gameObject)
     {
-        AttributeController attributeController = gameObject.GetComponent<AttributeController>();
+        RunnerAttributeController attributeController = gameObject.GetComponent<RunnerAttributeController>();
         Debug.Assert(attributeController != null);
         attributeController.RecalculateAttributes();
     }

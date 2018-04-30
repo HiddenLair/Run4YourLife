@@ -58,7 +58,7 @@
 
     public class InputSource
     {
-        public InputSourceType inputSoruceType;
+        public InputSourceType inputSourceType;
         public string input;
         public InputDevice inputDevice;
 
@@ -71,8 +71,9 @@
         public InputSource(Button button, InputDevice inputDevice) : this(InputSourceType.Button, button.ID, inputDevice) { }
         public InputSource(Trigger trigger, InputDevice inputDevice) : this(InputSourceType.Trigger, trigger.ID, inputDevice) { }
 
-        private InputSource(InputSourceType type, string input, InputDevice inputDevice)
+        private InputSource(InputSourceType inputSourceType, string input, InputDevice inputDevice)
         {
+            this.inputSourceType = inputSourceType;
             this.input = input;
             this.inputDevice = inputDevice;
         }

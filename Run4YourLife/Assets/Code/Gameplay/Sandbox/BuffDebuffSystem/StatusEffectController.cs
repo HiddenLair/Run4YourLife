@@ -22,10 +22,26 @@ public class StatusEffectController : MonoBehaviour {
         statusEffect.Apply(gameObject);
     }
 
+    public void Add(StatusEffectSet statusEffectSet)
+    {
+        foreach(StatusEffect statusEffect in statusEffectSet.statusEffects)
+        {
+            Add(statusEffect);
+        }
+    }
+
     public void Remove(StatusEffect statusEffect)
     {
         m_statusEffects[statusEffect.StatusEffectType].Remove(statusEffect);
         statusEffect.Unapply(gameObject);
+    }
+
+    public void Remove(StatusEffectSet statusEffectSet)
+    {
+        foreach (StatusEffect statusEffect in statusEffectSet.statusEffects)
+        {
+            Remove(statusEffect);
+        }
     }
 
     public List<StatusEffect> Get(StatusEffectType statusEffectType)

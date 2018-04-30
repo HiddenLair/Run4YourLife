@@ -12,16 +12,24 @@ namespace Run4YourLife.Input
 
         void Awake()
         {
-            m_gameManager = GameObject.FindGameObjectWithTag(Tags.GameController);
             m_playerControlScheme = GetComponent<PlayerControlScheme>();
 
-            PauseManager pauseManager = m_gameManager.GetComponent<PauseManager>();
-            if (pauseManager != null)
+            m_gameManager = GameObject.FindGameObjectWithTag(Tags.GameController);
+            if(m_gameManager != null)
             {
-                pauseManager.PauseChangeEvent.AddListener(OnPauseChanged);
-            } else
+                PauseManager pauseManager = m_gameManager.GetComponent<PauseManager>();
+                if (pauseManager != null)
+                {
+                    pauseManager.PauseChangeEvent.AddListener(OnPauseChanged);
+                }
+                else
+                {
+                    Debug.LogWarning("Pause Manager Not Detected, could not bind to pause events");
+                }
+            }
+            else
             {
-                Debug.LogWarning("Pause Manager Not Detected, could not bound to pause events");
+                Debug.LogWarning("Game Manager Not Detected, could not bind to pause events");
             }
         }
 

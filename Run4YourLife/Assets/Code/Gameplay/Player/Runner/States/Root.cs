@@ -8,7 +8,7 @@ namespace Run4YourLife.Player
 
         private int remainingHits = 4;
 
-        AttributeModifier modifierSpeed;
+        //AttributeModifier modifierSpeed;
 
         #endregion
 
@@ -54,13 +54,13 @@ namespace Run4YourLife.Player
 
         protected override void Apply()
         {
-            modifierSpeed = new SpeedModifier(AttributeModifierType.SETTER, true, 0, -1);
-            GetComponent<RunnerAttributeController>().AddModifier(modifierSpeed);
+            //modifierSpeed = new SpeedModifier(AttributeModifierType.SETTER, true, 0, -1);
+            //GetComponent<RunnerAttributeController>().AddModifier(modifierSpeed);
         }
 
         protected override void Unapply()
         {
-            GetComponent<RunnerAttributeController>().RemoveAttributeModifier(modifierSpeed);
+            //GetComponent<RunnerAttributeController>().RemoveAttributeModifier(modifierSpeed);
         }
 
         public void SetHardness(int rootHardness)

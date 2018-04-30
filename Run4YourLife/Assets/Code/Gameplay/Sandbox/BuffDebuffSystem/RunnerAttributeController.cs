@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Attribute
+public enum RunnerAttribute
 {
     Speed,
     JumpHeight,
@@ -18,43 +18,57 @@ public enum AttributeModifierType
 }
 
 [RequireComponent(typeof(StatusEffectController))]
-public class AttributeController : MonoBehaviour {
+public class RunnerAttributeController : MonoBehaviour {
 
-    private Dictionary<Attribute, float> m_baseAttributes = new Dictionary<Attribute, float>();
-    private Dictionary<Attribute, float> m_attributes = new Dictionary<Attribute, float>();
+    [SerializeField]
+    private float m_baseSpeed;
+
+    [SerializeField]
+    private float m_baseJumpHeight;
+
+    [SerializeField]
+    private float m_baseBounceHeight;
+
+    protected Dictionary<RunnerAttribute, float> m_baseAttributes = new Dictionary<RunnerAttribute, float>();
+    private Dictionary<RunnerAttribute, float> m_attributes = new Dictionary<RunnerAttribute, float>();
 
     private StatusEffectController m_statusEffectController;
 
     private void Awake()
     {
+        m_baseAttributes[RunnerAttribute.Speed] = m_baseSpeed;
+        m_baseAttributes[RunnerAttribute.JumpHeight] = m_baseJumpHeight;
+        m_baseAttributes[RunnerAttribute.BounceHeight] = m_baseBounceHeight;
+
         m_statusEffectController = GetComponent<StatusEffectController>();
+        RecalculateAttributes();
     }
 
-    public float GetBaseAttribute(Attribute attribute)
+    public float GetBaseAttribute(RunnerAttribute attribute)
     {
         return m_baseAttributes[attribute];
     }
 
-    public float GetAttribute(Attribute attribute)
+    public float GetAttribute(RunnerAttribute attribute)
     {
         return m_attributes[attribute];
     }
 
     public void RecalculateAttributes()
     {
-        m_attributes = new Dictionary<Attribute, float>(m_baseAttributes);
+        m_attributes = new Dictionary<RunnerAttribute, float>(m_baseAttributes);
 
         List<StatusEffect> statusEffects = m_statusEffectController.Get(StatusEffectType.Attribute);
         foreach(StatusEffect statusEffect in statusEffects)
         {
             AttributeStatusEffect attributeStatusEffect = (AttributeStatusEffect)statusEffect;
-            ApplyAttributeStatusEffect(attributeStatusEffect);
+            ApplyStatusEffect(attributeStatusEffect);
         }
     }
 
-    private void ApplyAttributeStatusEffect(AttributeStatusEffect attributeStatusEffect)
+    private void ApplyStatusEffect(AttributeStatusEffect attributeStatusEffect)
     {
-        float value = m_baseAttributes[attributeStatusEffect.attribute];
+        float value = m_baseAttributes[attributeStatusEffect.runnerAttribute];
 
         switch(attributeStatusEffect.attributeModifierType)
         {
@@ -69,6 +83,6 @@ public class AttributeController : MonoBehaviour {
                 break;
         }
 
-        m_attributes[attributeStatusEffect.attribute] = value;
+        m_attributes[attributeStatusEffect.runnerAttribute] = value;
     }
 }

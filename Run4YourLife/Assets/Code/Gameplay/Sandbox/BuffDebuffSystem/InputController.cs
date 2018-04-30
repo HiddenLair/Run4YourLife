@@ -4,16 +4,12 @@ using UnityEngine;
 
 using Run4YourLife.Input;
 
-public enum InputModifierType
-{
-    Override,
-    Plain
-}
-
 public class InputController : MonoBehaviour {
-
-    protected Dictionary<Action, List<InputStatusEffect>> m_inputStatusEffects = new Dictionary<Action, List<InputStatusEffect>>();
+    
+    private Dictionary<Action, List<InputStatusEffect>> m_inputStatusEffects = new Dictionary<Action, List<InputStatusEffect>>();
     private ControlScheme m_controlScheme;
+
+    private Dictionary<Action, float> m_previousInputWithValue = new Dictionary<Action, float>();
 
     private void Awake()
     {
@@ -26,10 +22,21 @@ public class InputController : MonoBehaviour {
         }
     }
 
+    private void LateUpdate()
+    {
+        foreach(Action action in m_controlScheme.Actions)
+        {
+            float value = action.Value();
+            if(value != 0)
+            {
+                m_previousInputWithValue[action] = value;
+            }
+        }
+    }
 
     public bool Started(Action action)
     {
-        Debug.Assert(action.InputSource.inputSoruceType == InputSourceType.Button);
+        Debug.Assert(action.InputSource.inputSourceType == InputSourceType.Button, action.Name +": Started called with input source type {" +action.InputSource.inputSourceType+"}");
         bool started = action.Started();
 
         foreach(InputStatusEffect inputStatusEffect in m_inputStatusEffects[action])
@@ -42,6 +49,9 @@ public class InputController : MonoBehaviour {
                 case InputModifierType.Plain:
                     started = started || inputStatusEffect.bool_value;
                     break;
+                case InputModifierType.Maximize:
+                    Debug.LogError("Button input types are not compatible with maximize modifier");
+                    break;
             }
         }
         return started;
@@ -49,7 +59,7 @@ public class InputController : MonoBehaviour {
 
     public float Value(Action action)
     {
-        Debug.Assert(action.InputSource.inputSoruceType == InputSourceType.Button);
+        Debug.Assert(action.InputSource.inputSourceType == InputSourceType.Axis || action.InputSource.inputSourceType == InputSourceType.Trigger);
         float value = action.Value();
 
         foreach (InputStatusEffect inputStatusEffect in m_inputStatusEffects[action])
@@ -61,6 +71,9 @@ public class InputController : MonoBehaviour {
                     break;
                 case InputModifierType.Plain:
                     value = value + inputStatusEffect.float_value;
+                    break;
+                case InputModifierType.Maximize:
+                    value = Mathf.Sign(m_previousInputWithValue[action]);
                     break;
             }
         }

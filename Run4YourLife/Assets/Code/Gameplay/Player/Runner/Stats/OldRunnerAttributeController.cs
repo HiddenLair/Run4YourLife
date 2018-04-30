@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 using Run4YourLife.Utils;
-
+/*
 namespace Run4YourLife.Player
 {
     public enum AttributeType
@@ -109,4 +109,4 @@ namespace Run4YourLife.Player
             }
         }
     }
-}
+}*/

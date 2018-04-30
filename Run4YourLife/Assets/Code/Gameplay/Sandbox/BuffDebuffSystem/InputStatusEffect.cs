@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum InputModifierType
+{
+    Plain, // Value to be added to the input
+    Maximize, // Input gravitates to -1 or 1 depending on last input
+    Override // Overrides input value
+}
+
 [CreateAssetMenu(fileName = "InputStatusEffect", menuName = "Custom/StatusEffect/InputStatusEffect")]
 public class InputStatusEffect : StatusEffect
 {

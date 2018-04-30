@@ -1,43 +1,32 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wind : RunnerState, IRunnerInput
+public class Wind : MonoBehaviour
 {
     private float m_windForce;
-
-    public override Type StateType { get { return Type.Wind; } }
-
-    public void AddWindForce(float windForce)
-    {
-        m_windForce += windForce;
-    }
-
-    public void RemoveWindForce(float windForce)
-    {
-        m_windForce -= windForce;
-    }
-
-    int IRunnerInput.GetPriority()
-    {
-        return 0;
-    }
-
-    public void ModifyHorizontalInput(ref float input)
-    {
-        input += m_windForce;
-    }
+    private HashSet<WindSkillControl> m_windSkillControls;
 
     public void Destroy()
     {
         Destroy(this);
     }
 
-    protected override void Apply()
+    public void EnterWindArea(WindSkillControl windSkillControl)
     {
+        m_windForce += windSkillControl.GetWindForce();
+        m_windSkillControls.Add(windSkillControl);
     }
 
-    protected override void Unapply()
+    public void ExitWindArea(WindSkillControl windSkillControl)
     {
+        m_windForce -= windSkillControl.GetWindForce();
+        m_windSkillControls.Remove(windSkillControl);
+
+        if(m_windSkillControls.Count == 0)
+        {
+            Destroy(this);
+        }
     }
 }

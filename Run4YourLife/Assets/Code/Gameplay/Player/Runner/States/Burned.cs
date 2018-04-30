@@ -1,88 +1,45 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Run4YourLife.Player
 {
     [RequireComponent(typeof(RunnerAttributeController))]
-    public class Burned : RunnerState, IRunnerInput
+    [RequireComponent(typeof(StatusEffectController))]
+    public class Burned : MonoBehaviour
     {
-        private const float SPEED_BUFF_PERCENT = 1.0f / 3.0f;
+        private float m_burnTime;
+        private float m_endBurnTime;
 
+        private StatusEffectSet m_statusEffectSet;
 
-        private AttributeModifier m_modifier;
-        private RunnerAttributeController m_stats;
+        private StatusEffectController m_statusEffectController;
 
-        private float lastInputSign = 1.0f;
-        private float m_destructionTime;
-        private float m_burnDuration;
-
-        public override Type StateType { get { return Type.Burned; } }
-
-
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
-            m_stats = GetComponent<RunnerAttributeController>();
+            m_statusEffectController = GetComponent<StatusEffectController>();
+            Debug.Assert(m_statusEffectSet != null);
         }
 
-        int IRunnerInput.GetPriority()
+        public void Init(float burnTime, StatusEffectSet statusEffectSet)
         {
-            return 0;
+            m_burnTime = burnTime;
+            m_statusEffectSet = statusEffectSet;
+
+            m_statusEffectController.Add(statusEffectSet);
         }
 
-        public void ModifyHorizontalInput(ref float input)
+        public void RefreshTime()
         {
-            float inputSign = Mathf.Sign(input);
-
-            if (inputSign != lastInputSign)
-            {
-                input = inputSign;
-                lastInputSign = inputSign;
-            }
-            else
-            {
-                input = lastInputSign;
-            }
+            m_endBurnTime = Time.time + m_burnTime;
         }
 
         private void Update()
         {
-            if (Time.time > m_destructionTime)
-                Destroy(this);
-        }
-
-        public void Refresh()
-        {
-            m_destructionTime = Time.time + m_burnDuration;
-
-            //TODO: Why do we remove it and re-add it?
-            m_stats.RemoveAttributeModifier(m_modifier);
-            m_stats.AddModifier(m_modifier);
-        }
-
-        protected override void Apply()
-        {
-            m_modifier = new SpeedModifier(AttributeModifierType.PERCENT, true, SPEED_BUFF_PERCENT, m_burnDuration);
-            m_stats.AddModifier(m_modifier);
-
-            m_destructionTime = Time.time + m_burnDuration;
-        }
-
-        protected override void Unapply()
-        {
-            m_stats.RemoveAttributeModifier(m_modifier);
-        }
-
-        public void SetBurningTime(int burningTime)
-        {
-            if (burningTime > 0)
+            if (Time.time > m_endBurnTime)
             {
-                m_burnDuration = burningTime;
+                m_statusEffectController.Remove(m_statusEffectSet);
+                Destroy(this);
             }
-        }
-
-        public void Destroy()
-        {
-            Destroy(this);
         }
     }
 }

@@ -72,7 +72,7 @@ namespace Run4YourLife.Player
         #region References
 
         private CharacterController m_characterController;
-        private RunnerAttributeController m_stats;
+        private RunnerAttributeController m_runnerAttributeController;
         private RunnerControlScheme m_runnerControlScheme;
         private Animator m_animator;
         private AudioSource m_audioSource;
@@ -115,6 +115,8 @@ namespace Run4YourLife.Player
                 return m_velocity;
             }
         }
+
+        public Vector3 ExternalVelocity { get; set; }
         #endregion
 
         void Awake()
@@ -122,7 +124,7 @@ namespace Run4YourLife.Player
             m_audioSource = GetComponent<AudioSource>();
             m_runnerControlScheme = GetComponent<RunnerControlScheme>();
             m_characterController = GetComponent<CharacterController>();
-            m_stats = GetComponent<RunnerAttributeController>();
+            m_runnerAttributeController = GetComponent<RunnerAttributeController>();
             m_animator = GetComponent<Animator>();
             m_inputController = GetComponent<InputController>();
 
@@ -297,8 +299,10 @@ namespace Run4YourLife.Player
         {
             float horizontal = m_inputController.Value(m_runnerControlScheme.Move);
 
-            Vector3 inputMovement = transform.right * horizontal * m_stats.Get(AttributeType.SPEED) * Time.deltaTime;
-            Vector3 totalMovement = inputMovement + m_velocity * Time.deltaTime;
+            Vector3 inputMovement = transform.right * horizontal * m_runnerAttributeController.GetAttribute(RunnerAttribute.Speed) * Time.deltaTime;
+            Vector3 totalMovement = inputMovement + m_velocity * Time.deltaTime + ExternalVelocity * Time.deltaTime;
+
+            ExternalVelocity = Vector3.zero;
 
             MoveCharacterContoller(totalMovement);
         }
@@ -385,7 +389,7 @@ namespace Run4YourLife.Player
             m_animator.SetTrigger("jump");
 
             //set vertical velocity to the velocity needed to reach maxJumpHeight
-            m_velocity.y = HeightToVelocity(m_stats.Get(AttributeType.JUMP_HEIGHT));
+            m_velocity.y = HeightToVelocity(m_runnerAttributeController.GetAttribute(RunnerAttribute.JumpHeight));
             yield return StartCoroutine(WaitUntilApexOfJumpOrReleaseButtonOrCeiling());
 
             m_isJumping = false;
