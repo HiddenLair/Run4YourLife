@@ -21,10 +21,10 @@ namespace Run4YourLife.Player
         private float m_baseSpeed;
 
         [SerializeField]
-        private float m_jumpHeight;
+        private float m_baseJumpHeight;
 
         [SerializeField]
-        private float m_bounceHeight;
+        private float m_baseBounceHeight;
 
         #endregion
 
@@ -41,8 +41,8 @@ namespace Run4YourLife.Player
         void Awake()
         {
             m_baseAttributes.Add(AttributeType.SPEED, m_baseSpeed);
-            m_baseAttributes.Add(AttributeType.JUMP_HEIGHT, m_jumpHeight);
-            m_baseAttributes.Add(AttributeType.BOUNCE_HEIGHT, m_bounceHeight);
+            m_baseAttributes.Add(AttributeType.JUMP_HEIGHT, m_baseJumpHeight);
+            m_baseAttributes.Add(AttributeType.BOUNCE_HEIGHT, m_baseBounceHeight);
 
             ResetAttributes();
         }

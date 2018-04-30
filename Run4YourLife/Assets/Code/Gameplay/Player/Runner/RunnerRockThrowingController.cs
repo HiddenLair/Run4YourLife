@@ -8,7 +8,7 @@ namespace Run4YourLife.Player {
     [RequireComponent(typeof(InputController))]
     [RequireComponent(typeof(PlayerInstance))]
     [RequireComponent(typeof(Collider))]
-    public class ThrowRockRunnerController : MonoBehaviour {
+    public class RunnerRockThrowingController : MonoBehaviour {
 
         [SerializeField]
         private GameObject m_rockPrefab;
