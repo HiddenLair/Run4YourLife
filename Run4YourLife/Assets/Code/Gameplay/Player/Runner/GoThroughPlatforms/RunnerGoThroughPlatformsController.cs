@@ -9,7 +9,7 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(RunnerAttributeController))]
     [RequireComponent(typeof(Collider))]
     [RequireComponent(typeof(RunnerInputStated))]
-    public class GoThroughPlatforms : MonoBehaviour
+    public class RunnerGoThroughPlatformsController : MonoBehaviour
     {
         [SerializeField]
         [Range(-1f,1f)]

@@ -10,9 +10,6 @@ namespace Run4YourLife.Player
         #region Inspector
 
         [SerializeField]
-        private GameObject headBumpCollider;
-
-        [SerializeField]
         private GameObject shield;
 
         #endregion
