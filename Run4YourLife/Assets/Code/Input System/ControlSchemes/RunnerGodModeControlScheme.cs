@@ -11,10 +11,10 @@ namespace Run4YourLife.Input
 
         public RunnerGodModeControlScheme()
         {
-            actions.Add(MoveV = new Action(new InputSource(Axis.LEFT_VERTICAL)));
-            actions.Add(MoveH = new Action(new InputSource(Axis.LEFT_HORIZONTAL)));
-            actions.Add(MSpeed = new Action(new InputSource(Button.A)));
-            actions.Add(End = new Action(new InputSource(Button.B)));
+            Actions.Add(MoveV = new Action(new InputSource(Axis.LEFT_VERTICAL), "MoveV"));
+            Actions.Add(MoveH = new Action(new InputSource(Axis.LEFT_HORIZONTAL), "MoveH"));
+            Actions.Add(MSpeed = new Action(new InputSource(Button.A), "MSpeed"));
+            Actions.Add(End = new Action(new InputSource(Button.B), "End"));
         }
 
         public override void ActionsReactOnPause(PauseState pauseState)
@@ -25,10 +25,10 @@ namespace Run4YourLife.Input
                 pauseValue = true;
             }
 
-            MoveH.enabled = pauseValue;
-            MoveV.enabled = pauseValue;
-            MSpeed.enabled = pauseValue;
-            End.enabled = pauseValue;
+            MoveH.Enabled = pauseValue;
+            MoveV.Enabled = pauseValue;
+            MSpeed.Enabled = pauseValue;
+            End.Enabled = pauseValue;
         }
     }
 }

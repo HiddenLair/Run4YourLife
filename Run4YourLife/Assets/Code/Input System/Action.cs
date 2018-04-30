@@ -2,37 +2,39 @@
 {
     public class Action
     {
-        public bool enabled;
-        public InputSource inputSource;
+        public InputSource InputSource { get; set; }
+        public string Name { get; set; }
+        public bool Enabled { get; set; }
 
-        public Action(InputSource inputSource)
+        public Action(InputSource inputSource, string name)
         {
-            this.inputSource = inputSource;
+            this.InputSource = inputSource;
+            this.Name = name;
         }
 
         public bool Started()
         {
-            return enabled && inputSource.ButtonDown();
+            return Enabled && InputSource.ButtonDown();
         }
 
         public bool Persists()
         {
-            return enabled && inputSource.Button();
+            return Enabled && InputSource.Button();
         }
 
         public bool Ended()
         {
-            return enabled && inputSource.ButtonUp();
+            return Enabled && InputSource.ButtonUp();
         }
 
         public float Value()
         {
-            return enabled ? inputSource.Value() : 0.0f;
+            return Enabled ? InputSource.Value() : 0.0f;
         }
 
         public bool Triggered(float percentage)
         {
-            return enabled && inputSource.Value() >= percentage;
+            return Enabled && InputSource.Value() >= percentage;
         }
     }
 }

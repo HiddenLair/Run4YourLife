@@ -13,11 +13,11 @@ namespace Run4YourLife.Input
 
         public RunnerControlScheme()
         {
-            actions.Add(Vertical = new Action(new InputSource(Axis.LEFT_VERTICAL)));
-            actions.Add(Move = new Action(new InputSource(Axis.LEFT_HORIZONTAL)));
-            actions.Add(Jump = new Action(new InputSource(Button.A)));
-            actions.Add(Dash = new Action(new InputSource(Button.X)));
-            actions.Add(Rock = new Action(new InputSource(Button.B)));
+            Actions.Add(Vertical = new Action(new InputSource(Axis.LEFT_VERTICAL), "Vertical"));
+            Actions.Add(Move = new Action(new InputSource(Axis.LEFT_HORIZONTAL), "Move"));
+            Actions.Add(Jump = new Action(new InputSource(Button.A), "Jump"));
+            Actions.Add(Dash = new Action(new InputSource(Button.X), "Dash"));
+            Actions.Add(Rock = new Action(new InputSource(Button.B), "Rock"));
         }
 
         public override void ActionsReactOnPause(PauseState pauseState)
@@ -28,11 +28,11 @@ namespace Run4YourLife.Input
                 pauseValue = true;
             }
 
-            Move.enabled = pauseValue;
-            Jump.enabled = pauseValue;
-            Dash.enabled = pauseValue;
-            Rock.enabled = pauseValue;
-            Vertical.enabled = pauseValue;
+            Move.Enabled = pauseValue;
+            Jump.Enabled = pauseValue;
+            Dash.Enabled = pauseValue;
+            Rock.Enabled = pauseValue;
+            Vertical.Enabled = pauseValue;
         }
     }
 }

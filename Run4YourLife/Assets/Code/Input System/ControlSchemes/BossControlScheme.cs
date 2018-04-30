@@ -28,22 +28,22 @@ namespace Run4YourLife.Input
 
         public BossControlScheme()
         {
-            actions.Add(MoveTrapIndicatorVertical = new Action(new InputSource(Axis.LEFT_VERTICAL)));
-            actions.Add(MoveTrapIndicatorHorizontal = new Action(new InputSource(Axis.LEFT_HORIZONTAL)));
+            Actions.Add(MoveTrapIndicatorVertical = new Action(new InputSource(Axis.LEFT_VERTICAL), "MoveTrapIndicatorVertical"));
+            Actions.Add(MoveTrapIndicatorHorizontal = new Action(new InputSource(Axis.LEFT_HORIZONTAL), "MoveTrapIndicatorHorizontal"));
 
-            actions.Add(Skill1 = new Action(new InputSource(Button.A)));
-            actions.Add(Skill2 = new Action(new InputSource(Button.X)));
-            actions.Add(Skill3 = new Action(new InputSource(Button.Y)));
-            actions.Add(Skill4 = new Action(new InputSource(Button.B)));
+            Actions.Add(Skill1 = new Action(new InputSource(Button.A), "Skill1"));
+            Actions.Add(Skill2 = new Action(new InputSource(Button.X), "Skill2"));
+            Actions.Add(Skill3 = new Action(new InputSource(Button.Y), "Skill3"));
+            Actions.Add(Skill4 = new Action(new InputSource(Button.B), "Skill4"));
 
-            actions.Add(NextSet = new Action(new InputSource(Button.RB)));
-            actions.Add(PreviousSet = new Action(new InputSource(Button.LB)));
+            Actions.Add(NextSet = new Action(new InputSource(Button.RB), "NextSet"));
+            Actions.Add(PreviousSet = new Action(new InputSource(Button.LB), "PreviousSet"));
 
-            actions.Add(Shoot = new Action(new InputSource(Trigger.RIGHT)));
-            actions.Add(Melee = new Action(new InputSource(Trigger.LEFT)));
+            Actions.Add(Shoot = new Action(new InputSource(Trigger.RIGHT), "Shoot"));
+            Actions.Add(Melee = new Action(new InputSource(Trigger.LEFT), "Melee"));
 
-            actions.Add(MoveLaserVertical = new Action(new InputSource(Axis.RIGHT_VERTICAL)));
-            actions.Add(MoveLaserHorizontal = new Action(new InputSource(Axis.RIGHT_HORIZONTAL)));
+            Actions.Add(MoveLaserVertical = new Action(new InputSource(Axis.RIGHT_VERTICAL), "MoveLaserVertical"));
+            Actions.Add(MoveLaserHorizontal = new Action(new InputSource(Axis.RIGHT_HORIZONTAL), "MoveLaserHorizontal"));
         }
 
         public override void ActionsReactOnPause(PauseState pauseState)
@@ -54,18 +54,18 @@ namespace Run4YourLife.Input
                 pauseValue = true;
             }
 
-            Skill1.enabled = pauseValue;
-            Skill2.enabled = pauseValue;
-            Skill3.enabled = pauseValue;
-            Skill4.enabled = pauseValue;
-            NextSet.enabled = pauseValue;
-            PreviousSet.enabled = pauseValue;
-            Shoot.enabled = pauseValue;
-            Melee.enabled = pauseValue;
-            MoveLaserHorizontal.enabled = pauseValue;
-            MoveLaserVertical.enabled = pauseValue;
-            MoveTrapIndicatorHorizontal.enabled = pauseValue;
-            MoveTrapIndicatorVertical.enabled = pauseValue;
+            Skill1.Enabled = pauseValue;
+            Skill2.Enabled = pauseValue;
+            Skill3.Enabled = pauseValue;
+            Skill4.Enabled = pauseValue;
+            NextSet.Enabled = pauseValue;
+            PreviousSet.Enabled = pauseValue;
+            Shoot.Enabled = pauseValue;
+            Melee.Enabled = pauseValue;
+            MoveLaserHorizontal.Enabled = pauseValue;
+            MoveLaserVertical.Enabled = pauseValue;
+            MoveTrapIndicatorHorizontal.Enabled = pauseValue;
+            MoveTrapIndicatorVertical.Enabled = pauseValue;
         }
     }
 }

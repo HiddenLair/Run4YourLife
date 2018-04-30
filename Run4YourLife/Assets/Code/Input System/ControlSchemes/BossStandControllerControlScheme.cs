@@ -6,7 +6,7 @@
 
         public BossStandControllerControlScheme()
         {
-            actions.Add(SetAsRunner = new Action(new InputSource(Button.X)));
+            Actions.Add(SetAsRunner = new Action(new InputSource(Button.X), "SetAsRunner"));
         }
     }
 }

@@ -8,9 +8,9 @@
 
         public PlayerStandControllerControlScheme()
         {
-            actions.Add(Ready = new Action(new InputSource(Button.START)));
-            actions.Add(Exit = new Action(new InputSource(Button.B)));
-            actions.Add(Rotate = new Action(new InputSource(Axis.LEFT_HORIZONTAL)));
+            Actions.Add(Ready = new Action(new InputSource(Button.START), "Ready"));
+            Actions.Add(Exit = new Action(new InputSource(Button.B), "Exit"));
+            Actions.Add(Rotate = new Action(new InputSource(Axis.LEFT_HORIZONTAL), "Rotate"));
         }
     }
 }

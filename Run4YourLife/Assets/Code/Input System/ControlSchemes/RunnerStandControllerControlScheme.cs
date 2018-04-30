@@ -8,9 +8,9 @@
 
         public RunnerStandControllerControlScheme()
         {
-            actions.Add(NextStand = new Action(new InputSource(Button.RB)));
-            actions.Add(PreviousStand = new Action(new InputSource(Button.LB)));
-            actions.Add(SetAsBoss = new Action(new InputSource(Button.X)));
+            Actions.Add(NextStand = new Action(new InputSource(Button.RB), "NextStand"));
+            Actions.Add(PreviousStand = new Action(new InputSource(Button.LB), "PreviousStand"));
+            Actions.Add(SetAsBoss = new Action(new InputSource(Button.X), "SetAsBoss"));
         }
     }
 }

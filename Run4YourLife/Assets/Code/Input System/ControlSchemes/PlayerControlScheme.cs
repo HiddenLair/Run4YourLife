@@ -8,7 +8,7 @@ namespace Run4YourLife.Input
 
         public PlayerControlScheme()
         {
-            actions.Add(Pause = new Action(new InputSource(Button.START)));
+            Actions.Add(Pause = new Action(new InputSource(Button.START), "Pause"));
         }
 
         public abstract void ActionsReactOnPause(PauseState pauseState);

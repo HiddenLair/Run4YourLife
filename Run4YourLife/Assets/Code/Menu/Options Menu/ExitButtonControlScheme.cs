@@ -6,7 +6,7 @@
 
         public ExitButtonControlScheme()
         {
-            actions.Add(exitAction = new Action(new InputSource(Button.B)));
+            Actions.Add(exitAction = new Action(new InputSource(Button.B), "exitAction"));
         }
     }
 }

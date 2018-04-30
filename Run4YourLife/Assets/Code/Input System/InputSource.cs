@@ -1,5 +1,12 @@
 ﻿namespace Run4YourLife.Input
 {
+    public enum InputSourceType
+    {
+        Axis,
+        Button,
+        Trigger
+    }
+
     public class Axis
     {
         public string ID { get; private set; }
@@ -51,23 +58,32 @@
 
     public class InputSource
     {
+        public InputSourceType inputSoruceType;
         public string input;
         public InputDevice inputDevice;
 
 
-        public InputSource(Axis axis) : this(axis.ID, null) { }
-        public InputSource(Button button) : this(button.ID, null) { }
-        public InputSource(Trigger trigger) : this(trigger.ID, null) { }
+        public InputSource(Axis axis) : this(InputSourceType.Axis, axis.ID, null) { }
+        public InputSource(Button button) : this(InputSourceType.Button, button.ID, null) { }
+        public InputSource(Trigger trigger) : this(InputSourceType.Trigger, trigger.ID, null) { }
 
-        public InputSource(InputDevice inputDevice) : this("", inputDevice) { }
+        public InputSource(Axis axis, InputDevice inputDevice) : this(InputSourceType.Axis, axis.ID, inputDevice) { }
+        public InputSource(Button button, InputDevice inputDevice) : this(InputSourceType.Button, button.ID, inputDevice) { }
+        public InputSource(Trigger trigger, InputDevice inputDevice) : this(InputSourceType.Trigger, trigger.ID, inputDevice) { }
 
-        public InputSource(Axis axis, InputDevice inputDevice) : this(axis.ID, inputDevice) { }
-        public InputSource(Button button, InputDevice inputDevice) : this(button.ID, inputDevice) { }
-        public InputSource(Trigger trigger, InputDevice inputDevice) : this(trigger.ID, inputDevice) { }
-
-        private InputSource(string input, InputDevice inputDevice)
+        private InputSource(InputSourceType type, string input, InputDevice inputDevice)
         {
             this.input = input;
+            this.inputDevice = inputDevice;
+        }
+
+        /// <summary>
+        /// Do not use unless you know how to use this
+        /// </summary>
+        /// <param name="inputDevice"></param>
+        public InputSource(InputDevice inputDevice)
+        {
+            this.input = "";
             this.inputDevice = inputDevice;
         }
 
