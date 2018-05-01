@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Linq;
 
 using Cinemachine;
+using Run4YourLife.Cinemachine;
 
 public class Walker : MonoBehaviour {
 
@@ -16,7 +15,7 @@ public class Walker : MonoBehaviour {
 
     void Start()
     {
-        checkPointManager = FindObjectsOfType<CheckPointManager>().Where(x => x.enabled).First();
+        checkPointManager = FindObjectsOfType<CheckPointManager>().Where(x => x.enabled).First(); // TODO: When walker is fixed do this better
         id = checkPointManager.Subscribe();
     }
 
