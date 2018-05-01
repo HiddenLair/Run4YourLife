@@ -44,6 +44,11 @@ public class RunnerAttributeController : MonoBehaviour {
         RecalculateAttributes();
     }
 
+    private void OnEnable()
+    {
+        RecalculateAttributes();
+    }
+
     public float GetBaseAttribute(RunnerAttribute attribute)
     {
         return m_baseAttributes[attribute];

@@ -1,44 +1,36 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
+using Run4YourLife;
 using Run4YourLife.Player;
 
-public class ExplosionTrapControl : MonoBehaviour {
+public class ExplosionTrapControl : MonoBehaviour
+{
+    [SerializeField]
+    private float m_explosionRatius;
 
-    #region Private Variables
-    private bool toDelete = false;
-    #endregion
-
-    #region Public Variables
-    public float AOERadius = 2.0f;
-    public LayerMask trapListener;
-    public LayerMask blockingElement;
+    [SerializeField]
     public GameObject activationParticles;
-    #endregion
 
     private void OnTriggerEnter(Collider collider)
     {
-        Collider[] collisions = Physics.OverlapSphere(transform.position, AOERadius, trapListener);
+        Collider[] collisions = Physics.OverlapSphere(transform.position, m_explosionRatius, Layers.Runner);
 
         foreach (Collider c in collisions)
         {
-            if (!Physics.Linecast(transform.position, c.gameObject.GetComponent<Collider>().bounds.center, blockingElement))
+            if (!Physics.Linecast(transform.position, c.bounds.center, Layers.Stage))
             {
                 ExecuteEvents.Execute<ICharacterEvents>(c.gameObject, null, (x, y) => x.Kill());
-                toDelete = true;
             }
         }
 
-        if (toDelete)
-        {
-            Instantiate(activationParticles, transform.position, transform.rotation);
-            Destroy(gameObject);
-        }
+        Instantiate(activationParticles, transform.position, transform.rotation);
+        Destroy(gameObject);
     }
 
-    void OnDrawGizmos()
+    void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, AOERadius);
+        Gizmos.DrawWireSphere(transform.position, m_explosionRatius);
     }
 }

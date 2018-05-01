@@ -55,7 +55,7 @@ public class PushTrapControl : MonoBehaviour {
         return direction * pushForce;
     }
 
-    void OnDrawGizmos()
+    void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, AOERadius);

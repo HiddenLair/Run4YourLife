@@ -13,7 +13,7 @@ namespace Run4YourLife.Player
 
         public override void Apply(GameObject runner)
         {
-            runner.AddComponent<Shielded>();
+            runner.GetComponent<RunnerController>().ActivateShield();
         }
     }
 }

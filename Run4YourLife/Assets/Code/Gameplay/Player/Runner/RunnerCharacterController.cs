@@ -130,10 +130,16 @@ namespace Run4YourLife.Player
             m_horizontalDrag = m_baseHorizontalDrag;
         }
 
-        public void Clear()
+        private void OnEnable()
         {
-            StopAllCoroutines();
+            StartCoroutine(CheckCoyoteGroundedCoroutine());
+            m_runnerControlScheme.Active = true;
 
+            ResetMembers();
+        }
+
+        private void ResetMembers()
+        {
             m_gravity = m_baseGravity;
             m_horizontalDrag = m_baseHorizontalDrag;
             m_velocity = Vector3.zero;
@@ -147,19 +153,12 @@ namespace Run4YourLife.Player
             m_ceilingCollision = false;
 
             m_animator.Rebind();
-
-            m_runnerControlScheme.Active = false;
-        }
-
-        private void OnEnable()
-        {
-            StartCoroutine(CheckCoyoteGroundedCoroutine());
-            m_runnerControlScheme.Active = true;
         }
 
         private void OnDisable()
         {
-            GetComponent<ResetPlayerStatus>().Reset();
+            StopAllCoroutines();
+            m_runnerControlScheme.Active = false;
         }
 
         public void Deactivate()
