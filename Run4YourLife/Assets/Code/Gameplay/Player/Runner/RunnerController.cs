@@ -7,34 +7,44 @@ using Run4YourLife.GameManagement;
 namespace Run4YourLife.Player
 {
     [RequireComponent(typeof(RunnerCharacterController))]
-    [RequireComponent(typeof(Animator))]
-    [RequireComponent(typeof(BuffManager))]
     public class RunnerController : MonoBehaviour, ICharacterEvents
     {
+        private bool m_isShielded;
+
+        private Transform m_shieldGameObject;
         private RunnerCharacterController m_runnerCharacterController;
-        private BuffManager m_buffManager;
 
         private void Awake()
         {
             m_runnerCharacterController = GetComponent<RunnerCharacterController>();
-            m_buffManager = GetComponent<BuffManager>();
+
+            m_shieldGameObject = transform.Find("Graphics/Shield");
+            Debug.Assert(m_shieldGameObject != null, "Shield gameobject has not been found inside the character");
         }
 
-        private bool HasShield()
+        #region Shield
+
+        public void ActivateShield()
         {
-            RunnerState buff = m_buffManager.GetBuff();
-            return buff != null && buff.StateType == RunnerState.Type.Shielded;
+            m_isShielded = true;
+            m_shieldGameObject.gameObject.SetActive(true);
         }
 
-        private bool ConsumeShieldIfAviable()
+        /// <summary>
+        /// Consumes shield if the shield is active
+        /// </summary>
+        /// <returns>True when it had a shield, false when it did not have a shield</returns>
+        public bool ConsumeShieldIfAviable()
         {
-            if(HasShield())
-            {
-                Destroy(m_buffManager.GetBuff());
-                return true;
-            }
-            return false;
+            bool wasShielded = m_isShielded;
+
+            m_isShielded = false;
+            m_shieldGameObject.gameObject.SetActive(false);
+
+            return wasShielded;
         }
+
+        #endregion
 
         #region Character Effects
 
@@ -47,29 +57,16 @@ namespace Run4YourLife.Player
             }
         }
 
+        public void AbsoluteKill()
+        {
+            ExecuteEvents.Execute<IGameplayPlayerEvents>(GameplayPlayerManager.InstanceGameObject, null, (x, y) => x.OnRunnerDeath(gameObject));
+        }
+
         public void Impulse(Vector3 force)
         {
             if (!ConsumeShieldIfAviable()) {
                 m_runnerCharacterController.Impulse(force);
             }
-        }
-
-        public void Root(int rootHardness)
-        {
-            if (!ConsumeShieldIfAviable())
-            {
-                Root oldInstance = gameObject.GetComponent<Root>();
-                if (oldInstance != null)
-                {
-                    Destroy(oldInstance);
-                }
-                gameObject.AddComponent<Root>().SetHardness(rootHardness);
-            }
-        }
-
-        public void AbsoluteKill()
-        {
-            ExecuteEvents.Execute<IGameplayPlayerEvents>(GameplayPlayerManager.InstanceGameObject, null, (x, y) => x.OnRunnerDeath(gameObject));
         }
 
         #endregion

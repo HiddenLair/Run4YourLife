@@ -8,6 +8,5 @@ namespace Run4YourLife.Player
         void Kill();
         void AbsoluteKill();
         void Impulse(Vector3 force);
-        void Root(int rootHardness);
     }
 }

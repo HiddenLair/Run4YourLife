@@ -69,4 +69,16 @@ public class StatusEffectController : MonoBehaviour {
         yield return new WaitForSeconds(time);
         Remove(statusEffect);
     }
+
+    public void AddAndRemoveAfterTime(StatusEffectSet statusEffect, float time)
+    {
+        Add(statusEffect);
+        StartCoroutine(RemoveAfterTime(statusEffect, time));
+    }
+
+    private IEnumerator RemoveAfterTime(StatusEffectSet statusEffect, float time)
+    {
+        yield return new WaitForSeconds(time);
+        Remove(statusEffect);
+    }
 }

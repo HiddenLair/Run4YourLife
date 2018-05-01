@@ -6,17 +6,30 @@ using Run4YourLife.Player;
 
 public class RootTrapControl : MonoBehaviour
 {
-    #region Public variables
-    public GameObject activationParticles;
-    public int rootHardness = 5;
-    #endregion
+    [SerializeField]
+    private GameObject m_activationParticles;
+
+    [SerializeField]
+    private int m_interactionsUntilRelease;
+
+    [SerializeField]
+    private StatusEffectSet m_statusEffectSet;
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.CompareTag(Tags.Runner) || collider.CompareTag(Tags.Shoot))
+        if (collider.CompareTag(Tags.Runner))
         {
-            ExecuteEvents.Execute<ICharacterEvents>(collider.gameObject, null, (x, y) => x.Root(rootHardness));
-            Instantiate(activationParticles, transform.position, transform.rotation);
+            GameObject runner = collider.gameObject;
+
+            Root root = runner.gameObject.GetComponent<Root>();
+            if (root == null)
+            {
+                root = runner.AddComponent<Root>();
+                root.Init(m_interactionsUntilRelease, m_statusEffectSet);
+            }
+
+            root.RefreshRoot();
+
             Destroy(gameObject);
         }
     }

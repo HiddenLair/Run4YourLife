@@ -1,79 +1,53 @@
-﻿using System;
+﻿using UnityEngine;
+using Run4YourLife.Input;
 
 namespace Run4YourLife.Player
 {
-    public class Root : RunnerState, IInteractInput, IJumpInput, IVerticalInput
+    [RequireComponent(typeof(RunnerControlScheme))]
+    [RequireComponent(typeof(StatusEffectController))]
+    public class Root : MonoBehaviour
     {
-        #region Variables
+        private int m_interactionsUntilRelease;
+        private int m_currentInteractionsUntilRelease;
 
-        private int remainingHits = 4;
+        private StatusEffectSet m_statusEffectSet;
 
-        //AttributeModifier modifierSpeed;
+        private RunnerControlScheme m_runnerControlScheme;
+        private StatusEffectController m_statusEffectController;
 
-        #endregion
-
-        public override Type StateType { get { return Type.Root; } }
-
-        int IInteractInput.GetPriority()
+        private void Awake()
         {
-            return 1;
+            m_runnerControlScheme = GetComponent<RunnerControlScheme>();
+            Debug.Assert(m_runnerControlScheme != null);
+
+            m_statusEffectController = GetComponent<StatusEffectController>();
+            Debug.Assert(m_statusEffectController != null);
         }
 
-        int IJumpInput.GetPriority()
+        public void Init(int interactionsUntilRelease, StatusEffectSet statusEffectSet)
         {
-            return 1;
+            m_interactionsUntilRelease = interactionsUntilRelease;
+            m_statusEffectSet = statusEffectSet;
+
+            m_statusEffectController.Add(statusEffectSet);
         }
 
-        int IVerticalInput.GetPriority()
+        private void Update()
         {
-            return 1;
-        }
-
-        public void ModifyInteractInput(ref bool input)
-        {
-            if (input)
+            if (m_runnerControlScheme.Dash.Started())
             {
-                if (--remainingHits == 0)
+                m_currentInteractionsUntilRelease -= 1;
+                if (m_currentInteractionsUntilRelease == 0)
                 {
+                    m_statusEffectController.Remove(m_statusEffectSet);
                     Destroy(this);
                 }
             }
-
-            input = false;
         }
 
-        public void ModifyVerticalInput(ref float input)
+        public void RefreshRoot()
         {
-            input = 0.0f;
-        }
-
-        public void ModifyJumpInput(ref bool input)
-        {
-            input = false;
-        }
-
-        protected override void Apply()
-        {
-            //modifierSpeed = new SpeedModifier(AttributeModifierType.SETTER, true, 0, -1);
-            //GetComponent<RunnerAttributeController>().AddModifier(modifierSpeed);
-        }
-
-        protected override void Unapply()
-        {
-            //GetComponent<RunnerAttributeController>().RemoveAttributeModifier(modifierSpeed);
-        }
-
-        public void SetHardness(int rootHardness)
-        {
-            if (rootHardness > 0)
-            {
-                remainingHits = rootHardness;
-            }
-        }
-
-        public void Destroy()
-        {
-            Destroy(this);
+            m_currentInteractionsUntilRelease = m_interactionsUntilRelease;
         }
     }
 }
