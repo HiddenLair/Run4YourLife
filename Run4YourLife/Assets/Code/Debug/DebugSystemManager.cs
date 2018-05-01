@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-namespace Run4YourLife.DebuggingTools
+namespace Run4YourLife.Debug
 {
     [RequireComponent(typeof(FPSCounter))]
     [RequireComponent(typeof(VertexAndTriangleCounter))]
@@ -37,7 +37,7 @@ namespace Run4YourLife.DebuggingTools
 
         void Update()
         {
-            if(Debug.isDebugBuild)
+            if(UnityEngine.Debug.isDebugBuild)
             {
                 if(UnityEngine.Input.GetKeyDown(KeyCode.F1))
                 {

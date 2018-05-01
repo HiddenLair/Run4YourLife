@@ -2,72 +2,80 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Run4YourLife.Utils;
-using Cinemachine;
+using UnityEngine.EventSystems;
+using Run4YourLife.UI;
+
 using Run4YourLife.Player;
+using Run4YourLife.Utils;
+
+using Cinemachine;
 
 namespace Run4YourLife.GameManagement
 {
-    public class HardMoveHorizontalManager : GamePhaseManager
+    public class BossFightPhaseManager : GamePhaseManager
     {
         #region Editor variables
-
-        [SerializeField]
-        private CheckPointManager m_checkPointManager;
 
         [SerializeField]
         private CinemachineVirtualCamera m_virtualCamera;
 
         [SerializeField]
-        private GameObject m_background;
+        private Transform m_bossFightStartingCameraPositionDebug;
 
         [SerializeField]
-        private Material m_newBackgroundMat;
+        private float m_timeOfPhase;
+
+        [SerializeField]
+        private Tiling m_backgroundTiling;
 
         [SerializeField]
         private Transform[] phase2Spawns;
 
         #endregion
 
-        #region Member Variables
+        #region Member variables
 
         private PlayerSpawner m_playerSpawner;
 
-        #endregion
+        private GameObject m_uiManager;
 
-        #region Regular Execution
+
+        #endregion
 
         #region Initialization
 
         private void Awake()
         {
             m_playerSpawner = GetComponent<PlayerSpawner>();
-            Debug.Assert(m_playerSpawner != null);
+            UnityEngine.Debug.Assert(m_playerSpawner != null);
 
+            m_uiManager = GameObject.FindGameObjectWithTag(Tags.UI);
 
-            RegisterPhase(GamePhase.HardMoveHorizontal);
+            RegisterPhase(GamePhase.BossFight);
         }
 
         #endregion
 
+        #region Regular Execution
+
         public override void StartPhase()
         {
-            m_checkPointManager.gameObject.SetActive(true);
             m_playerSpawner.ActivateBoss();
             StartPhaseCommon();
         }
 
-        private void StartPhaseCommon()
+        void StartPhaseCommon()
         {
-
             GameObject boss = GameplayPlayerManager.Instance.Boss;
             m_virtualCamera.Follow = boss.transform;
             m_virtualCamera.LookAt = boss.transform;
             m_virtualCamera.gameObject.SetActive(true);
 
-            StartCoroutine(YieldHelper.SkipFrame(() => MoveRunners()));
+            m_backgroundTiling.SetActive(false);
+            ExecuteEvents.Execute<IUIEvents>(m_uiManager, null, (x, y) => x.OnCountdownSetted(m_timeOfPhase));
 
-            m_background.GetComponent<Tiling>().SetActive(true);
+            StartCoroutine(YieldHelper.SkipFrame(()=>MoveRunners()));           
+            StartCoroutine(YieldHelper.WaitForSeconds(StartNextPhase, m_timeOfPhase));
         }
 
         private void MoveRunners()
@@ -82,15 +90,21 @@ namespace Run4YourLife.GameManagement
             }
         }
 
+        private void StartNextPhase()
+        {
+            GameManager.Instance.EndExecutingPhaseAndStartPhase(GamePhase.BossFightRockTransition);
+        }
+
         public override void EndPhase()
         {
+            GameObject boss = GameplayPlayerManager.Instance.Boss;
+            Destroy(boss);
+
             EndPhaseCommon();
         }
 
         private void EndPhaseCommon()
         {
-            m_checkPointManager.gameObject.SetActive(false);
-
             m_virtualCamera.Follow = null;
             m_virtualCamera.LookAt = null;
             m_virtualCamera.gameObject.SetActive(false);
@@ -112,19 +126,21 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugStartPhase()
         {
-            m_checkPointManager.gameObject.SetActive(true);
             m_playerSpawner.ActivatePlayers();
+            m_virtualCamera.transform.position = m_bossFightStartingCameraPositionDebug.position;
 
             StartPhaseCommon();
         }
 
         public override void DebugEndPhase()
         {
+            StopAllCoroutines();
+
             GameplayPlayerManager.Instance.DebugClearAllPlayers();
+
             EndPhaseCommon();
         }
 
         #endregion
     }
 }
-

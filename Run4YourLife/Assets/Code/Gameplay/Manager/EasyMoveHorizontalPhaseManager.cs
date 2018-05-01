@@ -32,7 +32,7 @@ namespace Run4YourLife.GameManagement
         private void Awake()
         {
             m_playerSpawner = GetComponent<PlayerSpawner>();
-            Debug.Assert(m_playerSpawner != null);
+            UnityEngine.Debug.Assert(m_playerSpawner != null);
 
             RegisterPhase(GamePhase.EasyMoveHorizontal);
         }
@@ -49,7 +49,7 @@ namespace Run4YourLife.GameManagement
         void StartPhaseCommon()
         {
             GameObject boss = GameplayPlayerManager.Instance.Boss;
-            Debug.Assert(boss != null);
+            UnityEngine.Debug.Assert(boss != null);
 
             m_virtualCamera.Follow = boss.transform;
             m_virtualCamera.LookAt = boss.transform;

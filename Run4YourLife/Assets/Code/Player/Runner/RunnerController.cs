@@ -19,7 +19,7 @@ namespace Run4YourLife.Player
             m_runnerCharacterController = GetComponent<RunnerCharacterController>();
 
             m_shieldGameObject = transform.Find("Graphics/Shield");
-            Debug.Assert(m_shieldGameObject != null, "Shield gameobject has not been found inside the character");
+            UnityEngine.Debug.Assert(m_shieldGameObject != null, "Shield gameobject has not been found inside the character");
         }
 
         #region Shield

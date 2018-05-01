@@ -30,7 +30,7 @@ namespace Run4YourLife.Player
         private void Awake()
         {
             crosshairImage = crossHairUi.GetComponent<Image>();
-            Debug.Assert(crosshairImage != null);
+            UnityEngine.Debug.Assert(crosshairImage != null);
         }
 
         private void Update()

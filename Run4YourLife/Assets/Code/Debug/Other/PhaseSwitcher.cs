@@ -3,7 +3,7 @@
 using Run4YourLife.Utils;
 using Run4YourLife.GameManagement;
 
-namespace Run4YourLife.DebuggingTools
+namespace Run4YourLife.Debug
 {
     public class PhaseSwitcher : DebugFeature
     {

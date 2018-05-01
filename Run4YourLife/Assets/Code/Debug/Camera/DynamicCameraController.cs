@@ -3,7 +3,7 @@ using UnityEngine;
 
 using Run4YourLife.Utils;
 
-namespace Run4YourLife.DebuggingTools
+namespace Run4YourLife.Debug
 {
     public class DynamicCameraController : DebugCameraFeature
     {

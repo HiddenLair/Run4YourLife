@@ -6,7 +6,7 @@ using Cinemachine;
 
 namespace Run4YourLife.GameManagement
 {
-    public class TransitionToBossFightPhaseManager : GamePhaseManager
+    public class TransitionToHardMoveHorizontal : GamePhaseManager
     {
         #region Editor variables
 
@@ -19,35 +19,47 @@ namespace Run4YourLife.GameManagement
 
         private void Awake()
         {
-            RegisterPhase(GamePhase.TransitionToBossFight);
+            RegisterPhase(GamePhase.TransitionToHardMoveHorizontal);
         }
 
         #endregion
 
+        #region Regular Execution
+
+
         public override void StartPhase()
-        {           
-            m_virtualCamera.Follow = null;
-            m_virtualCamera.LookAt = null;
-            m_virtualCamera.gameObject.SetActive(false);
-           
-            GameManager.Instance.EndExecutingPhaseAndStartPhase(GamePhase.BossFight);
-        }
+        {
+            GameManager.Instance.EndExecutingPhaseAndStartPhase(GamePhase.HardMoveHorizontal);
+        }       
 
         public override void EndPhase()
         {
-            
+            EndPhaseCommon();
         }
 
-     
+        private void EndPhaseCommon()
+        {
+            m_virtualCamera.Follow = null;
+            m_virtualCamera.LookAt = null;
+            m_virtualCamera.gameObject.SetActive(false);
+        }
+
+        #endregion
+
+        #region Debug Execution
 
         public override void DebugStartPhase()
         {
-            Debug.LogError("This method should never be called");
+            UnityEngine.Debug.LogError("This method should never be called");
         }
 
         public override void DebugEndPhase()
         {
-            
+            EndPhaseCommon();
         }
+
+        #endregion
+
     }
 }
+

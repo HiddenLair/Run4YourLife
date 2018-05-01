@@ -44,7 +44,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         void Awake()
         {
             controlScheme = GetComponent<PlayerStandControllerControlScheme>();
-            Debug.Assert(controlScheme != null);
+            UnityEngine.Debug.Assert(controlScheme != null);
 
             initialScale = transform.localScale;
 

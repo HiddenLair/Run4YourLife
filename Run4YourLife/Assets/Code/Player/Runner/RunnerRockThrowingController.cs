@@ -43,7 +43,7 @@ namespace Run4YourLife.Player {
             collider = GetComponent<Collider>();
 
             m_graphics = transform.Find("Graphics");
-            Debug.Assert(m_graphics != null, "Graphics object not found in hierarchy");
+            UnityEngine.Debug.Assert(m_graphics != null, "Graphics object not found in hierarchy");
 
             timer = Time.time;
         }

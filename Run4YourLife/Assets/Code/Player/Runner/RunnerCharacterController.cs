@@ -126,10 +126,10 @@ namespace Run4YourLife.Player
             m_inputController = GetComponent<InputController>();
 
             m_graphics = transform.Find("Graphics");
-            Debug.Assert(m_graphics != null);
+            UnityEngine.Debug.Assert(m_graphics != null);
 
             m_dashTrail = transform.Find("Graphics/DashTrail");
-            Debug.Assert(m_dashTrail != null);
+            UnityEngine.Debug.Assert(m_dashTrail != null);
 
             m_gravity = m_baseGravity;
             m_horizontalDrag = m_baseHorizontalDrag;

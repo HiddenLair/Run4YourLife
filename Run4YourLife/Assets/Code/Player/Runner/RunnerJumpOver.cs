@@ -11,7 +11,7 @@ namespace Run4YourLife.Player
         private void Awake()
         {
             m_runnerCharacterController = transform.parent.GetComponent<RunnerCharacterController>();
-            Debug.Assert(m_runnerCharacterController, "Objects needs a parent that has a player character controller");
+            UnityEngine.Debug.Assert(m_runnerCharacterController, "Objects needs a parent that has a player character controller");
             Physics.IgnoreCollision(GetComponent<Collider>(), m_runnerCharacterController.GetComponent<Collider>());
         }
 

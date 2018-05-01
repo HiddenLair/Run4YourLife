@@ -85,7 +85,7 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugStartPhase()
         {
-            Debug.LogError("This method should never be called");
+            UnityEngine.Debug.LogError("This method should never be called");
         }
 
         public override void DebugEndPhase()

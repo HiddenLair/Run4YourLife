@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Run4YourLife.Player;
 using Run4YourLife.GameManagement;
 
-namespace Run4YourLife.DebuggingTools
+namespace Run4YourLife.Debug
 {
     public class RunnerGodMode : DebugFeature
     {

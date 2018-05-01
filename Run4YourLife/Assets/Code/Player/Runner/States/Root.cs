@@ -18,10 +18,10 @@ namespace Run4YourLife.Player
         private void Awake()
         {
             m_runnerControlScheme = GetComponent<RunnerControlScheme>();
-            Debug.Assert(m_runnerControlScheme != null);
+            UnityEngine.Debug.Assert(m_runnerControlScheme != null);
 
             m_statusEffectController = GetComponent<StatusEffectController>();
-            Debug.Assert(m_statusEffectController != null);
+            UnityEngine.Debug.Assert(m_statusEffectController != null);
         }
 
         public void Init(int interactionsUntilRelease, StatusEffectSet statusEffectSet)

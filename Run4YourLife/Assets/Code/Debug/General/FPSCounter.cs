@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Run4YourLife.DebuggingTools
+namespace Run4YourLife.Debug
 {
     public class FPSCounter : DebugFeature
     {

@@ -2,80 +2,72 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using Run4YourLife.UI;
-
-using Run4YourLife.Player;
 using Run4YourLife.Utils;
-
 using Cinemachine;
+using Run4YourLife.Player;
 
 namespace Run4YourLife.GameManagement
 {
-    public class BossFightPhaseManager : GamePhaseManager
+    public class HardMoveHorizontalManager : GamePhaseManager
     {
         #region Editor variables
+
+        [SerializeField]
+        private CheckPointManager m_checkPointManager;
 
         [SerializeField]
         private CinemachineVirtualCamera m_virtualCamera;
 
         [SerializeField]
-        private Transform m_bossFightStartingCameraPositionDebug;
+        private GameObject m_background;
 
         [SerializeField]
-        private float m_timeOfPhase;
-
-        [SerializeField]
-        private Tiling m_backgroundTiling;
+        private Material m_newBackgroundMat;
 
         [SerializeField]
         private Transform[] phase2Spawns;
 
         #endregion
 
-        #region Member variables
+        #region Member Variables
 
         private PlayerSpawner m_playerSpawner;
 
-        private GameObject m_uiManager;
-
-
         #endregion
+
+        #region Regular Execution
 
         #region Initialization
 
         private void Awake()
         {
             m_playerSpawner = GetComponent<PlayerSpawner>();
-            Debug.Assert(m_playerSpawner != null);
+            UnityEngine.Debug.Assert(m_playerSpawner != null);
 
-            m_uiManager = GameObject.FindGameObjectWithTag(Tags.UI);
 
-            RegisterPhase(GamePhase.BossFight);
+            RegisterPhase(GamePhase.HardMoveHorizontal);
         }
 
         #endregion
 
-        #region Regular Execution
-
         public override void StartPhase()
         {
+            m_checkPointManager.gameObject.SetActive(true);
             m_playerSpawner.ActivateBoss();
             StartPhaseCommon();
         }
 
-        void StartPhaseCommon()
+        private void StartPhaseCommon()
         {
+
             GameObject boss = GameplayPlayerManager.Instance.Boss;
             m_virtualCamera.Follow = boss.transform;
             m_virtualCamera.LookAt = boss.transform;
             m_virtualCamera.gameObject.SetActive(true);
 
-            m_backgroundTiling.SetActive(false);
-            ExecuteEvents.Execute<IUIEvents>(m_uiManager, null, (x, y) => x.OnCountdownSetted(m_timeOfPhase));
+            StartCoroutine(YieldHelper.SkipFrame(() => MoveRunners()));
 
-            StartCoroutine(YieldHelper.SkipFrame(()=>MoveRunners()));           
-            StartCoroutine(YieldHelper.WaitForSeconds(StartNextPhase, m_timeOfPhase));
+            m_background.GetComponent<Tiling>().SetActive(true);
         }
 
         private void MoveRunners()
@@ -90,21 +82,15 @@ namespace Run4YourLife.GameManagement
             }
         }
 
-        private void StartNextPhase()
-        {
-            GameManager.Instance.EndExecutingPhaseAndStartPhase(GamePhase.BossFightRockTransition);
-        }
-
         public override void EndPhase()
         {
-            GameObject boss = GameplayPlayerManager.Instance.Boss;
-            Destroy(boss);
-
             EndPhaseCommon();
         }
 
         private void EndPhaseCommon()
         {
+            m_checkPointManager.gameObject.SetActive(false);
+
             m_virtualCamera.Follow = null;
             m_virtualCamera.LookAt = null;
             m_virtualCamera.gameObject.SetActive(false);
@@ -126,21 +112,19 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugStartPhase()
         {
+            m_checkPointManager.gameObject.SetActive(true);
             m_playerSpawner.ActivatePlayers();
-            m_virtualCamera.transform.position = m_bossFightStartingCameraPositionDebug.position;
 
             StartPhaseCommon();
         }
 
         public override void DebugEndPhase()
         {
-            StopAllCoroutines();
-
             GameplayPlayerManager.Instance.DebugClearAllPlayers();
-
             EndPhaseCommon();
         }
 
         #endregion
     }
 }
+

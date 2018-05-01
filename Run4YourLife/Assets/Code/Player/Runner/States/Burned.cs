@@ -17,7 +17,7 @@ namespace Run4YourLife.Player
         private void Awake()
         {
             m_statusEffectController = GetComponent<StatusEffectController>();
-            Debug.Assert(m_statusEffectController != null);
+            UnityEngine.Debug.Assert(m_statusEffectController != null);
         }
 
         public void Init(float burnTime, StatusEffectSet statusEffectSet)

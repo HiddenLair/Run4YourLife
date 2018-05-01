@@ -104,7 +104,7 @@ namespace Run4YourLife.GameManagement {
 
         private void CreateDebugPlayers()
         {
-            Debug.Log("Creating debug player handles for game");
+            UnityEngine.Debug.Log("Creating debug player handles for game");
 
             PlayerHandle[] playerHandles = new PlayerHandle[]
             {
@@ -241,14 +241,14 @@ namespace Run4YourLife.GameManagement {
                 case GamePhase.HardMoveHorizontal:
                     return m_sceneBosses[2];
                 default:
-                    Debug.LogError("You are trying to get a boss for a phase that has no boss");
+                    UnityEngine.Debug.LogError("You are trying to get a boss for a phase that has no boss");
                     return null;
             }
         }
 
         private void Update()
         {
-            if (Debug.isDebugBuild)
+            if (UnityEngine.Debug.isDebugBuild)
             {
                 if (UnityEngine.Input.GetKeyDown(KeyCode.R))
                 {
