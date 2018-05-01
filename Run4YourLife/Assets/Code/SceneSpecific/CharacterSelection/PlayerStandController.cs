@@ -3,7 +3,7 @@
 using Run4YourLife.Input;
 using Run4YourLife.Player;
 
-namespace Run4YourLife.CharacterSelection
+namespace Run4YourLife.SceneSpecific.CharacterSelection
 {
     public abstract class PlayerStandController : MonoBehaviour, IPlayerHandleEvent
     {

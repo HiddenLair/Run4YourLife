@@ -1,10 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 using Run4YourLife.Input;
 using Run4YourLife.Player;
 
-namespace Run4YourLife.CharacterSelection
+namespace Run4YourLife.SceneSpecific.CharacterSelection
 {
     [RequireComponent(typeof(RunnerStandControllerControlScheme))]
     public class RunnerStandController : PlayerStandController

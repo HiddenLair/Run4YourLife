@@ -15,13 +15,6 @@ public class ExecuteEventAfterSeconds : MonoBehaviour {
 
     public void Invoke()
     {
-        // StartCoroutine(StartEventAfterSeconds(m_seconds));
         StartCoroutine(YieldHelper.WaitForSeconds(m_toExecute.Invoke, m_seconds));
     }
-
-    /* private IEnumerator StartEventAfterSeconds(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        m_toExecute.Invoke();
-    } */
 }

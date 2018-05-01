@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Run4YourLife.WinMenu
+namespace Run4YourLife.SceneSpecific.WinMenu
 {
     public class BossWinsMenuManager : WinMenuManager
     {

@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.Events;
-using UnityEngine;
+﻿using UnityEngine;
 
 using Run4YourLife.Player;
 using Run4YourLife.Input;
 
-namespace Run4YourLife.CharacterSelection
+namespace Run4YourLife.SceneSpecific.CharacterSelection
 {
     public class InputDeviceDetector : MonoBehaviour {
         public InputDeviceEvent OncontrollerDetected;

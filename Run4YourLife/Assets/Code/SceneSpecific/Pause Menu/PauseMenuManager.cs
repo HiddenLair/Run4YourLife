@@ -1,13 +1,11 @@
-﻿using Cinemachine;
-using Run4YourLife.GameManagement;
-using Run4YourLife.SceneManagement;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 
-namespace Run4YourLife.PauseMenu
+using Cinemachine;
+
+using Run4YourLife.GameManagement;
+
+namespace Run4YourLife.SceneSpecific.PauseMenu
 {
     public class PauseMenuManager : MonoBehaviour
     {

@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 using Run4YourLife.SceneManagement;
 using UnityEngine.EventSystems;
 using Run4YourLife.Input;
 
-namespace Run4YourLife.OptionsMenu
+namespace Run4YourLife.SceneSpecific.OptionsMenu
 {
     [RequireComponent(typeof(ExitButtonControlScheme))]
     public class OptionsMenuManager : MonoBehaviour
@@ -31,7 +28,7 @@ namespace Run4YourLife.OptionsMenu
 
         private void Update()
         {
-            if(exitScheme.exitAction.Started())
+            if(exitScheme.ExitAction.Started())
             {
                 m_unloadOptionsMenu.Execute();
             }

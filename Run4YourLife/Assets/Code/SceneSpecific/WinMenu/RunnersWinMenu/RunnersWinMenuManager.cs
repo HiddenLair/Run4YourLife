@@ -6,7 +6,7 @@ using Run4YourLife.Player;
 using Run4YourLife.GameManagement;
 using Run4YourLife.Input;
 
-namespace Run4YourLife.WinMenu
+namespace Run4YourLife.SceneSpecific.WinMenu
 {
     [RequireComponent(typeof(RunnerPrefabManager))]
     public class RunnersWinMenuManager : WinMenuManager

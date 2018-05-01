@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 using Run4YourLife.Player;
 
-namespace Run4YourLife.CharacterSelection
+namespace Run4YourLife.SceneSpecific.CharacterSelection
 {
     public class PlayerStandsManager : SingletonMonoBehaviour<PlayerStandsManager>
     {

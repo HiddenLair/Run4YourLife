@@ -1,11 +1,10 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 using Run4YourLife.Input;
 using Run4YourLife.Player;
 using Run4YourLife.SceneManagement;
 
-namespace Run4YourLife.CharacterSelection
+namespace Run4YourLife.SceneSpecific.CharacterSelection
 {
     [RequireComponent(typeof(InputDeviceDetector))]
     public class CharacterSelectionManager : SingletonMonoBehaviour<CharacterSelectionManager>

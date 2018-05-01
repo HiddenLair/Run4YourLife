@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 using Run4YourLife.SceneManagement;
 
-namespace Run4YourLife.MainMenu
+namespace Run4YourLife.SceneSpecific.MainMenu
 {
     public class MainMenuManager : MonoBehaviour
     {

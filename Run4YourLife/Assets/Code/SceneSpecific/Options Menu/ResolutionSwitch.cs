@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Run4YourLife.OptionsMenu
+namespace Run4YourLife.SceneSpecific.OptionsMenu
 {
     public class ResolutionSwitch : MonoBehaviour, IMoveHandler, ISelectHandler, IDeselectHandler
     {

@@ -2,7 +2,7 @@
 
 using Run4YourLife.SceneManagement;
 
-namespace Run4YourLife.WinMenu
+namespace Run4YourLife.SceneSpecific.WinMenu
 {
     public abstract class WinMenuManager : MonoBehaviour
     {
