@@ -19,20 +19,5 @@ namespace Run4YourLife.Input
             Actions.Add(Dash = new Action(new InputSource(Button.X), "Dash"));
             Actions.Add(Rock = new Action(new InputSource(Button.B), "Rock"));
         }
-
-        public override void ActionsReactOnPause(PauseState pauseState)
-        {
-            bool pauseValue = false;
-            if(pauseState == PauseState.UNPAUSED)
-            {
-                pauseValue = true;
-            }
-
-            Move.Enabled = pauseValue;
-            Jump.Enabled = pauseValue;
-            Dash.Enabled = pauseValue;
-            Rock.Enabled = pauseValue;
-            Vertical.Enabled = pauseValue;
-        }
     }
 }

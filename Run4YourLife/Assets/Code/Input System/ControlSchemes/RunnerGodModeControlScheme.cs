@@ -16,19 +16,5 @@ namespace Run4YourLife.Input
             Actions.Add(MSpeed = new Action(new InputSource(Button.A), "MSpeed"));
             Actions.Add(End = new Action(new InputSource(Button.B), "End"));
         }
-
-        public override void ActionsReactOnPause(PauseState pauseState)
-        {
-            bool pauseValue = false;
-            if(pauseState == PauseState.UNPAUSED)
-            {
-                pauseValue = true;
-            }
-
-            MoveH.Enabled = pauseValue;
-            MoveV.Enabled = pauseValue;
-            MSpeed.Enabled = pauseValue;
-            End.Enabled = pauseValue;
-        }
     }
 }

@@ -22,7 +22,7 @@ namespace Run4YourLife.GameManagement
 
     public class PauseStateChangeEvent : UnityEvent<PauseState> { }
 
-    public class PauseManager : MonoBehaviour, IPauseEvent
+    public class PauseManager : SingletonMonoBehaviour<PauseManager>, IPauseEvent
     {
         private PauseState actualGameState = PauseState.UNPAUSED;
         private CinemachineBrain mainCameraCinemachine;

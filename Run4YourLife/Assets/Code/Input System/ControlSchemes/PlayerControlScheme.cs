@@ -10,7 +10,5 @@ namespace Run4YourLife.Input
         {
             Actions.Add(Pause = new Action(new InputSource(Button.START), "Pause"));
         }
-
-        public abstract void ActionsReactOnPause(PauseState pauseState);
     }
 }

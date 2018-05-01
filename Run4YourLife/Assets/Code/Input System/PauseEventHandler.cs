@@ -7,43 +7,24 @@ namespace Run4YourLife.Input
     [RequireComponent(typeof(PlayerControlScheme))]
     public class PauseEventHandler : MonoBehaviour
     {
-        private GameObject m_gameManager;
         private PlayerControlScheme m_playerControlScheme;
 
         void Awake()
         {
             m_playerControlScheme = GetComponent<PlayerControlScheme>();
-
-            m_gameManager = GameObject.FindGameObjectWithTag(Tags.GameController);
-            if(m_gameManager != null)
-            {
-                PauseManager pauseManager = m_gameManager.GetComponent<PauseManager>();
-                if (pauseManager != null)
-                {
-                    pauseManager.PauseChangeEvent.AddListener(OnPauseChanged);
-                }
-                else
-                {
-                    Debug.LogWarning("Pause Manager Not Detected, could not bind to pause events");
-                }
-            }
-            else
-            {
-                Debug.LogWarning("Game Manager Not Detected, could not bind to pause events");
-            }
         }
 
         private void Update()
         {
             if (m_playerControlScheme.Pause.Started())
             {
-                ExecuteEvents.Execute<IPauseEvent>(m_gameManager, null, (x, y) => x.OnPauseInput());
+                ExecuteEvents.Execute<IPauseEvent>(PauseManager.InstanceGameObject, null, (x, y) => x.OnPauseInput());
             }
         }
 
         public void OnPauseChanged(PauseState pauseState)
         {
-            m_playerControlScheme.ActionsReactOnPause(pauseState);
+            m_playerControlScheme.Active = pauseState == PauseState.UNPAUSED;
         }
     }
 }

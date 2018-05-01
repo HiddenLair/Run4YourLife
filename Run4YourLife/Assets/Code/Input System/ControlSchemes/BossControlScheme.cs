@@ -45,27 +45,5 @@ namespace Run4YourLife.Input
             Actions.Add(MoveLaserVertical = new Action(new InputSource(Axis.RIGHT_VERTICAL), "MoveLaserVertical"));
             Actions.Add(MoveLaserHorizontal = new Action(new InputSource(Axis.RIGHT_HORIZONTAL), "MoveLaserHorizontal"));
         }
-
-        public override void ActionsReactOnPause(PauseState pauseState)
-        {
-            bool pauseValue = false;
-            if (pauseState == PauseState.UNPAUSED)
-            {
-                pauseValue = true;
-            }
-
-            Skill1.Enabled = pauseValue;
-            Skill2.Enabled = pauseValue;
-            Skill3.Enabled = pauseValue;
-            Skill4.Enabled = pauseValue;
-            NextSet.Enabled = pauseValue;
-            PreviousSet.Enabled = pauseValue;
-            Shoot.Enabled = pauseValue;
-            Melee.Enabled = pauseValue;
-            MoveLaserHorizontal.Enabled = pauseValue;
-            MoveLaserVertical.Enabled = pauseValue;
-            MoveTrapIndicatorHorizontal.Enabled = pauseValue;
-            MoveTrapIndicatorVertical.Enabled = pauseValue;
-        }
     }
 }
