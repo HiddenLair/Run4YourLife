@@ -631,16 +631,15 @@ GameObject:
   - component: {fileID: 143288854585419614}
   - component: {fileID: 114501902548479586}
   - component: {fileID: 114522423575112644}
-  - component: {fileID: 114652456559360876}
+  - component: {fileID: 114322378382530888}
+  - component: {fileID: 114886001507526580}
+  - component: {fileID: 114258361713000630}
   - component: {fileID: 114230566275700994}
-  - component: {fileID: 114619949637134424}
   - component: {fileID: 114872548824352940}
   - component: {fileID: 114198941812428530}
-  - component: {fileID: 114006496448077282}
   - component: {fileID: 114870256499141686}
-  - component: {fileID: 114546252549524180}
   - component: {fileID: 114907486398693434}
-  - component: {fileID: 114301064429267496}
+  - component: {fileID: 114546252549524180}
   m_Layer: 8
   m_Name: GameplayRunnerBlue
   m_TagString: Player
@@ -1209,7 +1208,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1658063006562502}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.056768, y: 6.164922, z: -2.938592}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4756756439427404}
@@ -2184,19 +2183,6 @@ TrailRenderer:
     generateLightingData: 0
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
---- !u!114 &114006496448077282
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1658063006562502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a33c8cb7c3b4ed5469f4f7d9b9e154ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  headBumpCollider: {fileID: 1027867998329872}
-  shield: {fileID: 1708864343730160}
 --- !u!114 &114198941812428530
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2220,7 +2206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6968e196e4f7a1344bc4744e2b7cc4eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114301064429267496
+--- !u!114 &114258361713000630
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -2228,9 +2214,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 1658063006562502}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cd7b018e4efb174dace3ae34c53497c, type: 3}
+  m_Script: {fileID: 11500000, guid: 4adec5e244d7e60469aa00c40a4c037e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114322378382530888
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1658063006562502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08267b506f7ca44468185dc8b456dbd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnStatusEffectAdded:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: StatusEffectEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  OnStatusEffectRemoved:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: StatusEffectEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &114501902548479586
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2264,31 +2271,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff4e6999a7f30fe4aa9f4d8d89f65bd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114619949637134424
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1658063006562502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb2d1b5309e129f4e8b1fcb95811671a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_baseSpeed: 5
-  m_jumpHeight: 2
-  m_bounceHeight: 3
---- !u!114 &114652456559360876
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1658063006562502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cc9a4870bb3c9b4bbb4dc2b24fa4f76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114773813731915592
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2315,7 +2297,6 @@ MonoBehaviour:
   m_rockPrefab: {fileID: 1859296258977212, guid: d0708a5fb3adb4847b37627c5b5c7b49,
     type: 2}
   m_rockInstantiationTransform: {fileID: 4806281484960980}
-  m_graphics: {fileID: 4756756439427404}
   force: 10
   angle: 30
   Reload: 0.5
@@ -2330,7 +2311,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d11b9ec8ec5299f4fbd2b1ad52bc3f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_graphics: {fileID: 1772153977518270}
   m_coyoteGroundedTime: 0.1
   m_impulseHorizontalDrag: 5
   m_baseGravity: -40
@@ -2347,6 +2327,20 @@ MonoBehaviour:
   bounceClip: {fileID: 8300000, guid: 4c27b064170a56b48907e5a15905f521, type: 3}
   deathParticles: {fileID: 1751776643570596, guid: fa8134d7703a4c34bb96cae308ef5c96,
     type: 2}
+--- !u!114 &114886001507526580
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1658063006562502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa277cd4f8321324db9f002989d43317, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_baseSpeed: 5
+  m_baseJumpHeight: 2
+  m_baseBounceHeight: 2
 --- !u!114 &114907486398693434
 MonoBehaviour:
   m_ObjectHideFlags: 1

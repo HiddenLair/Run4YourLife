@@ -20,9 +20,6 @@ namespace Run4YourLife.Player
         #region InspectorVariables
 
         [SerializeField]
-        private GameObject m_graphics;
-
-        [SerializeField]
         private float m_coyoteGroundedTime;
 
         [SerializeField]
@@ -55,8 +52,7 @@ namespace Run4YourLife.Player
         [SerializeField]
         private float m_timeToIdle;
 
-        [SerializeField]
-        private GameObject m_dashTrail;
+        
 
         #endregion
 
@@ -77,6 +73,9 @@ namespace Run4YourLife.Player
         private Animator m_animator;
         private AudioSource m_audioSource;
         private InputController m_inputController;
+
+        private Transform m_graphics;
+        private Transform m_dashTrail;
 
         #endregion
 
@@ -125,6 +124,12 @@ namespace Run4YourLife.Player
             m_runnerAttributeController = GetComponent<RunnerAttributeController>();
             m_animator = GetComponent<Animator>();
             m_inputController = GetComponent<InputController>();
+
+            m_graphics = transform.Find("Graphics");
+            Debug.Assert(m_graphics != null);
+
+            m_dashTrail = transform.Find("Graphics/DashTrail");
+            Debug.Assert(m_dashTrail != null);
 
             m_gravity = m_baseGravity;
             m_horizontalDrag = m_baseHorizontalDrag;
@@ -223,7 +228,7 @@ namespace Run4YourLife.Player
             m_isReadyToDash = false;
             m_animator.SetTrigger("dash");
 
-            m_dashTrail.SetActive(true);
+            m_dashTrail.gameObject.SetActive(true);
 
             m_horizontalDrag = m_dashHorizontalDrag;
             float facingRight = m_isFacingRight ? 1 : -1;
@@ -238,7 +243,7 @@ namespace Run4YourLife.Player
 
             m_horizontalDrag = m_baseHorizontalDrag;
 
-            m_dashTrail.SetActive(false);
+            m_dashTrail.gameObject.SetActive(false);
 
             m_isDashing = false;
             yield return new WaitUntil(() => m_characterController.isGrounded);
@@ -348,7 +353,7 @@ namespace Run4YourLife.Player
             bool shouldFaceTheOtherWay = (m_isFacingRight && m_runnerControlScheme.Move.Value() < 0) || (!m_isFacingRight && m_runnerControlScheme.Move.Value() > 0);
             if (shouldFaceTheOtherWay)
             {
-                m_graphics.transform.Rotate(Vector3.up, 180);
+                m_graphics.Rotate(Vector3.up, 180);
                 m_isFacingRight = !m_isFacingRight;
             }
         }

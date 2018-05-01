@@ -175,16 +175,15 @@ GameObject:
   - component: {fileID: 143895353894693126}
   - component: {fileID: 114833089619696824}
   - component: {fileID: 114775733409411302}
-  - component: {fileID: 114855827864118560}
+  - component: {fileID: 114713375489697384}
+  - component: {fileID: 114711709460787476}
+  - component: {fileID: 114436709229247256}
   - component: {fileID: 114143806343890252}
-  - component: {fileID: 114186454666080274}
   - component: {fileID: 114699132781339792}
   - component: {fileID: 114952540855206564}
-  - component: {fileID: 114527757853993492}
   - component: {fileID: 114033240377035464}
-  - component: {fileID: 114699221370750574}
   - component: {fileID: 114796697429773708}
-  - component: {fileID: 114957140243689868}
+  - component: {fileID: 114699221370750574}
   m_Layer: 8
   m_Name: GameplayRunnerPurple
   m_TagString: Player
@@ -398,7 +397,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4734079998748054}
   - component: {fileID: 137614534889149522}
-  - component: {fileID: 114709991528719828}
   m_Layer: 0
   m_Name: R4YL_CHA_personaje001
   m_TagString: Untagged
@@ -1291,7 +1289,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1767937530890780}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1405,7 +1403,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1190572292703128}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 29.391336, y: 0.000000029802322, z: -0.77416515}
+  m_LocalPosition: {x: 0, y: 1.523, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4382724806196786}
@@ -1558,8 +1556,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1450863544387022}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.49999997, z: 0}
+  m_LocalScale: {x: 1.0000002, y: 1, z: 1.0000002}
   m_Children: []
   m_Father: {fileID: 4382724806196786}
   m_RootOrder: 2
@@ -2199,7 +2197,6 @@ MonoBehaviour:
   m_rockPrefab: {fileID: 1859296258977212, guid: d0708a5fb3adb4847b37627c5b5c7b49,
     type: 2}
   m_rockInstantiationTransform: {fileID: 4835871525831648}
-  m_graphics: {fileID: 4382724806196786}
   force: 10
   angle: 30
   Reload: 0.5
@@ -2214,20 +2211,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6968e196e4f7a1344bc4744e2b7cc4eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114186454666080274
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1190572292703128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb2d1b5309e129f4e8b1fcb95811671a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
-  jumpHeight: 2
-  bounceHeight: 3
 --- !u!114 &114400700760236346
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2240,7 +2223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   falling: 1
---- !u!114 &114527757853993492
+--- !u!114 &114436709229247256
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -2248,11 +2231,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1190572292703128}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a33c8cb7c3b4ed5469f4f7d9b9e154ba, type: 3}
+  m_Script: {fileID: 11500000, guid: 4adec5e244d7e60469aa00c40a4c037e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  headBumpCollider: {fileID: 1507607836618992}
-  shield: {fileID: 1910957760697730}
 --- !u!114 &114699132781339792
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2264,7 +2245,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d11b9ec8ec5299f4fbd2b1ad52bc3f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_graphics: {fileID: 1767937530890780}
   m_coyoteGroundedTime: 0.1
   m_impulseHorizontalDrag: 5
   m_baseGravity: -40
@@ -2276,7 +2256,7 @@ MonoBehaviour:
   m_dashDistance: 15
   m_dashHorizontalDrag: 10
   m_timeToIdle: 5
-  m_dashTrail: {fileID: 1450863544387022}
+  m_dashTrail: {fileID: 0}
   jumpClip: {fileID: 8300000, guid: 8bc5dbb3f916c7d4bb404c8a010f4106, type: 3}
   bounceClip: {fileID: 8300000, guid: 4c27b064170a56b48907e5a15905f521, type: 3}
   deathParticles: {fileID: 1751776643570596, guid: fa8134d7703a4c34bb96cae308ef5c96,
@@ -2292,18 +2272,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff4e6999a7f30fe4aa9f4d8d89f65bd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114709991528719828
+--- !u!114 &114711709460787476
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1464568459670718}
+  m_GameObject: {fileID: 1190572292703128}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 068fe7ecb5a8dde49829f299867fdee7, type: 3}
+  m_Script: {fileID: 11500000, guid: aa277cd4f8321324db9f002989d43317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toActivate: {fileID: 1190572292703128}
+  m_baseSpeed: 5
+  m_baseJumpHeight: 2
+  m_baseBounceHeight: 2
+--- !u!114 &114713375489697384
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1190572292703128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08267b506f7ca44468185dc8b456dbd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnStatusEffectAdded:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: StatusEffectEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  OnStatusEffectRemoved:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: StatusEffectEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &114775733409411302
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2341,17 +2344,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cec698f25fa65f47a9e9032dfde8efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114855827864118560
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1190572292703128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cc9a4870bb3c9b4bbb4dc2b24fa4f76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114952540855206564
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2364,17 +2356,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_inputThreshold: -0.9
---- !u!114 &114957140243689868
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1190572292703128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cd7b018e4efb174dace3ae34c53497c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &135190689752814058
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -2401,7 +2382,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 2c6751fe33ccdcb40b946d77ee6a85b2, type: 2}
+  - {fileID: 2100000, guid: bcda4cee5c32fbd4d8fbb809358c0726, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2448,7 +2429,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 2c6751fe33ccdcb40b946d77ee6a85b2, type: 2}
+  - {fileID: 2100000, guid: d3794e7883fc6c64b9a09effd7701f8e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2524,7 +2505,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 2c6751fe33ccdcb40b946d77ee6a85b2, type: 2}
+  - {fileID: 2100000, guid: bcda4cee5c32fbd4d8fbb809358c0726, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

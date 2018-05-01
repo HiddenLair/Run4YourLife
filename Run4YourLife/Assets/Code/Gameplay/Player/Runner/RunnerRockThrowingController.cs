@@ -17,9 +17,6 @@ namespace Run4YourLife.Player {
         private Transform m_rockInstantiationTransform;
 
         [SerializeField]
-        private Transform m_graphics;
-
-        [SerializeField]
         private float force;
 
         [SerializeField]
@@ -34,6 +31,8 @@ namespace Run4YourLife.Player {
         private RunnerControlScheme m_runnerControlScheme;
         private new Collider collider;
 
+        private Transform m_graphics;
+
         private float timer;
 
         private void Awake()
@@ -42,6 +41,9 @@ namespace Run4YourLife.Player {
             m_inputController = GetComponent<InputController>();
             m_runnerControlScheme = GetComponent<RunnerControlScheme>();
             collider = GetComponent<Collider>();
+
+            m_graphics = transform.Find("Graphics");
+            Debug.Assert(m_graphics != null, "Graphics object not found in hierarchy");
 
             timer = Time.time;
         }

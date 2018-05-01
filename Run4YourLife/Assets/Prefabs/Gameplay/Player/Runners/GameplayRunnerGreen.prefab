@@ -524,16 +524,15 @@ GameObject:
   - component: {fileID: 143609414199606322}
   - component: {fileID: 114549860601639932}
   - component: {fileID: 114530186430118160}
-  - component: {fileID: 114157902777720206}
+  - component: {fileID: 114236280826603856}
+  - component: {fileID: 114312394092193120}
+  - component: {fileID: 114518389792135224}
   - component: {fileID: 114456454068292368}
-  - component: {fileID: 114751259999779406}
   - component: {fileID: 114097876310681834}
   - component: {fileID: 114870739380008438}
-  - component: {fileID: 114125986892772842}
   - component: {fileID: 114170465351769530}
-  - component: {fileID: 114393201052373230}
   - component: {fileID: 114749682835152774}
-  - component: {fileID: 114061208846996590}
+  - component: {fileID: 114393201052373230}
   m_Layer: 8
   m_Name: GameplayRunnerGreen
   m_TagString: Player
@@ -1060,7 +1059,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1387644681890842}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 45.343365, y: 0, z: -0.2741499}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4690047490792588}
@@ -1685,7 +1684,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1148597755308942}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2184,17 +2183,6 @@ TrailRenderer:
     generateLightingData: 0
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
---- !u!114 &114061208846996590
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1387644681890842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cd7b018e4efb174dace3ae34c53497c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114097876310681834
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2206,7 +2194,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d11b9ec8ec5299f4fbd2b1ad52bc3f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_graphics: {fileID: 1148597755308942}
   m_coyoteGroundedTime: 0.1
   m_impulseHorizontalDrag: 5
   m_baseGravity: -40
@@ -2218,35 +2205,11 @@ MonoBehaviour:
   m_dashDistance: 15
   m_dashHorizontalDrag: 10
   m_timeToIdle: 5
-  m_dashTrail: {fileID: 1071752584405178}
+  m_dashTrail: {fileID: 0}
   jumpClip: {fileID: 8300000, guid: 8bc5dbb3f916c7d4bb404c8a010f4106, type: 3}
   bounceClip: {fileID: 8300000, guid: 4c27b064170a56b48907e5a15905f521, type: 3}
   deathParticles: {fileID: 1751776643570596, guid: fa8134d7703a4c34bb96cae308ef5c96,
     type: 2}
---- !u!114 &114125986892772842
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1387644681890842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a33c8cb7c3b4ed5469f4f7d9b9e154ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  headBumpCollider: {fileID: 1746717361181040}
-  shield: {fileID: 1779601660871816}
---- !u!114 &114157902777720206
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1387644681890842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cc9a4870bb3c9b4bbb4dc2b24fa4f76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114170465351769530
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2261,10 +2224,44 @@ MonoBehaviour:
   m_rockPrefab: {fileID: 1859296258977212, guid: d0708a5fb3adb4847b37627c5b5c7b49,
     type: 2}
   m_rockInstantiationTransform: {fileID: 4326393397419540}
-  m_graphics: {fileID: 4690047490792588}
   force: 10
   angle: 30
   Reload: 0.5
+--- !u!114 &114236280826603856
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1387644681890842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08267b506f7ca44468185dc8b456dbd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnStatusEffectAdded:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: StatusEffectEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  OnStatusEffectRemoved:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: StatusEffectEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+--- !u!114 &114312394092193120
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1387644681890842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa277cd4f8321324db9f002989d43317, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_baseSpeed: 5
+  m_baseJumpHeight: 2
+  m_baseBounceHeight: 2
 --- !u!114 &114393201052373230
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2285,6 +2282,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6968e196e4f7a1344bc4744e2b7cc4eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114518389792135224
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1387644681890842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4adec5e244d7e60469aa00c40a4c037e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114530186430118160
@@ -2324,20 +2332,6 @@ MonoBehaviour:
   leftEye: {fileID: 137423716398974690}
   head: {fileID: 137900872654288786}
   bumpTime: 0.25
---- !u!114 &114751259999779406
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1387644681890842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb2d1b5309e129f4e8b1fcb95811671a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
-  jumpHeight: 2
-  bounceHeight: 3
 --- !u!114 &114804903260674874
 MonoBehaviour:
   m_ObjectHideFlags: 1
