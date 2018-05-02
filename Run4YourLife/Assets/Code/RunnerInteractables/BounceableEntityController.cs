@@ -5,14 +5,14 @@ using Run4YourLife.Player;
 
 namespace Run4YourLife.Interactables
 {
-    public class LeafJumpOver : RunnerBounceDetection
+    public class BounceableEntityController : BounceableEntityBase
     {
+        [SerializeField]
+        [Range(0,360)]
+        private float m_angle;
 
         [SerializeField]
-        private Vector3 direction;
-
-        [SerializeField]
-        private float bounceOverMeForce;
+        private float m_bounceForce;
 
         private Animator anim;
 
@@ -21,22 +21,23 @@ namespace Run4YourLife.Interactables
             anim = GetComponentInChildren<Animator>();
         }
 
-        #region JumpOver
-        protected override void JumpedOn()
+        protected override void BouncedOn()
         {
             anim.SetTrigger("bump");
         }
 
-        protected override Vector3 GetBounceForce()
+        protected override Vector3 BounceForce
         {
-            return bounceOverMeForce * direction.normalized;
+            get
+            {
+                return m_bounceForce * (Quaternion.Euler(0, 0, m_angle) * Vector3.right);
+            }
         }
-        #endregion
 
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, transform.position + direction.normalized * 5);
+            Gizmos.DrawLine(transform.position, transform.position + BounceForce);
         }
     }
 }

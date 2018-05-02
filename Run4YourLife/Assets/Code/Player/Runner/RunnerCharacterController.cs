@@ -15,6 +15,7 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(RunnerAttributeController))]
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(InputController))]
+    [RequireComponent(typeof(BumpController))]
     public class RunnerCharacterController : MonoBehaviour, IDeactivateByInvisible
     {
         #region InspectorVariables
@@ -52,16 +53,11 @@ namespace Run4YourLife.Player
         [SerializeField]
         private float m_timeToIdle;
 
-        
+        [SerializeField]
+        private AudioClip jumpClip;
 
-        #endregion
-
-        //TODO: Move to Inspector Variables
-        #region Public Variable
-
-        public AudioClip jumpClip;
-        public AudioClip bounceClip;
-        public GameObject deathParticles;
+        [SerializeField]
+        private AudioClip bounceClip;
 
         #endregion
 
@@ -73,6 +69,7 @@ namespace Run4YourLife.Player
         private Animator m_animator;
         private AudioSource m_audioSource;
         private InputController m_inputController;
+        private BumpController m_bumpController;
 
         private Transform m_graphics;
         private Transform m_dashTrail;
@@ -94,13 +91,13 @@ namespace Run4YourLife.Player
         private float m_gravity;
         private float m_horizontalDrag;
 
-        private bool m_limitRight = false;
-        private bool m_limitLeft = false;
-        private bool m_checkOutOfScreen = false;
+        private bool m_limitRight;
+        private bool m_limitLeft;
+        private bool m_checkOutOfScreen;
 
         private float m_idleTimer;
 
-        private float m_baseHorizontalDrag = 2f;
+        private readonly float m_baseHorizontalDrag = 2f; // Hard coded because DragToVelocity calculates with a magic number
 
         #endregion
 
@@ -124,6 +121,7 @@ namespace Run4YourLife.Player
             m_runnerAttributeController = GetComponent<RunnerAttributeController>();
             m_animator = GetComponent<Animator>();
             m_inputController = GetComponent<InputController>();
+            m_bumpController = GetComponent<BumpController>();
 
             m_graphics = transform.Find("Graphics");
             UnityEngine.Debug.Assert(m_graphics != null);
@@ -453,9 +451,9 @@ namespace Run4YourLife.Player
 
         #region Bounce
 
-        public void BounceOnMe()
+        public void BouncedOn()
         {
-            GetComponent<BumpController>().Bump();
+            m_bumpController.Bump();
         }
 
         public void Bounce(Vector3 bounceForce)

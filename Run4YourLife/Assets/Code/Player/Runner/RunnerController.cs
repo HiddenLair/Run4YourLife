@@ -52,7 +52,6 @@ namespace Run4YourLife.Player
         {
             if (!ConsumeShieldIfAviable())
             {
-                Instantiate(m_runnerCharacterController.deathParticles, transform.position, transform.rotation);
                 ExecuteEvents.Execute<IGameplayPlayerEvents>(GameplayPlayerManager.InstanceGameObject, null, (x, y) => x.OnRunnerDeath(gameObject));
             }
         }

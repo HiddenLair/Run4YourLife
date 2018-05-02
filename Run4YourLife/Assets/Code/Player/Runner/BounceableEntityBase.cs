@@ -3,29 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Run4YourLife.Player {
-    public abstract class RunnerBounceDetection : MonoBehaviour {
-
-        #region Inspector
+    public abstract class BounceableEntityBase : MonoBehaviour {
 
         [SerializeField]
         private bool falling = false;
 
-        #endregion
+        protected abstract Vector3 BounceForce { get; }
 
         private void OnTriggerEnter(Collider other)
         {
             if(other.CompareTag(Tags.Runner))
             {
                 RunnerCharacterController characterController = other.GetComponent<RunnerCharacterController>();
-                if (falling && characterController.Velocity.y < 0 || !falling)
+                if (!falling || characterController.Velocity.y < 0)
                 {
-                    characterController.Bounce(GetBounceForce());
-                    JumpedOn();
+                    characterController.Bounce(BounceForce);
+                    BouncedOn();
                 }
             }
         }
 
-        protected abstract Vector3 GetBounceForce();
-        protected abstract void JumpedOn();
+        protected abstract void BouncedOn();
     }
 }
