@@ -20,22 +20,23 @@ public class ForceAspectRatio : MonoBehaviour
 
         if(currentWindowAspectRatio != previousWindowAspectRatio)
         {
+            Rect rect = camera.rect;
             float scaleHeight = currentWindowAspectRatio / TARGET_ASPECT_RATIO;
 
-            if(scaleHeight <= 1.0f)
+            if(scaleHeight < 1.0f)
             {
-                Rect rect = camera.rect;
-
                 rect.width = 1.0f; rect.height = scaleHeight;
                 rect.x = 0.0f; rect.y = (1.0f - scaleHeight) / 2.0f;
-
-                camera.rect = rect;
             }
             else
             {
-                Debug.LogWarning("ForceAspectRatio::Update() => scaleHeight > 1.0f");
+                float scalewidth = 1.0f / scaleHeight;
+
+                rect.width = scalewidth; rect.height = 1.0f;
+                rect.x = (1.0f - scalewidth) / 2.0f; rect.y = 0.0f;
             }
 
+            camera.rect = rect;
             previousWindowAspectRatio = currentWindowAspectRatio;
         }
     }
