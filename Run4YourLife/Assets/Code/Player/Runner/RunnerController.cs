@@ -9,6 +9,15 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(RunnerCharacterController))]
     public class RunnerController : MonoBehaviour, ICharacterEvents
     {
+
+        #region Inspector
+        [SerializeField]
+        private FXReceiver bodyReceiver;
+
+        [SerializeField]
+        private GameObject deathPartciles;
+
+        #endregion
         private bool m_isShielded;
 
         private Transform m_shieldGameObject;
@@ -52,12 +61,16 @@ namespace Run4YourLife.Player
         {
             if (!ConsumeShieldIfAviable())
             {
+                bodyReceiver.PlayFx(deathPartciles);
+                gameObject.SetActive(false);
                 ExecuteEvents.Execute<IGameplayPlayerEvents>(GameplayPlayerManager.InstanceGameObject, null, (x, y) => x.OnRunnerDeath(gameObject));
             }
         }
 
         public void AbsoluteKill()
         {
+            bodyReceiver.PlayFx(deathPartciles);
+            gameObject.SetActive(false);
             ExecuteEvents.Execute<IGameplayPlayerEvents>(GameplayPlayerManager.InstanceGameObject, null, (x, y) => x.OnRunnerDeath(gameObject));
         }
 
