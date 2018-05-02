@@ -12,6 +12,9 @@ namespace Run4YourLife.Interactables
         private GameObject destroyParticles;
 
         [SerializeField]
+        private FXReceiver receiver;
+
+        [SerializeField]
         private UnityEvent m_onBrokenByDash;
 
 
@@ -40,7 +43,7 @@ namespace Run4YourLife.Interactables
         private void Break()
         {
             m_onBrokenByDash.Invoke();
-            Instantiate(destroyParticles, transform.position, destroyParticles.transform.rotation);
+            receiver.PlayFx(destroyParticles);
             gameObject.SetActive(false);
         }
     }

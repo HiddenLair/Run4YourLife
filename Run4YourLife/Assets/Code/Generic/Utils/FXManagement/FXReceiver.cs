@@ -13,7 +13,7 @@ public class FXReceiver : MonoBehaviour {
 
     public void PlayFxOnAnimation(string animName,float time, GameObject prefab)
     {
-        AnimationPlayOnTime.Instance.PlayOnAnimation(anim,animName,time,()=>CallBack(prefab));
+        AnimationPlayOnTimeManager.Instance.PlayOnAnimation(anim,animName,time,()=>CallBack(prefab));
     }
 
     public void CallBack(GameObject prefab)

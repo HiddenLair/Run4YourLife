@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class AnimationPlayOnTime : SingletonMonoBehaviour<AnimationPlayOnTime> {
+public class AnimationPlayOnTimeManager : SingletonMonoBehaviour<AnimationPlayOnTimeManager> {
 
 	public void PlayOnAnimation(Animator anim,string animationName,float time, Action callBack)
     {
