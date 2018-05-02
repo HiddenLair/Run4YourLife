@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Run4YourLife
+namespace Run4YourLife.Interactables
 {
     public class MovingPlatform : MonoBehaviour
     {

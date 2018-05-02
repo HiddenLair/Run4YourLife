@@ -1,29 +1,32 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-using Run4YourLife;
 using Run4YourLife.Player;
 
-public class KillRunnerOnPhisicInteraction : MonoBehaviour {
-
-    private void OnTriggerEnter(Collider collider)
+namespace Run4YourLife.Interactables
+{
+    public class KillRunnerOnPhisicInteraction : MonoBehaviour
     {
-        if(collider.CompareTag(Tags.Runner))
+
+        private void OnTriggerEnter(Collider collider)
         {
-            SendKillEvent(collider.gameObject);
+            if (collider.CompareTag(Tags.Runner))
+            {
+                SendKillEvent(collider.gameObject);
+            }
         }
-    }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.CompareTag(Tags.Runner))
+        private void OnCollisionEnter(Collision collision)
         {
-            SendKillEvent(collision.gameObject);
+            if (collision.gameObject.CompareTag(Tags.Runner))
+            {
+                SendKillEvent(collision.gameObject);
+            }
         }
-    }
 
-    void SendKillEvent(GameObject runner)
-    {
-        ExecuteEvents.Execute<ICharacterEvents>(runner, null, (x, y) => x.Kill());
+        void SendKillEvent(GameObject runner)
+        {
+            ExecuteEvents.Execute<ICharacterEvents>(runner, null, (x, y) => x.Kill());
+        }
     }
 }

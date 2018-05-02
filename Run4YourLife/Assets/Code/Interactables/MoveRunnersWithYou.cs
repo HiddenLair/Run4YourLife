@@ -1,39 +1,41 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-using Run4YourLife;
+namespace Run4YourLife.Interactables
+{
+    public class MoveRunnersWithYou : MonoBehaviour
+    {
 
-public class MoveRunnersWithYou : MonoBehaviour {
+        private Vector3 m_previousPosition;
 
-    private Vector3 m_previousPosition;
+        List<Transform> players = new List<Transform>();
 
-    List<Transform> players = new List<Transform>();
-	
-	void FixedUpdate () {
-        Vector3 delta = transform.position - m_previousPosition;
-
-        foreach (Transform transform in players)
+        void FixedUpdate()
         {
-            transform.Translate(delta, Space.World);
+            Vector3 delta = transform.position - m_previousPosition;
+
+            foreach (Transform transform in players)
+            {
+                transform.Translate(delta, Space.World);
+            }
+
+            m_previousPosition = transform.position;
         }
 
-        m_previousPosition = transform.position;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.CompareTag(Tags.Runner))
+        private void OnTriggerEnter(Collider other)
         {
-            players.Add(other.transform);
+            if (other.CompareTag(Tags.Runner))
+            {
+                players.Add(other.transform);
+            }
         }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag(Tags.Runner))
+        private void OnTriggerExit(Collider other)
         {
-            players.Remove(other.transform);
+            if (other.CompareTag(Tags.Runner))
+            {
+                players.Remove(other.transform);
+            }
         }
     }
 }
