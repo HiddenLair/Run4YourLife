@@ -8,6 +8,9 @@ namespace Run4YourLife.Player
         #region Editor variables
 
         [SerializeField]
+        private GameObject instance;
+
+        [SerializeField]
         private float instanceSpeed;
 
         [SerializeField]
@@ -20,6 +23,8 @@ namespace Run4YourLife.Player
         private GameObject handR;
 
         #endregion
+
+        private float timeToMeleFromAnim = 0.75f;
 
         private AudioSource audioSource;
         private Animator anim;
@@ -46,6 +51,7 @@ namespace Run4YourLife.Player
             if(screenPos.x <= 0.5f * Camera.main.pixelWidth)
             {
                 anim.SetTrigger("MeleR");
+                AnimationPlayOnTimeManager.Instance.PlayOnAnimation(anim,"MeleRight",timeToMeleFromAnim,()=>ArmInstantiate());
                 trapPos.x = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, 0, Camera.main.transform.position.z - trapPos.z)).x;
                 rotation = Quaternion.Euler(0, 0, 0);
                 right = true;
@@ -53,6 +59,7 @@ namespace Run4YourLife.Player
             else
             {
                 anim.SetTrigger("MeleL");
+                AnimationPlayOnTimeManager.Instance.PlayOnAnimation(anim, "MeleLeft", timeToMeleFromAnim, () => ArmInstantiate());
                 trapPos.x = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, Camera.main.transform.position.z - trapPos.z)).x;
                 rotation = Quaternion.Euler(0, 180, 0);
                 right = false;

@@ -188,9 +188,6 @@ namespace Run4YourLife.GameManagement {
             PlayerHandle playerHandle = runner.GetComponent<PlayerInstance>().PlayerHandle;
             m_deadRunners.Enqueue(playerHandle);
             m_runnersAlive.Remove(runner);
-            
-            runner.SetActive(false);
-            Instantiate(m_runnerDeathParticles, runner.transform.position, Quaternion.identity);
 
             if (m_runnersAlive.Count == 0)
             {

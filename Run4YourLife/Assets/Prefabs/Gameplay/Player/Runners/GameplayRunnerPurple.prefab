@@ -866,6 +866,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4519782568796506}
+  - component: {fileID: 114153046915279454}
   m_Layer: 0
   m_Name: CenterSubroot
   m_TagString: Untagged
@@ -1403,7 +1404,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1190572292703128}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.523, z: 0}
+  m_LocalPosition: {x: 19.526323, y: 13.877961, z: -12.829041}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4382724806196786}
@@ -2211,6 +2212,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6968e196e4f7a1344bc4744e2b7cc4eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bodyReceiver: {fileID: 114153046915279454}
+  deathPartciles: {fileID: 1751776643570596, guid: fa8134d7703a4c34bb96cae308ef5c96,
+    type: 2}
+--- !u!114 &114153046915279454
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1881129862338824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cb52b0f7a8d8b1458965b078cdc7767, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 95487660169147168}
 --- !u!114 &114400700760236346
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2426,7 +2442,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: d3794e7883fc6c64b9a09effd7701f8e, type: 2}
+  - {fileID: 2100000, guid: 2c6751fe33ccdcb40b946d77ee6a85b2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
