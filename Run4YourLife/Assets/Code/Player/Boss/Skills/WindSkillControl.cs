@@ -1,55 +1,48 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine;
 
-using Run4YourLife;
-using Run4YourLife.Player;
-using System;
-
-[RequireComponent(typeof(RunnerCharacterController))]
-public class WindSkillControl : MonoBehaviour {
-
-    [SerializeField]
-    private float timeToDie = 5;
-
-    [SerializeField]
-    private float windForce;
-
-    private RunnerCharacterController m_runnerCharacterController;
-
-    private void Awake()
+namespace Run4YourLife.Player
+{
+    [RequireComponent(typeof(RunnerCharacterController))]
+    public class WindSkillControl : SkillBase
     {
-        m_runnerCharacterController = GetComponent<RunnerCharacterController>();
-        Debug.Assert(m_runnerCharacterController != null);
 
-        Destroy(gameObject, timeToDie);
-    }
+        [SerializeField]
+        private float timeToDie = 5;
 
-    private void OnTriggerEnter(Collider collider)
-    {
-        if (collider.CompareTag(Tags.Runner))
+        [SerializeField]
+        private float windForce;
+
+        private void OnEnable()
         {
-            Wind wind = collider.gameObject.GetComponent<Wind>();
-            if(wind == null)
-            {
-                wind = collider.gameObject.AddComponent<Wind>();
-            }
-
-            wind.EnterWindArea(this);
+            Destroy(gameObject, timeToDie);
         }
-    }
 
-    public float GetWindForce()
-    {
-        return windForce;
-    }
-
-    private void OnTriggerExit(Collider collider)
-    {
-        if (collider.CompareTag(Tags.Runner))
+        private void OnTriggerEnter(Collider collider)
         {
-            Wind wind = collider.gameObject.GetComponent<Wind>();
-            wind.ExitWindArea(this);
+            if (collider.CompareTag(Tags.Runner))
+            {
+                Wind wind = collider.gameObject.GetComponent<Wind>();
+                if (wind == null)
+                {
+                    wind = collider.gameObject.AddComponent<Wind>();
+                }
+
+                wind.EnterWindArea(this);
+            }
+        }
+
+        public float GetWindForce()
+        {
+            return windForce;
+        }
+
+        private void OnTriggerExit(Collider collider)
+        {
+            if (collider.CompareTag(Tags.Runner))
+            {
+                Wind wind = collider.gameObject.GetComponent<Wind>();
+                wind.ExitWindArea(this);
+            }
         }
     }
 }

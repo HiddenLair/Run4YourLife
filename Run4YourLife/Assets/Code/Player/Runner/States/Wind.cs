@@ -1,32 +1,33 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Wind : MonoBehaviour
+namespace Run4YourLife.Player
 {
-    private float m_windForce;
-    private HashSet<WindSkillControl> m_windSkillControls;
-
-    public void Destroy()
+    public class Wind : MonoBehaviour
     {
-        Destroy(this);
-    }
+        private float m_windForce;
+        private HashSet<WindSkillControl> m_windSkillControls;
 
-    public void EnterWindArea(WindSkillControl windSkillControl)
-    {
-        m_windForce += windSkillControl.GetWindForce();
-        m_windSkillControls.Add(windSkillControl);
-    }
-
-    public void ExitWindArea(WindSkillControl windSkillControl)
-    {
-        m_windForce -= windSkillControl.GetWindForce();
-        m_windSkillControls.Remove(windSkillControl);
-
-        if(m_windSkillControls.Count == 0)
+        public void Destroy()
         {
             Destroy(this);
+        }
+
+        public void EnterWindArea(WindSkillControl windSkillControl)
+        {
+            m_windForce += windSkillControl.GetWindForce();
+            m_windSkillControls.Add(windSkillControl);
+        }
+
+        public void ExitWindArea(WindSkillControl windSkillControl)
+        {
+            m_windForce -= windSkillControl.GetWindForce();
+            m_windSkillControls.Remove(windSkillControl);
+
+            if (m_windSkillControls.Count == 0)
+            {
+                Destroy(this);
+            }
         }
     }
 }

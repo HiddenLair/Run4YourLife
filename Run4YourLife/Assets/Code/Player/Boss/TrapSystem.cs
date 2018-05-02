@@ -172,7 +172,7 @@ namespace Run4YourLife.Player
             float cooldown = 0.0f ;
             if (currentType == Type.SKILL)
             {
-                cooldown = skill.GetComponent<CooldownIndicator>().cooldown; // TODO: Refactor this
+                cooldown = skill.GetComponent<SkillBase>().Cooldown;
                 StartCoroutine(WaitForAnim(skill));
             }
             else

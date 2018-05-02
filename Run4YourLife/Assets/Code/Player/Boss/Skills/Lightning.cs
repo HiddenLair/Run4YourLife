@@ -1,10 +1,10 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Run4YourLife.Player {
-    public class Lightning : MonoBehaviour {
+    public class Lightning : SkillBase
+    {
 
         #region Inspector
 
@@ -22,7 +22,7 @@ namespace Run4YourLife.Player {
 
         #endregion
 
-        private void Start()
+        private void OnEnable()
         {
             Vector3 tempPos = transform.position;
             tempPos.y = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, Mathf.Abs(Camera.main.transform.position.z - transform.position.z))).y;
@@ -53,8 +53,7 @@ namespace Run4YourLife.Player {
             lighningEffect.SetActive(true);
 
             RaycastHit[] hits;
-            int layerMask = 1 << LayerMask.NameToLayer("Runner");
-            hits = Physics.SphereCastAll(lighningEffect.transform.position, width, Vector3.down, pos.y - transform.position.y, layerMask);
+            hits = Physics.SphereCastAll(lighningEffect.transform.position, width, Vector3.down, pos.y - transform.position.y, 1 << Layers.Runner);
 
             foreach (RaycastHit hit in hits)
             {
