@@ -37,7 +37,7 @@ namespace Run4YourLife.Cinemachine
             Vector3 position = VirtualCamera.Follow.position + m_offsetFromTarget;
 
 
-            float aspectRatio = (float)Screen.width / Screen.height;
+            float aspectRatio = Camera.main.aspect;
             float xWorldDistance = (m_verticalHeight * aspectRatio) / 2.0f;
             float screenXPercentage = -m_screenX * 2 + 1;
             position += VirtualCamera.Follow.right * xWorldDistance * screenXPercentage;
