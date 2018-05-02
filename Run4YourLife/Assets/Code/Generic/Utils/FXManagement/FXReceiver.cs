@@ -16,7 +16,7 @@ public class FXReceiver : MonoBehaviour {
         AnimationPlayOnTimeManager.Instance.PlayOnAnimation(anim,animName,time,()=>CallBack(prefab));
     }
 
-    public void CallBack(GameObject prefab)
+    void CallBack(GameObject prefab)
     {
         FXManager.Instance.InstantiateFromReceiver(this,prefab);
     }

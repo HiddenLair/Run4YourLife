@@ -18,7 +18,15 @@ namespace Run4YourLife.Player
 
         #endregion
 
+        private float timeToShootFromAnim = 0.5f;
+
         public override void ShootByAnim()
+        {
+            animator.SetTrigger("Shoot");
+            AnimationPlayOnTimeManager.Instance.PlayOnAnimation(animator, "Shoot", timeToShootFromAnim, () => Shoot());        
+        }
+
+        void Shoot()
         {
             audioSource.PlayOneShot(sfx);
 

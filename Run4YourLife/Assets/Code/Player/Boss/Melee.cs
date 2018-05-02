@@ -16,9 +16,6 @@ namespace Run4YourLife.Player
         private float triggerSensivility = 0.2f;
 
         [SerializeField]
-        protected GameObject instance;
-
-        [SerializeField]
         private float reloadTimeS;
 
         [SerializeField]

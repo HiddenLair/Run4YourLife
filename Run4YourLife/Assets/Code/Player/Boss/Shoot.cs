@@ -93,8 +93,7 @@ namespace Run4YourLife.Player
                 {
                     if (currentTimeS <= Time.time && !alreadyPressed)
                     {
-                        animator.SetTrigger("Shoot");
-
+                        ShootByAnim();
                         currentTimeS = Time.time + reloadTimeS;
                         alreadyPressed = true;
 

@@ -55,8 +55,6 @@ namespace Run4YourLife.Player
         private GameObject skillB;
         [SerializeField]
         private GameObject trapB;
-        [SerializeField]
-        private float trapDelaySpawn;
 
         #endregion
 
@@ -67,7 +65,8 @@ namespace Run4YourLife.Player
         BossControlScheme bossControlScheme;
         private Animator anim;
         private GameObject uiManager;
-        private bool animTriggerSetElement = false;
+
+        private float timeToSpawnTrapsFromAnim = 0.2f;
 
 
         #endregion
@@ -173,27 +172,20 @@ namespace Run4YourLife.Player
             if (currentType == Type.SKILL)
             {
                 cooldown = skill.GetComponent<SkillBase>().Cooldown;
-                StartCoroutine(WaitForAnim(skill));
+                AnimationPlayOnTimeManager.Instance.PlayOnAnimation(anim, "Cast", timeToSpawnTrapsFromAnim, () => SetElementCallback(skill));
             }
             else
             {
                 cooldown = trap.GetComponent<TrapBase>().Cooldown;
-                StartCoroutine(WaitForAnim(trap));
+                AnimationPlayOnTimeManager.Instance.PlayOnAnimation(anim,"Cast",timeToSpawnTrapsFromAnim,()=> SetElementCallback(trap));
             }
             return cooldown;
         }
 
-        IEnumerator WaitForAnim(GameObject g)
+        void SetElementCallback(GameObject g)
         {
-            yield return new WaitUntil(() => animTriggerSetElement);
             Vector3 temp = crossHair.transform.position;
             Instantiate(g, temp, g.GetComponent<Transform>().rotation);
-            animTriggerSetElement = false;
-        }
-
-        public void SetElementTriggered()
-        {
-            animTriggerSetElement = true;
         }
     }
 }

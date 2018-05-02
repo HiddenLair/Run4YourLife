@@ -36,7 +36,7 @@ namespace Run4YourLife.Player {
             Vector3 newSize = Vector3.one;
             newSize.x = newSize.z = width;
             float topScreen = Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight, Mathf.Abs(Camera.main.transform.position.z - flashBody.position.z))).y;
-            newSize.y = topScreen - transform.position.y;
+            newSize.y = (topScreen - transform.position.y)/2;
             flashBody.localScale = newSize;
             flashBody.localPosition = new Vector3(0, newSize.y);
             flashEffect.SetActive(true);
@@ -53,7 +53,7 @@ namespace Run4YourLife.Player {
             lighningEffect.SetActive(true);
 
             RaycastHit[] hits;
-            hits = Physics.SphereCastAll(lighningEffect.transform.position, width, Vector3.down, pos.y - transform.position.y, 1 << Layers.Runner);
+            hits = Physics.SphereCastAll(lighningEffect.transform.position, width, Vector3.down, pos.y - transform.position.y,Layers.Runner);
 
             foreach (RaycastHit hit in hits)
             {
