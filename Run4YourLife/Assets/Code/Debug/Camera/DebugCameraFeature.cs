@@ -1,6 +1,6 @@
 ﻿using Cinemachine;
 
-namespace Run4YourLife.Debug
+namespace Run4YourLife.Debugging
 {
     public abstract class DebugCameraFeature : DebugFeature
     {

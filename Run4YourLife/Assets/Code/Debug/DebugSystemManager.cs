@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-namespace Run4YourLife.Debug
+namespace Run4YourLife.Debugging
 {
     [RequireComponent(typeof(FPSCounter))]
     [RequireComponent(typeof(VertexAndTriangleCounter))]

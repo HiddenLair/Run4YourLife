@@ -3,7 +3,7 @@
 using Run4YourLife.Player;
 using Run4YourLife.GameManagement;
 
-namespace Run4YourLife.Debug
+namespace Run4YourLife.Debugging
 {
     public class FollowRunnerCameraController : DebugCameraFeature
     {

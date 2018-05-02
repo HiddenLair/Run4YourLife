@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Run4YourLife.Debug
+namespace Run4YourLife.Debugging
 {
     public class ForceGlobalManager : MonoBehaviour
     {
