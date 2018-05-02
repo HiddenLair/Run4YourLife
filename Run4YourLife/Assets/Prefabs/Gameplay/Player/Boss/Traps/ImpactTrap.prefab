@@ -19,11 +19,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4694216362574630}
-  - component: {fileID: 114787679649463040}
-  - component: {fileID: 114902593553862488}
-  - component: {fileID: 114342415570898938}
-  - component: {fileID: 65338818036603442}
   - component: {fileID: 54746004584542846}
+  - component: {fileID: 65338818036603442}
+  - component: {fileID: 114787679649463040}
   m_Layer: 9
   m_Name: ImpactTrap
   m_TagString: Untagged
@@ -128,7 +126,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1053646925812610}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.7638962, y: 2.3262956, z: -4.783531}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4143248105669654}
@@ -221,18 +219,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114342415570898938
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1053646925812610}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56edeefa29b384b468b659f4fa81aebf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fadeInTime: 0.5
 --- !u!114 &114787679649463040
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -244,6 +230,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cef8c5261110ab4480cd75cfd34f07a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_fadeInTime: 1
+  m_cooldown: 5
   AOERadius: 2
   activationParticles: {fileID: 1394625515734414, guid: f264e05d59f3182498f76aa564400582,
     type: 2}
@@ -255,18 +243,6 @@ MonoBehaviour:
     m_Bits: 1024
   angleFromHorizontalAxis: 30
   pushForce: 15
---- !u!114 &114902593553862488
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1053646925812610}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cde7015af7841514c923a9c3fa508138, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cooldown: 5
 --- !u!198 &198044481164281180
 ParticleSystem:
   m_ObjectHideFlags: 1

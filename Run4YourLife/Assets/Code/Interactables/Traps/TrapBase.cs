@@ -1,23 +1,25 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-using Run4YourLife;
 
 namespace Run4YourLife.Interactables
 {
     [RequireComponent(typeof(Collider))]
     [RequireComponent(typeof(Rigidbody))]
-    public class TrapInit : MonoBehaviour
+    public abstract class TrapBase : MonoBehaviour
     {
         [SerializeField]
-        private float fadeInTime;
+        private float m_fadeInTime;
+
+        [SerializeField]
+        private float m_cooldown;
+
+        public float Cooldown { get { return m_cooldown; } }
 
         private Collider m_collider;
         private Renderer m_renderer;
         private Rigidbody m_rigidbody;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             m_rigidbody = GetComponent<Rigidbody>();
             m_collider = GetComponent<Collider>();
@@ -31,7 +33,7 @@ namespace Run4YourLife.Interactables
             m_renderer.material.color = actualC;
         }
 
-        private void Start()
+        protected virtual void OnEnable()
         {
             StartCoroutine(FadeInAndFall());
         }
@@ -42,8 +44,8 @@ namespace Run4YourLife.Interactables
             yield return StartCoroutine(Fall());
 
             m_collider.enabled = true;
-            Destroy(this);
-            Destroy(m_rigidbody);
+            m_rigidbody.useGravity = false;
+            m_rigidbody.isKinematic = true;
         }
 
         private IEnumerator FadeIn()
@@ -52,7 +54,7 @@ namespace Run4YourLife.Interactables
             Color color = m_renderer.material.color;
             while (color.a < 1)
             {
-                color.a = Mathf.Min(Time.time - startTime, fadeInTime) / fadeInTime;
+                color.a = Mathf.Min(Time.time - startTime, m_fadeInTime) / m_fadeInTime;
                 m_renderer.material.color = color;
                 yield return null;
             }

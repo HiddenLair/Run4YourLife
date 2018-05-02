@@ -2,7 +2,7 @@
 
 namespace Run4YourLife.Interactables
 {
-    public class SlowTrapController : MonoBehaviour
+    public class SlowTrapController : TrapBase
     {
         [SerializeField]
         private GameObject m_activationParticles;

@@ -4,7 +4,7 @@ using Run4YourLife.Player;
 
 namespace Run4YourLife.Interactables
 {
-    public class RootTrapControl : MonoBehaviour
+    public class RootTrapControl : TrapBase
     {
         [SerializeField]
         private GameObject m_activationParticles;

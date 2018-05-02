@@ -5,7 +5,7 @@ using Run4YourLife.Player;
 
 namespace Run4YourLife.Interactables
 {
-    public class PushTrapControl : MonoBehaviour
+    public class PushTrapControl : TrapBase
     {
         public float AOERadius = 2.0f;
         public GameObject activationParticles;
@@ -16,21 +16,24 @@ namespace Run4YourLife.Interactables
 
         private void OnTriggerEnter(Collider collider)
         {
-            Collider[] collisions = Physics.OverlapSphere(transform.position, AOERadius, trapListener);
-
-            foreach (Collider c in collisions)
+            if(collider.CompareTag(Tags.Runner))
             {
-                if (!Physics.Linecast(transform.position, c.gameObject.GetComponent<Collider>().bounds.center, blockingElement))
+                Collider[] collisions = Physics.OverlapSphere(transform.position, AOERadius, trapListener);
+
+                foreach (Collider c in collisions)
                 {
-                    Vector3 direction = c.gameObject.GetComponent<Collider>().bounds.center - transform.position;
-                    bool isRight = direction.x > 0;
+                    if (!Physics.Linecast(transform.position, c.gameObject.GetComponent<Collider>().bounds.center, blockingElement))
+                    {
+                        Vector3 direction = c.gameObject.GetComponent<Collider>().bounds.center - transform.position;
+                        bool isRight = direction.x > 0;
 
-                    ExecuteEvents.Execute<ICharacterEvents>(c.gameObject, null, (x, y) => x.Impulse(GetPushForce(isRight)));
+                        ExecuteEvents.Execute<ICharacterEvents>(c.gameObject, null, (x, y) => x.Impulse(GetPushForce(isRight)));
+                    }
                 }
-            }
 
-            Instantiate(activationParticles, transform.position, transform.rotation);
-            Destroy(gameObject);            
+                Instantiate(activationParticles, transform.position, transform.rotation);
+                Destroy(gameObject);
+            }        
         }
 
         Vector3 GetPushForce(bool right)

@@ -37,11 +37,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4733664109319810}
-  - component: {fileID: 114521536942929264}
-  - component: {fileID: 114331164568281786}
-  - component: {fileID: 114374035786322822}
-  - component: {fileID: 65687488831705326}
   - component: {fileID: 54301486726897940}
+  - component: {fileID: 65687488831705326}
+  - component: {fileID: 114521536942929264}
   m_Layer: 9
   m_Name: ExplosionTrap
   m_TagString: Untagged
@@ -115,7 +113,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1674844452342998}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 6.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4475558695245332}
@@ -221,30 +219,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114331164568281786
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1674844452342998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cde7015af7841514c923a9c3fa508138, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cooldown: 5
---- !u!114 &114374035786322822
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1674844452342998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56edeefa29b384b468b659f4fa81aebf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fadeInTime: 1
 --- !u!114 &114521536942929264
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -256,6 +230,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff8f2f097d240743b317e140ad7c3a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_fadeInTime: 1
+  m_cooldown: 5
   m_explosionRatius: 1.2
   activationParticles: {fileID: 1394625515734414, guid: f264e05d59f3182498f76aa564400582,
     type: 2}

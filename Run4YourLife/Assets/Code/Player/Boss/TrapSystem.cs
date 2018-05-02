@@ -1,9 +1,10 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine;
+
 using Run4YourLife.UI;
 using Run4YourLife.Input;
+using Run4YourLife.Interactables;
 
 namespace Run4YourLife.Player
 {
@@ -171,12 +172,12 @@ namespace Run4YourLife.Player
             float cooldown = 0.0f ;
             if (currentType == Type.SKILL)
             {
-                cooldown = skill.GetComponent<CooldownIndicator>().cooldown;
+                cooldown = skill.GetComponent<CooldownIndicator>().cooldown; // TODO: Refactor this
                 StartCoroutine(WaitForAnim(skill));
             }
             else
             {
-                cooldown = trap.GetComponent<CooldownIndicator>().cooldown;
+                cooldown = trap.GetComponent<TrapBase>().Cooldown;
                 StartCoroutine(WaitForAnim(trap));
             }
             return cooldown;
