@@ -1,10 +1,9 @@
-﻿using Run4YourLife.Player;
-using UnityEngine.EventSystems;
+﻿using UnityEngine.EventSystems;
 using UnityEngine;
-using Run4YourLife.GameManagement;
-using Run4YourLife;
 
-namespace Run4YourLife.Player
+using Run4YourLife.GameManagement;
+
+namespace Run4YourLife.Interactables
 {
     public class Revive : PowerUp
     {

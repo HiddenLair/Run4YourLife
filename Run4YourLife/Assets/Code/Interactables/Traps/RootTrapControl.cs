@@ -1,36 +1,37 @@
 ﻿using UnityEngine;
-using UnityEngine.EventSystems;
 
-using Run4YourLife;
 using Run4YourLife.Player;
 
-public class RootTrapControl : MonoBehaviour
+namespace Run4YourLife.Interactables
 {
-    [SerializeField]
-    private GameObject m_activationParticles;
-
-    [SerializeField]
-    private int m_interactionsUntilRelease;
-
-    [SerializeField]
-    private StatusEffectSet m_statusEffectSet;
-
-    private void OnTriggerEnter(Collider collider)
+    public class RootTrapControl : MonoBehaviour
     {
-        if (collider.CompareTag(Tags.Runner))
+        [SerializeField]
+        private GameObject m_activationParticles;
+
+        [SerializeField]
+        private int m_interactionsUntilRelease;
+
+        [SerializeField]
+        private StatusEffectSet m_statusEffectSet;
+
+        private void OnTriggerEnter(Collider collider)
         {
-            GameObject runner = collider.gameObject;
-
-            Root root = runner.gameObject.GetComponent<Root>();
-            if (root == null)
+            if (collider.CompareTag(Tags.Runner))
             {
-                root = runner.AddComponent<Root>();
-                root.Init(m_interactionsUntilRelease, m_statusEffectSet);
+                GameObject runner = collider.gameObject;
+
+                Root root = runner.gameObject.GetComponent<Root>();
+                if (root == null)
+                {
+                    root = runner.AddComponent<Root>();
+                    root.Init(m_interactionsUntilRelease, m_statusEffectSet);
+                }
+
+                root.RefreshRoot();
+
+                Destroy(gameObject);
             }
-
-            root.RefreshRoot();
-
-            Destroy(gameObject);
         }
     }
 }

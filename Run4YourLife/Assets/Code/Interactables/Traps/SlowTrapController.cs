@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
-using UnityEngine.EventSystems;
 
-using Run4YourLife;
-
-namespace Run4YourLife.Player
+namespace Run4YourLife.Interactables
 {
     public class SlowTrapController : MonoBehaviour
     {

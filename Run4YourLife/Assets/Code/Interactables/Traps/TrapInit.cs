@@ -4,82 +4,89 @@ using UnityEngine;
 
 using Run4YourLife;
 
-public class TrapInit : MonoBehaviour {
-
-    #region Inspector
-    [SerializeField]
-    private float fadeInTime;
-    #endregion
-    #region Variables
-
-    private bool grounded =false;
-    private bool faded = false;
-
-    #endregion
-
-    // Use this for initialization
-    private void Awake()
+namespace Run4YourLife.Interactables
+{
+    [RequireComponent(typeof(Collider))]
+    [RequireComponent(typeof(Rigidbody))]
+    public class TrapInit : MonoBehaviour
     {
-        GetComponent<Collider>().enabled = false;
-        Color actualC = GetComponentInChildren<Renderer>().material.color;
-        actualC.a = 0;
-        GetComponentInChildren<Renderer>().material.color = actualC;
-        StartCoroutine(FadeIn(fadeInTime));
-    }
+        [SerializeField]
+        private float fadeInTime;
 
-    // Update is called once per frame
-    void Update () {
-		if(faded && grounded)
+        private Collider m_collider;
+        private Renderer m_renderer;
+        private Rigidbody m_rigidbody;
+
+        private void Awake()
         {
-            GetComponent<Collider>().enabled = true;
+            m_rigidbody = GetComponent<Rigidbody>();
+            m_collider = GetComponent<Collider>();
+            m_renderer = GetComponentInChildren<Renderer>();
+            Debug.Assert(m_renderer != null);
+
+            m_collider.enabled = false;
+
+            Color actualC = m_renderer.material.color;
+            actualC.a = 0;
+            m_renderer.material.color = actualC;
+        }
+
+        private void Start()
+        {
+            StartCoroutine(FadeInAndFall());
+        }
+
+        private IEnumerator FadeInAndFall()
+        {
+            yield return StartCoroutine(FadeIn());
+            yield return StartCoroutine(Fall());
+
+            m_collider.enabled = true;
             Destroy(this);
+            Destroy(m_rigidbody);
         }
-	}
 
-    IEnumerator Fall()
-    {
-        GetComponent<Rigidbody>().useGravity = true;
-        while (!grounded)
+        private IEnumerator FadeIn()
         {
-            RaycastHit info;
-            if (Physics.Raycast(transform.position, Vector3.down,out info, 0.5f, Layers.Stage, QueryTriggerInteraction.Ignore))
+            float startTime = Time.time;
+            Color color = m_renderer.material.color;
+            while (color.a < 1)
             {
-                transform.position = transform.position + Vector3.down * info.distance;
-                grounded = true;
-                Destroy(GetComponent<Rigidbody>());
-                //Set ground as parent
-                transform.SetParent(info.collider.gameObject.transform);
+                color.a = Mathf.Min(Time.time - startTime, fadeInTime) / fadeInTime;
+                m_renderer.material.color = color;
+                yield return null;
             }
-            yield return 0;
-        }
-    }
 
-    IEnumerator FadeIn(float delay)
-    {
-        //TODO: FIX THIS DO NOT USE CONSTATNT Time.deltaTime
-        float fps = 1 / Time.deltaTime;
-        float alphaPerFrame = 1 / (delay * fps);
-        Color temp = GetComponentInChildren<Renderer>().material.color;
-        while (temp.a < 1)
+            MakeOpaque(m_renderer.material);
+        }
+
+        private IEnumerator Fall()
         {
-            temp.a += alphaPerFrame;
-            GetComponentInChildren<Renderer>().material.color = temp;
-            yield return 0;
+            m_rigidbody.useGravity = true;
+
+            while (true)
+            {
+                RaycastHit info;
+                if (Physics.Raycast(transform.position, Vector3.down, out info, 0.5f, Layers.Stage, QueryTriggerInteraction.Ignore))
+                {
+                    transform.position = transform.position + Vector3.down * info.distance;
+                    transform.SetParent(info.collider.gameObject.transform); //Set ground as parent
+
+                    break;
+                }
+                yield return null;
+            }
         }
-        faded = true;
 
-        SetToOpaque(gameObject.GetComponentInChildren<Renderer>().material);
-        StartCoroutine(Fall());
-    }
-
-    public void SetToOpaque(Material material)
-    {
-        material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
-        material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
-        material.SetInt("_ZWrite", 1);
-        material.DisableKeyword("_ALPHATEST_ON");
-        material.DisableKeyword("_ALPHABLEND_ON");
-        material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-        material.renderQueue = -1;
+        private void MakeOpaque(Material material)
+        {
+            material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+            material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
+            material.SetInt("_ZWrite", 1);
+            material.DisableKeyword("_ALPHATEST_ON");
+            material.DisableKeyword("_ALPHABLEND_ON");
+            material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+            material.renderQueue = -1;
+        }
     }
 }

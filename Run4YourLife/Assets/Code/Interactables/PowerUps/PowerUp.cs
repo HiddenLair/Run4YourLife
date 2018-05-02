@@ -1,12 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Playables;
 
 using Run4YourLife.GameManagement;
-using System;
-using System.Collections;
+using Run4YourLife.Player;
 
-namespace Run4YourLife.Player
+namespace Run4YourLife.Interactables
 {
     [RequireComponent(typeof(PlayableDirector))]
     public abstract class PowerUp : MonoBehaviour

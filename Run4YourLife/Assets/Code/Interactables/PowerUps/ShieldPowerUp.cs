@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-using Run4YourLife.Utils;
-using Run4YourLife.GameManagement;
+using Run4YourLife.Player;
 
-namespace Run4YourLife.Player
+namespace Run4YourLife.Interactables
 {
     public class ShieldPowerUp : PowerUp
     {
