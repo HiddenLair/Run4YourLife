@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4379962237876684}
   - component: {fileID: 65646474464860190}
   - component: {fileID: 114330607493920500}
-  - component: {fileID: 114558471965765234}
   m_Layer: 9
   m_Name: FireSkill
   m_TagString: Untagged
@@ -127,22 +126,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f842c082fbc1e08439472979176664c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_cooldown: 2
   m_skillTime: 5
   m_burnTime: 2
   m_burnStatusEffectSet: {fileID: 11400000, guid: 2ca7392b6a9215d4a8e54cf93d603539,
     type: 2}
---- !u!114 &114558471965765234
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1392325496747952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cde7015af7841514c923a9c3fa508138, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cooldown: 2
 --- !u!198 &198228460819329472
 ParticleSystem:
   m_ObjectHideFlags: 1
