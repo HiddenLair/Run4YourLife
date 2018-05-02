@@ -16,8 +16,9 @@ namespace Run4YourLife.Interactables
 
         private Animator anim;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             anim = GetComponentInChildren<Animator>();
         }
 

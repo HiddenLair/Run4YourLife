@@ -16,8 +16,9 @@ namespace Run4YourLife.Player
             }
         }
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             m_runnerAttributeController = GetComponentInParent<RunnerAttributeController>();
             UnityEngine.Debug.Assert(m_runnerAttributeController != null);
 

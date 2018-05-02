@@ -21,6 +21,8 @@ namespace Run4YourLife.Player
         private bool active = true;
         #endregion
 
+
+        //TODO: this creates exceptions when closing the editor
         private void OnEnable()
         {
             UICrossHair.Instance.SubscribeWorldCrossHair(gameObject);
