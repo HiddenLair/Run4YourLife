@@ -1,9 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+
 using UnityEngine;
-using Run4YourLife.Utils;
 using Cinemachine;
+
+using Run4YourLife.Utils;
 using Run4YourLife.Player;
 
 namespace Run4YourLife.GameManagement
@@ -13,7 +13,7 @@ namespace Run4YourLife.GameManagement
         #region Editor variables
 
         [SerializeField]
-        private CheckPointManager m_checkPointManager;
+        private BossPath m_checkPointManager;
 
         [SerializeField]
         private CinemachineVirtualCamera m_virtualCamera;

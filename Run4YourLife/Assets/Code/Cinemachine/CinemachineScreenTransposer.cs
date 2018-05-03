@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 using Cinemachine;
 
 namespace Run4YourLife.Cinemachine
 {
-    public class CinemachineScreenTransposer : CinemachineComponentBase
+    [Serializable]
+    public class CinemachineScreenTransposerData
     {
         [Tooltip("Offset from target to be calculated from")]
         public Vector3 m_offsetFromTarget;
@@ -19,6 +21,12 @@ namespace Run4YourLife.Cinemachine
         [Range(0, 1)]
         [Tooltip("Percentual screen Y position for target")]
         public float m_screenY = 0.5f;
+    }
+
+    public class CinemachineScreenTransposer : CinemachineComponentBase
+    {
+        [SerializeField]
+        public CinemachineScreenTransposerData m_cinemachineScreenTransposerData;
 
         public override bool IsValid { get { return enabled && FollowTarget != null; } }
 
@@ -34,19 +42,19 @@ namespace Run4YourLife.Cinemachine
 
         private Vector3 CalculatePosition()
         {
-            Vector3 position = VirtualCamera.Follow.position + m_offsetFromTarget;
+            Vector3 position = VirtualCamera.Follow.position + m_cinemachineScreenTransposerData.m_offsetFromTarget;
 
 
             float aspectRatio = Camera.main.aspect;
-            float xWorldDistance = (m_verticalHeight * aspectRatio) / 2.0f;
-            float screenXPercentage = -m_screenX * 2 + 1;
+            float xWorldDistance = (m_cinemachineScreenTransposerData.m_verticalHeight * aspectRatio) / 2.0f;
+            float screenXPercentage = -m_cinemachineScreenTransposerData.m_screenX * 2 + 1;
             position += VirtualCamera.Follow.right * xWorldDistance * screenXPercentage;
 
-            float yWorldDistance = (m_verticalHeight / 2.0f);
-            float screenYPercentage = m_screenY * 2 - 1;
+            float yWorldDistance = (m_cinemachineScreenTransposerData.m_verticalHeight / 2.0f);
+            float screenYPercentage = m_cinemachineScreenTransposerData.m_screenY * 2 - 1;
             position += VirtualCamera.Follow.up * yWorldDistance * screenYPercentage;
 
-            float zWorldDistance = m_verticalHeight / (2.0f * Mathf.Tan(Mathf.Deg2Rad * Camera.main.fieldOfView / 2.0f));
+            float zWorldDistance = m_cinemachineScreenTransposerData.m_verticalHeight / (2.0f * Mathf.Tan(Mathf.Deg2Rad * Camera.main.fieldOfView / 2.0f));
             position += zWorldDistance * -VirtualCamera.Follow.forward;
 
             return position;

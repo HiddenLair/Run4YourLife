@@ -4,7 +4,7 @@ namespace Run4YourLife.Debugging
 {
     public class WalkerController : DebugFeature
     {
-        private Walker walker = null;
+        private BossPathWalker walker = null;
         private GameObject boss = null;
 
         private string walkerSpeedText = string.Empty;
@@ -21,7 +21,7 @@ namespace Run4YourLife.Debugging
             {
                 // Walker Speed
 
-                GUILayout.Label("Current Walker Speed: " + walker.speed.ToString("0.###"));
+                GUILayout.Label("Current Walker Speed: " + walker.m_speed.ToString("0.###"));
 
                 GUILayout.BeginHorizontal();
 
@@ -57,7 +57,7 @@ namespace Run4YourLife.Debugging
 
                 if(boss != null)
                 {
-                    walker = boss.GetComponent<Walker>();
+                    walker = boss.GetComponent<BossPathWalker>();
                 }
             }
         }
@@ -82,7 +82,7 @@ namespace Run4YourLife.Debugging
 
             if(float.TryParse(value, out speed))
             {
-                walker.speed = speed;
+                walker.m_speed = speed;
             }
         }
 
@@ -92,8 +92,7 @@ namespace Run4YourLife.Debugging
 
             if(float.TryParse(value, out increaseSpeed))
             {
-                walker.increaseValue = increaseSpeed;
-                walker.increaseSpeedOverTime = increaseSpeed != 0.0f;
+                walker.m_acceleration = increaseSpeed;
             }
         }
     }
