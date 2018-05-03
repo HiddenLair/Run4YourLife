@@ -189,7 +189,11 @@ namespace Run4YourLife.GameManagement {
             m_deadRunners.Enqueue(playerHandle);
             m_runnersAlive.Remove(runner);
 
-            if (m_runnersAlive.Count == 0)
+            if (runner.GetComponent<RunnerController>().GetReviveMode())
+            {
+                RunnerRevive(playerHandle, GetRandomSpawnPosition());
+            }
+            else if (m_runnersAlive.Count == 0)
             {
                 m_onAllRunnersDied.Invoke();
             }
@@ -200,9 +204,14 @@ namespace Run4YourLife.GameManagement {
             if(m_deadRunners.Count > 0)
             { 
                 PlayerHandle playerHandle = m_deadRunners.Dequeue();
-                GameObject runner = ActivateRunner(playerHandle, position);
-                m_onPlayerRevived.Invoke(runner);
+                RunnerRevive(playerHandle,position);
             }
+        }
+
+        public void RunnerRevive(PlayerHandle playerHandle,Vector3 position)
+        {
+            GameObject runner = ActivateRunner(playerHandle, position);
+            m_onPlayerRevived.Invoke(runner);
         }
 
         public GameObject ActivateRunner(PlayerHandle playerHandle, Vector3 position)
