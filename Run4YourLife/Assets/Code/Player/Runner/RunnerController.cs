@@ -18,7 +18,10 @@ namespace Run4YourLife.Player
         private GameObject deathPartciles;
 
         #endregion
+
         private bool m_isShielded;
+
+        private bool m_reviveMode;
 
         private Transform m_shieldGameObject;
         private RunnerCharacterController m_runnerCharacterController;
@@ -81,6 +84,20 @@ namespace Run4YourLife.Player
             }
         }
 
+        #endregion
+
+        #region Setters
+        public void SetReviveMode(bool value)
+        {
+            m_reviveMode = value;
+        }
+        #endregion
+
+        #region Getters
+        public bool GetReviveMode()
+        {
+            return m_reviveMode;
+        }
         #endregion
     }
 }

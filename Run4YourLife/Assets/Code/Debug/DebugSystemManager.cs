@@ -81,6 +81,7 @@ namespace Run4YourLife.Debugging
         {
             otherDebugFeatures.Add(GetComponent<PhaseSwitcher>());
             otherDebugFeatures.Add(GetComponent<RunnerGodMode>());
+            otherDebugFeatures.Add(GetComponent<PlayerInvencible>());
         }
 
         #region GUI
