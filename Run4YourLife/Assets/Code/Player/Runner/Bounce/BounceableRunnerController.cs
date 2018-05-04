@@ -20,10 +20,10 @@ namespace Run4YourLife.Player
         {
             base.Awake();
             m_runnerAttributeController = GetComponentInParent<RunnerAttributeController>();
-            UnityEngine.Debug.Assert(m_runnerAttributeController != null);
+            Debug.Assert(m_runnerAttributeController != null);
 
             m_runnerCharacterController = transform.parent.GetComponent<RunnerCharacterController>();
-            UnityEngine.Debug.Assert(m_runnerCharacterController != null, "Objects needs a parent that has a player character controller");
+            Debug.Assert(m_runnerCharacterController != null, "Objects needs a parent that has a player character controller");
 
             // We ignore collisions with the runner because otherwise we would collide with it all the time
             Physics.IgnoreCollision(GetComponent<Collider>(), m_runnerCharacterController.GetComponent<Collider>());

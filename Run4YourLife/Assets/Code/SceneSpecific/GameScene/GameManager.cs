@@ -17,6 +17,18 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private SceneTransitionRequest m_loadBossWinsMenu;
 
+        private Dictionary<GamePhase, GamePhaseManager> gamePhases = new Dictionary<GamePhase, GamePhaseManager>();
+        private GamePhaseManager m_executingGamePhaseManager;
+
+        private void Awake()
+        {
+            foreach (GamePhaseManager gamePhaseManager in FindObjectsOfType<GamePhaseManager>())
+            {
+                Debug.Assert(!gamePhases.ContainsKey(gamePhaseManager.GamePhase), "Error, trying to add multiple gamePhaseManagers with the same gamePhase");
+                gamePhases.Add(gamePhaseManager.GamePhase, gamePhaseManager);
+            }
+        }
+
         private void Start()
         {
             StartCoroutine(YieldHelper.SkipFrame(() => EndExecutingPhaseAndStartPhase(GamePhase.TransitionToEasyMoveHorizontal)));
@@ -28,22 +40,6 @@ namespace Run4YourLife.GameManagement
         }
 
         #region Phase Execution
-
-        public GamePhase GamePhase {
-            get {
-                UnityEngine.Debug.Assert(m_executingGamePhaseManager != null);
-                return m_executingGamePhaseManager.GamePhase;
-            }
-        }
-
-        public Dictionary<GamePhase, GamePhaseManager> gamePhases = new Dictionary<GamePhase, GamePhaseManager>();
-        private GamePhaseManager m_executingGamePhaseManager;
-
-        public void RegisterPhase(GamePhase gamePhase, GamePhaseManager gamePhaseManager)
-        {
-            UnityEngine.Debug.Assert(!gamePhases.ContainsKey(gamePhase), "Error, trying to add multiple gamePhaseManagers with the same gamePhase");
-            gamePhases.Add(gamePhase, gamePhaseManager);
-        }
 
         public void EndExecutingPhaseAndStartPhase(GamePhase gamePhase)
         {
@@ -63,7 +59,7 @@ namespace Run4YourLife.GameManagement
 
         public void PhaseStart(GamePhase gamePhase)
         {
-            UnityEngine.Debug.Assert(m_executingGamePhaseManager == null);
+            Debug.Assert(m_executingGamePhaseManager == null);
 
             m_executingGamePhaseManager = gamePhases[gamePhase];
             m_executingGamePhaseManager.StartPhase();
@@ -80,7 +76,7 @@ namespace Run4YourLife.GameManagement
 
         public void DebugPhaseStart(GamePhase gamePhase)
         {
-            UnityEngine.Debug.Assert(m_executingGamePhaseManager == null);
+            Debug.Assert(m_executingGamePhaseManager == null);
 
             m_executingGamePhaseManager = gamePhases[gamePhase];
             m_executingGamePhaseManager.DebugStartPhase();
@@ -101,7 +97,7 @@ namespace Run4YourLife.GameManagement
 
         private void Update()
         {
-            if(UnityEngine.Debug.isDebugBuild)
+            if(Debug.isDebugBuild)
             {
                 if (UnityEngine.Input.GetKeyDown(KeyCode.Keypad1))
                 {

@@ -24,7 +24,7 @@ namespace Run4YourLife.SceneManagement
             }
             else
             {
-                UnityEngine.Debug.LogError("Requesting a scene load, but did not specify a load nor unload");
+                Debug.LogError("Requesting a scene load, but did not specify a load nor unload");
             }
         }
         

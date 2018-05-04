@@ -14,6 +14,8 @@ namespace Run4YourLife.GameManagement
 {
     public class BossFightPhaseManager : GamePhaseManager
     {
+        public override GamePhase GamePhase { get { return GamePhase.BossFight; } }
+
         #region Editor variables
 
         [SerializeField]
@@ -47,11 +49,10 @@ namespace Run4YourLife.GameManagement
         private void Awake()
         {
             m_playerSpawner = GetComponent<PlayerSpawner>();
-            UnityEngine.Debug.Assert(m_playerSpawner != null);
+            Debug.Assert(m_playerSpawner != null);
 
             m_uiManager = GameObject.FindGameObjectWithTag(Tags.UI);
-
-            RegisterPhase(GamePhase.BossFight);
+            Debug.Assert(m_uiManager != null);
         }
 
         #endregion
@@ -67,9 +68,11 @@ namespace Run4YourLife.GameManagement
         void StartPhaseCommon()
         {
             GameObject boss = GameplayPlayerManager.Instance.Boss;
+            Debug.Assert(boss != null);
+
             m_virtualCamera.Follow = boss.transform;
             m_virtualCamera.LookAt = boss.transform;
-            m_virtualCamera.gameObject.SetActive(true);
+            CameraManager.Instance.TransitionToCamera(m_virtualCamera);
 
             m_backgroundTiling.SetActive(false);
             ExecuteEvents.Execute<IUIEvents>(m_uiManager, null, (x, y) => x.OnCountdownSetted(m_timeOfPhase));
@@ -105,10 +108,6 @@ namespace Run4YourLife.GameManagement
 
         private void EndPhaseCommon()
         {
-            m_virtualCamera.Follow = null;
-            m_virtualCamera.LookAt = null;
-            m_virtualCamera.gameObject.SetActive(false);
-
             List<GameObject> runners = GameplayPlayerManager.Instance.Runners;
 
             foreach (GameObject g in runners)

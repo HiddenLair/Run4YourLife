@@ -8,28 +8,10 @@ namespace Run4YourLife.GameManagement
 {
     public class TransitionToBossFightPhaseManager : GamePhaseManager
     {
-        #region Editor variables
-
-        [SerializeField]
-        private CinemachineVirtualCamera m_virtualCamera;
-
-        #endregion
-
-        #region Initialization
-
-        private void Awake()
-        {
-            RegisterPhase(GamePhase.TransitionToBossFight);
-        }
-
-        #endregion
+        public override GamePhase GamePhase { get { return GamePhase.TransitionToBossFight; } }
 
         public override void StartPhase()
-        {           
-            m_virtualCamera.Follow = null;
-            m_virtualCamera.LookAt = null;
-            m_virtualCamera.gameObject.SetActive(false);
-           
+        {                     
             GameManager.Instance.EndExecutingPhaseAndStartPhase(GamePhase.BossFight);
         }
 
@@ -38,11 +20,9 @@ namespace Run4YourLife.GameManagement
             
         }
 
-     
-
         public override void DebugStartPhase()
         {
-            UnityEngine.Debug.LogError("This method should never be called");
+            Debug.LogError("This method should never be called");
         }
 
         public override void DebugEndPhase()

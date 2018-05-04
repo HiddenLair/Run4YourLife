@@ -17,7 +17,7 @@ namespace Run4YourLife.Player {
         protected virtual void Awake()
         {
             m_collider = GetComponent<Collider>();
-            UnityEngine.Debug.Assert(m_collider != null);
+            Debug.Assert(m_collider != null);
         }
 
         private void OnTriggerEnter(Collider other)

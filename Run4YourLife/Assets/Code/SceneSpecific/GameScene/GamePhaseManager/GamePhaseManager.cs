@@ -23,13 +23,7 @@ namespace Run4YourLife.GameManagement
     }
 
     public abstract class GamePhaseManager : MonoBehaviour {
-        public GamePhase GamePhase { get; private set; }
-
-        public void RegisterPhase(GamePhase gamePhase)
-        {
-            GamePhase = gamePhase;
-            GameManager.Instance.RegisterPhase(this.GamePhase,this);
-        }
+        public abstract GamePhase GamePhase { get; }
 
         public abstract void StartPhase();
         public abstract void EndPhase();

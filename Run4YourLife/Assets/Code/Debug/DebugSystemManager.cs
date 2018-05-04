@@ -37,7 +37,7 @@ namespace Run4YourLife.Debugging
 
         void Update()
         {
-            if(UnityEngine.Debug.isDebugBuild)
+            if(Debug.isDebugBuild)
             {
                 if(UnityEngine.Input.GetKeyDown(KeyCode.F1))
                 {

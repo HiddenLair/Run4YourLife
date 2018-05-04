@@ -8,21 +8,7 @@ namespace Run4YourLife.GameManagement
 {
     public class TransitionToHardMoveHorizontal : GamePhaseManager
     {
-        #region Editor variables
-
-        [SerializeField]
-        private CinemachineVirtualCamera m_virtualCamera;
-
-        #endregion
-
-        #region Initialization
-
-        private void Awake()
-        {
-            RegisterPhase(GamePhase.TransitionToHardMoveHorizontal);
-        }
-
-        #endregion
+        public override GamePhase GamePhase { get { return GamePhase.TransitionToHardMoveHorizontal;  } }
 
         #region Regular Execution
 
@@ -39,9 +25,6 @@ namespace Run4YourLife.GameManagement
 
         private void EndPhaseCommon()
         {
-            m_virtualCamera.Follow = null;
-            m_virtualCamera.LookAt = null;
-            m_virtualCamera.gameObject.SetActive(false);
         }
 
         #endregion
@@ -50,7 +33,7 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugStartPhase()
         {
-            UnityEngine.Debug.LogError("This method should never be called");
+            Debug.LogError("This method should never be called");
         }
 
         public override void DebugEndPhase()

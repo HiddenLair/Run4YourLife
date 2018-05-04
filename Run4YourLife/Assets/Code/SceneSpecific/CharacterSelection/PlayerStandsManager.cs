@@ -77,7 +77,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
             if(playerHandle.IsBoss)
             {
-                UnityEngine.Debug.Assert(bossStandController.GetplayerHandle() == null);
+                Debug.Assert(bossStandController.GetplayerHandle() == null);
 
                 playerStandController = bossStandController;
             }
@@ -93,7 +93,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 }
             }
 
-            UnityEngine.Debug.Assert(playerStandController != null);
+            Debug.Assert(playerStandController != null);
 
             ExecuteEvents.Execute<IPlayerHandleEvent>(playerStandController.gameObject, null, (a, b) => a.OnPlayerHandleChanged(playerHandle));
         }

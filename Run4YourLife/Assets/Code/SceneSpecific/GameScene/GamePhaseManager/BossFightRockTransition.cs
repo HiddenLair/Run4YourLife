@@ -8,6 +8,7 @@ namespace Run4YourLife.GameManagement
 {
     public class BossFightRockTransition : GamePhaseManager
     {
+        public override GamePhase GamePhase { get { return GamePhase.BossFightRockTransition; } }
 
         #region Inspector
         [SerializeField]
@@ -23,16 +24,11 @@ namespace Run4YourLife.GameManagement
         private float time;
         #endregion
 
-        private void Awake()
-        {
-            RegisterPhase(GamePhase.BossFightRockTransition);
-        }
-
         public override void StartPhase()
         {
             m_virtualCamera.LookAt=cameraLookAtThis.transform;
             m_virtualCamera.Follow = cameraLookAtThis.transform;
-            m_virtualCamera.gameObject.SetActive(true);
+            CameraManager.Instance.TransitionToCamera(m_virtualCamera);
 
             List<GameObject> runners = GameplayPlayerManager.Instance.Runners;
 
@@ -68,10 +64,6 @@ namespace Run4YourLife.GameManagement
 
         private void EndPhaseCommon()
         {
-            m_virtualCamera.Follow = null;
-            m_virtualCamera.LookAt = null;
-            m_virtualCamera.gameObject.SetActive(false);
-
             List<GameObject> runners = GameplayPlayerManager.Instance.Runners;
 
             foreach (GameObject g in runners)
@@ -85,7 +77,7 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugStartPhase()
         {
-            UnityEngine.Debug.LogError("This method should never be called");
+            Debug.LogError("This method should never be called");
         }
 
         public override void DebugEndPhase()

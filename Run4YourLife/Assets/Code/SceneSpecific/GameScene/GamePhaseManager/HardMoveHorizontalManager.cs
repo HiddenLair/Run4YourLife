@@ -10,6 +10,8 @@ namespace Run4YourLife.GameManagement
 {
     public class HardMoveHorizontalManager : GamePhaseManager
     {
+        public override GamePhase GamePhase { get { return GamePhase.HardMoveHorizontal; } }
+
         #region Editor variables
 
         [SerializeField]
@@ -42,10 +44,7 @@ namespace Run4YourLife.GameManagement
         private void Awake()
         {
             m_playerSpawner = GetComponent<PlayerSpawner>();
-            UnityEngine.Debug.Assert(m_playerSpawner != null);
-
-
-            RegisterPhase(GamePhase.HardMoveHorizontal);
+            Debug.Assert(m_playerSpawner != null);
         }
 
         #endregion
@@ -63,7 +62,7 @@ namespace Run4YourLife.GameManagement
             GameObject boss = GameplayPlayerManager.Instance.Boss;
             m_virtualCamera.Follow = boss.transform;
             m_virtualCamera.LookAt = boss.transform;
-            m_virtualCamera.gameObject.SetActive(true);
+            CameraManager.Instance.TransitionToCamera(m_virtualCamera);
 
             StartCoroutine(YieldHelper.SkipFrame(() => MoveRunners()));
 
@@ -90,10 +89,6 @@ namespace Run4YourLife.GameManagement
         private void EndPhaseCommon()
         {
             m_checkPointManager.gameObject.SetActive(false);
-
-            m_virtualCamera.Follow = null;
-            m_virtualCamera.LookAt = null;
-            m_virtualCamera.gameObject.SetActive(false);
 
             List<GameObject> runners = GameplayPlayerManager.Instance.Runners;
 

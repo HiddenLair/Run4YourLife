@@ -124,10 +124,10 @@ namespace Run4YourLife.Player
             m_bumpController = GetComponent<BumpController>();
 
             m_graphics = transform.Find("Graphics");
-            UnityEngine.Debug.Assert(m_graphics != null);
+            Debug.Assert(m_graphics != null);
 
             m_dashTrail = transform.Find("Graphics/DashTrail");
-            UnityEngine.Debug.Assert(m_dashTrail != null);
+            Debug.Assert(m_dashTrail != null);
 
             m_gravity = m_baseGravity;
             m_horizontalDrag = m_baseHorizontalDrag;

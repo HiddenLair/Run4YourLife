@@ -9,30 +9,19 @@ namespace Run4YourLife.GameManagement
 {
     public class EasyMoveHorizontalPhaseManager : GamePhaseManager
     {
-        #region Editor variables
+        public override GamePhase GamePhase { get { return GamePhase.EasyMoveHorizontal; } }
 
         [SerializeField]
         private CinemachineVirtualCamera m_virtualCamera;
 
-        [SerializeField]
-        private BossPath m_checkPointManager;
-
-        #endregion
-
-        #region Member variables
-
         private PlayerSpawner m_playerSpawner;
-
-        #endregion
 
         #region Initialization
 
         private void Awake()
         {
             m_playerSpawner = GetComponent<PlayerSpawner>();
-            UnityEngine.Debug.Assert(m_playerSpawner != null);
-
-            RegisterPhase(GamePhase.EasyMoveHorizontal);
+            Debug.Assert(m_playerSpawner != null);
         }
 
         #endregion
@@ -47,11 +36,13 @@ namespace Run4YourLife.GameManagement
         void StartPhaseCommon()
         {
             GameObject boss = GameplayPlayerManager.Instance.Boss;
-            UnityEngine.Debug.Assert(boss != null);
+            Debug.Assert(boss != null);
 
             m_virtualCamera.Follow = boss.transform;
             m_virtualCamera.LookAt = boss.transform;
-            m_virtualCamera.gameObject.SetActive(true);
+            CameraManager.Instance.TransitionToCamera(m_virtualCamera);
+
+            boss.GetComponent<BossPathWalker>().m_position = 0;
 
             List<GameObject> runners = GameplayPlayerManager.Instance.Runners;
 
@@ -62,8 +53,6 @@ namespace Run4YourLife.GameManagement
                 tempController.SetLimitScreenLeft(true);
                 tempController.SetCheckOutScreen(true);
             }
-
-            m_checkPointManager.gameObject.SetActive(true);
         }
 
         public override void EndPhase()
@@ -73,10 +62,6 @@ namespace Run4YourLife.GameManagement
 
         void EndPhaseCommon()
         {
-            m_virtualCamera.Follow = null;
-            m_virtualCamera.LookAt = null;
-            m_virtualCamera.gameObject.SetActive(false);
-
             List<GameObject> runners = GameplayPlayerManager.Instance.Runners;
 
             foreach (GameObject g in runners)
@@ -86,8 +71,6 @@ namespace Run4YourLife.GameManagement
                 tempController.SetLimitScreenLeft(false);
                 tempController.SetCheckOutScreen(false);
             }
-
-            m_checkPointManager.gameObject.SetActive(false);
         }
 
         #endregion

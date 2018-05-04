@@ -25,7 +25,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         protected override void OnAwake()
         {
             m_runnerPrefabManager = FindObjectOfType<RunnerPrefabManager>();
-            UnityEngine.Debug.Assert(m_runnerPrefabManager != null);
+            Debug.Assert(m_runnerPrefabManager != null);
         }
 
         protected override void OnReady()

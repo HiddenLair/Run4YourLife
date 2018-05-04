@@ -8,6 +8,8 @@ namespace Run4YourLife.GameManagement
 {
     public class TransitionToEasyMoveHorizontalPhaseManager : GamePhaseManager
     {
+        public override GamePhase GamePhase { get { return GamePhase.TransitionToEasyMoveHorizontal; } }
+
         [SerializeField]
         private PlayableDirector m_startingCutscene;
 
@@ -20,9 +22,7 @@ namespace Run4YourLife.GameManagement
         private void Awake()
         {
             m_playerSpawner = GetComponent<PlayerSpawner>();
-            UnityEngine.Debug.Assert(m_playerSpawner != null);
-
-            RegisterPhase(GamePhase.TransitionToEasyMoveHorizontal);
+            Debug.Assert(m_playerSpawner != null);
         }
 
         #endregion
@@ -48,7 +48,7 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugStartPhase()
         {
-            UnityEngine.Debug.LogError("This method should never be called");
+            Debug.LogError("This method should never be called");
         }
 
         public override void DebugEndPhase()
