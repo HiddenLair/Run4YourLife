@@ -35,7 +35,8 @@ public class ProgressManager : MonoBehaviour
         FindBoss();
     }
 
-    void Update()
+    //TODO: FIX ME
+    /*void Update()
     {
         if(boss == null || !boss.activeInHierarchy)
         {
@@ -58,7 +59,7 @@ public class ProgressManager : MonoBehaviour
                 ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnBossProgress(ComputeProgress()));
             }
         }
-    }
+    }*/
 
     private float ComputeProgress()
     {

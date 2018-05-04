@@ -1,45 +1,42 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-using Run4YourLife.Utils;
-
-public class ChangeRigidBodyOnCollision : MonoBehaviour {
-
-
-    [SerializeField]
-    private Rigidbody body;
-
-    public float delayActivation = 0;
-    public bool gravity;
-    public bool kinematic;
-    //TODO:: add more options
-
-    private bool activatedFlag=false;
-
-    private void OnCollisionEnter(Collision collision)
+namespace Run4YourLife.Utils
+{
+    public class ChangeRigidBodyOnCollision : MonoBehaviour
     {
-        if (!activatedFlag)
+        [SerializeField]
+        private Rigidbody body;
+
+        public float delayActivation;
+        public bool gravity;
+        public bool kinematic;
+
+        private bool activatedFlag;
+
+        private void OnCollisionEnter(Collision collision)
         {
-            // StartCoroutine(ChangeDelayed());
-            StartCoroutine(YieldHelper.WaitForSeconds(Change, delayActivation));
+            if (!activatedFlag)
+            {
+                // StartCoroutine(ChangeDelayed());
+                StartCoroutine(YieldHelper.WaitForSeconds(Change, delayActivation));
+            }
+            activatedFlag = true;
         }
-        activatedFlag = true;
-    }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!activatedFlag)
+        private void OnTriggerEnter(Collider other)
         {
-            // StartCoroutine(ChangeDelayed());
-            StartCoroutine(YieldHelper.WaitForSeconds(Change, delayActivation));
+            if (!activatedFlag)
+            {
+                // StartCoroutine(ChangeDelayed());
+                StartCoroutine(YieldHelper.WaitForSeconds(Change, delayActivation));
+            }
+            activatedFlag = true;
         }
-        activatedFlag = true;
-    }
 
-    private void Change()
-    {
-        body.useGravity = gravity;
-        body.isKinematic = kinematic;
+        private void Change()
+        {
+            body.useGravity = gravity;
+            body.isKinematic = kinematic;
+        }
     }
 }

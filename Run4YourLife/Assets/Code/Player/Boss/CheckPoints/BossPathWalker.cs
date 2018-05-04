@@ -47,8 +47,13 @@ public class BossPathWalker : MonoBehaviour
             m_position = m_path.NormalizeUnit(distanceAlongPath, m_positionUnits);
             transform.position = m_path.EvaluatePositionAtUnit(m_position, m_positionUnits);
 
-            CinemachineScreenTransposer cinemachineScreenTransposer = Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineScreenTransposer>();
-            cinemachineScreenTransposer.m_cinemachineScreenTransposerData = m_path.EvaluateScreenTransposerDataAtUnit(m_position, m_positionUnits);
+            //TODO: Refactor this with virtual camera manager
+            try
+            {
+                CinemachineScreenTransposer cinemachineScreenTransposer = Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineScreenTransposer>();
+                cinemachineScreenTransposer.m_cinemachineScreenTransposerData = m_path.EvaluateScreenTransposerDataAtUnit(m_position, m_positionUnits);
+            }
+            catch {}
         }
     }
 }

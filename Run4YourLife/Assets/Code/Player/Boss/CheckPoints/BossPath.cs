@@ -7,13 +7,13 @@ using Run4YourLife.Cinemachine;
 [ExecuteInEditMode]
 public class BossPath : MonoBehaviour {
 
+    [SerializeField]
+    private CinemachineScreenTransposerData[] m_cinemachineScreenTransposerDatas;
     private CinemachinePath m_path;
-    private CinemachineScreenTransposerDataHolder[] m_cinemachineScreenTransposerDataHolders;
 
     private void Awake()
     {
         m_path = GetComponent<CinemachinePath>();
-        m_cinemachineScreenTransposerDataHolders = GetComponentsInChildren<CinemachineScreenTransposerDataHolder>();
     }
 
     public float NormalizeUnit(float distanceAlongPath, CinemachinePathBase.PositionUnits positionUnits)
@@ -41,18 +41,29 @@ public class BossPath : MonoBehaviour {
         int index = (int)Math.Truncate(pathUnitsPosition);
         float decimalPart = pathUnitsPosition - index;
 
-        CinemachineScreenTransposerData previous = m_cinemachineScreenTransposerDataHolders[index].CinemachineScreenTransposerData;
-        CinemachineScreenTransposerData next = m_cinemachineScreenTransposerDataHolders[Mathf.Min(index, m_cinemachineScreenTransposerDataHolders.Length)].CinemachineScreenTransposerData;
+        CinemachineScreenTransposerData previous = m_cinemachineScreenTransposerDatas[index];
+        CinemachineScreenTransposerData next = m_cinemachineScreenTransposerDatas[Mathf.Min(index+1, m_cinemachineScreenTransposerDatas.Length -1)];
 
-
-        CinemachineScreenTransposerData blendedData = BlendCinemachineScreenTransposerData(decimalPart, previous, next);
-
-        return blendedData;
+        return BlendCinemachineScreenTransposerData(decimalPart, previous, next); ;
     }
 
-    private CinemachineScreenTransposerData BlendCinemachineScreenTransposerData(float decimalPart, CinemachineScreenTransposerData previous, CinemachineScreenTransposerData next)
+    private CinemachineScreenTransposerData BlendCinemachineScreenTransposerData(float t, CinemachineScreenTransposerData previous, CinemachineScreenTransposerData next)
     {
-        //TODO blend
-        return previous;
+        return new CinemachineScreenTransposerData()
+        {
+            m_offsetFromTarget = Vector3.Lerp(previous.m_offsetFromTarget, next.m_offsetFromTarget, t),
+            m_screenX = Mathf.Lerp(previous.m_screenX, next.m_screenX, t),
+            m_screenY = Mathf.Lerp(previous.m_screenY, next.m_screenY, t),
+            m_verticalHeight = Mathf.Lerp(previous.m_verticalHeight, next.m_verticalHeight, t)
+        };
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Debug.Assert(m_cinemachineScreenTransposerDatas.Length == m_path.m_Waypoints.Length, "The number of path positions<"+m_path.m_Waypoints.Length+ "> and path CinemachineScreenTransposerData<"+m_cinemachineScreenTransposerDatas.Length+"> does not match");
+        for (int i = 0; i < m_cinemachineScreenTransposerDatas.Length; i++)
+        {
+            CinemachineScreenTransposerDataGizmos.DrawGizmos(m_cinemachineScreenTransposerDatas[i], m_path.m_Waypoints[i].position);
+        }
     }
 }

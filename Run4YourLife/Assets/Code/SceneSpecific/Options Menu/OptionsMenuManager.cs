@@ -6,29 +6,29 @@ using Run4YourLife.Input;
 
 namespace Run4YourLife.SceneSpecific.OptionsMenu
 {
-    [RequireComponent(typeof(ExitButtonControlScheme))]
+    [RequireComponent(typeof(OptionsMenuControlScheme))]
     public class OptionsMenuManager : MonoBehaviour
     {
         [SerializeField]
         private SceneTransitionRequest m_unloadOptionsMenu;
 
-        private ExitButtonControlScheme exitScheme;
+        private OptionsMenuControlScheme m_optionsMenuControlScheme;
 
         private void Awake()
         {
-            exitScheme = GetComponent<ExitButtonControlScheme>();
+            m_optionsMenuControlScheme = GetComponent<OptionsMenuControlScheme>();
         }
 
         private void Start()
         {
-            exitScheme.InputDevice = new InputDevice(0); //TODO use inputDeviceManager.DefaultInputDevice instead
-            exitScheme.Active = true;
+            m_optionsMenuControlScheme.InputDevice = InputDeviceManager.Instance.DefaultInputDevice;
+            m_optionsMenuControlScheme.Active = true;
             EventSystem.current.firstSelectedGameObject.GetComponent<ISelectHandler>().OnSelect(null);
         }
 
         private void Update()
         {
-            if(exitScheme.ExitAction.Started())
+            if(m_optionsMenuControlScheme.Exit.Started())
             {
                 m_unloadOptionsMenu.Execute();
             }
