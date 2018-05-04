@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
 
+using Run4YourLife.Player;
+
 namespace Run4YourLife.Debugging
 {
     public class WalkerController : DebugFeature
     {
-        private BossPathWalker walker = null;
-        private GameObject boss = null;
+        private BossPathWalker walker;
+        private GameObject boss;
 
-        private string walkerSpeedText = string.Empty;
-        private string walkerIncreaseSpeedText = string.Empty;
+        private string walkerSpeedText;
+        private string walkerIncreaseSpeedText;
 
         protected override string GetPanelName()
         {
