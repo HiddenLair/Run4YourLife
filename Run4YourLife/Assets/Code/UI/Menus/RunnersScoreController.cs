@@ -6,7 +6,7 @@ using Run4YourLife.Utils;
 
 namespace Run4YourLife.UI
 {
-    [RequireComponent(typeof(HorizontalLayoutGroup)]
+    [RequireComponent(typeof(HorizontalLayoutGroup))]
     public class RunnersScoreController : MonoBehaviour
     {
         [SerializeField]
