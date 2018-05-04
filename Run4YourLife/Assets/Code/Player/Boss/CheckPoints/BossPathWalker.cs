@@ -3,7 +3,7 @@ using Cinemachine;
 using Run4YourLife.Cinemachine;
 
 [ExecuteInEditMode]
-public class BossPathWalker : MonoBehaviour
+public class BossPathWalker : MonoBehaviour, IProgressProvider
 {
     /// <summary>The path to follow</summary>
     [Tooltip("The path to follow")]
@@ -25,6 +25,13 @@ public class BossPathWalker : MonoBehaviour
     public float m_position;
 
     public CinemachineScreenTransposerData CinemachineScreenTransposerData { get; private set; }
+
+    public float Progress
+    {
+        get {
+            return m_path.EvaluatePercentageAtUnit(m_position);
+        }
+    }
 
     private void Update()
     {

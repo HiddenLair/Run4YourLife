@@ -31,6 +31,11 @@ public class BossPath : MonoBehaviour {
         return m_path.EvaluateOrientationAtUnit(position, positionUnits);
     }
 
+    public float EvaluatePercentageAtUnit(float position)
+    {
+        return (position - m_path.MinPos) / m_path.MaxPos;
+    }
+
     public CinemachineScreenTransposerData EvaluateScreenTransposerDataAtUnit(float position, CinemachinePathBase.PositionUnits positionUnits)
     {
         float pathUnitsPosition = position;
@@ -57,6 +62,8 @@ public class BossPath : MonoBehaviour {
             m_verticalHeight = Mathf.Lerp(previous.m_verticalHeight, next.m_verticalHeight, t)
         };
     }
+
+     
 
     private void OnDrawGizmosSelected()
     {
