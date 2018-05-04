@@ -31,9 +31,9 @@ public class BossPath : MonoBehaviour {
         return m_path.EvaluateOrientationAtUnit(position, positionUnits);
     }
 
-    public float EvaluatePercentageAtUnit(float position)
+    public float EvaluatePercentageAtUnit(float position, CinemachinePathBase.PositionUnits positionUnits)
     {
-        return (position - m_path.MinPos) / m_path.MaxPos;
+        return (position - m_path.MinUnit(positionUnits)) / m_path.MaxUnit(positionUnits);
     }
 
     public CinemachineScreenTransposerData EvaluateScreenTransposerDataAtUnit(float position, CinemachinePathBase.PositionUnits positionUnits)

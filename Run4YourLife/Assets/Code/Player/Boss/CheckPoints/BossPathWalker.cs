@@ -29,7 +29,7 @@ public class BossPathWalker : MonoBehaviour, IProgressProvider
     public float Progress
     {
         get {
-            return m_path.EvaluatePercentageAtUnit(m_position);
+            return m_path.EvaluatePercentageAtUnit(m_position, m_positionUnits);
         }
     }
 
