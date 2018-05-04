@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 using Run4YourLife.GameManagement;
-
 
 namespace Run4YourLife.Player
 {
@@ -24,7 +24,8 @@ namespace Run4YourLife.Player
         private bool m_reviveMode;
 
         private Transform m_shieldGameObject;
-        private RunnerCharacterController m_runnerCharacterController;
+        private Coroutine shieldCooldownDestroy;
+        private RunnerCharacterController m_runnerCharacterController;      
 
         private void Awake()
         {
@@ -36,10 +37,17 @@ namespace Run4YourLife.Player
 
         #region Shield
 
-        public void ActivateShield()
+        public void ActivateShield(int shieldTime)
         {
             m_isShielded = true;
             m_shieldGameObject.gameObject.SetActive(true);
+
+            if(shieldCooldownDestroy != null)
+            {
+                StopCoroutine(shieldCooldownDestroy);
+            }
+
+            shieldCooldownDestroy = StartCoroutine(DestroyShieldOnCooldownReached(shieldTime));
         }
 
         /// <summary>
@@ -48,6 +56,8 @@ namespace Run4YourLife.Player
         /// <returns>True when it had a shield, false when it did not have a shield</returns>
         public bool ConsumeShieldIfAviable()
         {
+            StopCoroutine(shieldCooldownDestroy);
+
             bool wasShielded = m_isShielded;
 
             m_isShielded = false;
@@ -55,6 +65,16 @@ namespace Run4YourLife.Player
 
             return wasShielded;
         }
+
+        /// <summary>
+        /// Consumes shield if enough time passes
+        /// </summary>
+        IEnumerator DestroyShieldOnCooldownReached(int shieldTime)
+        {
+            yield return new WaitForSeconds(shieldTime);
+            ConsumeShieldIfAviable();
+        }
+
 
         #endregion
 
