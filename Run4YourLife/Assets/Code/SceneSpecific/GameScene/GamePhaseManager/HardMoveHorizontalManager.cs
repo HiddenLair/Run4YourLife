@@ -21,7 +21,7 @@ namespace Run4YourLife.GameManagement
         private CinemachineVirtualCamera m_virtualCamera;
 
         [SerializeField]
-        private GameObject m_background;
+        private Tiling m_background;
 
         [SerializeField]
         private Material m_newBackgroundMat;
@@ -58,15 +58,16 @@ namespace Run4YourLife.GameManagement
 
         private void StartPhaseCommon()
         {
-
             GameObject boss = GameplayPlayerManager.Instance.Boss;
             m_virtualCamera.Follow = boss.transform;
             m_virtualCamera.LookAt = boss.transform;
             CameraManager.Instance.TransitionToCamera(m_virtualCamera);
 
+            boss.GetComponent<BossPathWalker>().m_position = 0;
+
             StartCoroutine(YieldHelper.SkipFrame(() => MoveRunners()));
 
-            m_background.GetComponent<Tiling>().SetActive(true);
+            m_background.SetActive(true);
         }
 
         private void MoveRunners()

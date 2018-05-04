@@ -17,6 +17,8 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private SceneTransitionRequest m_loadBossWinsMenu;
 
+        public GamePhase GamePhase { get { return m_executingGamePhaseManager.GamePhase; } }
+
         private Dictionary<GamePhase, GamePhaseManager> gamePhases = new Dictionary<GamePhase, GamePhaseManager>();
         private GamePhaseManager m_executingGamePhaseManager;
 
