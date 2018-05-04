@@ -6,6 +6,11 @@
         public string Name { get; set; }
         public bool Enabled { get; set; }
 
+        /// <summary>
+        /// Last value where value != 0
+        /// </summary>
+        public float LastValue { get; private set; } 
+
         public Action(InputSource inputSource, string name)
         {
             this.InputSource = inputSource;
@@ -29,7 +34,9 @@
 
         public float Value()
         {
-            return Enabled ? InputSource.Value() : 0.0f;
+            float value = Enabled ? InputSource.Value() : 0.0f;
+            LastValue = value != 0 ? value : LastValue;
+            return value;
         }
 
         public bool Triggered(float percentage)

@@ -9,8 +9,6 @@ public class InputController : MonoBehaviour {
     private Dictionary<Action, List<InputStatusEffect>> m_inputStatusEffects = new Dictionary<Action, List<InputStatusEffect>>();
     private ControlScheme m_controlScheme;
 
-    private Dictionary<Action, float> m_previousInputWithValue = new Dictionary<Action, float>();
-
     private void Awake()
     {
         m_controlScheme = GetComponent<ControlScheme>();
@@ -19,18 +17,6 @@ public class InputController : MonoBehaviour {
         foreach(Action action in m_controlScheme.Actions)
         {
             m_inputStatusEffects.Add(action, new List<InputStatusEffect>());
-        }
-    }
-
-    private void LateUpdate()
-    {
-        foreach(Action action in m_controlScheme.Actions)
-        {
-            float value = action.Value();
-            if(value != 0)
-            {
-                m_previousInputWithValue[action] = value;
-            }
         }
     }
 
@@ -73,7 +59,7 @@ public class InputController : MonoBehaviour {
                     value = value + inputStatusEffect.float_value;
                     break;
                 case InputModifierType.Maximize:
-                    value = Mathf.Sign(m_previousInputWithValue[action]);
+                    value = Mathf.Sign(action.LastValue);
                     break;
             }
         }

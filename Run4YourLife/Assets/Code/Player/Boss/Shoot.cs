@@ -9,6 +9,8 @@ namespace Run4YourLife.Player
 {
     [RequireComponent(typeof(Ready))]
     [RequireComponent(typeof(BossControlScheme))]
+    [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(AudioSource))]
     public abstract class Shoot : MonoBehaviour
     {
         #region Inspector
@@ -48,22 +50,30 @@ namespace Run4YourLife.Player
 
         private void Awake()
         {
-            currentTimeS = Time.time + reloadTimeS;
-
-            GetComponents();
-
+            ready = GetComponent<Ready>();
+            controlScheme = GetComponent<BossControlScheme>();
+            animator = GetComponent<Animator>();
+            audioSource = GetComponent<AudioSource>();
             uiManager = GameObject.FindGameObjectWithTag(Tags.UI);
+            Debug.Assert(uiManager != null, "UI manager gameobject not found");
+
+            currentTimeS = Time.time + reloadTimeS;
+            initialRotation = head.rotation;
         }
 
         private void Start()
         {
             controlScheme.Active = true;
-            initialRotation = head.rotation;
         }
 
-        void Update()
+        private void Update()
         {
-            Verify();
+            FireBullet();
+        }
+
+        private void LateUpdate()
+        {
+            RotateHead();
         }
 
         public virtual void RotateHead()
@@ -73,19 +83,7 @@ namespace Run4YourLife.Player
             head.rotation *= initialRotation;
         }
 
-        private void LateUpdate()
-        {
-            RotateHead();         
-            /*Quaternion lookRotation = Quaternion.LookRotation(crossHair.position - head.position);
-            head.rotation = lookRotation * initialRotation;*/
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawLine(crossHair.position, head.position);
-        }
-
-        private void Verify()
+        private void FireBullet()
         {
             if (ready.Get())
             {
@@ -107,14 +105,11 @@ namespace Run4YourLife.Player
             }
         }
 
-        protected virtual void GetComponents()
-        {
-            ready = GetComponent<Ready>();
-            controlScheme = GetComponent<BossControlScheme>();
-            animator = GetComponent<Animator>();
-            audioSource = GetComponent<AudioSource>();
-        }
-
         public abstract void ShootByAnim();
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.DrawLine(head.position, crossHair.position);
+        }
     }
 }
