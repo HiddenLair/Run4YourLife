@@ -23,27 +23,27 @@ namespace Run4YourLife.GameManagement
 
         private Dictionary<PlayerHandle, float> m_playerScore = new Dictionary<PlayerHandle, float>();
 
-        public void Initialize()
-        {
-            m_playerScore.Clear();
-        }
-
         void OnEnable()
         {
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
+        void OnDisable()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+
         void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            if(scene.name == "GameScene")
+            if (scene.name == "GameScene")
             {
                 Initialize();
             }
         }
 
-        void OnDisable()
+        public void Initialize()
         {
-            SceneManager.sceneLoaded -= OnSceneLoaded;
+            m_playerScore.Clear();
         }
 
         public void OnAddPoints(PlayerHandle playerHandle,float points)
