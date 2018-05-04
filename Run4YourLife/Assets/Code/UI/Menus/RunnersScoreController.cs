@@ -16,13 +16,12 @@ public class RunnersScoreController : MonoBehaviour
         scoreTexts = GetComponent<HorizontalLayoutGroup>();
     }
 
-	void Start()
+    void Start()
     {
-        foreach(PlayerHandle playerHandle in PlayerManager.Instance.RunnerPlayerHandles)
+        foreach (PlayerHandle playerHandle in PlayerManager.Instance.RunnerPlayerHandles)
         {
-            GameObject scoreText = Instantiate(scoreTextPrefab);
-            scoreText.transform.SetParent(scoreTexts.transform);
+            GameObject scoreText = Instantiate(scoreTextPrefab, scoreTexts.transform, false);
             scoreText.GetComponent<RunnerScoreController>().SetplayerHandle(playerHandle);
         }
-	}
+    }
 }

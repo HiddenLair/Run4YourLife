@@ -56,7 +56,10 @@ namespace Run4YourLife.Player
         /// <returns>True when it had a shield, false when it did not have a shield</returns>
         public bool ConsumeShieldIfAviable()
         {
-            StopCoroutine(shieldCooldownDestroy);
+            if (shieldCooldownDestroy != null)
+            {
+                StopCoroutine(shieldCooldownDestroy);
+            }
 
             bool wasShielded = m_isShielded;
 
