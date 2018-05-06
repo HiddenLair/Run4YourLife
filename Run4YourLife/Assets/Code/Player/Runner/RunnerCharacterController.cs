@@ -80,6 +80,9 @@ namespace Run4YourLife.Player
 
         #region Private Variables
 
+        private WaitForSeconds coyoteDelay;
+        private WaitForSeconds dashDelay;
+
         private bool m_isGroundedOrCoyoteGrounded;
         private bool m_isJumping;
         private bool m_isBouncing;
@@ -136,6 +139,9 @@ namespace Run4YourLife.Player
 
             m_gravity = m_baseGravity;
             m_horizontalDrag = m_baseHorizontalDrag;
+
+            coyoteDelay = new WaitForSeconds(m_coyoteGroundedTime);
+            dashDelay = new WaitForSeconds(m_dashCooldown);
         }
 
         private void OnEnable()
@@ -189,7 +195,7 @@ namespace Run4YourLife.Player
                 {
                     if(m_isGroundedOrCoyoteGrounded)
                     {
-                        yield return new WaitForSeconds(m_coyoteGroundedTime);
+                        yield return coyoteDelay;
                         m_isGroundedOrCoyoteGrounded = false;
                     }
                 }
@@ -250,7 +256,7 @@ namespace Run4YourLife.Player
 
             m_isDashing = false;
             yield return new WaitUntil(() => m_characterController.isGrounded);
-            yield return new WaitForSeconds(m_dashCooldown);
+            yield return dashDelay;
             m_isReadyToDash = true;
         }
 
