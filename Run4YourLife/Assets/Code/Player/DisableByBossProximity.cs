@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 
 using UnityEngine;
 
@@ -12,10 +13,12 @@ namespace Run4YourLife.Interactables
         private float m_alphaAnimationLenght = 0.5f;
 
         private Renderer[] m_renderer;
+        private Material[] m_sharedMaterials;
 
         private void Awake()
         {
             m_renderer = GetComponentsInChildren<Renderer>();
+            m_sharedMaterials = m_renderer.Select((x) => x.sharedMaterial).ToArray();
         }
 
         public override void OnBossDestroy()
@@ -23,28 +26,22 @@ namespace Run4YourLife.Interactables
             foreach (Renderer renderer in m_renderer)
             {
                 MakeTransparent(renderer.material);
-                StartCoroutine(BeautifullDestroy(m_alphaAnimationLenght, renderer.material));
+                StartCoroutine(AlphaAnimation(m_alphaAnimationLenght, renderer.material));
             }
         }
 
         public override void OnRegenerate()
         {
             StopAllCoroutines();
-            gameObject.SetActive(true);
-
-            foreach (Renderer renderer in m_renderer)
+            for (int i = 0; i < m_renderer.Length; i++)
             {
-                Color color = renderer.material.color;
-                color.a = 1;
-                renderer.material.color = color;
-                MakeOpaque(renderer.material);
+                m_renderer[i].material = m_sharedMaterials[i];
             }
+            gameObject.SetActive(true);
         }
 
-        private IEnumerator BeautifullDestroy(float trasitionLenght, Material mat)
+        private IEnumerator AlphaAnimation(float trasitionLenght, Material mat)
         {
-            enabled = false;
-
             float time = trasitionLenght;
             Color color = mat.color;
             while (time >= 0)
@@ -67,17 +64,6 @@ namespace Run4YourLife.Interactables
             material.DisableKeyword("_ALPHABLEND_ON");
             material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
             material.renderQueue = 3000;
-        }
-
-        private void MakeOpaque(Material material)
-        {
-            material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
-            material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
-            material.SetInt("_ZWrite", 1);
-            material.DisableKeyword("_ALPHATEST_ON");
-            material.DisableKeyword("_ALPHABLEND_ON");
-            material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-            material.renderQueue = -1;
         }
     }
 }
