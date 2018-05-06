@@ -286,7 +286,7 @@ namespace Run4YourLife.GameManagement {
 
         private Vector3 GetRandomSpawnPosition()
         {
-            Vector3 position = Camera.main.transform.position;
+            Vector3 position = CameraManager.Instance.MainCamera.transform.position;
 
             position.x += Random.Range(-3, 6);
             position.y += Random.Range(-2, 5);

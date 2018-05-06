@@ -25,15 +25,9 @@ namespace Run4YourLife.GameManagement
     public class PauseManager : SingletonMonoBehaviour<PauseManager>, IPauseEvent
     {
         private PauseState actualGameState = PauseState.UNPAUSED;
-        private CinemachineBrain mainCameraCinemachine;
         public SceneTransitionRequest m_pauseSceneLoader;
         public SceneTransitionRequest m_pauseSceneUnloader;
         public PauseStateChangeEvent PauseChangeEvent = new PauseStateChangeEvent();
-
-        private void Awake()
-        {
-            mainCameraCinemachine = Camera.main.GetComponent<CinemachineBrain>();
-        }
 
         public void OnPauseInput()
         {
@@ -41,10 +35,8 @@ namespace Run4YourLife.GameManagement
             {
                 case PauseState.PAUSED:
                     {
-                        if (mainCameraCinemachine != null)
-                        {
-                            mainCameraCinemachine.enabled = true;
-                        }
+                        CameraManager.Instance.CinemachineBrain.enabled = true;
+                        
                         Time.timeScale = 1;
                         actualGameState = PauseState.UNPAUSED;
                         m_pauseSceneUnloader.Execute();
@@ -52,10 +44,8 @@ namespace Run4YourLife.GameManagement
                     break;
                 case PauseState.UNPAUSED:
                     {
-                        if (mainCameraCinemachine != null)
-                        {
-                            mainCameraCinemachine.enabled = false;
-                        }
+                        CameraManager.Instance.CinemachineBrain.enabled = false;
+
                         Time.timeScale = 0;
                         actualGameState = PauseState.PAUSED;
                         m_pauseSceneLoader.Execute();

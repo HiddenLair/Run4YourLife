@@ -2,6 +2,8 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+using Run4YourLife.GameManagement;
+
 namespace Run4YourLife.Player {
     public class Lightning : SkillBase
     {
@@ -24,9 +26,9 @@ namespace Run4YourLife.Player {
 
         private void OnEnable()
         {
-            Vector3 tempPos = transform.position;
-            tempPos.y = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, Mathf.Abs(Camera.main.transform.position.z - transform.position.z))).y;
-            transform.position = tempPos;
+            Vector3 position = transform.position;
+            position.y = CameraManager.Instance.MainCamera.ScreenToWorldPoint(new Vector3(0, 0, Mathf.Abs(CameraManager.Instance.MainCamera.transform.position.z - transform.position.z))).y;
+            transform.position = position;
             StartCoroutine(Flash());
         }
 
@@ -35,7 +37,7 @@ namespace Run4YourLife.Player {
             Transform flashBody = flashEffect.transform;
             Vector3 newSize = Vector3.one;
             newSize.x = newSize.z = width;
-            float topScreen = Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight, Mathf.Abs(Camera.main.transform.position.z - flashBody.position.z))).y;
+            float topScreen = CameraManager.Instance.MainCamera.ScreenToWorldPoint(new Vector3(0, CameraManager.Instance.MainCamera.pixelHeight, Mathf.Abs(CameraManager.Instance.MainCamera.transform.position.z - flashBody.position.z))).y;
             newSize.y = (topScreen - transform.position.y)/2;
             flashBody.localScale = newSize;
             flashBody.localPosition = new Vector3(0, newSize.y);
@@ -47,8 +49,9 @@ namespace Run4YourLife.Player {
 
         private void LightningHit()
         {
+            Camera mainCamera = CameraManager.Instance.MainCamera;
             Vector3 pos = Vector3.zero;
-            pos.y = Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight, Mathf.Abs(Camera.main.transform.position.z - pos.z))).y;
+            pos.y = mainCamera.ScreenToWorldPoint(new Vector3(0, mainCamera.pixelHeight, Mathf.Abs(mainCamera.transform.position.z - pos.z))).y;
             lighningEffect.transform.localPosition = pos;
             lighningEffect.SetActive(true);
 

@@ -59,13 +59,11 @@ namespace Run4YourLife.Player
                 m_position = m_path.NormalizeUnit(distanceAlongPath, m_positionUnits);
                 transform.position = m_path.EvaluatePositionAtUnit(m_position, m_positionUnits);
 
-                //TODO: Refactor this with virtual camera manager
-                try
+                if(CameraManager.Instance.ActiveCinemachineCamera != null)
                 {
-                    CinemachineScreenTransposer cinemachineScreenTransposer = Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineScreenTransposer>();
+                    CinemachineScreenTransposer cinemachineScreenTransposer = CameraManager.Instance.ActiveCinemachineCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineScreenTransposer>();
                     cinemachineScreenTransposer.m_cinemachineScreenTransposerData = m_path.EvaluateScreenTransposerDataAtUnit(m_position, m_positionUnits);
                 }
-                catch { }
             }
         }
     }

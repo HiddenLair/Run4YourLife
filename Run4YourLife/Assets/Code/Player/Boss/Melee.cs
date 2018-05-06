@@ -31,11 +31,12 @@ namespace Run4YourLife.Player
         
         private GameObject uiManager;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             currentTimeS = reloadTimeS;
 
-            GetComponents();
+            ready = GetComponent<Ready>();
+            controlScheme = GetComponent<BossControlScheme>();
 
             uiManager = GameObject.FindGameObjectWithTag(Tags.UI);
         }
@@ -73,12 +74,6 @@ namespace Run4YourLife.Player
                     alreadyPressed = false;
                 }
             }
-        }
-
-        protected virtual void GetComponents()
-        {
-            ready = GetComponent<Ready>();
-            controlScheme = GetComponent<BossControlScheme>();
         }
 
         protected abstract void OnSuccess();

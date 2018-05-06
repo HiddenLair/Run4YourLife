@@ -18,12 +18,12 @@ public class RunnerScoreController : MonoBehaviour
         SetScore(0);
     }
 
-    private void Start()
+    private void OnEnable()
     {
         ScoreManager.Instance.OnPlayerScoreChanged.AddListener(OnPlayerScoreChanged);
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         ScoreManager.Instance.OnPlayerScoreChanged.RemoveListener(OnPlayerScoreChanged);
     }

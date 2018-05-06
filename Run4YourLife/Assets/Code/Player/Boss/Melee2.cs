@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 
+using Run4YourLife.GameManagement;
+
 namespace Run4YourLife.Player
 {
     [RequireComponent(typeof(AudioSource))]
+    [RequireComponent(typeof(Animator))]
     public class Melee2 : Melee
     {
         #region Editor variables
@@ -26,41 +29,44 @@ namespace Run4YourLife.Player
 
         private float timeToMeleFromAnim = 0.75f;
 
-        private AudioSource audioSource;
-        private Animator anim;
+        private Vector3 trapPos;
+        private Quaternion rotation;
+        private bool right = false;
 
-        Vector3 trapPos;
-        Quaternion rotation;
-        bool right = false;
+        private AudioSource m_audioSource;
+        private Animator m_animator;
+        private Camera m_mainCamera;
 
-        protected override void GetComponents()
+        protected override void Awake()
         {
-            base.GetComponents();
-
-            anim = GetComponent<Animator>();
-            audioSource = GetComponent<AudioSource>();
+            base.Awake();
+            m_animator = GetComponent<Animator>();
+            m_audioSource = GetComponent<AudioSource>();
+            m_mainCamera = CameraManager.Instance.MainCamera;
+            Debug.Assert(m_mainCamera != null);
         }
 
         protected override void OnSuccess()
         {
-            audioSource.PlayOneShot(sfx);
+
+            m_audioSource.PlayOneShot(sfx);
 
             trapPos = crossHairPos.position;
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(trapPos);
+            Vector3 screenPos = m_mainCamera.WorldToScreenPoint(trapPos);
 
-            if(screenPos.x <= 0.5f * Camera.main.pixelWidth)
+            if(screenPos.x <= 0.5f * m_mainCamera.pixelWidth)
             {
-                anim.SetTrigger("MeleR");
-                AnimationPlayOnTimeManager.Instance.PlayOnAnimation(anim,"MeleRight",timeToMeleFromAnim,()=>ArmInstantiate());
-                trapPos.x = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, 0, Camera.main.transform.position.z - trapPos.z)).x;
+                m_animator.SetTrigger("MeleR");
+                AnimationPlayOnTimeManager.Instance.PlayOnAnimation(m_animator,"MeleRight",timeToMeleFromAnim,()=>ArmInstantiate());
+                trapPos.x = m_mainCamera.ScreenToWorldPoint(new Vector3(m_mainCamera.pixelWidth, 0, m_mainCamera.transform.position.z - trapPos.z)).x;
                 rotation = Quaternion.Euler(0, 0, 0);
                 right = true;
             }
             else
             {
-                anim.SetTrigger("MeleL");
-                AnimationPlayOnTimeManager.Instance.PlayOnAnimation(anim, "MeleLeft", timeToMeleFromAnim, () => ArmInstantiate());
-                trapPos.x = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, Camera.main.transform.position.z - trapPos.z)).x;
+                m_animator.SetTrigger("MeleL");
+                AnimationPlayOnTimeManager.Instance.PlayOnAnimation(m_animator, "MeleLeft", timeToMeleFromAnim, () => ArmInstantiate());
+                trapPos.x = m_mainCamera.ScreenToWorldPoint(new Vector3(0, 0, m_mainCamera.transform.position.z - trapPos.z)).x;
                 rotation = Quaternion.Euler(0, 180, 0);
                 right = false;
             }

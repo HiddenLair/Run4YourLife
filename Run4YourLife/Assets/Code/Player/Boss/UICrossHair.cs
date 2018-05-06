@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+
+using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.Player
 {
@@ -24,6 +24,7 @@ namespace Run4YourLife.Player
 
         private GameObject crossHair = null;
         private Image crosshairImage;
+        private Camera m_mainCamera;
 
         #endregion
 
@@ -31,6 +32,9 @@ namespace Run4YourLife.Player
         {
             crosshairImage = crossHairUi.GetComponent<Image>();
             Debug.Assert(crosshairImage != null);
+
+            m_mainCamera = CameraManager.Instance.MainCamera;
+            Debug.Assert(m_mainCamera != null);
         }
 
         private void Update()
@@ -51,7 +55,7 @@ namespace Run4YourLife.Player
 
         void Move()
         {
-            crossHairUi.position = Camera.main.WorldToScreenPoint(crossHair.transform.position);
+            crossHairUi.position = m_mainCamera.WorldToScreenPoint(crossHair.transform.position);
         }
 
         void CheckStatus()

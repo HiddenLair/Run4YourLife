@@ -1,10 +1,10 @@
-﻿using System.Collections;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine;
 
 using Run4YourLife.UI;
 using Run4YourLife.Input;
 using Run4YourLife.Interactables;
+using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.Player
 {
@@ -124,8 +124,9 @@ namespace Run4YourLife.Player
 
         void ClampPositionInsideScreen()
         {
-            Vector2 screenTopRight = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, Mathf.Abs(Camera.main.transform.position.z - crossHair.transform.position.z)));
-            Vector2 screenBottomLeft = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth * screenLeftLimitPercentaje, Camera.main.pixelHeight * screenBottomLimitPercentaje, Mathf.Abs(Camera.main.transform.position.z - crossHair.transform.position.z)));
+            Camera mainCamera = CameraManager.Instance.MainCamera;
+            Vector2 screenTopRight = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, Mathf.Abs(mainCamera.transform.position.z - crossHair.transform.position.z)));
+            Vector2 screenBottomLeft = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth * screenLeftLimitPercentaje, mainCamera.pixelHeight * screenBottomLimitPercentaje, Mathf.Abs(mainCamera.transform.position.z - crossHair.transform.position.z)));
 
             Vector3 clampedPosition = crossHair.transform.position;
             clampedPosition.x = Mathf.Clamp(crossHair.transform.position.x, screenBottomLeft.x, screenTopRight.x);

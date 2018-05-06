@@ -74,6 +74,8 @@ namespace Run4YourLife.Player
         private Transform m_graphics;
         private Transform m_dashTrail;
 
+        private Camera m_mainCamera;
+
         #endregion
 
         #region Private Variables
@@ -128,6 +130,9 @@ namespace Run4YourLife.Player
 
             m_dashTrail = transform.Find("Graphics/DashTrail");
             Debug.Assert(m_dashTrail != null);
+
+            m_mainCamera = CameraManager.Instance.MainCamera;
+            Debug.Assert(m_mainCamera != null);
 
             m_gravity = m_baseGravity;
             m_horizontalDrag = m_baseHorizontalDrag;
@@ -326,7 +331,7 @@ namespace Run4YourLife.Player
 
         private void TrimPlayerPositionInsideCameraViewRight()
         {
-            float xScreenRight = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, 0, Math.Abs(Camera.main.transform.position.z - transform.position.z))).x;
+            float xScreenRight = m_mainCamera.ScreenToWorldPoint(new Vector3(m_mainCamera.pixelWidth, 0, Math.Abs(m_mainCamera.transform.position.z - transform.position.z))).x;
             if (transform.position.x > xScreenRight)
             {
                 Vector3 trimmedPosition = transform.position;
@@ -337,7 +342,7 @@ namespace Run4YourLife.Player
 
         private void TrimPlayerPositionInsideCameraViewLeft()
         {
-            float xScreenLeft = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, Math.Abs(Camera.main.transform.position.z - transform.position.z))).x;
+            float xScreenLeft = m_mainCamera.ScreenToWorldPoint(new Vector3(0, 0, Math.Abs(m_mainCamera.transform.position.z - transform.position.z))).x;
             if (transform.position.x < xScreenLeft)
             {
                 Vector3 trimmedPosition = transform.position;

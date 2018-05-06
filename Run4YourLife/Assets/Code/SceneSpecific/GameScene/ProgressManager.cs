@@ -20,12 +20,12 @@ namespace Run4YourLife.GameManagement
             Debug.Assert(m_uiManager != null, "UI not found");
         }
 
-        private void Start()
+        private void OnEnable()
         {
             GameManager.Instance.onGamePhaseChanged.AddListener(OnGamePhaseChanged);
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             GameManager.Instance.onGamePhaseChanged.RemoveListener(OnGamePhaseChanged);
         }

@@ -2,6 +2,7 @@
 using UnityEngine;
 
 using Cinemachine;
+using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.Cinemachine
 {
@@ -42,10 +43,10 @@ namespace Run4YourLife.Cinemachine
 
         private Vector3 CalculatePosition()
         {
+            Camera mainCamera = CameraManager.Instance.MainCamera;
             Vector3 position = VirtualCamera.Follow.position + m_cinemachineScreenTransposerData.m_offsetFromTarget;
 
-
-            float aspectRatio = Camera.main.aspect;
+            float aspectRatio = mainCamera.aspect;
             float xWorldDistance = (m_cinemachineScreenTransposerData.m_verticalHeight * aspectRatio) / 2.0f;
             float screenXPercentage = -m_cinemachineScreenTransposerData.m_screenX * 2 + 1;
             position += VirtualCamera.Follow.right * xWorldDistance * screenXPercentage;
@@ -54,7 +55,7 @@ namespace Run4YourLife.Cinemachine
             float screenYPercentage = m_cinemachineScreenTransposerData.m_screenY * 2 - 1;
             position += VirtualCamera.Follow.up * yWorldDistance * screenYPercentage;
 
-            float zWorldDistance = m_cinemachineScreenTransposerData.m_verticalHeight / (2.0f * Mathf.Tan(Mathf.Deg2Rad * Camera.main.fieldOfView / 2.0f));
+            float zWorldDistance = m_cinemachineScreenTransposerData.m_verticalHeight / (2.0f * Mathf.Tan(Mathf.Deg2Rad * mainCamera.fieldOfView / 2.0f));
             position += zWorldDistance * -VirtualCamera.Follow.forward;
 
             return position;

@@ -15,7 +15,7 @@ namespace Run4YourLife.SceneSpecific.PauseMenu
         private void Awake()
         {
             gameManager = GameObject.FindGameObjectWithTag(Tags.GameController);
-            mainCameraCinemachine = Camera.main.GetComponent<CinemachineBrain>();
+            mainCameraCinemachine = CameraManager.Instance.CinemachineBrain;
         }
 
         private void OnDestroy()

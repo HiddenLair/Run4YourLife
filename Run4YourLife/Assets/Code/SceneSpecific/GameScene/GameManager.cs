@@ -95,6 +95,15 @@ namespace Run4YourLife.GameManagement
 
         #endregion
 
+        private void OnApplicationQuit()
+        {
+            MonoBehaviour[] scripts = FindObjectsOfType<MonoBehaviour>();
+            foreach (MonoBehaviour script in scripts)
+            {
+                script.enabled = false;
+            }
+        }
+
         #region Debug
 
         private void Update()

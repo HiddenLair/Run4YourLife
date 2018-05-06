@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.Debugging
 {
@@ -63,7 +64,7 @@ namespace Run4YourLife.Debugging
         {
             generalDebugFeatures.Add(GetComponent<FPSCounter>());
             generalDebugFeatures.Add(GetComponent<VertexAndTriangleCounter>());
-            generalDebugFeatures.Add(Camera.main.gameObject.AddComponent<WireframeMode>());
+            generalDebugFeatures.Add(CameraManager.Instance.MainCamera.gameObject.AddComponent<WireframeMode>());
         }
 
         private void AddBossDebugFeatures()
@@ -73,8 +74,8 @@ namespace Run4YourLife.Debugging
 
         private void AddCameraDebugFeatures()
         {
-            cameraDebugFeatures.Add(Camera.main.gameObject.AddComponent<DynamicCameraController>());
-            cameraDebugFeatures.Add(Camera.main.gameObject.AddComponent<FollowRunnerCameraController>());
+            cameraDebugFeatures.Add(CameraManager.Instance.MainCamera.gameObject.AddComponent<DynamicCameraController>());
+            cameraDebugFeatures.Add(CameraManager.Instance.MainCamera.gameObject.AddComponent<FollowRunnerCameraController>());
         }
 
         private void AddOtherDebugFeatures()

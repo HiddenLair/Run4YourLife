@@ -9,9 +9,9 @@ namespace Run4YourLife.Player
         private Animator animator;
         private AudioSource audioSource;
 
-        protected override void GetComponents()
+        protected override void Awake()
         {
-            base.GetComponents();
+            base.Awake();
 
             animator = GetComponent<Animator>();
             audioSource = GetComponent<AudioSource>();
