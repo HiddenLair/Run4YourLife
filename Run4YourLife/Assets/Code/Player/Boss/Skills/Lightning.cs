@@ -7,7 +7,6 @@ using Run4YourLife.GameManagement;
 namespace Run4YourLife.Player {
     public class Lightning : SkillBase
     {
-
         #region Inspector
 
         [SerializeField]
@@ -23,6 +22,17 @@ namespace Run4YourLife.Player {
         private GameObject lighningEffect;
 
         #endregion
+
+        #region Private Variables
+
+        private WaitForSeconds lightningDelay;
+
+        #endregion
+
+        private void Awake()
+        {
+            lightningDelay = new WaitForSeconds(delayHit);
+        }
 
         private void OnEnable()
         {
@@ -42,7 +52,7 @@ namespace Run4YourLife.Player {
             flashBody.localScale = newSize;
             flashBody.localPosition = new Vector3(0, newSize.y);
             flashEffect.SetActive(true);
-            yield return new WaitForSeconds(delayHit);
+            yield return lightningDelay;
             flashEffect.SetActive(false);
             LightningHit();
         }
