@@ -35,7 +35,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4606793002052564}
   - component: {fileID: 65641236048467084}
-  - component: {fileID: 114772495380284732}
+  - component: {fileID: 114857518927537976}
   m_Layer: 10
   m_Name: SmallRock
   m_TagString: Untagged
@@ -54,7 +54,6 @@ GameObject:
   - component: {fileID: 33517923423847546}
   - component: {fileID: 23111292487445376}
   - component: {fileID: 95247073699274996}
-  - component: {fileID: 114730468969173100}
   m_Layer: 10
   m_Name: R4YL_PROP_normal_rock_small
   m_TagString: Untagged
@@ -82,7 +81,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1140437413512358}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 0, z: 0}
+  m_LocalPosition: {x: 1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4810563909171540}
@@ -173,19 +172,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114730468969173100
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1604029331505100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29e27016b2378fe448ccf0cce3eb0757, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toActivate: {fileID: 1140437413512358}
---- !u!114 &114772495380284732
+--- !u!114 &114857518927537976
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -196,3 +183,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_distance: -3
+  m_alphaAnimationLenght: 0.5

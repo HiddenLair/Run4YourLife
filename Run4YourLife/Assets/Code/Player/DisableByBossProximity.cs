@@ -4,49 +4,42 @@ using UnityEngine;
 using Run4YourLife.GameManagement;
 using UnityEngine.Rendering;
 
-public class DisableByBossProximity : MonoBehaviour,IActivateByRender {
+public class DisableByBossProximity : BossDestructedInstance {
 
-    private static readonly float DISTANCE_FROM_BOSSS_TO_DESTROY = 2.0f;
-    private static readonly float ALPHA_TRANSITION_LENGHT = 0.5f;
+    [SerializeField]
+    private float m_alphaAnimationLenght = 0.5f;
 
     private Renderer[] m_renderer;
 
     private void Awake()
     {
         m_renderer = GetComponentsInChildren<Renderer>();
-
-        enabled = false;
     }
 
-    private void Update()
+    public override void OnBossDestroy()
     {
-        if (GameplayPlayerManager.Instance.Boss != null)
+        foreach (Renderer renderer in m_renderer)
         {
-            if (CheckHorizontalDistanceToBoss())
-            {
-                foreach(Renderer r in m_renderer) {
-                    SetToTransparent(r.material);
-                    StartCoroutine(BeautifullDestroy(ALPHA_TRANSITION_LENGHT, r.material));
-                }
-            }
+            MakeTransparent(renderer.material);
+            StartCoroutine(BeautifullDestroy(m_alphaAnimationLenght, renderer.material));
         }
     }
 
-    private bool CheckHorizontalDistanceToBoss()
+    public override void OnRegenerate()
     {
-        foreach (Renderer r in m_renderer)
+        StopAllCoroutines();
+        gameObject.SetActive(true);
+
+        foreach (Renderer renderer in m_renderer)
         {
-            float itemPosition = transform.position.x - (r.bounds.size.x / 2.0f);
-            float bossPosition = GameplayPlayerManager.Instance.Boss.transform.position.x;
-            if(itemPosition - bossPosition < DISTANCE_FROM_BOSSS_TO_DESTROY)
-            {
-                return true;
-            }
+            Color color = renderer.material.color;
+            color.a = 1;
+            renderer.material.color = color;
+            MakeOpaque(renderer.material);
         }
-        return false;
     }
 
-    private IEnumerator BeautifullDestroy(float trasitionLenght,Material mat)
+    private IEnumerator BeautifullDestroy(float trasitionLenght, Material mat)
     {
         enabled = false;
 
@@ -62,12 +55,7 @@ public class DisableByBossProximity : MonoBehaviour,IActivateByRender {
         gameObject.SetActive(false);
     }
 
-    public void Activate()
-    {
-        enabled = true;
-    }
-
-    public void SetToTransparent(Material material)
+    public void MakeTransparent(Material material)
     {
         material.SetFloat("_Mode", 3);
         material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
@@ -77,5 +65,16 @@ public class DisableByBossProximity : MonoBehaviour,IActivateByRender {
         material.DisableKeyword("_ALPHABLEND_ON");
         material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
         material.renderQueue = 3000;
+    }
+
+    private void MakeOpaque(Material material)
+    {
+        material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+        material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
+        material.SetInt("_ZWrite", 1);
+        material.DisableKeyword("_ALPHATEST_ON");
+        material.DisableKeyword("_ALPHABLEND_ON");
+        material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        material.renderQueue = -1;
     }
 }
