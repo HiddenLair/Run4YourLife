@@ -7,7 +7,7 @@ using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.Interactables
 {
-    public class DisableByBossProximity : BossDestructedInstance {
+    public class BossDestructsGraphics : BossDestructedInstance {
 
         [SerializeField]
         private float m_alphaAnimationLenght = 0.5f;
