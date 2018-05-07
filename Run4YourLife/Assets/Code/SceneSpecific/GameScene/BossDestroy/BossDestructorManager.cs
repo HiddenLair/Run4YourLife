@@ -42,8 +42,20 @@ namespace Run4YourLife.GameManagement
         private void DestroyAndRegenerateStaticElements(GameObject boss)
         {
             float xBossPosition = boss.transform.position.x;
-            int desiredIndex = EvaluateIndexForBossPosition(xBossPosition);
-            Debug.Log(desiredIndex);
+            int lastSmaller = LastElementSmallerThanPosition(xBossPosition);
+            if(lastSmaller > m_bossPositionIndex)
+            {
+                DestroyElementsFromTo(m_bossPositionIndex+1, lastSmaller);
+            }
+            else if (lastSmaller < m_bossPositionIndex)
+            {
+                ResetElementsFromTo(lastSmaller+1, m_bossPositionIndex);
+            }
+            m_bossPositionIndex = lastSmaller;
+
+
+            /*int desiredIndex = EvaluateIndexForBossPosition(xBossPosition);
+            Debug.Log(xBossPosition + " " + desiredIndex +  " " + m_staticElements[desiredIndex].DestroyPosition);
             if (desiredIndex < m_bossPositionIndex)
             {
                 ResetElementsFromTo(desiredIndex, m_bossPositionIndex);
@@ -52,14 +64,20 @@ namespace Run4YourLife.GameManagement
             {
                 DestroyElementsFromTo(m_bossPositionIndex, desiredIndex);
             }
-            m_bossPositionIndex = desiredIndex;
+            m_bossPositionIndex = desiredIndex;*/
         }
 
+        /// <summary>
+        /// Evaluates the position of the array the boss is at.
+        /// The position's object is at a destroyed state
+        /// </summary>
+        /// <param name="xBossPosition">The horizontal position of the boss</param>
+        /// <returns>The position of the boss</returns>
         private int EvaluateIndexForBossPosition(float xBossPosition)
         {
             //TODO: Optimize me
 
-            /*if(xBossPosition < m_staticElements[0].DestroyPosition)
+            if(xBossPosition < m_staticElements[0].DestroyPosition)
             {
                 return 0;
             }
@@ -72,30 +90,27 @@ namespace Run4YourLife.GameManagement
                 }
             }
 
-            return m_staticElements.Length - 1;*/
+            return m_staticElements.Length - 1;
+        }
 
-            if(xBossPosition > m_staticElements[m_bossPositionIndex].DestroyPosition)
+        private int LastElementSmallerThanPosition(float position)
+        {
+            int firstBigger = 0;
+            while(firstBigger < m_staticElements.Length && m_staticElements[firstBigger].DestroyPosition < position)
             {
-                while(m_bossPositionIndex < m_staticElements.Length && xBossPosition >= m_staticElements[m_bossPositionIndex].DestroyPosition)
-                {
-                    m_bossPositionIndex++;
-                }
-            } else 
-            {
-                while(m_bossPositionIndex > 0 && xBossPosition < m_staticElements[m_bossPositionIndex-1].DestroyPosition)
-                {
-                    m_bossPositionIndex--;
-                }
+                firstBigger++;
             }
-
-            return m_bossPositionIndex;
+            return firstBigger - 1;
         }
 
         private void DestroyElementsFromTo(int fromIndex, float toIndex)
         {
             for (int i = fromIndex; i <= toIndex; i++)
             {
-                m_staticElements[i].OnBossDestroy();
+                if(i > 0)
+                {
+                    m_staticElements[i].OnBossDestroy();
+                }
             }
         }
 
@@ -103,7 +118,10 @@ namespace Run4YourLife.GameManagement
         {
             for (int i = fromIndex; i <= toIndex; i++)
             {
-                m_staticElements[i].OnRegenerate();
+                if(i > 0)
+                {
+                    m_staticElements[i].OnRegenerate();
+                }
             }
         }
     }

@@ -23,7 +23,6 @@ namespace Run4YourLife.Interactables
 
         public override void OnBossDestroy()
         {
-            Debug.Log(gameObject.name + gameObject.activeInHierarchy + gameObject.activeSelf);
             foreach (Renderer renderer in m_renderer)
             {
                 MakeTransparent(renderer.material);

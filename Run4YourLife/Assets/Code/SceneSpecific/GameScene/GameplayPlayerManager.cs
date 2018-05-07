@@ -107,8 +107,6 @@ namespace Run4YourLife.GameManagement {
 
         private void CreateDebugPlayers()
         {
-            Debug.Log("Creating debug player handles for game");
-
             PlayerHandle[] playerHandles = new PlayerHandle[]
             {
                 new PlayerHandle() {
