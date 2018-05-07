@@ -43,54 +43,16 @@ namespace Run4YourLife.GameManagement
         {
             float xBossPosition = boss.transform.position.x;
             int lastSmaller = LastElementSmallerThanPosition(xBossPosition);
-            if(lastSmaller > m_bossPositionIndex)
+            Debug.Log(lastSmaller);
+            if (lastSmaller > m_bossPositionIndex)
             {
-                DestroyElementsFromTo(m_bossPositionIndex+1, lastSmaller);
+                DestroyElementsFromTo(m_bossPositionIndex + 1, lastSmaller);
             }
             else if (lastSmaller < m_bossPositionIndex)
             {
-                ResetElementsFromTo(lastSmaller+1, m_bossPositionIndex);
+                ResetElementsFromTo(lastSmaller + 1, m_bossPositionIndex);
             }
             m_bossPositionIndex = lastSmaller;
-
-
-            /*int desiredIndex = EvaluateIndexForBossPosition(xBossPosition);
-            Debug.Log(xBossPosition + " " + desiredIndex +  " " + m_staticElements[desiredIndex].DestroyPosition);
-            if (desiredIndex < m_bossPositionIndex)
-            {
-                ResetElementsFromTo(desiredIndex, m_bossPositionIndex);
-            }
-            else if (desiredIndex > m_bossPositionIndex)
-            {
-                DestroyElementsFromTo(m_bossPositionIndex, desiredIndex);
-            }
-            m_bossPositionIndex = desiredIndex;*/
-        }
-
-        /// <summary>
-        /// Evaluates the position of the array the boss is at.
-        /// The position's object is at a destroyed state
-        /// </summary>
-        /// <param name="xBossPosition">The horizontal position of the boss</param>
-        /// <returns>The position of the boss</returns>
-        private int EvaluateIndexForBossPosition(float xBossPosition)
-        {
-            //TODO: Optimize me
-
-            if(xBossPosition < m_staticElements[0].DestroyPosition)
-            {
-                return 0;
-            }
-
-            for (int i = 0; i < m_staticElements.Length; ++i)
-            {
-                if (xBossPosition < m_staticElements[i].DestroyPosition)
-                {
-                    return i-1;
-                }
-            }
-
-            return m_staticElements.Length - 1;
         }
 
         private int LastElementSmallerThanPosition(float position)
@@ -107,7 +69,7 @@ namespace Run4YourLife.GameManagement
         {
             for (int i = fromIndex; i <= toIndex; i++)
             {
-                if(i > 0)
+                if(i >= 0)
                 {
                     m_staticElements[i].OnBossDestroy();
                 }
@@ -118,7 +80,7 @@ namespace Run4YourLife.GameManagement
         {
             for (int i = fromIndex; i <= toIndex; i++)
             {
-                if(i > 0)
+                if(i >= 0)
                 {
                     m_staticElements[i].OnRegenerate();
                 }
