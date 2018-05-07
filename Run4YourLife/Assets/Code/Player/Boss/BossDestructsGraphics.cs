@@ -51,7 +51,7 @@ namespace Run4YourLife.Interactables
                 foreach (Renderer renderer in m_renderer)
                 {
                     Color color = renderer.material.color;
-                    color.a = Time.time - startTime / m_alphaAnimationLenght;
+                    color.a = (endTime - Time.time) / m_alphaAnimationLenght;
                     renderer.material.color = color;
                 }   
                 yield return null;

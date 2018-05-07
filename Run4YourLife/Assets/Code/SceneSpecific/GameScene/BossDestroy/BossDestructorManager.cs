@@ -43,7 +43,7 @@ namespace Run4YourLife.GameManagement
         {
             float xBossPosition = boss.transform.position.x;
             int lastSmaller = LastElementSmallerThanPosition(xBossPosition);
-            Debug.Log(lastSmaller);
+
             if (lastSmaller > m_bossPositionIndex)
             {
                 DestroyElementsFromTo(m_bossPositionIndex + 1, lastSmaller);
