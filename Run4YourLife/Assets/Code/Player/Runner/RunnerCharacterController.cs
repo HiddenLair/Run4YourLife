@@ -16,7 +16,7 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(InputController))]
     [RequireComponent(typeof(BumpController))]
-    public class RunnerCharacterController : MonoBehaviour, IDeactivateByInvisible
+    public class RunnerCharacterController : MonoBehaviour
     {
         #region InspectorVariables
 
@@ -173,14 +173,6 @@ namespace Run4YourLife.Player
         {
             StopAllCoroutines();
             m_runnerControlScheme.Active = false;
-        }
-
-        public void Deactivate()
-        {
-            if (m_checkOutOfScreen)
-            {
-                GetComponent<RunnerController>().AbsoluteKill();
-            }
         }
 
         private IEnumerator CheckCoyoteGroundedCoroutine()
