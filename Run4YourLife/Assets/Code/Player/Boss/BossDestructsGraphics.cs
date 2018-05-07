@@ -23,11 +23,13 @@ namespace Run4YourLife.Interactables
 
         public override void OnBossDestroy()
         {
+            Debug.Log(gameObject.name + gameObject.activeInHierarchy + gameObject.activeSelf);
             foreach (Renderer renderer in m_renderer)
             {
                 MakeTransparent(renderer.material);
-                StartCoroutine(AlphaAnimation(m_alphaAnimationLenght, renderer.material));
             }
+
+            StartCoroutine(AlphaAnimation());
         }
 
         public override void OnRegenerate()
@@ -37,20 +39,25 @@ namespace Run4YourLife.Interactables
             {
                 m_renderer[i].material = m_sharedMaterials[i];
             }
+
             gameObject.SetActive(true);
         }
 
-        private IEnumerator AlphaAnimation(float trasitionLenght, Material mat)
-        {
-            float time = trasitionLenght;
-            Color color = mat.color;
-            while (time >= 0)
+        private IEnumerator AlphaAnimation()
+        {            
+            float endTime = Time.time + m_alphaAnimationLenght;
+            float startTime = Time.time;
+            while(Time.time < endTime)
             {
-                color.a = time / trasitionLenght;
-                mat.color = color;
+                foreach (Renderer renderer in m_renderer)
+                {
+                    Color color = renderer.material.color;
+                    color.a = Time.time - startTime / m_alphaAnimationLenght;
+                    renderer.material.color = color;
+                }   
                 yield return null;
-                time -= Time.deltaTime;
             }
+
             gameObject.SetActive(false);
         }
 

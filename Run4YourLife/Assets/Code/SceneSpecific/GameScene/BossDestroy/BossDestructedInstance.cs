@@ -9,7 +9,6 @@ namespace Run4YourLife.GameManagement
         private float m_distance;
 
         public float DestroyPosition { get { return transform.position.x + m_distance; } }
-        public float Distance { get { return m_distance; } }
 
         protected virtual void Start()
         {

@@ -20,11 +20,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4920631133129116}
   - component: {fileID: 65788425093327276}
-  - component: {fileID: 114017625724791862}
   - component: {fileID: 65935239500202876}
   - component: {fileID: 54708183884739172}
   - component: {fileID: 114925770227603946}
   - component: {fileID: 114267061123607138}
+  - component: {fileID: 114017625724791862}
   m_Layer: 10
   m_Name: MediumSmallPlatformUp
   m_TagString: Untagged
@@ -43,7 +43,6 @@ GameObject:
   - component: {fileID: 33121435767017424}
   - component: {fileID: 23232432769729602}
   - component: {fileID: 95731134763835320}
-  - component: {fileID: 114445968010666856}
   m_Layer: 10
   m_Name: R4YL_PROP_platform001
   m_TagString: Untagged
@@ -100,7 +99,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1027905170962860}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 129.8254, y: -1.1028214, z: -6.74}
+  m_LocalPosition: {x: 143.68411, y: 5.650549, z: -7.3696404}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4780474330606658}
@@ -215,6 +214,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_distance: 3
+  m_alphaAnimationLenght: 0.5
 --- !u!114 &114267061123607138
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -226,18 +227,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c0c5c604a1074d44a3b71c29d3a47fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114445968010666856
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1572649004847190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29e27016b2378fe448ccf0cce3eb0757, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toActivate: {fileID: 1027905170962860}
 --- !u!114 &114925770227603946
 MonoBehaviour:
   m_ObjectHideFlags: 1

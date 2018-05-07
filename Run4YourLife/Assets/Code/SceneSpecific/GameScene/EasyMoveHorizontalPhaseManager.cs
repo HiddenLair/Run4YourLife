@@ -44,14 +44,10 @@ namespace Run4YourLife.GameManagement
 
             boss.GetComponent<BossPathWalker>().m_position = 0;
 
-            List<GameObject> runners = GameplayPlayerManager.Instance.Runners;
-
-            foreach (GameObject g in runners)
+            foreach (GameObject runner in GameplayPlayerManager.Instance.Runners)
             {
-                RunnerCharacterController tempController = g.GetComponent<RunnerCharacterController>();
-                tempController.SetLimitScreenRight(true);
-                tempController.SetLimitScreenLeft(true);
-                tempController.SetCheckOutScreen(true);
+                RunnerCharacterController runnerCharacterController = runner.GetComponent<RunnerCharacterController>();
+                runnerCharacterController.CheckOutScreen = true;
             }
         }
 
@@ -62,14 +58,10 @@ namespace Run4YourLife.GameManagement
 
         void EndPhaseCommon()
         {
-            List<GameObject> runners = GameplayPlayerManager.Instance.Runners;
-
-            foreach (GameObject g in runners)
+            foreach (GameObject runner in GameplayPlayerManager.Instance.Runners)
             {
-                RunnerCharacterController tempController = g.GetComponent<RunnerCharacterController>();
-                tempController.SetLimitScreenRight(false);
-                tempController.SetLimitScreenLeft(false);
-                tempController.SetCheckOutScreen(false);
+                RunnerCharacterController runnerCharacterController = runner.GetComponent<RunnerCharacterController>();
+                runnerCharacterController.CheckOutScreen = false;
             }
         }
 

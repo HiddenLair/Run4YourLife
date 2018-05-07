@@ -74,11 +74,10 @@ namespace Run4YourLife.GameManagement
         {
             for (int i = 0; i < GameplayPlayerManager.Instance.Runners.Count; i++)
             {
-                GameplayPlayerManager.Instance.Runners[i].transform.position = phase2Spawns[i].position;
-                RunnerCharacterController tempController = GameplayPlayerManager.Instance.Runners[i].GetComponent<RunnerCharacterController>();
-                tempController.SetLimitScreenLeft(true);
-                tempController.SetLimitScreenRight(true);
-                tempController.SetCheckOutScreen(true);
+                GameObject runner = GameplayPlayerManager.Instance.Runners[i];
+                runner.transform.position = phase2Spawns[i].position;
+                RunnerCharacterController runnerCharacterController = runner.GetComponent<RunnerCharacterController>();
+                runnerCharacterController.CheckOutScreen = true;
             }
         }
 
@@ -91,14 +90,10 @@ namespace Run4YourLife.GameManagement
         {
             m_checkPointManager.gameObject.SetActive(false);
 
-            List<GameObject> runners = GameplayPlayerManager.Instance.Runners;
-
-            foreach (GameObject g in runners)
+            foreach (GameObject runner in GameplayPlayerManager.Instance.Runners)
             {
-                RunnerCharacterController tempController = g.GetComponent<RunnerCharacterController>();
-                tempController.SetLimitScreenRight(false);
-                tempController.SetLimitScreenLeft(false);
-                tempController.SetCheckOutScreen(false);
+                RunnerCharacterController runnerCharacterController = runner.GetComponent<RunnerCharacterController>();
+                runnerCharacterController.CheckOutScreen = false;
             }
         }
 

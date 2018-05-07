@@ -30,14 +30,10 @@ namespace Run4YourLife.GameManagement
             m_virtualCamera.Follow = cameraLookAtThis.transform;
             CameraManager.Instance.TransitionToCamera(m_virtualCamera);
 
-            List<GameObject> runners = GameplayPlayerManager.Instance.Runners;
-
-            foreach (GameObject g in runners)
+            foreach (GameObject runner in GameplayPlayerManager.Instance.Runners)
             {
-                RunnerCharacterController tempController = g.GetComponent<RunnerCharacterController>();
-                tempController.SetLimitScreenRight(true);
-                tempController.SetLimitScreenLeft(true);
-                tempController.SetCheckOutScreen(true);
+                RunnerCharacterController runnerCharacterController = runner.GetComponent<RunnerCharacterController>();
+                runnerCharacterController.CheckOutScreen = true;
             }
 
             Vector3 bossPos = bossRockToMove.transform.position;
@@ -64,14 +60,10 @@ namespace Run4YourLife.GameManagement
 
         private void EndPhaseCommon()
         {
-            List<GameObject> runners = GameplayPlayerManager.Instance.Runners;
-
-            foreach (GameObject g in runners)
+            foreach (GameObject runner in GameplayPlayerManager.Instance.Runners)
             {
-                RunnerCharacterController tempController = g.GetComponent<RunnerCharacterController>();
-                tempController.SetLimitScreenRight(false);
-                tempController.SetLimitScreenLeft(false);
-                tempController.SetCheckOutScreen(false);
+                RunnerCharacterController runnerCharacterController = runner.GetComponent<RunnerCharacterController>();
+                runnerCharacterController.CheckOutScreen = false;
             }
         }
 

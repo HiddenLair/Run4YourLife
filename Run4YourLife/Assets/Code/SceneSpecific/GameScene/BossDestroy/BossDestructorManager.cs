@@ -1,4 +1,5 @@
 ﻿using Run4YourLife.Utils;
+using System;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -10,7 +11,8 @@ namespace Run4YourLife.GameManagement
         private List<BossDestructedInstance> m_staticElementsList = new List<BossDestructedInstance>();
 
         private BossDestructedInstance[] m_staticElements;
-        private int bossPositionIndex;
+
+        private int m_bossPositionIndex;
 
         public void Add(BossDestructedInstance bossDestructedInstance)
         {
@@ -30,28 +32,34 @@ namespace Run4YourLife.GameManagement
 
         private void Update()
         {
-            if(GameplayPlayerManager.Instance.Boss)
+            GameObject boss = GameplayPlayerManager.Instance.Boss;
+            if(boss != null)
             {
-                float xBossPosition = GameplayPlayerManager.Instance.Boss.transform.position.x;
-                int desiredIndex = EvaluateIndexForBossPosition(xBossPosition);
-
-                if (desiredIndex < bossPositionIndex)
-                {
-                    ResetElementsFromTo(desiredIndex+1, bossPositionIndex);
-                }
-                else if (desiredIndex != bossPositionIndex)
-                {
-                    DestroyElementsFromTo(bossPositionIndex, desiredIndex);
-                }
-                bossPositionIndex = desiredIndex;
+                DestroyAndRegenerateStaticElements(boss);
             }
+        }
+
+        private void DestroyAndRegenerateStaticElements(GameObject boss)
+        {
+            float xBossPosition = boss.transform.position.x;
+            int desiredIndex = EvaluateIndexForBossPosition(xBossPosition);
+            Debug.Log(desiredIndex);
+            if (desiredIndex < m_bossPositionIndex)
+            {
+                ResetElementsFromTo(desiredIndex, m_bossPositionIndex);
+            }
+            else if (desiredIndex > m_bossPositionIndex)
+            {
+                DestroyElementsFromTo(m_bossPositionIndex, desiredIndex);
+            }
+            m_bossPositionIndex = desiredIndex;
         }
 
         private int EvaluateIndexForBossPosition(float xBossPosition)
         {
             //TODO: Optimize me
 
-            if(xBossPosition < m_staticElements[0].DestroyPosition)
+            /*if(xBossPosition < m_staticElements[0].DestroyPosition)
             {
                 return 0;
             }
@@ -64,7 +72,23 @@ namespace Run4YourLife.GameManagement
                 }
             }
 
-            return m_staticElements.Length - 1;
+            return m_staticElements.Length - 1;*/
+
+            if(xBossPosition > m_staticElements[m_bossPositionIndex].DestroyPosition)
+            {
+                while(m_bossPositionIndex < m_staticElements.Length && xBossPosition >= m_staticElements[m_bossPositionIndex].DestroyPosition)
+                {
+                    m_bossPositionIndex++;
+                }
+            } else 
+            {
+                while(m_bossPositionIndex > 0 && xBossPosition < m_staticElements[m_bossPositionIndex-1].DestroyPosition)
+                {
+                    m_bossPositionIndex--;
+                }
+            }
+
+            return m_bossPositionIndex;
         }
 
         private void DestroyElementsFromTo(int fromIndex, float toIndex)

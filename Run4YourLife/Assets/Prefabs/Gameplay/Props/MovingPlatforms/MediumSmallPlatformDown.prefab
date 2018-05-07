@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 33178494938242900}
   - component: {fileID: 23710541920265580}
   - component: {fileID: 95728341591519146}
-  - component: {fileID: 114856481663584480}
   m_Layer: 10
   m_Name: R4YL_PROP_platform001
   m_TagString: Untagged
@@ -39,11 +38,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4552059027809056}
   - component: {fileID: 65913822086413484}
-  - component: {fileID: 114883145402883560}
   - component: {fileID: 65496131656712720}
   - component: {fileID: 54793657088510040}
   - component: {fileID: 114593158478326318}
   - component: {fileID: 114200801410131434}
+  - component: {fileID: 114883145402883560}
   m_Layer: 10
   m_Name: MediumSmallPlatformDown
   m_TagString: Untagged
@@ -86,7 +85,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1834242061234096}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 129.8254, y: -1.1028214, z: -6.74}
+  m_LocalPosition: {x: 143.04489, y: 5.4518614, z: -7.5118694}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4580352046769022}
@@ -227,18 +226,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_velocity: {x: 0, y: -2, z: 0}
---- !u!114 &114856481663584480
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1786023902350358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29e27016b2378fe448ccf0cce3eb0757, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toActivate: {fileID: 1834242061234096}
 --- !u!114 &114883145402883560
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -250,3 +237,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_distance: 3
+  m_alphaAnimationLenght: 0.5

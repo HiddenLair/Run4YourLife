@@ -96,8 +96,6 @@ namespace Run4YourLife.Player
         private float m_gravity;
         private float m_horizontalDrag;
 
-        private bool m_limitRight;
-        private bool m_limitLeft;
         private bool m_checkOutOfScreen;
 
         private float m_idleTimer;
@@ -116,6 +114,10 @@ namespace Run4YourLife.Player
         }
 
         public Vector3 ExternalVelocity { get; set; }
+
+        public bool IsDashing { get { return m_isDashing; } }
+
+        public bool CheckOutScreen { get { return m_checkOutOfScreen; } set { m_checkOutOfScreen = value; } }
         #endregion
 
         void Awake()
@@ -313,13 +315,9 @@ namespace Run4YourLife.Player
         private void MoveCharacterContoller(Vector3 movement)
         {
             m_characterController.Move(movement);
-            if (m_limitRight)
+            if (m_checkOutOfScreen)
             {
-                TrimPlayerPositionInsideCameraViewRight();
-            }
-            if (m_limitLeft)
-            {
-                TrimPlayerPositionInsideCameraViewLeft();
+                TrimPlayerPositionHorizontalInsideCameraView();
             }
 
             m_animator.SetFloat("xSpeed", Mathf.Abs(movement.x));
@@ -327,26 +325,13 @@ namespace Run4YourLife.Player
             UpdateIdleTimer(movement);
         }
 
-        private void TrimPlayerPositionInsideCameraViewRight()
-        {
-            float xScreenRight = m_mainCamera.ScreenToWorldPoint(new Vector3(m_mainCamera.pixelWidth, 0, Math.Abs(m_mainCamera.transform.position.z - transform.position.z))).x;
-            if (transform.position.x > xScreenRight)
-            {
-                Vector3 trimmedPosition = transform.position;
-                trimmedPosition.x = xScreenRight;
-                transform.position = trimmedPosition;
-            }
-        }
-
-        private void TrimPlayerPositionInsideCameraViewLeft()
+        private void TrimPlayerPositionHorizontalInsideCameraView()
         {
             float xScreenLeft = m_mainCamera.ScreenToWorldPoint(new Vector3(0, 0, Math.Abs(m_mainCamera.transform.position.z - transform.position.z))).x;
-            if (transform.position.x < xScreenLeft)
-            {
-                Vector3 trimmedPosition = transform.position;
-                trimmedPosition.x = xScreenLeft;
-                transform.position = trimmedPosition;
-            }
+            float xScreenRight = m_mainCamera.ScreenToWorldPoint(new Vector3(m_mainCamera.pixelWidth, 0, Math.Abs(m_mainCamera.transform.position.z - transform.position.z))).x;
+            Vector3 trimmedPosition = transform.position;
+            trimmedPosition.x = Mathf.Clamp(trimmedPosition.x, xScreenLeft, xScreenRight);
+            transform.position = trimmedPosition;
         }
 
         private void LookAtMovingSide()
@@ -525,34 +510,6 @@ namespace Run4YourLife.Player
 
             m_horizontalDrag = m_baseHorizontalDrag;
             m_isBeingImpulsed = false;
-        }
-
-        #endregion
-
-        #region Getters
-
-        public bool IsDashing()
-        {
-            return m_isDashing;
-        }
-
-        #endregion
-
-        #region Setters
-
-        public void SetLimitScreenRight(bool value)
-        {
-            m_limitRight = value;
-        }
-
-        public void SetLimitScreenLeft(bool value)
-        {
-            m_limitLeft = value;
-        }
-
-        public void SetCheckOutScreen(bool value)
-        {
-            m_checkOutOfScreen = value;
         }
 
         #endregion
