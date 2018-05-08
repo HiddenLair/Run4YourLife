@@ -55,7 +55,7 @@ namespace Run4YourLife.Input
             m_inputDevice = inputDevice;
             foreach (Action action in m_actions)
             {
-                action.InputSource.inputDevice = inputDevice;
+                action.InputSource.InputDevice = inputDevice;
             }
         }
 

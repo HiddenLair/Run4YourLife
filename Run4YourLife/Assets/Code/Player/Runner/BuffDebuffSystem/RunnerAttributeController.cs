@@ -10,6 +10,19 @@ public enum RunnerAttribute
     BounceHeight
 }
 
+public struct RunnerAttributeEqualityComparer : IEqualityComparer<RunnerAttribute>
+{
+    public bool Equals(RunnerAttribute x, RunnerAttribute y)
+    {
+        return x == y;
+    }
+
+    public int GetHashCode(RunnerAttribute obj)
+    {
+        return (int)obj;
+    }
+}
+
 public enum AttributeModifierType
 {
     Override,
@@ -29,9 +42,8 @@ public class RunnerAttributeController : MonoBehaviour {
     [SerializeField]
     private float m_baseBounceHeight;
 
-    protected Dictionary<RunnerAttribute, float> m_baseAttributes = new Dictionary<RunnerAttribute, float>();
-    private Dictionary<RunnerAttribute, float> m_attributes = new Dictionary<RunnerAttribute, float>();
-
+    protected Dictionary<RunnerAttribute, float> m_baseAttributes = new Dictionary<RunnerAttribute, float>(new RunnerAttributeEqualityComparer());
+    private Dictionary<RunnerAttribute, float> m_attributes = new Dictionary<RunnerAttribute, float>(new RunnerAttributeEqualityComparer());
     private StatusEffectController m_statusEffectController;
 
     private void Awake()
@@ -61,7 +73,11 @@ public class RunnerAttributeController : MonoBehaviour {
 
     public void RecalculateAttributes()
     {
-        m_attributes = new Dictionary<RunnerAttribute, float>(m_baseAttributes);
+        m_attributes.Clear();
+        foreach(var atribute in m_baseAttributes)
+        {
+            m_attributes.Add(atribute.Key, atribute.Value);
+        }
 
         List<StatusEffect> statusEffects = m_statusEffectController.Get(StatusEffectType.Attribute);
         foreach(StatusEffect statusEffect in statusEffects)

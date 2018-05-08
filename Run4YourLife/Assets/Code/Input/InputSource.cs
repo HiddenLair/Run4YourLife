@@ -58,54 +58,79 @@
 
     public class InputSource
     {
-        public InputSourceType inputSourceType;
-        public string input;
-        public InputDevice inputDevice;
+        private InputSourceType m_inputSourceType;
+        private InputDevice m_inputDevice;
+        private string m_input;
+        private string m_cachedInputString;
 
+        public InputSourceType InputSourceType { get { return m_inputSourceType; } }
+        public InputDevice InputDevice { 
+            
+            get { return m_inputDevice; } 
+            set { 
+                m_inputDevice = value;
+                m_cachedInputString = m_inputDevice.InputString(m_input);
+            } 
+        }
+        public string Input { 
+            
+            get { return m_input; } 
+            set { 
+                m_input = value;
+                m_cachedInputString = m_inputDevice.InputString(m_input);
+            } 
+        }
 
-        public InputSource(Axis axis) : this(InputSourceType.Axis, axis.ID, null) { }
-        public InputSource(Button button) : this(InputSourceType.Button, button.ID, null) { }
-        public InputSource(Trigger trigger) : this(InputSourceType.Trigger, trigger.ID, null) { }
+        public InputSource(Axis axis) : this(InputSourceType.Axis, axis.ID) { }
+        public InputSource(Button button) : this(InputSourceType.Button, button.ID) { }
+        public InputSource(Trigger trigger) : this(InputSourceType.Trigger, trigger.ID) { }
 
         public InputSource(Axis axis, InputDevice inputDevice) : this(InputSourceType.Axis, axis.ID, inputDevice) { }
         public InputSource(Button button, InputDevice inputDevice) : this(InputSourceType.Button, button.ID, inputDevice) { }
         public InputSource(Trigger trigger, InputDevice inputDevice) : this(InputSourceType.Trigger, trigger.ID, inputDevice) { }
 
+        private InputSource(InputSourceType inputSourceType, string input)
+        {
+            this.m_inputSourceType = inputSourceType;
+            this.m_input = input;
+        }
+
         private InputSource(InputSourceType inputSourceType, string input, InputDevice inputDevice)
         {
-            this.inputSourceType = inputSourceType;
-            this.input = input;
-            this.inputDevice = inputDevice;
+            this.m_inputSourceType = inputSourceType;
+            this.m_inputDevice = inputDevice;            
+            this.m_input = input;
+            m_cachedInputString = inputDevice.InputString(input);
         }
 
         /// <summary>
-        /// Do not use unless you know how to use this
+        /// !!! ALERT !!!
+        /// Do NOT use unless you know how to use this!!
         /// </summary>
         /// <param name="inputDevice"></param>
         public InputSource(InputDevice inputDevice)
         {
-            this.input = "";
-            this.inputDevice = inputDevice;
+            this.m_inputDevice = inputDevice;
         }
 
         public bool ButtonDown()
         {
-            return UnityEngine.Input.GetButtonDown(inputDevice.InputString(input));
+            return UnityEngine.Input.GetButtonDown(m_cachedInputString);
         }
 
         public bool Button()
         {
-            return UnityEngine.Input.GetButton(inputDevice.InputString(input));
+            return UnityEngine.Input.GetButton(m_cachedInputString);
         }
 
         public bool ButtonUp()
         {
-            return UnityEngine.Input.GetButtonUp(inputDevice.InputString(input));
+            return UnityEngine.Input.GetButtonUp(m_cachedInputString);
         }
 
         public float Value()
         {
-            return UnityEngine.Input.GetAxis(inputDevice.InputString(input));
+            return UnityEngine.Input.GetAxis(m_cachedInputString);
         }
     }
 

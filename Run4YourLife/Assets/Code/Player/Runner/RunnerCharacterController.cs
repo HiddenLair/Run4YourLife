@@ -82,7 +82,6 @@ namespace Run4YourLife.Player
 
         private WaitForSeconds m_waitForSecondsCoyoteGroundedTime;
         private WaitForSeconds m_waitForSecondsDashCooldown;
-        private WaitUntil m_waitUntilCharacterControllerIsGrounded;
 
         private bool m_isGroundedOrCoyoteGrounded;
         private bool m_isJumping;
@@ -145,7 +144,6 @@ namespace Run4YourLife.Player
 
             m_waitForSecondsCoyoteGroundedTime = new WaitForSeconds(m_coyoteGroundedTime);
             m_waitForSecondsDashCooldown = new WaitForSeconds(m_dashCooldown);
-            m_waitUntilCharacterControllerIsGrounded = new WaitUntil(() => m_characterController.isGrounded);
         }
 
         private void OnEnable()
@@ -205,7 +203,6 @@ namespace Run4YourLife.Player
             {
                 GravityAndDrag();
 
-
                 if (m_isGroundedOrCoyoteGrounded && m_inputController.Started(m_runnerControlScheme.Jump))
                 {
                     Jump();
@@ -218,8 +215,8 @@ namespace Run4YourLife.Player
 
                 Move();
             }
-            m_animator.SetFloat("ySpeed",m_velocity.y);
-            m_animator.SetBool("ground", m_characterController.isGrounded);
+            m_animator.SetFloat(RunnerAnimation.ySpeed,m_velocity.y);
+            m_animator.SetBool(RunnerAnimation.ground, m_characterController.isGrounded);
         }
 
         private void Dash()
@@ -231,7 +228,7 @@ namespace Run4YourLife.Player
         {
             m_isDashing = true;
             m_isReadyToDash = false;
-            m_animator.SetTrigger("dash");
+            m_animator.SetTrigger(RunnerAnimation.dash);
 
             m_dashTrail.gameObject.SetActive(true);
 
@@ -251,7 +248,6 @@ namespace Run4YourLife.Player
             m_dashTrail.gameObject.SetActive(false);
 
             m_isDashing = false;
-            yield return m_waitUntilCharacterControllerIsGrounded;
             yield return m_waitForSecondsDashCooldown;
             m_isReadyToDash = true;
         }
@@ -322,7 +318,7 @@ namespace Run4YourLife.Player
                 TrimPlayerPositionHorizontalInsideCameraView();
             }
 
-            m_animator.SetFloat("xSpeed", Mathf.Abs(movement.x));
+            m_animator.SetFloat(RunnerAnimation.xSpeed, Mathf.Abs(movement.x));
             LookAtMovingSide();
             UpdateIdleTimer(movement);
         }
@@ -350,7 +346,7 @@ namespace Run4YourLife.Player
         {
             bool isMoving = totalMovement != Vector3.zero;
             m_idleTimer = isMoving ? m_idleTimer + Time.deltaTime : 0.0f;
-            m_animator.SetFloat("timeToIdle", m_idleTimer);
+            m_animator.SetFloat(RunnerAnimation.timeToIdle, m_idleTimer);
         }
 
         #region Jump
@@ -376,7 +372,7 @@ namespace Run4YourLife.Player
             m_isJumping = true;
 
             m_audioSource.PlayOneShot(jumpClip);
-            m_animator.SetTrigger("jump");
+            m_animator.SetTrigger(RunnerAnimation.jump);
 
             //set vertical velocity to the velocity needed to reach maxJumpHeight
             m_velocity.y = HeightToVelocity(m_runnerAttributeController.GetAttribute(RunnerAttribute.JumpHeight));
@@ -490,8 +486,8 @@ namespace Run4YourLife.Player
             m_isBeingImpulsed = true;
             m_horizontalDrag = m_impulseHorizontalDrag;
 
-            m_animator.SetTrigger("push");
-            m_animator.SetFloat("pushForce", force.x);
+            m_animator.SetTrigger(RunnerAnimation.push);
+            m_animator.SetFloat(RunnerAnimation.pushForce, force.x);
 
             AddVelocity(force);
 

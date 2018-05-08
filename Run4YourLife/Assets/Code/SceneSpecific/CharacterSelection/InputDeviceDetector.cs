@@ -13,7 +13,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             InputSource joinGameInput = new InputSource(Button.A);
             foreach (InputDevice inputDevice in InputDeviceManager.Instance.InputDevices) 
             {
-                joinGameInput.inputDevice = inputDevice;
+                joinGameInput.InputDevice = inputDevice;
                 if (joinGameInput.ButtonDown() && !IsAssignedToAPlayer(inputDevice))
                 {
                     OncontrollerDetected.Invoke(inputDevice);

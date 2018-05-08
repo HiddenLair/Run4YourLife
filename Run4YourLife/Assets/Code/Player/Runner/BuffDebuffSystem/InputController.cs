@@ -22,7 +22,7 @@ public class InputController : MonoBehaviour {
 
     public bool Started(Action action)
     {
-        Debug.Assert(action.InputSource.inputSourceType == InputSourceType.Button, action.Name +": Started called with input source type {" +action.InputSource.inputSourceType+"}");
+        Debug.Assert(action.InputSource.InputSourceType == InputSourceType.Button);
         bool started = action.Started();
 
         foreach(InputStatusEffect inputStatusEffect in m_inputStatusEffects[action])
@@ -45,7 +45,7 @@ public class InputController : MonoBehaviour {
 
     public float Value(Action action)
     {
-        Debug.Assert(action.InputSource.inputSourceType == InputSourceType.Axis || action.InputSource.inputSourceType == InputSourceType.Trigger);
+        Debug.Assert(action.InputSource.InputSourceType == InputSourceType.Axis || action.InputSource.InputSourceType == InputSourceType.Trigger);
         float value = action.Value();
 
         foreach (InputStatusEffect inputStatusEffect in m_inputStatusEffects[action])

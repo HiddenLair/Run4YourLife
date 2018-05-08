@@ -41,7 +41,7 @@ namespace Run4YourLife.Player
             return (position - m_path.MinUnit(positionUnits)) / m_path.MaxUnit(positionUnits);
         }
 
-        public CinemachineScreenTransposerData EvaluateScreenTransposerDataAtUnit(float position, CinemachinePathBase.PositionUnits positionUnits)
+        public void EvaluateScreenTransposerDataAtUnit(float position, CinemachinePathBase.PositionUnits positionUnits, ref CinemachineScreenTransposerData cinemachineScreenTransposerData)
         {
             float pathUnitsPosition = position;
             if (positionUnits == CinemachinePathBase.PositionUnits.Distance)
@@ -54,18 +54,15 @@ namespace Run4YourLife.Player
             CinemachineScreenTransposerData previous = m_cinemachineScreenTransposerDatas[index];
             CinemachineScreenTransposerData next = m_cinemachineScreenTransposerDatas[Mathf.Min(index + 1, m_cinemachineScreenTransposerDatas.Length - 1)];
 
-            return BlendCinemachineScreenTransposerData(decimalPart, previous, next); ;
+            BlendCinemachineScreenTransposerData(decimalPart, previous, next, ref cinemachineScreenTransposerData); ;
         }
 
-        private CinemachineScreenTransposerData BlendCinemachineScreenTransposerData(float t, CinemachineScreenTransposerData previous, CinemachineScreenTransposerData next)
+        private void BlendCinemachineScreenTransposerData(float t, CinemachineScreenTransposerData previous, CinemachineScreenTransposerData next, ref CinemachineScreenTransposerData cinemachineScreenTransposerData)
         {
-            return new CinemachineScreenTransposerData()
-            {
-                m_offsetFromTarget = Vector3.Lerp(previous.m_offsetFromTarget, next.m_offsetFromTarget, t),
-                m_screenX = Mathf.Lerp(previous.m_screenX, next.m_screenX, t),
-                m_screenY = Mathf.Lerp(previous.m_screenY, next.m_screenY, t),
-                m_verticalHeight = Mathf.Lerp(previous.m_verticalHeight, next.m_verticalHeight, t)
-            };
+            cinemachineScreenTransposerData.m_offsetFromTarget = Vector3.Lerp(previous.m_offsetFromTarget, next.m_offsetFromTarget, t);
+            cinemachineScreenTransposerData.m_screenX = Mathf.Lerp(previous.m_screenX, next.m_screenX, t);
+            cinemachineScreenTransposerData.m_screenY = Mathf.Lerp(previous.m_screenY, next.m_screenY, t);
+            cinemachineScreenTransposerData.m_verticalHeight = Mathf.Lerp(previous.m_verticalHeight, next.m_verticalHeight, t);
         }
 
         private void OnDrawGizmosSelected()

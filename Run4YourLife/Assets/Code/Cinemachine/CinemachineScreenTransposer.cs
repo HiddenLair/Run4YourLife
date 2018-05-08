@@ -3,6 +3,7 @@ using UnityEngine;
 
 using Cinemachine;
 using Run4YourLife.GameManagement;
+using Run4YourLife.Player;
 
 namespace Run4YourLife.Cinemachine
 {
@@ -26,8 +27,8 @@ namespace Run4YourLife.Cinemachine
 
     public class CinemachineScreenTransposer : CinemachineComponentBase
     {
-        [SerializeField]
         public CinemachineScreenTransposerData m_cinemachineScreenTransposerData;
+        private Transform m_previousTarget; 
 
         public override bool IsValid { get { return enabled && FollowTarget != null; } }
 
@@ -37,7 +38,17 @@ namespace Run4YourLife.Cinemachine
         {
             if (IsValid)
             {
+                UpdateCinemachineScreenTransposerData();
                 curState.RawPosition = CalculatePosition();
+            }
+            m_previousTarget = FollowTarget;
+        }
+
+        private void UpdateCinemachineScreenTransposerData()
+        {
+            if (FollowTarget != null && m_previousTarget != FollowTarget)
+            {
+                m_cinemachineScreenTransposerData = FollowTarget.GetComponent<BossPathWalker>().CinemachineScreenTransposerData;
             }
         }
 

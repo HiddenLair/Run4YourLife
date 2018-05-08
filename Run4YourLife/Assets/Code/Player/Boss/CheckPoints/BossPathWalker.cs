@@ -28,8 +28,10 @@ namespace Run4YourLife.Player
         [Tooltip("The position along the path at which the cart will be placed.  This can be animated directly or, if the velocity is non-zero, will be updated automatically.  The value is interpreted according to the Position Units setting.")]
         public float m_position;
 
-        public CinemachineScreenTransposerData CinemachineScreenTransposerData { get; private set; }
+        private CinemachineScreenTransposerData m_cinemachineScreenTransposerData = new CinemachineScreenTransposerData();
 
+        public CinemachineScreenTransposerData CinemachineScreenTransposerData { get { return m_cinemachineScreenTransposerData; } }
+        
         public float Progress
         {
             get
@@ -58,12 +60,12 @@ namespace Run4YourLife.Player
             {
                 m_position = m_path.NormalizeUnit(distanceAlongPath, m_positionUnits);
                 transform.position = m_path.EvaluatePositionAtUnit(m_position, m_positionUnits);
+                m_path.EvaluateScreenTransposerDataAtUnit(m_position, m_positionUnits, ref m_cinemachineScreenTransposerData); 
 
-                if(CameraManager.Instance.ActiveCinemachineCamera != null)
+                /*if(CameraManager.Instance.ActiveCinemachineCamera != null)
                 {
-                    CinemachineScreenTransposer cinemachineScreenTransposer = CameraManager.Instance.ActiveCinemachineCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineScreenTransposer>();
-                    cinemachineScreenTransposer.m_cinemachineScreenTransposerData = m_path.EvaluateScreenTransposerDataAtUnit(m_position, m_positionUnits);
-                }
+                    m_path.EvaluateScreenTransposerDataAtUnit(m_position, m_positionUnits, ref cinemachineScreenTransposer.m_cinemachineScreenTransposerData); 
+                }*/
             }
         }
     }

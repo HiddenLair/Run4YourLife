@@ -1,4 +1,5 @@
-﻿using UnityEngine.Events;
+﻿using System.Text;
+using UnityEngine.Events;
 
 namespace Run4YourLife.Input
 {
@@ -9,29 +10,30 @@ namespace Run4YourLife.Input
 
     public class InputDevice
     {
-        private uint id;
-        
+        private StringBuilder m_stringBuilder = new StringBuilder();
+
+        private uint m_uid;
+        private string m_sid;
         public uint ID
         {
             get
             {
-                return id;
-            }
-
-            private set
-            {
-                id = value;
+                return m_uid;
             }
         }
 
         public InputDevice(uint id)
         {
-            this.id = id;
+            m_uid = id;
+            m_sid = id.ToString();
         }
 
         public string InputString(string input)
         {
-            return id + input;
+            m_stringBuilder.Length = 0;
+            m_stringBuilder.Append(m_sid);
+            m_stringBuilder.Append(input);
+            return m_stringBuilder.ToString();
         }
 
         public bool HasInput()
@@ -40,7 +42,7 @@ namespace Run4YourLife.Input
 
             foreach (Trigger trigger in Trigger.TRIGGERS)
             {
-                inputSource.input = trigger.ID;
+                inputSource.Input = trigger.ID;
                 if (inputSource.Value() != 0)
                 {
                     return true;
@@ -49,7 +51,7 @@ namespace Run4YourLife.Input
 
             foreach (Axis axis in Axis.AXES)
             {
-                inputSource.input = axis.ID;
+                inputSource.Input = axis.ID;
                 if (inputSource.Value() != 0)
                 {
                     return true;
@@ -58,7 +60,7 @@ namespace Run4YourLife.Input
 
             foreach (Button button in Button.BUTTONS)
             {
-                inputSource.input = button.ID;
+                inputSource.Input = button.ID;
                 if (inputSource.ButtonDown() || inputSource.Button() || inputSource.ButtonUp())
                 {
                     return true;
