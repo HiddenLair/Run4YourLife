@@ -14,6 +14,12 @@ public class FallingPlatformController : MonoBehaviour
     public float m_delay;
 
     private bool activatedFlag = false;
+    private Vector3 m_startingPosition;
+
+    private void OnEnable()
+    {
+        m_startingPosition = m_rigidbody.transform.localPosition;
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -37,5 +43,15 @@ public class FallingPlatformController : MonoBehaviour
         m_rigidbody.isKinematic = false;
         m_FallingCollider.SetActive(true);
         activatedFlag = true;
+    }
+
+    public void Regenerate()
+    {
+        m_rigidbody.transform.localPosition = m_startingPosition;
+
+        m_rigidbody.useGravity = false;
+        m_rigidbody.isKinematic = true;
+        m_FallingCollider.SetActive(false);
+        activatedFlag = false;
     }
 }

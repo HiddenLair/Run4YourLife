@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 using Run4YourLife.GameManagement;
+using UnityEngine.Events;
 
 namespace Run4YourLife.Interactables
 {
@@ -11,6 +12,9 @@ namespace Run4YourLife.Interactables
 
         [SerializeField]
         private float m_alphaAnimationLenght = 0.5f;
+
+        [SerializeField]
+        private UnityEvent m_onRegenerated;
 
         private Renderer[] m_renderer;
         private Material[] m_sharedMaterials;
@@ -38,6 +42,8 @@ namespace Run4YourLife.Interactables
             {
                 m_renderer[i].material = m_sharedMaterials[i];
             }
+
+            m_onRegenerated.Invoke();
 
             gameObject.SetActive(true);
         }
