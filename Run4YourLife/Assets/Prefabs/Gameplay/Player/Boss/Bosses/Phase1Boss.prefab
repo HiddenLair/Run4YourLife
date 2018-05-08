@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 65919466109941810}
   - component: {fileID: 114102374727877472}
   - component: {fileID: 114409557748637370}
+  - component: {fileID: 114953066611022898}
   m_Layer: 11
   m_Name: Phase1Boss
   m_TagString: Boss
@@ -2497,8 +2498,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ddc099e4c91e5946b11c1b1741d90a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crossHair: {fileID: 1262969282835440}
-  crossHairSpeed: 10
   screenLeftLimitPercentaje: 0.3
   screenBottomLimitPercentaje: 0.3
   phase: 0
@@ -2608,12 +2607,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   head: {fileID: 4069658453212358}
   shootInitZone: {fileID: 4525444668835978}
-  crossHair: {fileID: 4938653771746490}
   triggerSensivility: 0.2
   reloadTimeS: 1.5
   sfx: {fileID: 8300000, guid: c3833cf9a9803f145bb95bbf5defe584, type: 3}
   instance: {fileID: 1291411062935820, guid: e8ac79f5b65bc4b47979ed4ca39d2027, type: 2}
   bulletSpeed: 600
+--- !u!114 &114953066611022898
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1034222424642850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ae855258506e3b44bc9e3c2c4b23169, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crossHair: {fileID: 1262969282835440}
+  crossHairSpeed: 10
 --- !u!137 &137008490253348218
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

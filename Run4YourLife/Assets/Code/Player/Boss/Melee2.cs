@@ -6,6 +6,7 @@ namespace Run4YourLife.Player
 {
     [RequireComponent(typeof(AudioSource))]
     [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(CrossHairControl))]
     public class Melee2 : Melee
     {
         #region Editor variables
@@ -15,9 +16,6 @@ namespace Run4YourLife.Player
 
         [SerializeField]
         private float instanceSpeed;
-
-        [SerializeField]
-        private Transform crossHairPos;
 
         [SerializeField]
         private GameObject handL;
@@ -33,6 +31,7 @@ namespace Run4YourLife.Player
         private Quaternion rotation;
         private bool right = false;
 
+        private CrossHairControl crossHairControl;
         private AudioSource m_audioSource;
         private Animator m_animator;
         private Camera m_mainCamera;
@@ -43,6 +42,7 @@ namespace Run4YourLife.Player
             m_animator = GetComponent<Animator>();
             m_audioSource = GetComponent<AudioSource>();
             m_mainCamera = CameraManager.Instance.MainCamera;
+            crossHairControl = GetComponent<CrossHairControl>();
             Debug.Assert(m_mainCamera != null);
         }
 
@@ -51,7 +51,7 @@ namespace Run4YourLife.Player
 
             m_audioSource.PlayOneShot(sfx);
 
-            trapPos = crossHairPos.position;
+            trapPos = crossHairControl.GetPosition();
             Vector3 screenPos = m_mainCamera.WorldToScreenPoint(trapPos);
 
             if(screenPos.x <= 0.5f * m_mainCamera.pixelWidth)

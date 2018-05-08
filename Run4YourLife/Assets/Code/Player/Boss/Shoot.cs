@@ -11,6 +11,7 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(BossControlScheme))]
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(AudioSource))]
+    [RequireComponent(typeof(CrossHairControl))]
     public abstract class Shoot : MonoBehaviour
     {
         #region Inspector
@@ -20,9 +21,6 @@ namespace Run4YourLife.Player
 
         [SerializeField]
         protected Transform shootInitZone;
-
-        [SerializeField]
-        protected Transform crossHair;
 
         [SerializeField]
         [Range(0, 1)]
@@ -37,12 +35,13 @@ namespace Run4YourLife.Player
         #endregion
 
         private float currentTimeS = 0;
-        private bool alreadyPressed = false;
+        private bool shootTrigger = false;
         protected Quaternion initialRotation;
 
         private Ready ready;
         private BossControlScheme controlScheme;
 
+        protected CrossHairControl crossHairControl;
         protected Animator animator;
         protected AudioSource audioSource;
 
@@ -54,6 +53,7 @@ namespace Run4YourLife.Player
             controlScheme = GetComponent<BossControlScheme>();
             animator = GetComponent<Animator>();
             audioSource = GetComponent<AudioSource>();
+            crossHairControl = GetComponent<CrossHairControl>();
             uiManager = GameObject.FindGameObjectWithTag(Tags.UI);
             Debug.Assert(uiManager != null, "UI manager gameobject not found");
 
@@ -78,7 +78,7 @@ namespace Run4YourLife.Player
 
         public virtual void RotateHead()
         {
-            head.LookAt(crossHair.position);
+            head.LookAt(crossHairControl.GetPosition());
             head.Rotate(0, -90, 0);
             head.rotation *= initialRotation;
         }
@@ -89,18 +89,20 @@ namespace Run4YourLife.Player
             {
                 if (controlScheme.Shoot.Value() > triggerSensivility)
                 {
-                    if (currentTimeS <= Time.time && !alreadyPressed)
+                    if (currentTimeS <= Time.time && !shootTrigger)
                     {
                         ShootByAnim();
                         currentTimeS = Time.time + reloadTimeS;
-                        alreadyPressed = true;
+                        shootTrigger = true;
+                        crossHairControl.BlockCrossHair();
 
                         ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.SHOOT, reloadTimeS));
                     }
                 }
                 else
                 {
-                    alreadyPressed = false;
+                    shootTrigger = false;
+                    crossHairControl.UnblockCrossHair();
                 }
             }
         }
@@ -109,7 +111,7 @@ namespace Run4YourLife.Player
 
         private void OnDrawGizmosSelected()
         {
-            Gizmos.DrawLine(head.position, crossHair.position);
+            Gizmos.DrawLine(head.position, crossHairControl.GetPosition());
         }
     }
 }

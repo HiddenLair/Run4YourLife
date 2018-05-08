@@ -10,6 +10,7 @@ namespace Run4YourLife.Player
 {
     [RequireComponent(typeof(Ready))]
     [RequireComponent(typeof(BossControlScheme))]
+    [RequireComponent(typeof(CrossHairControl))]
     public class TrapSystem : MonoBehaviour
     {
 
@@ -21,12 +22,6 @@ namespace Run4YourLife.Player
         #endregion
 
         #region Inspector
-
-        [SerializeField]
-        private GameObject crossHair;
-
-        [SerializeField]
-        private float crossHairSpeed;
 
         [SerializeField]
         [Range(0, 1)]
@@ -65,6 +60,7 @@ namespace Run4YourLife.Player
         BossControlScheme bossControlScheme;
         private Animator anim;
         private GameObject uiManager;
+        private CrossHairControl crossHairControl;
 
         private float timeToSpawnTrapsFromAnim = 0.2f;
 
@@ -86,6 +82,7 @@ namespace Run4YourLife.Player
             ready = GetComponent<Ready>();
             anim = GetComponent<Animator>();
             bossControlScheme = GetComponent<BossControlScheme>();
+            crossHairControl = GetComponent<CrossHairControl>();
             uiManager = GameObject.FindGameObjectWithTag(Tags.UI);
         }
 
@@ -94,7 +91,7 @@ namespace Run4YourLife.Player
         {
             Move();
 
-            if (ready.Get() && crossHair.GetComponent<CrossHair>().GetActive()) {
+            if (ready.Get() && crossHairControl.IsCrossHairActive()) {
                 CheckToSetElement();
             }
 
@@ -118,20 +115,20 @@ namespace Run4YourLife.Player
             float yInput = bossControlScheme.MoveTrapIndicatorVertical.Value();
             Vector3 input = new Vector3(xInput, yInput);
 
-            crossHair.transform.Translate(input * crossHairSpeed * Time.deltaTime);
+            crossHairControl.Translate(input);
             ClampPositionInsideScreen();
         }
 
         void ClampPositionInsideScreen()
         {
             Camera mainCamera = CameraManager.Instance.MainCamera;
-            Vector2 screenTopRight = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, Mathf.Abs(mainCamera.transform.position.z - crossHair.transform.position.z)));
-            Vector2 screenBottomLeft = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth * screenLeftLimitPercentaje, mainCamera.pixelHeight * screenBottomLimitPercentaje, Mathf.Abs(mainCamera.transform.position.z - crossHair.transform.position.z)));
+            Vector2 screenTopRight = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, Mathf.Abs(mainCamera.transform.position.z - crossHairControl.GetPosition().z)));//crossHair.transform.position.z)));
+            Vector2 screenBottomLeft = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth * screenLeftLimitPercentaje, mainCamera.pixelHeight * screenBottomLimitPercentaje, Mathf.Abs(mainCamera.transform.position.z - crossHairControl.GetPosition().z))); //crossHair.transform.position.z)));
 
-            Vector3 clampedPosition = crossHair.transform.position;
-            clampedPosition.x = Mathf.Clamp(crossHair.transform.position.x, screenBottomLeft.x, screenTopRight.x);
-            clampedPosition.y = Mathf.Clamp(crossHair.transform.position.y, screenBottomLeft.y, screenTopRight.y);
-            crossHair.transform.position = clampedPosition;
+            Vector3 clampedPosition = crossHairControl.GetPosition();
+            clampedPosition.x = Mathf.Clamp(crossHairControl.GetPosition().x, screenBottomLeft.x, screenTopRight.x);
+            clampedPosition.y = Mathf.Clamp(crossHairControl.GetPosition().y, screenBottomLeft.y, screenTopRight.y);
+            crossHairControl.ChangePosition(clampedPosition);
         }
 
         void CheckToSetElement()
@@ -185,7 +182,7 @@ namespace Run4YourLife.Player
 
         void SetElementCallback(GameObject g)
         {
-            Vector3 temp = crossHair.transform.position;
+            Vector3 temp = crossHairControl.GetPosition();
             Instantiate(g, temp, g.GetComponent<Transform>().rotation);
         }
     }
