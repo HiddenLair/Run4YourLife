@@ -4,7 +4,7 @@ using UnityEngine;
 
 using Run4YourLife.Player;
 
-namespace Run4YourLife.Input
+namespace Run4YourLife.InputManagement
 {
     public abstract class ControlScheme : MonoBehaviour, IPlayerHandleEvent
     {

@@ -1,7 +1,7 @@
 ﻿using Run4YourLife.GameManagement;
 using Run4YourLife.Player;
 
-namespace Run4YourLife.Input
+namespace Run4YourLife.InputManagement
 {
     public class RunnerControlScheme : PlayerControlScheme
     {

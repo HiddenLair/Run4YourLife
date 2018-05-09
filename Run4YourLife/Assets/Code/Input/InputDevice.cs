@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using UnityEngine.Events;
 
-namespace Run4YourLife.Input
+namespace Run4YourLife.InputManagement
 {
     [System.Serializable]
     public class InputDeviceEvent : UnityEvent<InputDevice>

@@ -1,6 +1,6 @@
 ﻿using UnityEngine.EventSystems;
 
-using Run4YourLife.Input;
+using Run4YourLife.InputManagement;
 
 namespace Run4YourLife.Player
 {
@@ -28,7 +28,7 @@ namespace Run4YourLife.Player
             CharacterType = CharacterType.Purple,
             ID = 1,
             IsBoss = false,
-            inputDevice = Run4YourLife.Input.InputDeviceManager.Instance.DefaultInputDevice
+            inputDevice = Run4YourLife.InputManagement.InputDeviceManager.Instance.DefaultInputDevice
         };
     }
 }

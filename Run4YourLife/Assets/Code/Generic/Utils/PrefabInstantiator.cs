@@ -56,7 +56,7 @@ public class PrefabInstantiator : MonoBehaviour {
         {
             yield return delayBetweenInstantiations;
             GameObject instance = m_gameObjectPool.Get(m_prefab);
-            instance.transform.localPosition = Vector3.zero;
+            instance.transform.position = transform.position;
             instance.transform.rotation = Quaternion.identity;
             instance.SetActive(true);
         }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using Run4YourLife.Input;
+using Run4YourLife.InputManagement;
 using System;
 using UnityEngine.EventSystems;
 using Run4YourLife.GameManagement;

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Run4YourLife.Input;
+using Run4YourLife.InputManagement;
 using UnityEngine.EventSystems;
 using Run4YourLife.UI;
 

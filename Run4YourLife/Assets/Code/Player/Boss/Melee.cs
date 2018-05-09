@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using Run4YourLife.UI;
-using Run4YourLife.Input;
+using Run4YourLife.InputManagement;
 using UnityEngine.EventSystems;
 
 namespace Run4YourLife.Player
