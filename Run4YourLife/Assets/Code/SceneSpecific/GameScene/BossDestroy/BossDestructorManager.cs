@@ -46,8 +46,8 @@ namespace Run4YourLife.GameManagement
             GameObject boss = GameplayPlayerManager.Instance.Boss;
             if(boss != null)
             {
-                DestroyAndRegenerateStaticElements(boss);
                 DestroyAndRegenerateDynamicElements(boss);
+                DestroyAndRegenerateStaticElements(boss);
             }
         }
 
