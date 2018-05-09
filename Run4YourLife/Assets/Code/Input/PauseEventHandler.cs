@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 using Run4YourLife.GameManagement;
 
-namespace Run4YourLife.Input
+namespace Run4YourLife.InputManagement
 {
     [RequireComponent(typeof(PlayerControlScheme))]
     public class PauseEventHandler : MonoBehaviour

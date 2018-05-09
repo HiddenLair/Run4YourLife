@@ -2,7 +2,7 @@
 
 using Run4YourLife.SceneManagement;
 using UnityEngine.EventSystems;
-using Run4YourLife.Input;
+using Run4YourLife.InputManagement;
 
 namespace Run4YourLife.SceneSpecific.OptionsMenu
 {

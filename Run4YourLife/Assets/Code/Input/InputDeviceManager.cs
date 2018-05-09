@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Run4YourLife.Input
+namespace Run4YourLife.InputManagement
 {
     public class InputDeviceManager : SingletonMonoBehaviour<InputDeviceManager>
     {

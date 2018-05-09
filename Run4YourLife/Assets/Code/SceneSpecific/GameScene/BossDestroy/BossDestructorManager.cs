@@ -12,11 +12,22 @@ namespace Run4YourLife.GameManagement
 
         private BossDestructedInstance[] m_staticElements;
 
+        private List<BossDestructedInstance> m_dynamicElements = new List<BossDestructedInstance>();
+
         private int m_bossPositionIndex;
 
-        public void Add(BossDestructedInstance bossDestructedInstance)
+        /// <summary>
+        /// Adds a static element. Must be called the first frame the game starts.
+        /// Unexpected behaviour otherwise
+        /// </summary>
+        public void AddStatic(BossDestructedInstance bossDestructedInstance)
         {
             m_staticElementsList.Add(bossDestructedInstance);
+        }
+
+        public void AddDynamic(BossDestructedInstance bossDestructedInstance)
+        {
+            m_dynamicElements.Add(bossDestructedInstance);
         }
 
         private void Start()
@@ -36,6 +47,29 @@ namespace Run4YourLife.GameManagement
             if(boss != null)
             {
                 DestroyAndRegenerateStaticElements(boss);
+                DestroyAndRegenerateDynamicElements(boss);
+            }
+        }
+
+        private void DestroyAndRegenerateDynamicElements(GameObject boss)
+        {
+            float xBossPosition = boss.transform.position.x;
+            foreach(BossDestructedInstance bossDestructedInstance in m_dynamicElements)
+            {
+                if(xBossPosition < bossDestructedInstance.DestroyPosition)
+                {
+                    if(bossDestructedInstance.IsDestructed)
+                    {
+                        bossDestructedInstance.OnRegenerate();
+                    }
+                }
+                else
+                {
+                    if(!bossDestructedInstance.IsDestructed)
+                    {
+                        bossDestructedInstance.OnBossDestroy();
+                    }
+                }
             }
         }
 

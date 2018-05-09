@@ -1,6 +1,6 @@
 ﻿using Run4YourLife.GameManagement;
 
-namespace Run4YourLife.Input
+namespace Run4YourLife.InputManagement
 {
     public class RunnerGodModeControlScheme : PlayerControlScheme
     {

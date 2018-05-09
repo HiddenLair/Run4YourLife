@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-using Run4YourLife.Input;
+using Run4YourLife.InputManagement;
 
 namespace Run4YourLife.Player
 {

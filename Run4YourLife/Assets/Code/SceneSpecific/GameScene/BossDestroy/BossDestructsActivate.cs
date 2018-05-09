@@ -15,11 +15,13 @@ namespace Run4YourLife.Interactables
 
         public override void OnBossDestroy()
         {
+            IsDestructed = true;
             gameObject.SetActive(false);
         }
 
         public override void OnRegenerate()
         {
+            IsDestructed = false;
             gameObject.SetActive(m_activateOnRegenerate);
             m_onRegenerated.Invoke();
         }

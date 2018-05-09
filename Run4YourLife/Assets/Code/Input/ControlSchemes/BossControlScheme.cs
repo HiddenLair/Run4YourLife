@@ -5,7 +5,7 @@ using UnityEngine;
 using Run4YourLife.Player;
 using Run4YourLife.GameManagement;
 
-namespace Run4YourLife.Input
+namespace Run4YourLife.InputManagement
 {
     public class BossControlScheme : PlayerControlScheme
     {

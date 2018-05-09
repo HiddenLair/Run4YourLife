@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Run4YourLife.Input;
+using Run4YourLife.InputManagement;
 
 namespace Run4YourLife.Player
 {

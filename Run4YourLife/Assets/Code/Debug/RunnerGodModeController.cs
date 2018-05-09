@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-using Run4YourLife.Input;
+using Run4YourLife.InputManagement;
 using Run4YourLife.Utils;
 using Run4YourLife.Player;
 using UnityEngine.EventSystems;

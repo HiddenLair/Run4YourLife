@@ -30,6 +30,7 @@ namespace Run4YourLife.Interactables
 
         public override void OnBossDestroy()
         {
+            IsDestructed = true;
             foreach (Renderer renderer in m_renderer)
             {
                 MakeTransparent(renderer.material);
@@ -40,6 +41,8 @@ namespace Run4YourLife.Interactables
 
         public override void OnRegenerate()
         {
+            IsDestructed = false;
+
             StopAllCoroutines();
             for (int i = 0; i < m_renderer.Length; i++)
             {

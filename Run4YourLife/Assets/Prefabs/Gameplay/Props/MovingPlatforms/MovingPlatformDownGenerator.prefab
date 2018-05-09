@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4462074190378158}
   - component: {fileID: 114489958559010044}
   - component: {fileID: 114987841117491862}
+  - component: {fileID: 114781210629762754}
   m_Layer: 0
   m_Name: MovingPlatformDownGenerator
   m_TagString: Untagged
@@ -56,8 +57,18 @@ MonoBehaviour:
   m_isInfinite: 1
   m_instantiationCount: 0
   m_prefab: {fileID: 1834242061234096, guid: 7a3b9610afd8a6046ab586ea93ae7394, type: 2}
-  destroyOnTime: 1
-  destroyTime: 7
+  m_numberPooledPrefabs: 0
+--- !u!114 &114781210629762754
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1383291393925586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8073855dcfad5724c94cad4bdb64b4aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114987841117491862
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -69,7 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1659940a78172e49a0bba4c42efe87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_distance: 3
+  m_distance: -3
   m_activateOnRegenerate: 1
   m_onRegenerated:
     m_PersistentCalls:

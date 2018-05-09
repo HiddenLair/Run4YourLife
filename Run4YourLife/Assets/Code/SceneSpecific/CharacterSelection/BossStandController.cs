@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-using Run4YourLife.Input;
+using Run4YourLife.InputManagement;
 using Run4YourLife.Player;
 
 namespace Run4YourLife.SceneSpecific.CharacterSelection
