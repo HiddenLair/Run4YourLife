@@ -32,12 +32,15 @@ namespace Run4YourLife.Interactables
         public override void OnBossDestroy()
         {
             IsDestructed = true;
-            foreach (Renderer renderer in m_renderer)
+            if(gameObject.activeSelf)
             {
-                MakeTransparent(renderer.material);
-            }
+                foreach (Renderer renderer in m_renderer)
+                {
+                    MakeTransparent(renderer.material);
+                }
 
-            StartCoroutine(AlphaAnimation());
+                StartCoroutine(AlphaAnimation());
+            }            
         }
 
         public override void OnRegenerate()

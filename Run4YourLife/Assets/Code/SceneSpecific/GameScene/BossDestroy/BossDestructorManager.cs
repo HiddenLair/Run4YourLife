@@ -56,21 +56,18 @@ namespace Run4YourLife.GameManagement
             float xBossPosition = boss.transform.position.x;
             foreach(BossDestructedInstance bossDestructedInstance in m_dynamicElements)
             {
-                if(bossDestructedInstance.gameObject.activeSelf)
+                if(xBossPosition < bossDestructedInstance.DestroyPosition)
                 {
-                    if(xBossPosition < bossDestructedInstance.DestroyPosition)
+                    if(bossDestructedInstance.IsDestructed)
                     {
-                        if(bossDestructedInstance.IsDestructed)
-                        {
-                            bossDestructedInstance.OnRegenerate();
-                        }
+                        bossDestructedInstance.OnRegenerate();
                     }
-                    else
+                }
+                else
+                {
+                    if(!bossDestructedInstance.IsDestructed)
                     {
-                        if(!bossDestructedInstance.IsDestructed)
-                        {
-                            bossDestructedInstance.OnBossDestroy();
-                        }
+                        bossDestructedInstance.OnBossDestroy();
                     }
                 }
             }

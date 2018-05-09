@@ -54,7 +54,6 @@ public class PrefabInstantiator : MonoBehaviour {
     {
         while(m_isInfinite || m_instantiationCount-- > 0)
         {
-            Debug.Log("spawn Object");
             GameObject instance = m_gameObjectPool.Get(m_prefab);
             instance.transform.position = transform.position;
             instance.transform.rotation = Quaternion.identity;
