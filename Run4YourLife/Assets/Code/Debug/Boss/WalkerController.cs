@@ -95,29 +95,33 @@ namespace Run4YourLife.Debugging
         private IEnumerator BossManual()
         {
             enabled = false;
-            yield return null;
 
             BossPathWalker bossPathWalker = GameplayPlayerManager.Instance.Boss.GetComponent<BossPathWalker>();
 
-            float startingWalkerSpeed = bossPathWalker.m_speed;
-            float startingWalkerAcceleration = bossPathWalker.m_acceleration;
-            
-            bossPathWalker.m_speed = 0;
-            bossPathWalker.m_acceleration = 0;
-
-            GameplayPlayerManager.Instance.DebugClearAllRunners();
-
-            InputSource horizontalInputSource = new InputSource(Axis.LEFT_HORIZONTAL, InputDeviceManager.Instance.DefaultInputDevice);
-            while(!Input.GetKeyDown(KeyCode.P))
+            if(bossPathWalker != null)
             {
-                bossPathWalker.m_position += horizontalInputSource.Value() * m_manualSpeed * Time.deltaTime;
-                yield return null;
+                yield return null; // P Key down is true, wait one frame so that it does not skip the while
+                float startingWalkerSpeed = bossPathWalker.m_speed;
+                float startingWalkerAcceleration = bossPathWalker.m_acceleration;
+                
+                bossPathWalker.m_speed = 0;
+                bossPathWalker.m_acceleration = 0;
+
+                GameplayPlayerManager.Instance.DebugClearAllRunners();
+
+                InputSource horizontalInputSource = new InputSource(Axis.LEFT_HORIZONTAL, InputDeviceManager.Instance.DefaultInputDevice);
+                while(!Input.GetKeyDown(KeyCode.P))
+                {
+                    bossPathWalker.m_position += horizontalInputSource.Value() * m_manualSpeed * Time.deltaTime;
+                    yield return null;
+                }
+                
+                bossPathWalker.m_speed = startingWalkerSpeed;
+                bossPathWalker.m_acceleration = startingWalkerAcceleration;
+
+                GameplayPlayerManager.Instance.DebugActivateAllRunners();
             }
             
-            bossPathWalker.m_speed = startingWalkerSpeed;
-            bossPathWalker.m_acceleration = startingWalkerAcceleration;
-
-            GameplayPlayerManager.Instance.DebugActivateAllRunners();
 
             enabled = true;
         }
