@@ -48,27 +48,29 @@ namespace Run4YourLife.Player
 
         protected override void OnSuccess()
         {
-
-            m_audioSource.PlayOneShot(sfx);
-
-            trapPos = crossHairControl.GetPosition();
-            Vector3 screenPos = m_mainCamera.WorldToScreenPoint(trapPos);
-
-            if(screenPos.x <= 0.5f * m_mainCamera.pixelWidth)
+            if (handR.activeInHierarchy && handL.activeInHierarchy)
             {
-                m_animator.SetTrigger("MeleR");
-                AnimationPlayOnTimeManager.Instance.PlayOnAnimation(m_animator,"MeleRight",timeToMeleFromAnim,()=>ArmInstantiate());
-                trapPos.x = m_mainCamera.ScreenToWorldPoint(new Vector3(m_mainCamera.pixelWidth, 0, m_mainCamera.transform.position.z - trapPos.z)).x;
-                rotation = Quaternion.Euler(0, 0, 0);
-                right = true;
-            }
-            else
-            {
-                m_animator.SetTrigger("MeleL");
-                AnimationPlayOnTimeManager.Instance.PlayOnAnimation(m_animator, "MeleLeft", timeToMeleFromAnim, () => ArmInstantiate());
-                trapPos.x = m_mainCamera.ScreenToWorldPoint(new Vector3(0, 0, m_mainCamera.transform.position.z - trapPos.z)).x;
-                rotation = Quaternion.Euler(0, 180, 0);
-                right = false;
+                m_audioSource.PlayOneShot(sfx);
+
+                trapPos = crossHairControl.GetPosition();
+                Vector3 screenPos = m_mainCamera.WorldToScreenPoint(trapPos);
+
+                if (screenPos.x <= 0.5f * m_mainCamera.pixelWidth)
+                {
+                    m_animator.SetTrigger("MeleR");
+                    AnimationPlayOnTimeManager.Instance.PlayOnAnimation(m_animator, "MeleRight", timeToMeleFromAnim, () => ArmInstantiate());
+                    trapPos.x = m_mainCamera.ScreenToWorldPoint(new Vector3(m_mainCamera.pixelWidth, 0, m_mainCamera.transform.position.z - trapPos.z)).x;
+                    rotation = Quaternion.Euler(0, 0, 0);
+                    right = true;
+                }
+                else
+                {
+                    m_animator.SetTrigger("MeleL");
+                    AnimationPlayOnTimeManager.Instance.PlayOnAnimation(m_animator, "MeleLeft", timeToMeleFromAnim, () => ArmInstantiate());
+                    trapPos.x = m_mainCamera.ScreenToWorldPoint(new Vector3(0, 0, m_mainCamera.transform.position.z - trapPos.z)).x;
+                    rotation = Quaternion.Euler(0, 180, 0);
+                    right = false;
+                }
             }
         }
 
