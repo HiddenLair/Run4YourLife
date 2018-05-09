@@ -22,8 +22,9 @@ namespace Run4YourLife.Interactables
         private Renderer[] m_renderer;
         private Material[] m_sharedMaterials;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             m_renderer = GetComponentsInChildren<Renderer>();
             m_sharedMaterials = m_renderer.Select((x) => x.sharedMaterial).ToArray();
         }

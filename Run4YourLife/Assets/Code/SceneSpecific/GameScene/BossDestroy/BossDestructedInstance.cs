@@ -15,7 +15,7 @@ namespace Run4YourLife.GameManagement
 
         public bool IsDestructed { get; protected set; }
 
-        private void Awake()
+        protected virtual void Awake()
         {
             if(m_isDynamic)
             {
