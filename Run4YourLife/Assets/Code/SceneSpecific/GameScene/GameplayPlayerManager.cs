@@ -300,6 +300,7 @@ namespace Run4YourLife.GameManagement {
             for(int i = 0; i< m_runnersAlive.Count;i++)
             {
                 m_runnersAlive[i].SetActive(false);
+
             }
 
             m_runnersAlive.Clear();
@@ -308,13 +309,23 @@ namespace Run4YourLife.GameManagement {
 
         public void DebugClearAllRunners()
         {
-            for(int i = 0; i< m_runnersAlive.Count;i++)
+            foreach(GameObject runner in m_runnersAlive)
             {
-                m_runnersAlive[i].SetActive(false);
+                runner.SetActive(false);
             }
 
-            m_runnersAlive.Clear();
             m_deadRunners.Clear();
+            m_runnersAlive.Clear();
+        }
+
+        public void DebugActivateAllRunners()
+        {
+            foreach(GameObject runner in m_runners)
+            {
+                m_runnersAlive.Add(runner);
+                runner.transform.position = GetRandomSpawnPosition();
+                runner.SetActive(true);
+            }
         }
     }
 }

@@ -117,7 +117,7 @@ namespace Run4YourLife.Debugging
             bossPathWalker.m_speed = startingWalkerSpeed;
             bossPathWalker.m_acceleration = startingWalkerAcceleration;
 
-            GameplayPlayerManager.Instance.ReviveAllRunners();
+            GameplayPlayerManager.Instance.DebugActivateAllRunners();
 
             enabled = true;
         }
