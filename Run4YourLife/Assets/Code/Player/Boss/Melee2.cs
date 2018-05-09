@@ -48,6 +48,7 @@ namespace Run4YourLife.Player
 
         protected override void OnSuccess()
         {
+            //Only shoot when the boss has both hands. No double shoot is allowed.
             if (handR.activeInHierarchy && handL.activeInHierarchy)
             {
                 m_audioSource.PlayOneShot(sfx);
