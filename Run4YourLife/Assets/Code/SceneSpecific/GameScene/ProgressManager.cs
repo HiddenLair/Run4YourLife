@@ -20,7 +20,7 @@ namespace Run4YourLife.GameManagement
             Debug.Assert(m_uiManager != null, "UI not found");
         }
 
-        private void OnEnable()
+        /* private void OnEnable()
         {
             GameManager.Instance.onGamePhaseChanged.AddListener(OnGamePhaseChanged);
         }
@@ -28,19 +28,22 @@ namespace Run4YourLife.GameManagement
         private void OnDisable()
         {
             GameManager.Instance.onGamePhaseChanged.RemoveListener(OnGamePhaseChanged);
-        }
+        } */
 
         void Update()
         {
             GameObject boss = GameplayPlayerManager.Instance.Boss;
-            if (boss != null)
+            if(boss != null)
             {
                 IProgressProvider progressProvider = boss.GetComponent<IProgressProvider>();
-                ExecuteEvents.Execute<IUIEvents>(m_uiManager, null, (x, y) => x.OnBossProgress(progressProvider.Progress));
+                if(progressProvider != null)
+                {
+                    ExecuteEvents.Execute<IUIEvents>(m_uiManager, null, (x, y) => x.OnBossProgress(progressProvider.Progress));
+                }
             }
         }
 
-        private void OnGamePhaseChanged(GamePhase gamePhase)
+        /* private void OnGamePhaseChanged(GamePhase gamePhase)
         {
             switch(gamePhase)
             {
@@ -57,6 +60,6 @@ namespace Run4YourLife.GameManagement
                     enabled = false;
                     break;
             }
-        }
+        } */
     }
 }

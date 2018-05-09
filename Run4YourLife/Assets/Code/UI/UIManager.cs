@@ -53,22 +53,40 @@ namespace Run4YourLife.UI
         #region ScaleTicks
 
         [SerializeField]
-        private ScaleTick scaleTickMele;
+        private ScaleTick scaleTickMeleBottom;
 
         [SerializeField]
-        private ScaleTick scaleTickShoot;
+        private ScaleTick scaleTickMeleTop;
 
         [SerializeField]
-        private ScaleTick scaleTickTrapA;
+        private ScaleTick scaleTickShootBottom;
 
         [SerializeField]
-        private ScaleTick scaleTickTrapB;
+        private ScaleTick scaleTickShootTop;
 
         [SerializeField]
-        private ScaleTick scaleTickTrapX;
+        private ScaleTick scaleTickTrapABottom;
 
         [SerializeField]
-        private ScaleTick scaleTickTrapY;
+        private ScaleTick scaleTickTrapATop;
+
+        [SerializeField]
+        private ScaleTick scaleTickTrapBBottom;
+
+        [SerializeField]
+        private ScaleTick scaleTickTrapBTop;
+
+        [SerializeField]
+        private ScaleTick scaleTickTrapXBottom;
+
+        [SerializeField]
+        private ScaleTick scaleTickTrapXTop;
+
+        [SerializeField]
+        private ScaleTick scaleTickTrapYBottom;
+
+        [SerializeField]
+        private ScaleTick scaleTickTrapYTop;
 
         #endregion
 
@@ -88,7 +106,8 @@ namespace Run4YourLife.UI
 
         private List<ImageUpdater> imageUpdaters = new List<ImageUpdater>();
 
-        private List<ScaleTick> scaleTicks = new List<ScaleTick>();
+        private List<ScaleTick> scaleTicksBottom = new List<ScaleTick>();
+        private List<ScaleTick> scaleTicksTop = new List<ScaleTick>();
 
         void Awake()
         {
@@ -99,12 +118,19 @@ namespace Run4YourLife.UI
             imageUpdaters.Add(imageUpdaterTrapX);
             imageUpdaters.Add(imageUpdaterTrapY);
 
-            scaleTicks.Add(scaleTickMele);
-            scaleTicks.Add(scaleTickShoot);
-            scaleTicks.Add(scaleTickTrapA);
-            scaleTicks.Add(scaleTickTrapB);
-            scaleTicks.Add(scaleTickTrapX);
-            scaleTicks.Add(scaleTickTrapY);
+            scaleTicksBottom.Add(scaleTickMeleBottom);
+            scaleTicksBottom.Add(scaleTickShootBottom);
+            scaleTicksBottom.Add(scaleTickTrapABottom);
+            scaleTicksBottom.Add(scaleTickTrapBBottom);
+            scaleTicksBottom.Add(scaleTickTrapXBottom);
+            scaleTicksBottom.Add(scaleTickTrapYBottom);
+
+            scaleTicksTop.Add(scaleTickMeleTop);
+            scaleTicksTop.Add(scaleTickShootTop);
+            scaleTicksTop.Add(scaleTickTrapATop);
+            scaleTicksTop.Add(scaleTickTrapBTop);
+            scaleTicksTop.Add(scaleTickTrapXTop);
+            scaleTicksTop.Add(scaleTickTrapYTop);
 
             GameManager.Instance.onGamePhaseChanged.AddListener(ConversorTemporal);
         }
@@ -136,7 +162,8 @@ namespace Run4YourLife.UI
         public void OnActionUsed(ActionType actionType, float time)
         {
             imageUpdaters[(int)actionType].Use(time);
-            scaleTicks[(int)actionType].Tick();
+            scaleTicksBottom[(int)actionType].Tick();
+            scaleTicksTop[(int)actionType].Tick();
         }
 
         public void OnSetSetted(SetType setType)
