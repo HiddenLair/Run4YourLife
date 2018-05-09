@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class Countdown : MonoBehaviour
 {
-    private Text text;
+    private TextMeshProUGUI text;
 
     private bool on = false;
 
@@ -11,7 +12,7 @@ public class Countdown : MonoBehaviour
 
 	void Awake()
     {
-        text = GetComponent<Text>();
+        text = GetComponent<TextMeshProUGUI>();
 	}
 
 	void Update()

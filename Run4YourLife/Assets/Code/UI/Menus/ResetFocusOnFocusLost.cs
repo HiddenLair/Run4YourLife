@@ -6,7 +6,6 @@ public class ResetFocusOnFocusLost : MonoBehaviour
     [SerializeField]
     private GameObject gameObjectOnUnableToResetFocus;
 
-    [SerializeField]
     private EventSystem eventSystem;
     private GameObject lastGameObjectFocus;
 

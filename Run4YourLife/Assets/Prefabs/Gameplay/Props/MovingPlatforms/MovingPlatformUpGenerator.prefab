@@ -21,10 +21,11 @@ GameObject:
   - component: {fileID: 4416754056163954}
   - component: {fileID: 114991204883478038}
   - component: {fileID: 114518101485018542}
+  - component: {fileID: 114747021593220518}
   m_Layer: 0
   m_Name: MovingPlatformUpGenerator
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -35,7 +36,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1797976266180184}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: -1.51, z: 0}
+  m_LocalPosition: {x: 9, y: -1.51, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -52,13 +53,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1659940a78172e49a0bba4c42efe87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_distance: 3
+  m_distance: -3
+  m_isDynamic: 0
   m_activateOnRegenerate: 1
   m_onRegenerated:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114747021593220518
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1797976266180184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8073855dcfad5724c94cad4bdb64b4aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_parent: {fileID: 0}
 --- !u!114 &114991204883478038
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -74,5 +88,4 @@ MonoBehaviour:
   m_isInfinite: 1
   m_instantiationCount: 0
   m_prefab: {fileID: 1027905170962860, guid: 77d0749a049f8644ba5f4beb90666ffe, type: 2}
-  destroyOnTime: 1
-  destroyTime: 6
+  m_numberPooledPrefabs: 3

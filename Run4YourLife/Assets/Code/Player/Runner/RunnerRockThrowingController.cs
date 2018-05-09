@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Run4YourLife.Input;
+using Run4YourLife.InputManagement;
 
 namespace Run4YourLife.Player {
     [RequireComponent(typeof(InputController))]

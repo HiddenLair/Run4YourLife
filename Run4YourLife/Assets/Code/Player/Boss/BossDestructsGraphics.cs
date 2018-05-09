@@ -22,24 +22,31 @@ namespace Run4YourLife.Interactables
         private Renderer[] m_renderer;
         private Material[] m_sharedMaterials;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             m_renderer = GetComponentsInChildren<Renderer>();
             m_sharedMaterials = m_renderer.Select((x) => x.sharedMaterial).ToArray();
         }
 
         public override void OnBossDestroy()
         {
-            foreach (Renderer renderer in m_renderer)
+            IsDestructed = true;
+            if(gameObject.activeSelf)
             {
-                MakeTransparent(renderer.material);
-            }
+                foreach (Renderer renderer in m_renderer)
+                {
+                    MakeTransparent(renderer.material);
+                }
 
-            StartCoroutine(AlphaAnimation());
+                StartCoroutine(AlphaAnimation());
+            }            
         }
 
         public override void OnRegenerate()
         {
+            IsDestructed = false;
+
             StopAllCoroutines();
             for (int i = 0; i < m_renderer.Length; i++)
             {

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using Run4YourLife.Player;
-using Run4YourLife.Input;
+using Run4YourLife.InputManagement;
 
 namespace Run4YourLife.GameManagement {
     public interface IGameplayPlayerEvents : IEventSystemHandler
@@ -260,7 +260,7 @@ namespace Run4YourLife.GameManagement {
             {
                 if (UnityEngine.Input.GetKeyDown(KeyCode.R))
                 {
-                    ReviveAllPlayers();
+                    ReviveAllRunners();
                 }
             }
         }
@@ -269,11 +269,11 @@ namespace Run4YourLife.GameManagement {
         {
             if(gamePhase.Equals(GamePhase.TransitionToBossFight) || gamePhase.Equals(GamePhase.TransitionToHardMoveHorizontal))
             {
-                ReviveAllPlayers(); 
+                ReviveAllRunners(); 
             }
         }
 
-        public void ReviveAllPlayers()
+        public void ReviveAllRunners()
         {
             while(m_deadRunners.Count > 0)
             {
@@ -300,10 +300,32 @@ namespace Run4YourLife.GameManagement {
             for(int i = 0; i< m_runnersAlive.Count;i++)
             {
                 m_runnersAlive[i].SetActive(false);
+
             }
 
             m_runnersAlive.Clear();
             m_deadRunners.Clear();
+        }
+
+        public void DebugClearAllRunners()
+        {
+            foreach(GameObject runner in m_runnersAlive)
+            {
+                runner.SetActive(false);
+            }
+
+            m_deadRunners.Clear();
+            m_runnersAlive.Clear();
+        }
+
+        public void DebugActivateAllRunners()
+        {
+            foreach(GameObject runner in m_runners)
+            {
+                m_runnersAlive.Add(runner);
+                runner.transform.position = GetRandomSpawnPosition();
+                runner.SetActive(true);
+            }
         }
     }
 }

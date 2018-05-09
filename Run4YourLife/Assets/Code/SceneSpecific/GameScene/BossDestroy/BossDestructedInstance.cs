@@ -8,11 +8,27 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private float m_distance;
 
+        [SerializeField]
+        private bool m_isDynamic;
+
         public float DestroyPosition { get { return transform.position.x + m_distance; } }
+
+        public bool IsDestructed { get; protected set; }
+
+        protected virtual void Awake()
+        {
+            if(m_isDynamic)
+            {
+                BossDestructorManager.Instance.AddDynamic(this);
+            }
+        }
 
         protected virtual void Start()
         {
-            BossDestructorManager.Instance.Add(this);
+            if(!m_isDynamic)
+            {
+                BossDestructorManager.Instance.AddStatic(this);
+            }
         }
 
         public abstract void OnBossDestroy();

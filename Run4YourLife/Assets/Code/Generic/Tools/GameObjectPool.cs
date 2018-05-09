@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GameObjectPool : MonoBehaviour {
 
+    [SerializeField]
+    private Transform m_parent;
+
     private Dictionary<GameObject, List<GameObject>> m_pool = new Dictionary<GameObject, List<GameObject>>();
 
 
@@ -17,7 +20,7 @@ public class GameObjectPool : MonoBehaviour {
 
     public GameObject Add(GameObject key)
     {
-        GameObject instance = Instantiate(key, transform);
+        GameObject instance = Instantiate(key, m_parent);
         instance.SetActive(false);
 
         List<GameObject> instances;
@@ -47,5 +50,10 @@ public class GameObjectPool : MonoBehaviour {
         }
 
         return Add(key);
+    }
+
+    private void Reset()
+    {
+        m_parent = transform;
     }
 }

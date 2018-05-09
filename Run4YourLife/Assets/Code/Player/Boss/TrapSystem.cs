@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 
 using Run4YourLife.UI;
-using Run4YourLife.Input;
+using Run4YourLife.InputManagement;
 using Run4YourLife.Interactables;
 using Run4YourLife.GameManagement;
 

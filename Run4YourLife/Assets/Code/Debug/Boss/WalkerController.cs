@@ -1,16 +1,24 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+
+using UnityEngine;
 
 using Run4YourLife.Player;
+using Run4YourLife.GameManagement;
+using Run4YourLife.InputManagement;
 
 namespace Run4YourLife.Debugging
 {
     public class WalkerController : DebugFeature
     {
-        private BossPathWalker walker;
-        private GameObject boss;
+        [SerializeField]
+        private float m_manualSpeed;
 
-        private string walkerSpeedText;
-        private string walkerIncreaseSpeedText;
+        private string m_speedText;
+        private string m_accelerationText;
+
+        private bool isWalkerManual;
+
 
         protected override string GetPanelName()
         {
@@ -19,83 +27,103 @@ namespace Run4YourLife.Debugging
 
         protected override void OnCustomDrawGUI()
         {
-            if(walker != null)
+            if(GameplayPlayerManager.Instance.Boss != null)
             {
-                // Walker Speed
-
-                GUILayout.Label("Current Walker Speed: " + walker.m_speed.ToString("0.###"));
-
-                GUILayout.BeginHorizontal();
-
-                GUILayout.Label("Walker Speed");
-                walkerSpeedText = GUILayout.TextField(walkerSpeedText);
-                if(GUILayout.Button("Apply"))
+                BossPathWalker bossPathWalker = GameplayPlayerManager.Instance.Boss.GetComponent<BossPathWalker>();
+                if(bossPathWalker != null)
                 {
-                    SetSpeed(walkerSpeedText);
-                }
-
-                GUILayout.EndHorizontal();
-
-                // Walker Increase Speed
-
-                GUILayout.BeginHorizontal();
-
-                GUILayout.Label("Walker Inc. Speed");
-                walkerIncreaseSpeedText = GUILayout.TextField(walkerIncreaseSpeedText);
-                if(GUILayout.Button("Apply"))
-                {
-                    SetIncreaseSpeed(walkerIncreaseSpeedText);
-                }
-
-                GUILayout.EndHorizontal();
-            }
-        }
-
-        void Update()
-        {
-            if(boss == null || !boss.activeInHierarchy)
-            {
-                FindBoss();
-
-                if(boss != null)
-                {
-                    walker = boss.GetComponent<BossPathWalker>();
+                    Speed(bossPathWalker);
+                    Acceleration(bossPathWalker);
+                    WalkerManual(bossPathWalker);
                 }
             }
         }
 
-        private void FindBoss()
+        private void WalkerManual(BossPathWalker bossPathWalker)
         {
-            GameObject[] bosses = GameObject.FindGameObjectsWithTag(Tags.Boss);
+        }
 
-            foreach(GameObject currentBoss in bosses)
+        private void Speed(BossPathWalker bossPathWalker)
+        {
+            GUILayout.BeginHorizontal();
+
+            GUILayout.Label("Walker Speed");
+            m_speedText = GUILayout.TextField(bossPathWalker.m_speed.ToString());
+            if (GUILayout.Button("Apply"))
             {
-                if(currentBoss.activeInHierarchy)
+                float speed;
+
+                if (float.TryParse(m_speedText, out speed))
                 {
-                    boss = currentBoss;
-                    break;
+                    bossPathWalker.m_speed = speed;
+                }
+            }
+
+            GUILayout.EndHorizontal();
+        }
+
+        private void Acceleration(BossPathWalker bossPathWalker)
+        {
+            GUILayout.BeginHorizontal();
+
+            GUILayout.Label("Walker acceleration");
+            m_accelerationText = GUILayout.TextField(m_accelerationText);
+            if (GUILayout.Button("Apply"))
+            {
+                float acceleration;
+
+                if (float.TryParse(m_accelerationText, out acceleration))
+                {
+                    bossPathWalker.m_speed = acceleration;
+                }
+            }
+
+            GUILayout.EndHorizontal();
+        }
+
+        private void Update()
+        {
+            if(Debug.isDebugBuild)
+            {
+                if(Input.GetKeyDown(KeyCode.P))
+                {
+                    StartCoroutine(BossManual());
                 }
             }
         }
 
-        private void SetSpeed(string value)
+        private IEnumerator BossManual()
         {
-            float speed;
+            enabled = false;
 
-            if(float.TryParse(value, out speed))
+            BossPathWalker bossPathWalker = GameplayPlayerManager.Instance.Boss.GetComponent<BossPathWalker>();
+
+            if(bossPathWalker != null)
             {
-                walker.m_speed = speed;
-            }
-        }
+                yield return null; // P Key down is true, wait one frame so that it does not skip the while
+                float startingWalkerSpeed = bossPathWalker.m_speed;
+                float startingWalkerAcceleration = bossPathWalker.m_acceleration;
+                
+                bossPathWalker.m_speed = 0;
+                bossPathWalker.m_acceleration = 0;
 
-        private void SetIncreaseSpeed(string value)
-        {
-            float increaseSpeed;
+                GameplayPlayerManager.Instance.DebugClearAllRunners();
 
-            if(float.TryParse(value, out increaseSpeed))
-            {
-                walker.m_acceleration = increaseSpeed;
+                InputSource horizontalInputSource = new InputSource(Axis.LEFT_HORIZONTAL, InputDeviceManager.Instance.DefaultInputDevice);
+                while(!Input.GetKeyDown(KeyCode.P))
+                {
+                    bossPathWalker.m_position += horizontalInputSource.Value() * m_manualSpeed * Time.deltaTime;
+                    yield return null;
+                }
+                
+                bossPathWalker.m_speed = startingWalkerSpeed;
+                bossPathWalker.m_acceleration = startingWalkerAcceleration;
+
+                GameplayPlayerManager.Instance.DebugActivateAllRunners();
             }
+            
+
+            enabled = true;
         }
     }
 }

@@ -54,11 +54,11 @@ public class PrefabInstantiator : MonoBehaviour {
     {
         while(m_isInfinite || m_instantiationCount-- > 0)
         {
-            yield return delayBetweenInstantiations;
             GameObject instance = m_gameObjectPool.Get(m_prefab);
-            instance.transform.localPosition = Vector3.zero;
+            instance.transform.position = transform.position;
             instance.transform.rotation = Quaternion.identity;
             instance.SetActive(true);
+            yield return delayBetweenInstantiations;
         }
     }
 }

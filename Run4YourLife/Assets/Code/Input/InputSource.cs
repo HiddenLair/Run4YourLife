@@ -1,4 +1,4 @@
-﻿namespace Run4YourLife.Input
+﻿namespace Run4YourLife.InputManagement
 {
     public enum InputSourceType
     {

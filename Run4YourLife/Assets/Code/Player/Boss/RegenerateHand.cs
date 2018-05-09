@@ -8,7 +8,10 @@ public class RegenerateHand : MonoBehaviour {
 
     private void OnBecameInvisible()
     {
-        handToRecover.SetActive(true);
+        if (handToRecover != null)
+        {
+            handToRecover.SetActive(true);
+        }
     }
 
     public void SetHandToRecover(GameObject hand)
