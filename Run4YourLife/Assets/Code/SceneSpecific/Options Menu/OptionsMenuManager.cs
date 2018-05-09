@@ -23,7 +23,16 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
         {
             m_optionsMenuControlScheme.InputDevice = InputDeviceManager.Instance.DefaultInputDevice;
             m_optionsMenuControlScheme.Active = true;
-            EventSystem.current.firstSelectedGameObject.GetComponent<ISelectHandler>().OnSelect(null);
+
+            GameObject firstSelectedGameObject = EventSystem.current.firstSelectedGameObject;
+            if(firstSelectedGameObject != null)
+            {
+                ISelectHandler firstSelected = firstSelectedGameObject.GetComponent<ISelectHandler>();
+                if(firstSelected != null)
+                {
+                    firstSelected.OnSelect(null);
+                }
+            }
         }
 
         private void Update()
