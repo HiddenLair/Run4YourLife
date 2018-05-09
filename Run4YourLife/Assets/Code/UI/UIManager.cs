@@ -28,28 +28,6 @@ namespace Run4YourLife.UI
 
     public class UIManager : MonoBehaviour, IUIEvents
     {
-        #region Text updaters
-
-        [SerializeField]
-        private TextUpdater textUpdaterMele;
-
-        [SerializeField]
-        private TextUpdater textUpdaterShoot;
-
-        [SerializeField]
-        private TextUpdater textUpdaterTrapA;
-
-        [SerializeField]
-        private TextUpdater textUpdaterTrapB;
-
-        [SerializeField]
-        private TextUpdater textUpdaterTrapX;
-
-        [SerializeField]
-        private TextUpdater textUpdaterTrapY;
-
-        #endregion
-
         #region Image updaters
 
         [SerializeField]
@@ -108,21 +86,12 @@ namespace Run4YourLife.UI
 
         #endregion
 
-        private List<TextUpdater> textUpdaters = new List<TextUpdater>();
-
         private List<ImageUpdater> imageUpdaters = new List<ImageUpdater>();
 
         private List<ScaleTick> scaleTicks = new List<ScaleTick>();
 
         void Awake()
         {
-            textUpdaters.Add(textUpdaterMele);
-            textUpdaters.Add(textUpdaterShoot);
-            textUpdaters.Add(textUpdaterTrapA);
-            textUpdaters.Add(textUpdaterTrapB);
-            textUpdaters.Add(textUpdaterTrapX);
-            textUpdaters.Add(textUpdaterTrapY);
-
             imageUpdaters.Add(imageUpdaterMele);
             imageUpdaters.Add(imageUpdaterShoot);
             imageUpdaters.Add(imageUpdaterTrapA);
@@ -166,7 +135,6 @@ namespace Run4YourLife.UI
 
         public void OnActionUsed(ActionType actionType, float time)
         {
-            textUpdaters[(int)actionType].Use(time);
             imageUpdaters[(int)actionType].Use(time);
             scaleTicks[(int)actionType].Tick();
         }
