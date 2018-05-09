@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(GameObjectPool))]
 public class PrefabInstantiator : MonoBehaviour {
 
     #region Editor fields
@@ -20,15 +21,14 @@ public class PrefabInstantiator : MonoBehaviour {
     private GameObject m_prefab;
 
     [SerializeField]
-    private bool destroyOnTime = false;
-
-    [SerializeField]
-    private float destroyTime = 1.0f;
+    [Tooltip("How many prefabs will be pooled on awake")]
+    private int m_numberPooledPrefabs;
 
     #endregion
 
     #region Private Fields
 
+    private GameObjectPool m_gameObjectPool;
     private WaitForSeconds delayBetweenInstantiations;
 
     #endregion
@@ -36,7 +36,18 @@ public class PrefabInstantiator : MonoBehaviour {
     private void Awake()
     {
         delayBetweenInstantiations = new WaitForSeconds(m_timeBetweenInstantiations);
+        m_gameObjectPool = GetComponent<GameObjectPool>();
+        m_gameObjectPool.Add(m_prefab, m_numberPooledPrefabs);
+    }
+
+    private void OnEnable()
+    {
         StartCoroutine(InstantiateObjects());
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
     }
 
     private IEnumerator InstantiateObjects()
@@ -44,11 +55,10 @@ public class PrefabInstantiator : MonoBehaviour {
         while(m_isInfinite || m_instantiationCount-- > 0)
         {
             yield return delayBetweenInstantiations;
-            GameObject temp = Instantiate(m_prefab, transform.position, transform.rotation, transform);
-            if (destroyOnTime)
-            {
-                Destroy(temp, destroyTime);
-            }
+            GameObject instance = m_gameObjectPool.Get(m_prefab);
+            instance.transform.localPosition = Vector3.zero;
+            instance.transform.rotation = Quaternion.identity;
+            instance.SetActive(true);
         }
     }
 }

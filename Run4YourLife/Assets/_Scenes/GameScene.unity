@@ -772,10 +772,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 1383291393925586, guid: 36f08abd4820d154f8e6a52ee64ee923, type: 2}
-      propertyPath: m_Name
-      value: MovingPlatformDownGenerator
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 36f08abd4820d154f8e6a52ee64ee923, type: 2}
   m_IsPrefabParent: 0
@@ -12128,6 +12124,11 @@ Prefab:
       propertyPath: bounceOverMeForce
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 114786842801940676, guid: ed100ab12e096854ea85d5c391bde264,
+        type: 2}
+      propertyPath: m_bounceForce
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ed100ab12e096854ea85d5c391bde264, type: 2}
   m_IsPrefabParent: 0
@@ -21668,6 +21669,22 @@ Transform:
   m_Father: {fileID: 787214130}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1303591094 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1383291393925586, guid: 36f08abd4820d154f8e6a52ee64ee923,
+    type: 2}
+  m_PrefabInternal: {fileID: 44150803}
+--- !u!114 &1303591097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1303591094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8073855dcfad5724c94cad4bdb64b4aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1305094661
 GameObject:
   m_ObjectHideFlags: 0
@@ -28580,10 +28597,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1797976266180184, guid: a39b24e7fa0aa3b418b2e7437aa6ca33, type: 2}
-      propertyPath: m_Name
-      value: MovingPlatformUpGenerator
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a39b24e7fa0aa3b418b2e7437aa6ca33, type: 2}
   m_IsPrefabParent: 0
@@ -33629,6 +33642,22 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: eb20a6c8b75d22f4f855bd1143dc5c41, type: 3}
   m_PrefabInternal: {fileID: 1923584141}
+--- !u!1 &1927455215 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1797976266180184, guid: a39b24e7fa0aa3b418b2e7437aa6ca33,
+    type: 2}
+  m_PrefabInternal: {fileID: 1707277049}
+--- !u!114 &1927455218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1927455215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8073855dcfad5724c94cad4bdb64b4aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1929380322 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4969825178464836, guid: d2f976f655f5db847a8d7fee4d929fc9,
@@ -34393,6 +34422,40 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a32fa57db87ccde49962d609812f0a5f, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1965016609 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1797976266180184, guid: a39b24e7fa0aa3b418b2e7437aa6ca33,
+    type: 2}
+  m_PrefabInternal: {fileID: 113556597}
+--- !u!114 &1965016611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1965016609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1659940a78172e49a0bba4c42efe87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_distance: 3
+  m_activateOnRegenerate: 1
+  m_onRegenerated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &1965016613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1965016609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8073855dcfad5724c94cad4bdb64b4aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1972209001
 GameObject:
   m_ObjectHideFlags: 0

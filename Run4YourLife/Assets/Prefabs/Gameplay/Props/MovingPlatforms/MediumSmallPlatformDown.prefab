@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 114593158478326318}
   - component: {fileID: 114200801410131434}
   - component: {fileID: 114883145402883560}
+  - component: {fileID: 114441375233561844}
   m_Layer: 10
   m_Name: MediumSmallPlatformDown
   m_TagString: Untagged
@@ -214,6 +215,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c0c5c604a1074d44a3b71c29d3a47fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114441375233561844
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1834242061234096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6508b9737787f4a4fbe4af8fdfcd2631, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_time: 6
 --- !u!114 &114593158478326318
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -239,3 +252,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_distance: 3
   m_alphaAnimationLenght: 0.5
+  m_activateOnRegenerate: 0
+  m_onRegenerated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null

@@ -14,6 +14,9 @@ namespace Run4YourLife.Interactables
         private float m_alphaAnimationLenght = 0.5f;
 
         [SerializeField]
+        private bool m_activateOnRegenerate = true;
+
+        [SerializeField]
         private UnityEvent m_onRegenerated;
 
         private Renderer[] m_renderer;
@@ -45,7 +48,7 @@ namespace Run4YourLife.Interactables
 
             m_onRegenerated.Invoke();
 
-            gameObject.SetActive(true);
+            gameObject.SetActive(m_activateOnRegenerate);
         }
 
         private IEnumerator AlphaAnimation()
