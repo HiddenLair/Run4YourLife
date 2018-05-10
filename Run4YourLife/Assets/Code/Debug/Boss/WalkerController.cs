@@ -16,6 +16,7 @@ namespace Run4YourLife.Debugging
 
         private string m_speedText;
         private string m_accelerationText;
+        private string m_positionText;
 
         private bool isWalkerManual;
 
@@ -34,21 +35,36 @@ namespace Run4YourLife.Debugging
                 {
                     Speed(bossPathWalker);
                     Acceleration(bossPathWalker);
-                    WalkerManual(bossPathWalker);
+                    Position(bossPathWalker);
                 }
             }
         }
 
-        private void WalkerManual(BossPathWalker bossPathWalker)
+        private void Position(BossPathWalker bossPathWalker)
         {
+            GUILayout.BeginHorizontal();
+
+            GUILayout.Label("Position: "+bossPathWalker.m_position);
+            m_positionText = GUILayout.TextField(m_positionText);
+            if (GUILayout.Button("Apply"))
+            {
+                float position;
+
+                if (float.TryParse(m_positionText, out position))
+                {
+                    bossPathWalker.m_position = position;
+                }
+            }
+
+            GUILayout.EndHorizontal();
         }
 
         private void Speed(BossPathWalker bossPathWalker)
         {
             GUILayout.BeginHorizontal();
 
-            GUILayout.Label("Walker Speed");
-            m_speedText = GUILayout.TextField(bossPathWalker.m_speed.ToString());
+            GUILayout.Label("Speed: "+bossPathWalker.m_speed);
+            m_speedText = GUILayout.TextField(m_speedText);
             if (GUILayout.Button("Apply"))
             {
                 float speed;
@@ -66,7 +82,7 @@ namespace Run4YourLife.Debugging
         {
             GUILayout.BeginHorizontal();
 
-            GUILayout.Label("Walker acceleration");
+            GUILayout.Label("Acceleration: "+bossPathWalker.m_acceleration);
             m_accelerationText = GUILayout.TextField(m_accelerationText);
             if (GUILayout.Button("Apply"))
             {
@@ -74,7 +90,7 @@ namespace Run4YourLife.Debugging
 
                 if (float.TryParse(m_accelerationText, out acceleration))
                 {
-                    bossPathWalker.m_speed = acceleration;
+                    bossPathWalker.m_acceleration = acceleration;
                 }
             }
 
@@ -112,7 +128,8 @@ namespace Run4YourLife.Debugging
                 InputSource horizontalInputSource = new InputSource(Axis.LEFT_HORIZONTAL, InputDeviceManager.Instance.DefaultInputDevice);
                 while(!Input.GetKeyDown(KeyCode.P))
                 {
-                    bossPathWalker.m_position += horizontalInputSource.Value() * m_manualSpeed * Time.deltaTime;
+                    float speedMultiplier = Input.GetKey(KeyCode.LeftShift) ? 2.0f : 1.0f;
+                    bossPathWalker.m_position += horizontalInputSource.Value() * speedMultiplier * m_manualSpeed * Time.deltaTime;
                     yield return null;
                 }
                 
