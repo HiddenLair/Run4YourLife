@@ -4,6 +4,11 @@ namespace Run4YourLife.Debugging
 {
     public class VertexAndTriangleCounter : DebugFeature
     {
+        [SerializeField]
+        private float updateTimeS = 0.5f;
+
+        private float currentUpdateTimeS = Mathf.Infinity;
+
         private int vertexCount = 0;
         private int triangleCount = 0;
 
@@ -14,7 +19,11 @@ namespace Run4YourLife.Debugging
 
         protected override void OnCustomDrawGUI()
         {
-            Count();
+            if((currentUpdateTimeS += Time.deltaTime) >= updateTimeS)
+            {
+                Count(); // Expensive
+                currentUpdateTimeS = 0.0f;
+            }
 
             GUILayout.Label("Num. Vertices: " + vertexCount);
             GUILayout.Label("Num. Triangles: " + triangleCount);
@@ -38,7 +47,7 @@ namespace Run4YourLife.Debugging
                     if(filter)
                     {
                         vertexCount += filter.sharedMesh.vertexCount;
-                        triangleCount += filter.sharedMesh.triangles.Length;
+                        triangleCount += filter.sharedMesh.triangles.Length; // ¡GC! O.o
                     }
                 }
             }

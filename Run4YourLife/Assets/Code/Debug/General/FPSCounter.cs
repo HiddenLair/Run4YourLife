@@ -11,17 +11,17 @@ namespace Run4YourLife.Debugging
 
         protected override void OnCustomDrawGUI()
         {
-            GUILayout.Label("Fps: " + GetFPS().ToString("0") + ", Ms: " + GetMs().ToString("0"));
+            GUILayout.Label("Fps: " + GetFPS() + ", Ms: " + GetMs());
         }
 
-        private float GetFPS()
+        private int GetFPS()
         {
-            return 1.0f / Time.deltaTime;
+            return Mathf.RoundToInt(1.0f / Time.deltaTime);
         }
 
-        private float GetMs()
+        private int GetMs()
         {
-            return 1000.0f * Time.deltaTime;
+            return Mathf.RoundToInt(1000.0f * Time.deltaTime);
         }
     }
 }
