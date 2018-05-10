@@ -20,7 +20,6 @@ namespace Run4YourLife.Debugging
 
         private bool isWalkerManual;
 
-
         protected override string GetPanelName()
         {
             return "Boss walker";
@@ -99,12 +98,9 @@ namespace Run4YourLife.Debugging
 
         private void Update()
         {
-            if(Debug.isDebugBuild)
+            if(Input.GetKeyDown(KeyCode.P))
             {
-                if(Input.GetKeyDown(KeyCode.P))
-                {
-                    StartCoroutine(BossManual());
-                }
+                StartCoroutine(BossManual());
             }
         }
 
@@ -138,7 +134,6 @@ namespace Run4YourLife.Debugging
 
                 GameplayPlayerManager.Instance.DebugActivateAllRunners();
             }
-            
 
             enabled = true;
         }

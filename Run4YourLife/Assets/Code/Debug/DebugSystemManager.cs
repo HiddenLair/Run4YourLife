@@ -33,17 +33,27 @@ namespace Run4YourLife.Debugging
 
         void Awake()
         {
-            AddDebugFeatures();
+            if(Debug.isDebugBuild)
+            {
+                AddDebugFeatures();
+            }
+            else
+            {
+                Destroy(this);
+
+                DebugFeature[] allDebugFeatures = FindObjectsOfType<DebugFeature>();
+                for(int i = 0; i < allDebugFeatures.Length; ++i)
+                {
+                    Destroy(allDebugFeatures[i]);
+                }
+            }
         }
 
         void Update()
         {
-            if(Debug.isDebugBuild)
+            if(Input.GetKeyDown(KeyCode.F1))
             {
-                if(UnityEngine.Input.GetKeyDown(KeyCode.F1))
-                {
-                    debugging = !debugging;
-                }
+                debugging = !debugging;
             }
         }
 
