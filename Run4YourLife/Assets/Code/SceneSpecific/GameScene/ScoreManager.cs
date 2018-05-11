@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using Run4YourLife.Player;
 using UnityEngine.SceneManagement;
+using Run4YourLife.UI;
 
 namespace Run4YourLife.GameManagement
 {
@@ -13,37 +14,15 @@ namespace Run4YourLife.GameManagement
         void OnScoreAdded(PlayerHandle playerHandle, float points);
     }
 
-    [System.Serializable]
-    public class ScoreChangeEvent : UnityEvent<PlayerHandle, float> { }
-
     public class ScoreManager : SingletonMonoBehaviour<ScoreManager>, IScoreEvents
     {
-        private ScoreChangeEvent m_onPlayerScoreChanged = new ScoreChangeEvent();
-        public ScoreChangeEvent OnPlayerScoreChanged { get { return m_onPlayerScoreChanged; } }
-
         private Dictionary<PlayerHandle, float> m_playerScore = new Dictionary<PlayerHandle, float>();
+        private GameObject m_uiGameObject;
 
-        void OnEnable()
+        private void Awake()
         {
-            SceneManager.sceneLoaded += OnSceneLoaded;
-        }
-
-        void OnDisable()
-        {
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-        }
-
-        void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-        {
-            if (scene.name == "GameScene")
-            {
-                Initialize();
-            }
-        }
-
-        public void Initialize()
-        {
-            m_playerScore.Clear();
+            m_uiGameObject = GameObject.FindGameObjectWithTag(Tags.UI);
+            Debug.Assert(m_uiGameObject != null);
         }
 
         public void OnScoreAdded(PlayerHandle playerHandle,float points)
@@ -54,15 +33,7 @@ namespace Run4YourLife.GameManagement
             }
 
             float score = (m_playerScore[playerHandle] += points);
-            m_onPlayerScoreChanged.Invoke(playerHandle, score);
-        }
-
-        public float GetPointsByplayerHandle(PlayerHandle playerHandle)
-        {
-            float playerScore;
-            m_playerScore.TryGetValue(playerHandle, out playerScore);
-
-            return playerScore;
+            ExecuteEvents.Execute<IUIScoreEvents>(m_uiGameObject, null, (x,y)=>x.OnScoreChanged(playerHandle, score));
         }
     }
 }

@@ -216,7 +216,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224664845114242426}
-  - component: {fileID: 114770313344695228}
   m_Layer: 5
   m_Name: Scores
   m_TagString: Untagged
@@ -426,6 +425,7 @@ GameObject:
   - component: {fileID: 114256861709653166}
   - component: {fileID: 114923568026538286}
   - component: {fileID: 114834907179015938}
+  - component: {fileID: 114048008151444030}
   m_Layer: 5
   m_Name: UI
   m_TagString: UI
@@ -788,6 +788,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0e6a387973d0fa41b5af8364ba78c5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114048008151444030
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1607582914678852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a91df3de51885c4cba315f926133469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_runnerScoreControllers:
+  - {fileID: 114835285417358062}
+  - {fileID: 114693567781643874}
+  - {fileID: 114113768756188868}
 --- !u!114 &114051653040375530
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1553,21 +1568,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_usePlayableDirector: {fileID: 320700096166617820}
   m_cooldownImage: {fileID: 114395344524048520}
---- !u!114 &114770313344695228
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1361665254073768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a91df3de51885c4cba315f926133469, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_runnerScoreControllers:
-  - {fileID: 114835285417358062}
-  - {fileID: 114693567781643874}
-  - {fileID: 114113768756188868}
 --- !u!114 &114777143846162080
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1988,7 +1988,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 1
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0

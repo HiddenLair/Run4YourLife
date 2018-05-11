@@ -10,7 +10,6 @@ public class RunnerScoreController : MonoBehaviour
 {
     private PlayableDirector m_onScoreChangedPlayableDirector;
     private TextMeshProUGUI m_scoreText;
-    private PlayerHandle m_playerHandle;
 
     private void Awake()
     {
@@ -22,30 +21,7 @@ public class RunnerScoreController : MonoBehaviour
         SetScore(0);
     }
 
-    private void OnEnable()
-    {
-        ScoreManager.Instance.OnPlayerScoreChanged.AddListener(OnPlayerScoreChanged);
-    }
-
-    private void OnDisable()
-    {
-        ScoreManager.Instance.OnPlayerScoreChanged.RemoveListener(OnPlayerScoreChanged);
-    }
-
-    public void SetplayerHandle(PlayerHandle playerHandle)
-    {
-        m_playerHandle = playerHandle;
-    }
-
-    private void OnPlayerScoreChanged(PlayerHandle playerHandle, float score)
-    {
-        if(playerHandle == m_playerHandle)
-        {
-            SetScore(score);
-        }
-    }
-
-    private void SetScore(float score)
+    public void SetScore(float score)
     {
         m_scoreText.text = ((int)Mathf.Round(score)).ToString();
         m_onScoreChangedPlayableDirector.Play();

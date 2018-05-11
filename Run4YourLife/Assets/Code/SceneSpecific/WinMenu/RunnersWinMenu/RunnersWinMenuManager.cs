@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Run4YourLife.Player;
 using Run4YourLife.GameManagement;
 using Run4YourLife.InputManagement;
+using System;
 
 namespace Run4YourLife.SceneSpecific.WinMenu
 {
@@ -40,14 +41,27 @@ namespace Run4YourLife.SceneSpecific.WinMenu
         {
             if(PlayerManager.Instance.PlayerHandles.Count == 0)
             {
-                SetUpFakePlayers(3);
-                SetUpFakeScores();
+                SetUpTestPlayers(3);
             }
+
+            if(!GlobalDataContainer.Instance.Data.ContainsKey(GlobalDataContainerKeys.Score))
+            {
+                SetUpTestScores();
+            }
+
             SpawnRunners();
+            ClearScoreData();
         }
 
-        private void SetUpFakePlayers(uint numRunners)
+        private void ClearScoreData()
         {
+            GlobalDataContainer.Instance.Data.Remove(GlobalDataContainerKeys.Score);
+        }
+
+        private void SetUpTestPlayers(uint numRunners)
+        {
+            Debug.Log("Setting up test players");
+
             for(uint i = 0; i < numRunners; ++i)
             {
                 PlayerManager.Instance.AddPlayer(new PlayerHandle()
@@ -60,23 +74,25 @@ namespace Run4YourLife.SceneSpecific.WinMenu
             }
         }
 
-        private void SetUpFakeScores()
+        private void SetUpTestScores()
         {
-            ScoreManager.Instance.Initialize();
-
+            Debug.Log("Setting up test scores");
+            Dictionary<PlayerHandle, float> scores = new Dictionary<PlayerHandle,float>();
             foreach(PlayerHandle playerHandle in PlayerManager.Instance.RunnerPlayerHandles)
             {
-                ScoreManager.Instance.OnScoreAdded(playerHandle, Random.Range(0.0f, 50.0f));
+                scores[playerHandle] = UnityEngine.Random.Range(0.0f, 50.0f);
             }
+            GlobalDataContainer.Instance.Data[GlobalDataContainerKeys.Score] = scores;
         }
 
         private void SpawnRunners()
         {
+            Dictionary<PlayerHandle,float> scores = GlobalDataContainer.Instance.Data[GlobalDataContainerKeys.Score] as Dictionary<PlayerHandle,float>;
             List<KeyValuePair<float, PlayerHandle>> points = new List<KeyValuePair<float, PlayerHandle>>();
 
             foreach(PlayerHandle playerHandle in PlayerManager.Instance.RunnerPlayerHandles)
             {
-                points.Add(new KeyValuePair<float, PlayerHandle>(ScoreManager.Instance.GetPointsByplayerHandle(playerHandle), playerHandle));
+                points.Add(new KeyValuePair<float, PlayerHandle>(scores[playerHandle], playerHandle));
             }
 
             points.Sort((a, b) => b.Key.CompareTo(a.Key));
