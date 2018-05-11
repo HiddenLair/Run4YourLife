@@ -8,8 +8,6 @@ namespace Run4YourLife.UI
 
         void OnSetSetted(SetType setType);
 
-        void OnPhaseSetted(PhaseType phaseType);
-
         void OnBossProgress(float percent);
 
         void OnCountdownSetted(float time);

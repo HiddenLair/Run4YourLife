@@ -4,27 +4,7 @@ using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.UI
 {
-    #region Useful types for events
 
-    public enum ActionType
-    {
-        MELE, SHOOT,
-        TRAP_A, TRAP_B, TRAP_X, TRAP_Y,
-        SKILL_A, SKILL_B, SKILL_X, SKILL_Y
-    }
-
-    public enum SetType
-    {
-        TRAPS, SKILLS
-    }
-
-    public enum PhaseType
-    {
-        FIRST, SECOND, THIRD,
-        TRANSITION
-    }
-
-    #endregion
 
     public class UIManager : MonoBehaviour, IUIEvents
     {
@@ -168,7 +148,7 @@ namespace Run4YourLife.UI
 
         public void OnSetSetted(SetType setType)
         {
-
+            throw new System.NotImplementedException("Not Implemented");
         }
 
         public void OnPhaseSetted(PhaseType phaseType)
