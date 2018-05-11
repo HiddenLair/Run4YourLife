@@ -1,18 +1,22 @@
-﻿using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Playables;
+
+using TMPro;
 
 using Run4YourLife.Player;
 using Run4YourLife.GameManagement;
 
 public class RunnerScoreController : MonoBehaviour
 {
-    private ScaleTick m_scaleTick;
+    private PlayableDirector m_onScoreChangedPlayableDirector;
     private TextMeshProUGUI m_scoreText;
     private PlayerHandle m_playerHandle;
 
     private void Awake()
     {
-        m_scaleTick = GetComponent<ScaleTick>();
+        m_onScoreChangedPlayableDirector = GetComponent<PlayableDirector>();
+        Debug.Assert(m_onScoreChangedPlayableDirector != null);
+
         m_scoreText = GetComponent<TextMeshProUGUI>();
 
         SetScore(0);
@@ -43,7 +47,7 @@ public class RunnerScoreController : MonoBehaviour
 
     private void SetScore(float score)
     {
-        m_scaleTick.Tick();
         m_scoreText.text = ((int)Mathf.Round(score)).ToString();
+        m_onScoreChangedPlayableDirector.Play();
     }
 }

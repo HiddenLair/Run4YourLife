@@ -6,18 +6,10 @@ using Run4YourLife.Utils;
 
 namespace Run4YourLife.UI
 {
-    [RequireComponent(typeof(HorizontalLayoutGroup))]
     public class RunnersScoreController : MonoBehaviour
     {
         [SerializeField]
-        private GameObject scoreTextPrefab;
-
-        private HorizontalLayoutGroup scoreTexts;
-
-        private void Awake()
-        {
-            scoreTexts = GetComponent<HorizontalLayoutGroup>();
-        }
+        RunnerScoreController[] m_runnerScoreControllers;
 
         private void Start()
         {
@@ -26,10 +18,11 @@ namespace Run4YourLife.UI
 
         private void InitializeScores()
         {
-            foreach (PlayerHandle playerHandle in PlayerManager.Instance.RunnerPlayerHandles)
+            for (int i = 0; i < PlayerManager.Instance.RunnerPlayerHandles.Count; i++)
             {
-                GameObject scoreText = Instantiate(scoreTextPrefab, scoreTexts.transform, false);
-                scoreText.GetComponent<RunnerScoreController>().SetplayerHandle(playerHandle);
+                PlayerHandle playerHandle = PlayerManager.Instance.RunnerPlayerHandles[i];
+                m_runnerScoreControllers[i].gameObject.SetActive(true);
+                m_runnerScoreControllers[i].SetplayerHandle(playerHandle);
             }
         }
     }
