@@ -3131,6 +3131,54 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 400014, guid: d6e8cf279e27a0f47a930169905c44f0, type: 3}
   m_PrefabInternal: {fileID: 154553867}
+--- !u!1 &156651759
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 156651761}
+  - component: {fileID: 156651760}
+  m_Layer: 0
+  m_Name: RunnersWinMenuLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &156651760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 156651759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b54b125ffc0a6ec46b3f2eecc0eff95c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_loadEvent: 0
+  m_sceneLoadRequestData:
+    loadScene: 1
+    sceneName: RunnersWinMenu
+    loadSceneMode: 0
+    setLoadedSceneAsActiveScene: 1
+    unloadScene: 0
+    unloadedSceneName: 
+--- !u!4 &156651761
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 156651759}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1132782364}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &157803595
 Prefab:
   m_ObjectHideFlags: 0
@@ -3496,22 +3544,6 @@ MonoBehaviour:
   - {fileID: 1532828309}
   - {fileID: 866646477}
   - {fileID: 1106314936}
-  m_onAllRunnersDied:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 168087532}
-        m_MethodName: OnAllRunnersDied
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   m_onPlayerRevived:
     m_PersistentCalls:
       m_Calls: []
@@ -3550,7 +3582,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Run4YourLife.GameManagement.GamePhaseEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  m_loadBossWinsMenu: {fileID: 1915366743}
+  m_loadBossWinMenu: {fileID: 1915366743}
+  m_loadRunnersWinMenu: {fileID: 156651760}
 --- !u!114 &168087533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19165,6 +19198,7 @@ Transform:
   - {fileID: 1937127592}
   - {fileID: 440002490}
   - {fileID: 1915366742}
+  - {fileID: 156651761}
   m_Father: {fileID: 618985662}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -33412,7 +33446,7 @@ GameObject:
   - component: {fileID: 1915366742}
   - component: {fileID: 1915366743}
   m_Layer: 0
-  m_Name: BossWinLoader
+  m_Name: BossWinMenuLoader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35840,6 +35874,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 364220131}
     m_Modifications:
+    - target: {fileID: 114983468303368926, guid: 82e5f869fd23d8747ba74e09e03e38da,
+        type: 2}
+      propertyPath: m_onBrokenByDash.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4680598691483688, guid: 82e5f869fd23d8747ba74e09e03e38da, type: 2}
       propertyPath: m_LocalPosition.x
       value: 31.8
@@ -35872,7 +35911,43 @@ Prefab:
       propertyPath: m_RootOrder
       value: 14
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 114983468303368926, guid: 82e5f869fd23d8747ba74e09e03e38da,
+        type: 2}
+      propertyPath: m_onBrokenByDash.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 168087532}
+    - target: {fileID: 114983468303368926, guid: 82e5f869fd23d8747ba74e09e03e38da,
+        type: 2}
+      propertyPath: m_onBrokenByDash.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnFinalRockDestroyed
+      objectReference: {fileID: 0}
+    - target: {fileID: 114983468303368926, guid: 82e5f869fd23d8747ba74e09e03e38da,
+        type: 2}
+      propertyPath: m_onBrokenByDash.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114983468303368926, guid: 82e5f869fd23d8747ba74e09e03e38da,
+        type: 2}
+      propertyPath: m_onBrokenByDash.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114983468303368926, guid: 82e5f869fd23d8747ba74e09e03e38da,
+        type: 2}
+      propertyPath: m_onBrokenByDash.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114983468303368926, guid: 82e5f869fd23d8747ba74e09e03e38da,
+        type: 2}
+      propertyPath: m_onBrokenByDash.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114983468303368926, guid: 82e5f869fd23d8747ba74e09e03e38da,
+        type: 2}
+      propertyPath: m_onBrokenByDash.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114020171906782452, guid: 82e5f869fd23d8747ba74e09e03e38da, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 82e5f869fd23d8747ba74e09e03e38da, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &2055977595 stripped

@@ -42,9 +42,9 @@ namespace Run4YourLife.Interactables
 
         private void Break()
         {
-            m_onBrokenByDash.Invoke();
             receiver.PlayFx(destroyParticles);
             gameObject.SetActive(false);
+            m_onBrokenByDash.Invoke();
         }
     }
 }

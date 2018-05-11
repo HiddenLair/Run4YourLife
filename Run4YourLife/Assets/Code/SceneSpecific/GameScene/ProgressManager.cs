@@ -20,16 +20,6 @@ namespace Run4YourLife.GameManagement
             Debug.Assert(m_uiManager != null, "UI not found");
         }
 
-        /* private void OnEnable()
-        {
-            GameManager.Instance.onGamePhaseChanged.AddListener(OnGamePhaseChanged);
-        }
-
-        private void OnDisable()
-        {
-            GameManager.Instance.onGamePhaseChanged.RemoveListener(OnGamePhaseChanged);
-        } */
-
         void Update()
         {
             GameObject boss = GameplayPlayerManager.Instance.Boss;
@@ -42,24 +32,5 @@ namespace Run4YourLife.GameManagement
                 }
             }
         }
-
-        /* private void OnGamePhaseChanged(GamePhase gamePhase)
-        {
-            switch(gamePhase)
-            {
-                case GamePhase.EasyMoveHorizontal:
-                case GamePhase.HardMoveHorizontal:
-                    enabled = true;
-                    break;
-                case GamePhase.BossFight:
-                case GamePhase.BossFightRockTransition:
-                case GamePhase.End:
-                case GamePhase.TransitionToBossFight:
-                case GamePhase.TransitionToEasyMoveHorizontal:
-                case GamePhase.TransitionToHardMoveHorizontal:
-                    enabled = false;
-                    break;
-            }
-        } */
     }
 }

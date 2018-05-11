@@ -27,10 +27,6 @@ namespace Run4YourLife.GameManagement {
         private List<GameObject> m_sceneBosses;
 
         [SerializeField]
-        [Tooltip("Event that will be fired when all the players have died")]
-        private UnityEvent m_onAllRunnersDied;
-
-        [SerializeField]
         [Tooltip("Event that will be fired when a playerIsRevived")]
         private OnPlayerReviveEvent m_onPlayerRevived;
 
@@ -193,7 +189,7 @@ namespace Run4YourLife.GameManagement {
             }
             else if (m_runnersAlive.Count == 0)
             {
-                m_onAllRunnersDied.Invoke();
+                ExecuteEvents.Execute<IGameplayEvents>(gameObject, null, (x,y) =>x.OnGameEnded(GameEndResult.BossWin));
             }
         }
 

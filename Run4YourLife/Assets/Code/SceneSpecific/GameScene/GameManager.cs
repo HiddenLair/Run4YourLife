@@ -10,12 +10,26 @@ using System;
 
 namespace Run4YourLife.GameManagement
 {
-    public class GameManager : SingletonMonoBehaviour<GameManager>
+    public enum GameEndResult 
+    {
+        RunnersWin,
+        BossWin
+    }
+
+    public interface IGameplayEvents : IEventSystemHandler
+    {
+        void OnGameEnded(GameEndResult gameEndResult);
+    }
+
+    public class GameManager : SingletonMonoBehaviour<GameManager>, IGameplayEvents
     {
         public GamePhaseEvent onGamePhaseChanged;
 
         [SerializeField]
-        private SceneTransitionRequest m_loadBossWinsMenu;
+        private SceneTransitionRequest m_loadBossWinMenu;
+
+        [SerializeField]
+        private SceneTransitionRequest m_loadRunnersWinMenu;
 
         public GamePhase GamePhase { get { return m_executingGamePhaseManager.GamePhase; } }
 
@@ -34,11 +48,6 @@ namespace Run4YourLife.GameManagement
         private void Start()
         {
             StartCoroutine(YieldHelper.SkipFrame(() => EndExecutingPhaseAndStartPhase(GamePhase.TransitionToEasyMoveHorizontal)));
-        }
-
-        public void OnAllRunnersDied()
-        {
-            m_loadBossWinsMenu.Execute();
         }
 
         #region Phase Execution
@@ -133,6 +142,26 @@ namespace Run4YourLife.GameManagement
             }
         }
 
+        
+
         #endregion
+        
+        public void OnGameEnded(GameEndResult gameEndResult)
+        {
+            switch(gameEndResult)
+            {
+                case GameEndResult.BossWin:
+                    StartCoroutine(YieldHelper.SkipFrame(() => m_loadBossWinMenu.Execute()));
+                    break;
+                case GameEndResult.RunnersWin:
+                    StartCoroutine(YieldHelper.SkipFrame(() => m_loadRunnersWinMenu.Execute()));
+                    break;
+            }
+        }
+
+        public void OnFinalRockDestroyed()
+        {
+            ExecuteEvents.Execute<IGameplayEvents>(gameObject, null, (a, b) => a.OnGameEnded(GameEndResult.RunnersWin));
+        }
     }
 }

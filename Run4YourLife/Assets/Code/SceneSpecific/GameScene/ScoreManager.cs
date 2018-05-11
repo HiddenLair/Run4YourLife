@@ -1,22 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
+
 using Run4YourLife.Player;
-using UnityEngine.SceneManagement;
 using Run4YourLife.UI;
 
 namespace Run4YourLife.GameManagement
 {
-    public interface IScoreEvents : IEventSystemHandler
+    public interface IScoreEvents : IEventSystemHandler, IGameplayEvents
     {
         void OnScoreAdded(PlayerHandle playerHandle, float points);
     }
 
-    public class ScoreManager : SingletonMonoBehaviour<ScoreManager>, IScoreEvents
+    public class ScoreManager : SingletonMonoBehaviour<ScoreManager>, IScoreEvents, IGameplayEvents
     {
-        private Dictionary<PlayerHandle, float> m_playerScore = new Dictionary<PlayerHandle, float>();
+        private Dictionary<PlayerHandle, float> m_score = new Dictionary<PlayerHandle, float>();
         private GameObject m_uiGameObject;
 
         private void Awake()
@@ -27,13 +26,18 @@ namespace Run4YourLife.GameManagement
 
         public void OnScoreAdded(PlayerHandle playerHandle,float points)
         {
-            if(!m_playerScore.ContainsKey(playerHandle))
+            if(!m_score.ContainsKey(playerHandle))
             {
-                m_playerScore.Add(playerHandle, 0);
+                m_score.Add(playerHandle, 0);
             }
 
-            float score = (m_playerScore[playerHandle] += points);
+            float score = (m_score[playerHandle] += points);
             ExecuteEvents.Execute<IUIScoreEvents>(m_uiGameObject, null, (x,y)=>x.OnScoreChanged(playerHandle, score));
+        }
+
+        public void OnGameEnded(GameEndResult gameEndResult)
+        {
+            GlobalDataContainer.Instance.Data[GlobalDataContainerKeys.Score] = m_score;
         }
     }
 }

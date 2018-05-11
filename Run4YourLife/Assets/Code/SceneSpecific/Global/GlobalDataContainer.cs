@@ -7,7 +7,7 @@ namespace Run4YourLife
 {
     public class GlobalDataContainerKeys
     {
-        public static readonly string Score = "score"; 
+        public static readonly string Score = "score"; // May contain Dictionary<PlayerHandle, float>
     }
     public class GlobalDataContainer : SingletonMonoBehaviour<GlobalDataContainer> {
 
