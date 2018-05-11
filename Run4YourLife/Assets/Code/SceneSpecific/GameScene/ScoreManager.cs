@@ -10,7 +10,7 @@ namespace Run4YourLife.GameManagement
 {
     public interface IScoreEvents : IEventSystemHandler
     {
-        void OnAddPoints(PlayerHandle playerHandle, float points);
+        void OnScoreAdded(PlayerHandle playerHandle, float points);
     }
 
     [System.Serializable]
@@ -46,7 +46,7 @@ namespace Run4YourLife.GameManagement
             m_playerScore.Clear();
         }
 
-        public void OnAddPoints(PlayerHandle playerHandle,float points)
+        public void OnScoreAdded(PlayerHandle playerHandle,float points)
         {
             if(!m_playerScore.ContainsKey(playerHandle))
             {

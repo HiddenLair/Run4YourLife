@@ -49,7 +49,7 @@ namespace Run4YourLife.Interactables
         private void ExecutePowerUp(GameObject runner)
         {
             PlayerHandle playerHandle = runner.GetComponent<PlayerInstance>().PlayerHandle;
-            ExecuteEvents.Execute<IScoreEvents>(ScoreManager.InstanceGameObject, null, (x, y) => x.OnAddPoints(playerHandle, m_score));
+            ExecuteEvents.Execute<IScoreEvents>(ScoreManager.InstanceGameObject, null, (x, y) => x.OnScoreAdded(playerHandle, m_score));
 
             switch (Type)
             {

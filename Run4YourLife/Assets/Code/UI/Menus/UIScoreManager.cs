@@ -6,7 +6,7 @@ using Run4YourLife.Utils;
 
 namespace Run4YourLife.UI
 {
-    public class RunnersScoreController : MonoBehaviour
+    public class UIScoreManager : MonoBehaviour
     {
         [SerializeField]
         RunnerScoreController[] m_runnerScoreControllers;

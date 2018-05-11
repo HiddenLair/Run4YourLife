@@ -66,7 +66,7 @@ namespace Run4YourLife.SceneSpecific.WinMenu
 
             foreach(PlayerHandle playerHandle in PlayerManager.Instance.RunnerPlayerHandles)
             {
-                ScoreManager.Instance.OnAddPoints(playerHandle, Random.Range(0.0f, 50.0f));
+                ScoreManager.Instance.OnScoreAdded(playerHandle, Random.Range(0.0f, 50.0f));
             }
         }
 
