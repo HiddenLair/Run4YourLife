@@ -12,6 +12,16 @@ namespace Run4YourLife.Debugging
         private int vertexCount = 0;
         private int triangleCount = 0;
 
+        // Getting the triangle count of a mesh is expensive
+        // TriangleCounterHelper minimizes this cost by caching this information
+
+        private TriangleCounterHelper triangleCounterHelper = new TriangleCounterHelper();
+
+        void OnDestroy()
+        {
+            triangleCounterHelper.Clear();
+        }
+
         protected override string GetPanelName()
         {
             return "Vertex and triangle counter";
@@ -21,7 +31,7 @@ namespace Run4YourLife.Debugging
         {
             if((currentUpdateTimeS += Time.deltaTime) >= updateTimeS)
             {
-                Count(); // Expensive
+                Count();
                 currentUpdateTimeS = 0.0f;
             }
 
@@ -29,25 +39,29 @@ namespace Run4YourLife.Debugging
             GUILayout.Label("Num. Triangles: " + triangleCount);
         }
 
-        private void Count()
+        private void Count() // Expensive
         {
             vertexCount = 0;
             triangleCount = 0;
 
             MeshRenderer[] meshes = FindObjectsOfType<MeshRenderer>();
 
-            foreach(MeshRenderer mesh in meshes)
+            for(int i = 0; i < meshes.Length; ++i)
             {
+                MeshRenderer meshRenderer = meshes[i];
+
                 // Vertex and triangle count does not work with static game objects
 
-                if(!mesh.gameObject.isStatic && mesh.isVisible)
+                if(!meshRenderer.gameObject.isStatic && meshRenderer.isVisible)
                 {
-                    MeshFilter filter = mesh.GetComponent<MeshFilter>();
+                    MeshFilter filter = meshRenderer.GetComponent<MeshFilter>();
 
-                    if(filter)
+                    if(filter != null)
                     {
-                        vertexCount += filter.sharedMesh.vertexCount;
-                        triangleCount += filter.sharedMesh.triangles.Length; // ¡GC! O.o
+                        Mesh mesh = filter.sharedMesh;
+
+                        vertexCount += mesh.vertexCount;
+                        triangleCount += triangleCounterHelper.Get(mesh);
                     }
                 }
             }
