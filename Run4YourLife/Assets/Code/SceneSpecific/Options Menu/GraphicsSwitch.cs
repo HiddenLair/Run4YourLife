@@ -4,66 +4,33 @@ using UnityEngine.EventSystems;
 
 namespace Run4YourLife.SceneSpecific.OptionsMenu
 {
-    public class GraphicsSwitch : MonoBehaviour, IMoveHandler, ISelectHandler, IDeselectHandler
+    public class GraphicsSwitch : MenuEntryArrowed
     {
-        #region Public Variables
-        public TextMeshProUGUI graphicsText;
-        public GameObject leftSwitch;
-        public GameObject rightSwitch;
-        #endregion
+        public TextMeshProUGUI m_graphicsText;
 
-        public void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             UpdateUI();
-        }
-
-        public void OnMove(AxisEventData eventData)
-        {
-            if(eventData.moveDir == MoveDirection.Right)
-            {
-                QualitySettings.IncreaseLevel();
-                UpdateUI();
-
-                rightSwitch.GetComponent<ScaleTick>().Tick();
-            }
-            else if(eventData.moveDir == MoveDirection.Left)
-            {
-                QualitySettings.DecreaseLevel();
-                UpdateUI();
-
-                leftSwitch.GetComponent<ScaleTick>().Tick();
-            }
         }
 
         private void UpdateUI()
         {
-            graphicsText.SetText(QualitySettings.names[QualitySettings.GetQualityLevel()]);
+            m_graphicsText.SetText(QualitySettings.names[QualitySettings.GetQualityLevel()]);
         }
 
-        public void OnSelect(BaseEventData eventData)
+        protected override void OnArrowEvent(MoveEvent moveEvent)
         {
-            if (leftSwitch != null)
+            switch(moveEvent)
             {
-                leftSwitch.SetActive(true);
+                case MoveEvent.Left:
+                    QualitySettings.DecreaseLevel();
+                    break;
+                case MoveEvent.Right:
+                    QualitySettings.IncreaseLevel();
+                    break;
             }
-
-            if (rightSwitch != null)
-            {
-                rightSwitch.SetActive(true);
-            }
-        }
-
-        public void OnDeselect(BaseEventData eventData)
-        {
-            if (leftSwitch != null)
-            {
-                leftSwitch.SetActive(false);
-            }
-
-            if (rightSwitch != null)
-            {
-                rightSwitch.SetActive(false);
-            }
+            UpdateUI();
         }
     }
 }

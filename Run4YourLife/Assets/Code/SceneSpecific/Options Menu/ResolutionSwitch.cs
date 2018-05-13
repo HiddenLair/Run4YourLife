@@ -9,21 +9,17 @@ using UnityEngine.UI;
 
 namespace Run4YourLife.SceneSpecific.OptionsMenu
 {
-    public class ResolutionSwitch : MonoBehaviour, IMoveHandler, ISelectHandler, IDeselectHandler
+    public class ResolutionSwitch : MenuEntryArrowed
     {
-        #region Private Variables
+        [SerializeField]
+        private TextMeshProUGUI resolutionText;
+
         private Resolution[] availableResolutions;
-        private int resolutionIndex;
-        #endregion
+        private int resolutionIndex;        
 
-        #region Public Variables
-        public TextMeshProUGUI resolutionText;
-        public GameObject leftSwitch;
-        public GameObject rightSwitch;
-        #endregion
-
-        public void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             availableResolutions = Screen.resolutions;
 
             for (int i = 0; i < availableResolutions.Length; ++i)
@@ -38,34 +34,6 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
             UpdateUI();
         }
 
-        public void OnMove(AxisEventData eventData)
-        {
-            if (eventData.moveDir == MoveDirection.Right)
-            {
-                if (resolutionIndex < availableResolutions.Length-1)
-                {
-                    resolutionIndex++;
-                    SetResolution(resolutionIndex);
-                }
-
-                UpdateUI();
-
-                rightSwitch.GetComponent<ScaleTick>().Tick();
-            }
-            else if (eventData.moveDir == MoveDirection.Left)
-            {
-                if (resolutionIndex > 0)
-                {
-                    resolutionIndex--;
-                    SetResolution(resolutionIndex);
-                }
-
-                UpdateUI();
-
-                leftSwitch.GetComponent<ScaleTick>().Tick();
-            }
-        }
-
         private void SetResolution(int resIndex)
         {
             Screen.SetResolution(availableResolutions[resIndex].width, availableResolutions[resIndex].height, Screen.fullScreen);
@@ -76,30 +44,26 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
             resolutionText.text = availableResolutions[resolutionIndex].width + " x " + availableResolutions[resolutionIndex].height;
         }
 
-        public void OnSelect(BaseEventData eventData)
+        protected override void OnArrowEvent(MoveEvent moveEvent)
         {
-            if (leftSwitch != null)
+            switch(moveEvent)
             {
-                leftSwitch.SetActive(true);
+                case MoveEvent.Left:
+                    if (resolutionIndex > 0)
+                    {
+                        resolutionIndex--;
+                        SetResolution(resolutionIndex);
+                    }
+                    break;
+                case MoveEvent.Right:
+                    if (resolutionIndex < availableResolutions.Length-1)
+                    {
+                        resolutionIndex++;
+                        SetResolution(resolutionIndex);
+                    }
+                    break;
             }
-
-            if (rightSwitch != null)
-            {
-                rightSwitch.SetActive(true);
-            }
-        }
-
-        public void OnDeselect(BaseEventData eventData)
-        {
-            if (leftSwitch != null)
-            {
-                leftSwitch.SetActive(false);
-            }
-
-            if (rightSwitch != null)
-            {
-                rightSwitch.SetActive(false);
-            }
+            UpdateUI();
         }
     }
 }

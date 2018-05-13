@@ -2,54 +2,54 @@
 using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.Playables;
 
 namespace Run4YourLife.SceneSpecific.OptionsMenu
 {
-    public class VolumeSwitch : MonoBehaviour, IMoveHandler, ISelectHandler, IDeselectHandler
+    public class VolumeSwitch : MenuEntryArrowed
     {
-        #region Private Variables
-        private int volumeLevel = 3;
-        #endregion
-
-        #region Public Variables
-        public Sprite activeMusicalNote;
+        [SerializeField]
+        private Sprite activeMusicalNote;
+        
+        [SerializeField]
         public Sprite unactiveMusicalNote;
+
+        [SerializeField]
         public GameObject[] musicalNotes;
-        public GameObject leftSwitch;
-        public GameObject rightSwitch;
+
+        [SerializeField]
         public AudioMixer audioMixer;
-        #endregion
 
-        public void Awake()
+        private int volumeLevel = 3;
+
+        protected override void Awake()
         {
-            SetVolume(3, true); 
+            base.Awake();
+            SetVolume(3, false); 
         }
 
-        public void OnMove(AxisEventData eventData)
+        protected override void OnArrowEvent(MoveEvent moveEvent)
         {
-            if (eventData.moveDir == MoveDirection.Right)
+            switch(moveEvent)
             {
-                if (volumeLevel < 5)
-                {
-                    volumeLevel++;
-                    SetVolume(volumeLevel);
-                }
-
-                rightSwitch.GetComponent<ScaleTick>().Tick();
-            }
-            else if (eventData.moveDir == MoveDirection.Left)
-            {
-                if (volumeLevel > 0)
-                {
-                    volumeLevel--;
-                    SetVolume(volumeLevel);
-                }
-
-                leftSwitch.GetComponent<ScaleTick>().Tick();
+                case MoveEvent.Left:
+                    if (volumeLevel > 0)
+                    {
+                        volumeLevel--;
+                        SetVolume(volumeLevel);
+                    }
+                    break;
+                case MoveEvent.Right:
+                    if (volumeLevel < 5)
+                    {
+                        volumeLevel++;
+                        SetVolume(volumeLevel);
+                    }
+                    break;
             }
         }
 
-        private void SetVolume(int volumeValue, bool ignoreNoteScaleTick = false)
+        private void SetVolume(int volumeValue, bool playNoteAnimation = true)
         {
             for(int i = 0; i < volumeLevel; i++)
             {
@@ -64,9 +64,9 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
             float volumeOffset = 20.0f * (float)volumeValue;
             audioMixer.SetFloat("Volume", -80.0f + volumeOffset);
 
-            if(!ignoreNoteScaleTick && volumeValue > 0)
-            {
-                musicalNotes[volumeValue - 1].GetComponent<ScaleTick>().Tick();
+            if(playNoteAnimation && volumeValue > 0)
+            {   
+                musicalNotes[volumeValue - 1].GetComponent<PlayableDirector>().Play();
             }
         }
 
@@ -78,32 +78,6 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
         private void ActivateNote(GameObject note)
         {
             note.GetComponent<Image>().sprite = activeMusicalNote;
-        }
-
-        public void OnSelect(BaseEventData eventData)
-        {
-            if (leftSwitch != null)
-            {
-                leftSwitch.SetActive(true);
-            }
-
-            if (rightSwitch != null)
-            {
-                rightSwitch.SetActive(true);
-            }
-        }
-
-        public void OnDeselect(BaseEventData eventData)
-        {
-            if (leftSwitch != null)
-            {
-                leftSwitch.SetActive(false);
-            }
-
-            if (rightSwitch != null)
-            {
-                rightSwitch.SetActive(false);
-            }
         }
     }
 }

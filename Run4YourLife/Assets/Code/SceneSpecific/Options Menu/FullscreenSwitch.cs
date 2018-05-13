@@ -1,68 +1,32 @@
-﻿using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Playables;
+
+using TMPro;
 
 namespace Run4YourLife.SceneSpecific.OptionsMenu
 {
-    public class  FullscreenSwitch : MonoBehaviour, IMoveHandler, ISelectHandler, IDeselectHandler
+    public class  FullscreenSwitch : MenuEntryArrowed
     {
-        #region Public Variables
         [SerializeField]
-        private TextMeshProUGUI fullscreenText;
+        private TextMeshProUGUI m_fullscreenText;
 
-        [SerializeField]
-        private GameObject leftSwitch;
+        private string m_onString = "ON";
+        private string m_offString = "OFF";
 
-        [SerializeField]
-        private GameObject rightSwitch;
-        #endregion
-
-        private void UpdateUI()
+        protected override void OnArrowEvent(MoveEvent moveEvent)
         {
-            fullscreenText.text = Screen.fullScreen ? "ON" : "OFF";
-        }
-
-        public void OnMove(AxisEventData eventData)
-        {
-            if (eventData.moveDir == MoveDirection.Right)
+            switch(moveEvent)
             {
-                Screen.fullScreen = true;
-                UpdateUI();
+                case MoveEvent.Right:
+                    Screen.fullScreen = true;
+                    m_fullscreenText.text = m_onString;
+                    break;
 
-                rightSwitch.GetComponent<ScaleTick>().Tick();
-            }
-            else if (eventData.moveDir == MoveDirection.Left)
-            {
-                Screen.fullScreen = false;
-                UpdateUI();
-
-                leftSwitch.GetComponent<ScaleTick>().Tick();
-            }
-        }
-
-        public void OnSelect(BaseEventData eventData)
-        {
-            if(leftSwitch != null)
-            {
-                leftSwitch.SetActive(true);
-            }
-
-            if(rightSwitch != null)
-            {
-                rightSwitch.SetActive(true);
-            }
-        }
-
-        public void OnDeselect(BaseEventData eventData)
-        {
-            if (leftSwitch != null)
-            {
-                leftSwitch.SetActive(false);
-            }
-
-            if (rightSwitch != null)
-            {
-                rightSwitch.SetActive(false);
+                case MoveEvent.Left:
+                    Screen.fullScreen = false;
+                    m_fullscreenText.text = m_offString;
+                    break;
             }
         }
     }
