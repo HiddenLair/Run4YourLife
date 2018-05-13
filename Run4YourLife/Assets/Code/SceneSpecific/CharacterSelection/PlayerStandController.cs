@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Playables;
 
 using Run4YourLife.InputManagement;
 using Run4YourLife.Player;
@@ -8,109 +9,83 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
     public abstract class PlayerStandController : MonoBehaviour, IPlayerHandleEvent
     {
         [SerializeField]
-        protected GameObject ui;
+        private float m_rotationSpeed;        
 
         [SerializeField]
-        protected ScaleTick readyBoxScaleTick;
-
-        [SerializeField]
-        protected ScaleTick readyTextScaleTick;
-
-        [SerializeField]
-        protected Transform spawnTransform;
+        private Transform m_spawn;
 
         [SerializeField]
         private float scaleMultiplierReady = 1.1f;
 
-        protected bool ready = false;
+        [SerializeField]
+        private PlayableDirector m_readyPlayableDirector;
+        
+        [SerializeField]
+        private GameObject m_readyText;
+
+        public bool IsReady { get { return m_ready; } }
+        public PlayerHandle PlayerHandle { get { return m_playerHandle; } }
+
+        private bool m_ready;
 
         protected float rotationY = 0.0f;
 
         private Vector3 initialScale;
 
-        #region Stands
+        private GameObject m_ui;
+        protected Transform activeStand;
+        private PlayerHandle m_playerHandle;
+        protected PlayerStandControllerControlScheme m_playerStandControlScheme;
 
-        protected GameObject activeStand;
-
-        #endregion
-
-        #region References
-
-        protected PlayerHandle playerHandle;
-        protected PlayerStandControllerControlScheme controlScheme;
-
-        #endregion
-
-        void Awake()
+        protected virtual void Awake()
         {
-            controlScheme = GetComponent<PlayerStandControllerControlScheme>();
-            Debug.Assert(controlScheme != null);
+            m_ui = transform.Find("UI").gameObject;
+            Debug.Assert(m_ui != null);
+
+            m_playerStandControlScheme = GetComponent<PlayerStandControllerControlScheme>();
+            Debug.Assert(m_playerStandControlScheme != null);
 
             initialScale = transform.localScale;
-
-            OnAwake();
         }
 
-        void Update()
+        public void OnPlayerHandleChanged(PlayerHandle playerHandle)
         {
-            if(playerHandle != null)
+            m_playerHandle = playerHandle;
+
+            bool hasPlayerHandle = playerHandle != null;
+            m_ui.SetActive(hasPlayerHandle);
+            m_playerStandControlScheme.Active = hasPlayerHandle;
+
+            if(activeStand != null)
             {
-                UpdatePlayer();
+                Destroy(activeStand.gameObject);
+                activeStand = null;
+            }
+
+            if(hasPlayerHandle)
+            {
+                activeStand = SpawnPlayerStand(playerHandle).transform;
             }
             else
             {
                 rotationY = 0.0f;
             }
+        }
 
-            if(activeStand != null)
+        private void Update()
+        {
+            if(m_playerHandle != null)
             {
-                activeStand.transform.rotation = Quaternion.AngleAxis(rotationY, Vector3.up);
+                activeStand.rotation = Quaternion.AngleAxis(rotationY, Vector3.up);
+
+                UpdatePlayer();
             }
-        }
-
-        public bool GetReady()
-        {
-            return ready;
-        }
-
-        public PlayerHandle GetplayerHandle()
-        {
-            return playerHandle;
-        }
-
-        public void OnPlayerHandleChanged(PlayerHandle playerHandle)
-        {
-            if(playerHandle == null)
-            {
-                ClearplayerHandle();
-            }
-            else
-            {
-                SetplayerHandle(playerHandle);
-            }
-        }
-
-        protected void SetplayerHandle(PlayerHandle playerHandle)
-        {
-            this.playerHandle = playerHandle;
-            activeStand = SpawnPlayerStand(playerHandle);
-            controlScheme.Active = true;
-            ui.SetActive(true);
-        }
-
-        protected void ClearplayerHandle()
-        {
-            playerHandle = null;
-            Destroy(activeStand);
-            activeStand = null;
-            controlScheme.Active = false;
-            ui.SetActive(false);
         }
 
         private GameObject SpawnPlayerStand(PlayerHandle playerHandle)
         {
             GameObject prefab = GetStandPrefabForPlayer(playerHandle);
-            GameObject instance = Instantiate(prefab, spawnTransform, false);
+            GameObject instance = Instantiate(prefab, m_spawn, false);
 
             return instance;
         }
@@ -119,39 +94,39 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         protected virtual void UpdatePlayer()
         {
-            if(controlScheme.Ready.Started())
+            rotationY += m_rotationSpeed * m_playerStandControlScheme.Rotate.Value() * Time.deltaTime;
+
+            if(m_playerStandControlScheme.Ready.Started())
             {
-                if(ready)
+                m_ready = !m_ready;
+
+                if(!m_ready)
                 {
-                    ready = false;
-                    readyTextScaleTick.gameObject.SetActive(false);
-                    OnNotReady();
+                    m_readyText.SetActive(false);
+
                     transform.localScale = initialScale;
+
+                    OnNotReady();
                 }
                 else
                 {
-                    ready = true;
-                    readyBoxScaleTick.Tick();
-                    readyTextScaleTick.Tick();
-                    readyTextScaleTick.gameObject.SetActive(true);
-                    OnReady();
+                    m_readyText.SetActive(true);
+                    m_readyPlayableDirector.Play();
+                    
                     transform.localScale = scaleMultiplierReady * initialScale;
+
+                    OnReady();
                 }
             }
-            else if(controlScheme.Exit.Started())
+            
+            if(m_playerStandControlScheme.Exit.Started())
             {
                 PlayerStandsManager.Instance.GoMainMenu();
             }
-            else if(Mathf.Abs(controlScheme.Rotate.Value()) > 0.5f)
-            {
-                rotationY += -200.0f * controlScheme.Rotate.Value() * Time.deltaTime;
-            }
         }
 
-        protected virtual void OnAwake() { }
+        protected abstract void OnReady();
 
-        protected virtual void OnReady() { }
-
-        protected virtual void OnNotReady() { }
+        protected abstract void OnNotReady();
     }
 }

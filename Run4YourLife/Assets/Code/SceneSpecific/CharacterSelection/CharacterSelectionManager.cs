@@ -40,15 +40,11 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             {
                 inputDevice = inputDevice,
                 CharacterType = PlayerManager.Instance.GetFirstAviablePlayerCharacterType(),
-                ID = inputDevice.ID
+                ID = inputDevice.ID,
+                IsBoss = PlayerManager.Instance.BossPlayerHandle == null
             };
 
-            if (PlayerManager.Instance.PlayerHandles.Count == 0)
-            {
-                PlayerManager.Instance.SetPlayerAsBoss(playerHandle);
-            }
-
-            PlayerManager.Instance.AddPlayer(playerHandle);
+            PlayerManager.Instance.AddPlayer(playerHandle);        
         }
 
         public void OnGameStart()

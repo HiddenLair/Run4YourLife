@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.Playables;
 
 using Run4YourLife.InputManagement;
 using Run4YourLife.Player;
@@ -9,10 +11,10 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
     public class RunnerStandController : PlayerStandController
     {
         [SerializeField]
-        private ScaleTick m_scaleTickArrowLeft;
+        private PlayableDirector m_leftArrowUse;
 
         [SerializeField]
-        private ScaleTick m_scaleTickArrowRight;
+        private PlayableDirector m_rightArrowUse;
 
         [SerializeField]
         private string animationNotReady = "idle";
@@ -22,8 +24,9 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         private RunnerPrefabManager m_runnerPrefabManager;
 
-        protected override void OnAwake()
+        protected override void Awake()
         {
+            base.Awake();
             m_runnerPrefabManager = FindObjectOfType<RunnerPrefabManager>();
             Debug.Assert(m_runnerPrefabManager != null);
         }
@@ -31,15 +34,15 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         protected override void OnReady()
         {
             activeStand.GetComponent<Animator>().Play(animationReady);
-            m_scaleTickArrowLeft.gameObject.SetActive(false);
-            m_scaleTickArrowRight.gameObject.SetActive(false);
+            m_leftArrowUse.gameObject.SetActive(false);
+            m_rightArrowUse.gameObject.SetActive(false);
         }
 
         protected override void OnNotReady()
         {
             activeStand.GetComponent<Animator>().Play(animationNotReady);
-            m_scaleTickArrowLeft.gameObject.SetActive(true);
-            m_scaleTickArrowRight.gameObject.SetActive(true);
+            m_leftArrowUse.gameObject.SetActive(true);
+            m_rightArrowUse.gameObject.SetActive(true);
         }
 
         protected override GameObject GetStandPrefabForPlayer(PlayerHandle playerHandle)
@@ -51,18 +54,18 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         {
             base.UpdatePlayer();
 
-            RunnerStandControllerControlScheme controlScheme = this.controlScheme as RunnerStandControllerControlScheme;
+            RunnerStandControllerControlScheme controlScheme = this.m_playerStandControlScheme as RunnerStandControllerControlScheme;
 
-            if(!ready)
+            if(!IsReady)
             {
                 if(controlScheme.NextStand.Started())
                 {
-                    m_scaleTickArrowRight.Tick();
+                    m_rightArrowUse.Play();
                     ChangePlayerCharacter(AdvanceType.Next);
                 }
                 else if(controlScheme.PreviousStand.Started())
                 {
-                    m_scaleTickArrowLeft.Tick();
+                    m_leftArrowUse.Play();
                     ChangePlayerCharacter(AdvanceType.Previous);
                 }
                 else if(controlScheme.SetAsBoss.Started())
@@ -80,10 +83,9 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         private void ChangePlayerCharacter(AdvanceType advanceType)
         {
-            PlayerHandle playerHandle = this.playerHandle;
-            ClearplayerHandle();
+            PlayerHandle playerHandle = this.PlayerHandle;
             playerHandle.CharacterType = PlayerManager.Instance.GetFirstAviableCharacterType(playerHandle.CharacterType, (int)advanceType);
-            SetplayerHandle(playerHandle);
+            ExecuteEvents.Execute<IPlayerHandleEvent>(gameObject, null, (a,b) => a.OnPlayerHandleChanged(playerHandle));
         }
     }
 }

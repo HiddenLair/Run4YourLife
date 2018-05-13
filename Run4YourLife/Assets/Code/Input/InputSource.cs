@@ -69,7 +69,14 @@
             get { return m_inputDevice; } 
             set { 
                 m_inputDevice = value;
-                m_cachedInputString = m_inputDevice.InputString(m_input);
+                if(m_inputDevice != null)
+                {
+                    m_cachedInputString = m_inputDevice.InputString(m_input);
+                }
+                else
+                {
+                    m_cachedInputString = string.Empty;
+                }
             } 
         }
         public string Input { 

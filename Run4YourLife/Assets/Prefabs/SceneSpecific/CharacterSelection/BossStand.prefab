@@ -19,6 +19,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4024043890068498}
+  - component: {fileID: 320632261374218780}
+  - component: {fileID: 95390264881170548}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -147,7 +149,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1073336735829158}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 2.5, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 4024043890068498}
@@ -175,7 +177,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1753740232925490}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.25, z: 1}
+  m_LocalPosition: {x: 0, y: -4.4, z: 2.5}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children: []
   m_Father: {fileID: 4745700278705608}
@@ -222,6 +224,23 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1557967148600036}
   m_Mesh: {fileID: 0}
+--- !u!95 &95390264881170548
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1011374967317024}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114015469747117826
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -384,11 +403,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2965f7759518cb48972fbfb467e4115, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ui: {fileID: 1011374967317024}
-  readyBoxScaleTick: {fileID: 114766194689242696}
-  readyTextScaleTick: {fileID: 114487345422533756}
-  spawnTransform: {fileID: 4986715368185946}
-  boss: {fileID: 1952039067271902, guid: 20073b34bb10fcd4d88c135b833d71da, type: 2}
+  m_rotationSpeed: -200
+  m_spawn: {fileID: 4986715368185946}
+  scaleMultiplierReady: 1.1
+  m_readyPlayableDirector: {fileID: 320632261374218780}
+  m_readyText: {fileID: 1557967148600036}
+  m_bossStand: {fileID: 1952039067271902, guid: 20073b34bb10fcd4d88c135b833d71da,
+    type: 2}
 --- !u!212 &212743699875420814
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -501,3 +522,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0.287, y: 0}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!320 &320632261374218780
+PlayableDirector:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1011374967317024}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 98dd8b692df8e184293c6975f69b30a7, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 114691831822115364, guid: 98dd8b692df8e184293c6975f69b30a7, type: 2}
+    value: {fileID: 1011374967317024}
+  m_ExposedReferences:
+    m_References: []

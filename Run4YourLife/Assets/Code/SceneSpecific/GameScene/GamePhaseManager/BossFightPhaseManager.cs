@@ -99,9 +99,6 @@ namespace Run4YourLife.GameManagement
 
         public override void EndPhase()
         {
-            GameObject boss = GameplayPlayerManager.Instance.Boss;
-            Destroy(boss);
-
             EndPhaseCommon();
         }
 

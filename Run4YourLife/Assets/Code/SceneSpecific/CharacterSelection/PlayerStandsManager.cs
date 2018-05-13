@@ -16,9 +16,14 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         private bool ready = true;
         private bool gameHasStarted = false;
 
-        private void Start()
+        private void OnEnable()
         {
             PlayerManager.Instance.OnPlayerChanged.AddListener(OnPlayerChanged);
+        }
+
+        private void OnDisable()
+        {
+            PlayerManager.Instance.OnPlayerChanged.RemoveListener(OnPlayerChanged);
         }
 
         void Update()
@@ -47,9 +52,11 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         private void DestroyStand(PlayerHandle playerHandle)
         {
+            Debug.Assert(playerHandle != null);
+
             PlayerStandController playerStandController = null;
 
-            if(bossStandController.GetplayerHandle() == playerHandle)
+            if(bossStandController.PlayerHandle == playerHandle)
             {
                 playerStandController = bossStandController;
             }
@@ -57,7 +64,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             {
                 foreach(RunnerStandController runnerStandController in runnerStandControllers)
                 {
-                    if(runnerStandController.GetplayerHandle() == playerHandle)
+                    if(runnerStandController.PlayerHandle == playerHandle)
                     {
                         playerStandController = runnerStandController;
                         break;
@@ -77,7 +84,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
             if(playerHandle.IsBoss)
             {
-                Debug.Assert(bossStandController.GetplayerHandle() == null);
+                Debug.Assert(bossStandController.PlayerHandle == null);
 
                 playerStandController = bossStandController;
             }
@@ -85,7 +92,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             {
                 foreach(RunnerStandController runnerStandController in runnerStandControllers)
                 {
-                    if(runnerStandController.GetplayerHandle() == null)
+                    if(runnerStandController.PlayerHandle == null)
                     {
                         playerStandController = runnerStandController;
                         break;
@@ -105,9 +112,9 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             if(!ready) return;
             ready = false;
 
-            if(bossStandController.GetplayerHandle() == null)
+            if(bossStandController.PlayerHandle == null)
             {
-                PlayerManager.Instance.SetPlayerAsBoss(runnerStandController.GetplayerHandle());
+                PlayerManager.Instance.SetPlayerAsBoss(runnerStandController.PlayerHandle);
             }
         }
 
@@ -116,7 +123,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             if(!ready) return;
             ready = false;
 
-            PlayerManager.Instance.SetPlayerAsRunner(bossStandController.GetplayerHandle());
+            PlayerManager.Instance.SetPlayerAsRunner(bossStandController.PlayerHandle);
         }
 
         public void GoMainMenu()
@@ -131,12 +138,12 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 return false;
             }
 
-            if(bossStandController.GetplayerHandle() == null)
+            if(bossStandController.PlayerHandle == null)
             {
                 return false;
             }
 
-            if(!bossStandController.GetReady())
+            if(!bossStandController.IsReady)
             {
                 return false;
             }
@@ -145,9 +152,9 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
             foreach(RunnerStandController runnerStandController in runnerStandControllers)
             {
-                if(runnerStandController.GetplayerHandle() != null)
+                if(runnerStandController.PlayerHandle != null)
                 {
-                    if(!runnerStandController.GetReady())
+                    if(!runnerStandController.IsReady)
                     {
                         return false;
                     }
