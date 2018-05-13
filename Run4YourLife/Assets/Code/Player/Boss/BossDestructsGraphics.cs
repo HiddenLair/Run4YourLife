@@ -36,7 +36,7 @@ namespace Run4YourLife.Interactables
             {
                 foreach (Renderer renderer in m_renderer)
                 {
-                    MakeTransparent(renderer.material);
+                    SetInitialTiling(renderer.material);
                 }
 
                 StartCoroutine(AlphaAnimation());
@@ -66,9 +66,6 @@ namespace Run4YourLife.Interactables
             {
                 foreach (Renderer renderer in m_renderer)
                 {
-                    //Color color = renderer.material.color;
-                    //color.a = (endTime - Time.time) / m_alphaAnimationLenght;
-                    //renderer.material.color = color;
                     float dissolve = renderer.material.GetFloat("_Dissolveamout");
                     dissolve = 1 - (endTime - Time.time) / m_alphaAnimationLenght;
                     renderer.material.SetFloat("_Dissolveamout", dissolve);
@@ -79,16 +76,11 @@ namespace Run4YourLife.Interactables
             gameObject.SetActive(false);
         }
 
-        public void MakeTransparent(Material material)
+        private void SetInitialTiling(Material mat)
         {
-            //material.SetFloat("_Mode", 3);
-            //material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
-            //material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-            //material.SetInt("_ZWrite", 0);
-            //material.DisableKeyword("_ALPHATEST_ON");
-            //material.DisableKeyword("_ALPHABLEND_ON");
-            //material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
-            //material.renderQueue = 3000;
+            float x = Mathf.Sin(Time.time);
+            float y = Mathf.Cos(Time.time);
+            mat.SetTextureOffset("_Noise",new Vector2(x,y));
         }
     }
 }
