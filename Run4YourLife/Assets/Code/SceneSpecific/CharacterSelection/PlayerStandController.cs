@@ -76,9 +76,12 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         {
             if(m_playerHandle != null)
             {
-                activeStand.rotation = Quaternion.AngleAxis(rotationY, Vector3.up);
-
                 UpdatePlayer();
+
+                if(activeStand != null)
+                {
+                    activeStand.rotation = Quaternion.AngleAxis(rotationY, Vector3.up);
+                }
             }
         }
 
