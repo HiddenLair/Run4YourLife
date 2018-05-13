@@ -66,9 +66,12 @@ namespace Run4YourLife.Interactables
             {
                 foreach (Renderer renderer in m_renderer)
                 {
-                    Color color = renderer.material.color;
-                    color.a = (endTime - Time.time) / m_alphaAnimationLenght;
-                    renderer.material.color = color;
+                    //Color color = renderer.material.color;
+                    //color.a = (endTime - Time.time) / m_alphaAnimationLenght;
+                    //renderer.material.color = color;
+                    float dissolve = renderer.material.GetFloat("_Dissolveamout");
+                    dissolve = 1 - (endTime - Time.time) / m_alphaAnimationLenght;
+                    renderer.material.SetFloat("_Dissolveamout", dissolve);
                 }   
                 yield return null;
             }
@@ -78,14 +81,14 @@ namespace Run4YourLife.Interactables
 
         public void MakeTransparent(Material material)
         {
-            material.SetFloat("_Mode", 3);
-            material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
-            material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-            material.SetInt("_ZWrite", 0);
-            material.DisableKeyword("_ALPHATEST_ON");
-            material.DisableKeyword("_ALPHABLEND_ON");
-            material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
-            material.renderQueue = 3000;
+            //material.SetFloat("_Mode", 3);
+            //material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+            //material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            //material.SetInt("_ZWrite", 0);
+            //material.DisableKeyword("_ALPHATEST_ON");
+            //material.DisableKeyword("_ALPHABLEND_ON");
+            //material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
+            //material.renderQueue = 3000;
         }
     }
 }
