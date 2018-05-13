@@ -10,6 +10,9 @@ namespace Run4YourLife.Player
         #region Inspector
 
         [SerializeField]
+        private RectTransform m_mainCanvas;
+
+        [SerializeField]
         private RectTransform crossHairUi;
 
         [SerializeField]
@@ -25,6 +28,7 @@ namespace Run4YourLife.Player
         private GameObject crossHair = null;
         private Image crosshairImage;
         private Camera m_mainCamera;
+        private Vector2 crossHairScreenPosition;
 
         #endregion
 
@@ -55,7 +59,15 @@ namespace Run4YourLife.Player
 
         void Move()
         {
-            crossHairUi.anchoredPosition = m_mainCamera.WorldToScreenPoint(crossHair.transform.position);
+            Vector2 viewportPosition = m_mainCamera.WorldToViewportPoint(crossHair.transform.position);
+
+            float deltaX = m_mainCanvas.sizeDelta.x;
+            float deltaY = m_mainCanvas.sizeDelta.y;
+
+            crossHairScreenPosition.x = (viewportPosition.x * deltaX) - (deltaX * 0.5f);
+            crossHairScreenPosition.y = (viewportPosition.y * deltaY) - (deltaY * 0.5f);
+
+            crossHairUi.anchoredPosition = crossHairScreenPosition;
         }
 
         void CheckStatus()
