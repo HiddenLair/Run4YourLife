@@ -10,7 +10,7 @@ namespace Run4YourLife.Player
         #region Inspector
 
         [SerializeField]
-        private Transform crossHairUi;
+        private RectTransform crossHairUi;
 
         [SerializeField]
         private Color enabledColor;
@@ -55,7 +55,7 @@ namespace Run4YourLife.Player
 
         void Move()
         {
-            crossHairUi.position = m_mainCamera.WorldToScreenPoint(crossHair.transform.position);
+            crossHairUi.anchoredPosition = m_mainCamera.WorldToScreenPoint(crossHair.transform.position);
         }
 
         void CheckStatus()

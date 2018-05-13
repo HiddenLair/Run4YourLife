@@ -128,7 +128,7 @@ namespace Run4YourLife.Player
             Vector3 clampedPosition = crossHairControl.GetPosition();
             clampedPosition.x = Mathf.Clamp(crossHairControl.GetPosition().x, screenBottomLeft.x, screenTopRight.x);
             clampedPosition.y = Mathf.Clamp(crossHairControl.GetPosition().y, screenBottomLeft.y, screenTopRight.y);
-            crossHairControl.ChangePosition(clampedPosition);
+            //crossHairControl.ChangePosition(clampedPosition);
         }
 
         void CheckToSetElement()
