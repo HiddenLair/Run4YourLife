@@ -80,7 +80,7 @@ namespace Run4YourLife.Interactables
         {
             float x = Mathf.Sin(Time.time);
             float y = Mathf.Cos(Time.time);
-            mat.SetTextureOffset("_Noise",new Vector2(x,y));
+            mat.SetTextureOffset("_Noise", new Vector2(x,y));
         }
     }
 }
