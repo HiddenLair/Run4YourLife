@@ -18,19 +18,39 @@ namespace Run4YourLife.Player
         private GameObject laser;
 
         [SerializeField]
+        private GameObject dangerIndicator;
+
+        [SerializeField]
         private float maxLaserDistance = 50.0f;
 
         [SerializeField]
-        private float laserDuration = 0.5f;
+        private float laserWidth = 1.0f;
 
         #endregion
 
         private float timeToShootFromAnim = 0.2f;
 
+        private void Start()
+        {
+            Vector3 newScale = dangerIndicator.transform.localScale;
+            newScale.x = newScale.z = laserWidth;
+            newScale.y = maxLaserDistance;
+            dangerIndicator.transform.localScale = newScale;
+            Vector3 newPos = new Vector3(newScale.y, 0, 0);
+            dangerIndicator.transform.localPosition = newPos;
+        }
+
         public override void ShootByAnim()
         {
             animator.SetTrigger("Shoot");
-            AnimationPlayOnTimeManager.Instance.PlayOnNextAnimation(animator, "ChargeShoot", timeToShootFromAnim, () => Shoot());   
+            AnimationPlayOnTimeManager.Instance.PlayOnNextAnimation(animator, "ChargeShoot", timeToShootFromAnim, () => Shoot());
+            AnimationPlayOnTimeManager.Instance.PlayOnNextAnimation(animator, "ChargeShoot", 0.0f, () => StopIndicator());
+            dangerIndicator.SetActive(true);
+        }
+
+        void StopIndicator()
+        {
+            dangerIndicator.SetActive(false);
         }
 
         void Shoot()
@@ -38,13 +58,11 @@ namespace Run4YourLife.Player
             RaycastHit[] targetLocation;
 
             laser.SetActive(true);
-            float thickness = laser.GetComponent<ParticleSystem>().shape.boxThickness.y; //<-- Desired thickness here.
-            targetLocation = Physics.SphereCastAll(shootInitZone.position, thickness, shootInitZone.right, maxLaserDistance, Layers.Runner | Layers.Trap);
+            targetLocation = Physics.SphereCastAll(shootInitZone.position, laserWidth, shootInitZone.right, maxLaserDistance, Layers.Runner | Layers.Trap);
             foreach (RaycastHit r in targetLocation)
             {
                 ExecuteEvents.Execute<ICharacterEvents>(r.transform.gameObject, null, (x, y) => x.Kill());
             }
-            StartCoroutine(YieldHelper.WaitForSeconds(g => g.SetActive(false), laser, laserDuration));
         }
     }
 }

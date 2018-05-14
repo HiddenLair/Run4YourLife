@@ -27,6 +27,7 @@ namespace Run4YourLife.Interactables
         private Renderer m_renderer;
         private Vector3 finalPos;
         private Vector3 speed = Vector3.zero;
+        private bool destroyOnLanding = false;
 
         protected virtual void Awake()
         {
@@ -41,8 +42,12 @@ namespace Run4YourLife.Interactables
             m_renderer.material.color = actualC;
 
             RaycastHit info;
-            if (Physics.Raycast(transform.position, Vector3.down, out info, rayCheckerLenght, Layers.Stage, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(transform.position, Vector3.down, out info, rayCheckerLenght, Layers.Stage))
             {
+                if (info.collider.CompareTag(Tags.Water))
+                {
+                    destroyOnLanding = true;
+                }
                 finalPos = transform.position + Vector3.down * info.distance;
                 transform.SetParent(info.collider.gameObject.transform); //Set ground as parent
             }
@@ -80,10 +85,14 @@ namespace Run4YourLife.Interactables
         {
             while(true)
             {
-                transform.Translate(speed);
+                transform.Translate(speed * Time.deltaTime);
                 if (transform.position.y < finalPos.y)
                 {
                     transform.position = finalPos;
+                    if (destroyOnLanding)
+                    {
+                        Destroy(gameObject);
+                    }
                     break;
                 }
                 speed.y += gravity * Time.deltaTime;
