@@ -19,7 +19,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4698797999849596}
-  - component: {fileID: 54605072418980380}
   - component: {fileID: 65233848308280810}
   - component: {fileID: 114718282125331268}
   m_Layer: 9
@@ -175,21 +174,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1569240684819298}
   m_Mesh: {fileID: 4300000, guid: f0a730cbb1996db4b9fd1c70778e5770, type: 3}
---- !u!54 &54605072418980380
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1244499117138228}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 122
-  m_CollisionDetection: 0
 --- !u!65 &65233848308280810
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -232,6 +216,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_fadeInTime: 1
   m_cooldown: 5
+  rayCheckerLenght: 10
+  gravity: -9.8
+  initialSpeed: 0
   m_activationParticles: {fileID: 1394625515734414, guid: f264e05d59f3182498f76aa564400582,
     type: 2}
   m_interactionsUntilRelease: 2
