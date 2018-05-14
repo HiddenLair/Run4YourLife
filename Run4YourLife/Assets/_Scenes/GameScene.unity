@@ -24252,6 +24252,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1441804610}
   - component: {fileID: 1441804609}
+  - component: {fileID: 1441804611}
   m_Layer: 0
   m_Name: CM_HardBossHorizontalCamera
   m_TagString: Untagged
@@ -24298,6 +24299,21 @@ Transform:
   m_Father: {fileID: 1185261670}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1441804611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1441804608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a33cb3158ed2b84ca595942beb1b7c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_maxRotationalTraumaAngle: 25
+  m_maxTranslationalMovement: 1.5
+  m_frequency: 15
+  m_traumaDecreaseSpeed: 1
 --- !u!4 &1443095302 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4398305129704816, guid: df0f58e6bd6a38d44a983bad7ca48a77,
