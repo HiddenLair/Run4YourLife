@@ -98,10 +98,24 @@ namespace Run4YourLife.Debugging
 
         private void Update()
         {
-            if(Input.GetKeyDown(KeyCode.P))
+            if(Debug.isDebugBuild)
             {
-                StartCoroutine(BossManual());
+                if(Input.GetKeyDown(KeyCode.P))
+                {
+                    StartCoroutine(BossManual());
+                }
+
+                if(Input.GetKeyDown(KeyCode.O))
+                {
+                    PauseResumeWalker();
+                }
             }
+        }
+
+        private void PauseResumeWalker()
+        {
+            BossPathWalker bossPathWalker = GameplayPlayerManager.Instance.Boss.GetComponent<BossPathWalker>();
+            bossPathWalker.enabled = !bossPathWalker.enabled;
         }
 
         private IEnumerator BossManual()
