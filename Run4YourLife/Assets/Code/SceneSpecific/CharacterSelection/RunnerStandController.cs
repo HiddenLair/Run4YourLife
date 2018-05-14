@@ -23,6 +23,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         private string animationReady = "correr";
 
         private RunnerPrefabManager m_runnerPrefabManager;
+        private bool wantsToBecomeBoss;
 
         protected override void Awake()
         {
@@ -70,8 +71,17 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 }
                 else if(controlScheme.SetAsBoss.Started())
                 {
-                    PlayerStandsManager.Instance.SetAsBoss(this);
+                    wantsToBecomeBoss = true;
                 }
+            }
+        }
+
+        private void LateUpdate()
+        {
+            if(wantsToBecomeBoss)
+            {
+                PlayerStandsManager.Instance.SetAsBoss(this);
+                wantsToBecomeBoss = false;
             }
         }
 

@@ -13,6 +13,8 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         [FormerlySerializedAs("boss")]
         private GameObject m_bossStand;
 
+        private bool wantsToBecomeRunner;
+
         protected override GameObject GetStandPrefabForPlayer(PlayerHandle playerHandle)
         {
             return m_bossStand;
@@ -26,7 +28,16 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
             if(!IsReady && controlScheme.SetAsRunner.Started())
             {
+                wantsToBecomeRunner = true;
+            }
+        }
+
+        private void LateUpdate()
+        {
+            if(wantsToBecomeRunner)
+            {
                 PlayerStandsManager.Instance.SetAsRunner(this);
+                wantsToBecomeRunner = false;
             }
         }
 

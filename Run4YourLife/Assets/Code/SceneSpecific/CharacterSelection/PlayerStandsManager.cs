@@ -12,8 +12,6 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         [SerializeField]
         private RunnerStandController[] runnerStandControllers;
-
-        private bool ready = true;
         private bool gameHasStarted = false;
 
         private void OnEnable()
@@ -26,7 +24,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             PlayerManager.Instance.OnPlayerChanged.RemoveListener(OnPlayerChanged);
         }
 
-        void Update()
+        private void Update()
         {
             if(CheckGoGame())
             {
@@ -34,18 +32,13 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             }
         }
 
-        void LateUpdate()
-        {
-            ready = true;
-        }
-
-        void OnPlayerChanged(PlayerHandle playerHandle)
+        private void OnPlayerChanged(PlayerHandle playerHandle)
         {
             DestroyStand(playerHandle);
             CreateStand(playerHandle);
         }
 
-        void OnPlayerLeft(PlayerHandle playerHandle)
+        private void OnPlayerLeft(PlayerHandle playerHandle)
         {
             DestroyStand(playerHandle);
         }
@@ -109,9 +102,6 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         public void SetAsBoss(RunnerStandController runnerStandController)
         {
-            if(!ready) return;
-            ready = false;
-
             if(bossStandController.PlayerHandle == null)
             {
                 PlayerManager.Instance.SetPlayerAsBoss(runnerStandController.PlayerHandle);
@@ -120,9 +110,6 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         public void SetAsRunner(BossStandController bossStandController)
         {
-            if(!ready) return;
-            ready = false;
-
             PlayerManager.Instance.SetPlayerAsRunner(bossStandController.PlayerHandle);
         }
 
