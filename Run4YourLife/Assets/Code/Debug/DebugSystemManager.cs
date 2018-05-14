@@ -11,6 +11,8 @@ namespace Run4YourLife.Debugging
     [RequireComponent(typeof(RunnerGodMode))]
     public class DebugSystemManager : MonoBehaviour
     {
+        private const string cachedWindowNameStr = "Debugging Tools";
+
         private List<DebugFeature> generalDebugFeatures = new List<DebugFeature>();
         private List<DebugFeature> bossDebugFeatures = new List<DebugFeature>();
         private List<DebugFeature> cameraDebugFeatures = new List<DebugFeature>();
@@ -101,7 +103,7 @@ namespace Run4YourLife.Debugging
         {
             if(debugging)
             {
-                windowRect = GUI.Window(0, windowRect, OnGUIWindow, "Debugging Tools");
+                windowRect = GUI.Window(0, windowRect, OnGUIWindow, cachedWindowNameStr);
             }
         }
 
@@ -125,7 +127,9 @@ namespace Run4YourLife.Debugging
 
             GUILayout.BeginVertical();
 
-            foreach(DebugFeature debugFeature in debugFeatures[currentDebugFeaturesSetIndex].Key)
+            List<DebugFeature> currentDebugFeatures = debugFeatures[currentDebugFeaturesSetIndex].Key;
+
+            foreach(DebugFeature debugFeature in currentDebugFeatures)
             {
                 debugFeature.OnDrawGUI();
             }

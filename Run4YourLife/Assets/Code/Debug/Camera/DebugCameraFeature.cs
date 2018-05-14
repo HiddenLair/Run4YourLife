@@ -8,7 +8,7 @@ namespace Run4YourLife.Debugging
 
         protected bool active = false;
 
-        void Awake()
+        protected override void OnAwake()
         {
             cinemachineBrain = GetComponent<CinemachineBrain>();
         }

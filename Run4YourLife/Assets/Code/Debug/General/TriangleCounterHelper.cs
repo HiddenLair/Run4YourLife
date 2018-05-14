@@ -27,7 +27,7 @@ namespace Run4YourLife.Debugging
 
         private int Count(Mesh mesh)
         {
-            return mesh.triangles.Length / 3;
+            return mesh.triangles.Length / 3; // !GC¡ O.o
         }
     }
 }

@@ -4,6 +4,8 @@ namespace Run4YourLife.Debugging
 {
     public class WireframeMode : DebugFeature
     {
+        private const string cachedToggleTextStr = " Active";
+
         private bool wireframe = false;
 
         protected override string GetPanelName()
@@ -13,7 +15,7 @@ namespace Run4YourLife.Debugging
 
         protected override void OnCustomDrawGUI()
         {
-            wireframe = GUILayout.Toggle(wireframe, " Active");
+            wireframe = GUILayout.Toggle(wireframe, cachedToggleTextStr);
         }
 
         void OnPreRender()
