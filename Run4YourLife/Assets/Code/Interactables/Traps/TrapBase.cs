@@ -4,7 +4,6 @@ using UnityEngine;
 namespace Run4YourLife.Interactables
 {
     [RequireComponent(typeof(Collider))]
-    [RequireComponent(typeof(Rigidbody))]
     public abstract class TrapBase : MonoBehaviour
     {
         [SerializeField]
@@ -13,15 +12,25 @@ namespace Run4YourLife.Interactables
         [SerializeField]
         private float m_cooldown;
 
+        [SerializeField]
+        private float rayCheckerLenght = 10.0f;
+
+        [SerializeField]
+        private float gravity = -9.8f;
+
+        [SerializeField]
+        private float initialSpeed = 0;
+
         public float Cooldown { get { return m_cooldown; } }
 
         private Collider m_collider;
         private Renderer m_renderer;
-        private Rigidbody m_rigidbody;
+        private Vector3 finalPos;
+        private Vector3 speed = Vector3.zero;
+        private bool destroyOnLanding = false;
 
         protected virtual void Awake()
         {
-            m_rigidbody = GetComponent<Rigidbody>();
             m_collider = GetComponent<Collider>();
             m_renderer = GetComponentInChildren<Renderer>();
             Debug.Assert(m_renderer != null);
@@ -31,6 +40,18 @@ namespace Run4YourLife.Interactables
             Color actualC = m_renderer.material.color;
             actualC.a = 0;
             m_renderer.material.color = actualC;
+
+            RaycastHit info;
+            if (Physics.Raycast(transform.position, Vector3.down, out info, rayCheckerLenght, Layers.Stage))
+            {
+                if (info.collider.CompareTag(Tags.Water))
+                {
+                    destroyOnLanding = true;
+                }
+                finalPos = transform.position + Vector3.down * info.distance;
+                transform.SetParent(info.collider.gameObject.transform); //Set ground as parent
+            }
+            speed.y = initialSpeed;
         }
 
         protected virtual void OnEnable()
@@ -44,8 +65,6 @@ namespace Run4YourLife.Interactables
             yield return StartCoroutine(Fall());
 
             m_collider.enabled = true;
-            m_rigidbody.useGravity = false;
-            m_rigidbody.isKinematic = true;
         }
 
         private IEnumerator FadeIn()
@@ -64,18 +83,19 @@ namespace Run4YourLife.Interactables
 
         private IEnumerator Fall()
         {
-            m_rigidbody.useGravity = true;
-
-            while (true)
+            while(true)
             {
-                RaycastHit info;
-                if (Physics.Raycast(transform.position, Vector3.down, out info, 0.5f, Layers.Stage, QueryTriggerInteraction.Ignore))
+                transform.Translate(speed * Time.deltaTime);
+                if (transform.position.y < finalPos.y)
                 {
-                    transform.position = transform.position + Vector3.down * info.distance;
-                    transform.SetParent(info.collider.gameObject.transform); //Set ground as parent
-
+                    transform.position = finalPos;
+                    if (destroyOnLanding)
+                    {
+                        Destroy(gameObject);
+                    }
                     break;
                 }
+                speed.y += gravity * Time.deltaTime;
                 yield return null;
             }
         }
