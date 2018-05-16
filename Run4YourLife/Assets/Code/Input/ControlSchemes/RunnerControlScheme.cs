@@ -1,7 +1,4 @@
-﻿using Run4YourLife.GameManagement;
-using Run4YourLife.Player;
-
-namespace Run4YourLife.InputManagement
+﻿namespace Run4YourLife.InputManagement
 {
     public class RunnerControlScheme : PlayerControlScheme
     {
@@ -10,6 +7,7 @@ namespace Run4YourLife.InputManagement
         public Action Jump { get; private set; }
         public Action Dash { get; private set; }
         public Action Rock { get; private set; }
+        public Action Focus { get; private set; }
 
         public RunnerControlScheme()
         {
@@ -18,6 +16,7 @@ namespace Run4YourLife.InputManagement
             Actions.Add(Jump = new Action(new InputSource(Button.A), "Jump"));
             Actions.Add(Dash = new Action(new InputSource(Button.X), "Dash"));
             Actions.Add(Rock = new Action(new InputSource(Button.B), "Rock"));
+            Actions.Add(Focus = new Action(new InputSource(Button.LB), "Focus"));
         }
     }
 }
