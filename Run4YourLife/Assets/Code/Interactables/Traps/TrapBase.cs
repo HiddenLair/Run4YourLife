@@ -7,6 +7,9 @@ namespace Run4YourLife.Interactables
     public abstract class TrapBase : MonoBehaviour
     {
         [SerializeField]
+        private float m_generationAnimationLength = 0.5f;
+
+        [SerializeField]
         private float m_fadeInTime;
 
         [SerializeField]
@@ -34,12 +37,7 @@ namespace Run4YourLife.Interactables
             m_collider = GetComponent<Collider>();
             m_renderer = GetComponentInChildren<Renderer>();
             Debug.Assert(m_renderer != null);
-
             m_collider.enabled = false;
-
-            Color actualC = m_renderer.material.color;
-            actualC.a = 0;
-            m_renderer.material.color = actualC;
 
             RaycastHit info;
             if (Physics.Raycast(transform.position, Vector3.down, out info, rayCheckerLenght, Layers.Stage))
@@ -52,6 +50,8 @@ namespace Run4YourLife.Interactables
                 transform.SetParent(info.collider.gameObject.transform); //Set ground as parent
             }
             speed.y = initialSpeed;
+
+            SetInitialTiling(m_renderer.material);
         }
 
         protected virtual void OnEnable()
@@ -61,24 +61,23 @@ namespace Run4YourLife.Interactables
 
         private IEnumerator FadeInAndFall()
         {
-            yield return StartCoroutine(FadeIn());
+            yield return StartCoroutine(GenerateTrap());
             yield return StartCoroutine(Fall());
 
             m_collider.enabled = true;
         }
 
-        private IEnumerator FadeIn()
+        private IEnumerator GenerateTrap()
         {
+            float endTime = Time.time + m_fadeInTime;
             float startTime = Time.time;
-            Color color = m_renderer.material.color;
-            while (color.a < 1)
+            while (Time.time < endTime)
             {
-                color.a = Mathf.Min(Time.time - startTime, m_fadeInTime) / m_fadeInTime;
-                m_renderer.material.color = color;
+                float dissolve = m_renderer.material.GetFloat("_Dissolveamout");
+                dissolve = (endTime - Time.time) / m_fadeInTime;
+                m_renderer.material.SetFloat("_Dissolveamout", dissolve);
                 yield return null;
             }
-
-            MakeOpaque(m_renderer.material);
         }
 
         private IEnumerator Fall()
@@ -100,15 +99,11 @@ namespace Run4YourLife.Interactables
             }
         }
 
-        private void MakeOpaque(Material material)
+        private void SetInitialTiling(Material mat)
         {
-            material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
-            material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
-            material.SetInt("_ZWrite", 1);
-            material.DisableKeyword("_ALPHATEST_ON");
-            material.DisableKeyword("_ALPHABLEND_ON");
-            material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-            material.renderQueue = -1;
+            float x = Mathf.Sin(Time.time);
+            float y = Mathf.Cos(Time.time);
+            mat.SetTextureOffset("_Noise", new Vector2(x, y));
         }
     }
 }
