@@ -8,19 +8,42 @@ namespace Run4YourLife.Debugging
 {
     public class PlayerInvencible : DebugFeature
     {
-        Dictionary<GameObject, bool> toggleValues = new Dictionary<GameObject, bool>();
+        private bool m_isInvincibleActive;
+
+        private string m_invincibleActiveText = "Runners Invincible";
+
 
         protected override string GetPanelName()
         {
             return "Runner revive mode";
         }
 
+
         protected override void OnCustomDrawGUI()
+        {
+            m_isInvincibleActive = GUILayout.Toggle(m_isInvincibleActive, m_invincibleActiveText);
+                        
+            foreach (GameObject runner in GameplayPlayerManager.Instance.Runners)
+            {
+                if(m_isInvincibleActive)
+                {
+                    Activate(runner);
+                }
+                else
+                {
+                    Deactivate(runner);
+                }
+            }
+        }
+
+        //Dictionary<GameObject, bool> toggleValues = new Dictionary<GameObject, bool>();
+
+        /*protected override void OnCustomDrawGUI()
         {
             GUILayout.BeginHorizontal();
 
             List<GameObject> runners = GameplayPlayerManager.Instance.Runners;
-
+            
             for (int i = 0; i < runners.Count; ++i)
             {
                 GameObject runner = runners[i];
@@ -41,7 +64,7 @@ namespace Run4YourLife.Debugging
             }
 
             GUILayout.EndHorizontal();
-        }
+        }*/
 
         private void Activate(GameObject runner)
         {
