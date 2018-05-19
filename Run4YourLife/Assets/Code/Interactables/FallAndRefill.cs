@@ -58,6 +58,7 @@ namespace Run4YourLife.Interactables
         private void OnTriggerEnter(Collider other)
         {
             ExecuteEvents.Execute<ICharacterEvents>(other.gameObject, null, (x, y) => x.Kill());
+            hitTrigger.enabled = false;
 
             StartCoroutine(Refill(refillTimer));
         }
@@ -66,13 +67,13 @@ namespace Run4YourLife.Interactables
         {
             graphics.SetActive(false);
             this.enabled = false;
-            hitTrigger.enabled = false;
+
             yield return new WaitForSeconds(time);
 
             transform.localPosition = new Vector3(0, 0, 0);
             refillTimer = refillTime;
             falling = false;
-            velocity = 0.0f;
+            velocity = 0.0f;         
             this.enabled = true;
             graphics.SetActive(true);
         }
