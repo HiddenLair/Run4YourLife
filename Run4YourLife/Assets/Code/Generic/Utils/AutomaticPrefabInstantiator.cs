@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(GameObjectPool))]
-public class PrefabInstantiator : MonoBehaviour {
+public class AutomaticPrefabInstantiator : MonoBehaviour {
 
     #region Editor fields
 

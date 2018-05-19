@@ -11,6 +11,8 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(Ready))]
     [RequireComponent(typeof(BossControlScheme))]
     [RequireComponent(typeof(CrossHairControl))]
+    [RequireComponent(typeof(ManualPrefabInstantiator))]
+    [RequireComponent(typeof(GameObjectPool))]
     public class TrapSystem : MonoBehaviour
     {
 
@@ -50,6 +52,8 @@ namespace Run4YourLife.Player
         private GameObject skillB;
         [SerializeField]
         private GameObject trapB;
+        [SerializeField]
+        private int numberOfTrapsInPool = 5;
 
         #endregion
 
@@ -61,9 +65,10 @@ namespace Run4YourLife.Player
         private Animator anim;
         private GameObject uiManager;
         private CrossHairControl crossHairControl;
+        private GameObjectPool gameObjectPool;
+        private ManualPrefabInstantiator trapInstantiator;
 
         private float timeToSpawnTrapsFromAnim = 0.2f;
-
 
         #endregion
 
@@ -84,9 +89,18 @@ namespace Run4YourLife.Player
             bossControlScheme = GetComponent<BossControlScheme>();
             crossHairControl = GetComponent<CrossHairControl>();
             uiManager = GameObject.FindGameObjectWithTag(Tags.UI);
+            gameObjectPool = GetComponent<GameObjectPool>();
+            trapInstantiator = GetComponent<ManualPrefabInstantiator>();
         }
 
-        // Update is called once per frame
+        private void Start()
+        {
+            gameObjectPool.Add(trapA, numberOfTrapsInPool);
+            gameObjectPool.Add(trapB, numberOfTrapsInPool);
+            gameObjectPool.Add(trapX, numberOfTrapsInPool);
+            gameObjectPool.Add(trapY, numberOfTrapsInPool);
+        }
+
         void Update()
         {
             Move();
@@ -183,7 +197,8 @@ namespace Run4YourLife.Player
         void SetElementCallback(GameObject g)
         {
             Vector3 temp = crossHairControl.GetPosition();
-            Instantiate(g, temp, g.GetComponent<Transform>().rotation);
+            trapInstantiator.ManualInstantiate(g, temp);
+            //Instantiate(g, temp, g.GetComponent<Transform>().rotation);
         }
     }
 }

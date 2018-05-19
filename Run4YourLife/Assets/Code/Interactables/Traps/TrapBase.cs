@@ -39,6 +39,15 @@ namespace Run4YourLife.Interactables
             Debug.Assert(m_renderer != null);
             m_collider.enabled = false;
 
+            speed.y = initialSpeed;
+
+            SetInitialTiling(m_renderer.material);
+        }
+
+        protected virtual void OnEnable()
+        {
+            speed.y = initialSpeed;
+
             RaycastHit info;
             if (Physics.Raycast(transform.position, Vector3.down, out info, rayCheckerLenght, Layers.Stage))
             {
@@ -47,15 +56,8 @@ namespace Run4YourLife.Interactables
                     destroyOnLanding = true;
                 }
                 finalPos = transform.position + Vector3.down * info.distance;
-                transform.SetParent(info.collider.gameObject.transform); //Set ground as parent
             }
-            speed.y = initialSpeed;
 
-            SetInitialTiling(m_renderer.material);
-        }
-
-        protected virtual void OnEnable()
-        {
             StartCoroutine(FadeInAndFall());
         }
 
@@ -73,9 +75,12 @@ namespace Run4YourLife.Interactables
             float startTime = Time.time;
             while (Time.time < endTime)
             {
-                float dissolve = m_renderer.material.GetFloat("_Dissolveamout");
-                dissolve = (endTime - Time.time) / m_fadeInTime;
-                m_renderer.material.SetFloat("_Dissolveamout", dissolve);
+                if(m_renderer.material.HasProperty("_Dissolveamout"))
+                {
+                    float dissolve = m_renderer.material.GetFloat("_Dissolveamout");
+                    dissolve = (endTime - Time.time) / m_fadeInTime;
+                    m_renderer.material.SetFloat("_Dissolveamout", dissolve);
+                }                
                 yield return null;
             }
         }
@@ -90,7 +95,7 @@ namespace Run4YourLife.Interactables
                     transform.position = finalPos;
                     if (destroyOnLanding)
                     {
-                        Destroy(gameObject);
+                        gameObject.SetActive(false);
                     }
                     break;
                 }
@@ -101,9 +106,12 @@ namespace Run4YourLife.Interactables
 
         private void SetInitialTiling(Material mat)
         {
-            float x = Mathf.Sin(Time.time);
-            float y = Mathf.Cos(Time.time);
-            mat.SetTextureOffset("_Noise", new Vector2(x, y));
+            if(mat.HasProperty("_Noise"))
+            {
+                float x = Mathf.Sin(Time.time);
+                float y = Mathf.Cos(Time.time);
+                mat.SetTextureOffset("_Noise", new Vector2(x, y));
+            }          
         }
     }
 }
