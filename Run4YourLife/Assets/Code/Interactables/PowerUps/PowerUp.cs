@@ -13,7 +13,7 @@ namespace Run4YourLife.Interactables
     public abstract class PowerUp : MonoBehaviour
     {
         [SerializeField]
-        private float m_score;
+        private int m_score;
 
         protected enum PowerUpType { Void, Single, Shared };
 

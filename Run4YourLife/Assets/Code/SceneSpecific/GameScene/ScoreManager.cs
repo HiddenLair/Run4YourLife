@@ -8,14 +8,19 @@ using Run4YourLife.UI;
 
 namespace Run4YourLife.GameManagement
 {
-    public interface IScoreEvents : IEventSystemHandler, IGameplayEvents
+    public interface IScoreEvents : IEventSystemHandler
     {
-        void OnScoreAdded(PlayerHandle playerHandle, float points);
+        void OnScoreAdded(PlayerHandle playerHandle, int score);
+    }
+
+    public interface IRunnerScoreEvents : IEventSystemHandler
+    {
+        void OnScoreChanged(int score);
     }
 
     public class ScoreManager : SingletonMonoBehaviour<ScoreManager>, IScoreEvents, IGameplayEvents
     {
-        private Dictionary<PlayerHandle, float> m_score = new Dictionary<PlayerHandle, float>();
+        private Dictionary<PlayerHandle, int> m_score = new Dictionary<PlayerHandle, int>();
         private GameObject m_uiGameObject;
 
         private void Awake()
@@ -24,15 +29,17 @@ namespace Run4YourLife.GameManagement
             Debug.Assert(m_uiGameObject != null);
         }
 
-        public void OnScoreAdded(PlayerHandle playerHandle,float points)
+        public void OnScoreAdded(PlayerHandle playerHandle, int score)
         {
             if(!m_score.ContainsKey(playerHandle))
             {
                 m_score.Add(playerHandle, 0);
             }
 
-            float score = (m_score[playerHandle] += points);
-            ExecuteEvents.Execute<IUIScoreEvents>(m_uiGameObject, null, (x,y)=>x.OnScoreChanged(playerHandle, score));
+            int newScore = (m_score[playerHandle] += score);
+
+            GameObject runner = GameplayPlayerManager.Instance.RunnerGameObject[playerHandle];
+            runner.GetComponent<IRunnerScoreEvents>().OnScoreChanged(newScore);
         }
 
         public void OnGameEnded(GameEndResult gameEndResult)

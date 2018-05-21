@@ -2,11 +2,12 @@
 using UnityEngine;
 using UnityEngine.Playables;
 
+using Run4YourLife.GameManagement;
 using Run4YourLife.InputManagement;
 
 namespace Run4YourLife.Player
 {
-    public class RunnerHUDController : MonoBehaviour, IPlayerHandleEvent
+    public class RunnerHUDController : MonoBehaviour, IPlayerHandleEvent, IRunnerScoreEvents
     {
         private static Color32 BLUE_RUNNER_COLOR = Color.blue;
         private static Color32 GREEN_RUNNER_COLOR = Color.green;
@@ -28,18 +29,13 @@ namespace Run4YourLife.Player
             runnerControlScheme = GetComponent<RunnerControlScheme>();
         }
 
-        void Update()
+        void Start()
         {
-            if(inputController.Started(runnerControlScheme.Focus))
-            {
-                playableDirector.Play();
-            }
+            text.text = "0";
         }
 
         public void OnPlayerHandleChanged(PlayerHandle playerHandle)
         {
-            text.text = playerHandle.ID.ToString();
-
             switch(playerHandle.CharacterType)
             {
                 case CharacterType.Blue:
@@ -55,6 +51,12 @@ namespace Run4YourLife.Player
                     text.color = ORANGE_RUNNER_COLOR;
                     break;
             }
+        }
+
+        public void OnScoreChanged(int score)
+        {
+            text.text = score.ToString();
+            playableDirector.Play();
         }
     }
 }

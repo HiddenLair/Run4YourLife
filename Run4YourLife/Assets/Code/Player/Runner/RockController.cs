@@ -8,7 +8,7 @@ using Run4YourLife;
 public class RockController : MonoBehaviour {
 
     [SerializeField]
-    private float points;
+    private int score;
 
     private PlayerHandle playerWhoThrew;
 
@@ -16,7 +16,7 @@ public class RockController : MonoBehaviour {
     {
         if(other.CompareTag(Tags.BossRockScore))
         {
-            ExecuteEvents.Execute<IScoreEvents>(ScoreManager.InstanceGameObject, null, (x, y) => x.OnScoreAdded(playerWhoThrew, points));
+            ExecuteEvents.Execute<IScoreEvents>(ScoreManager.InstanceGameObject, null, (x, y) => x.OnScoreAdded(playerWhoThrew, score));
             Destroy(gameObject);
         }
     }
