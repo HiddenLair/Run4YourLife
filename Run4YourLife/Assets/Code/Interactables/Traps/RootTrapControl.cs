@@ -30,7 +30,7 @@ namespace Run4YourLife.Interactables
 
                 root.RefreshRoot();
 
-                Destroy(gameObject);
+                gameObject.SetActive(false);
             }
         }
     }

@@ -32,7 +32,7 @@ namespace Run4YourLife.Interactables
                 }
 
                 Instantiate(activationParticles, transform.position, transform.rotation);
-                Destroy(gameObject);
+                gameObject.SetActive(false);
             }        
         }
 
