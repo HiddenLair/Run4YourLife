@@ -216,7 +216,7 @@ namespace Run4YourLife.Player
                 Move();
             }
             m_animator.SetFloat(RunnerAnimation.ySpeed,m_velocity.y);
-            m_animator.SetBool(RunnerAnimation.ground, m_characterController.isGrounded);
+            m_animator.SetBool(RunnerAnimation.isGrounded, m_characterController.isGrounded);
         }
 
         private void Dash()
@@ -346,7 +346,7 @@ namespace Run4YourLife.Player
         {
             bool isMoving = totalMovement != Vector3.zero;
             m_idleTimer = isMoving ? m_idleTimer + Time.deltaTime : 0.0f;
-            m_animator.SetFloat(RunnerAnimation.timeToIdle, m_idleTimer);
+            m_animator.SetFloat(RunnerAnimation.idleTime, m_idleTimer);
         }
 
         #region Jump
