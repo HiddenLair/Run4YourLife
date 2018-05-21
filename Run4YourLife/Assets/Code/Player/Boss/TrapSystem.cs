@@ -105,7 +105,7 @@ namespace Run4YourLife.Player
         {
             Move();
 
-            if (ready.Get() && crossHairControl.IsCrossHairActive()) {
+            if (ready.Get() && crossHairControl.IsOperative) {
                 CheckToSetElement();
             }
 
@@ -136,12 +136,12 @@ namespace Run4YourLife.Player
         void ClampPositionInsideScreen()
         {
             Camera mainCamera = CameraManager.Instance.MainCamera;
-            Vector2 screenTopRight = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, Mathf.Abs(mainCamera.transform.position.z - crossHairControl.GetPosition().z)));//crossHair.transform.position.z)));
-            Vector2 screenBottomLeft = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth * screenLeftLimitPercentaje, mainCamera.pixelHeight * screenBottomLimitPercentaje, Mathf.Abs(mainCamera.transform.position.z - crossHairControl.GetPosition().z))); //crossHair.transform.position.z)));
+            Vector2 screenTopRight = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, Mathf.Abs(mainCamera.transform.position.z - crossHairControl.Position.z)));
+            Vector2 screenBottomLeft = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth * screenLeftLimitPercentaje, mainCamera.pixelHeight * screenBottomLimitPercentaje, Mathf.Abs(mainCamera.transform.position.z - crossHairControl.Position.z)));
 
-            Vector3 clampedPosition = crossHairControl.GetPosition();
-            clampedPosition.x = Mathf.Clamp(crossHairControl.GetPosition().x, screenBottomLeft.x, screenTopRight.x);
-            clampedPosition.y = Mathf.Clamp(crossHairControl.GetPosition().y, screenBottomLeft.y, screenTopRight.y);
+            Vector3 clampedPosition = crossHairControl.Position;
+            clampedPosition.x = Mathf.Clamp(crossHairControl.Position.x, screenBottomLeft.x, screenTopRight.x);
+            clampedPosition.y = Mathf.Clamp(crossHairControl.Position.y, screenBottomLeft.y, screenTopRight.y);
             crossHairControl.ChangePosition(clampedPosition);
         }
 
@@ -196,7 +196,7 @@ namespace Run4YourLife.Player
 
         void SetElementCallback(GameObject g)
         {
-            Vector3 temp = crossHairControl.GetPosition();
+            Vector3 temp = crossHairControl.Position;
             trapInstantiator.ManualInstantiate(g, temp);
             //Instantiate(g, temp, g.GetComponent<Transform>().rotation);
         }

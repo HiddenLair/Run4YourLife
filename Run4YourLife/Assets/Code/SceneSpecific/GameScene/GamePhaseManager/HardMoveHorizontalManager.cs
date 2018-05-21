@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Cinemachine;
 
 using Run4YourLife.Utils;
@@ -34,6 +35,7 @@ namespace Run4YourLife.GameManagement
         #region Member Variables
 
         private PlayerSpawner m_playerSpawner;
+        private GameObject m_ui;
 
         #endregion
 
@@ -45,6 +47,9 @@ namespace Run4YourLife.GameManagement
         {
             m_playerSpawner = GetComponent<PlayerSpawner>();
             Debug.Assert(m_playerSpawner != null);
+
+            m_ui = GameObject.FindGameObjectWithTag(Tags.UI);
+            Debug.Assert(m_ui != null);
         }
 
         #endregion
@@ -68,6 +73,8 @@ namespace Run4YourLife.GameManagement
             StartCoroutine(YieldHelper.SkipFrame(() => MoveRunners()));
 
             m_background.SetActive(true);
+
+            ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (a,b) => a.ShowCrossHair());
         }
 
         private void MoveRunners()
@@ -95,6 +102,7 @@ namespace Run4YourLife.GameManagement
                 RunnerCharacterController runnerCharacterController = runner.GetComponent<RunnerCharacterController>();
                 runnerCharacterController.CheckOutScreen = false;
             }
+            ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (a,b) => a.HideCrossHair());
         }
 
         #endregion

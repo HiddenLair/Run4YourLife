@@ -428,6 +428,8 @@ GameObject:
   - component: {fileID: 114694272259496632}
   - component: {fileID: 114411323788195880}
   - component: {fileID: 114330724144454964}
+  - component: {fileID: 114981782027625848}
+  - component: {fileID: 114824991494756204}
   m_Layer: 11
   m_Name: Phase1Boss
   m_TagString: Boss
@@ -2429,8 +2431,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d67487b577a63a40b0d38773955ab3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxTrapWidth: 2.5
-  maxTrapHeight: 5
 --- !u!114 &114224224721616840
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2453,6 +2453,7 @@ MonoBehaviour:
   trapY: {fileID: 1053646925812610, guid: 6891dd8f950938046ba0d059588dd1d4, type: 2}
   skillB: {fileID: 0}
   trapB: {fileID: 1244499117138228, guid: e7e661a6bdf2b734497407d3c1e47138, type: 2}
+  numberOfTrapsInPool: 5
 --- !u!114 &114266491501543548
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2475,8 +2476,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ae855258506e3b44bc9e3c2c4b23169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crossHair: {fileID: 1418072902498268}
-  crossHairSpeed: 10
+  m_crossHairGameObject: {fileID: 1418072902498268}
+  m_speed: 10
 --- !u!114 &114386431807633544
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2531,6 +2532,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 412452455570aa44bac37005f9813a6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114824991494756204
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1339971389182100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0a0cd912d4956d41a198afebc9af656, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114871553384709032
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2554,6 +2566,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animationReadyName: Move
+--- !u!114 &114981782027625848
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1339971389182100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8073855dcfad5724c94cad4bdb64b4aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_parent: {fileID: 0}
 --- !u!114 &114999108935031068
 MonoBehaviour:
   m_ObjectHideFlags: 1

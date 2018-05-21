@@ -53,7 +53,7 @@ namespace Run4YourLife.Player
             {
                 m_audioSource.PlayOneShot(sfx);
 
-                trapPos = crossHairControl.GetPosition();
+                trapPos = crossHairControl.Position;
                 Vector3 screenPos = m_mainCamera.WorldToScreenPoint(trapPos);
 
                 if (screenPos.x <= 0.5f * m_mainCamera.pixelWidth)

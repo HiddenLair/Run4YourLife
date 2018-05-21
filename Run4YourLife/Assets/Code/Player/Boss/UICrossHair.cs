@@ -2,18 +2,22 @@
 using UnityEngine.UI;
 
 using Run4YourLife.GameManagement;
+using UnityEngine.EventSystems;
 
 namespace Run4YourLife.Player
 {
-    public class UICrossHair : SingletonMonoBehaviour<UICrossHair>
+    public interface IUICrossHairEvents : IEventSystemHandler
     {
-        #region Inspector
+        void ShowCrossHair();
+        void HideCrossHair();
+        void AttachCrossHair(CrossHair crossHair);
+        void DeatachCrossHair();
+    }
 
+    public class UICrossHair : MonoBehaviour, IUICrossHairEvents
+    {
         [SerializeField]
-        private RectTransform m_mainCanvas;
-
-        [SerializeField]
-        private RectTransform crossHairUi;
+        private GameObject m_crossHairUi;
 
         [SerializeField]
         private Color enabledColor;
@@ -21,21 +25,26 @@ namespace Run4YourLife.Player
         [SerializeField]
         private Color disabledColor;
 
-        #endregion
 
-        #region Variables
-
-        private GameObject crossHair = null;
-        private Image crosshairImage;
+        private RectTransform m_canvasTransform;
+        private RectTransform m_crossHairUiTransform;
         private Camera m_mainCamera;
-        private Vector2 crossHairScreenPosition;
+        private Image m_crossHairImage;
 
-        #endregion
+
+        private CrossHair m_attachedCrossHair;
+        private Transform m_attachedCrossHairTransform;
 
         private void Awake()
         {
-            crosshairImage = crossHairUi.GetComponent<Image>();
-            Debug.Assert(crosshairImage != null);
+            m_canvasTransform = GetComponent<RectTransform>();
+            Debug.Assert(m_canvasTransform != null);
+
+            m_crossHairUiTransform = m_crossHairUi.GetComponent<RectTransform>();
+            Debug.Assert(m_crossHairUiTransform != null);
+
+            m_crossHairImage = m_crossHairUi.GetComponent<Image>();
+            Debug.Assert(m_crossHairImage != null);
 
             m_mainCamera = CameraManager.Instance.MainCamera;
             Debug.Assert(m_mainCamera != null);
@@ -43,56 +52,61 @@ namespace Run4YourLife.Player
 
         private void Update()
         {
-            if (crossHair != null)
+            if(m_attachedCrossHair != null)
             {
-                crosshairImage.enabled = true;
+                UpdatePosition();
+                UpdateActiveStatus();
+            }
+        }
 
-                Move();
+        void UpdatePosition()
+        {
+            Vector2 viewportPosition = m_mainCamera.WorldToViewportPoint(m_attachedCrossHairTransform.position);
 
-                CheckStatus();
+            float deltaX = m_canvasTransform.sizeDelta.x;
+            float deltaY = m_canvasTransform.sizeDelta.y;
+
+            Vector2 crossHairScreenPosition = new Vector2()
+            {
+                x = (viewportPosition.x * deltaX) - (deltaX * 0.5f),
+                y = (viewportPosition.y * deltaY) - (deltaY * 0.5f)
+            };
+
+            m_crossHairUiTransform.anchoredPosition = crossHairScreenPosition;
+        }
+
+        void UpdateActiveStatus()
+        {
+            if (m_attachedCrossHair.IsOperative)
+            {
+                m_crossHairImage.color = enabledColor;
             }
             else
             {
-                crosshairImage.enabled = false;
+                m_crossHairImage.color = disabledColor;
             }
         }
 
-        void Move()
+        public void ShowCrossHair()
         {
-            Vector2 viewportPosition = m_mainCamera.WorldToViewportPoint(crossHair.transform.position);
-
-            float deltaX = m_mainCanvas.sizeDelta.x;
-            float deltaY = m_mainCanvas.sizeDelta.y;
-
-            crossHairScreenPosition.x = (viewportPosition.x * deltaX) - (deltaX * 0.5f);
-            crossHairScreenPosition.y = (viewportPosition.y * deltaY) - (deltaY * 0.5f);
-
-            crossHairUi.anchoredPosition = crossHairScreenPosition;
+            m_crossHairUi.SetActive(true);
         }
 
-        void CheckStatus()
+        public void HideCrossHair()
         {
-            if (crossHair.GetComponent<CrossHair>().GetActive())
-            {
-                crosshairImage.color = enabledColor;
-            }
-            else
-            {
-                crosshairImage.color = disabledColor;
-            }
+            m_crossHairUi.SetActive(false);
         }
 
-        public void SubscribeWorldCrossHair(GameObject crossHair)
+        public void AttachCrossHair(CrossHair crossHair)
         {
-            this.crossHair = crossHair;
+            m_attachedCrossHair = crossHair;
+            m_attachedCrossHairTransform = crossHair.transform;
         }
 
-        public void UnsubscribeWorldCrossHair(GameObject crossHair)
+        public void DeatachCrossHair()
         {
-            if(this.crossHair == crossHair)
-            {
-                crossHair = null;
-            }
+            m_attachedCrossHair = null;
+            m_attachedCrossHairTransform = null;
         }
     }
 }

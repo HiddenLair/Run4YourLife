@@ -1,59 +1,83 @@
-﻿using Run4YourLife.Player;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class CrossHairControl : MonoBehaviour {
+namespace Run4YourLife.Player
+{
+    public class CrossHairControl : MonoBehaviour {
 
-    #region Inspector
+        [SerializeField]
+        private GameObject m_crossHairGameObject;
 
-    [SerializeField]
-    private GameObject crossHair;
+        [SerializeField]
+        private float m_speed;
 
-    [SerializeField]
-    private float crossHairSpeed;
+        private CrossHair m_crosshair;
+        private Transform m_crossHairTransform;
+        private GameObject m_ui;
 
-    #endregion
+        private bool m_isLocked;
 
-    #region Variables
-
-    private bool crossHairBlock = false;
-
-    #endregion
-
-    public bool IsCrossHairActive()
-    {
-        return crossHair.GetComponent<CrossHair>().GetActive();
-    }
-
-    public void Translate(Vector3 input)
-    {
-        if (!crossHairBlock)
+        private void Awake()
         {
-            crossHair.transform.Translate(input * crossHairSpeed * Time.deltaTime);
+            m_crosshair =  m_crossHairGameObject.GetComponent<CrossHair>();
+            Debug.Assert(m_crosshair != null);
+
+            m_crossHairTransform = m_crossHairGameObject.transform;
+            
+            m_ui = GameObject.FindGameObjectWithTag(Tags.UI);
+            Debug.Assert(m_ui != null);
         }
-    }
 
-    public Vector3 GetPosition()
-    {
-        return crossHair.transform.position;
-    }
-
-    public void ChangePosition(Vector3 newPosition)
-    {
-        if (!crossHairBlock)
+        private void OnEnable()
         {
-            crossHair.transform.position = newPosition;
+            ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (a,b) => a.AttachCrossHair(m_crosshair));
         }
-    }
 
-    public void BlockCrossHair()
-    {
-        crossHairBlock = true;
-    }
+        private void OnDisable()
+        {
+            ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (a,b) => a.DeatachCrossHair());
+        }
 
-    public void UnblockCrossHair()
-    {
-        crossHairBlock = false;
+        public bool IsOperative {
+            get
+            {
+                return m_crosshair.IsOperative;
+            }
+        }
+
+        public Vector3 Position {
+            get
+            {
+                return m_crossHairTransform.position;
+            }
+        }
+
+        public void Translate(Vector3 input)
+        {
+            if (!m_isLocked)
+            {
+                m_crossHairTransform.Translate(input * m_speed * Time.deltaTime);
+            }
+        }
+
+        
+
+        public void ChangePosition(Vector3 newPosition)
+        {
+            if (!m_isLocked)
+            {
+                m_crossHairGameObject.transform.position = newPosition;
+            }
+        }
+
+        public void Lock()
+        {
+            m_isLocked = true;
+        }
+
+        public void Unlock()
+        {
+            m_isLocked = false;
+        }
     }
 }

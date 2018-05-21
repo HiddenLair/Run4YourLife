@@ -3735,6 +3735,11 @@ MonoBehaviour:
   - {fileID: 1713260474}
   m_bossGameObjectPhase: 1
   m_bossSpawn: {fileID: 1303295797}
+--- !u!1 &173660564 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1755753670321862, guid: 9a5e7583ade9a744b9cf51b10f62c666,
+    type: 2}
+  m_PrefabInternal: {fileID: 459277993}
 --- !u!1 &173924292
 GameObject:
   m_ObjectHideFlags: 0
@@ -5746,29 +5751,6 @@ GameObject:
   m_PrefabParentObject: {fileID: 1339971389182100, guid: 1a9e2992859b7174287e9f8c3793c4b6,
     type: 2}
   m_PrefabInternal: {fileID: 620275080}
---- !u!114 &333569449
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 333569448}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8073855dcfad5724c94cad4bdb64b4aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_parent: {fileID: 127977425}
---- !u!114 &333569450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 333569448}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0a0cd912d4956d41a198afebc9af656, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &334653604
 Prefab:
   m_ObjectHideFlags: 0
@@ -7715,6 +7697,20 @@ Prefab:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1793479656}
+    - target: {fileID: 114834907179015938, guid: 9a5e7583ade9a744b9cf51b10f62c666,
+        type: 2}
+      propertyPath: m_crossHairUi
+      value: 
+      objectReference: {fileID: 173660564}
+    - target: {fileID: 114107308391102030, guid: 9a5e7583ade9a744b9cf51b10f62c666,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1755753670321862, guid: 9a5e7583ade9a744b9cf51b10f62c666, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9a5e7583ade9a744b9cf51b10f62c666, type: 2}
   m_IsPrefabParent: 0
@@ -10821,6 +10817,11 @@ Prefab:
       propertyPath: m_path
       value: 
       objectReference: {fileID: 684826591}
+    - target: {fileID: 114981782027625848, guid: 1a9e2992859b7174287e9f8c3793c4b6,
+        type: 2}
+      propertyPath: m_parent
+      value: 
+      objectReference: {fileID: 127977425}
     - target: {fileID: 1339971389182100, guid: 1a9e2992859b7174287e9f8c3793c4b6, type: 2}
       propertyPath: m_IsActive
       value: 0
@@ -13575,7 +13576,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4405151106240620, guid: 9304469b9d7b7d84b84226e301fd7e0a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4405151106240620, guid: 9304469b9d7b7d84b84226e301fd7e0a, type: 2}
       propertyPath: m_LocalRotation.x
@@ -13596,10 +13597,6 @@ Prefab:
     - target: {fileID: 4405151106240620, guid: 9304469b9d7b7d84b84226e301fd7e0a, type: 2}
       propertyPath: m_RootOrder
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1432021327500220, guid: 9304469b9d7b7d84b84226e301fd7e0a, type: 2}
-      propertyPath: m_Name
-      value: Phase3Boss
       objectReference: {fileID: 0}
     - target: {fileID: 114891650166769830, guid: 9304469b9d7b7d84b84226e301fd7e0a,
         type: 2}
@@ -30300,10 +30297,6 @@ Prefab:
     - target: {fileID: 4162217030126272, guid: 55874eaaf7b2e70468e2b5e17c41cbed, type: 2}
       propertyPath: m_RootOrder
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1490842876409522, guid: 55874eaaf7b2e70468e2b5e17c41cbed, type: 2}
-      propertyPath: m_Name
-      value: Phase2Boss
       objectReference: {fileID: 0}
     - target: {fileID: 1490842876409522, guid: 55874eaaf7b2e70468e2b5e17c41cbed, type: 2}
       propertyPath: m_IsActive

@@ -1,60 +1,25 @@
 ﻿using UnityEngine;
 
+using Run4YourLife.UI;
+
 namespace Run4YourLife.Player
 {
     public class CrossHair : MonoBehaviour
-    {
-
-        #region Inspector
-
-        [SerializeField]
-        private float maxTrapWidth;
-
-        [SerializeField]
-        private float maxTrapHeight;
-
-        #endregion
-
-        #region Variables
-        private bool active = true;
-        #endregion
+    {        
+        
+        private bool m_isOperative = true;
 
 
-        //TODO: this creates exceptions when closing the editor
-        private void OnEnable()
-        {
-            UICrossHair.Instance.SubscribeWorldCrossHair(gameObject);
-        }
-
-        private void OnDisable()
-        {
-            UICrossHair.Instance.UnsubscribeWorldCrossHair(gameObject);
-        }
-
-        void Deactivate()
-        {
-            //There is no space to place the trap
-            active = false;
-        }
-
-        void Activate()
-        {
-            active = true;
-        }
-
+        public bool IsOperative { get { return m_isOperative; } set { m_isOperative = value; } }
+        
         private void OnTriggerEnter(Collider other)
         {
-            Deactivate();
+            m_isOperative = false;
         }
 
         private void OnTriggerExit(Collider other)
         {
-            Activate();
-        }
-
-        public bool GetActive()
-        {
-            return active;
+            m_isOperative = true;
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Run4YourLife.GameManagement
 
         private PlayerSpawner m_playerSpawner;
 
-        private GameObject m_uiManager;
+        private GameObject m_ui;
 
 
         #endregion
@@ -51,8 +51,8 @@ namespace Run4YourLife.GameManagement
             m_playerSpawner = GetComponent<PlayerSpawner>();
             Debug.Assert(m_playerSpawner != null);
 
-            m_uiManager = GameObject.FindGameObjectWithTag(Tags.UI);
-            Debug.Assert(m_uiManager != null);
+            m_ui = GameObject.FindGameObjectWithTag(Tags.UI);
+            Debug.Assert(m_ui != null);
         }
 
         #endregion
@@ -75,7 +75,8 @@ namespace Run4YourLife.GameManagement
             CameraManager.Instance.TransitionToCamera(m_virtualCamera);
 
             m_backgroundTiling.SetActive(false);
-            ExecuteEvents.Execute<IUIEvents>(m_uiManager, null, (x, y) => x.OnCountdownSetted(m_timeOfPhase));
+            ExecuteEvents.Execute<IUIEvents>(m_ui, null, (x, y) => x.OnCountdownSetted(m_timeOfPhase));
+            ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (a,b) => a.ShowCrossHair());
 
             StartCoroutine(YieldHelper.SkipFrame(()=>MoveRunners()));           
             StartCoroutine(YieldHelper.WaitForSeconds(StartNextPhase, m_timeOfPhase));
@@ -109,6 +110,7 @@ namespace Run4YourLife.GameManagement
                 RunnerCharacterController runnerCharacterController = runner.GetComponent<RunnerCharacterController>(); 
                 runnerCharacterController.CheckOutScreen = false; 
             }
+            ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (a,b) => a.HideCrossHair());
         }
 
         #endregion

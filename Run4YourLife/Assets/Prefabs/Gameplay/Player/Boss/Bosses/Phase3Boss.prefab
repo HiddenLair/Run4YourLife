@@ -1554,7 +1554,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1432021327500220}
   m_LocalRotation: {x: -0.00000009735359, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.46159935, y: 2.4735756, z: -1.76}
+  m_LocalPosition: {x: 246.02, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4896981082139672}
@@ -2597,6 +2597,7 @@ MonoBehaviour:
   laser: {fileID: 1978646733605274}
   dangerIndicator: {fileID: 1728473321792840}
   maxLaserDistance: 50
+  laserWidth: 1
 --- !u!114 &114365934285163218
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2619,8 +2620,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d67487b577a63a40b0d38773955ab3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxTrapWidth: 2.5
-  maxTrapHeight: 5
 --- !u!114 &114648588520097026
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2654,6 +2653,7 @@ MonoBehaviour:
   trapY: {fileID: 1053646925812610, guid: 6891dd8f950938046ba0d059588dd1d4, type: 2}
   skillB: {fileID: 1463452844622424, guid: 7e170bbe1f8b8ea4eb65d2fe06bf9368, type: 2}
   trapB: {fileID: 1244499117138228, guid: e7e661a6bdf2b734497407d3c1e47138, type: 2}
+  numberOfTrapsInPool: 5
 --- !u!114 &114696684942109732
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2676,8 +2676,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ae855258506e3b44bc9e3c2c4b23169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crossHair: {fileID: 1541446947185904}
-  crossHairSpeed: 10
+  m_crossHairGameObject: {fileID: 1541446947185904}
+  m_speed: 10
 --- !u!114 &114859266328240884
 MonoBehaviour:
   m_ObjectHideFlags: 1

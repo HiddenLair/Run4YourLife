@@ -30,15 +30,15 @@ namespace Run4YourLife.Player
         {
             audioSource.PlayOneShot(sfx);
 
-            Vector3 director = (crossHairControl.GetPosition() - shootInitZone.position).normalized;
+            Vector3 director = (crossHairControl.Position - shootInitZone.position).normalized;
             GameObject tempInstance = Instantiate(instance, shootInitZone.position, instance.transform.rotation);
             tempInstance.GetComponent<Rigidbody>().velocity = director * bulletSpeed * Time.deltaTime;
-            tempInstance.GetComponent<ChargedBullet>().SetZValue(crossHairControl.GetPosition().z);
+            tempInstance.GetComponent<ChargedBullet>().SetZValue(crossHairControl.Position.z);
         }
 
         public override void RotateHead()
         {
-            head.LookAt(crossHairControl.GetPosition());
+            head.LookAt(crossHairControl.Position);
             head.Rotate(0, -180, 0);
             head.rotation *= initialRotation;
         }

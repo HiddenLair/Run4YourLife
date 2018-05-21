@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Cinemachine;
 
 using Run4YourLife.Player;
+using Run4YourLife.UI;
 
 namespace Run4YourLife.GameManagement
 {
@@ -15,6 +17,7 @@ namespace Run4YourLife.GameManagement
         private CinemachineVirtualCamera m_virtualCamera;
 
         private PlayerSpawner m_playerSpawner;
+        private GameObject m_ui;
 
         #region Initialization
 
@@ -22,6 +25,9 @@ namespace Run4YourLife.GameManagement
         {
             m_playerSpawner = GetComponent<PlayerSpawner>();
             Debug.Assert(m_playerSpawner != null);
+
+            m_ui = GameObject.FindGameObjectWithTag(Tags.UI);
+            Debug.Assert(m_ui != null);
         }
 
         #endregion
@@ -49,6 +55,8 @@ namespace Run4YourLife.GameManagement
                 RunnerCharacterController runnerCharacterController = runner.GetComponent<RunnerCharacterController>();
                 runnerCharacterController.CheckOutScreen = true;
             }
+
+            ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (a,b) => a.ShowCrossHair());
         }
 
         public override void EndPhase()
@@ -63,6 +71,7 @@ namespace Run4YourLife.GameManagement
                 RunnerCharacterController runnerCharacterController = runner.GetComponent<RunnerCharacterController>();
                 runnerCharacterController.CheckOutScreen = false;
             }
+            ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (a,b) => a.HideCrossHair());
         }
 
         #endregion

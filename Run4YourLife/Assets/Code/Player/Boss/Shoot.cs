@@ -78,7 +78,7 @@ namespace Run4YourLife.Player
 
         public virtual void RotateHead()
         {
-            head.LookAt(crossHairControl.GetPosition());
+            head.LookAt(crossHairControl.Position);
             head.Rotate(0, -90, 0);
             head.rotation *= initialRotation;
         }
@@ -94,7 +94,7 @@ namespace Run4YourLife.Player
                         ShootByAnim();
                         currentTimeS = Time.time + reloadTimeS;
                         shootTrigger = true;
-                        crossHairControl.BlockCrossHair();
+                        crossHairControl.Lock();
 
                         ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.SHOOT, reloadTimeS));
                     }
@@ -102,7 +102,7 @@ namespace Run4YourLife.Player
                 else
                 {
                     shootTrigger = false;
-                    crossHairControl.UnblockCrossHair();
+                    crossHairControl.Unlock();
                 }
             }
         }
@@ -111,7 +111,7 @@ namespace Run4YourLife.Player
 
         private void OnDrawGizmosSelected()
         {
-            Gizmos.DrawLine(head.position, crossHairControl.GetPosition());
+            Gizmos.DrawLine(head.position, crossHairControl.Position);
         }
     }
 }
