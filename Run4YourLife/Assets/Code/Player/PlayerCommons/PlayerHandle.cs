@@ -19,8 +19,8 @@ namespace Run4YourLife.Player
 
     public class PlayerHandle
     {
-        public uint ID;
-        public InputDevice inputDevice;
+        public uint ID { get; set; }
+        public InputDevice InputDevice { get; set; }
         public bool IsBoss { get; set; }
         public CharacterType CharacterType { get; set; }
 
@@ -28,7 +28,7 @@ namespace Run4YourLife.Player
             CharacterType = CharacterType.Purple,
             ID = 1,
             IsBoss = false,
-            inputDevice = Run4YourLife.InputManagement.InputDeviceManager.Instance.DefaultInputDevice
+            InputDevice = Run4YourLife.InputManagement.InputDeviceManager.Instance.DefaultInputDevice
         };
     }
 }

@@ -107,26 +107,22 @@ namespace Run4YourLife.GameManagement {
             {
                 new PlayerHandle() {
                     CharacterType = CharacterType.Purple,
-                    ID = 1,
-                    inputDevice = InputDeviceManager.Instance.InputDevices[1],
+                    InputDevice = InputDeviceManager.Instance.InputDevices[1],
                     IsBoss = false
                 },
                 new PlayerHandle() {
                     CharacterType = CharacterType.Green,
-                    ID = 2,
-                    inputDevice = InputDeviceManager.Instance.InputDevices[0],
+                    InputDevice = InputDeviceManager.Instance.InputDevices[0],
                     IsBoss = true
                 },
                 new PlayerHandle() {
                     CharacterType = CharacterType.Orange,
-                    ID = 3,
-                    inputDevice = InputDeviceManager.Instance.InputDevices[2],
+                    InputDevice = InputDeviceManager.Instance.InputDevices[2],
                     IsBoss = false
                 },
                 new PlayerHandle() {
                     CharacterType = CharacterType.Green,
-                    ID = 4,
-                    inputDevice = InputDeviceManager.Instance.InputDevices[3],
+                    InputDevice = InputDeviceManager.Instance.InputDevices[3],
                     IsBoss = false
                 }
             };
@@ -249,6 +245,7 @@ namespace Run4YourLife.GameManagement {
                     return null;
             }
         }
+
 
         private void Update()
         {

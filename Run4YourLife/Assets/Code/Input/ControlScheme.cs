@@ -47,7 +47,7 @@ namespace Run4YourLife.InputManagement
 
         public void OnPlayerHandleChanged(PlayerHandle playerHandle)
         {
-            InputDevice = playerHandle != null ? playerHandle.inputDevice : null;
+            InputDevice = playerHandle != null ? playerHandle.InputDevice : null;
         }
 
         protected void UpdateInputDevice(InputDevice inputDevice)

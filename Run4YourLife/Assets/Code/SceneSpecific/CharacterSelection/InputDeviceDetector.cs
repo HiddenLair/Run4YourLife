@@ -25,7 +25,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         {
             foreach (PlayerHandle playerHandle in PlayerManager.Instance.PlayerHandles)
             {
-                if (playerHandle.inputDevice.Equals(inputDevice))
+                if (playerHandle.InputDevice.Equals(inputDevice))
                 {
                     return true;
                 }

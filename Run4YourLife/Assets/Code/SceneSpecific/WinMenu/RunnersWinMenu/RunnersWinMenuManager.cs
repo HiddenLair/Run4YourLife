@@ -67,8 +67,7 @@ namespace Run4YourLife.SceneSpecific.WinMenu
                 PlayerManager.Instance.AddPlayer(new PlayerHandle()
                 {
                     CharacterType = (CharacterType)i,
-                    ID = i + 1,
-                    inputDevice = InputDeviceManager.Instance.InputDevices[(int)i],
+                    InputDevice = InputDeviceManager.Instance.InputDevices[(int)i],
                     IsBoss = false
                 });
             }

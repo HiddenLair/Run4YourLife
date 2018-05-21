@@ -55,6 +55,7 @@ namespace Run4YourLife.Player
         public void SetPlayerAsBoss(PlayerHandle player)
         {
             player.IsBoss = true;
+            UpdatePlayerHandleIds();
             OnPlayerChanged.Invoke(player);
         }
 
@@ -62,7 +63,21 @@ namespace Run4YourLife.Player
         {
             player.CharacterType = GetFirstAviablePlayerCharacterType();
             player.IsBoss = false;
+            UpdatePlayerHandleIds();
             OnPlayerChanged.Invoke(player);
+        }
+
+        private void UpdatePlayerHandleIds()
+        {
+            uint id = 1;
+            foreach(PlayerHandle playerHandle in m_playerHandles)
+            {
+                if(!playerHandle.IsBoss)
+                {
+                    playerHandle.ID = id;
+                    id++;
+                }
+            }
         }
 
         public CharacterType GetFirstAviablePlayerCharacterType()
@@ -114,6 +129,7 @@ namespace Run4YourLife.Player
         public void AddPlayer(PlayerHandle playerHandle)
         {
             m_playerHandles.Add(playerHandle);
+            UpdatePlayerHandleIds();
             OnPlayerChanged.Invoke(playerHandle);
         }
     }
