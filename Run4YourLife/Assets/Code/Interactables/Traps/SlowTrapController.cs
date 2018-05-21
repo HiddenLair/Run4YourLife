@@ -20,7 +20,7 @@ namespace Run4YourLife.Interactables
                 StatusEffectController statusEffectController = collider.GetComponent<StatusEffectController>();
                 statusEffectController.AddAndRemoveAfterTime(m_statusEffectSet, m_slowTime);
                 Instantiate(m_activationParticles, transform.position, transform.rotation);
-                Destroy(gameObject);
+                gameObject.SetActive(false);
             }
         }
     }
