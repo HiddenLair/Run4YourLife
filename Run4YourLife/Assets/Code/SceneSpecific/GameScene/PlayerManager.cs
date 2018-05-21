@@ -77,6 +77,10 @@ namespace Run4YourLife.Player
                     playerHandle.ID = id;
                     id++;
                 }
+                else
+                {
+                    playerHandle.ID = 1; // There should only be one boss
+                }
             }
         }
 
