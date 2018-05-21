@@ -48,7 +48,7 @@ namespace Run4YourLife.Player
         private float m_dashDistance;
 
         [SerializeField]
-        private float m_dashHorizontalDrag;
+        private float m_dashTime;
 
         [SerializeField]
         private float m_timeToIdle;
@@ -167,7 +167,7 @@ namespace Run4YourLife.Player
             m_isDashing = false;
             m_isReadyToDash = true;
             m_ceilingCollision = false;
-
+            m_dashTrail.gameObject.SetActive(false);
             m_animator.Rebind();
         }
 
@@ -232,19 +232,16 @@ namespace Run4YourLife.Player
 
             m_dashTrail.gameObject.SetActive(true);
 
-            m_horizontalDrag = m_dashHorizontalDrag;
             float facingRight = m_isFacingRight ? 1 : -1;
-            m_velocity.x = facingRight * DragToVelocity(m_dashDistance);
+            m_velocity.x = facingRight * m_dashDistance/m_dashTime;
             m_velocity.y = 0.0f;
-            while (m_velocity.x != 0)
+            float endTime = Time.time + m_dashTime;
+            while (Time.time < endTime)
             {
-                Drag();
                 MoveCharacterContoller(m_velocity * Time.deltaTime);
                 yield return null;
             }
-
-            m_horizontalDrag = m_baseHorizontalDrag;
-
+            m_velocity.x = 0;   
             m_dashTrail.gameObject.SetActive(false);
 
             m_isDashing = false;
