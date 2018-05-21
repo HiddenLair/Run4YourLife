@@ -299,7 +299,7 @@ namespace Run4YourLife.Player
         {
             float horizontal = m_inputController.Value(m_runnerControlScheme.Move);
 
-            Vector3 inputMovement = transform.right * horizontal * m_runnerAttributeController.GetAttribute(RunnerAttribute.Speed) * Time.deltaTime;
+            Vector3 inputMovement = transform.right * (horizontal * m_runnerAttributeController.GetAttribute(RunnerAttribute.Speed) * Time.deltaTime);
             Vector3 totalMovement = inputMovement + m_velocity * Time.deltaTime + ExternalVelocity * Time.deltaTime;
 
             ExternalVelocity = Vector3.zero;
