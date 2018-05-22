@@ -69,7 +69,7 @@ namespace Run4YourLife.Player
         private ManualPrefabInstantiator trapInstantiator;
 
         private float timeToSpawnTrapsFromAnim = 0.2f;
-
+        private bool trapCooldownBool = false;
         #endregion
 
         #region Timers
@@ -105,7 +105,9 @@ namespace Run4YourLife.Player
         {
             Move();
 
-            if (ready.Get() && crossHairControl.IsOperative) {
+            if (ready.Get() && crossHairControl.IsOperative && !trapCooldownBool)
+            {
+                trapCooldownBool = true;
                 CheckToSetElement();
             }
 
@@ -175,11 +177,17 @@ namespace Run4YourLife.Player
 
                 ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.TRAP_B, buttonCooldown));
             }
+            else
+            {
+                trapCooldownBool = false;
+            }
         }
 
         float SetElement(GameObject trap, GameObject skill)
         {
             anim.SetTrigger("Casting");
+            trapCooldownBool = false;
+
             float cooldown = 0.0f ;
             if (currentType == Type.SKILL)
             {
@@ -189,7 +197,7 @@ namespace Run4YourLife.Player
             else
             {
                 cooldown = trap.GetComponent<TrapBase>().Cooldown;
-                AnimationPlayOnTimeManager.Instance.PlayOnAnimation(anim,"Cast",timeToSpawnTrapsFromAnim,()=> SetElementCallback(trap));
+                AnimationPlayOnTimeManager.Instance.PlayOnAnimation(anim, "Cast", timeToSpawnTrapsFromAnim,()=> SetElementCallback(trap));
             }
             return cooldown;
         }
