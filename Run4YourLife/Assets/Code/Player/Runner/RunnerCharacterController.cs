@@ -377,9 +377,10 @@ namespace Run4YourLife.Player
 
             //set vertical velocity to the velocity needed to reach maxJumpHeight
             m_velocity.y = HeightToVelocity(m_runnerAttributeController.GetAttribute(RunnerAttribute.JumpHeight));
-            yield return StartCoroutine(WaitUntilApexOfJumpOrReleaseButtonOrCeiling());
+            yield return StartCoroutine(WaitUntilApexOfJumpOrReleaseButtonOrCeiling(false));
 
-            if (!m_ceilingCollision)
+            if(m_runnerControlScheme.Jump.Started())
+            if (!m_ceilingCollision && m_runnerControlScheme.Jump.Persists())
             {
                 yield return StartCoroutine(JumpHover());
             }
@@ -387,6 +388,7 @@ namespace Run4YourLife.Player
             {
                 m_ceilingCollision = false;
             }
+
             m_isJumping = false;
 
             yield return StartCoroutine(FallFaster(false));
@@ -400,7 +402,7 @@ namespace Run4YourLife.Player
         private IEnumerator SecondJumpCoroutine()
         {
             m_velocity.y = HeightToVelocity(m_secondJumpHeight);
-            yield return StartCoroutine(WaitUntilApexOfJumpOrReleaseButtonOrCeiling());
+            yield return StartCoroutine(WaitUntilApexOfJumpOrReleaseButtonOrCeiling(true));
             
             if (!m_ceilingCollision)
             {
@@ -419,15 +421,22 @@ namespace Run4YourLife.Player
             while(m_velocity.y > 0f)
             {
                 yield return null;
+                if(m_runnerControlScheme.Jump.Started()) // we want to execute the second jump
+                {
+                    break; 
+                }
                 m_velocity.y = Mathf.Lerp(m_velocity.y, 0.0f, m_releaseJumpButtonVelocityReductor * Time.deltaTime);
             }
 
-            m_gravity = m_hoverGravity;
+            if(!m_runnerControlScheme.Jump.Started())
+            {
+                m_gravity = m_hoverGravity;
 
-            float endTime = Time.time + m_hoverDuration;
-            yield return new WaitUntil(() => Time.time >= endTime || m_runnerControlScheme.Jump.Ended() || m_characterController.isGrounded || m_isBouncing);
+                float endTime = Time.time + m_hoverDuration;
+                yield return new WaitUntil(() => Time.time >= endTime || m_runnerControlScheme.Jump.Ended() || m_characterController.isGrounded || m_isBouncing);
 
-            m_gravity = m_baseGravity;
+                m_gravity = m_baseGravity;
+            }
         }
 
         private IEnumerator FallFaster(bool ignoreJump)
@@ -438,12 +447,14 @@ namespace Run4YourLife.Player
             m_gravity -= m_endOfJumpGravity;
         }
 
-        private IEnumerator WaitUntilApexOfJumpOrReleaseButtonOrCeiling()
+        private IEnumerator WaitUntilApexOfJumpOrReleaseButtonOrCeiling(bool ignoreJump)
         {
             float previousPositionY = transform.position.y;
             yield return null;
 
-            while (m_runnerControlScheme.Jump.Persists() && previousPositionY < transform.position.y && !m_ceilingCollision)
+            while (m_runnerControlScheme.Jump.Persists() && 
+                    previousPositionY < transform.position.y && 
+                    !m_ceilingCollision)
             {                
                 previousPositionY = transform.position.y;
                 yield return null;
@@ -476,24 +487,32 @@ namespace Run4YourLife.Player
             m_velocity.x = DragToVelocity(bounceForce.x);
             m_velocity.y = HeightToVelocity(bounceForce.y);
 
-            yield return StartCoroutine(WaitUntilApexOfBounce());
+            yield return StartCoroutine(WaitUntilApexOfBounceOrJump());
 
             m_isBouncing = false; // Bounce ends here However more behaviour continues after this
 
-            yield return StartCoroutine(FallFaster(false));
 
-            if(!m_isBouncing && m_jumpedWhileFalling) // We can bounce while falling
+            if(m_runnerControlScheme.Jump.Started())
             {
                 StartCoroutine(SecondJumpCoroutine());
             }
+            else
+            {
+                yield return StartCoroutine(FallFaster(false));
+
+                if(!m_isBouncing && m_jumpedWhileFalling) // We can bounce while falling
+                {
+                    StartCoroutine(SecondJumpCoroutine());
+                }
+            }
         }
 
-        private IEnumerator WaitUntilApexOfBounce()
+        private IEnumerator WaitUntilApexOfBounceOrJump()
         {
             float previousPositionY = transform.position.y;
             yield return null;
 
-            while (previousPositionY < transform.position.y)
+            while (previousPositionY < transform.position.y && !m_runnerControlScheme.Jump.Started())
             {
                 previousPositionY = transform.position.y;
                 yield return null;
