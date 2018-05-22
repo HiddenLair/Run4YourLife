@@ -39,6 +39,9 @@ namespace Run4YourLife.Player
         private float m_releaseJumpButtonVelocityReductor;
 
         [SerializeField]
+        private float m_secondJumpHeight;
+        
+        [SerializeField]
         private float m_endOfJumpGravity;
 
         [SerializeField]
@@ -90,6 +93,7 @@ namespace Run4YourLife.Player
         private bool m_isDashing;
         private bool m_isReadyToDash = true;
         private bool m_ceilingCollision;
+        private bool m_jumpedWhileFalling;
         private bool m_isFacingRight = true;
 
         private Vector3 m_velocity;
@@ -375,8 +379,29 @@ namespace Run4YourLife.Player
             m_velocity.y = HeightToVelocity(m_runnerAttributeController.GetAttribute(RunnerAttribute.JumpHeight));
             yield return StartCoroutine(WaitUntilApexOfJumpOrReleaseButtonOrCeiling());
 
+            if (!m_ceilingCollision)
+            {
+                yield return StartCoroutine(JumpHover());
+            }
+            else
+            {
+                m_ceilingCollision = false;
+            }
             m_isJumping = false;
 
+            yield return StartCoroutine(FallFaster(false));
+
+            if(!m_isBouncing && m_jumpedWhileFalling)
+            {
+                StartCoroutine(SecondJumpCoroutine());
+            }
+        }
+
+        private IEnumerator SecondJumpCoroutine()
+        {
+            m_velocity.y = HeightToVelocity(m_secondJumpHeight);
+            yield return StartCoroutine(WaitUntilApexOfJumpOrReleaseButtonOrCeiling());
+            
             if (!m_ceilingCollision)
             {
                 yield return StartCoroutine(JumpHover());
@@ -386,8 +411,7 @@ namespace Run4YourLife.Player
                 m_ceilingCollision = false;
             }
 
-
-            yield return StartCoroutine(FallFaster());
+            yield return StartCoroutine(FallFaster(true));
         }
 
         private IEnumerator JumpHover()
@@ -406,10 +430,11 @@ namespace Run4YourLife.Player
             m_gravity = m_baseGravity;
         }
 
-        private IEnumerator FallFaster()
+        private IEnumerator FallFaster(bool ignoreJump)
         {
             m_gravity += m_endOfJumpGravity;
-            yield return new WaitUntil(() => m_characterController.isGrounded || m_isBouncing);
+            yield return new WaitUntil(() => m_characterController.isGrounded || m_isBouncing || (!ignoreJump && m_runnerControlScheme.Jump.Started()));
+            m_jumpedWhileFalling = !ignoreJump && m_runnerControlScheme.Jump.Started();
             m_gravity -= m_endOfJumpGravity;
         }
 
@@ -452,9 +477,15 @@ namespace Run4YourLife.Player
             m_velocity.y = HeightToVelocity(bounceForce.y);
 
             yield return StartCoroutine(WaitUntilApexOfBounce());
-            m_isBouncing = false;
 
-            yield return StartCoroutine(FallFaster());
+            m_isBouncing = false; // Bounce ends here However more behaviour continues after this
+
+            yield return StartCoroutine(FallFaster(false));
+
+            if(!m_isBouncing && m_jumpedWhileFalling) // We can bounce while falling
+            {
+                StartCoroutine(SecondJumpCoroutine());
+            }
         }
 
         private IEnumerator WaitUntilApexOfBounce()
