@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Run4YourLife.InputManagement;
 using UnityEngine;
 
 namespace Run4YourLife.Player {
@@ -8,7 +9,12 @@ namespace Run4YourLife.Player {
     public abstract class BounceableEntityBase : MonoBehaviour {
 
         [SerializeField]
-        private bool falling = false;
+        [Tooltip("Allways bounce when colliding with it")]
+        private bool m_allwaysBounce;
+
+        [SerializeField]
+        [Tooltip("When colliding with it check wether the runner has the jump button pressed or not. If set to positive will only jump when pressed")]
+        private bool m_shouldBeJumping;
 
         protected abstract Vector3 BounceForce { get; }
 
@@ -25,7 +31,7 @@ namespace Run4YourLife.Player {
             if(other.CompareTag(Tags.Runner))
             {
                 RunnerCharacterController runnerCharacterController = other.GetComponent<RunnerCharacterController>();
-                if (!falling || runnerCharacterController.Velocity.y < 0)
+                if (m_allwaysBounce || ((!m_shouldBeJumping || m_shouldBeJumping && runnerCharacterController.GetComponent<RunnerControlScheme>().Jump.Persists()) && runnerCharacterController.Velocity.y < 0))
                 {
                     FixRunnerPositionOnTopOfEntity(runnerCharacterController);
                     runnerCharacterController.Bounce(BounceForce);
