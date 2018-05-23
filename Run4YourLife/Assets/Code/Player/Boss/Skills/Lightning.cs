@@ -75,6 +75,8 @@ namespace Run4YourLife.Player {
                     ExecuteEvents.Execute<ICharacterEvents>(hit.collider.gameObject, null, (x, y) => x.Kill());
                 }
             }
+
+            gameObject.SetActive(false);
         }
     }
 }

@@ -62,6 +62,11 @@ public class GameObjectPool : MonoBehaviour {
         return Add(key);
     }
 
+    public bool IsAlreadyFilled()
+    {
+        return m_pool.Count > 0;
+    }
+
     private void Update()
     {
         if(timer <= Time.time)

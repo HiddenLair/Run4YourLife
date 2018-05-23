@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace Run4YourLife.Player
 {
@@ -17,7 +18,13 @@ namespace Run4YourLife.Player
 
         private void OnEnable()
         {
-            Destroy(gameObject, m_skillTime);
+            StartCoroutine(DeactivateAfterTime());
+        }
+
+        IEnumerator DeactivateAfterTime()
+        {
+            yield return new WaitForSeconds(m_skillTime);
+            gameObject.SetActive(false);
         }
 
         private void OnTriggerEnter(Collider collider)

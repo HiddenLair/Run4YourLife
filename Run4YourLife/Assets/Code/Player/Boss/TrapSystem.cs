@@ -65,7 +65,7 @@ namespace Run4YourLife.Player
         private Animator anim;
         private GameObject uiManager;
         private CrossHairControl crossHairControl;
-        private GameObjectPool gameObjectPool;
+        protected GameObjectPool gameObjectPool;
         private ManualPrefabInstantiator trapInstantiator;
 
         private float timeToSpawnTrapsFromAnim = 0.2f;
@@ -95,10 +95,20 @@ namespace Run4YourLife.Player
 
         private void Start()
         {
-            gameObjectPool.Add(trapA, numberOfTrapsInPool);
-            gameObjectPool.Add(trapB, numberOfTrapsInPool);
-            gameObjectPool.Add(trapX, numberOfTrapsInPool);
-            gameObjectPool.Add(trapY, numberOfTrapsInPool);
+            if (phase == Phase.Phase1)
+            {
+                gameObjectPool.Add(trapA, numberOfTrapsInPool);
+                gameObjectPool.Add(trapB, numberOfTrapsInPool);
+                gameObjectPool.Add(trapX, numberOfTrapsInPool);
+                gameObjectPool.Add(trapY, numberOfTrapsInPool);
+            }
+            else if (phase == Phase.Phase2)
+            {
+                gameObjectPool.Add(skillA, numberOfTrapsInPool);
+                gameObjectPool.Add(skillB, numberOfTrapsInPool);
+                gameObjectPool.Add(skillX, numberOfTrapsInPool);
+                gameObjectPool.Add(skillY, numberOfTrapsInPool);
+            }
         }
 
         void Update()
@@ -204,9 +214,8 @@ namespace Run4YourLife.Player
 
         void SetElementCallback(GameObject g)
         {
-            Vector3 temp = crossHairControl.Position;
+            Vector3 temp = crossHairControl.Position;           
             trapInstantiator.ManualInstantiate(g, temp);
-            //Instantiate(g, temp, g.GetComponent<Transform>().rotation);
         }
     }
 }
