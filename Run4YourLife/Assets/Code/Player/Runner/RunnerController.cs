@@ -17,12 +17,21 @@ namespace Run4YourLife.Player
         [SerializeField]
         private GameObject deathPartciles;
 
+        [SerializeField]
+        private float inmuneTimeAfterRevive = 2.0f;
+
+        [SerializeField]
+        private float fadePeriodAfterRevive = 0.2f;
+
         #endregion
 
         private bool m_isShielded;
 
         private bool m_reviveMode;
 
+        private bool m_recentlyRevived;
+
+        private Renderer[] m_renderers;
         private Transform m_shieldGameObject;
         private Coroutine shieldCooldownDestroy;
         private RunnerCharacterController m_runnerCharacterController;      
@@ -31,6 +40,7 @@ namespace Run4YourLife.Player
         {
             m_runnerCharacterController = GetComponent<RunnerCharacterController>();
 
+            m_renderers = gameObject.GetComponentsInChildren<Renderer>();
             m_shieldGameObject = transform.Find("Graphics/Shield");
             Debug.Assert(m_shieldGameObject != null, "Shield gameobject has not been found inside the character");
         }
@@ -86,7 +96,7 @@ namespace Run4YourLife.Player
 
         public void Kill()
         {
-            if (!ConsumeShieldIfAviable())
+            if (!ConsumeShieldIfAviable() && !m_recentlyRevived)
             {
                 bodyReceiver.PlayFx(deathPartciles);
                 gameObject.SetActive(false);
@@ -103,8 +113,48 @@ namespace Run4YourLife.Player
 
         public void Impulse(Vector3 force)
         {
-            if (!ConsumeShieldIfAviable()) {
+            if (!ConsumeShieldIfAviable() && !m_recentlyRevived) {
                 m_runnerCharacterController.Impulse(force);
+            }
+        }
+
+        public void RecentlyRevived()
+        {
+            m_recentlyRevived = true;
+            StartCoroutine(ManageRecentlyRevived());
+        }
+
+        IEnumerator ManageRecentlyRevived()
+        {
+            bool faded = false;
+            float timer = Time.time + inmuneTimeAfterRevive;
+            float fadeTimer = Time.time + fadePeriodAfterRevive;
+            while (timer > Time.time)
+            {
+                if(fadeTimer <= Time.time)
+                {
+                    if (faded)
+                    {
+                        FadeByRender(true);
+                    }
+                    else
+                    {
+                        FadeByRender(false);
+                    }
+                    faded = !faded;
+                    fadeTimer = Time.time + fadePeriodAfterRevive;
+                }
+                yield return null;
+            }
+            FadeByRender(true);
+            m_recentlyRevived = false;
+        }
+
+        private void FadeByRender(bool active)
+        {
+            foreach (Renderer renderer in m_renderers)
+            {
+                renderer.enabled = active;
             }
         }
 

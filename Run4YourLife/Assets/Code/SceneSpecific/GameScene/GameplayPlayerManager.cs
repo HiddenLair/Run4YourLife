@@ -201,6 +201,7 @@ namespace Run4YourLife.GameManagement {
         public void RunnerRevive(PlayerHandle playerHandle,Vector3 position)
         {
             GameObject runner = ActivateRunner(playerHandle, position);
+            runner.GetComponent<RunnerController>().RecentlyRevived();
             m_onPlayerRevived.Invoke(runner);
         }
 
