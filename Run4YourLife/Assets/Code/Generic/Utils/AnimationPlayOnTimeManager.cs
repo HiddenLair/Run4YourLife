@@ -17,7 +17,7 @@ public class AnimationPlayOnTimeManager : SingletonMonoBehaviour<AnimationPlayOn
 
     IEnumerator WaitForCallBack(Animator anim, string animationName, float time, Action callBack)
     {
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName(animationName) && Mathf.Repeat(anim.GetCurrentAnimatorStateInfo(0).normalizedTime , 1.0f) < time);
+        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName(animationName) && Mathf.Repeat(anim.GetCurrentAnimatorStateInfo(0).normalizedTime * anim.GetCurrentAnimatorStateInfo(0).speed, 1.0f) < time);
         yield return new WaitUntil(() => Mathf.Repeat(anim.GetCurrentAnimatorStateInfo(0).normalizedTime, 1.0f) >= time);
         callBack.Invoke();
     }
@@ -26,7 +26,7 @@ public class AnimationPlayOnTimeManager : SingletonMonoBehaviour<AnimationPlayOn
     {
         yield return new WaitUntil(()=>anim.GetCurrentAnimatorStateInfo(0).IsName(animationName));
         yield return new WaitUntil(()=>anim.IsInTransition(0));
-        yield return new WaitUntil(() => Mathf.Repeat(anim.GetCurrentAnimatorStateInfo(0).normalizedTime, 1.0f) >= time);
+        yield return new WaitUntil(() => Mathf.Repeat(anim.GetCurrentAnimatorStateInfo(0).normalizedTime * anim.GetCurrentAnimatorStateInfo(0).speed, 1.0f) >= time);
         callBack.Invoke();
     }
 }
