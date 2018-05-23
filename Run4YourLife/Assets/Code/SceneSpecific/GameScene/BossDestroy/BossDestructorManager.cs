@@ -35,18 +35,14 @@ namespace Run4YourLife.GameManagement
 
         public void AddDynamic(BossDestructedInstance bossDestructedInstance)
         {
-            if(GameplayPlayerManager.Instance.Boss == null)
+            if(GameplayPlayerManager.Instance.Boss == null || bossDestructedInstance.DestroyPosition > GameplayPlayerManager.Instance.Boss.transform.position.x)
             {
                 m_activeDynamicElements.Add(bossDestructedInstance);
-            }
-            else if(bossDestructedInstance.DestroyPosition <= GameplayPlayerManager.Instance.Boss.transform.position.x)
-            {
-                m_destroyedDynamicElements.Add(bossDestructedInstance);
-                bossDestructedInstance.OnBossDestroy();
             }
             else
             {
-                m_activeDynamicElements.Add(bossDestructedInstance);
+                m_destroyedDynamicElements.Add(bossDestructedInstance);
+                bossDestructedInstance.OnBossDestroy();
             }
         }
 
