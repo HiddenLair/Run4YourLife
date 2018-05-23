@@ -37,10 +37,11 @@ namespace Run4YourLife.Player
 
         #region Shield
 
-        public void ActivateShield(int shieldTime)
+        public void ActivateShield(float shieldTime)
         {
             m_isShielded = true;
             m_shieldGameObject.gameObject.SetActive(true);
+            m_shieldGameObject.GetComponent<MaterialFadeOut>().Activate(shieldTime);
 
             if(shieldCooldownDestroy != null)
             {
@@ -72,7 +73,7 @@ namespace Run4YourLife.Player
         /// <summary>
         /// Consumes shield if enough time passes
         /// </summary>
-        IEnumerator DestroyShieldOnCooldownReached(int shieldTime)
+        IEnumerator DestroyShieldOnCooldownReached(float shieldTime)
         {
             yield return new WaitForSeconds(shieldTime);
             ConsumeShieldIfAviable();
