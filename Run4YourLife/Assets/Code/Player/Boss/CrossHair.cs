@@ -18,6 +18,12 @@ namespace Run4YourLife.Player
             collidingObject = other;
         }
 
+        private void OnTriggerExit(Collider other)
+        {
+            m_isOperative = true;
+            collidingObject = null;
+        }
+
         private void Update()
         {
             if(!m_isOperative && !collidingObject)
