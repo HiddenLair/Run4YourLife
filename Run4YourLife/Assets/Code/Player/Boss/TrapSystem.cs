@@ -154,7 +154,7 @@ namespace Run4YourLife.Player
                 float buttonCooldown = SetElement(trapA, skillA);
                 aButtonCooldown = Time.time + buttonCooldown;
 
-                ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.TRAP_A, aButtonCooldown));
+                ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.TRAP_A, buttonCooldown));
             }
             else if (bossControlScheme.Skill2.Started() && (xButtonCooldown <= Time.time))
             {
