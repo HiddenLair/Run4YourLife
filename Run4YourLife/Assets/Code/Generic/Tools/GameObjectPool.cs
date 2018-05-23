@@ -7,8 +7,18 @@ public class GameObjectPool : MonoBehaviour {
     [SerializeField]
     private Transform m_parent;
 
+    [SerializeField]
+    private float updatePeriod = 10;
+
+    private float timer;
+
     private Dictionary<GameObject, List<GameObject>> m_pool = new Dictionary<GameObject, List<GameObject>>();
 
+
+    private void Start()
+    {
+        timer = Time.time + updatePeriod;
+    }
 
     public void Add(GameObject key, int amount)
     {
@@ -50,6 +60,29 @@ public class GameObjectPool : MonoBehaviour {
         }
 
         return Add(key);
+    }
+
+    private void Update()
+    {
+        if(timer <= Time.time)
+        {
+            RetrieveObjectsToPool();
+            timer = Time.time + updatePeriod;
+        }
+    }
+
+    private void RetrieveObjectsToPool()
+    {
+        foreach (KeyValuePair<GameObject, List<GameObject>> item in m_pool)
+        {
+            foreach(GameObject g in item.Value)
+            {
+                if (!g.activeInHierarchy)
+                {
+                    g.transform.SetParent(m_parent);
+                }
+            }
+        }
     }
 
     private void Reset()

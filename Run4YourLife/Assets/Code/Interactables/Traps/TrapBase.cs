@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Run4YourLife.Utils;
 
 namespace Run4YourLife.Interactables
 {
@@ -31,6 +32,8 @@ namespace Run4YourLife.Interactables
         private Vector3 finalPos;
         private Vector3 speed = Vector3.zero;
         private bool destroyOnLanding = false;
+        private Transform fatherTransformStorage;
+        private float fatherInitialY;
 
         protected virtual void Awake()
         {
@@ -56,9 +59,16 @@ namespace Run4YourLife.Interactables
                     destroyOnLanding = true;
                 }
                 finalPos = transform.position + Vector3.down * info.distance;
+                fatherTransformStorage = info.collider.gameObject.transform;
+                fatherInitialY = fatherTransformStorage.position.y;
             }
 
             StartCoroutine(FadeInAndFall());
+        }
+
+        private void OnDisable()
+        {
+            gameObject.SetActive(false);
         }
 
         private IEnumerator FadeInAndFall()
@@ -90,9 +100,12 @@ namespace Run4YourLife.Interactables
             while(true)
             {
                 transform.Translate(speed * Time.deltaTime);
-                if (transform.position.y < finalPos.y)
+                float yVar = fatherTransformStorage.position.y - fatherInitialY;
+                if (transform.position.y < finalPos.y + yVar)
                 {
+                    finalPos.y += yVar;
                     transform.position = finalPos;
+                    transform.SetParent(fatherTransformStorage);
                     if (destroyOnLanding)
                     {
                         gameObject.SetActive(false);
