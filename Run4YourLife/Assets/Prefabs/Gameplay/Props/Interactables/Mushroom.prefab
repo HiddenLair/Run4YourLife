@@ -130,8 +130,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_distance: 0
+  m_distance: -3
+  m_isDynamic: 0
   m_alphaAnimationLenght: 0.5
+  m_activateOnRegenerate: 1
+  m_onRegenerated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114604628835581620
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -143,7 +150,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd7144b7e13849f46acba789926c0302, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  falling: 0
+  m_allwaysBounce: 0
+  m_shouldBeJumping: 0
   m_angle: 75
   m_bounceForce: 5
 --- !u!135 &135265792257110028
