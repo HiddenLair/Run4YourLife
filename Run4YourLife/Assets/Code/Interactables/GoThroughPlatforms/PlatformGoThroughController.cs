@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
-
+using Run4YourLife.Player;
 using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.Interactables
 {
-    public class PlatformGoThroughController : MonoBehaviour
+    public class PlatformGoThroughController : MonoBehaviour, ICustomVisibleInvisible
     {
-
         private Collider m_collider;
 
         private void Awake()
@@ -34,12 +33,12 @@ namespace Run4YourLife.Interactables
             }
         }
 
-        private void OnBecameInvisible()
+        public void OnCustomBecameInvisible()
         {
             enabled = false;
         }
 
-        private void OnBecameVisible()
+        public void OnCustomBecameVisible()
         {
             enabled = true;
         }
