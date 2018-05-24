@@ -4631,6 +4631,11 @@ Prefab:
       propertyPath: m_Name
       value: LauncherPlant (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 114403341536357374, guid: dcb9cdb975b75994ebd1ca2e7c819bd5,
+        type: 2}
+      propertyPath: shootForce
+      value: 700
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dcb9cdb975b75994ebd1ca2e7c819bd5, type: 2}
   m_IsPrefabParent: 0
@@ -9987,10 +9992,10 @@ Transform:
   - {fileID: 1221884973}
   - {fileID: 140132993}
   - {fileID: 1707565115}
+  - {fileID: 1716053563}
   - {fileID: 2015877531}
   - {fileID: 1119900103}
   - {fileID: 1485221581}
-  - {fileID: 1716053563}
   - {fileID: 288398968}
   m_Father: {fileID: 1132630549}
   m_RootOrder: 4
@@ -13195,6 +13200,11 @@ Prefab:
     - target: {fileID: 4320437171692552, guid: dcb9cdb975b75994ebd1ca2e7c819bd5, type: 2}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114403341536357374, guid: dcb9cdb975b75994ebd1ca2e7c819bd5,
+        type: 2}
+      propertyPath: shootForce
+      value: 700
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dcb9cdb975b75994ebd1ca2e7c819bd5, type: 2}
@@ -17783,8 +17793,8 @@ Transform:
   - {fileID: 1701234942}
   - {fileID: 1293632192}
   - {fileID: 732508587}
-  - {fileID: 27410771}
   - {fileID: 799076024}
+  - {fileID: 27410771}
   - {fileID: 1397138003}
   - {fileID: 1667840286}
   - {fileID: 1339829768}
@@ -34128,52 +34138,60 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_cinemachineScreenTransposerDatas:
-  - m_offsetFromTarget: {x: -1.7, y: -1.2, z: 0}
-    m_verticalHeight: 10
+  - m_offsetFromTarget: {x: -3, y: -1.5, z: 0}
+    m_verticalHeight: 16
     m_screenX: 0
     m_screenY: 1
-  - m_offsetFromTarget: {x: -1.7, y: -1.2, z: 0}
-    m_verticalHeight: 10
+  - m_offsetFromTarget: {x: -3, y: -1.5, z: 0}
+    m_verticalHeight: 16
     m_screenX: 0
     m_screenY: 1
-  - m_offsetFromTarget: {x: -1.7, y: -1.2, z: 0}
-    m_verticalHeight: 10
+  - m_offsetFromTarget: {x: -3, y: -4.616916, z: 0}
+    m_verticalHeight: 19.116917
     m_screenX: 0
     m_screenY: 1
-  - m_offsetFromTarget: {x: -1.7, y: -1.2, z: 0}
-    m_verticalHeight: 10
+  - m_offsetFromTarget: {x: -3, y: -4.616916, z: 0}
+    m_verticalHeight: 19.11692
     m_screenX: 0
     m_screenY: 1
-  - m_offsetFromTarget: {x: -1.7, y: -1.2, z: 0}
-    m_verticalHeight: 10
+  - m_offsetFromTarget: {x: -3, y: -1.5, z: 0}
+    m_verticalHeight: 16
     m_screenX: 0
     m_screenY: 1
-  - m_offsetFromTarget: {x: -1.7, y: -1.2, z: 0}
-    m_verticalHeight: 10
+  - m_offsetFromTarget: {x: -3, y: -1.5, z: 0}
+    m_verticalHeight: 16
     m_screenX: 0
     m_screenY: 1
-  - m_offsetFromTarget: {x: -1.7, y: -1.2, z: 0}
-    m_verticalHeight: 10
+  - m_offsetFromTarget: {x: -3, y: -1.5, z: 0}
+    m_verticalHeight: 16
     m_screenX: 0
     m_screenY: 1
-  - m_offsetFromTarget: {x: -1.7, y: -1.2, z: 0}
-    m_verticalHeight: 10
+  - m_offsetFromTarget: {x: -3, y: -1.5, z: 0}
+    m_verticalHeight: 16
     m_screenX: 0
     m_screenY: 1
-  - m_offsetFromTarget: {x: -1.7, y: -1.2, z: 0}
-    m_verticalHeight: 10
+  - m_offsetFromTarget: {x: -3, y: -1.5, z: 0}
+    m_verticalHeight: 16
     m_screenX: 0
     m_screenY: 1
-  - m_offsetFromTarget: {x: -1.7, y: -1.2, z: 0}
-    m_verticalHeight: 10
+  - m_offsetFromTarget: {x: -3, y: -1.5, z: 0}
+    m_verticalHeight: 16
     m_screenX: 0
     m_screenY: 1
-  - m_offsetFromTarget: {x: -1.7, y: -1.2, z: 0}
-    m_verticalHeight: 10
+  - m_offsetFromTarget: {x: -3, y: -7.60625, z: 0}
+    m_verticalHeight: 22.10625
     m_screenX: 0
     m_screenY: 1
-  - m_offsetFromTarget: {x: -1.7, y: -1.2, z: 0}
-    m_verticalHeight: 10
+  - m_offsetFromTarget: {x: -3, y: -1.5, z: 0}
+    m_verticalHeight: 16
+    m_screenX: 0
+    m_screenY: 1
+  - m_offsetFromTarget: {x: -3, y: -1.5, z: 0}
+    m_verticalHeight: 16
+    m_screenX: 0
+    m_screenY: 1
+  - m_offsetFromTarget: {x: -3, y: -1.5, z: 0}
+    m_verticalHeight: 16
     m_screenX: 0
     m_screenY: 1
 --- !u!114 &1662031825
@@ -34197,38 +34215,44 @@ MonoBehaviour:
   - position: {x: 0, y: 0, z: 0}
     tangent: {x: 1, y: 0, z: 0}
     roll: 0
-  - position: {x: 20, y: 0, z: 0}
-    tangent: {x: 1, y: 0, z: 0}
+  - position: {x: 27.08992, y: 0, z: 0}
+    tangent: {x: 1.1463318, y: -0.10964012, z: 0}
     roll: 0
-  - position: {x: 37, y: 5, z: 0}
-    tangent: {x: 1, y: 0, z: 0}
+  - position: {x: 37.000015, y: 3.1169157, z: 0}
+    tangent: {x: 2.8743286, y: 0, z: 0}
     roll: 0
-  - position: {x: 60, y: 6.7, z: 0}
+  - position: {x: 60, y: 3.116916, z: 0}
     tangent: {x: 0, y: 0, z: 0}
     roll: 0
-  - position: {x: 66, y: 6.7, z: 0}
+  - position: {x: 67.94603, y: 5, z: 0}
+    tangent: {x: 0.23202515, y: -0.08921623, z: 0}
+    roll: 0
+  - position: {x: 97, y: 5, z: 0}
+    tangent: {x: -0.0082092285, y: 0, z: 0}
+    roll: 0
+  - position: {x: 97, y: 19.496841, z: 0}
+    tangent: {x: 0.11917114, y: 5.275076, z: 0}
+    roll: 0
+  - position: {x: 124.000015, y: 21, z: 0}
+    tangent: {x: 0.48931885, y: 0, z: 0}
+    roll: 0
+  - position: {x: 147.41261, y: 21, z: 0}
     tangent: {x: 0, y: 0, z: 0}
     roll: 0
-  - position: {x: 82, y: 0, z: 0}
-    tangent: {x: 1, y: 0, z: 0}
+  - position: {x: 161.96397, y: 21, z: 0}
+    tangent: {x: -1.0961609, y: -0.088228226, z: 0}
     roll: 0
-  - position: {x: 83, y: 11, z: 0}
-    tangent: {x: 0, y: 1, z: 0}
+  - position: {x: 174.5092, y: 27.10625, z: 0}
+    tangent: {x: 4.504242, y: -0.49027252, z: 0}
     roll: 0
-  - position: {x: 124, y: 11, z: 0}
-    tangent: {x: 1, y: 0, z: 0}
+  - position: {x: 184.26134, y: 32.977337, z: 0}
+    tangent: {x: 1.7233276, y: 0.8103752, z: 0}
     roll: 0
-  - position: {x: 125, y: 16, z: 0}
-    tangent: {x: 1, y: 0, z: 0}
+  - position: {x: 194.45436, y: 33, z: 0}
+    tangent: {x: 1, y: -0.122112274, z: 0}
     roll: 0
-  - position: {x: 145, y: 16, z: 0}
-    tangent: {x: 1, y: 0, z: 0}
-    roll: 0
-  - position: {x: 148.00002, y: 17, z: 0}
-    tangent: {x: 1, y: 0, z: 0}
-    roll: 0
-  - position: {x: 180.00002, y: 17, z: 0}
-    tangent: {x: 1, y: 0, z: 0}
+  - position: {x: 252.3008, y: 33, z: 0}
+    tangent: {x: 0, y: 0, z: 0}
     roll: 0
 --- !u!1001 &1662776659
 Prefab:
@@ -35440,7 +35464,7 @@ Transform:
   - {fileID: 2036988228}
   - {fileID: 354843742}
   m_Father: {fileID: 467876061}
-  m_RootOrder: 23
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1717097020
 Prefab:
@@ -39234,6 +39258,16 @@ Prefab:
     - target: {fileID: 1410030826953418, guid: dcb9cdb975b75994ebd1ca2e7c819bd5, type: 2}
       propertyPath: m_Name
       value: LauncherPlant (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114403341536357374, guid: dcb9cdb975b75994ebd1ca2e7c819bd5,
+        type: 2}
+      propertyPath: shootForce
+      value: 700
+      objectReference: {fileID: 0}
+    - target: {fileID: 114403341536357374, guid: dcb9cdb975b75994ebd1ca2e7c819bd5,
+        type: 2}
+      propertyPath: timeBetweenShoots
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dcb9cdb975b75994ebd1ca2e7c819bd5, type: 2}
