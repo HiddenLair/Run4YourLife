@@ -365,6 +365,8 @@ GameObject:
   - component: {fileID: 65399253425502934}
   - component: {fileID: 114648588520097026}
   - component: {fileID: 114800066667396244}
+  - component: {fileID: 114355901401528554}
+  - component: {fileID: 114589042388342810}
   m_Layer: 11
   m_Name: Phase3Boss
   m_TagString: Boss
@@ -2598,6 +2600,19 @@ MonoBehaviour:
   dangerIndicator: {fileID: 1728473321792840}
   maxLaserDistance: 50
   laserWidth: 1
+--- !u!114 &114355901401528554
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1432021327500220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8073855dcfad5724c94cad4bdb64b4aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_parent: {fileID: 4405151106240620}
+  updatePeriod: 10
 --- !u!114 &114365934285163218
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2618,6 +2633,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d67487b577a63a40b0d38773955ab3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114589042388342810
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1432021327500220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0a0cd912d4956d41a198afebc9af656, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114648588520097026
