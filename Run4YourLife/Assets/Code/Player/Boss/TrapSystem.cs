@@ -148,12 +148,14 @@ namespace Run4YourLife.Player
         void ClampPositionInsideScreen()
         {
             Camera mainCamera = CameraManager.Instance.MainCamera;
-            Vector2 screenTopRight = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, Mathf.Abs(mainCamera.transform.position.z - crossHairControl.Position.z)));
-            Vector2 screenBottomLeft = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth * screenLeftLimitPercentaje, mainCamera.pixelHeight * screenBottomLimitPercentaje, Mathf.Abs(mainCamera.transform.position.z - crossHairControl.Position.z)));
+
+            Vector3 screenTopRight = mainCamera.ViewportToWorldPoint(new Vector3(1.0f, 1.0f, Mathf.Abs(mainCamera.transform.position.z - crossHairControl.Position.z)));
+            Vector3 screenBottomLeft = mainCamera.ViewportToWorldPoint(new Vector3(screenLeftLimitPercentaje, screenBottomLimitPercentaje, Mathf.Abs(mainCamera.transform.position.z - crossHairControl.Position.z)));
 
             Vector3 clampedPosition = crossHairControl.Position;
             clampedPosition.x = Mathf.Clamp(crossHairControl.Position.x, screenBottomLeft.x, screenTopRight.x);
             clampedPosition.y = Mathf.Clamp(crossHairControl.Position.y, screenBottomLeft.y, screenTopRight.y);
+
             crossHairControl.ChangePosition(clampedPosition);
         }
 
