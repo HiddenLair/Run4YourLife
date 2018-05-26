@@ -12,10 +12,7 @@ namespace Run4YourLife.Player
 
         #region Inspector
         [SerializeField]
-        private FXReceiver bodyReceiver;
-
-        [SerializeField]
-        private GameObject deathPartciles;
+        private FXReceiver deathReceiver;
 
         [SerializeField]
         private float inmuneTimeAfterRevive = 2.0f;
@@ -98,7 +95,7 @@ namespace Run4YourLife.Player
         {
             if (!ConsumeShieldIfAviable() && !m_recentlyRevived)
             {
-                bodyReceiver.PlayFx(deathPartciles);
+                deathReceiver.PlayFx();
                 gameObject.SetActive(false);
                 ExecuteEvents.Execute<IGameplayPlayerEvents>(GameplayPlayerManager.InstanceGameObject, null, (x, y) => x.OnRunnerDeath(gameObject));
             }
@@ -106,7 +103,7 @@ namespace Run4YourLife.Player
 
         public void AbsoluteKill()
         {
-            bodyReceiver.PlayFx(deathPartciles);
+            deathReceiver.PlayFx();
             gameObject.SetActive(false);
             ExecuteEvents.Execute<IGameplayPlayerEvents>(GameplayPlayerManager.InstanceGameObject, null, (x, y) => x.OnRunnerDeath(gameObject));
         }

@@ -9,9 +9,6 @@ namespace Run4YourLife.Interactables
     public class BreakByDash : MonoBehaviour
     {
         [SerializeField]
-        private GameObject destroyParticles;
-
-        [SerializeField]
         private FXReceiver receiver;
 
         [SerializeField]
@@ -42,7 +39,7 @@ namespace Run4YourLife.Interactables
 
         private void Break()
         {
-            receiver.PlayFx(destroyParticles);
+            receiver.PlayFx();
             gameObject.SetActive(false);
             m_onBrokenByDash.Invoke();
         }
