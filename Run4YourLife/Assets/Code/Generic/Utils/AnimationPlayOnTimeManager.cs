@@ -15,6 +15,11 @@ public class AnimationPlayOnTimeManager : SingletonMonoBehaviour<AnimationPlayOn
         StartCoroutine(WaitForNextCallback(anim,animationName,time,callBack));
     }
 
+    public void PlayOnNextTransitionFrom(Animator anim, string firstAnimation,string secondAnimation,Action callBack)
+    {
+       StartCoroutine(WaitForEspecificTransition(anim, firstAnimation, secondAnimation, callBack));
+    }
+
     IEnumerator WaitForCallBack(Animator anim, string animationName, float time, Action callBack)
     {
         yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName(animationName) && Mathf.Repeat(anim.GetCurrentAnimatorStateInfo(0).normalizedTime * anim.GetCurrentAnimatorStateInfo(0).speed, 1.0f) < time);
@@ -28,5 +33,19 @@ public class AnimationPlayOnTimeManager : SingletonMonoBehaviour<AnimationPlayOn
         yield return new WaitUntil(()=>anim.IsInTransition(0));
         yield return new WaitUntil(() => Mathf.Repeat(anim.GetCurrentAnimatorStateInfo(0).normalizedTime * anim.GetCurrentAnimatorStateInfo(0).speed, 1.0f) >= time);
         callBack.Invoke();
+    }
+
+    IEnumerator WaitForEspecificTransition(Animator anim, string firstStateName, string secondName,Action callBack)
+    {
+        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName(firstStateName) && !anim.IsInTransition(0));
+        yield return new WaitUntil(() => anim.IsInTransition(0)); 
+        if (anim.GetNextAnimatorStateInfo(0).IsName(secondName))
+        {
+            callBack.Invoke();
+        }
+        else
+        {
+            StartCoroutine(WaitForEspecificTransition(anim,firstStateName,secondName,callBack));
+        }
     }
 }

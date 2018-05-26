@@ -6,6 +6,7 @@ using Run4YourLife.InputManagement;
 using System;
 using UnityEngine.EventSystems;
 using Run4YourLife.GameManagement;
+using Run4YourLife.Utils;
 
 namespace Run4YourLife.Player
 {
@@ -63,10 +64,19 @@ namespace Run4YourLife.Player
         private AudioClip bounceClip;
 
         [SerializeField]
-        private FXReceiver bounceReceiver;
+        private FXReceiver leftbounceReceiver;
+
+        [SerializeField]
+        private FXReceiver rightbounceReceiver;
 
         [SerializeField]
         private FXReceiver fartReceiver;
+
+        [SerializeField]
+        private FXReceiver leftdustReceiver;
+
+        [SerializeField]
+        private FXReceiver rightdustReceiver;
 
         #endregion
 
@@ -151,6 +161,8 @@ namespace Run4YourLife.Player
 
             m_gravity = m_baseGravity;
             m_horizontalDrag = m_baseHorizontalDrag;
+
+            AnimationPlayOnTimeManager.Instance.PlayOnNextTransitionFrom(m_animator, "idle", "correr", () => Dust());
 
             m_waitForSecondsCoyoteGroundedTime = new WaitForSeconds(m_coyoteGroundedTime);
             m_waitForSecondsDashCooldown = new WaitForSeconds(m_dashCooldown);
@@ -484,12 +496,19 @@ namespace Run4YourLife.Player
 
         public void Bounce(Vector3 bounceForce)
         {
-            bounceReceiver.PlayFx();
             StartCoroutine(BounceCoroutine(bounceForce));
         }
 
         IEnumerator BounceCoroutine(Vector3 bounceForce)
         {
+            if (m_isFacingRight)
+            {
+                rightbounceReceiver.PlayFx();
+            }
+            else
+            {
+                leftbounceReceiver.PlayFx();
+            }
             m_isBouncing = true;
             m_audioSource.PlayOneShot(bounceClip);
             m_velocity.x = DragToVelocity(bounceForce.x);
@@ -563,6 +582,23 @@ namespace Run4YourLife.Player
 
             m_horizontalDrag = m_baseHorizontalDrag;
             m_isBeingImpulsed = false;
+        }
+
+        #endregion
+
+        #region DustParticlesManagement
+
+        void Dust()
+        {            
+            if (m_isFacingRight)
+            {
+                rightdustReceiver.PlayFx();
+            }
+            else
+            {
+                leftdustReceiver.PlayFx();
+            }
+            AnimationPlayOnTimeManager.Instance.PlayOnNextTransitionFrom(m_animator, "idle", "correr", () => Dust());
         }
 
         #endregion
