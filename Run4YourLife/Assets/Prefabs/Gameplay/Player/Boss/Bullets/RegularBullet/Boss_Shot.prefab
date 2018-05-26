@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 198019355396659698}
   - component: {fileID: 199323319278883814}
   - component: {fileID: 114296659388083682}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shot_aura
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 4113015723937870}
   - component: {fileID: 198542615215516720}
   - component: {fileID: 199247385347228510}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shot_trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,12 +55,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4846887696143886}
   - component: {fileID: 114946949731346962}
-  - component: {fileID: 114163953919176302}
+  - component: {fileID: 114375096072483962}
   - component: {fileID: 136957052827606210}
   - component: {fileID: 54417531336440742}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Boss_Shot
-  m_TagString: Untagged
+  m_TagString: Shoot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,7 +98,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1781781690259230}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.842, y: 1.83, z: -0.92243385}
+  m_LocalPosition: {x: -2.629, y: 2.231, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4424415456715648}
@@ -121,17 +121,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &114163953919176302
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1781781690259230}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a4bff627ec8fec4586c2d3764a5adca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114296659388083682
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -144,6 +133,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hierarchyUpLevels: 1
+--- !u!114 &114375096072483962
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1781781690259230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57011c5b505caa14391fef1be874907b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitParticles: {fileID: 1637268079511322, guid: 64c492ff39cd4e1469e0714cc3f49da0,
+    type: 2}
 --- !u!114 &114946949731346962
 MonoBehaviour:
   m_ObjectHideFlags: 1
