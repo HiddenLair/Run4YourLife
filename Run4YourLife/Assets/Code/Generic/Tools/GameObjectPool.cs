@@ -52,7 +52,7 @@ public class GameObjectPool : MonoBehaviour {
         {
             foreach(GameObject g in instances)
             {
-                if(!g.activeSelf)
+                if(!g.activeSelf && (g.transform.parent == m_parent))
                 {
                     return g;
                 }
@@ -84,6 +84,10 @@ public class GameObjectPool : MonoBehaviour {
             {
                 if (!g.activeInHierarchy)
                 {
+                    if(g.transform.position != m_parent.transform.position)
+                    {
+                        g.transform.position = m_parent.transform.position;
+                    }
                     g.transform.SetParent(m_parent);
                 }
             }
