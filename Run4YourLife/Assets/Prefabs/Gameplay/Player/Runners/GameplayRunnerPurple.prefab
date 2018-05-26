@@ -142,6 +142,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4983334390059584}
+  - component: {fileID: 114678328885927912}
   m_Layer: 0
   m_Name: LeftToe
   m_TagString: Untagged
@@ -264,7 +265,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4065471608015094}
-  - component: {fileID: 114130232290671060}
   m_Layer: 0
   m_Name: CenterRoot
   m_TagString: Untagged
@@ -514,6 +514,22 @@ GameObject:
   - component: {fileID: 4187338639630000}
   m_Layer: 0
   m_Name: QuickRigCharacter_Guides
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1442384381174686
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4626796326098328}
+  - component: {fileID: 114826062344592354}
+  m_Layer: 0
+  m_Name: FartReceiver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1078,6 +1094,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1851408220769890
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4187128725129014}
+  - component: {fileID: 114198410260783734}
+  m_Layer: 0
+  m_Name: DeathReceiver
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1895820518117792
 GameObject:
   m_ObjectHideFlags: 1
@@ -1208,6 +1240,8 @@ Transform:
   - {fileID: 4978658970554344}
   - {fileID: 4283767496557160}
   - {fileID: 4762784340012630}
+  - {fileID: 4187128725129014}
+  - {fileID: 4626796326098328}
   m_Father: {fileID: 4154794571481752}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1325,7 +1359,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1837875320852082}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.79, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4593702343663260}
@@ -1346,6 +1380,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4061207468205184}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4187128725129014
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1851408220769890}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4065471608015094}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4187338639630000
 Transform:
@@ -1904,6 +1951,19 @@ Transform:
   m_Father: {fileID: 4917472299535788}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4626796326098328
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1442384381174686}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4065471608015094}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4630880672417258
 Transform:
   m_ObjectHideFlags: 1
@@ -2452,18 +2512,6 @@ TrailRenderer:
     generateLightingData: 0
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
---- !u!114 &114130232290671060
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1237165161706190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cb52b0f7a8d8b1458965b078cdc7767, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 0}
 --- !u!114 &114139232969802602
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2475,6 +2523,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67d256071968d944793b20e43cfc5a0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114198410260783734
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1851408220769890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cb52b0f7a8d8b1458965b078cdc7767, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fx: {fileID: 1751776643570596, guid: fa8134d7703a4c34bb96cae308ef5c96, type: 2}
+  anim: {fileID: 0}
 --- !u!114 &114312492064301204
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2681,11 +2742,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6968e196e4f7a1344bc4744e2b7cc4eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bodyReceiver: {fileID: 114130232290671060}
-  deathPartciles: {fileID: 1751776643570596, guid: fa8134d7703a4c34bb96cae308ef5c96,
-    type: 2}
+  deathReceiver: {fileID: 114198410260783734}
   inmuneTimeAfterRevive: 2
   fadePeriodAfterRevive: 0.5
+--- !u!114 &114678328885927912
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1158008696760682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cb52b0f7a8d8b1458965b078cdc7767, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fx: {fileID: 1200353531548318, guid: 76cab33c44ee8e14c89e142f7ba0bbe6, type: 2}
+  anim: {fileID: 0}
 --- !u!114 &114799538616923324
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2697,6 +2769,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff4e6999a7f30fe4aa9f4d8d89f65bd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114826062344592354
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1442384381174686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cb52b0f7a8d8b1458965b078cdc7767, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fx: {fileID: 1747895177136780, guid: 339637275c8fd6e4794c63f89a508645, type: 2}
+  anim: {fileID: 0}
 --- !u!114 &114870244662351562
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2743,6 +2828,8 @@ MonoBehaviour:
   m_timeToIdle: 5
   jumpClip: {fileID: 8300000, guid: 8bc5dbb3f916c7d4bb404c8a010f4106, type: 3}
   bounceClip: {fileID: 8300000, guid: 4c27b064170a56b48907e5a15905f521, type: 3}
+  bounceReceiver: {fileID: 114678328885927912}
+  fartReceiver: {fileID: 114826062344592354}
 --- !u!114 &114944513227704966
 MonoBehaviour:
   m_ObjectHideFlags: 1

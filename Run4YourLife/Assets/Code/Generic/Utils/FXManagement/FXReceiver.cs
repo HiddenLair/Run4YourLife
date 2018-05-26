@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class FXReceiver : MonoBehaviour {
 
+    public GameObject fx;
     public Animator anim;
 
-    public GameObject PlayFx(GameObject prefab)
+    public GameObject PlayFx()
     {
-        return FXManager.Instance.InstantiateFromReceiver(this, prefab);
+        return FXManager.Instance.InstantiateFromReceiver(this, fx);
     }
 
-    public void PlayFxOnAnimation(string animName,float time, GameObject prefab)
+    public void PlayFxOnAnimation(string animName,float time)
     {
-        AnimationPlayOnTimeManager.Instance.PlayOnAnimation(anim,animName,time,()=>CallBack(prefab));
+        AnimationPlayOnTimeManager.Instance.PlayOnAnimation(anim,animName,time,()=>CallBack(fx));
     }
 
     void CallBack(GameObject prefab)
