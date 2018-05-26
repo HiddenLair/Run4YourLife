@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17600103, g: 0.22025716, b: 0.3025852, a: 1}
+  m_IndirectSpecularColor: {r: 0.17889616, g: 0.22400421, b: 0.30586368, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -12419,13 +12419,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 507394051}
-  m_LocalRotation: {x: -0.6072047, y: 0.2290915, z: 0.019803997, w: -0.7605441}
+  m_LocalRotation: {x: -0.5558277, y: 0.28232446, z: 0.07823741, w: -0.77796364}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1875530165}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 66.14, y: 292.937, z: -49.664}
+  m_LocalEulerAnglesHint: {x: 55.15, y: 292.937, z: -49.664}
 --- !u!108 &507394053
 Light:
   m_ObjectHideFlags: 0
@@ -12435,7 +12435,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.9655172, b: 0.5, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -38198,6 +38198,71 @@ Transform:
   m_PrefabParentObject: {fileID: 4428404465085170, guid: 5eaafedb748a6574484a13d6f1eb6de7,
     type: 2}
   m_PrefabInternal: {fileID: 1653069855}
+--- !u!1 &1653461641
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1653461642}
+  - component: {fileID: 1653461643}
+  m_Layer: 0
+  m_Name: Directional Light (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &1653461642
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1653461641}
+  m_LocalRotation: {x: -0.53278744, y: 0.30612367, z: 0.10139385, w: -0.78239703}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1.0000002, z: 1.0000002}
+  m_Children: []
+  m_Father: {fileID: 1875530165}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 50.5, y: 292.64, z: -49.664}
+--- !u!108 &1653461643
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1653461641}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 1
+  m_Color: {r: 0.09245241, g: 0.5296355, b: 0.83823526, a: 1}
+  m_Intensity: 0.7
+  m_Range: 10
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: 3
+    m_CustomResolution: -1
+    m_Strength: 0.604
+    m_Bias: 0.05
+    m_NormalBias: 0.29
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 4
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!1001 &1655268694
 Prefab:
   m_ObjectHideFlags: 0
@@ -44085,6 +44150,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 507394052}
+  - {fileID: 1653461642}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -49282,15 +49348,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400014, guid: d6e8cf279e27a0f47a930169905c44f0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 32
+      value: 30.64
       objectReference: {fileID: 0}
     - target: {fileID: 400014, guid: d6e8cf279e27a0f47a930169905c44f0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.58
       objectReference: {fileID: 0}
     - target: {fileID: 400014, guid: d6e8cf279e27a0f47a930169905c44f0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.85
+      value: 2.66
       objectReference: {fileID: 0}
     - target: {fileID: 400014, guid: d6e8cf279e27a0f47a930169905c44f0, type: 3}
       propertyPath: m_LocalRotation.x
