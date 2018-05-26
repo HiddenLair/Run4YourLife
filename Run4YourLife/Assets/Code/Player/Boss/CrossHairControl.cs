@@ -3,13 +3,16 @@ using UnityEngine.EventSystems;
 
 namespace Run4YourLife.Player
 {
-    public class CrossHairControl : MonoBehaviour {
-
+    public class CrossHairControl : MonoBehaviour
+    {
         [SerializeField]
         private GameObject m_crossHairGameObject;
 
         [SerializeField]
         private float m_speed;
+
+        [SerializeField]
+        private float desiredZ = 0.0f;
 
         private CrossHair m_crosshair;
         private Transform m_crossHairTransform;
@@ -38,14 +41,16 @@ namespace Run4YourLife.Player
             ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (a,b) => a.DeatachCrossHair());
         }
 
-        public bool IsOperative {
+        public bool IsOperative
+        {
             get
             {
                 return m_crosshair.IsOperative;
             }
         }
 
-        public Vector3 Position {
+        public Vector3 Position
+        {
             get
             {
                 return m_crossHairTransform.position;
@@ -54,19 +59,19 @@ namespace Run4YourLife.Player
 
         public void Translate(Vector3 input)
         {
-            if (!m_isLocked)
+            if(!m_isLocked)
             {
                 m_crossHairTransform.Translate(input * m_speed * Time.deltaTime);
+                OverrideZ();
             }
         }
 
-        
-
         public void ChangePosition(Vector3 newPosition)
         {
-            if (!m_isLocked)
+            if(!m_isLocked)
             {
                 m_crossHairGameObject.transform.position = newPosition;
+                OverrideZ();
             }
         }
 
@@ -78,6 +83,12 @@ namespace Run4YourLife.Player
         public void Unlock()
         {
             m_isLocked = false;
+        }
+
+        private void OverrideZ()
+        {
+            Vector3 tmpPosition = m_crossHairTransform.localPosition; tmpPosition.z = desiredZ;
+            m_crossHairTransform.localPosition = tmpPosition;
         }
     }
 }
