@@ -400,7 +400,6 @@ namespace Run4YourLife.Player
             m_velocity.y = HeightToVelocity(m_runnerAttributeController.GetAttribute(RunnerAttribute.JumpHeight));
             yield return StartCoroutine(WaitUntilApexOfJumpOrReleaseButtonOrCeiling(false));
 
-            if(m_runnerControlScheme.Jump.Started())
             if (!m_ceilingCollision && m_runnerControlScheme.Jump.Persists())
             {
                 yield return StartCoroutine(JumpHover());
@@ -446,20 +445,17 @@ namespace Run4YourLife.Player
                 yield return null;
                 if(m_runnerControlScheme.Jump.Started()) // we want to execute the second jump
                 {
-                    break; 
+                    yield break; // exit prematurely
                 }
                 m_velocity.y = Mathf.Lerp(m_velocity.y, 0.0f, m_releaseJumpButtonVelocityReductor * Time.deltaTime);
             }
 
-            if(!m_runnerControlScheme.Jump.Started())
-            {
-                m_gravity = m_hoverGravity;
+            m_gravity = m_hoverGravity;
 
-                float endTime = Time.time + m_hoverDuration;
-                yield return new WaitUntil(() => Time.time >= endTime || m_runnerControlScheme.Jump.Ended() || m_characterController.isGrounded || m_isBouncing);
+            float endTime = Time.time + m_hoverDuration;
+            yield return new WaitUntil(() => Time.time >= endTime || m_runnerControlScheme.Jump.Ended() || m_characterController.isGrounded || m_isBouncing);
 
-                m_gravity = m_baseGravity;
-            }
+            m_gravity = m_baseGravity;
         }
 
         private IEnumerator FallFaster(bool ignoreJump)
