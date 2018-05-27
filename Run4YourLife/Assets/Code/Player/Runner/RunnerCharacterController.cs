@@ -64,6 +64,9 @@ namespace Run4YourLife.Player
         private AudioClip bounceClip;
 
         [SerializeField]
+        private AudioClip fartClip;
+
+        [SerializeField]
         private FXReceiver leftbounceReceiver;
 
         [SerializeField]
@@ -419,6 +422,7 @@ namespace Run4YourLife.Player
 
         private IEnumerator SecondJumpCoroutine()
         {
+            m_audioSource.PlayOneShot(fartClip);
             fartReceiver.PlayFx();
             m_velocity.y = HeightToVelocity(m_secondJumpHeight);
             yield return StartCoroutine(WaitUntilApexOfJumpOrReleaseButtonOrCeiling(true));
