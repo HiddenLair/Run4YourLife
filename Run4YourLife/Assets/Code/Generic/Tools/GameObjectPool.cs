@@ -52,7 +52,7 @@ public class GameObjectPool : MonoBehaviour {
         {
             foreach(GameObject g in instances)
             {
-                if(!g.activeSelf && (g.transform.parent == m_parent))
+                if(!g.activeInHierarchy && (g.transform.parent == m_parent))
                 {
                     return g;
                 }

@@ -3,28 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(GameObjectPool))]
-public class ManualPrefabInstantiator : MonoBehaviour {
-
-    #region Editor fields
-
-    //[SerializeField]
-    //private float m_timeBetweenInstantiations = 1.0f;
-
-    //[SerializeField]
-    //private bool m_isInfinite;
-
-    //[SerializeField]
-    //private int m_instantiationCount = -1;
-
-    //[SerializeField]
-    //private GameObject[] m_prefabs;
-
-    //[SerializeField]
-    //[Tooltip("How many prefabs will be pooled on awake")]
-    //private int m_numberOfPrefabs;
-
-    #endregion
-
+public class ManualPrefabInstantiator : MonoBehaviour
+{ 
     #region Private Fields
 
     private GameObjectPool m_gameObjectPool;

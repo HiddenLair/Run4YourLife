@@ -11,11 +11,10 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(Ready))]
     [RequireComponent(typeof(BossControlScheme))]
     [RequireComponent(typeof(CrossHairControl))]
-    [RequireComponent(typeof(ManualPrefabInstantiator))]
-    [RequireComponent(typeof(GameObjectPool))]
+    //[RequireComponent(typeof(ManualPrefabInstantiator))]
+    //[RequireComponent(typeof(GameObjectPool))]
     public class TrapSystem : MonoBehaviour
     {
-
         #region Enums
 
         public enum Phase { Phase1, Phase2, Phase3 };
@@ -65,8 +64,6 @@ namespace Run4YourLife.Player
         private Animator anim;
         private GameObject uiManager;
         private CrossHairControl crossHairControl;
-        protected GameObjectPool gameObjectPool;
-        private ManualPrefabInstantiator trapInstantiator;
 
         private float timeToSpawnTrapsFromAnim = 0.2f;
         private bool trapCooldownBool = false;
@@ -89,26 +86,6 @@ namespace Run4YourLife.Player
             bossControlScheme = GetComponent<BossControlScheme>();
             crossHairControl = GetComponent<CrossHairControl>();
             uiManager = GameObject.FindGameObjectWithTag(Tags.UI);
-            gameObjectPool = GetComponent<GameObjectPool>();
-            trapInstantiator = GetComponent<ManualPrefabInstantiator>();
-        }
-
-        private void Start()
-        {
-            if (phase == Phase.Phase1)
-            {
-                gameObjectPool.Add(trapA, numberOfTrapsInPool);
-                gameObjectPool.Add(trapB, numberOfTrapsInPool);
-                gameObjectPool.Add(trapX, numberOfTrapsInPool);
-                gameObjectPool.Add(trapY, numberOfTrapsInPool);
-            }
-            else if (phase == Phase.Phase2)
-            {
-                gameObjectPool.Add(skillA, numberOfTrapsInPool);
-                gameObjectPool.Add(skillB, numberOfTrapsInPool);
-                gameObjectPool.Add(skillX, numberOfTrapsInPool);
-                gameObjectPool.Add(skillY, numberOfTrapsInPool);
-            }
         }
 
         void Update()
@@ -216,8 +193,8 @@ namespace Run4YourLife.Player
 
         void SetElementCallback(GameObject g)
         {
-            Vector3 temp = crossHairControl.Position;           
-            trapInstantiator.ManualInstantiate(g, temp);
+            Vector3 temp = crossHairControl.Position;
+            BossPoolManager.Instance.InstantiateBossElement(g, temp);
         }
     }
 }
