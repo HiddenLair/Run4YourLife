@@ -70,7 +70,7 @@ namespace Run4YourLife.Player
             Debug.Assert(m_cinemachineScreenTransposerDatas.Length == m_path.m_Waypoints.Length, "The number of path positions<" + m_path.m_Waypoints.Length + "> and path CinemachineScreenTransposerData<" + m_cinemachineScreenTransposerDatas.Length + "> does not match");
             for (int i = 0; i < m_cinemachineScreenTransposerDatas.Length; i++)
             {
-                CinemachineScreenTransposerDataGizmos.DrawGizmos(m_cinemachineScreenTransposerDatas[i], m_path.m_Waypoints[i].position);
+                CinemachineScreenTransposerDataGizmos.DrawGizmos(m_cinemachineScreenTransposerDatas[i], transform.position + m_path.m_Waypoints[i].position);
             }
         }
     }
