@@ -9,9 +9,6 @@ namespace Run4YourLife.Interactables
     public abstract class TrapBase : MonoBehaviour
     {
         [SerializeField]
-        protected AudioClip trapTriggerFx;
-
-        [SerializeField]
         private float m_generationAnimationLength = 0.5f;
 
         [SerializeField]
@@ -31,8 +28,6 @@ namespace Run4YourLife.Interactables
 
         public float Cooldown { get { return m_cooldown; } }
 
-        protected AudioSource m_audioSource;
-
         private Collider m_collider;
         private Renderer m_renderer;
         private Vector3 finalPos;
@@ -43,7 +38,6 @@ namespace Run4YourLife.Interactables
 
         protected virtual void Awake()
         {
-            m_audioSource = GetComponent<AudioSource>();
             m_collider = GetComponent<Collider>();
             m_renderer = GetComponentInChildren<Renderer>();
             Debug.Assert(m_renderer != null);
