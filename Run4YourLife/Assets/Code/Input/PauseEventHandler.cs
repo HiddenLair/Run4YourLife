@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+
+using Run4YourLife.Utils;
 using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.InputManagement
@@ -7,16 +9,28 @@ namespace Run4YourLife.InputManagement
     [RequireComponent(typeof(PlayerControlScheme))]
     public class PauseEventHandler : MonoBehaviour
     {
+        private GameObject pauseManagerGameObject;
         private PlayerControlScheme m_playerControlScheme;
 
         void Awake()
         {
+            pauseManagerGameObject = PauseManager.InstanceGameObject;
             m_playerControlScheme = GetComponent<PlayerControlScheme>();
         }
 
-        private void Update()
+        void OnEnable()
         {
-            if (m_playerControlScheme.Pause.Started())
+            ExecuteEvents.Execute<IPauseEvent>(pauseManagerGameObject, null, (x, y) => x.AttachListener(OnPauseChanged));
+        }
+
+        void OnDisable()
+        {
+            ExecuteEvents.Execute<IPauseEvent>(pauseManagerGameObject, null, (x, y) => x.DetachListener(OnPauseChanged));
+        }
+
+        void Update()
+        {
+            if(m_playerControlScheme.Pause.Started())
             {
                 ExecuteEvents.Execute<IPauseEvent>(PauseManager.InstanceGameObject, null, (x, y) => x.OnPauseInput());
             }
@@ -24,7 +38,13 @@ namespace Run4YourLife.InputManagement
 
         public void OnPauseChanged(PauseState pauseState)
         {
-            m_playerControlScheme.Active = pauseState == PauseState.UNPAUSED;
+            /*
+
+            Skip one frame in order to prevent the players' input from being resolved if Pause -> Unpause
+
+            */
+
+            StartCoroutine(YieldHelper.SkipFrame(() => m_playerControlScheme.Active = pauseState == PauseState.UNPAUSED));
         }
     }
 }

@@ -1,11 +1,7 @@
-﻿using Cinemachine;
-using Run4YourLife.SceneManagement;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using Run4YourLife.SceneManagement;
 
 namespace Run4YourLife.GameManagement
 {
@@ -18,6 +14,8 @@ namespace Run4YourLife.GameManagement
     public interface IPauseEvent : IEventSystemHandler
     {
         void OnPauseInput();
+        void AttachListener(UnityAction<PauseState> pauseListenerAction);
+        void DetachListener(UnityAction<PauseState> pauseListenerAction);
     }
 
     public class PauseStateChangeEvent : UnityEvent<PauseState> { }
@@ -27,7 +25,7 @@ namespace Run4YourLife.GameManagement
         private PauseState actualGameState = PauseState.UNPAUSED;
         public SceneTransitionRequest m_pauseSceneLoader;
         public SceneTransitionRequest m_pauseSceneUnloader;
-        public PauseStateChangeEvent PauseChangeEvent = new PauseStateChangeEvent();
+        private PauseStateChangeEvent PauseChangeEvent = new PauseStateChangeEvent();
 
         public void OnPauseInput()
         {
@@ -54,6 +52,16 @@ namespace Run4YourLife.GameManagement
             }
 
             PauseChangeEvent.Invoke(actualGameState);
+        }
+
+        public void AttachListener(UnityAction<PauseState> pauseListenerAction)
+        {
+            PauseChangeEvent.AddListener(pauseListenerAction);
+        }
+
+        public void DetachListener(UnityAction<PauseState> pauseListenerAction)
+        {
+            PauseChangeEvent.RemoveListener(pauseListenerAction);
         }
     }
 }
