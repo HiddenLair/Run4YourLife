@@ -43,10 +43,12 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         protected override void OnNotReady()
         {
+            activeStand.GetComponent<BossEyesEnabler>().Enable(false);
         }
 
         protected override void OnReady()
         {
+            activeStand.GetComponent<BossEyesEnabler>().Enable(true);
         }
     }
 }
