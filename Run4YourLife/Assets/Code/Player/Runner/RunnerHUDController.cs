@@ -20,15 +20,6 @@ namespace Run4YourLife.Player
         [SerializeField]
         private PlayableDirector playableDirector;
 
-        private InputController inputController;
-        private RunnerControlScheme runnerControlScheme;
-
-        void Awake()
-        {
-            inputController = GetComponent<InputController>();
-            runnerControlScheme = GetComponent<RunnerControlScheme>();
-        }
-
         void Start()
         {
             text.text = "0";
