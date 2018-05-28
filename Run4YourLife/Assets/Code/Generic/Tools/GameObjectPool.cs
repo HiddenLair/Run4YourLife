@@ -8,16 +8,17 @@ public class GameObjectPool : MonoBehaviour {
     private Transform m_parent;
 
     [SerializeField]
-    private float updatePeriod = 10;
+    [UnityEngine.Serialization.FormerlySerializedAs("updatePeriod")]
+    private float m_timeBetweenRetrivals = 10;
 
-    private float timer;
+    private float m_nextRetrivalTime;
 
     private Dictionary<GameObject, List<GameObject>> m_pool = new Dictionary<GameObject, List<GameObject>>();
 
 
-    private void Start()
+    private void OnEnable()
     {
-        timer = Time.time + updatePeriod;
+        m_nextRetrivalTime = Time.time + m_timeBetweenRetrivals;
     }
 
     public void Add(GameObject key, int amount)
@@ -62,17 +63,12 @@ public class GameObjectPool : MonoBehaviour {
         return Add(key);
     }
 
-    public bool IsAlreadyFilled()
-    {
-        return m_pool.Count > 0;
-    }
-
     private void Update()
     {
-        if(timer <= Time.time)
+        if(m_nextRetrivalTime <= Time.time)
         {
             RetrieveObjectsToPool();
-            timer = Time.time + updatePeriod;
+            m_nextRetrivalTime = Time.time + m_timeBetweenRetrivals;
         }
     }
 
@@ -84,18 +80,11 @@ public class GameObjectPool : MonoBehaviour {
             {
                 if (!g.activeInHierarchy)
                 {
-                    if(g.transform.position != m_parent.transform.position)
-                    {
-                        g.transform.position = m_parent.transform.position;
-                    }
                     g.transform.SetParent(m_parent);
+                    g.transform.localPosition = Vector3.zero;
+                    g.transform.localRotation = Quaternion.identity;
                 }
             }
         }
-    }
-
-    private void Reset()
-    {
-        m_parent = transform;
     }
 }
