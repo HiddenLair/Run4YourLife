@@ -86,12 +86,15 @@ namespace Run4YourLife.SceneSpecific.WinMenu
 
         private void SpawnRunners()
         {
-            Dictionary<PlayerHandle,float> scores = GlobalDataContainer.Instance.Data[GlobalDataContainerKeys.Score] as Dictionary<PlayerHandle,float>;
+            Dictionary<PlayerHandle,int> scores = GlobalDataContainer.Instance.Data[GlobalDataContainerKeys.Score] as Dictionary<PlayerHandle,int>;
+            Debug.Assert(scores != null);
             List<KeyValuePair<float, PlayerHandle>> points = new List<KeyValuePair<float, PlayerHandle>>();
 
             foreach(PlayerHandle playerHandle in PlayerManager.Instance.RunnerPlayerHandles)
             {
-                points.Add(new KeyValuePair<float, PlayerHandle>(scores[playerHandle], playerHandle));
+                int score;
+                scores.TryGetValue(playerHandle,out score);
+                points.Add(new KeyValuePair<float, PlayerHandle>(score, playerHandle));
             }
 
             points.Sort((a, b) => b.Key.CompareTo(a.Key));
