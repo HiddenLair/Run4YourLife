@@ -27,8 +27,6 @@ namespace Run4YourLife.Interactables
                     }
                 }
 
-                //m_audioSource.PlayOneShot(trapTriggerFx);
-
                 Instantiate(activationParticles, transform.position, transform.rotation);
                 gameObject.SetActive(false);
             }

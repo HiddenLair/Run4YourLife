@@ -11,7 +11,6 @@ using Run4YourLife.Utils;
 
 namespace Run4YourLife.Player
 {
-    [RequireComponent(typeof(AudioSource))]
     [RequireComponent(typeof(RunnerControlScheme))]
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(RunnerAttributeController))]
@@ -81,7 +80,6 @@ namespace Run4YourLife.Player
         private RunnerAttributeController m_runnerAttributeController;
         private RunnerControlScheme m_runnerControlScheme;
         private Animator m_animator;
-        private AudioSource m_audioSource;
         private InputController m_inputController;
         private BumpController m_bumpController;
 
@@ -137,7 +135,6 @@ namespace Run4YourLife.Player
 
         void Awake()
         {
-            m_audioSource = GetComponent<AudioSource>();
             m_runnerControlScheme = GetComponent<RunnerControlScheme>();
             m_characterController = GetComponent<CharacterController>();
             m_runnerAttributeController = GetComponent<RunnerAttributeController>();
@@ -404,7 +401,7 @@ namespace Run4YourLife.Player
         {
             m_isJumping = true;
 
-            AudioManager.Instance.PlayFX(AudioManager.Fx.RunnerJump);
+            AudioManager.Instance.PlayFX(AudioManager.Sfx.RunnerJump);
             m_animator.SetTrigger(RunnerAnimation.jump);
 
             //set vertical velocity to the velocity needed to reach maxJumpHeight
@@ -432,7 +429,7 @@ namespace Run4YourLife.Player
 
         private IEnumerator SecondJumpCoroutine()
         {
-            AudioManager.Instance.PlayFX(AudioManager.Fx.RunnerFart);
+            AudioManager.Instance.PlayFX(AudioManager.Sfx.RunnerFart);
             fartReceiver.PlayFx();
             
             float jumpHeight = m_secondJumpHeight;
@@ -528,7 +525,7 @@ namespace Run4YourLife.Player
                 leftbounceReceiver.PlayFx();
             }
             m_isBouncing = true;
-            AudioManager.Instance.PlayFX(AudioManager.Fx.RunnerBounce);
+            AudioManager.Instance.PlayFX(AudioManager.Sfx.RunnerBounce);
             m_velocity.x = DragToVelocity(bounceForce.x);
             m_velocity.y = HeightToVelocity(bounceForce.y);
 

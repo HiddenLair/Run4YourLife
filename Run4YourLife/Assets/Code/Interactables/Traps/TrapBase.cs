@@ -4,7 +4,6 @@ using Run4YourLife.Utils;
 
 namespace Run4YourLife.Interactables
 {
-    [RequireComponent(typeof(AudioSource))]
     [RequireComponent(typeof(Collider))]
     public abstract class TrapBase : MonoBehaviour
     {

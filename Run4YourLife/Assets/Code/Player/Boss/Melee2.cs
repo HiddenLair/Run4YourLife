@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
 using Run4YourLife.GameManagement;
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.Player
 {
-    [RequireComponent(typeof(AudioSource))]
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(CrossHairControl))]
     public class Melee2 : Melee
@@ -32,7 +32,6 @@ namespace Run4YourLife.Player
         private bool right = false;
 
         private CrossHairControl crossHairControl;
-        private AudioSource m_audioSource;
         private Animator m_animator;
         private Camera m_mainCamera;
 
@@ -40,7 +39,6 @@ namespace Run4YourLife.Player
         {
             base.Awake();
             m_animator = GetComponent<Animator>();
-            m_audioSource = GetComponent<AudioSource>();
             m_mainCamera = CameraManager.Instance.MainCamera;
             crossHairControl = GetComponent<CrossHairControl>();
             Debug.Assert(m_mainCamera != null);
@@ -51,7 +49,7 @@ namespace Run4YourLife.Player
             //Only shoot when the boss has both hands. No double shoot is allowed.
             if (handR.activeInHierarchy && handL.activeInHierarchy)
             {
-                m_audioSource.PlayOneShot(sfx);
+                AudioManager.Instance.PlayFX(AudioManager.Sfx.BossMelee);
 
                 trapPos = crossHairControl.Position;
                 Vector3 screenPos = m_mainCamera.WorldToScreenPoint(trapPos);

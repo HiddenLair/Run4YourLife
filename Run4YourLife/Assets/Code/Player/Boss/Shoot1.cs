@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.Player
 {
     [RequireComponent(typeof(Animator))]
-    [RequireComponent(typeof(AudioSource))]
     public class Shoot1 : Shoot
     {
         #region Inspector
@@ -28,7 +28,7 @@ namespace Run4YourLife.Player
 
         void Shoot()
         {
-            audioSource.PlayOneShot(sfx);
+            AudioManager.Instance.PlayFX(AudioManager.Sfx.BossShoot);
             Vector3 cPos = crossHairControl.Position;
             cPos.z = 0;
             Vector3 director = (crossHairControl.Position - shootInitZone.position).normalized;

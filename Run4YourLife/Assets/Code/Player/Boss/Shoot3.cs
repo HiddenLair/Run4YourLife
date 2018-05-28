@@ -5,11 +5,11 @@ using UnityEngine.EventSystems;
 
 using Run4YourLife;
 using Run4YourLife.Utils;
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.Player
 {
     [RequireComponent(typeof(Animator))]
-    [RequireComponent(typeof(AudioSource))]
     public class Shoot3 : Shoot
     {
         #region Inspector
@@ -55,7 +55,7 @@ namespace Run4YourLife.Player
             Quaternion rotation = Quaternion.FromToRotation(Vector3.right, director);
 
             dangerRotator.localRotation = rotation;
-
+            AudioManager.Instance.PlayFX(AudioManager.Sfx.BossShoot);
             loadShootReceiver.PlayFx();
             animator.SetTrigger("Shoot");
             AnimationPlayOnTimeManager.Instance.PlayOnNextAnimation(animator, "ChargeShoot", timeToShootFromAnim, () => Shoot());

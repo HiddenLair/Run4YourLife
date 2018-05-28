@@ -18,9 +18,6 @@ namespace Run4YourLife.Player
         [SerializeField]
         private float reloadTimeS;
 
-        [SerializeField]
-        protected AudioClip sfx;
-
         #endregion
 
         private float currentTimeS = 0;

@@ -10,7 +10,6 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(Ready))]
     [RequireComponent(typeof(BossControlScheme))]
     [RequireComponent(typeof(Animator))]
-    [RequireComponent(typeof(AudioSource))]
     [RequireComponent(typeof(CrossHairControl))]
     public abstract class Shoot : MonoBehaviour
     {
@@ -33,9 +32,6 @@ namespace Run4YourLife.Player
         [Range(-90, 90)]
         private float m_lookAtOffset;
 
-        [SerializeField]
-        protected AudioClip sfx;
-
         #endregion
 
         private float currentTimeS = 0;
@@ -47,7 +43,6 @@ namespace Run4YourLife.Player
 
         protected CrossHairControl crossHairControl;
         protected Animator animator;
-        protected AudioSource audioSource;
 
         private GameObject uiManager;
 
@@ -56,7 +51,6 @@ namespace Run4YourLife.Player
             ready = GetComponent<Ready>();
             controlScheme = GetComponent<BossControlScheme>();
             animator = GetComponent<Animator>();
-            audioSource = GetComponent<AudioSource>();
             crossHairControl = GetComponent<CrossHairControl>();
             uiManager = GameObject.FindGameObjectWithTag(Tags.UI);
             Debug.Assert(uiManager != null, "UI manager gameobject not found");
