@@ -23,6 +23,9 @@ namespace Run4YourLife.Interactables
         [SerializeField]
         private float initialSpeed = 0;
 
+        [SerializeField]
+        private GameObject indicatorParticles;
+
         public float Cooldown { get { return m_cooldown; } }
 
         private Collider m_collider;
@@ -59,6 +62,7 @@ namespace Run4YourLife.Interactables
                 finalPos = transform.position + Vector3.down * info.distance;
                 fatherTransformStorage = info.collider.gameObject.transform;
                 fatherInitialY = fatherTransformStorage.position.y;
+                FXManager.Instance.InstantiateFromValues(info.point,indicatorParticles.transform.rotation,indicatorParticles,fatherTransformStorage);
             }
 
             StartCoroutine(FadeInAndFall());
