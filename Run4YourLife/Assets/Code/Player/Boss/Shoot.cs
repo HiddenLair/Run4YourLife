@@ -30,6 +30,10 @@ namespace Run4YourLife.Player
         private float reloadTimeS;
 
         [SerializeField]
+        [Range(-90, 90)]
+        private float m_lookAtOffset;
+
+        [SerializeField]
         protected AudioClip sfx;
 
         #endregion
@@ -79,7 +83,7 @@ namespace Run4YourLife.Player
         public virtual void RotateHead()
         {
             head.LookAt(crossHairControl.Position);
-            head.Rotate(0, -90, 0);
+            head.Rotate(0, -90, m_lookAtOffset);
             head.rotation *= initialRotation;
         }
 
