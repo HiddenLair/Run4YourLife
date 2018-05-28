@@ -6,6 +6,7 @@ using Cinemachine;
 
 using Run4YourLife.Player;
 using Run4YourLife.UI;
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.GameManagement
 {
@@ -41,6 +42,8 @@ namespace Run4YourLife.GameManagement
 
         void StartPhaseCommon()
         {
+            AudioManager.Instance.PlayMusic(AudioManager.Music.GameScene);
+
             GameObject boss = GameplayPlayerManager.Instance.Boss;
             Debug.Assert(boss != null);
 
