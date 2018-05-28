@@ -9,9 +9,6 @@ namespace Run4YourLife.Interactables
     public abstract class TrapBase : MonoBehaviour
     {
         [SerializeField]
-        private float m_generationAnimationLength = 0.5f;
-
-        [SerializeField]
         private float m_fadeInTime;
 
         [SerializeField]

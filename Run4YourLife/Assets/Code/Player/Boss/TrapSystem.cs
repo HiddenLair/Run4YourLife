@@ -51,8 +51,6 @@ namespace Run4YourLife.Player
         private GameObject skillB;
         [SerializeField]
         private GameObject trapB;
-        [SerializeField]
-        private int numberOfTrapsInPool = 5;
 
         #endregion
 
@@ -191,10 +189,9 @@ namespace Run4YourLife.Player
             return cooldown;
         }
 
-        void SetElementCallback(GameObject g)
+        void SetElementCallback(GameObject gameObject)
         {
-            Vector3 temp = crossHairControl.Position;
-            BossPoolManager.Instance.InstantiateBossElement(g, temp);
+            BossPoolManager.Instance.InstantiateBossElement(gameObject, crossHairControl.Position);
         }
     }
 }
