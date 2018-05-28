@@ -10,15 +10,21 @@ namespace Run4YourLife.Cinemachine
         private static readonly float s = 100.0f;
         private static readonly float fH = 10.0f;
 
+        private static readonly float aspectRatio = 16.0f / 9.0f;
+
         public static void DrawGizmos(CinemachineScreenTransposerData data, Vector3 position)
         {
-            Vector3 size = new Vector3(w, h, 1.0f) / s;
-            size *= data.m_verticalHeight / fH;
+            Vector3 toRight = new Vector3(data.m_verticalHeight * aspectRatio, 0,0);
 
-            Vector3 center = position + 0.5f * size;
-            center += data.m_offsetFromTarget;
+            Vector3 bottomLeft = position + data.m_offsetFromTarget;
+            Vector3 topLeft = bottomLeft + new Vector3(0,data.m_verticalHeight,0);
+            Vector3 bottomRight = bottomLeft + toRight;
+            Vector3 topRight = topLeft + toRight;
 
-            Gizmos.DrawWireCube(center, size);
+            Gizmos.DrawLine(bottomLeft, bottomRight);
+            Gizmos.DrawLine(bottomRight, topRight);
+            Gizmos.DrawLine(topRight, topLeft);
+            Gizmos.DrawLine(topLeft, bottomLeft);
         }
     }
 }
