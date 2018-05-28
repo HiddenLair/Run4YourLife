@@ -29,9 +29,10 @@ namespace Run4YourLife.Player
         void Shoot()
         {
             audioSource.PlayOneShot(sfx);
-
+            Vector3 cPos = crossHairControl.Position;
+            cPos.z = 0;
             Vector3 director = (crossHairControl.Position - shootInitZone.position).normalized;
-            Quaternion rot = Quaternion.FromToRotation(Vector3.forward,director);
+            Quaternion rot = Quaternion.FromToRotation(Vector3.right,director);
             GameObject tempInstance = Instantiate(instance, shootInitZone.position, instance.transform.rotation * rot);
             tempInstance.GetComponent<Rigidbody>().velocity = director * bulletSpeed * Time.deltaTime;
         }
