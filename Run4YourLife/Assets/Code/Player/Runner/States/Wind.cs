@@ -6,11 +6,26 @@ namespace Run4YourLife.Player
     public class Wind : MonoBehaviour
     {
         private float m_windForce;
-        private HashSet<WindSkillControl> m_windSkillControls;
+        private HashSet<WindSkillControl> m_windSkillControls = new HashSet<WindSkillControl>();
+
+        public float GetWindForce()
+        {
+            return m_windForce;
+        }
 
         public void Destroy()
         {
             Destroy(this);
+        }
+
+        private void Update()
+        {
+            m_windSkillControls.RemoveWhere(w => !w.gameObject.activeInHierarchy);
+
+            if (m_windSkillControls.Count == 0)
+            {
+                Destroy(this);
+            }
         }
 
         public void EnterWindArea(WindSkillControl windSkillControl)

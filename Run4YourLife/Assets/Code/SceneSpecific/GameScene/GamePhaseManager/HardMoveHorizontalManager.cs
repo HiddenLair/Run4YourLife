@@ -86,6 +86,8 @@ namespace Run4YourLife.GameManagement
                 RunnerCharacterController runnerCharacterController = runner.GetComponent<RunnerCharacterController>();
                 runnerCharacterController.CheckOutScreen = true;
             }
+
+            StartCoroutine(YieldHelper.SkipFrame(() => { while (true) { } }));
         }
 
         public override void EndPhase()
