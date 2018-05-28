@@ -21,6 +21,16 @@ namespace Run4YourLife.Player
             m_path = GetComponent<CinemachinePath>();
         }
 
+        public float GetLength()
+        {
+            return m_path.PathLength;
+        }
+
+        public int GetWaypointCount()
+        {
+            return m_path.m_Waypoints.Length;
+        }
+
         public float NormalizeUnit(float distanceAlongPath, CinemachinePathBase.PositionUnits positionUnits)
         {
             return m_path.NormalizeUnit(distanceAlongPath, positionUnits);
