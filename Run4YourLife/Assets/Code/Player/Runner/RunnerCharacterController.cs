@@ -381,7 +381,12 @@ namespace Run4YourLife.Player
 
         private float HeightToVelocity(float height)
         {
-            return Mathf.Sqrt(height * -2f * m_baseGravity);
+            return Mathf.Sqrt(height * -2.0f * m_baseGravity);
+        }
+
+        private float VelocityToHeight(float velocity)
+        {
+            return Mathf.Sqrt(velocity / (-2.0f * m_baseGravity));
         }
 
         private float DragToVelocity(float dragDistance)
@@ -423,7 +428,14 @@ namespace Run4YourLife.Player
         {
             m_audioSource.PlayOneShot(fartClip);
             fartReceiver.PlayFx();
-            m_velocity.y = HeightToVelocity(m_secondJumpHeight);
+            
+            float jumpHeight = m_secondJumpHeight;
+            if(m_velocity.y > 0)
+            {
+                jumpHeight += VelocityToHeight(m_velocity.y);
+            }
+            m_velocity.y = HeightToVelocity(jumpHeight);
+
             yield return StartCoroutine(WaitUntilApexOfJumpOrReleaseButtonOrCeiling(true));
             
             if (!m_ceilingCollision)
