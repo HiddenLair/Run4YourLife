@@ -678,8 +678,6 @@ GameObject:
   - component: {fileID: 114804406637999624}
   - component: {fileID: 114902076369322454}
   - component: {fileID: 114004692947530906}
-  - component: {fileID: 114809591959178870}
-  - component: {fileID: 114921100232037742}
   m_Layer: 11
   m_Name: Phase2Boss
   m_TagString: Boss
@@ -2710,6 +2708,7 @@ MonoBehaviour:
   shootInitZone: {fileID: 4630429362345324}
   triggerSensivility: 0.2
   reloadTimeS: 1
+  m_lookAtOffset: 0
   sfx: {fileID: 8300000, guid: c3833cf9a9803f145bb95bbf5defe584, type: 3}
   instance: {fileID: 1214334319900842, guid: e49eed30291e49844809c8393cf7819c, type: 2}
   bulletSpeed: 500
@@ -2764,7 +2763,6 @@ MonoBehaviour:
   trapY: {fileID: 0}
   skillB: {fileID: 1463452844622424, guid: 7e170bbe1f8b8ea4eb65d2fe06bf9368, type: 2}
   trapB: {fileID: 0}
-  numberOfTrapsInPool: 5
 --- !u!114 &114804406637999624
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2777,17 +2775,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animationReadyName: Idle
---- !u!114 &114809591959178870
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1490842876409522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0a0cd912d4956d41a198afebc9af656, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114902076369322454
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2799,19 +2786,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff4e6999a7f30fe4aa9f4d8d89f65bd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114921100232037742
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1490842876409522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8073855dcfad5724c94cad4bdb64b4aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_parent: {fileID: 0}
-  updatePeriod: 10
 --- !u!114 &114957659301726920
 MonoBehaviour:
   m_ObjectHideFlags: 1

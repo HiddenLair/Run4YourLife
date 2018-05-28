@@ -11,8 +11,6 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(Ready))]
     [RequireComponent(typeof(BossControlScheme))]
     [RequireComponent(typeof(CrossHairControl))]
-    //[RequireComponent(typeof(ManualPrefabInstantiator))]
-    //[RequireComponent(typeof(GameObjectPool))]
     public class TrapSystem : MonoBehaviour
     {
         #region Enums

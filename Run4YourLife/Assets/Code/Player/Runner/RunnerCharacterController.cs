@@ -6,6 +6,7 @@ using Run4YourLife.InputManagement;
 using System;
 using UnityEngine.EventSystems;
 using Run4YourLife.GameManagement;
+using Run4YourLife.GameManagement.AudioManagement;
 using Run4YourLife.Utils;
 
 namespace Run4YourLife.Player
@@ -56,15 +57,6 @@ namespace Run4YourLife.Player
 
         [SerializeField]
         private float m_timeToIdle;
-
-        [SerializeField]
-        private AudioClip jumpClip;
-
-        [SerializeField]
-        private AudioClip bounceClip;
-
-        [SerializeField]
-        private AudioClip fartClip;
 
         [SerializeField]
         private FXReceiver leftbounceReceiver;
@@ -412,7 +404,7 @@ namespace Run4YourLife.Player
         {
             m_isJumping = true;
 
-            m_audioSource.PlayOneShot(jumpClip);
+            AudioManager.Instance.PlayFX(AudioManager.Fx.RunnerJump);
             m_animator.SetTrigger(RunnerAnimation.jump);
 
             //set vertical velocity to the velocity needed to reach maxJumpHeight
@@ -440,7 +432,7 @@ namespace Run4YourLife.Player
 
         private IEnumerator SecondJumpCoroutine()
         {
-            m_audioSource.PlayOneShot(fartClip);
+            AudioManager.Instance.PlayFX(AudioManager.Fx.RunnerFart);
             fartReceiver.PlayFx();
             
             float jumpHeight = m_secondJumpHeight;
@@ -536,7 +528,7 @@ namespace Run4YourLife.Player
                 leftbounceReceiver.PlayFx();
             }
             m_isBouncing = true;
-            m_audioSource.PlayOneShot(bounceClip);
+            AudioManager.Instance.PlayFX(AudioManager.Fx.RunnerBounce);
             m_velocity.x = DragToVelocity(bounceForce.x);
             m_velocity.y = HeightToVelocity(bounceForce.y);
 
