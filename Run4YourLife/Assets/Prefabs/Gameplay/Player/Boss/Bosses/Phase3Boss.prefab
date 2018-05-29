@@ -1247,7 +1247,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &1985817010969908
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
@@ -1438,7 +1438,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1979552409252376}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0.05, y: 4.9, z: 1.5}
+  m_LocalPosition: {x: 0.05, y: 9.32, z: 2.98}
   m_LocalScale: {x: 2.54, y: 2.54, z: 2.54}
   m_Children: []
   m_Father: {fileID: 4405151106240620}
@@ -1664,7 +1664,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1993205745798342}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.05, y: 4.9, z: -1.5}
+  m_LocalPosition: {x: 0.05, y: 9.14, z: -2.9}
   m_LocalScale: {x: 2.54, y: 2.54, z: 2.54}
   m_Children: []
   m_Father: {fileID: 4405151106240620}
@@ -1779,14 +1779,13 @@ Transform:
   m_GameObject: {fileID: 1432021327500220}
   m_LocalRotation: {x: -0.00000009735359, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: 246.02, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4896981082139672}
   - {fileID: 4321350123017566}
   - {fileID: 4122330299701158}
   - {fileID: 4125347254440274}
   - {fileID: 4868351270829168}
-  - {fileID: 4492174773157854}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1905,12 +1904,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1985817010969908}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.0999985, y: 3.7, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4493201371579582}
-  m_Father: {fileID: 4405151106240620}
-  m_RootOrder: 5
+  m_Father: {fileID: 4868351270829168}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4493201371579582
 Transform:
@@ -2378,9 +2377,10 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1450956272509708}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.1, y: 3.7, z: 0}
+  m_LocalPosition: {x: 4, y: 7.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4492174773157854}
   m_Father: {fileID: 4405151106240620}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2405,7 +2405,7 @@ Transform:
   m_GameObject: {fileID: 1614667946386488}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4598725802385964}
   - {fileID: 4425379499510368}
@@ -2920,7 +2920,7 @@ MonoBehaviour:
   shootInitZone: {fileID: 0}
   triggerSensivility: 0.2
   reloadTimeS: 5
-  m_lookAtOffset: 0
+  m_lookAtOffset: 20
   dangerIndicator: {fileID: 1728473321792840}
   dangerRotator: {fileID: 4492174773157854}
   maxLaserDistance: 50
@@ -2928,6 +2928,8 @@ MonoBehaviour:
   loadShootReceiver: {fileID: 114326443634226574}
   loadedShootParticles: {fileID: 1464658711923784, guid: db7a136e382c08e4ab402fc5519cc48e,
     type: 2}
+  distanceToFollow: -3
+  rotationReceiverOffset: 40
 --- !u!114 &114250132661222224
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -17,7 +17,7 @@ public class FXManager : SingletonMonoBehaviour<FXManager> {
         Transform parent = fxDefaultParent;
         if (setAsParent)
         {
-            parent = receiver.transform.parent;
+            parent = receiver.transform;
         }
 
         List<GameObject> tempList = fxPool[prefab];

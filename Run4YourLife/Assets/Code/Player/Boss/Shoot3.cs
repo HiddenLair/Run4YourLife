@@ -32,6 +32,13 @@ namespace Run4YourLife.Player
         [SerializeField]
         private GameObject loadedShootParticles;
 
+        [SerializeField]
+        private float distanceToFollow;
+
+        [SerializeField]
+        [Range(-90,90)]
+        private float rotationReceiverOffset;
+
         #endregion
 
         private float timeToShootFromAnim = 0.2f;
@@ -42,7 +49,6 @@ namespace Run4YourLife.Player
             newScale.x = newScale.z = laserWidth;
             newScale.y = maxLaserDistance;
             dangerIndicator.transform.localScale = newScale;
-            dangerIndicator.transform.position = loadShootReceiver.transform.position;
             Vector3 newLocalPos = dangerIndicator.transform.localPosition;
             newLocalPos.x += newScale.y;
             dangerIndicator.transform.localPosition = newLocalPos;
@@ -51,12 +57,10 @@ namespace Run4YourLife.Player
 
         public override void ShootByAnim()
         {
-            Vector3 director = (crossHairControl.Position - loadShootReceiver.transform.position).normalized;
-            Quaternion rotation = Quaternion.FromToRotation(Vector3.right, director);
+            SetUpLoadReceiver();
 
-            dangerRotator.localRotation = rotation;
             AudioManager.Instance.PlayFX(AudioManager.Sfx.BossShoot);
-            loadShootReceiver.PlayFx();
+            loadShootReceiver.PlayFx(true);
             animator.SetTrigger("Shoot");
             AnimationPlayOnTimeManager.Instance.PlayOnNextAnimation(animator, "ChargeShoot", timeToShootFromAnim, () => Shoot());
             AnimationPlayOnTimeManager.Instance.PlayOnNextAnimation(animator, "ChargeShoot", 0.0f, () => StopIndicator());
@@ -71,16 +75,28 @@ namespace Run4YourLife.Player
         void Shoot()
         {
             Vector3 director = (crossHairControl.Position - loadShootReceiver.transform.position).normalized;
-            Quaternion rotation = Quaternion.FromToRotation(Vector3.right,director);
 
             RaycastHit[] targetLocation;
-            FXManager.Instance.InstantiateFromValues(loadShootReceiver.transform.position, rotation, loadedShootParticles,loadShootReceiver.transform);
+            GameObject particle = FXManager.Instance.InstantiateFromValues(loadShootReceiver.transform.position, Quaternion.identity, loadedShootParticles,loadShootReceiver.transform);
+            particle.transform.localRotation = loadedShootParticles.transform.rotation;
 
             targetLocation = Physics.SphereCastAll(loadShootReceiver.transform.position, laserWidth, director, maxLaserDistance, Layers.Runner | Layers.Trap);
             foreach (RaycastHit r in targetLocation)
             {
                 ExecuteEvents.Execute<ICharacterEvents>(r.transform.gameObject, null, (x, y) => x.Kill());
             }
+        }
+
+        void SetUpLoadReceiver()
+        {
+            Vector3 rot = Quaternion.Euler(0.0f, 0.0f, rotationReceiverOffset) * head.right;
+
+            loadShootReceiver.transform.position = head.position + rot.normalized * distanceToFollow;
+
+            Vector3 director = (crossHairControl.Position - loadShootReceiver.transform.position).normalized;
+            Quaternion rotation = Quaternion.FromToRotation(Vector3.right, director);
+
+            loadShootReceiver.transform.localRotation = rotation;
         }
     }
 }
