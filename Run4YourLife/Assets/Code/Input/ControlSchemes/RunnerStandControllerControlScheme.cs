@@ -2,15 +2,15 @@
 {
     public class RunnerStandControllerControlScheme : PlayerStandControllerControlScheme
     {
-        public Action NextStand { get; private set; }
-        public Action PreviousStand { get; private set; }
-        public Action SetAsBoss { get; private set; }
+        public InputAction NextStand { get; private set; }
+        public InputAction PreviousStand { get; private set; }
+        public InputAction SetAsBoss { get; private set; }
 
         public RunnerStandControllerControlScheme()
         {
-            Actions.Add(NextStand = new Action(new InputSource(Button.RB), "NextStand"));
-            Actions.Add(PreviousStand = new Action(new InputSource(Button.LB), "PreviousStand"));
-            Actions.Add(SetAsBoss = new Action(new InputSource(Button.X), "SetAsBoss"));
+            InputActions.Add(NextStand = new InputAction(new InputSource(Button.RB), "NextStand"));
+            InputActions.Add(PreviousStand = new InputAction(new InputSource(Button.LB), "PreviousStand"));
+            InputActions.Add(SetAsBoss = new InputAction(new InputSource(Button.X), "SetAsBoss"));
         }
     }
 }

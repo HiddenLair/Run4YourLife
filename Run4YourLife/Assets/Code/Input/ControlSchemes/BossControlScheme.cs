@@ -9,41 +9,41 @@ namespace Run4YourLife.InputManagement
 {
     public class BossControlScheme : PlayerControlScheme
     {
-        public Action MoveTrapIndicatorVertical { get; private set; }
-        public Action MoveTrapIndicatorHorizontal { get; private set; }
+        public InputAction MoveTrapIndicatorVertical { get; private set; }
+        public InputAction MoveTrapIndicatorHorizontal { get; private set; }
 
-        public Action Skill1 { get; private set; }
-        public Action Skill2 { get; private set; }
-        public Action Skill3 { get; private set; }
-        public Action Skill4 { get; private set; }
+        public InputAction Skill1 { get; private set; }
+        public InputAction Skill2 { get; private set; }
+        public InputAction Skill3 { get; private set; }
+        public InputAction Skill4 { get; private set; }
 
-        public Action NextSet { get; private set; }
-        public Action PreviousSet { get; private set; }
+        public InputAction NextSet { get; private set; }
+        public InputAction PreviousSet { get; private set; }
 
-        public Action Shoot { get; private set; }
-        public Action Melee { get; private set; }
+        public InputAction Shoot { get; private set; }
+        public InputAction Melee { get; private set; }
 
-        public Action MoveLaserVertical { get; private set; }
-        public Action MoveLaserHorizontal { get; private set; }
+        public InputAction MoveLaserVertical { get; private set; }
+        public InputAction MoveLaserHorizontal { get; private set; }
 
         public BossControlScheme()
         {
-            Actions.Add(MoveTrapIndicatorVertical = new Action(new InputSource(Axis.LEFT_VERTICAL), "MoveTrapIndicatorVertical"));
-            Actions.Add(MoveTrapIndicatorHorizontal = new Action(new InputSource(Axis.LEFT_HORIZONTAL), "MoveTrapIndicatorHorizontal"));
+            InputActions.Add(MoveTrapIndicatorVertical = new InputAction(new InputSource(Axis.LEFT_VERTICAL), "MoveTrapIndicatorVertical"));
+            InputActions.Add(MoveTrapIndicatorHorizontal = new InputAction(new InputSource(Axis.LEFT_HORIZONTAL), "MoveTrapIndicatorHorizontal"));
 
-            Actions.Add(Skill1 = new Action(new InputSource(Button.A), "Skill1"));
-            Actions.Add(Skill2 = new Action(new InputSource(Button.X), "Skill2"));
-            Actions.Add(Skill3 = new Action(new InputSource(Button.Y), "Skill3"));
-            Actions.Add(Skill4 = new Action(new InputSource(Button.B), "Skill4"));
+            InputActions.Add(Skill1 = new InputAction(new InputSource(Button.A), "Skill1"));
+            InputActions.Add(Skill2 = new InputAction(new InputSource(Button.X), "Skill2"));
+            InputActions.Add(Skill3 = new InputAction(new InputSource(Button.Y), "Skill3"));
+            InputActions.Add(Skill4 = new InputAction(new InputSource(Button.B), "Skill4"));
 
-            Actions.Add(NextSet = new Action(new InputSource(Button.RB), "NextSet"));
-            Actions.Add(PreviousSet = new Action(new InputSource(Button.LB), "PreviousSet"));
+            InputActions.Add(NextSet = new InputAction(new InputSource(Button.RB), "NextSet"));
+            InputActions.Add(PreviousSet = new InputAction(new InputSource(Button.LB), "PreviousSet"));
 
-            Actions.Add(Shoot = new Action(new InputSource(Trigger.RIGHT), "Shoot"));
-            Actions.Add(Melee = new Action(new InputSource(Trigger.LEFT), "Melee"));
+            InputActions.Add(Shoot = new InputAction(new InputSource(Trigger.RIGHT), "Shoot"));
+            InputActions.Add(Melee = new InputAction(new InputSource(Trigger.LEFT), "Melee"));
 
-            Actions.Add(MoveLaserVertical = new Action(new InputSource(Axis.RIGHT_VERTICAL), "MoveLaserVertical"));
-            Actions.Add(MoveLaserHorizontal = new Action(new InputSource(Axis.RIGHT_HORIZONTAL), "MoveLaserHorizontal"));
+            InputActions.Add(MoveLaserVertical = new InputAction(new InputSource(Axis.RIGHT_VERTICAL), "MoveLaserVertical"));
+            InputActions.Add(MoveLaserHorizontal = new InputAction(new InputSource(Axis.RIGHT_HORIZONTAL), "MoveLaserHorizontal"));
         }
     }
 }

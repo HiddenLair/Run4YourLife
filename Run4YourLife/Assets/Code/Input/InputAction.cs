@@ -1,6 +1,6 @@
 ﻿namespace Run4YourLife.InputManagement
 {
-    public class Action
+    public class InputAction
     {
         public InputSource InputSource { get; set; }
         public string Name { get; set; }
@@ -11,7 +11,7 @@
         /// </summary>
         public float LastValue { get; private set; } 
 
-        public Action(InputSource inputSource, string name)
+        public InputAction(InputSource inputSource, string name)
         {
             this.InputSource = inputSource;
             this.Name = name;

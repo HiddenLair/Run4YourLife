@@ -4,17 +4,17 @@ namespace Run4YourLife.InputManagement
 {
     public class RunnerGodModeControlScheme : PlayerControlScheme
     {
-        public Action MoveH { get; private set; }
-        public Action MoveV { get; private set; }
-        public Action MSpeed { get; private set; }
-        public Action End { get; private set; }
+        public InputAction MoveH { get; private set; }
+        public InputAction MoveV { get; private set; }
+        public InputAction MSpeed { get; private set; }
+        public InputAction End { get; private set; }
 
         public RunnerGodModeControlScheme()
         {
-            Actions.Add(MoveV = new Action(new InputSource(Axis.LEFT_VERTICAL), "MoveV"));
-            Actions.Add(MoveH = new Action(new InputSource(Axis.LEFT_HORIZONTAL), "MoveH"));
-            Actions.Add(MSpeed = new Action(new InputSource(Button.A), "MSpeed"));
-            Actions.Add(End = new Action(new InputSource(Button.B), "End"));
+            InputActions.Add(MoveV = new InputAction(new InputSource(Axis.LEFT_VERTICAL), "MoveV"));
+            InputActions.Add(MoveH = new InputAction(new InputSource(Axis.LEFT_HORIZONTAL), "MoveH"));
+            InputActions.Add(MSpeed = new InputAction(new InputSource(Button.A), "MSpeed"));
+            InputActions.Add(End = new InputAction(new InputSource(Button.B), "End"));
         }
     }
 }

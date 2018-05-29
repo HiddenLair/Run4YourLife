@@ -8,8 +8,8 @@ namespace Run4YourLife.InputManagement
 {
     public abstract class ControlScheme : MonoBehaviour, IPlayerHandleEvent
     {
-        private List<Action> m_actions = new List<Action>();
-        public List<Action> Actions { get { return m_actions; } }
+        private List<InputAction> m_inputActions = new List<InputAction>();
+        public List<InputAction> InputActions { get { return m_inputActions; } }
 
         private bool m_active;
         public bool Active
@@ -24,9 +24,9 @@ namespace Run4YourLife.InputManagement
                 if (value != m_active)
                 {
                     m_active = value;
-                    foreach (Action action in m_actions)
+                    foreach (InputAction inputAction in m_inputActions)
                     {
-                        action.Enabled = value;
+                        inputAction.Enabled = value;
                     }
                 }
             }
@@ -53,15 +53,15 @@ namespace Run4YourLife.InputManagement
         protected void UpdateInputDevice(InputDevice inputDevice)
         {
             m_inputDevice = inputDevice;
-            foreach (Action action in m_actions)
+            foreach (InputAction action in m_inputActions)
             {
                 action.InputSource.InputDevice = inputDevice;
             }
         }
 
-        public Action GetByName(string name)
+        public InputAction GetByName(string name)
         {
-            return m_actions.Find((x) => x.Name.Equals(name));
+            return m_inputActions.Find((x) => x.Name.Equals(name));
         }
     }
 }

@@ -6,7 +6,7 @@ using Run4YourLife.InputManagement;
 
 public class InputController : MonoBehaviour {
     
-    private Dictionary<Action, List<InputStatusEffect>> m_inputStatusEffects = new Dictionary<Action, List<InputStatusEffect>>();
+    private Dictionary<InputAction, List<InputStatusEffect>> m_inputStatusEffects = new Dictionary<InputAction, List<InputStatusEffect>>();
     private ControlScheme m_controlScheme;
 
     private void Awake()
@@ -14,13 +14,13 @@ public class InputController : MonoBehaviour {
         m_controlScheme = GetComponent<ControlScheme>();
         Debug.Assert(m_controlScheme != null);
 
-        foreach(Action action in m_controlScheme.Actions)
+        foreach(InputAction action in m_controlScheme.InputActions)
         {
             m_inputStatusEffects.Add(action, new List<InputStatusEffect>());
         }
     }
 
-    public bool Started(Action action)
+    public bool Started(InputAction action)
     {
         Debug.Assert(action.InputSource.InputSourceType == InputSourceType.Button);
         bool started = action.Started();
@@ -43,7 +43,7 @@ public class InputController : MonoBehaviour {
         return started;
     }
 
-    public float Value(Action action)
+    public float Value(InputAction action)
     {
         Debug.Assert(action.InputSource.InputSourceType == InputSourceType.Axis || action.InputSource.InputSourceType == InputSourceType.Trigger);
         float value = action.Value();
@@ -68,14 +68,14 @@ public class InputController : MonoBehaviour {
 
     public void Add(InputStatusEffect inputStatusEffect)
     {
-        Action action = m_controlScheme.GetByName(inputStatusEffect.actionName);
+        InputAction action = m_controlScheme.GetByName(inputStatusEffect.actionName);
         Debug.Assert(action != null);
         m_inputStatusEffects[action].Add(inputStatusEffect);
     }
 
     public void Remove(InputStatusEffect inputStatusEffect)
     {
-        Action action = m_controlScheme.GetByName(inputStatusEffect.actionName);
+        InputAction action = m_controlScheme.GetByName(inputStatusEffect.actionName);
         Debug.Assert(action != null);
         m_inputStatusEffects[action].Remove(inputStatusEffect);
     }

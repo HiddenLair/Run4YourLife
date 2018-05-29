@@ -4,11 +4,11 @@ namespace Run4YourLife.InputManagement
 {
     public abstract class PlayerControlScheme : ControlScheme
     {
-        public Action Pause { get; private set; }
+        public InputAction Pause { get; private set; }
 
         public PlayerControlScheme()
         {
-            Actions.Add(Pause = new Action(new InputSource(Button.START), "Pause"));
+            InputActions.Add(Pause = new InputAction(new InputSource(Button.START), "Pause"));
         }
     }
 }
