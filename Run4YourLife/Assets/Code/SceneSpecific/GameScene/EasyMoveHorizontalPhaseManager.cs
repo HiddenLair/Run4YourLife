@@ -15,6 +15,9 @@ namespace Run4YourLife.GameManagement
         public override GamePhase GamePhase { get { return GamePhase.EasyMoveHorizontal; } }
 
         [SerializeField]
+        private AudioClip m_phase1MusicClip;
+
+        [SerializeField]
         private CinemachineVirtualCamera m_virtualCamera;
 
         private PlayerSpawner m_playerSpawner;
@@ -42,7 +45,7 @@ namespace Run4YourLife.GameManagement
 
         void StartPhaseCommon()
         {
-            AudioManager.Instance.PlayMusic(AudioManager.Music.GameScene);
+            AudioManager.Instance.PlayMusic(m_phase1MusicClip);
 
             GameObject boss = GameplayPlayerManager.Instance.Boss;
             Debug.Assert(boss != null);

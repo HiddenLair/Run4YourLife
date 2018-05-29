@@ -18,6 +18,9 @@ namespace Run4YourLife.Player
         [SerializeField]
         private float reloadTimeS;
 
+        [SerializeField]
+        protected AudioClip m_meleeClip;
+
         #endregion
 
         private float currentTimeS = 0;

@@ -28,7 +28,7 @@ namespace Run4YourLife.Player
 
         void Shoot()
         {
-            AudioManager.Instance.PlayFX(AudioManager.Sfx.BossShoot);
+            AudioManager.Instance.PlaySFX(m_shotClip);
 
             Vector3 director = (crossHairControl.Position - shootInitZone.position).normalized;
             GameObject tempInstance = Instantiate(instance, shootInitZone.position, instance.transform.rotation);

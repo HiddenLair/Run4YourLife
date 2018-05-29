@@ -22,6 +22,18 @@ namespace Run4YourLife.Player
         #region InspectorVariables
 
         [SerializeField]
+        private AudioClip m_jumpClip;
+
+        [SerializeField]
+        private AudioClip m_bounceClip;
+
+        [SerializeField]
+        private AudioClip m_fartClip;
+
+        [SerializeField]
+        private AudioClip m_deathClip;
+
+        [SerializeField]
         private float m_coyoteGroundedTime;
 
         [SerializeField]
@@ -402,7 +414,7 @@ namespace Run4YourLife.Player
         {
             m_isJumping = true;
 
-            AudioManager.Instance.PlayFX(AudioManager.Sfx.RunnerJump);
+            AudioManager.Instance.PlaySFX(m_jumpClip);
             m_animator.SetTrigger(RunnerAnimation.jump);
 
             //set vertical velocity to the velocity needed to reach maxJumpHeight
@@ -430,7 +442,7 @@ namespace Run4YourLife.Player
 
         private IEnumerator SecondJumpCoroutine()
         {
-            AudioManager.Instance.PlayFX(AudioManager.Sfx.RunnerFart);
+            AudioManager.Instance.PlaySFX(m_fartClip);
             fartReceiver.PlayFx();
             
             float jumpHeight = m_secondJumpHeight;
@@ -526,7 +538,7 @@ namespace Run4YourLife.Player
                 leftbounceReceiver.PlayFx();
             }
             m_isBouncing = true;
-            AudioManager.Instance.PlayFX(AudioManager.Sfx.RunnerBounce);
+            AudioManager.Instance.PlaySFX(m_bounceClip);
             m_velocity.x = DragToVelocity(bounceForce.x);
             m_velocity.y = HeightToVelocity(bounceForce.y);
 

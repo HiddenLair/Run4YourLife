@@ -8,6 +8,9 @@ namespace Run4YourLife.SceneSpecific.MainMenu
     public class MainMenuManager : MonoBehaviour
     {
         [SerializeField]
+        private AudioClip m_mainMenuMusicClip;
+
+        [SerializeField]
         private SceneTransitionRequest m_characterSelectionLoadRequest;
 
         [SerializeField]
@@ -15,7 +18,7 @@ namespace Run4YourLife.SceneSpecific.MainMenu
 
         private void Start()
         {
-            AudioManager.Instance.PlayMusic(AudioManager.Music.MainMenu);
+            AudioManager.Instance.PlayMusic(m_mainMenuMusicClip);
         }
 
         public void OnPlayButtonPressed()

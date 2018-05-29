@@ -49,7 +49,7 @@ namespace Run4YourLife.Player
             //Only shoot when the boss has both hands. No double shoot is allowed.
             if (handR.activeInHierarchy && handL.activeInHierarchy)
             {
-                AudioManager.Instance.PlayFX(AudioManager.Sfx.BossMelee);
+                AudioManager.Instance.PlaySFX(m_meleeClip);
 
                 trapPos = crossHairControl.Position;
                 Vector3 screenPos = m_mainCamera.WorldToScreenPoint(trapPos);

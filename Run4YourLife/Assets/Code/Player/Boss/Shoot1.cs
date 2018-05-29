@@ -28,7 +28,7 @@ namespace Run4YourLife.Player
 
         void Shoot()
         {
-            AudioManager.Instance.PlayFX(AudioManager.Sfx.BossShoot);
+            AudioManager.Instance.PlaySFX(m_shotClip);
             Vector3 cPos = crossHairControl.Position;
             cPos.z = 0;
             Vector3 director = (crossHairControl.Position - shootInitZone.position).normalized;

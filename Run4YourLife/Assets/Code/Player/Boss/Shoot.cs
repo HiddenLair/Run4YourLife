@@ -22,6 +22,9 @@ namespace Run4YourLife.Player
         protected Transform shootInitZone;
 
         [SerializeField]
+        protected AudioClip m_shotClip;
+
+        [SerializeField]
         [Range(0, 1)]
         private float triggerSensivility = 0.2f;
 

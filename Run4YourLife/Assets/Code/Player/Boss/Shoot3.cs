@@ -59,7 +59,7 @@ namespace Run4YourLife.Player
         {
             SetUpLoadReceiver();
 
-            AudioManager.Instance.PlayFX(AudioManager.Sfx.BossShoot);
+            AudioManager.Instance.PlaySFX(m_shotClip);
             loadShootReceiver.PlayFx(true);
             animator.SetTrigger("Shoot");
             AnimationPlayOnTimeManager.Instance.PlayOnNextAnimation(animator, "ChargeShoot", timeToShootFromAnim, () => Shoot());
