@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using Cinemachine;
-using System.Collections.Generic;
 
 using Run4YourLife.Cinemachine;
 using Run4YourLife.GameManagement;
@@ -12,18 +11,16 @@ namespace Run4YourLife.Player
     public class BossPathWalker : MonoBehaviour, IProgressProvider
     {
         [Serializable]
-        private struct BossStatsPathModifier
+        private class BossStatsPathModifier
         {
-            public int waypointIndex;
-            public float speedMultiplier;
-            public float accelerationMultiplier;
+            public static float ExponentialPow = 0.5f;
 
-            public void Reset()
-            {
-                waypointIndex = -1;
-                speedMultiplier = 1.0f;
-                accelerationMultiplier = 1.0f;
-            }
+            public enum BlendingType { None, Linear, Exponential }
+
+            public int waypointIndex = -1;
+            public float speedMultiplier = 1.0f;
+            public float accelerationMultiplier = 1.0f;
+            public BlendingType blendingType = BlendingType.Exponential;
         }
 
         /// <summary>The path to follow</summary>
@@ -52,7 +49,7 @@ namespace Run4YourLife.Player
 
         public CinemachineScreenTransposerData CinemachineScreenTransposerData { get { return m_cinemachineScreenTransposerData; } }
 
-        private List<BossStatsPathModifier> builtBossStatsPathModifiers = new List<BossStatsPathModifier>();
+        private BossStatsPathModifier[] builtBossStatsPathModifiers;
 
         public float Progress
         {
@@ -104,17 +101,16 @@ namespace Run4YourLife.Player
 
         private void BuiltBossStatsPathModifiers()
         {
-            for(int i = 0; i < m_path.GetWaypointCount(); ++i)
-            {
-                BossStatsPathModifier bossStatsPathModifier = new BossStatsPathModifier();
-                bossStatsPathModifier.Reset();
+            builtBossStatsPathModifiers = new BossStatsPathModifier[m_path.GetWaypointCount()];
 
-                builtBossStatsPathModifiers.Add(bossStatsPathModifier);
+            for(int i = 0; i < builtBossStatsPathModifiers.Length; ++i)
+            {
+                builtBossStatsPathModifiers[i] = new BossStatsPathModifier();
             }
 
             foreach(BossStatsPathModifier bossStatsPathModifier in bossStatsPathModifiers)
             {
-                Debug.Assert(bossStatsPathModifier.waypointIndex < builtBossStatsPathModifiers.Count, "BossPathWalker::BuiltBossStatsPathModifiers ... Index " + bossStatsPathModifier.waypointIndex + " not valid");
+                Debug.Assert(bossStatsPathModifier.waypointIndex < builtBossStatsPathModifiers.Length, "BossPathWalker::BuiltBossStatsPathModifiers ... Index " + bossStatsPathModifier.waypointIndex + " not valid");
 
                 if(builtBossStatsPathModifiers[bossStatsPathModifier.waypointIndex].waypointIndex != -1)
                 {
@@ -127,12 +123,45 @@ namespace Run4YourLife.Player
 
         private void GetCurrentSpeedAndAccelerationMultipliers(out float speedMultiplier, out float accelerationMultiplier)
         {
-            int index = (int)(m_position / m_path.GetLength() * m_path.GetWaypointCount());
+            int index;
+            float decimalPart;
 
-            BossStatsPathModifier currentBossStatsPathModifier = builtBossStatsPathModifiers[index];
+            m_path.GetWaypointIndex(m_position, m_positionUnits, out index, out decimalPart);
 
-            speedMultiplier = currentBossStatsPathModifier.speedMultiplier;
-            accelerationMultiplier = currentBossStatsPathModifier.accelerationMultiplier;
+            BossStatsPathModifier bossStatsPathModifier = builtBossStatsPathModifiers[index];
+
+            speedMultiplier = bossStatsPathModifier.speedMultiplier;
+            accelerationMultiplier = bossStatsPathModifier.accelerationMultiplier;
+
+            if(bossStatsPathModifier.blendingType != BossStatsPathModifier.BlendingType.None && index + 1 < m_path.GetWaypointCount())
+            {
+                float leftWeight = 0.0f;
+                float rightWeight = 0.0f;
+
+                switch(bossStatsPathModifier.blendingType)
+                {
+                    case BossStatsPathModifier.BlendingType.Linear:
+                        leftWeight = 1.0f - decimalPart;
+                        rightWeight = decimalPart;
+
+                        break;
+                    case BossStatsPathModifier.BlendingType.Exponential:
+                        leftWeight = Mathf.Pow(1.0f - decimalPart, BossStatsPathModifier.ExponentialPow);
+                        rightWeight = Mathf.Pow(decimalPart, BossStatsPathModifier.ExponentialPow);
+
+                        float totalWeight = leftWeight + rightWeight;
+
+                        leftWeight /= totalWeight;
+                        rightWeight /= totalWeight;
+
+                        break;
+                }
+
+                BossStatsPathModifier nextBossStatsPathModifier = builtBossStatsPathModifiers[index + 1];
+
+                speedMultiplier = leftWeight * speedMultiplier + rightWeight * nextBossStatsPathModifier.speedMultiplier;
+                accelerationMultiplier = leftWeight * accelerationMultiplier + rightWeight * nextBossStatsPathModifier.accelerationMultiplier;
+            }
         }
     }
 }

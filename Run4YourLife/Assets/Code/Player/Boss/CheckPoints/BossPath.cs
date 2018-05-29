@@ -11,7 +11,6 @@ namespace Run4YourLife.Player
     [ExecuteInEditMode]
     public class BossPath : MonoBehaviour
     {
-
         [SerializeField]
         private CinemachineScreenTransposerData[] m_cinemachineScreenTransposerDatas;
         private CinemachinePath m_path;
@@ -29,6 +28,24 @@ namespace Run4YourLife.Player
         public int GetWaypointCount()
         {
             return m_path.m_Waypoints.Length;
+        }
+
+        public Vector3 GetWaypointPosition(int index)
+        {
+            return m_path.m_Waypoints[index].position;
+        }
+
+        public void GetWaypointIndex(float position, CinemachinePathBase.PositionUnits positionUnits, out int index, out float decimalPart)
+        {
+            float pathUnitsPosition = position;
+
+            if(positionUnits == CinemachinePathBase.PositionUnits.Distance)
+            {
+                pathUnitsPosition = m_path.GetPathPositionFromDistance(position);
+            }
+
+            index = (int)Math.Truncate(pathUnitsPosition);
+            decimalPart = pathUnitsPosition - index;
         }
 
         public float NormalizeUnit(float distanceAlongPath, CinemachinePathBase.PositionUnits positionUnits)
@@ -53,13 +70,10 @@ namespace Run4YourLife.Player
 
         public void EvaluateScreenTransposerDataAtUnit(float position, CinemachinePathBase.PositionUnits positionUnits, ref CinemachineScreenTransposerData cinemachineScreenTransposerData)
         {
-            float pathUnitsPosition = position;
-            if (positionUnits == CinemachinePathBase.PositionUnits.Distance)
-            {
-                pathUnitsPosition = m_path.GetPathPositionFromDistance(position);
-            }
-            int index = (int)Math.Truncate(pathUnitsPosition);
-            float decimalPart = pathUnitsPosition - index;
+            int index;
+            float decimalPart;
+
+            GetWaypointIndex(position, positionUnits, out index, out decimalPart);
 
             CinemachineScreenTransposerData previous = m_cinemachineScreenTransposerDatas[index];
             CinemachineScreenTransposerData next = m_cinemachineScreenTransposerDatas[Mathf.Min(index + 1, m_cinemachineScreenTransposerDatas.Length - 1)];
