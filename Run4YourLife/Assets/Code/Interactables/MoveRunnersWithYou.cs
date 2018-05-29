@@ -37,5 +37,10 @@ namespace Run4YourLife.Interactables
                 players.Remove(other.transform);
             }
         }
+
+        private void OnDisable()
+        {
+            players.Clear();
+        }
     }
 }
