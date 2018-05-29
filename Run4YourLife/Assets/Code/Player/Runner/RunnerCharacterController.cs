@@ -115,6 +115,7 @@ namespace Run4YourLife.Player
 
         private readonly float m_baseHorizontalDrag = 2f; // Hard coded because DragToVelocity calculates with a magic number
 
+        private Coroutine dustCoroutine;
         #endregion
 
         #region Attributes
@@ -154,8 +155,6 @@ namespace Run4YourLife.Player
             m_gravity = m_baseGravity;
             m_horizontalDrag = m_baseHorizontalDrag;
 
-            AnimationPlayOnTimeManager.Instance.PlayOnNextTransitionFrom(m_animator, "idle", "correr", () => Dust());
-
             m_waitForSecondsCoyoteGroundedTime = new WaitForSeconds(m_coyoteGroundedTime);
             m_waitForSecondsDashCooldown = new WaitForSeconds(m_dashCooldown);
         }
@@ -163,6 +162,7 @@ namespace Run4YourLife.Player
         private void OnEnable()
         {
             StartCoroutine(CheckCoyoteGroundedCoroutine());
+            dustCoroutine = AnimationPlayOnTimeManager.Instance.PlayOnNextTransitionFrom(m_animator, "idle", "correr", () => Dust()); 
             m_runnerControlScheme.Active = true;
 
             ResetMembers();
@@ -188,6 +188,7 @@ namespace Run4YourLife.Player
         private void OnDisable()
         {
             StopAllCoroutines();
+            AnimationPlayOnTimeManager.Instance.StopCoroutine(dustCoroutine);//Its not in this class, then we need to call it for stop
             m_runnerControlScheme.Active = false;
         }
 
@@ -613,7 +614,7 @@ namespace Run4YourLife.Player
             {
                 leftdustReceiver.PlayFx();
             }
-            AnimationPlayOnTimeManager.Instance.PlayOnNextTransitionFrom(m_animator, "idle", "correr", () => Dust());
+            dustCoroutine = AnimationPlayOnTimeManager.Instance.PlayOnNextTransitionFrom(m_animator, "idle", "correr", () => Dust());
         }
 
         #endregion

@@ -63,7 +63,7 @@ namespace Run4YourLife.Player {
             Vector3 pos = Vector3.zero;
             pos.y = mainCamera.ScreenToWorldPoint(new Vector3(0, mainCamera.pixelHeight, Mathf.Abs(mainCamera.transform.position.z - pos.z))).y;
             lighningEffect.transform.localPosition = pos;
-            lighningEffect.SetActive(true);
+            
 
             RaycastHit[] hits;
             hits = Physics.SphereCastAll(lighningEffect.transform.position, width, Vector3.down, pos.y - transform.position.y,Layers.Runner);
@@ -75,8 +75,12 @@ namespace Run4YourLife.Player {
                     ExecuteEvents.Execute<ICharacterEvents>(hit.collider.gameObject, null, (x, y) => x.Kill());
                 }
             }
-
-            gameObject.SetActive(false);
+            lighningEffect.SetActive(true);
+            ParticleSystem lightning = lighningEffect.GetComponent<ParticleSystem>();
+            if (lightning.IsAlive())
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 }

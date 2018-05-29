@@ -103,6 +103,7 @@ namespace Run4YourLife.Player
 
         public void AbsoluteKill()
         {
+            ConsumeShieldIfAviable();
             deathReceiver.PlayFx();
             gameObject.SetActive(false);
             ExecuteEvents.Execute<IGameplayPlayerEvents>(GameplayPlayerManager.InstanceGameObject, null, (x, y) => x.OnRunnerDeath(gameObject));
