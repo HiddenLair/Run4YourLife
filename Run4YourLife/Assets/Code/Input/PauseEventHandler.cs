@@ -3,12 +3,16 @@ using UnityEngine.EventSystems;
 
 using Run4YourLife.Utils;
 using Run4YourLife.GameManagement;
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.InputManagement
 {
     [RequireComponent(typeof(PlayerControlScheme))]
     public class PauseEventHandler : MonoBehaviour
     {
+        [SerializeField]
+        private AudioClip m_pauseOpenClip;
+
         private GameObject pauseManagerGameObject;
         private PlayerControlScheme m_playerControlScheme;
 
@@ -32,6 +36,7 @@ namespace Run4YourLife.InputManagement
         {
             if(m_playerControlScheme.Pause.Started())
             {
+                AudioManager.Instance.PlaySFX(m_pauseOpenClip);
                 ExecuteEvents.Execute<IPauseEvent>(PauseManager.InstanceGameObject, null, (x, y) => x.OnPauseInput());
             }
         }

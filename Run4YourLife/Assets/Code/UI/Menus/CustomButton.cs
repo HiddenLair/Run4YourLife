@@ -1,9 +1,13 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Run4YourLife.GameManagement.AudioManagement;
 
 public class CustomButton : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
+    [SerializeField]
+    private AudioClip selectedButton;
+
     [SerializeField]
     private float buttonScaleMultiplierOnFocus = 1.25f;
 
@@ -73,6 +77,11 @@ public class CustomButton : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     public void OnDeselect(BaseEventData eventData)
     {
+        if (selectedButton != null)
+        {
+            AudioManager.Instance.PlaySFX(selectedButton);
+        }
+
         SetFocus(false);
     }
 

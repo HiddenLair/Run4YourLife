@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Run4YourLife.InputManagement;
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.Player {
     [RequireComponent(typeof(InputController))]
@@ -25,6 +26,8 @@ namespace Run4YourLife.Player {
         [SerializeField]
         private float Reload;
 
+        [SerializeField]
+        private AudioClip m_throwRockClip;
 
         private PlayerInstance m_playerInstance;
         private InputController m_inputController;
@@ -59,6 +62,7 @@ namespace Run4YourLife.Player {
 
         private void ThrowRock()
         {
+            AudioManager.Instance.PlaySFX(m_throwRockClip);
             GameObject rock = Instantiate(m_rockPrefab, m_rockInstantiationTransform.position, Quaternion.identity);
             Physics.IgnoreCollision(rock.GetComponent<Collider>(), collider);
             Rigidbody rigidbody = rock.GetComponent<Rigidbody>();

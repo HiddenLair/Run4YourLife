@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 using System.Collections;
 
 using Run4YourLife.GameManagement;
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.Player
 {
@@ -11,6 +12,9 @@ namespace Run4YourLife.Player
     {
 
         #region Inspector
+        [SerializeField]
+        private AudioClip m_deathClip;
+
         [SerializeField]
         private FXReceiver deathReceiver;
 
@@ -83,6 +87,8 @@ namespace Run4YourLife.Player
 
         public void Kill()
         {
+            AudioManager.Instance.PlaySFX(m_deathClip);
+
             if (!ConsumeShieldIfAviable() && !m_recentlyRevived)
             {
                 deathReceiver.PlayFx();
@@ -93,6 +99,8 @@ namespace Run4YourLife.Player
 
         public void AbsoluteKill()
         {
+            AudioManager.Instance.PlaySFX(m_deathClip);
+
             ConsumeShieldIfAviable();
             deathReceiver.PlayFx();
             gameObject.SetActive(false);

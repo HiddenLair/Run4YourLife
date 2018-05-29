@@ -22,6 +22,9 @@ namespace Run4YourLife.Player
         #region InspectorVariables
 
         [SerializeField]
+        private AudioClip m_dashClip;
+
+        [SerializeField]
         private AudioClip m_jumpClip;
 
         [SerializeField]
@@ -253,6 +256,8 @@ namespace Run4YourLife.Player
 
         private IEnumerator DashCoroutine()
         {
+            AudioManager.Instance.PlaySFX(m_dashClip);
+
             m_isDashing = true;
             m_isReadyToDash = false;
             m_animator.SetTrigger(RunnerAnimation.dash);
