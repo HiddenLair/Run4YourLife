@@ -13,15 +13,11 @@ namespace Run4YourLife.Player
         [SerializeField]
         private float windForce;
 
-        private void Start()
+        private void OnEnable()
         {
             m_skillAudioSource = GetComponent<AudioSource>();
             m_skillAudioSource.clip = m_skillTriggerClip;
             m_skillAudioSource.loop = true;
-        }
-
-        private void OnEnable()
-        {
             m_skillAudioSource.Play();
             StartCoroutine(DeactivateAfterTime());
         }
