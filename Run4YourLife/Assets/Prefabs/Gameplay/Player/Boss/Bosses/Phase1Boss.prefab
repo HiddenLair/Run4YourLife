@@ -459,16 +459,16 @@ GameObject:
   - component: {fileID: 114902960685460096}
   - component: {fileID: 114999108935031068}
   - component: {fileID: 65522943153168938}
-  - component: {fileID: 114694272259496632}
   - component: {fileID: 114411323788195880}
   - component: {fileID: 114330724144454964}
+  - component: {fileID: 114447119585797032}
   m_Layer: 11
   m_Name: Phase1Boss
   m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1359334047464650
 GameObject:
   m_ObjectHideFlags: 1
@@ -478,7 +478,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4118959847511596}
   - component: {fileID: 65642739560028000}
-  - component: {fileID: 114693910357728974}
+  - component: {fileID: 114019960116795640}
   m_Layer: 11
   m_Name: LeftHandCollider
   m_TagString: Untagged
@@ -1174,7 +1174,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4732340820761426}
   - component: {fileID: 65798921570206144}
-  - component: {fileID: 114869671608789566}
+  - component: {fileID: 114274581663227964}
   m_Layer: 11
   m_Name: RightHandCollider
   m_TagString: Boss
@@ -2748,6 +2748,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114019960116795640
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1359334047464650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7943cf917c37b24aaaf47a1ae2e38c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114130573736263022
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2792,6 +2803,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cec698f25fa65f47a9e9032dfde8efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114274581663227964
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1913453684288534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7943cf917c37b24aaaf47a1ae2e38c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114330724144454964
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2819,7 +2841,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerSensivility: 0.2
   reloadTimeS: 2
-  sfx: {fileID: 8300000, guid: 5a17a99919f460e4f961de3bb2f63aa7, type: 3}
 --- !u!114 &114411323788195880
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2829,6 +2850,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff4e6999a7f30fe4aa9f4d8d89f65bd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114447119585797032
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1339971389182100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7943cf917c37b24aaaf47a1ae2e38c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114569011030421814
@@ -2847,42 +2879,8 @@ MonoBehaviour:
   triggerSensivility: 0.2
   reloadTimeS: 1.5
   m_lookAtOffset: 0
-  sfx: {fileID: 8300000, guid: c3833cf9a9803f145bb95bbf5defe584, type: 3}
   instance: {fileID: 1781781690259230, guid: 4c137c15fa0b70749b76fbe566527326, type: 2}
   bulletSpeed: 600
---- !u!114 &114693910357728974
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1359334047464650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 412452455570aa44bac37005f9813a6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114694272259496632
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1339971389182100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 412452455570aa44bac37005f9813a6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114869671608789566
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1913453684288534}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 412452455570aa44bac37005f9813a6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114871553384709032
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2922,6 +2920,7 @@ MonoBehaviour:
   m_speed: 3
   m_acceleration: 0
   m_position: 0
+  bossStatsPathModifiers: []
 --- !u!137 &137264742435327442
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

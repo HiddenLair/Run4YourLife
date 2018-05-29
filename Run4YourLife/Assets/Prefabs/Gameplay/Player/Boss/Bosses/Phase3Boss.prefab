@@ -427,10 +427,10 @@ GameObject:
   - component: {fileID: 114099030480956222}
   - component: {fileID: 114154188997543654}
   - component: {fileID: 114891650166769830}
-  - component: {fileID: 114696684942109732}
   - component: {fileID: 65399253425502934}
   - component: {fileID: 114648588520097026}
   - component: {fileID: 114800066667396244}
+  - component: {fileID: 114250132661222224}
   m_Layer: 11
   m_Name: Phase3Boss
   m_TagString: Boss
@@ -446,8 +446,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4356864379939416}
-  - component: {fileID: 114467232857521670}
   - component: {fileID: 65963097469153364}
+  - component: {fileID: 114772048301559046}
   m_Layer: 11
   m_Name: LeftHandCollider
   m_TagString: Untagged
@@ -585,8 +585,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4694356609119718}
-  - component: {fileID: 114548528445710784}
   - component: {fileID: 65706014738079328}
+  - component: {fileID: 114481992341649112}
   m_Layer: 11
   m_Name: RightHandCollider
   m_TagString: Untagged
@@ -2893,7 +2893,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerSensivility: 0.2
   reloadTimeS: 2.5
-  sfx: {fileID: 8300000, guid: 5a17a99919f460e4f961de3bb2f63aa7, type: 3}
 --- !u!114 &114154188997543654
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2922,7 +2921,6 @@ MonoBehaviour:
   triggerSensivility: 0.2
   reloadTimeS: 5
   m_lookAtOffset: 0
-  sfx: {fileID: 8300000, guid: c3833cf9a9803f145bb95bbf5defe584, type: 3}
   dangerIndicator: {fileID: 1728473321792840}
   dangerRotator: {fileID: 4492174773157854}
   maxLaserDistance: 50
@@ -2930,6 +2928,17 @@ MonoBehaviour:
   loadShootReceiver: {fileID: 114326443634226574}
   loadedShootParticles: {fileID: 1464658711923784, guid: db7a136e382c08e4ab402fc5519cc48e,
     type: 2}
+--- !u!114 &114250132661222224
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1432021327500220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7943cf917c37b24aaaf47a1ae2e38c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114326443634226574
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2965,18 +2974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d67487b577a63a40b0d38773955ab3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114467232857521670
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1442447611252370}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 412452455570aa44bac37005f9813a6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114548528445710784
+--- !u!114 &114481992341649112
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -2984,7 +2982,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1536651728295860}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 412452455570aa44bac37005f9813a6e, type: 3}
+  m_Script: {fileID: 11500000, guid: d7943cf917c37b24aaaf47a1ae2e38c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114648588520097026
@@ -3020,15 +3018,15 @@ MonoBehaviour:
   trapY: {fileID: 1053646925812610, guid: 6891dd8f950938046ba0d059588dd1d4, type: 2}
   skillB: {fileID: 1463452844622424, guid: 7e170bbe1f8b8ea4eb65d2fe06bf9368, type: 2}
   trapB: {fileID: 1244499117138228, guid: e7e661a6bdf2b734497407d3c1e47138, type: 2}
---- !u!114 &114696684942109732
+--- !u!114 &114772048301559046
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1432021327500220}
+  m_GameObject: {fileID: 1442447611252370}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 412452455570aa44bac37005f9813a6e, type: 3}
+  m_Script: {fileID: 11500000, guid: d7943cf917c37b24aaaf47a1ae2e38c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114800066667396244
@@ -3074,6 +3072,10 @@ MonoBehaviour:
   m_speed: 3
   m_acceleration: 0
   m_position: 0
+  bossStatsPathModifiers:
+  - waypointIndex: 5
+    speedMultiplier: 0.25
+    accelerationMultiplier: 1
 --- !u!137 &137017230866588148
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
