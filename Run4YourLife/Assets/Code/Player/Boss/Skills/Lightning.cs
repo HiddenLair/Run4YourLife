@@ -43,12 +43,12 @@ namespace Run4YourLife.Player {
         }
 
         IEnumerator Flash()
-        {       
+        {
             Transform flashBody = flashEffect.transform;
             Vector3 newSize = Vector3.one;
             newSize.x = newSize.z = width;
             float topScreen = CameraManager.Instance.MainCamera.ScreenToWorldPoint(new Vector3(0, CameraManager.Instance.MainCamera.pixelHeight, Mathf.Abs(CameraManager.Instance.MainCamera.transform.position.z - flashBody.position.z))).y;
-            newSize.y = (topScreen - transform.position.y)/2;
+            newSize.y = (topScreen - transform.position.y) / 2;
             flashBody.localScale = newSize;
             flashBody.localPosition = new Vector3(0, newSize.y);
             flashEffect.SetActive(true);
@@ -63,10 +63,10 @@ namespace Run4YourLife.Player {
             Vector3 pos = Vector3.zero;
             pos.y = mainCamera.ScreenToWorldPoint(new Vector3(0, mainCamera.pixelHeight, Mathf.Abs(mainCamera.transform.position.z - pos.z))).y;
             lighningEffect.transform.localPosition = pos;
-            
+
 
             RaycastHit[] hits;
-            hits = Physics.SphereCastAll(lighningEffect.transform.position, width, Vector3.down, pos.y - transform.position.y,Layers.Runner);
+            hits = Physics.SphereCastAll(lighningEffect.transform.position, width, Vector3.down, pos.y - transform.position.y, Layers.Runner);
 
             foreach (RaycastHit hit in hits)
             {
@@ -76,11 +76,27 @@ namespace Run4YourLife.Player {
                 }
             }
             lighningEffect.SetActive(true);
-            ParticleSystem lightning = lighningEffect.GetComponent<ParticleSystem>();
-            if (lightning.IsAlive())
-            {
-                gameObject.SetActive(false);
+            ParticleSystem[] lightning = lighningEffect.GetComponentsInChildren<ParticleSystem>();
+            StartCoroutine(WaitForParticleSystems(lightning,lighningEffect));
+        }
+
+        IEnumerator WaitForParticleSystems(ParticleSystem[] particles,GameObject particleSystem)
+        {
+            bool finish = false;
+            while(!finish){
+                finish = true;
+                for (int i = 0; i < particles.Length; ++i)
+                {
+                    if (particles[i].IsAlive(false))
+                    {
+                        finish = false;
+                        break;
+                    }
+                }
+                yield return null;
             }
+            particleSystem.SetActive(false);
+            gameObject.SetActive(false);
         }
     }
 }
