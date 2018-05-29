@@ -166,9 +166,10 @@ namespace Run4YourLife.GameManagement {
 
         public void OnplayerHandleChanged(GameObject player, PlayerHandle playerHandle)
         {
-            player.SetActive(true);
-            ExecuteEvents.Execute<IPlayerHandleEvent>(player, null, (a, b) => a.OnPlayerHandleChanged(playerHandle));
-            player.SetActive(false);
+            foreach(IPlayerHandleEvent playerHandleEvent in player.GetComponents<IPlayerHandleEvent>())
+            {
+                playerHandleEvent.OnPlayerHandleChanged(playerHandle);
+            }
         }
 
         #endregion
