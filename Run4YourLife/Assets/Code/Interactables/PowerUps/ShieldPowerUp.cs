@@ -13,7 +13,13 @@ namespace Run4YourLife.Interactables
 
         public override void Apply(GameObject runner)
         {
-            runner.GetComponent<RunnerController>().ActivateShield(m_duration);
+            Shielded shielded = runner.GetComponent<Shielded>();
+            if(shielded == null)
+            {
+                shielded = runner.AddComponent<Shielded>();
+            }
+
+            shielded.SetDuration(m_duration);
         }
     }
 }
