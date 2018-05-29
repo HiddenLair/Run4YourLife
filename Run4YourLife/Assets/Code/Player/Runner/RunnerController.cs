@@ -20,6 +20,9 @@ namespace Run4YourLife.Player
         [SerializeField]
         private float fadePeriodAfterRevive = 0.2f;
 
+        [SerializeField]
+        private Renderer[] m_renderersToFade;
+
         #endregion
 
         private bool m_isShielded;
@@ -28,7 +31,6 @@ namespace Run4YourLife.Player
 
         private bool m_recentlyRevived;
 
-        private Renderer[] m_renderers;
         private GameObject m_shieldGameObject;
         private MaterialFadeOut m_shieldMaterialFadeOut;
 
@@ -38,8 +40,6 @@ namespace Run4YourLife.Player
         private void Awake()
         {
             m_runnerCharacterController = GetComponent<RunnerCharacterController>();
-
-            m_renderers = gameObject.GetComponentsInChildren<Renderer>();
             
             Transform shieldTransform = transform.Find("Graphics/Shield");
             Debug.Assert(shieldTransform != null);
@@ -140,7 +140,7 @@ namespace Run4YourLife.Player
 
         private void FadeByRender(bool active)
         {
-            foreach (Renderer renderer in m_renderers)
+            foreach (Renderer renderer in m_renderersToFade)
             {
                 renderer.enabled = active;
             }

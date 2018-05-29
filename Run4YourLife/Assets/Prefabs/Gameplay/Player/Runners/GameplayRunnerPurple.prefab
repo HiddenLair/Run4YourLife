@@ -1435,7 +1435,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1837875320852082}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.79, z: 0}
+  m_LocalPosition: {x: 0, y: 1.272, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4593702343663260}
@@ -2916,6 +2916,10 @@ MonoBehaviour:
   deathReceiver: {fileID: 114198410260783734}
   inmuneTimeAfterRevive: 2
   fadePeriodAfterRevive: 0.5
+  m_renderersToFade:
+  - {fileID: 137426927464821120}
+  - {fileID: 137624744854759776}
+  - {fileID: 137615049434199850}
 --- !u!114 &114799538616923324
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2984,9 +2988,6 @@ MonoBehaviour:
   m_dashDistance: 2.5
   m_dashTime: 0.15
   m_timeToIdle: 5
-  jumpClip: {fileID: 8300000, guid: 8bc5dbb3f916c7d4bb404c8a010f4106, type: 3}
-  bounceClip: {fileID: 8300000, guid: 4c27b064170a56b48907e5a15905f521, type: 3}
-  fartClip: {fileID: 8300000, guid: bca880593dd55a74f8e422ebd64e73eb, type: 3}
   leftbounceReceiver: {fileID: 114587612703956962}
   rightbounceReceiver: {fileID: 114241853470428418}
   fartReceiver: {fileID: 114826062344592354}
