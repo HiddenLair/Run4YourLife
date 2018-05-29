@@ -8,6 +8,9 @@ namespace Run4YourLife.Player
     public abstract class SkillBase : MonoBehaviour {
 
         [SerializeField]
+        private AudioClip m_skillTriggerClip;
+
+        [SerializeField]
         private float m_cooldown;
 
         public float Cooldown { get { return m_cooldown; } }

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 using Run4YourLife.Player;
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.Interactables
 {
@@ -29,7 +30,7 @@ namespace Run4YourLife.Interactables
                 }
 
                 root.RefreshRoot();
-
+                AudioManager.Instance.PlaySFX(m_trapDetonationClip);
                 gameObject.SetActive(false);
             }
         }

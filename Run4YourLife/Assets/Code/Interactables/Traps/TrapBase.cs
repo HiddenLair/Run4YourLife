@@ -8,6 +8,9 @@ namespace Run4YourLife.Interactables
     public abstract class TrapBase : MonoBehaviour
     {
         [SerializeField]
+        protected AudioClip m_trapDetonationClip;
+
+        [SerializeField]
         private float m_fadeInTime;
 
         [SerializeField]

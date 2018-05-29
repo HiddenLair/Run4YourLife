@@ -5,6 +5,7 @@ using Run4YourLife.UI;
 using Run4YourLife.InputManagement;
 using Run4YourLife.Interactables;
 using Run4YourLife.GameManagement;
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.Player
 {
@@ -21,6 +22,9 @@ namespace Run4YourLife.Player
         #endregion
 
         #region Inspector
+
+        [SerializeField]
+        private AudioClip m_castClip;
 
         [SerializeField]
         [Range(0, 1)]
@@ -170,6 +174,7 @@ namespace Run4YourLife.Player
 
         float SetElement(GameObject trap, GameObject skill)
         {
+            AudioManager.Instance.PlaySFX(m_castClip);
             anim.SetTrigger("Casting");
             trapCooldownBool = false;
 

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.Interactables
 {
@@ -19,6 +20,8 @@ namespace Run4YourLife.Interactables
             {
                 StatusEffectController statusEffectController = collider.GetComponent<StatusEffectController>();
                 statusEffectController.AddAndRemoveAfterTime(m_statusEffectSet, m_slowTime);
+
+                AudioManager.Instance.PlaySFX(m_trapDetonationClip);
                 Instantiate(m_activationParticles, transform.position, transform.rotation);
                 gameObject.SetActive(false);
             }
