@@ -25,10 +25,10 @@ namespace Run4YourLife.SceneSpecific.WinMenu
         private float othersScale = 3.0f;
 
         [SerializeField]
-        private string winnerAnimation = "dance";
+        private string danceAnimation;
 
         [SerializeField]
-        private string othersAnimation = "idle";
+        private string cryAnimation;
 
         private RunnerPrefabManager runnerPrefabManager;
 
@@ -76,10 +76,10 @@ namespace Run4YourLife.SceneSpecific.WinMenu
         private void SetUpTestScores()
         {
             Debug.Log("Setting up test scores");
-            Dictionary<PlayerHandle, float> scores = new Dictionary<PlayerHandle,float>();
+            Dictionary<PlayerHandle, int> scores = new Dictionary<PlayerHandle,int>();
             foreach(PlayerHandle playerHandle in PlayerManager.Instance.RunnerPlayerHandles)
             {
-                scores[playerHandle] = UnityEngine.Random.Range(0.0f, 50.0f);
+                scores[playerHandle] = (int)UnityEngine.Random.Range(0.0f, 50.0f);
             }
             GlobalDataContainer.Instance.Data[GlobalDataContainerKeys.Score] = scores;
         }
@@ -112,11 +112,11 @@ namespace Run4YourLife.SceneSpecific.WinMenu
                 {
                     isWinner = false;
                     scale = winnerScale;
-                    runner.GetComponent<Animator>().Play(winnerAnimation);
+                    runner.GetComponent<Animator>().Play(danceAnimation);
                 }
                 else
                 {
-                    runner.GetComponent<Animator>().Play(othersAnimation);
+                    runner.GetComponent<Animator>().Play(cryAnimation);
                 }
 
                 runnerSlot.transform.localScale = scale * Vector3.one;

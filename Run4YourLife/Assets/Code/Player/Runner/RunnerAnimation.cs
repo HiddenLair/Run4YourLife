@@ -16,6 +16,5 @@
         public static readonly string dash = "dash";
         public static readonly string root = "root";
         public static readonly string push = "push";
-        public static readonly string dance = "dance";
     }
 }
