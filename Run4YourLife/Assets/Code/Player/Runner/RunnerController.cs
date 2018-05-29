@@ -29,7 +29,9 @@ namespace Run4YourLife.Player
         private bool m_recentlyRevived;
 
         private Renderer[] m_renderers;
-        private Transform m_shieldGameObject;
+        private GameObject m_shieldGameObject;
+        private MaterialFadeOut m_shieldMaterialFadeOut;
+
         private Coroutine shieldCooldownDestroy;
         private RunnerCharacterController m_runnerCharacterController;      
 
@@ -38,8 +40,11 @@ namespace Run4YourLife.Player
             m_runnerCharacterController = GetComponent<RunnerCharacterController>();
 
             m_renderers = gameObject.GetComponentsInChildren<Renderer>();
-            m_shieldGameObject = transform.Find("Graphics/Shield");
-            Debug.Assert(m_shieldGameObject != null, "Shield gameobject has not been found inside the character");
+            
+            Transform shieldTransform = transform.Find("Graphics/Shield");
+            Debug.Assert(shieldTransform != null);
+            m_shieldGameObject = shieldTransform.gameObject;
+            m_shieldMaterialFadeOut = m_shieldGameObject.GetComponent<MaterialFadeOut>();
         }
 
         #region Shield
@@ -47,15 +52,14 @@ namespace Run4YourLife.Player
         public void ActivateShield(float shieldTime)
         {
             m_isShielded = true;
-            m_shieldGameObject.gameObject.SetActive(true);
-            m_shieldGameObject.GetComponent<MaterialFadeOut>().Activate(shieldTime);
+            m_shieldGameObject.SetActive(true);
+            m_shieldMaterialFadeOut.Activate(shieldTime);
+        }
 
-            if(shieldCooldownDestroy != null)
-            {
-                StopCoroutine(shieldCooldownDestroy);
-            }
-
-            shieldCooldownDestroy = StartCoroutine(DestroyShieldOnCooldownReached(shieldTime));
+        public void DeactivateShield()
+        {
+            m_isShielded = false;
+            m_shieldGameObject.SetActive(false);
         }
 
         /// <summary>
@@ -64,28 +68,14 @@ namespace Run4YourLife.Player
         /// <returns>True when it had a shield, false when it did not have a shield</returns>
         public bool ConsumeShieldIfAviable()
         {
-            if (shieldCooldownDestroy != null)
+            if(m_isShielded)
             {
-                StopCoroutine(shieldCooldownDestroy);
+                Destroy(GetComponent<Shielded>()); // this will call deactivate shield
+                return true;
             }
 
-            bool wasShielded = m_isShielded;
-
-            m_isShielded = false;
-            m_shieldGameObject.gameObject.SetActive(false);
-
-            return wasShielded;
+            return false;
         }
-
-        /// <summary>
-        /// Consumes shield if enough time passes
-        /// </summary>
-        IEnumerator DestroyShieldOnCooldownReached(float shieldTime)
-        {
-            yield return new WaitForSeconds(shieldTime);
-            ConsumeShieldIfAviable();
-        }
-
 
         #endregion
 
