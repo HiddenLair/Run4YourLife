@@ -3,9 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 using Run4YourLife.Player;
-using Run4YourLife.GameManagement;
 using Run4YourLife.InputManagement;
-using System;
 
 namespace Run4YourLife.SceneSpecific.WinMenu
 {
@@ -25,10 +23,10 @@ namespace Run4YourLife.SceneSpecific.WinMenu
         private float othersScale = 3.0f;
 
         [SerializeField]
-        private string danceAnimation;
+        private string winnerAnimation = "dance";
 
         [SerializeField]
-        private string cryAnimation;
+        private string otherAnimation = "dance";
 
         private RunnerPrefabManager runnerPrefabManager;
 
@@ -112,11 +110,11 @@ namespace Run4YourLife.SceneSpecific.WinMenu
                 {
                     isWinner = false;
                     scale = winnerScale;
-                    runner.GetComponent<Animator>().Play(danceAnimation);
+                    runner.GetComponent<Animator>().Play(winnerAnimation);
                 }
                 else
                 {
-                    runner.GetComponent<Animator>().Play(cryAnimation);
+                    runner.GetComponent<Animator>().Play(otherAnimation);
                 }
 
                 runnerSlot.transform.localScale = scale * Vector3.one;
