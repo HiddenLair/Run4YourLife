@@ -16,14 +16,23 @@ namespace Run4YourLife.Player
         [SerializeField]
         private StatusEffectSet m_burnStatusEffectSet;
 
+        private void Start()
+        {
+            m_skillAudioSource = GetComponent<AudioSource>();
+            m_skillAudioSource.clip = m_skillTriggerClip;
+            m_skillAudioSource.loop = true;
+        }
+
         private void OnEnable()
         {
+            m_skillAudioSource.Play();
             StartCoroutine(DeactivateAfterTime());
         }
 
         IEnumerator DeactivateAfterTime()
         {
             yield return new WaitForSeconds(m_skillTime);
+            m_skillAudioSource.Stop();
             gameObject.SetActive(false);
         }
 

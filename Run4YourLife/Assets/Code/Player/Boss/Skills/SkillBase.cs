@@ -5,10 +5,13 @@ using UnityEngine;
 
 namespace Run4YourLife.Player
 {
+    [RequireComponent(typeof(AudioSource))]
     public abstract class SkillBase : MonoBehaviour {
 
         [SerializeField]
-        private AudioClip m_skillTriggerClip;
+        protected AudioClip m_skillTriggerClip;
+
+        protected AudioSource m_skillAudioSource;
 
         [SerializeField]
         private float m_cooldown;

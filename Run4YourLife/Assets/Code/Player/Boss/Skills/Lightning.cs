@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 using Run4YourLife.GameManagement;
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.Player {
     public class Lightning : SkillBase
@@ -59,6 +60,7 @@ namespace Run4YourLife.Player {
 
         private void LightningHit()
         {
+            AudioManager.Instance.PlaySFX(m_skillTriggerClip);
             Camera mainCamera = CameraManager.Instance.MainCamera;
             Vector3 pos = Vector3.zero;
             pos.y = mainCamera.ScreenToWorldPoint(new Vector3(0, mainCamera.pixelHeight, Mathf.Abs(mainCamera.transform.position.z - pos.z))).y;
