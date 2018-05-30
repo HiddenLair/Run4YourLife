@@ -6,6 +6,8 @@ using Cinemachine;
 
 using Run4YourLife.Utils;
 using Run4YourLife.Player;
+using System;
+using System.Collections;
 
 namespace Run4YourLife.GameManagement
 {
@@ -70,7 +72,7 @@ namespace Run4YourLife.GameManagement
 
             boss.GetComponent<BossPathWalker>().m_position = 0;
 
-            StartCoroutine(YieldHelper.SkipFrame(() => MoveRunners()));
+            MoveRunners();
 
             m_background.SetActive(true);
 
@@ -83,6 +85,18 @@ namespace Run4YourLife.GameManagement
             {
                 GameObject runner = GameplayPlayerManager.Instance.Runners[i];
                 runner.transform.position = phase2Spawns[i].position;
+            }
+
+            StartCoroutine(EnableRunnersCheckOutScreen());
+        }
+
+        private IEnumerator EnableRunnersCheckOutScreen()
+        {
+            yield return null; // at the first frame the camera is still on the previous position
+            yield return null; // at the second frame the camera may or may not be at the right position
+            // The camera is at the right position we can enable it again
+            foreach(GameObject runner in GameplayPlayerManager.Instance.Runners)
+            {
                 RunnerCharacterController runnerCharacterController = runner.GetComponent<RunnerCharacterController>();
                 runnerCharacterController.CheckOutScreen = true;
             }
