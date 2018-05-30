@@ -6,6 +6,7 @@ using Run4YourLife.InputManagement;
 using Run4YourLife.Interactables;
 using Run4YourLife.GameManagement;
 using Run4YourLife.GameManagement.AudioManagement;
+using Run4YourLife.Utils;
 
 namespace Run4YourLife.Player
 {
@@ -182,12 +183,13 @@ namespace Run4YourLife.Player
             if (currentType == Type.SKILL)
             {
                 cooldown = skill.GetComponent<SkillBase>().Cooldown;
-                AnimationPlayOnTimeManager.Instance.PlayOnAnimation(anim, "Cast", timeToSpawnTrapsFromAnim, () => SetElementCallback(skill));
+                StartCoroutine(AnimationCallback.OnStateAtNormalizedTime(anim, "Cast", timeToSpawnTrapsFromAnim, () => SetElementCallback(skill)));
+
             }
             else
             {
                 cooldown = trap.GetComponent<TrapBase>().Cooldown;
-                AnimationPlayOnTimeManager.Instance.PlayOnAnimation(anim, "Cast", timeToSpawnTrapsFromAnim,()=> SetElementCallback(trap));
+                StartCoroutine(AnimationCallback.OnStateAtNormalizedTime(anim, "Cast", timeToSpawnTrapsFromAnim,()=> SetElementCallback(trap)));
             }
             return cooldown;
         }
