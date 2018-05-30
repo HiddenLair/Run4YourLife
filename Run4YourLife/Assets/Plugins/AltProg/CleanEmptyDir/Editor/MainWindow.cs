@@ -25,7 +25,7 @@ namespace AltProg.CleanEmptyDir
         public static void ShowWindow()
         {
             var w = GetWindow<MainWindow>();
-            w.title = "Clean";
+            w.titleContent.text = "Clean";
         }
 
         void OnEnable()
