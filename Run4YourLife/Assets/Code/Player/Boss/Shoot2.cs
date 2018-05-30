@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Run4YourLife.GameManagement.AudioManagement;
-using Run4YourLife.Utils;
 
 namespace Run4YourLife.Player
 {
@@ -24,7 +23,7 @@ namespace Run4YourLife.Player
         public override void ShootByAnim()
         {
             animator.SetTrigger("Shoot");
-            StartCoroutine(AnimationCallback.OnStateAtNormalizedTime(animator, "Shoot", timeToShootFromAnim, () => Shoot()));
+            AnimationPlayOnTimeManager.Instance.PlayOnAnimation(animator, "Shoot", timeToShootFromAnim, () => Shoot());        
         }
 
         void Shoot()
