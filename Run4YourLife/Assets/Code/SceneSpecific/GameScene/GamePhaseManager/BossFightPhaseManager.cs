@@ -31,7 +31,7 @@ namespace Run4YourLife.GameManagement
         private Tiling m_backgroundTiling;
 
         [SerializeField]
-        private Transform[] phase2Spawns;
+        private Transform[] m_runnerSpawns;
 
         #endregion
 
@@ -87,7 +87,7 @@ namespace Run4YourLife.GameManagement
             for (int i = 0; i < GameplayPlayerManager.Instance.Runners.Count; i++)
             {
                 GameObject runner = GameplayPlayerManager.Instance.Runners[i];
-                runner.transform.position = phase2Spawns[i].position;
+                runner.transform.position = m_runnerSpawns[i].position;
                 RunnerCharacterController runnerCharacterController = runner.GetComponent<RunnerCharacterController>();
                 runnerCharacterController.CheckOutScreen = true;
             }

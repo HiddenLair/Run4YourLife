@@ -8,7 +8,6 @@ public class GameObjectPool : MonoBehaviour {
     private Transform m_parent;
 
     [SerializeField]
-    [UnityEngine.Serialization.FormerlySerializedAs("updatePeriod")]
     private float m_timeBetweenRetrivals = 10;
 
     private float m_nextRetrivalTime;

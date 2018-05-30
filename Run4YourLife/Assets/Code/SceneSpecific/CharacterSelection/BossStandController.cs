@@ -10,7 +10,6 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
     public class BossStandController : PlayerStandController
     {
         [SerializeField]
-        [FormerlySerializedAs("boss")]
         private GameObject m_bossStand;
 
         private bool wantsToBecomeRunner;

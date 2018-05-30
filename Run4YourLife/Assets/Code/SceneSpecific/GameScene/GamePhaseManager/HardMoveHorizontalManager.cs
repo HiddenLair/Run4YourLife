@@ -30,7 +30,7 @@ namespace Run4YourLife.GameManagement
         private Material m_newBackgroundMat;
 
         [SerializeField]
-        private Transform[] phase2Spawns;
+        private Transform[] m_runnerSpawns;
 
         #endregion
 
@@ -72,7 +72,7 @@ namespace Run4YourLife.GameManagement
 
             boss.GetComponent<BossPathWalker>().m_position = 0;
 
-            MoveRunners();
+            StartCoroutine(YieldHelper.SkipFrame(() => MoveRunners()));
 
             m_background.SetActive(true);
 
@@ -84,19 +84,7 @@ namespace Run4YourLife.GameManagement
             for (int i = 0; i < GameplayPlayerManager.Instance.Runners.Count; i++)
             {
                 GameObject runner = GameplayPlayerManager.Instance.Runners[i];
-                runner.transform.position = phase2Spawns[i].position;
-            }
-
-            StartCoroutine(EnableRunnersCheckOutScreen());
-        }
-
-        private IEnumerator EnableRunnersCheckOutScreen()
-        {
-            yield return null; // at the first frame the camera is still on the previous position
-            yield return null; // at the second frame the camera may or may not be at the right position
-            // The camera is at the right position we can enable it again
-            foreach(GameObject runner in GameplayPlayerManager.Instance.Runners)
-            {
+                runner.transform.position = m_runnerSpawns[i].position;
                 RunnerCharacterController runnerCharacterController = runner.GetComponent<RunnerCharacterController>();
                 runnerCharacterController.CheckOutScreen = true;
             }

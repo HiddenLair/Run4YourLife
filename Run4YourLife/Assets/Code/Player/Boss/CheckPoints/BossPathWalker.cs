@@ -49,7 +49,7 @@ namespace Run4YourLife.Player
 
         public CinemachineScreenTransposerData CinemachineScreenTransposerData { get { return m_cinemachineScreenTransposerData; } }
 
-        private BossStatsPathModifier[] builtBossStatsPathModifiers;
+        private BossStatsPathModifier[] m_bossStatsPathModifiers;
 
         public float Progress
         {
@@ -61,7 +61,8 @@ namespace Run4YourLife.Player
 
         private void Awake()
         {
-            BuiltBossStatsPathModifiers();
+            BuildBossStatsPathModifiers();
+            UpdatePositionAndScreenTransposerData(m_position); 
         }
 
         private void Update()
@@ -99,25 +100,25 @@ namespace Run4YourLife.Player
             }
         }
 
-        private void BuiltBossStatsPathModifiers()
+        private void BuildBossStatsPathModifiers()
         {
-            builtBossStatsPathModifiers = new BossStatsPathModifier[m_path.GetWaypointCount()];
+            m_bossStatsPathModifiers = new BossStatsPathModifier[m_path.GetWaypointCount()];
 
-            for(int i = 0; i < builtBossStatsPathModifiers.Length; ++i)
+            for(int i = 0; i < m_bossStatsPathModifiers.Length; ++i)
             {
-                builtBossStatsPathModifiers[i] = new BossStatsPathModifier();
+                m_bossStatsPathModifiers[i] = new BossStatsPathModifier();
             }
 
             foreach(BossStatsPathModifier bossStatsPathModifier in bossStatsPathModifiers)
             {
-                Debug.Assert(bossStatsPathModifier.waypointIndex < builtBossStatsPathModifiers.Length, "BossPathWalker::BuiltBossStatsPathModifiers ... Index " + bossStatsPathModifier.waypointIndex + " not valid");
+                Debug.Assert(bossStatsPathModifier.waypointIndex < m_bossStatsPathModifiers.Length, "BossPathWalker::BuiltBossStatsPathModifiers ... Index " + bossStatsPathModifier.waypointIndex + " not valid");
 
-                if(builtBossStatsPathModifiers[bossStatsPathModifier.waypointIndex].waypointIndex != -1)
+                if(m_bossStatsPathModifiers[bossStatsPathModifier.waypointIndex].waypointIndex != -1)
                 {
                     Debug.LogWarning("BossPathWalker::BuiltBossStatsPathModifiers ... Index " + bossStatsPathModifier.waypointIndex + " already defined");
                 }
 
-                builtBossStatsPathModifiers[bossStatsPathModifier.waypointIndex] = bossStatsPathModifier;
+                m_bossStatsPathModifiers[bossStatsPathModifier.waypointIndex] = bossStatsPathModifier;
             }
         }
 
@@ -128,7 +129,7 @@ namespace Run4YourLife.Player
 
             m_path.GetWaypointIndex(m_position, m_positionUnits, out index, out decimalPart);
 
-            BossStatsPathModifier bossStatsPathModifier = builtBossStatsPathModifiers[index];
+            BossStatsPathModifier bossStatsPathModifier = m_bossStatsPathModifiers[index];
 
             speedMultiplier = bossStatsPathModifier.speedMultiplier;
             accelerationMultiplier = bossStatsPathModifier.accelerationMultiplier;
@@ -157,7 +158,7 @@ namespace Run4YourLife.Player
                         break;
                 }
 
-                BossStatsPathModifier nextBossStatsPathModifier = builtBossStatsPathModifiers[index + 1];
+                BossStatsPathModifier nextBossStatsPathModifier = m_bossStatsPathModifiers[index + 1];
 
                 speedMultiplier = leftWeight * speedMultiplier + rightWeight * nextBossStatsPathModifier.speedMultiplier;
                 accelerationMultiplier = leftWeight * accelerationMultiplier + rightWeight * nextBossStatsPathModifier.accelerationMultiplier;
