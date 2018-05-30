@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using Run4YourLife.Utils;
 
 public class FXReceiver : MonoBehaviour {
 
@@ -14,11 +13,8 @@ public class FXReceiver : MonoBehaviour {
 
     public void PlayFxOnAnimation(string animName,float time,bool setAsParent = false)
     {
-        AnimationPlayOnTimeManager.Instance.PlayOnAnimation(anim,animName,time,()=>CallBack(fx,setAsParent));
-    }
-
-    void CallBack(GameObject prefab,bool setAsParent)
-    {
-        FXManager.Instance.InstantiateFromReceiver(this,prefab,setAsParent);
+        StartCoroutine(AnimationCallback.OnStateAtNormalizedTime(anim,animName,time,
+            ()=>FXManager.Instance.InstantiateFromReceiver(this,fx,setAsParent))
+        );
     }
 }
