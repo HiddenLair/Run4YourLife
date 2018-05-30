@@ -24,7 +24,7 @@ namespace Run4YourLife.Player
         public override void ShootByAnim()
         {
             animator.SetTrigger("Shoot");
-            StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(animator, "Shoot", timeToShootFromAnim, () => Shoot()));
+            StartCoroutine(AnimationCallback.OnStateAtNormalizedTime(animator, "Shoot", timeToShootFromAnim, () => Shoot()));
         }
 
         void Shoot()

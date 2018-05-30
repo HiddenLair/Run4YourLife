@@ -176,7 +176,7 @@ namespace Run4YourLife.Player
         private void OnEnable()
         {
             StartCoroutine(CheckCoyoteGroundedCoroutine());
-            StartCoroutine(AnimationCallbacks.OnTransitionFromTo(m_animator, "idle", "correr", () => Dust(), true));
+            StartCoroutine(AnimationCallback.OnTransitionFromTo(m_animator, "idle", "correr", () => Dust(), true));
             m_runnerControlScheme.Active = true;
 
             ResetMembers();

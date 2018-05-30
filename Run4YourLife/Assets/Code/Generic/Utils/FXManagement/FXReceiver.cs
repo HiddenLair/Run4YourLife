@@ -13,7 +13,7 @@ public class FXReceiver : MonoBehaviour {
 
     public void PlayFxOnAnimation(string animName,float time,bool setAsParent = false)
     {
-        StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(anim,animName,time,
+        StartCoroutine(AnimationCallback.OnStateAtNormalizedTime(anim,animName,time,
             ()=>FXManager.Instance.InstantiateFromReceiver(this,fx,setAsParent))
         );
     }

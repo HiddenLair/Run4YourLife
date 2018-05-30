@@ -183,13 +183,13 @@ namespace Run4YourLife.Player
             if (currentType == Type.SKILL)
             {
                 cooldown = skill.GetComponent<SkillBase>().Cooldown;
-                StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(anim, "Cast", timeToSpawnTrapsFromAnim, () => SetElementCallback(skill)));
+                StartCoroutine(AnimationCallback.OnStateAtNormalizedTime(anim, "Cast", timeToSpawnTrapsFromAnim, () => SetElementCallback(skill)));
 
             }
             else
             {
                 cooldown = trap.GetComponent<TrapBase>().Cooldown;
-                StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(anim, "Cast", timeToSpawnTrapsFromAnim,()=> SetElementCallback(trap)));
+                StartCoroutine(AnimationCallback.OnStateAtNormalizedTime(anim, "Cast", timeToSpawnTrapsFromAnim,()=> SetElementCallback(trap)));
             }
             return cooldown;
         }
