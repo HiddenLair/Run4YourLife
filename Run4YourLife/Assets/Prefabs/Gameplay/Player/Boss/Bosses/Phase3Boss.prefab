@@ -1719,8 +1719,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1442447611252370}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.347, y: 0.816, z: -0}
-  m_LocalScale: {x: 1.1606959, y: 2.499418, z: 1.3456869}
+  m_LocalPosition: {x: -0.35, y: 0.41, z: -0}
+  m_LocalScale: {x: 1.1606959, y: 1.9637618, z: 1.3456869}
   m_Children: []
   m_Father: {fileID: 4859425965939660}
   m_RootOrder: 5
@@ -2237,8 +2237,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1536651728295860}
   m_LocalRotation: {x: 0.00000007078051, y: -0.15825461, z: 0.00000008940696, w: 0.9873984}
-  m_LocalPosition: {x: -0.855, y: -0.177, z: -0.378}
-  m_LocalScale: {x: 2.5746336, y: 1, z: 1.4197084}
+  m_LocalPosition: {x: -0.44, y: -0.18, z: -0.24}
+  m_LocalScale: {x: 1.9155829, y: 1, z: 1.4197084}
   m_Children: []
   m_Father: {fileID: 4195706866573176}
   m_RootOrder: 5
@@ -2892,7 +2892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   triggerSensivility: 0.2
-  reloadTimeS: 2.5
+  reloadTimeS: 8
   m_meleeClip: {fileID: 8300000, guid: 5a17a99919f460e4f961de3bb2f63aa7, type: 3}
 --- !u!114 &114154188997543654
 MonoBehaviour:
@@ -2921,7 +2921,7 @@ MonoBehaviour:
   shootInitZone: {fileID: 0}
   m_shotClip: {fileID: 8300000, guid: c3833cf9a9803f145bb95bbf5defe584, type: 3}
   triggerSensivility: 0.2
-  reloadTimeS: 5
+  reloadTimeS: 10
   m_lookAtOffset: 20
   dangerIndicator: {fileID: 1728473321792840}
   dangerRotator: {fileID: 4492174773157854}
@@ -3000,6 +3000,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff4e6999a7f30fe4aa9f4d8d89f65bd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_pauseOpenClip: {fileID: 8300000, guid: 5259d4cbf8ef2634c96b07ff8d5e4b9b, type: 3}
 --- !u!114 &114654113143466030
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3079,8 +3080,9 @@ MonoBehaviour:
   m_position: 0
   bossStatsPathModifiers:
   - waypointIndex: 5
-    speedMultiplier: 0.25
-    accelerationMultiplier: 1
+    speedMultiplier: 0.75
+    accelerationMultiplier: 0
+    blendingType: 0
 --- !u!137 &137017230866588148
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
