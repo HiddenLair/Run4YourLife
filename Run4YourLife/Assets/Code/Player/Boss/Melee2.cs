@@ -2,6 +2,7 @@
 
 using Run4YourLife.GameManagement;
 using Run4YourLife.GameManagement.AudioManagement;
+using Run4YourLife.Utils;
 
 namespace Run4YourLife.Player
 {
@@ -57,7 +58,7 @@ namespace Run4YourLife.Player
                 if (screenPos.x <= 0.5f * m_mainCamera.pixelWidth)
                 {
                     m_animator.SetTrigger("MeleR");
-                    AnimationPlayOnTimeManager.Instance.PlayOnAnimation(m_animator, "MeleRight", timeToMeleFromAnim, () => ArmInstantiate());
+                    StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator, "MeleRight", timeToMeleFromAnim, () => ArmInstantiate()));
                     trapPos.x = m_mainCamera.ScreenToWorldPoint(new Vector3(m_mainCamera.pixelWidth, 0, m_mainCamera.transform.position.z - trapPos.z)).x;
                     rotation = Quaternion.Euler(0, 0, 0);
                     right = true;
@@ -65,7 +66,7 @@ namespace Run4YourLife.Player
                 else
                 {
                     m_animator.SetTrigger("MeleL");
-                    AnimationPlayOnTimeManager.Instance.PlayOnAnimation(m_animator, "MeleLeft", timeToMeleFromAnim, () => ArmInstantiate());
+                    StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator, "MeleLeft", timeToMeleFromAnim, () => ArmInstantiate()));
                     trapPos.x = m_mainCamera.ScreenToWorldPoint(new Vector3(0, 0, m_mainCamera.transform.position.z - trapPos.z)).x;
                     rotation = Quaternion.Euler(0, 180, 0);
                     right = false;

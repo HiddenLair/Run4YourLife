@@ -62,8 +62,8 @@ namespace Run4YourLife.Player
             AudioManager.Instance.PlaySFX(m_shotClip);
             loadShootReceiver.PlayFx(true);
             animator.SetTrigger("Shoot");
-            AnimationPlayOnTimeManager.Instance.PlayOnNextAnimation(animator, "ChargeShoot", timeToShootFromAnim, () => Shoot());
-            AnimationPlayOnTimeManager.Instance.PlayOnNextAnimation(animator, "ChargeShoot", 0.0f, () => StopIndicator());
+            StartCoroutine(AnimationCallbacks.AfterStateAtNormalizedTime(animator, "ChargeShoot", timeToShootFromAnim, () => Shoot()));
+            StartCoroutine(AnimationCallbacks.AfterStateAtNormalizedTime(animator, "ChargeShoot", 0.0f, () => StopIndicator()));
             dangerIndicator.SetActive(true);
         }
 
