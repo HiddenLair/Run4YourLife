@@ -12,13 +12,10 @@ namespace Run4YourLife.Utils
         ///</summary>
         public static IEnumerator OnStateAtNormalizedTime(Animator anim, string state, float normalizedTime, Action action, bool infinite = false)
         {
-            WaitUntil waitUntilState = new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName(state) && Mathf.Repeat(anim.GetCurrentAnimatorStateInfo(0).normalizedTime * anim.GetCurrentAnimatorStateInfo(0).speed, 1.0f) < normalizedTime);
-            WaitUntil waitUntilNormalizedTime = new WaitUntil(() => Mathf.Repeat(anim.GetCurrentAnimatorStateInfo(0).normalizedTime, 1.0f) >= normalizedTime);
-
             while(infinite)
             {
-                yield return waitUntilState;
-                yield return waitUntilNormalizedTime;
+                yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName(state) && Mathf.Repeat(anim.GetCurrentAnimatorStateInfo(0).normalizedTime * anim.GetCurrentAnimatorStateInfo(0).speed, 1.0f) < normalizedTime);
+                yield return new WaitUntil(() => Mathf.Repeat(anim.GetCurrentAnimatorStateInfo(0).normalizedTime, 1.0f) >= normalizedTime);
                 action.Invoke();
             }
         }
@@ -28,15 +25,11 @@ namespace Run4YourLife.Utils
         ///</summary>
         public static IEnumerator AfterStateAtNormalizedTime(Animator anim, string state, float time, Action action, bool infinite = false)
         {
-            WaitUntil waitUntilState = new WaitUntil(()=>anim.GetCurrentAnimatorStateInfo(0).IsName(state));
-            WaitUntil waitUntilTransition = new WaitUntil(()=>anim.IsInTransition(0));
-            WaitUntil waitUntilNormalizedTime = new WaitUntil(() => Mathf.Repeat(anim.GetCurrentAnimatorStateInfo(0).normalizedTime * anim.GetCurrentAnimatorStateInfo(0).speed, 1.0f) >= time);
-
             while(infinite)
             {
-                yield return waitUntilState;
-                yield return waitUntilTransition;
-                yield return waitUntilNormalizedTime;
+                yield return new WaitUntil(()=>anim.GetCurrentAnimatorStateInfo(0).IsName(state));
+                yield return new WaitUntil(()=>anim.IsInTransition(0));
+                yield return new WaitUntil(() => Mathf.Repeat(anim.GetCurrentAnimatorStateInfo(0).normalizedTime * anim.GetCurrentAnimatorStateInfo(0).speed, 1.0f) >= time);
                 action.Invoke();
             }
         }
@@ -46,14 +39,12 @@ namespace Run4YourLife.Utils
         ///</summary>
         public static IEnumerator OnTransitionFromTo(Animator anim, string originState, string destinyState, Action action, bool infinite = false)
         {
-            WaitUntil waitUntilStateOrigin = new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName(originState) && !anim.IsInTransition(0));
-            WaitUntil waitUntilStateDestiny = new WaitUntil(() => anim.IsInTransition(0));
             while(infinite)
             {
                 while (true)
                 {
-                    yield return waitUntilStateOrigin;
-                    yield return waitUntilStateDestiny;
+                    yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName(originState) && !anim.IsInTransition(0));
+                    yield return new WaitUntil(() => anim.IsInTransition(0));
                     if (anim.GetNextAnimatorStateInfo(0).IsName(destinyState))
                     {
                         action.Invoke();
