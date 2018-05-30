@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Run4YourLife.Utils
 {
-    public class AnimationCallback : SingletonMonoBehaviour<AnimationCallback> {
+    public class AnimationCallbacks {
 
         ///<summary>
         /// When reaching the provided state at the provided normalized time
