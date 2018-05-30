@@ -15,12 +15,12 @@ namespace Run4YourLife.Utils
             WaitUntil waitUntilState = new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName(state) && Mathf.Repeat(anim.GetCurrentAnimatorStateInfo(0).normalizedTime * anim.GetCurrentAnimatorStateInfo(0).speed, 1.0f) < normalizedTime);
             WaitUntil waitUntilNormalizedTime = new WaitUntil(() => Mathf.Repeat(anim.GetCurrentAnimatorStateInfo(0).normalizedTime, 1.0f) >= normalizedTime);
 
-            while(infinite)
+            do
             {
                 yield return waitUntilState;
                 yield return waitUntilNormalizedTime;
                 action.Invoke();
-            }
+            } while(infinite);
         }
 
         ///<summary>
@@ -32,13 +32,13 @@ namespace Run4YourLife.Utils
             WaitUntil waitUntilTransition = new WaitUntil(()=>anim.IsInTransition(0));
             WaitUntil waitUntilNormalizedTime = new WaitUntil(() => Mathf.Repeat(anim.GetCurrentAnimatorStateInfo(0).normalizedTime * anim.GetCurrentAnimatorStateInfo(0).speed, 1.0f) >= time);
 
-            while(infinite)
+            do
             {
                 yield return waitUntilState;
                 yield return waitUntilTransition;
                 yield return waitUntilNormalizedTime;
                 action.Invoke();
-            }
+            } while(infinite);
         }
 
         ///<summary>
@@ -48,7 +48,7 @@ namespace Run4YourLife.Utils
         {
             WaitUntil waitUntilStateOrigin = new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName(originState) && !anim.IsInTransition(0));
             WaitUntil waitUntilStateDestiny = new WaitUntil(() => anim.IsInTransition(0));
-            while(infinite)
+            do
             {
                 while (true)
                 {
@@ -60,7 +60,7 @@ namespace Run4YourLife.Utils
                         break;
                     }
                 }
-            }
+            } while(infinite);
         }
     }
 }
