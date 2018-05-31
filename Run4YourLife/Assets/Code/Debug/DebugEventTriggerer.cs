@@ -7,7 +7,7 @@ public class DebugEventTriggerer : MonoBehaviour {
 
     private void Awake()
     {
-        enabled = Debug.isDebugBuild;
+        enabled = true || Debug.isDebugBuild;
     }
 
     public void Update()

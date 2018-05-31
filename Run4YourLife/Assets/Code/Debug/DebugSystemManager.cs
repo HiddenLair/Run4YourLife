@@ -35,7 +35,7 @@ namespace Run4YourLife.Debugging
 
         void Awake()
         {
-            if(Debug.isDebugBuild)
+            if(true || Debug.isDebugBuild)
             {
                 AddDebugFeatures();
             }

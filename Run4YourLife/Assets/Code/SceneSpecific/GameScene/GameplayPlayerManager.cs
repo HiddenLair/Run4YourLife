@@ -251,7 +251,7 @@ namespace Run4YourLife.GameManagement {
 
         private void Update()
         {
-            if (Debug.isDebugBuild)
+            if (true || Debug.isDebugBuild)
             {
                 if (UnityEngine.Input.GetKeyDown(KeyCode.R))
                 {

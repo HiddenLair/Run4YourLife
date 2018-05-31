@@ -98,7 +98,7 @@ namespace Run4YourLife.Debugging
 
         private void Update()
         {
-            if(Debug.isDebugBuild)
+            if(true || Debug.isDebugBuild) // Debug.isDebugBuild doesn't go here! -.-
             {
                 if(Input.GetKeyDown(KeyCode.P))
                 {
