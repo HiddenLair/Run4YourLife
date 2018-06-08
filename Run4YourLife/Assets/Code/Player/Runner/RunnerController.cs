@@ -92,7 +92,6 @@ namespace Run4YourLife.Player
             if (!ConsumeShieldIfAviable() && !m_recentlyRevived)
             {
                 deathReceiver.PlayFx();
-                gameObject.SetActive(false);
                 ExecuteEvents.Execute<IGameplayPlayerEvents>(GameplayPlayerManager.InstanceGameObject, null, (x, y) => x.OnRunnerDeath(gameObject));
             }
         }
@@ -103,7 +102,6 @@ namespace Run4YourLife.Player
 
             ConsumeShieldIfAviable();
             deathReceiver.PlayFx();
-            gameObject.SetActive(false);
             ExecuteEvents.Execute<IGameplayPlayerEvents>(GameplayPlayerManager.InstanceGameObject, null, (x, y) => x.OnRunnerDeath(gameObject));
         }
 

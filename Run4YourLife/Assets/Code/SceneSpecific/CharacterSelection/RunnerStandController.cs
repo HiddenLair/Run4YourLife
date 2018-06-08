@@ -48,7 +48,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         protected override GameObject GetStandPrefabForPlayer(PlayerHandle playerHandle)
         {
-            return m_runnerPrefabManager.Get(playerHandle.CharacterType);
+            return m_runnerPrefabManager.GetRunner(playerHandle.CharacterType);
         }
 
         protected override void UpdatePlayer()
