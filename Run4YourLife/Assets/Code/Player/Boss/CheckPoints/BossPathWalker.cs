@@ -20,6 +20,7 @@ namespace Run4YourLife.Player
             public int waypointIndex = -1;
             public float speedMultiplier = 1.0f;
             public float accelerationMultiplier = 1.0f;
+            public float blendingStartingPercentage = 0.0f;
             public BlendingType blendingType = BlendingType.Exponential;
         }
 
@@ -134,7 +135,7 @@ namespace Run4YourLife.Player
             speedMultiplier = bossStatsPathModifier.speedMultiplier;
             accelerationMultiplier = bossStatsPathModifier.accelerationMultiplier;
 
-            if(bossStatsPathModifier.blendingType != BossStatsPathModifier.BlendingType.None && index + 1 < m_path.GetWaypointCount())
+            if(bossStatsPathModifier.blendingType != BossStatsPathModifier.BlendingType.None && bossStatsPathModifier.blendingStartingPercentage <= decimalPart && index + 1 < m_path.GetWaypointCount())
             {
                 float leftWeight = 0.0f;
                 float rightWeight = 0.0f;
@@ -143,20 +144,20 @@ namespace Run4YourLife.Player
                 {
                     case BossStatsPathModifier.BlendingType.Linear:
                         leftWeight = 1.0f - decimalPart;
-                        rightWeight = decimalPart;
+                        rightWeight = decimalPart - bossStatsPathModifier.blendingStartingPercentage;
 
                         break;
                     case BossStatsPathModifier.BlendingType.Exponential:
                         leftWeight = Mathf.Pow(1.0f - decimalPart, BossStatsPathModifier.ExponentialPow);
-                        rightWeight = Mathf.Pow(decimalPart, BossStatsPathModifier.ExponentialPow);
-
-                        float totalWeight = leftWeight + rightWeight;
-
-                        leftWeight /= totalWeight;
-                        rightWeight /= totalWeight;
+                        rightWeight = Mathf.Pow(decimalPart - bossStatsPathModifier.blendingStartingPercentage, BossStatsPathModifier.ExponentialPow);
 
                         break;
                 }
+
+                float totalWeight = leftWeight + rightWeight;
+
+                leftWeight /= totalWeight;
+                rightWeight /= totalWeight;
 
                 BossStatsPathModifier nextBossStatsPathModifier = m_bossStatsPathModifiers[index + 1];
 
