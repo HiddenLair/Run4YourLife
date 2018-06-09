@@ -4578,12 +4578,13 @@ GameObject:
   - component: {fileID: 157230955}
   - component: {fileID: 157230954}
   - component: {fileID: 157230953}
+  - component: {fileID: 157230956}
   m_Layer: 13
   m_Name: Clouds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &157230952
 Transform:
@@ -4604,7 +4605,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 157230951}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 061f1f8e08f75c74f85f940c4c95fe2f, type: 3}
   m_Name: 
@@ -4652,6 +4653,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &157230956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 157230951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed05dab72bf7b684e86415b69fe8d6d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hSpeed: 0.0001
+  vSpeed: 0.1
 --- !u!1001 &160228212
 Prefab:
   m_ObjectHideFlags: 0
@@ -7145,12 +7159,13 @@ GameObject:
   - component: {fileID: 229609799}
   - component: {fileID: 229609798}
   - component: {fileID: 229609797}
+  - component: {fileID: 229609800}
   m_Layer: 13
   m_Name: Plantsmedium
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &229609796
 Transform:
@@ -7171,7 +7186,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 229609795}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 061f1f8e08f75c74f85f940c4c95fe2f, type: 3}
   m_Name: 
@@ -7219,6 +7234,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &229609800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 229609795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed05dab72bf7b684e86415b69fe8d6d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hSpeed: 0.01
+  vSpeed: 0.6
 --- !u!1001 &230187341
 Prefab:
   m_ObjectHideFlags: 0
@@ -15452,12 +15480,13 @@ GameObject:
   - component: {fileID: 494039822}
   - component: {fileID: 494039821}
   - component: {fileID: 494039820}
+  - component: {fileID: 494039823}
   m_Layer: 13
   m_Name: NearTrees
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &494039819
 Transform:
@@ -15478,7 +15507,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 494039818}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 061f1f8e08f75c74f85f940c4c95fe2f, type: 3}
   m_Name: 
@@ -15526,6 +15555,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &494039823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 494039818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed05dab72bf7b684e86415b69fe8d6d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hSpeed: 0.0075
+  vSpeed: 0.55
 --- !u!1 &494380789
 GameObject:
   m_ObjectHideFlags: 0
@@ -17973,12 +18015,13 @@ GameObject:
   - component: {fileID: 575268769}
   - component: {fileID: 575268768}
   - component: {fileID: 575268767}
+  - component: {fileID: 575268770}
   m_Layer: 13
   m_Name: Plantsback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &575268766
 Transform:
@@ -17999,7 +18042,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 575268765}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 061f1f8e08f75c74f85f940c4c95fe2f, type: 3}
   m_Name: 
@@ -18047,6 +18090,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &575268770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 575268765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed05dab72bf7b684e86415b69fe8d6d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hSpeed: 0.0025
+  vSpeed: 0.45
 --- !u!1 &578754870
 GameObject:
   m_ObjectHideFlags: 0
@@ -35554,12 +35610,13 @@ GameObject:
   - component: {fileID: 1105873607}
   - component: {fileID: 1105873606}
   - component: {fileID: 1105873605}
+  - component: {fileID: 1105873608}
   m_Layer: 13
   m_Name: MediumTrees
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1105873604
 Transform:
@@ -35580,7 +35637,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1105873603}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 061f1f8e08f75c74f85f940c4c95fe2f, type: 3}
   m_Name: 
@@ -35628,6 +35685,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &1105873608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1105873603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed05dab72bf7b684e86415b69fe8d6d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hSpeed: 0.00125
+  vSpeed: 0.4
 --- !u!1001 &1108896775
 Prefab:
   m_ObjectHideFlags: 0
@@ -56436,12 +56506,13 @@ GameObject:
   - component: {fileID: 1815195300}
   - component: {fileID: 1815195299}
   - component: {fileID: 1815195298}
+  - component: {fileID: 1815195301}
   m_Layer: 13
   m_Name: DarkTrees
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1815195297
 Transform:
@@ -56462,7 +56533,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1815195296}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 061f1f8e08f75c74f85f940c4c95fe2f, type: 3}
   m_Name: 
@@ -56510,6 +56581,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &1815195301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1815195296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed05dab72bf7b684e86415b69fe8d6d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hSpeed: 0.000625
+  vSpeed: 0.35
 --- !u!1001 &1819687197
 Prefab:
   m_ObjectHideFlags: 0
@@ -56731,12 +56815,13 @@ GameObject:
   - component: {fileID: 1827773174}
   - component: {fileID: 1827773173}
   - component: {fileID: 1827773172}
+  - component: {fileID: 1827773175}
   m_Layer: 13
   m_Name: Backtrees
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1827773171
 Transform:
@@ -56757,7 +56842,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1827773170}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 061f1f8e08f75c74f85f940c4c95fe2f, type: 3}
   m_Name: 
@@ -56805,6 +56890,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &1827773175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1827773170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed05dab72bf7b684e86415b69fe8d6d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hSpeed: 0.005
+  vSpeed: 0.5
 --- !u!1 &1829568606
 GameObject:
   m_ObjectHideFlags: 0
@@ -64899,7 +64997,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 0
 --- !u!4 &2013472462
 Transform:
