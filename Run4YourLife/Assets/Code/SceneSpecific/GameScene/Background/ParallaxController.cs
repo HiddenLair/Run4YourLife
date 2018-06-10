@@ -18,10 +18,7 @@ public class ParallaxController : MonoBehaviour
     [SerializeField]
     private float vSpeed;
 
-    private new Renderer renderer;
-
     private Material material;
-    private Material sharedMaterial;
 
     private float initialX;
     private float initialY;
@@ -31,10 +28,7 @@ public class ParallaxController : MonoBehaviour
 
     void Awake()
     {
-        renderer = GetComponent<Renderer>();
-
-        material = renderer.material;
-        sharedMaterial = renderer.sharedMaterial;
+        material = GetComponent<Renderer>().material;
 
         initialX = transform.position.x;
         initialY = transform.position.y;
@@ -46,11 +40,6 @@ public class ParallaxController : MonoBehaviour
 
         UpdateHMovement();
         UpdateVMovement();
-    }
-
-    void OnDestroy()
-    {
-        renderer.sharedMaterial = sharedMaterial;
     }
 
     private void UpdateStoredCamera()
