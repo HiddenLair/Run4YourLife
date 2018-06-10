@@ -15,13 +15,6 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(CrossHairControl))]
     public class TrapSystem : MonoBehaviour
     {
-        #region Enums
-
-        public enum Phase { Phase1, Phase2, Phase3 };
-        private enum Type { TRAP, SKILL };
-
-        #endregion
-
         #region Inspector
 
         [SerializeField]
@@ -36,30 +29,18 @@ namespace Run4YourLife.Player
         private float screenBottomLimitPercentaje = 0.2f;
 
         [SerializeField]
-        private Phase phase;
-
-        [SerializeField]
         private GameObject skillA;
-        [SerializeField]
-        private GameObject trapA;
         [SerializeField]
         private GameObject skillX;
         [SerializeField]
-        private GameObject trapX;
-        [SerializeField]
         private GameObject skillY;
         [SerializeField]
-        private GameObject trapY;
-        [SerializeField]
         private GameObject skillB;
-        [SerializeField]
-        private GameObject trapB;
 
         #endregion
 
         #region Variables
 
-        Type currentType = Type.TRAP;
         Ready ready;
         BossControlScheme bossControlScheme;
         private Animator anim;
@@ -81,7 +62,6 @@ namespace Run4YourLife.Player
 
         private void Awake()
         {
-            currentType = (Type)((int)phase % 2);
             ready = GetComponent<Ready>();
             anim = GetComponent<Animator>();
             bossControlScheme = GetComponent<BossControlScheme>();
@@ -93,24 +73,12 @@ namespace Run4YourLife.Player
         {
             Move();
 
-            if (ready.Get() && crossHairControl.IsOperative && !trapCooldownBool)
+            if (ready.Get() && !trapCooldownBool)
             {
                 trapCooldownBool = true;
-                CheckToSetElement();
-            }
-
-            if (phase == Phase.Phase3)
-            {
-                if (bossControlScheme.NextSet.Started())
-                {
-                    currentType = Type.TRAP;
-                }
-
-                if (bossControlScheme.PreviousSet.Started())
-                {
-                    currentType = Type.SKILL;
-                }
-            }
+                SelectElementToSet();
+                trapCooldownBool = false;
+            }       
         }
 
         void Move()
@@ -137,66 +105,75 @@ namespace Run4YourLife.Player
             crossHairControl.ChangePosition(clampedPosition);
         }
 
-        void CheckToSetElement()
+        void SelectElementToSet()
         {
             if (bossControlScheme.Skill1.Started() && (aButtonCooldown <= Time.time))
             {
-                float buttonCooldown = SetElement(trapA, skillA);
-                aButtonCooldown = Time.time + buttonCooldown;
-
-                ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.TRAP_A, buttonCooldown));
+                aButtonCooldown = Time.time + CheckToSetElement(skillA, ActionType.TRAP_A);             
             }
             else if (bossControlScheme.Skill2.Started() && (xButtonCooldown <= Time.time))
             {
-                float buttonCooldown = SetElement(trapX, skillX);
-                xButtonCooldown = Time.time + buttonCooldown;
-
-                ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.TRAP_X, buttonCooldown));
+                xButtonCooldown = Time.time + CheckToSetElement(skillX, ActionType.TRAP_X);
             }
             else if (bossControlScheme.Skill3.Started() && (yButtonCooldown <= Time.time))
             {
-                float buttonCooldown = SetElement(trapY, skillY);
-                yButtonCooldown = Time.time + buttonCooldown;
-
-                ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.TRAP_Y, buttonCooldown));
+                yButtonCooldown = Time.time + CheckToSetElement(skillY, ActionType.TRAP_Y);
             }
             else if (bossControlScheme.Skill4.Started() && (bButtonCooldown <= Time.time))
             {
-                float buttonCooldown = SetElement(trapB, skillB);
-                bButtonCooldown = Time.time + buttonCooldown;
-
-                ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.TRAP_B, buttonCooldown));
-            }
-            else
-            {
-                trapCooldownBool = false;
+                bButtonCooldown = Time.time + CheckToSetElement(skillB, ActionType.TRAP_B);
             }
         }
 
-        float SetElement(GameObject trap, GameObject skill)
+        float CheckToSetElement(GameObject skill,ActionType type)
+        {
+            GameObject instance;
+
+            if (!SkillCheckWorldAvailability(skillA, out instance))
+            {
+                CanNotPlace();
+                return 0.0f;
+            }
+            float buttonCooldown = SetElement(instance);
+
+            ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(type, buttonCooldown));
+            return buttonCooldown;
+        }
+
+        float SetElement(GameObject skill)
         {
             AudioManager.Instance.PlaySFX(m_castClip);
             anim.SetTrigger("Casting");
-            trapCooldownBool = false;
-
+            
             float cooldown = 0.0f ;
-            if (currentType == Type.SKILL)
-            {
-                cooldown = skill.GetComponent<SkillBase>().Cooldown;
-                StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(anim, "Cast", timeToSpawnTrapsFromAnim, () => SetElementCallback(skill)));
 
-            }
-            else
-            {
-                cooldown = trap.GetComponent<TrapBase>().Cooldown;
-                StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(anim, "Cast", timeToSpawnTrapsFromAnim,()=> SetElementCallback(trap)));
-            }
+            cooldown = skill.GetComponent<SkillBase>().Cooldown;
+            StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(anim, "Cast", timeToSpawnTrapsFromAnim, () => SetElementCallback(skill)));
+
             return cooldown;
         }
 
         void SetElementCallback(GameObject gameObject)
         {
-            BossPoolManager.Instance.InstantiateBossElement(gameObject, crossHairControl.Position);
+            gameObject.GetComponent<SkillBase>().StartSkill();
+            crossHairControl.TotalUnlock();
+        }
+
+        bool SkillCheckWorldAvailability(GameObject skill,out GameObject instance)
+        {
+           
+            instance = BossPoolManager.Instance.InstantiateBossElement(skill, crossHairControl.Position);
+            bool ret = instance.GetComponent<SkillBase>().Check();
+            if (ret)
+            {
+                crossHairControl.TotalLock();
+            }
+            return ret;
+        }
+
+        void CanNotPlace()
+        {
+            //Do something
         }
     }
 }

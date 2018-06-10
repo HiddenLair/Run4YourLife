@@ -16,11 +16,12 @@ public class ManualPrefabInstantiator : MonoBehaviour
         m_gameObjectPool = GetComponent<GameObjectPool>();
     }
 
-    public void ManualInstantiate(GameObject prefab, Vector3 instancePosition)
+    public GameObject ManualInstantiate(GameObject prefab, Vector3 instancePosition)
     {
         GameObject instance = m_gameObjectPool.Get(prefab);
         instance.transform.position = instancePosition;
         instance.transform.rotation = Quaternion.identity;
         instance.SetActive(true);
+        return instance;
     }
 }

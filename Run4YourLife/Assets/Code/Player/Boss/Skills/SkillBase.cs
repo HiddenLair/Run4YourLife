@@ -17,5 +17,11 @@ namespace Run4YourLife.Player
         private float m_cooldown;
 
         public float Cooldown { get { return m_cooldown; } }
+
+        virtual public bool Check()
+        {
+            return true;
+        }
+        virtual public void StartSkill() { }
     }
 }

@@ -35,9 +35,9 @@ namespace Run4YourLife.GameManagement
             }
         }
 
-        public void InstantiateBossElement(GameObject g, Vector3 instancePosition)
+        public GameObject InstantiateBossElement(GameObject g, Vector3 instancePosition)
         {
-            m_manualPrefabInstantiator.ManualInstantiate(g, instancePosition);
+           return m_manualPrefabInstantiator.ManualInstantiate(g, instancePosition);
         }
     }
 }

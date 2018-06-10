@@ -10,7 +10,7 @@ namespace Run4YourLife.Player
     {
         void ShowCrossHair();
         void HideCrossHair();
-        void AttachCrossHair(CrossHair crossHair);
+        void AttachCrossHair(Transform crossHair);
         void DeatachCrossHair();
     }
 
@@ -31,8 +31,6 @@ namespace Run4YourLife.Player
         private Camera m_mainCamera;
         private Image m_crossHairImage;
 
-
-        private CrossHair m_attachedCrossHair;
         private Transform m_attachedCrossHairTransform;
 
         private void Awake()
@@ -52,10 +50,9 @@ namespace Run4YourLife.Player
 
         private void Update()
         {
-            if(m_attachedCrossHair != null)
+            if(m_attachedCrossHairTransform != null)
             {
                 UpdatePosition();
-                UpdateActiveStatus();
             }
         }
 
@@ -75,18 +72,6 @@ namespace Run4YourLife.Player
             m_crossHairUiTransform.anchoredPosition = crossHairScreenPosition;
         }
 
-        void UpdateActiveStatus()
-        {
-            if (m_attachedCrossHair.IsOperative)
-            {
-                m_crossHairImage.color = enabledColor;
-            }
-            else
-            {
-                m_crossHairImage.color = disabledColor;
-            }
-        }
-
         public void ShowCrossHair()
         {
             m_crossHairUi.SetActive(true);
@@ -97,15 +82,13 @@ namespace Run4YourLife.Player
             m_crossHairUi.SetActive(false);
         }
 
-        public void AttachCrossHair(CrossHair crossHair)
+        public void AttachCrossHair(Transform crossHair)
         {
-            m_attachedCrossHair = crossHair;
-            m_attachedCrossHairTransform = crossHair.transform;
+            m_attachedCrossHairTransform = crossHair;
         }
 
         public void DeatachCrossHair()
         {
-            m_attachedCrossHair = null;
             m_attachedCrossHairTransform = null;
         }
     }

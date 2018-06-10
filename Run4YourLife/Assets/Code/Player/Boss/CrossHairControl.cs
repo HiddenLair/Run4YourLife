@@ -14,17 +14,15 @@ namespace Run4YourLife.Player
         [SerializeField]
         private float desiredZ = 0.0f;
 
-        private CrossHair m_crosshair;
         private Transform m_crossHairTransform;
         private GameObject m_ui;
 
         private bool m_isLocked;
+        private bool m_totalLocked;
+        private Vector3 lastPos;
 
         private void Awake()
         {
-            m_crosshair =  m_crossHairGameObject.GetComponent<CrossHair>();
-            Debug.Assert(m_crosshair != null);
-
             m_crossHairTransform = m_crossHairGameObject.transform;
             
             m_ui = GameObject.FindGameObjectWithTag(Tags.UI);
@@ -33,20 +31,12 @@ namespace Run4YourLife.Player
 
         private void OnEnable()
         {
-            ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (a,b) => a.AttachCrossHair(m_crosshair));
+            ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (a,b) => a.AttachCrossHair(m_crossHairTransform));
         }
 
         private void OnDisable()
         {
             ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (a,b) => a.DeatachCrossHair());
-        }
-
-        public bool IsOperative
-        {
-            get
-            {
-                return m_crosshair.IsOperative;
-            }
         }
 
         public Vector3 Position
@@ -73,6 +63,16 @@ namespace Run4YourLife.Player
                 m_crossHairGameObject.transform.position = newPosition;
                 OverrideZ();
             }
+
+        }
+
+        void Update()
+        {
+            if (m_totalLocked)
+            {
+                m_crossHairGameObject.transform.position = lastPos;
+                OverrideZ();
+            } 
         }
 
         public void Lock()
@@ -83,6 +83,19 @@ namespace Run4YourLife.Player
         public void Unlock()
         {
             m_isLocked = false;
+        }
+
+        public void TotalLock()
+        {
+            Lock();
+            m_totalLocked = true;
+            lastPos = m_crossHairGameObject.transform.position;
+        }
+
+        public void TotalUnlock()
+        {
+            Unlock();
+            m_totalLocked = false;
         }
 
         private void OverrideZ()
