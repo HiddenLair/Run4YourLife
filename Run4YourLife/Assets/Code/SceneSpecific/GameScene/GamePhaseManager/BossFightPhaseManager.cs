@@ -12,6 +12,7 @@ using Cinemachine;
 
 namespace Run4YourLife.GameManagement
 {
+    [RequireComponent(typeof(BossFightGemManager))]
     public class BossFightPhaseManager : GamePhaseManager
     {
         public override GamePhase GamePhase { get { return GamePhase.BossFight; } }
@@ -23,9 +24,6 @@ namespace Run4YourLife.GameManagement
 
         [SerializeField]
         private Transform m_bossFightStartingCameraPositionDebug;
-
-        [SerializeField]
-        private float m_timeOfPhase;
 
         [SerializeField]
         private Tiling m_backgroundTiling;
@@ -41,7 +39,6 @@ namespace Run4YourLife.GameManagement
 
         private GameObject m_ui;
 
-
         #endregion
 
         #region Initialization
@@ -50,9 +47,6 @@ namespace Run4YourLife.GameManagement
         {
             m_playerSpawner = GetComponent<PlayerSpawner>();
             Debug.Assert(m_playerSpawner != null);
-
-            m_ui = GameObject.FindGameObjectWithTag(Tags.UI);
-            Debug.Assert(m_ui != null);
         }
 
         #endregion
@@ -75,11 +69,10 @@ namespace Run4YourLife.GameManagement
             CameraManager.Instance.TransitionToCamera(m_virtualCamera);
 
             m_backgroundTiling.SetActive(false);
-            ExecuteEvents.Execute<IUIEvents>(m_ui, null, (x, y) => x.OnCountdownSetted(m_timeOfPhase));
+
             ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (a,b) => a.ShowCrossHair());
 
             StartCoroutine(YieldHelper.SkipFrame(()=>MoveRunners()));           
-            StartCoroutine(YieldHelper.WaitForSeconds(StartNextPhase, m_timeOfPhase));
         }
 
         private void MoveRunners()
@@ -93,7 +86,7 @@ namespace Run4YourLife.GameManagement
             }
         }
 
-        private void StartNextPhase()
+        public void StartNextPhase()
         {
             GameManager.Instance.EndExecutingPhaseAndStartPhase(GamePhase.BossFightRockTransition);
         }

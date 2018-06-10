@@ -14,7 +14,6 @@ namespace Run4YourLife.Interactables
         [SerializeField]
         private UnityEvent m_onBrokenByDash;
 
-
         private void OnTriggerEnter(Collider other)
         {
             if(other.CompareTag(Tags.Runner))
@@ -39,7 +38,11 @@ namespace Run4YourLife.Interactables
 
         private void Break()
         {
-            receiver.PlayFx();
+            if (receiver != null)
+            {
+                receiver.PlayFx();
+            }
+
             gameObject.SetActive(false);
             m_onBrokenByDash.Invoke();
         }
