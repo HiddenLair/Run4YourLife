@@ -4,6 +4,16 @@ using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.Debugging
 {
+    public static class DebugSystemManagerHelper
+    {
+        private static bool FORCE_DEBUGGING_TOOLS = true; // This should be false on release
+
+        public static bool DebuggingToolsEnabled()
+        {
+            return FORCE_DEBUGGING_TOOLS || Debug.isDebugBuild;
+        }
+    }
+
     [RequireComponent(typeof(FPSCounter))]
     [RequireComponent(typeof(VertexAndTriangleCounter))]
     [RequireComponent(typeof(WalkerController))]
@@ -35,7 +45,7 @@ namespace Run4YourLife.Debugging
 
         void Awake()
         {
-            if(true || Debug.isDebugBuild)
+            if(DebugSystemManagerHelper.DebuggingToolsEnabled())
             {
                 AddDebugFeatures();
             }

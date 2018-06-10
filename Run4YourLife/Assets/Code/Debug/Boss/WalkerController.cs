@@ -98,17 +98,14 @@ namespace Run4YourLife.Debugging
 
         private void Update()
         {
-            if(true || Debug.isDebugBuild) // Debug.isDebugBuild doesn't go here! -.-
+            if(Input.GetKeyDown(KeyCode.P))
             {
-                if(Input.GetKeyDown(KeyCode.P))
-                {
-                    StartCoroutine(BossManual());
-                }
+                StartCoroutine(BossManual());
+            }
 
-                if(Input.GetKeyDown(KeyCode.O))
-                {
-                    PauseResumeWalker();
-                }
+            if(Input.GetKeyDown(KeyCode.O))
+            {
+                PauseResumeWalker();
             }
         }
 

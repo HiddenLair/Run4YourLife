@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using Run4YourLife.Player;
 using Run4YourLife.InputManagement;
+using Run4YourLife.Debugging;
 
 namespace Run4YourLife.GameManagement {
     public interface IGameplayPlayerEvents : IEventSystemHandler
@@ -280,12 +281,11 @@ namespace Run4YourLife.GameManagement {
             }
         }
 
-
         private void Update()
         {
-            if (true || Debug.isDebugBuild)
+            if(DebugSystemManagerHelper.DebuggingToolsEnabled())
             {
-                if (UnityEngine.Input.GetKeyDown(KeyCode.R))
+                if(Input.GetKeyDown(KeyCode.R))
                 {
                     ReviveAllRunners();
                 }

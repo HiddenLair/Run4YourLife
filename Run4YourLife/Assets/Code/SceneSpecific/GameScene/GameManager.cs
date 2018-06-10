@@ -7,6 +7,7 @@ using Run4YourLife.SceneManagement;
 using Run4YourLife.Player;
 using Run4YourLife.Utils;
 using System;
+using Run4YourLife.Debugging;
 
 namespace Run4YourLife.GameManagement
 {
@@ -117,25 +118,25 @@ namespace Run4YourLife.GameManagement
 
         private void Update()
         {
-            if(true || Debug.isDebugBuild)
+            if(DebugSystemManagerHelper.DebuggingToolsEnabled())
             {
-                if (UnityEngine.Input.GetKeyDown(KeyCode.Keypad1))
+                if(Input.GetKeyDown(KeyCode.Keypad1))
                 {
                     DebugEndExecutingPhaseAndDebugStartPhase(GamePhase.EasyMoveHorizontal);
                 }
-                else if (UnityEngine.Input.GetKeyDown(KeyCode.Keypad2))
+                else if(Input.GetKeyDown(KeyCode.Keypad2))
                 {
                     DebugEndExecutingPhaseAndDebugStartPhase(GamePhase.BossFight);
                 }
-                else if (UnityEngine.Input.GetKeyDown(KeyCode.Keypad3))
+                else if(Input.GetKeyDown(KeyCode.Keypad3))
                 {
                     DebugEndExecutingPhaseAndDebugStartPhase(GamePhase.HardMoveHorizontal);
                 }
-                else if (UnityEngine.Input.GetKeyDown(KeyCode.Keypad4))
+                else if(Input.GetKeyDown(KeyCode.Keypad4))
                 {
                     EndExecutingPhaseAndStartPhase(GamePhase.TransitionToBossFight);
                 }
-                else if (UnityEngine.Input.GetKeyDown(KeyCode.Keypad5))
+                else if(Input.GetKeyDown(KeyCode.Keypad5))
                 {
                     EndExecutingPhaseAndStartPhase(GamePhase.TransitionToHardMoveHorizontal);
                 }
