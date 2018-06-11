@@ -877,7 +877,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4586380683070898}
   - component: {fileID: 135977691215322622}
-  - component: {fileID: 114974574908839584}
+  - component: {fileID: 114690376376908644}
   m_Layer: 9
   m_Name: BounceableArea
   m_TagString: Bounceable
@@ -1121,6 +1121,7 @@ GameObject:
   - component: {fileID: 114531655735769042}
   - component: {fileID: 114799538616923324}
   - component: {fileID: 114762261313781742}
+  - component: {fileID: 114168027487172500}
   m_Layer: 8
   m_Name: GameplayRunnerGreen
   m_TagString: Player
@@ -1449,7 +1450,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1837875320852082}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3794773, y: 0.39931834, z: -0.5}
+  m_LocalPosition: {x: 10.799176, y: 0, z: 0.018448353}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4593702343663260}
@@ -2680,6 +2681,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90e65ae8eb3cb8041abc40ccbc6439f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114168027487172500
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1837875320852082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3a3b6326faf46d41af8f1b5d68fd7f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_bounceJumpButtonSphereCastRatius: 0.2
 --- !u!114 &114280366997819650
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2810,6 +2823,17 @@ MonoBehaviour:
   - {fileID: 137426927464821120}
   - {fileID: 137624744854759776}
   - {fileID: 137615049434199850}
+--- !u!114 &114690376376908644
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1728149327170376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 041700effd1ef6f4bb0601cb732914b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114744593437363260
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3037,19 +3061,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cec698f25fa65f47a9e9032dfde8efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114974574908839584
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1728149327170376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 796661589eb16c34cafc228a3b528274, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_allwaysBounce: 0
-  m_shouldBeJumping: 1
 --- !u!135 &135977691215322622
 SphereCollider:
   m_ObjectHideFlags: 1
