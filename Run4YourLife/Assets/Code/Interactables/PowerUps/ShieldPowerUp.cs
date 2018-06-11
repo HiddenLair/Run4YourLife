@@ -9,7 +9,7 @@ namespace Run4YourLife.Interactables
         [SerializeField]
         private int m_duration;
 
-        protected override PowerUpType Type { get { return PowerUpType.Single; } }
+        protected override PowerUpType Type { get { return PowerUpType.Shared; } }
 
         public override void Apply(GameObject runner)
         {
