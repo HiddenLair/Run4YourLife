@@ -162,7 +162,7 @@ namespace Run4YourLife.Player
         bool SkillCheckWorldAvailability(GameObject skill,out GameObject instance)
         {
            
-            instance = BossPoolManager.Instance.InstantiateBossElement(skill, crossHairControl.Position);
+            instance = BossPoolManager.Instance.InstantiateBossElement(skill, crossHairControl.Position,false);
             bool ret = instance.GetComponent<SkillBase>().Check();
             if (ret)
             {

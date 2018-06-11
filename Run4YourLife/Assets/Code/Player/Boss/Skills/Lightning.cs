@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEditor;
+using System;
 using Run4YourLife.GameManagement;
 using Run4YourLife.GameManagement.AudioManagement;
 
@@ -14,11 +15,14 @@ namespace Run4YourLife.Player {
         SerializedProperty delayHit;
         SerializedProperty flashEffect;
         SerializedProperty lighningEffect;
+        SerializedProperty delayBetweenLightnings;
+        SerializedProperty delayBetweenLightningsProgresion;
         SerializedProperty trapGameObject;
-        SerializedProperty newLightningsDelay;
-        SerializedProperty newLightningsDelayProgresion;
+        SerializedProperty newLightningsDelayHit;
+        SerializedProperty newLightningsDelayHitProgresion;
         SerializedProperty newLightningsDistance;
         SerializedProperty newLightningsDistanceProgresion;
+        SerializedProperty lightningGameObject;
 
         private void OnEnable()
         {
@@ -43,25 +47,31 @@ namespace Run4YourLife.Player {
             }
             if (actualPhase == SkillBase.Phase.PHASE3)
             {
-                EditorGUILayout.PropertyField(newLightningsDelay);
-                EditorGUILayout.PropertyField(newLightningsDelayProgresion);
+                EditorGUILayout.PropertyField(delayBetweenLightnings);
+                EditorGUILayout.PropertyField(delayBetweenLightningsProgresion);
+                EditorGUILayout.PropertyField(newLightningsDelayHit);
+                EditorGUILayout.PropertyField(newLightningsDelayHitProgresion);
                 EditorGUILayout.PropertyField(newLightningsDistance);
                 EditorGUILayout.PropertyField(newLightningsDistanceProgresion);
+                EditorGUILayout.PropertyField(lightningGameObject);
             }
             serializedObject.ApplyModifiedProperties();
         }
 
         new public void Init()
         {
-             width = serializedObject.FindProperty("width");
-             delayHit = serializedObject.FindProperty("delayHit");
-             flashEffect = serializedObject.FindProperty("flashEffect");
-             lighningEffect = serializedObject.FindProperty("lighningEffect");
-             trapGameObject = serializedObject.FindProperty("trapGameObject");
-             newLightningsDelay = serializedObject.FindProperty("newLightningsDelay");
-             newLightningsDelayProgresion = serializedObject.FindProperty("newLightningsDelayProgresion");
-             newLightningsDistance = serializedObject.FindProperty("newLightningsDistance");
-             newLightningsDistanceProgresion = serializedObject.FindProperty("newLightningsDistanceProgresion");
+            width = serializedObject.FindProperty("width");
+            delayHit = serializedObject.FindProperty("delayHit");
+            flashEffect = serializedObject.FindProperty("flashEffect");
+            lighningEffect = serializedObject.FindProperty("lighningEffect");
+            trapGameObject = serializedObject.FindProperty("trapGameObject");
+            delayBetweenLightnings = serializedObject.FindProperty("delayBetweenLightnings"); ;
+            delayBetweenLightningsProgresion = serializedObject.FindProperty("delayBetweenLightningsProgresion");
+            newLightningsDelayHit = serializedObject.FindProperty("newLightningsDelayHit");
+            newLightningsDelayHitProgresion = serializedObject.FindProperty("newLightningsDelayHitProgresion");
+            newLightningsDistance = serializedObject.FindProperty("newLightningsDistance");
+            newLightningsDistanceProgresion = serializedObject.FindProperty("newLightningsDistanceProgresion");
+            lightningGameObject = serializedObject.FindProperty("lightningGameObject");
         }
     }
 
@@ -84,19 +94,26 @@ namespace Run4YourLife.Player {
         [SerializeField]
         private GameObject trapGameObject;
         [SerializeField]
-        private float newLightningsDelay;
+        private float delayBetweenLightnings;
         [SerializeField]
-        private float newLightningsDelayProgresion;
+        private float delayBetweenLightningsProgresion;
+        [SerializeField]
+        private float newLightningsDelayHit;
+        [SerializeField]
+        private float newLightningsDelayHitProgresion;
         [SerializeField]
         private float newLightningsDistance;
         [SerializeField]
         private float newLightningsDistanceProgresion;
+        [SerializeField]
+        private GameObject lightningGameObject;
 
         #endregion
 
         #region Private Variables
 
         private WaitForSeconds lightningDelay;
+        private bool oneLightningSideFinished = false;
 
         #endregion
 
@@ -111,6 +128,11 @@ namespace Run4YourLife.Player {
             position.y = CameraManager.Instance.MainCamera.ScreenToWorldPoint(new Vector3(0, 0, Mathf.Abs(CameraManager.Instance.MainCamera.transform.position.z - transform.position.z))).y;
             transform.position = position;
             StartCoroutine(Flash());
+            if (phase == SkillBase.Phase.PHASE3)
+            {
+                StartCoroutine(StartNewLeftLightning(1));
+                StartCoroutine(StartNewRightLightning(1));
+            }
         }
 
         IEnumerator Flash()
@@ -138,13 +160,17 @@ namespace Run4YourLife.Player {
 
 
             RaycastHit[] hits;
-            hits = Physics.SphereCastAll(lighningEffect.transform.position, width/2, Vector3.down, pos.y - transform.position.y, Layers.Runner);
+            hits = Physics.SphereCastAll(lighningEffect.transform.position, width/2, Vector3.down, pos.y - transform.position.y);
 
             foreach (RaycastHit hit in hits)
             {
                 if (hit.collider.tag == Tags.Runner)
                 {
                     ExecuteEvents.Execute<ICharacterEvents>(hit.collider.gameObject, null, (x, y) => x.Kill());
+                }
+                else if(phase != SkillBase.Phase.PHASE1)
+                {
+                    BossPoolManager.Instance.InstantiateBossElement(trapGameObject, hit.point);
                 }
             }
             lighningEffect.SetActive(true);
@@ -168,7 +194,10 @@ namespace Run4YourLife.Player {
                 yield return null;
             }
             particleSystem.SetActive(false);
-            gameObject.SetActive(false);
+            if (phase != SkillBase.Phase.PHASE3)
+            {
+                gameObject.SetActive(false);
+            }
         }
 
         public void SetDelayHit(float value)
@@ -179,6 +208,64 @@ namespace Run4YourLife.Player {
         public float GetDelayHit()
         {
             return delayHit;
+        }
+
+        IEnumerator StartNewLeftLightning(int iterationNumber)
+        {
+            yield return new WaitForSeconds(delayBetweenLightnings * Mathf.Pow(delayBetweenLightningsProgresion, iterationNumber));
+
+            Vector3 newPosL = transform.position;
+            newPosL.x -= newLightningsDistance * Mathf.Pow( newLightningsDistanceProgresion , iterationNumber);
+            GameObject instance = BossPoolManager.Instance.InstantiateBossElement(lightningGameObject, newPosL);
+            instance.GetComponent<Lightning>().SetDelayHit(newLightningsDelayHit * Mathf.Pow(newLightningsDelayHitProgresion,iterationNumber));
+
+            Camera mainCamera = Camera.main;
+            float leftScreen = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, Math.Abs(mainCamera.transform.position.z - transform.position.z))).x;
+
+            Debug.Log("Pos: "+newPosL.x +" Screen: "+leftScreen);
+            if (newPosL.x > leftScreen)
+            {
+                StartCoroutine(StartNewLeftLightning(++iterationNumber));
+            }
+            else
+            {
+                if (oneLightningSideFinished)
+                {
+                    gameObject.SetActive(false);
+                }
+                else
+                {
+                    oneLightningSideFinished = true;
+                }
+            }
+        }
+
+        IEnumerator StartNewRightLightning(int iterationNumber)
+        {
+            yield return new WaitForSeconds(delayBetweenLightnings * Mathf.Pow(delayBetweenLightningsProgresion,iterationNumber));
+
+            Vector3 newPosR = transform.position;
+            newPosR.x += newLightningsDistance * Mathf.Pow(newLightningsDistanceProgresion, iterationNumber);
+            GameObject instance = BossPoolManager.Instance.InstantiateBossElement(lightningGameObject, newPosR);
+            instance.GetComponent<Lightning>().SetDelayHit(newLightningsDelayHit * Mathf.Pow(newLightningsDelayHitProgresion, iterationNumber));
+
+            Camera mainCamera = Camera.main;
+            float rightScreen = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, Math.Abs(mainCamera.transform.position.z - transform.position.z))).x;
+
+            if (newPosR.x < rightScreen) {
+                StartCoroutine(StartNewRightLightning(++iterationNumber));
+            }
+            else
+            {
+                if (oneLightningSideFinished)
+                {
+                    gameObject.SetActive(false);
+                }
+                else
+                {
+                    oneLightningSideFinished = true;
+                }
+            }
         }
     }
 }

@@ -42,7 +42,7 @@ namespace Run4YourLife.Player
         public enum Phase {PHASE1,PHASE2,PHASE3 };
 
         [SerializeField]
-        private Phase phase;
+        protected Phase phase;
 
         [SerializeField]
         protected AudioClip m_skillTriggerClip;
