@@ -16,7 +16,7 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(RunnerAttributeController))]
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(InputController))]
-    [RequireComponent(typeof(BumpController))]
+    [RequireComponent(typeof(RunnerBounceController))]
     public class RunnerCharacterController : MonoBehaviour
     {
         #region InspectorVariables
@@ -94,9 +94,9 @@ namespace Run4YourLife.Player
         private CharacterController m_characterController;
         private RunnerAttributeController m_runnerAttributeController;
         private RunnerControlScheme m_runnerControlScheme;
+        private RunnerBounceController m_runnerBounceController;
         private Animator m_animator;
         private InputController m_inputController;
-        private BumpController m_bumpController;
 
         private Transform m_graphics;
         private Transform m_dashTrail;
@@ -153,9 +153,9 @@ namespace Run4YourLife.Player
             m_runnerControlScheme = GetComponent<RunnerControlScheme>();
             m_characterController = GetComponent<CharacterController>();
             m_runnerAttributeController = GetComponent<RunnerAttributeController>();
+            m_runnerBounceController = GetComponent<RunnerBounceController>();
             m_animator = GetComponent<Animator>();
             m_inputController = GetComponent<InputController>();
-            m_bumpController = GetComponent<BumpController>();
 
             m_graphics = transform.Find("Graphics");
             Debug.Assert(m_graphics != null);
@@ -439,7 +439,10 @@ namespace Run4YourLife.Player
 
             if(!m_isBouncing && m_jumpedWhileFalling)
             {
-                StartCoroutine(SecondJumpCoroutine());
+                if(!m_runnerBounceController.ExecuteBounceIfPossible())
+                {
+                    StartCoroutine(SecondJumpCoroutine());
+                }
             }
         }
 
@@ -520,11 +523,6 @@ namespace Run4YourLife.Player
 
         #region Bounce
 
-        public void BouncedOn()
-        {
-            m_bumpController.Bump();
-        }
-
         public void Bounce(Vector3 bounceForce)
         {
             StartCoroutine(BounceCoroutine(bounceForce));
@@ -552,7 +550,10 @@ namespace Run4YourLife.Player
 
             if(m_runnerControlScheme.Jump.Started())
             {
-                StartCoroutine(SecondJumpCoroutine());
+                if(!m_runnerBounceController.ExecuteBounceIfPossible())
+                {
+                    StartCoroutine(SecondJumpCoroutine());
+                }
             }
             else
             {

@@ -37,7 +37,7 @@ namespace Run4YourLife.GameManagement
 
         private PlayerSpawner m_playerSpawner;
 
-        private GameObject m_ui;
+        private GameObject m_ui; // TODO this value is allways null
 
         #endregion
 

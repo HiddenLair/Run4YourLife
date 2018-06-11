@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Run4YourLife.Player
 {
-    public class BounceGhost : BounceableEntityBase
+    /*public class BounceableGhost : BounceableEntityBase
     {
         [SerializeField]
         private float m_bounceForce;
@@ -19,10 +19,20 @@ namespace Run4YourLife.Player
             }
         }
 
+        public override Vector3 GetStartingBouncePosition(RunnerCharacterController runnerCharacterController)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override bool ShouldBounce(RunnerCharacterController runnerCharacterController)
+        {
+            throw new System.NotImplementedException();
+        }
+
         protected override void BouncedOn()
         {
             //gameObject.SetActive(false);
             ExecuteEvents.Execute<IGameplayPlayerEvents>(GameplayPlayerManager.InstanceGameObject, null, (x, y) => x.OnRunnerReviveRequest(transform.position));
         }
-    }
+    }*/
 }

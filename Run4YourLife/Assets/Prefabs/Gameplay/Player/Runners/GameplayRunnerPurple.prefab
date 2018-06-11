@@ -828,7 +828,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4586380683070898}
   - component: {fileID: 135977691215322622}
-  - component: {fileID: 114974574908839584}
+  - component: {fileID: 114015344963600618}
   m_Layer: 9
   m_Name: BounceableArea
   m_TagString: Bounceable
@@ -1072,6 +1072,7 @@ GameObject:
   - component: {fileID: 114531655735769042}
   - component: {fileID: 114799538616923324}
   - component: {fileID: 114434139804633618}
+  - component: {fileID: 114409943440673898}
   m_Layer: 8
   m_Name: GameplayRunnerPurple
   m_TagString: Player
@@ -1435,7 +1436,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1837875320852082}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.272, z: 0}
+  m_LocalPosition: {x: 10.726977, y: 0, z: -0.20867634}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4593702343663260}
@@ -2631,6 +2632,17 @@ TrailRenderer:
     generateLightingData: 0
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
+--- !u!114 &114015344963600618
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1728149327170376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 041700effd1ef6f4bb0601cb732914b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114043642877983530
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2833,6 +2845,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_inputThreshold: -0.9
+--- !u!114 &114409943440673898
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1837875320852082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3a3b6326faf46d41af8f1b5d68fd7f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_bounceJumpButtonSphereCastRatius: 0.2
 --- !u!114 &114434139804633618
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3023,19 +3047,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cec698f25fa65f47a9e9032dfde8efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114974574908839584
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1728149327170376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 796661589eb16c34cafc228a3b528274, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_allwaysBounce: 0
-  m_shouldBeJumping: 1
 --- !u!135 &135977691215322622
 SphereCollider:
   m_ObjectHideFlags: 1
