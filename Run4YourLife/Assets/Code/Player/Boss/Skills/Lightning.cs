@@ -105,7 +105,7 @@ namespace Run4YourLife.Player {
             lightningDelay = new WaitForSeconds(delayHit);
         }
 
-        public override void  StartSkill()
+        private void OnEnable()
         {
             Vector3 position = transform.position;
             position.y = CameraManager.Instance.MainCamera.ScreenToWorldPoint(new Vector3(0, 0, Mathf.Abs(CameraManager.Instance.MainCamera.transform.position.z - transform.position.z))).y;
@@ -138,7 +138,7 @@ namespace Run4YourLife.Player {
 
 
             RaycastHit[] hits;
-            hits = Physics.SphereCastAll(lighningEffect.transform.position, width, Vector3.down, pos.y - transform.position.y, Layers.Runner);
+            hits = Physics.SphereCastAll(lighningEffect.transform.position, width/2, Vector3.down, pos.y - transform.position.y, Layers.Runner);
 
             foreach (RaycastHit hit in hits)
             {

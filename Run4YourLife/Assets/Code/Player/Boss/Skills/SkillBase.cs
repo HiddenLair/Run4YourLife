@@ -58,6 +58,5 @@ namespace Run4YourLife.Player
         {
             return true;
         }
-        virtual public void StartSkill() { }
     }
 }
