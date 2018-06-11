@@ -33,6 +33,9 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
 
             m_rightArrowPlayableDirector = m_rightArrow.GetComponent<PlayableDirector>();
             Debug.Assert(m_rightArrowPlayableDirector != null);
+
+            m_leftArrow.SetActive(false);
+            m_rightArrow.SetActive(false);
         }
 
         public void OnMove(AxisEventData eventData)
@@ -58,9 +61,9 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
 
         public void OnDeselect(BaseEventData eventData)
         {
-            AudioManager.Instance.PlaySFX(m_switchClip);
             m_leftArrow.SetActive(false);
             m_rightArrow.SetActive(false);
+            AudioManager.Instance.PlaySFX(m_switchClip);
         }
 
         protected abstract void OnArrowEvent(MoveEvent moveEvent);
