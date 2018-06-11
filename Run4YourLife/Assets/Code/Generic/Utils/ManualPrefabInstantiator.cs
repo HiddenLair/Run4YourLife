@@ -21,7 +21,7 @@ public class ManualPrefabInstantiator : MonoBehaviour
         GameObject instance = m_gameObjectPool.Get(prefab);
         instance.transform.position = instancePosition;
         instance.transform.rotation = Quaternion.identity;
-        instance.SetActive(true);
+        //instance.SetActive(true);
         return instance;
     }
 }

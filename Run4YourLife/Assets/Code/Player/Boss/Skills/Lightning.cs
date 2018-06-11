@@ -1,11 +1,70 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using UnityEditor;
 using Run4YourLife.GameManagement;
 using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.Player {
+    [CustomEditor(typeof(Lightning))]
+    [CanEditMultipleObjects]
+    public class LightningEditor : BaseSkillEditor
+    {
+        SerializedProperty width;
+        SerializedProperty delayHit;
+        SerializedProperty flashEffect;
+        SerializedProperty lighningEffect;
+        SerializedProperty trapGameObject;
+        SerializedProperty newLightningsDelay;
+        SerializedProperty newLightningsDelayProgresion;
+        SerializedProperty newLightningsDistance;
+        SerializedProperty newLightningsDistanceProgresion;
+
+        private void OnEnable()
+        {
+            base.Init();
+            Init();
+        }
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+
+            serializedObject.Update();
+
+            EditorGUILayout.PropertyField(width);
+            EditorGUILayout.PropertyField(delayHit);
+            EditorGUILayout.PropertyField(flashEffect);
+            EditorGUILayout.PropertyField(lighningEffect);
+
+            SkillBase.Phase actualPhase = (SkillBase.Phase)phase.intValue;
+            if (actualPhase == SkillBase.Phase.PHASE2 || actualPhase == SkillBase.Phase.PHASE3)
+            {
+                EditorGUILayout.PropertyField(trapGameObject);
+            }
+            if (actualPhase == SkillBase.Phase.PHASE3)
+            {
+                EditorGUILayout.PropertyField(newLightningsDelay);
+                EditorGUILayout.PropertyField(newLightningsDelayProgresion);
+                EditorGUILayout.PropertyField(newLightningsDistance);
+                EditorGUILayout.PropertyField(newLightningsDistanceProgresion);
+            }
+            serializedObject.ApplyModifiedProperties();
+        }
+
+        new public void Init()
+        {
+             width = serializedObject.FindProperty("width");
+             delayHit = serializedObject.FindProperty("delayHit");
+             flashEffect = serializedObject.FindProperty("flashEffect");
+             lighningEffect = serializedObject.FindProperty("lighningEffect");
+             trapGameObject = serializedObject.FindProperty("trapGameObject");
+             newLightningsDelay = serializedObject.FindProperty("newLightningsDelay");
+             newLightningsDelayProgresion = serializedObject.FindProperty("newLightningsDelayProgresion");
+             newLightningsDistance = serializedObject.FindProperty("newLightningsDistance");
+             newLightningsDistanceProgresion = serializedObject.FindProperty("newLightningsDistanceProgresion");
+        }
+    }
+
     public class Lightning : SkillBase
     {
         #region Inspector
@@ -21,6 +80,17 @@ namespace Run4YourLife.Player {
 
         [SerializeField]
         private GameObject lighningEffect;
+
+        [SerializeField]
+        private GameObject trapGameObject;
+        [SerializeField]
+        private float newLightningsDelay;
+        [SerializeField]
+        private float newLightningsDelayProgresion;
+        [SerializeField]
+        private float newLightningsDistance;
+        [SerializeField]
+        private float newLightningsDistanceProgresion;
 
         #endregion
 
@@ -68,7 +138,7 @@ namespace Run4YourLife.Player {
 
 
             RaycastHit[] hits;
-            hits = Physics.SphereCastAll(lighningEffect.transform.position, width, Vector3.down, pos.y - transform.position.y, Layers.Runner);
+            hits = Physics.SphereCastAll(lighningEffect.transform.position, width/2, Vector3.down, pos.y - transform.position.y, Layers.Runner);
 
             foreach (RaycastHit hit in hits)
             {
@@ -99,6 +169,16 @@ namespace Run4YourLife.Player {
             }
             particleSystem.SetActive(false);
             gameObject.SetActive(false);
+        }
+
+        public void SetDelayHit(float value)
+        {
+            delayHit = value;
+        }
+
+        public float GetDelayHit()
+        {
+            return delayHit;
         }
     }
 }
