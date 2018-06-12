@@ -24,6 +24,13 @@ namespace Run4YourLife.Player {
                     }
                 }
 
+                //Especial Case
+                if (leftCollider.tag == Tags.Wall)
+                {
+                    SpawnUnder(leftCollider);
+                    return true;
+                }
+
                 Transform currentIterTransform = leftCollider.transform;
                 StageInfo info = currentIterTransform.GetComponent<StageInfo>();
                 while(info == null)
@@ -32,18 +39,6 @@ namespace Run4YourLife.Player {
                 }
 
                 Vector3 newPos = transform.position;
-
-                //Especial Case
-                if (info.spawnUnderMe)
-                {
-                    if (info.GetMinValue(out newPos.y))
-                    {
-                        transform.position = newPos;
-                        return true;
-                    }
-                }
-
-
                 Camera mainCamera = Camera.main;
                 float bottomScreen = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, Math.Abs(mainCamera.transform.position.z - transform.position.z))).y;
                 if (!info.GetMinValue(out raycastPosition.y) || raycastPosition.y < bottomScreen)
@@ -62,11 +57,23 @@ namespace Run4YourLife.Player {
             RaycastHit hitInfo;
             if (Physics.Raycast(raycastPosition, Vector3.down,out hitInfo, Mathf.Infinity, Layers.Stage, QueryTriggerInteraction.Ignore))
             {
+                if(hitInfo.collider.tag == Tags.Wall)
+                {
+                    SpawnUnder(hitInfo.collider);
+                    return true;
+                }
                 transform.position = hitInfo.point;
                 return true;
             }
 
             return false;
+        }
+
+        private void SpawnUnder(Collider collider)
+        {
+            Vector3 newPos = transform.position;
+            newPos.y = collider.bounds.min.y;
+            transform.position = newPos;
         }
 
         private void OnEnable()

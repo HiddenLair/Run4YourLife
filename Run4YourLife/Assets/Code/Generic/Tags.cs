@@ -27,6 +27,7 @@ namespace Run4YourLife
         public readonly static string BossRockScore = "BossRockScore";
         public readonly static string GlobalManager = "GlobalManager";
         public readonly static string Water = "Water";
+        public readonly static string Wall = "Wall";
 
         #endregion
 

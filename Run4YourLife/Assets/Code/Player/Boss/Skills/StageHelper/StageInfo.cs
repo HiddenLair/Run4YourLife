@@ -9,8 +9,6 @@ public class StageInfo : MonoBehaviour {
     [SerializeField]
     private bool isGround;
 
-    public bool spawnUnderMe;
-
     #endregion
 
     #region Variables
