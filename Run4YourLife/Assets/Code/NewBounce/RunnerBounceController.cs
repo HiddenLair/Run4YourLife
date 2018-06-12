@@ -11,6 +11,12 @@ public class RunnerBounceController : MonoBehaviour {
 
     [SerializeField]
     private float m_bounceJumpButtonSphereCastRatius;
+
+    [SerializeField]
+    private float m_verticalOffset;
+
+    [SerializeField]
+    private Vector3 m_colliderSize;
     private RunnerCharacterController m_runnerCharacterController;
 
     private void Awake()
@@ -29,8 +35,8 @@ public class RunnerBounceController : MonoBehaviour {
 
     public bool ExecuteBounceIfPossible()
     {
-        Vector3 position = transform.position - new Vector3(0, m_bounceJumpButtonSphereCastRatius);
-        Collider[] colliders = Physics.OverlapSphere(position, m_bounceJumpButtonSphereCastRatius, Layers.RunnerInteractable);
+        Vector3 position = transform.position + new Vector3(0, m_verticalOffset);
+        Collider[] colliders = Physics.OverlapBox(position, m_colliderSize/2.0f, Quaternion.identity, Layers.RunnerInteractable);
         foreach(Collider collider in colliders)
         {
             IBounceable bounceable = collider.GetComponent<IBounceable>();
@@ -53,7 +59,6 @@ public class RunnerBounceController : MonoBehaviour {
 
     private void OnDrawGizmosSelected()
     {
-        Vector3 position = transform.position - new Vector3(0, m_bounceJumpButtonSphereCastRatius);
-        Gizmos.DrawWireSphere(position, m_bounceJumpButtonSphereCastRatius);
+        Gizmos.DrawWireCube(transform.position + new Vector3(0, m_verticalOffset), m_colliderSize);
     }
 }
