@@ -176,7 +176,7 @@ namespace Run4YourLife.Player
 
         private void OnEnable()
         {
-            StartCoroutine(CheckCoyoteGroundedCoroutine());
+            StartCoroutine(CoyoteGroundedCoroutine());
             StartCoroutine(AnimationCallbacks.OnTransitionFromTo(m_animator, "idle", "correr", () => Dust(), true));
             m_runnerControlScheme.Active = true;
 
@@ -206,7 +206,7 @@ namespace Run4YourLife.Player
             m_runnerControlScheme.Active = false;
         }
 
-        private IEnumerator CheckCoyoteGroundedCoroutine()
+        private IEnumerator CoyoteGroundedCoroutine()
         {
             while(true)
             {
@@ -514,6 +514,8 @@ namespace Run4YourLife.Player
                 yield return null;
             }
 
+            m_isJumping = false;
+
             //Transitions to next states
             if(m_runnerControlScheme.Jump.Persists() && !m_ceilingCollision)
             {
@@ -540,8 +542,6 @@ namespace Run4YourLife.Player
             yield return new WaitUntil(() => Time.time >= endTime || m_runnerControlScheme.Jump.Ended() || m_characterController.isGrounded || m_isBouncing);
 
             m_gravity = m_baseGravity;
-
-            m_isJumping = false;
 
             //Transitions to next states
             StartCoroutine(FallingCoroutine(true));
@@ -574,6 +574,8 @@ namespace Run4YourLife.Player
                 yield return null;
             }
 
+            m_isJumping = false;
+
             //Transitions to next states
             if(m_runnerControlScheme.Jump.Persists() && !m_ceilingCollision)
             {
@@ -600,8 +602,6 @@ namespace Run4YourLife.Player
             yield return new WaitUntil(() => Time.time >= endTime || m_runnerControlScheme.Jump.Ended() || m_characterController.isGrounded || m_isBouncing);
 
             m_gravity = m_baseGravity;
-
-            m_isJumping = false;
 
             //Transitions to next states
             StartCoroutine(FallingCoroutine(false));
