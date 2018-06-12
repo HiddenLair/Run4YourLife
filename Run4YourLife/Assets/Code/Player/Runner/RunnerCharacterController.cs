@@ -113,6 +113,7 @@ namespace Run4YourLife.Player
         private bool m_isGroundedOrCoyoteGrounded;
         private bool m_isJumping;
         private bool m_isBouncing;
+        private bool m_wantsToBounce;
         private bool m_isBeingImpulsed;
         private bool m_isDashing;
         private bool m_isReadyToDash = true;
@@ -413,100 +414,6 @@ namespace Run4YourLife.Player
             return 2.1129f * dragDistance;
         }
 
-        private IEnumerator JumpCoroutine()
-        {
-            m_isJumping = true;
-
-            AudioManager.Instance.PlaySFX(m_jumpClip);
-            m_animator.SetTrigger(RunnerAnimation.jump);
-
-            //set vertical velocity to the velocity needed to reach maxJumpHeight
-            m_velocity.y = HeightToVelocity(m_runnerAttributeController.GetAttribute(RunnerAttribute.JumpHeight));
-            yield return StartCoroutine(WaitUntilApexOfJumpOrReleaseButtonOrCeiling(false));
-
-            if (!m_ceilingCollision && m_runnerControlScheme.Jump.Persists())
-            {
-                yield return StartCoroutine(JumpHover());
-            }
-            else
-            {
-                m_ceilingCollision = false;
-            }
-
-            m_isJumping = false;
-
-            yield return StartCoroutine(FallFaster(false));
-
-            if(!m_isBouncing && m_jumpedWhileFalling)
-            {
-                if(!m_runnerBounceController.ExecuteBounceIfPossible())
-                {
-                    StartCoroutine(SecondJumpCoroutine());
-                }
-            }
-        }
-
-        private IEnumerator SecondJumpCoroutine()
-        {
-            AudioManager.Instance.PlaySFX(m_fartClip);
-            fartReceiver.PlayFx();
-            
-            float jumpHeight = m_secondJumpHeight;
-            if(m_velocity.y > 0)
-            {
-                jumpHeight += VelocityToHeight(m_velocity.y);
-            }
-            m_velocity.y = HeightToVelocity(jumpHeight);
-
-            yield return StartCoroutine(WaitUntilApexOfJumpOrReleaseButtonOrCeiling(true));
-            
-            if (!m_ceilingCollision)
-            {
-                yield return StartCoroutine(JumpHover());
-            }
-            else
-            {
-                m_ceilingCollision = false;
-            }
-
-            while(!m_characterController.isGrounded || m_isBouncing)
-            {
-                yield return StartCoroutine(FallFaster(false));
-                if(m_runnerControlScheme.Jump.Started())
-                {
-                    m_runnerBounceController.ExecuteBounceIfPossible();
-                }
-            }
-        }
-
-        private IEnumerator JumpHover()
-        {
-            while(m_velocity.y > 0f)
-            {
-                yield return null;
-                if(m_runnerControlScheme.Jump.Started()) // we want to execute the second jump
-                {
-                    yield break; // exit prematurely
-                }
-                m_velocity.y = Mathf.Lerp(m_velocity.y, 0.0f, m_releaseJumpButtonVelocityReductor * Time.deltaTime);
-            }
-
-            m_gravity = m_hoverGravity;
-
-            float endTime = Time.time + m_hoverDuration;
-            yield return new WaitUntil(() => Time.time >= endTime || m_runnerControlScheme.Jump.Ended() || m_characterController.isGrounded || m_isBouncing);
-
-            m_gravity = m_baseGravity;
-        }
-
-        private IEnumerator FallFaster(bool ignoreJump)
-        {
-            m_gravity += m_endOfJumpGravity;
-            yield return new WaitUntil(() => m_characterController.isGrounded || m_isBouncing || (!ignoreJump && m_runnerControlScheme.Jump.Started()));
-            m_jumpedWhileFalling = !ignoreJump && m_runnerControlScheme.Jump.Started();
-            m_gravity -= m_endOfJumpGravity;
-        }
-
         private IEnumerator WaitUntilApexOfJumpOrReleaseButtonOrCeiling(bool ignoreJump)
         {
             float previousPositionY = transform.position.y;
@@ -527,65 +434,6 @@ namespace Run4YourLife.Player
         {
             m_velocity += velocity;
         }
-
-        #region Bounce
-
-        public void Bounce(Vector3 bounceForce)
-        {
-            StartCoroutine(BounceCoroutine(bounceForce));
-        }
-
-        IEnumerator BounceCoroutine(Vector3 bounceForce)
-        {
-            if (m_isFacingRight)
-            {
-                rightbounceReceiver.PlayFx();
-            }
-            else
-            {
-                leftbounceReceiver.PlayFx();
-            }
-            m_isBouncing = true;
-            AudioManager.Instance.PlaySFX(m_bounceClip);
-            m_velocity.x = DragToVelocity(bounceForce.x);
-            m_velocity.y = HeightToVelocity(bounceForce.y);
-
-            yield return StartCoroutine(WaitUntilApexOfBounceOrJump());
-
-            m_isBouncing = false; // Bounce ends here However more behaviour continues after this
-
-
-            if(m_runnerControlScheme.Jump.Started())
-            {
-                if(!m_runnerBounceController.ExecuteBounceIfPossible())
-                {
-                    StartCoroutine(SecondJumpCoroutine());
-                }
-            }
-            else
-            {
-                yield return StartCoroutine(FallFaster(false));
-
-                if(!m_isBouncing && m_jumpedWhileFalling) // We can bounce while falling
-                {
-                    StartCoroutine(SecondJumpCoroutine());
-                }
-            }
-        }
-
-        private IEnumerator WaitUntilApexOfBounceOrJump()
-        {
-            float previousPositionY = transform.position.y;
-            yield return null;
-
-            while (previousPositionY < transform.position.y && !m_runnerControlScheme.Jump.Started())
-            {
-                previousPositionY = transform.position.y;
-                yield return null;
-            }
-        }
-
-        #endregion
 
         #region Impulse
 
@@ -640,5 +488,181 @@ namespace Run4YourLife.Player
         }
 
         #endregion
+
+
+
+        IEnumerator JumpCoroutine()
+        {
+            m_isJumping = true;
+
+            AudioManager.Instance.PlaySFX(m_jumpClip);
+            m_animator.SetTrigger(RunnerAnimation.jump);
+
+            //set vertical velocity to the velocity needed to reach maxJumpHeight
+            m_velocity.y = HeightToVelocity(m_runnerAttributeController.GetAttribute(RunnerAttribute.JumpHeight));
+
+
+            //Wait Until end apex of jump or hit the ceiling or jump
+            float previousPositionY = transform.position.y;
+            yield return null;
+
+            while (m_runnerControlScheme.Jump.Persists() && 
+                    previousPositionY < transform.position.y && 
+                    !m_ceilingCollision)
+            {                
+                previousPositionY = transform.position.y;
+                yield return null;
+            }
+
+            //Transitions to next states
+            if(m_runnerControlScheme.Jump.Persists() && !m_ceilingCollision)
+            {
+                StartCoroutine(JumpHoverCoroutine());
+            }
+            else
+            {
+                m_ceilingCollision = false;
+                StartCoroutine(FallingCoroutine(true));
+            }
+        }
+
+        IEnumerator JumpHoverCoroutine()
+        {
+            while(m_velocity.y > 0f && m_runnerControlScheme.Jump.Persists())
+            {
+                m_velocity.y = Mathf.Lerp(m_velocity.y, 0.0f, m_releaseJumpButtonVelocityReductor * Time.deltaTime);
+                yield return null;
+            }
+
+            m_gravity = m_hoverGravity;
+
+            float endTime = Time.time + m_hoverDuration;
+            yield return new WaitUntil(() => Time.time >= endTime || m_runnerControlScheme.Jump.Ended() || m_characterController.isGrounded || m_isBouncing);
+
+            m_gravity = m_baseGravity;
+
+            m_isJumping = false;
+
+            //Transitions to next states
+            StartCoroutine(FallingCoroutine(true));
+        }
+
+        IEnumerator SecondJumpCoroutine()
+        {
+            m_isJumping = true;
+
+            AudioManager.Instance.PlaySFX(m_fartClip);
+            fartReceiver.PlayFx();
+            
+            float jumpHeight = m_secondJumpHeight;
+            if(m_velocity.y > 0)
+            {
+                jumpHeight += VelocityToHeight(m_velocity.y);
+            }
+            m_velocity.y = HeightToVelocity(jumpHeight);
+
+
+            //Wait Until end apex of jump or hit the ceiling or end jump
+            float previousPositionY = transform.position.y;
+            yield return null;
+
+            while (m_runnerControlScheme.Jump.Persists() && 
+                    previousPositionY < transform.position.y && 
+                    !m_ceilingCollision)
+            {                
+                previousPositionY = transform.position.y;
+                yield return null;
+            }
+
+            //Transitions to next states
+            if(m_runnerControlScheme.Jump.Persists() && !m_ceilingCollision)
+            {
+                StartCoroutine(SecondJumpHoverCoroutine());
+            }
+            else
+            {
+                m_ceilingCollision = false;
+                StartCoroutine(FallingCoroutine(false));
+            }
+        }
+
+        IEnumerator SecondJumpHoverCoroutine()
+        {
+            while(m_velocity.y > 0f && m_runnerControlScheme.Jump.Persists())
+            {
+                m_velocity.y = Mathf.Lerp(m_velocity.y, 0.0f, m_releaseJumpButtonVelocityReductor * Time.deltaTime);
+                yield return null;
+            }
+
+            m_gravity = m_hoverGravity;
+
+            float endTime = Time.time + m_hoverDuration;
+            yield return new WaitUntil(() => Time.time >= endTime || m_runnerControlScheme.Jump.Ended() || m_characterController.isGrounded || m_isBouncing);
+
+            m_gravity = m_baseGravity;
+
+            m_isJumping = false;
+
+            //Transitions to next states
+            StartCoroutine(FallingCoroutine(false));
+        }
+
+        IEnumerator FallingCoroutine(bool canSecondJump)
+        {
+            m_gravity += m_endOfJumpGravity;
+            yield return new WaitUntil(() => m_characterController.isGrounded || m_isBouncing || m_runnerControlScheme.Jump.Started());
+            m_gravity -= m_endOfJumpGravity;
+
+            if(!m_isBouncing && m_runnerControlScheme.Jump.Started())
+            {
+                if(!m_runnerBounceController.ExecuteBounceIfPossible()) // This will trigger a call that will start a bounce
+                {
+                    if(canSecondJump)
+                    {
+                        StartCoroutine(SecondJumpCoroutine());
+                    }
+                }
+            }
+        }
+
+
+        public void Bounce(Vector3 bounceForce)
+        {
+            StartCoroutine(BounceCoroutine(bounceForce));
+        }
+
+        IEnumerator BounceCoroutine(Vector3 bounceForce)
+        {
+            m_isBouncing = true;
+
+            //On Bounce Started
+            AudioManager.Instance.PlaySFX(m_bounceClip);
+            if (m_isFacingRight)
+            {
+                rightbounceReceiver.PlayFx();
+            }
+            else
+            {
+                leftbounceReceiver.PlayFx();
+            }
+
+            // Set speed values
+            m_velocity.x = DragToVelocity(bounceForce.x);
+            m_velocity.y = HeightToVelocity(bounceForce.y);
+
+            yield return null; // skip one frame because jump.started may be true
+
+            //Wait until apex of jump or jump
+            float previousPositionY = transform.position.y;
+            while (previousPositionY <= transform.position.y && !m_runnerControlScheme.Jump.Started())
+            {
+                previousPositionY = transform.position.y;
+                yield return null;
+            }
+
+            m_isBouncing = false;
+
+            StartCoroutine(FallingCoroutine(true));
+        }
     }
 }
