@@ -129,7 +129,7 @@ namespace Run4YourLife.Player
         {
             GameObject instance;
 
-            if (!SkillCheckWorldAvailability(skillA, out instance))
+            if (!SkillCheckWorldAvailability(skill, out instance))
             {
                 CanNotPlace();
                 return 0.0f;

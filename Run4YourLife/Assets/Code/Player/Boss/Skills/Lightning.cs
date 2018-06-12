@@ -130,8 +130,8 @@ namespace Run4YourLife.Player {
             StartCoroutine(Flash());
             if (phase == SkillBase.Phase.PHASE3)
             {
-                StartCoroutine(StartNewLeftLightning(1));
-                StartCoroutine(StartNewRightLightning(1));
+                StartCoroutine(StartNewLeftLightning(1,transform.position));
+                StartCoroutine(StartNewRightLightning(1,transform.position));
             }
         }
 
@@ -210,22 +210,20 @@ namespace Run4YourLife.Player {
             return delayHit;
         }
 
-        IEnumerator StartNewLeftLightning(int iterationNumber)
+        IEnumerator StartNewLeftLightning(int iterationNumber, Vector3 position)
         {
             yield return new WaitForSeconds(delayBetweenLightnings * Mathf.Pow(delayBetweenLightningsProgresion, iterationNumber));
 
-            Vector3 newPosL = transform.position;
-            newPosL.x -= newLightningsDistance * Mathf.Pow( newLightningsDistanceProgresion , iterationNumber);
-            GameObject instance = BossPoolManager.Instance.InstantiateBossElement(lightningGameObject, newPosL);
+            position.x -= newLightningsDistance * Mathf.Pow( newLightningsDistanceProgresion , iterationNumber);
+            GameObject instance = BossPoolManager.Instance.InstantiateBossElement(lightningGameObject, position);
             instance.GetComponent<Lightning>().SetDelayHit(newLightningsDelayHit * Mathf.Pow(newLightningsDelayHitProgresion,iterationNumber));
 
             Camera mainCamera = Camera.main;
             float leftScreen = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, Math.Abs(mainCamera.transform.position.z - transform.position.z))).x;
 
-            Debug.Log("Pos: "+newPosL.x +" Screen: "+leftScreen);
-            if (newPosL.x > leftScreen)
+            if (position.x > leftScreen)
             {
-                StartCoroutine(StartNewLeftLightning(++iterationNumber));
+                StartCoroutine(StartNewLeftLightning(++iterationNumber, position));
             }
             else
             {
@@ -240,20 +238,19 @@ namespace Run4YourLife.Player {
             }
         }
 
-        IEnumerator StartNewRightLightning(int iterationNumber)
+        IEnumerator StartNewRightLightning(int iterationNumber,Vector3 position)
         {
             yield return new WaitForSeconds(delayBetweenLightnings * Mathf.Pow(delayBetweenLightningsProgresion,iterationNumber));
 
-            Vector3 newPosR = transform.position;
-            newPosR.x += newLightningsDistance * Mathf.Pow(newLightningsDistanceProgresion, iterationNumber);
-            GameObject instance = BossPoolManager.Instance.InstantiateBossElement(lightningGameObject, newPosR);
+            position.x += newLightningsDistance * Mathf.Pow(newLightningsDistanceProgresion, iterationNumber);
+            GameObject instance = BossPoolManager.Instance.InstantiateBossElement(lightningGameObject, position);
             instance.GetComponent<Lightning>().SetDelayHit(newLightningsDelayHit * Mathf.Pow(newLightningsDelayHitProgresion, iterationNumber));
 
             Camera mainCamera = Camera.main;
             float rightScreen = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, Math.Abs(mainCamera.transform.position.z - transform.position.z))).x;
 
-            if (newPosR.x < rightScreen) {
-                StartCoroutine(StartNewRightLightning(++iterationNumber));
+            if (position.x < rightScreen) {
+                StartCoroutine(StartNewRightLightning(++iterationNumber,position));
             }
             else
             {
