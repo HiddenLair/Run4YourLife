@@ -469,7 +469,14 @@ namespace Run4YourLife.Player
                 m_ceilingCollision = false;
             }
 
-            yield return StartCoroutine(FallFaster(true));
+            while(!m_characterController.isGrounded || m_isBouncing)
+            {
+                yield return StartCoroutine(FallFaster(false));
+                if(m_runnerControlScheme.Jump.Started())
+                {
+                    m_runnerBounceController.ExecuteBounceIfPossible();
+                }
+            }
         }
 
         private IEnumerator JumpHover()
