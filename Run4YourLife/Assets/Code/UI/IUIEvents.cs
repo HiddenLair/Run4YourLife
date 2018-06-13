@@ -6,10 +6,6 @@ namespace Run4YourLife.UI
     {
         void OnActionUsed(ActionType actionType, float time);
 
-        void OnSetSetted(SetType setType);
-
         void OnBossProgress(float percent);
-
-        void OnCountdownSetted(float time);
     }
 }

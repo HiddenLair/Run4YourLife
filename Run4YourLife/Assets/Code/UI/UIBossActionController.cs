@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 using UnityEngine.Playables;
 
 namespace Run4YourLife.UI
 {
-    public class UIBossActionController : MonoBehaviour {
-
+    public class UIBossActionController : MonoBehaviour
+    {
         [SerializeField]
         private PlayableDirector m_usePlayableDirector;
 
@@ -19,13 +17,19 @@ namespace Run4YourLife.UI
 
         public void Use(float cooldown)
         {
+            Reset();
+
+            useCoroutine = StartCoroutine(UseCoroutine(cooldown));
+        }
+
+        public void Reset()
+        {
             if(useCoroutine != null)
             {
                 StopCoroutine(useCoroutine);
                 useCoroutine = null;
                 ResetUseState();
             }
-            useCoroutine = StartCoroutine(UseCoroutine(cooldown));
         }
 
         private void ResetUseState()

@@ -11,13 +11,7 @@ namespace Run4YourLife.UI
     public enum ActionType
     {
         MELE, SHOOT,
-        TRAP_A, TRAP_B, TRAP_X, TRAP_Y,
-        SKILL_A, SKILL_B, SKILL_X, SKILL_Y
-    }
-
-    public enum SetType
-    {
-        TRAPS, SKILLS
+        A, B, X, Y
     }
 
     public enum PhaseType
@@ -33,38 +27,24 @@ namespace Run4YourLife.UI
 
         [SerializeField]
         private UIBossActionController m_melee;
+
         [SerializeField]
         private UIBossActionController m_shoot;
 
         [SerializeField]
-        private UIBossActionController m_trapA;
+        private UIBossActionController m_A;
 
         [SerializeField]
-        private UIBossActionController m_trapB;
+        private UIBossActionController m_B;
 
         [SerializeField]
-        private UIBossActionController m_trapX;
+        private UIBossActionController m_X;
 
         [SerializeField]
-        private UIBossActionController m_trapY;
-
-        [SerializeField]
-        private UIBossActionController m_skillA;
-
-        [SerializeField]
-        private UIBossActionController m_skillB;
-
-        [SerializeField]
-        private UIBossActionController m_skillX;
-
-        [SerializeField]
-        private UIBossActionController m_skillY;
+        private UIBossActionController m_Y;
 
         [SerializeField]
         private Progress progress;
-
-        [SerializeField]
-        private Countdown countdown;
 
         #endregion
 
@@ -72,24 +52,24 @@ namespace Run4YourLife.UI
 
         private void Awake()
         {
-            
-            m_actionControllers = new  UIBossActionController[Enum.GetNames(typeof(ActionType)).Length];
+            m_actionControllers = new UIBossActionController[Enum.GetNames(typeof(ActionType)).Length];
             m_actionControllers[(int)ActionType.MELE] = m_melee;
             m_actionControllers[(int)ActionType.SHOOT] = m_shoot;
-            m_actionControllers[(int)ActionType.TRAP_A] = m_trapA;
-            m_actionControllers[(int)ActionType.TRAP_B] = m_trapB;
-            m_actionControllers[(int)ActionType.TRAP_X] = m_trapX;
-            m_actionControllers[(int)ActionType.TRAP_Y] = m_trapY;
-            m_actionControllers[(int)ActionType.SKILL_A] = m_skillA;
-            m_actionControllers[(int)ActionType.SKILL_B] = m_skillB;
-            m_actionControllers[(int)ActionType.SKILL_X] = m_skillX;
-            m_actionControllers[(int)ActionType.SKILL_Y] = m_skillY;
+            m_actionControllers[(int)ActionType.A] = m_A;
+            m_actionControllers[(int)ActionType.B] = m_B;
+            m_actionControllers[(int)ActionType.X] = m_X;
+            m_actionControllers[(int)ActionType.Y] = m_Y;
 
             GameManager.Instance.onGamePhaseChanged.AddListener(OnGamePhaseChanged);
         }
 
         private void OnGamePhaseChanged(GamePhase gamePhase)
         {
+            foreach(UIBossActionController bossActionController in m_actionControllers)
+            {
+                bossActionController.Reset();
+            }
+
             PhaseType phaseType = GamePhaseConversor(gamePhase);
             if(phaseType == PhaseType.TRANSITION)
             {
@@ -99,7 +79,6 @@ namespace Run4YourLife.UI
             {
                 ActiveAll(true);
                 progress.gameObject.SetActive(phaseType != PhaseType.SECOND);
-                countdown.gameObject.SetActive(phaseType == PhaseType.SECOND);
             }
 
             progress.SetPhase(phaseType);
@@ -113,16 +92,6 @@ namespace Run4YourLife.UI
         public void OnBossProgress(float percent)
         {
             progress.SetPercent(percent);
-        }
-
-        public void OnCountdownSetted(float time)
-        {
-            countdown.Go(time);
-        }
-
-        public void OnSetSetted(SetType setType)
-        {
-            throw new System.NotImplementedException("Not Implemented");
         }
 
         private PhaseType GamePhaseConversor(GamePhase phase)

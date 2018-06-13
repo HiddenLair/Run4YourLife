@@ -109,19 +109,19 @@ namespace Run4YourLife.Player
         {
             if (bossControlScheme.Skill1.Started() && (aButtonCooldown <= Time.time))
             {
-                aButtonCooldown = Time.time + CheckToSetElement(skillA, ActionType.TRAP_A);             
+                aButtonCooldown = Time.time + CheckToSetElement(skillA, ActionType.A);             
             }
             else if (bossControlScheme.Skill2.Started() && (xButtonCooldown <= Time.time))
             {
-                xButtonCooldown = Time.time + CheckToSetElement(skillX, ActionType.TRAP_X);
+                xButtonCooldown = Time.time + CheckToSetElement(skillX, ActionType.X);
             }
             else if (bossControlScheme.Skill3.Started() && (yButtonCooldown <= Time.time))
             {
-                yButtonCooldown = Time.time + CheckToSetElement(skillY, ActionType.TRAP_Y);
+                yButtonCooldown = Time.time + CheckToSetElement(skillY, ActionType.Y);
             }
             else if (bossControlScheme.Skill4.Started() && (bButtonCooldown <= Time.time))
             {
-                bButtonCooldown = Time.time + CheckToSetElement(skillB, ActionType.TRAP_B);
+                bButtonCooldown = Time.time + CheckToSetElement(skillB, ActionType.B);
             }
         }
 
