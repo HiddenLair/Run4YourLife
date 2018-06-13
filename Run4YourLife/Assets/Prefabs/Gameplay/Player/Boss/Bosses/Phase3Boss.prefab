@@ -602,7 +602,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4125347254440274}
-  - component: {fileID: 114385856520698822}
   - component: {fileID: 65962569323011984}
   - component: {fileID: 54314271299146240}
   m_Layer: 12
@@ -2967,17 +2966,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cec698f25fa65f47a9e9032dfde8efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114385856520698822
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1541446947185904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d67487b577a63a40b0d38773955ab3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114481992341649112
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3015,15 +3003,10 @@ MonoBehaviour:
   m_castClip: {fileID: 8300000, guid: 4a235b16048326246adf6fdd4f2cecee, type: 3}
   screenLeftLimitPercentaje: 0.3
   screenBottomLimitPercentaje: 0.3
-  phase: 2
   skillA: {fileID: 1392325496747952, guid: 51ca4f89786442b43970d93af24d9878, type: 2}
-  trapA: {fileID: 1674844452342998, guid: 824cd44351d62dd4898f4369812cf9dd, type: 2}
   skillX: {fileID: 1919952662679816, guid: 0e0278c361a7ea340a30ade8fded1ab1, type: 2}
-  trapX: {fileID: 1397588157857540, guid: 63d71b658400a024b9a9b989a4975592, type: 2}
   skillY: {fileID: 1705394957324018, guid: 6419794bc2429ea43b90d76b1153e827, type: 2}
-  trapY: {fileID: 1053646925812610, guid: 6891dd8f950938046ba0d059588dd1d4, type: 2}
   skillB: {fileID: 1463452844622424, guid: 7e170bbe1f8b8ea4eb65d2fe06bf9368, type: 2}
-  trapB: {fileID: 1244499117138228, guid: e7e661a6bdf2b734497407d3c1e47138, type: 2}
 --- !u!114 &114772048301559046
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3082,6 +3065,7 @@ MonoBehaviour:
   - waypointIndex: 5
     speedMultiplier: 0.75
     accelerationMultiplier: 0
+    blendingStartingPercentage: 0
     blendingType: 0
 --- !u!137 &137017230866588148
 SkinnedMeshRenderer:
