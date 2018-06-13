@@ -36,8 +36,6 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(RunnerBounceController))]
     public class RunnerCharacterController : MonoBehaviour
     {
-
-
         #region InspectorVariables
 
         [SerializeField]
@@ -202,7 +200,7 @@ namespace Run4YourLife.Player
             ResetMembers();
             m_runnerControlScheme.Active = true;
 
-            //m_stateMachine.ChangeState(States.Idle);
+            m_stateMachine.ChangeState(States.Idle);
         }
 
         private void ResetMembers()
@@ -383,6 +381,9 @@ namespace Run4YourLife.Player
 
         private void Idle_Update()
         {
+            GravityAndDrag();
+            Move();
+
             if(m_runnerControlScheme.Move.Value() != 0 || m_velocity.sqrMagnitude != 0f)
             {
                 m_stateMachine.ChangeState(States.Move);
@@ -409,7 +410,10 @@ namespace Run4YourLife.Player
 
         private void Move_Update()
         {
-            if(!m_characterController.isGrounded)
+            GravityAndDrag();
+            Move();
+
+            if (!m_characterController.isGrounded)
             {
                 m_stateMachine.ChangeState(States.CoyoteMove);
             }
@@ -432,7 +436,10 @@ namespace Run4YourLife.Player
 
         private void CoyoteMove_Update()
         {
-            if(m_characterController.isGrounded)
+            GravityAndDrag();
+            Move();
+
+            if (m_characterController.isGrounded)
             {
                 m_stateMachine.ChangeState(States.Move);
             }
@@ -482,7 +489,10 @@ namespace Run4YourLife.Player
 
         private void Jump_Update()
         {
-            if(m_ceilingCollision || m_runnerControlScheme.Jump.Ended() || m_jump_previousPositionY >= transform.position.y)
+            GravityAndDrag();
+            Move();
+
+            if (m_ceilingCollision || m_runnerControlScheme.Jump.Ended() || m_jump_previousPositionY >= transform.position.y)
             {
                 //Transitions to next states
                 if(m_runnerControlScheme.Jump.Persists() && !m_ceilingCollision)
@@ -531,7 +541,10 @@ namespace Run4YourLife.Player
 
         private void SecondJump_Update()
         {
-            if(m_ceilingCollision || m_runnerControlScheme.Jump.Ended() || m_secondJump_previousYPosition >= transform.position.y)
+            GravityAndDrag();
+            Move();
+
+            if (m_ceilingCollision || m_runnerControlScheme.Jump.Ended() || m_secondJump_previousYPosition >= transform.position.y)
             {
                 //Transitions to next states
                 if(m_runnerControlScheme.Jump.Persists() && !m_ceilingCollision)
@@ -556,6 +569,9 @@ namespace Run4YourLife.Player
         private void JumpSpeedRedution_Update()
         {
             m_velocity.y = Mathf.Lerp(m_velocity.y, 0.0f, m_releaseJumpButtonVelocityReductor * Time.deltaTime);
+
+            GravityAndDrag();
+            Move();
 
             if(m_velocity.y <= 0f || m_runnerControlScheme.Jump.Ended())
             {
@@ -582,7 +598,10 @@ namespace Run4YourLife.Player
 
         private void JumpHover_Update()
         {
-            if(Time.time >= m_secondJumpHover_EndTimer || m_runnerControlScheme.Jump.Ended())
+            GravityAndDrag();
+            Move();
+
+            if (Time.time >= m_secondJumpHover_EndTimer || m_runnerControlScheme.Jump.Ended())
             {
                 m_stateMachine.ChangeState(States.Fall);
             }
@@ -604,7 +623,10 @@ namespace Run4YourLife.Player
 
         private void Fall_Update()
         {
-            if(m_runnerControlScheme.Jump.Started())
+            GravityAndDrag();
+            Move();
+
+            if (m_runnerControlScheme.Jump.Started())
             {
                 if(!m_runnerBounceController.ExecuteBounceIfPossible()) // This will trigger a call that will start a bounce
                 {
@@ -661,7 +683,10 @@ namespace Run4YourLife.Player
 
         private void Bounce_Update()
         {
-            if(m_jump_previousPositionY >= transform.position.y)
+            GravityAndDrag();
+            Move();
+
+            if (m_jump_previousPositionY >= transform.position.y)
             {
                 m_stateMachine.ChangeState(States.Fall);
             }
@@ -745,7 +770,7 @@ namespace Run4YourLife.Player
             m_isBeingImpulsed = false;
         }
 
-        private void Push_Update(Vector3 force)
+        private void Push_Update()
         {
             /*while(m_velocity.x != 0.0f)
             {
