@@ -8,14 +8,13 @@ using Run4YourLife.InputManagement;
 namespace Run4YourLife.Interactables
 {
     public class BounceableEntity : BounceableEntityBase {
+        private enum BounceTrigger {
+            Allways,
+            NegativeVerticalVelocity
+        }
 
         [SerializeField]
-        [Tooltip("Allways bounce when colliding with it")]
-        private bool m_allwaysBounce;
-
-        [SerializeField]
-        [Tooltip("When colliding with it check wether the runner has the jump button pressed or not. If set to positive will only jump when pressed")]
-        private bool m_shouldBeJumping;
+        private BounceTrigger m_bounceTrigger;
 
         [SerializeField]
         [Range(0,360)]
@@ -51,7 +50,7 @@ namespace Run4YourLife.Interactables
 
         public override bool ShouldBounceByContact(RunnerCharacterController runnerCharacterController)
         {
-            return m_allwaysBounce || ((!m_shouldBeJumping || m_shouldBeJumping && runnerCharacterController.GetComponent<RunnerControlScheme>().Jump.Persists()) && runnerCharacterController.Velocity.y < 0);
+            return m_bounceTrigger == BounceTrigger.Allways || (m_bounceTrigger == BounceTrigger.NegativeVerticalVelocity && runnerCharacterController.Velocity.y < 0);
         }
 
         public override Vector3 GetStartingBouncePosition(RunnerCharacterController runnerCharacterController)
