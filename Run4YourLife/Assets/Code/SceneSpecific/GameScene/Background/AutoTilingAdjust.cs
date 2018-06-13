@@ -18,10 +18,14 @@ public class AutoTilingAdjust : MonoBehaviour
     private Renderer m_renderer;
     private MeshFilter m_meshFilter;
 
+    private Material sharedMaterial;
+
     void Awake()
     {
         m_renderer = GetComponent<Renderer>();
         m_meshFilter = GetComponent<MeshFilter>();
+
+        sharedMaterial = m_renderer.sharedMaterial;
     }
 
     void Start()
@@ -37,6 +41,11 @@ public class AutoTilingAdjust : MonoBehaviour
 
         Awake();
         Start();
+    }
+
+    private void OnDestroy()
+    {
+        m_renderer.sharedMaterial = sharedMaterial;
     }
 
     private Vector2 GetMeshSize()

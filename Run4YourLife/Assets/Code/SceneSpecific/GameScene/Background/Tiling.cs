@@ -1,28 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Tiling : MonoBehaviour {
-
-    [UnityEngine.Serialization.FormerlySerializedAs("renderer")]
-    public Renderer m_renderer;
+[RequireComponent(typeof(Renderer))]
+public class Tiling : MonoBehaviour
+{
     public Vector2 speed;
+
     private bool active = true;
+    private Renderer m_renderer;
     private Material sharedMaterial;
 
     private void Awake()
     {
+        m_renderer = GetComponent<Renderer>();
         sharedMaterial = m_renderer.sharedMaterial;
     }
 
     private void OnDestroy()
     {
-       m_renderer.sharedMaterial = sharedMaterial;
+        m_renderer.sharedMaterial = sharedMaterial;
     }
 
-    // Update is called once per frame
-    void Update () {
-        if (active)
+    void Update()
+    {
+        if(active)
         {
             m_renderer.material.mainTextureOffset += speed * Time.deltaTime;
         }
