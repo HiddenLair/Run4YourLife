@@ -12,9 +12,6 @@ namespace Run4YourLife.Interactables
     [RequireComponent(typeof(PlayableDirector))]
     public abstract class PowerUp : MonoBehaviour
     {
-        [SerializeField]
-        private int m_score;
-
         protected enum PowerUpType { Void, Single, Shared };
 
         protected abstract PowerUpType Type { get; }
@@ -48,9 +45,6 @@ namespace Run4YourLife.Interactables
 
         private void ExecutePowerUp(GameObject runner)
         {
-            PlayerHandle playerHandle = runner.GetComponent<PlayerInstance>().PlayerHandle;
-            ExecuteEvents.Execute<IScoreEvents>(ScoreManager.InstanceGameObject, null, (x, y) => x.OnScoreAdded(playerHandle, m_score));
-
             switch (Type)
             {
                 case PowerUpType.Void:

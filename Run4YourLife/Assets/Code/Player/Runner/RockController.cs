@@ -5,18 +5,14 @@ using UnityEngine.EventSystems;
 
 using Run4YourLife;
 
-public class RockController : MonoBehaviour {
-
-    [SerializeField]
-    private int score;
-
+public class RockController : MonoBehaviour
+{
     private PlayerHandle playerWhoThrew;
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag(Tags.BossRockScore))
         {
-            ExecuteEvents.Execute<IScoreEvents>(ScoreManager.InstanceGameObject, null, (x, y) => x.OnScoreAdded(playerWhoThrew, score));
             Destroy(gameObject);
         }
     }

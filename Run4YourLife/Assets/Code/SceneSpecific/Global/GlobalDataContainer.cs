@@ -5,10 +5,6 @@ using UnityEngine;
 
 namespace Run4YourLife
 {
-    public class GlobalDataContainerKeys
-    {
-        public static readonly string Score = "score"; // May contain Dictionary<PlayerHandle, float>
-    }
     public class GlobalDataContainer : SingletonMonoBehaviour<GlobalDataContainer> {
 
         private Dictionary<string, object> m_data = new Dictionary<string, object>();

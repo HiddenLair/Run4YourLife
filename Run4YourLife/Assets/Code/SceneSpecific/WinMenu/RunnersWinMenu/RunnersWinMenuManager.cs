@@ -1,5 +1,4 @@
-﻿using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 
 using Run4YourLife.Player;
@@ -11,9 +10,6 @@ namespace Run4YourLife.SceneSpecific.WinMenu
     public class RunnersWinMenuManager : WinMenuManager
     {
         [SerializeField]
-        private GameObject runnerSlotPrefab;
-
-        [SerializeField]
         private GameObject[] spawnPoints;
 
         [SerializeField]
@@ -24,9 +20,6 @@ namespace Run4YourLife.SceneSpecific.WinMenu
 
         [SerializeField]
         private string winnerAnimation = "dance";
-
-        [SerializeField]
-        private string otherAnimation = "dance";
 
         private RunnerPrefabManager runnerPrefabManager;
 
@@ -42,18 +35,7 @@ namespace Run4YourLife.SceneSpecific.WinMenu
                 SetUpTestPlayers(3);
             }
 
-            if(!GlobalDataContainer.Instance.Data.ContainsKey(GlobalDataContainerKeys.Score))
-            {
-                SetUpTestScores();
-            }
-
             SpawnRunners();
-            ClearScoreData();
-        }
-
-        private void ClearScoreData()
-        {
-            GlobalDataContainer.Instance.Data.Remove(GlobalDataContainerKeys.Score);
         }
 
         private void SetUpTestPlayers(uint numRunners)
@@ -71,55 +53,18 @@ namespace Run4YourLife.SceneSpecific.WinMenu
             }
         }
 
-        private void SetUpTestScores()
-        {
-            Debug.Log("Setting up test scores");
-            Dictionary<PlayerHandle, int> scores = new Dictionary<PlayerHandle,int>();
-            foreach(PlayerHandle playerHandle in PlayerManager.Instance.RunnerPlayerHandles)
-            {
-                scores[playerHandle] = (int)UnityEngine.Random.Range(0.0f, 50.0f);
-            }
-            GlobalDataContainer.Instance.Data[GlobalDataContainerKeys.Score] = scores;
-        }
-
         private void SpawnRunners()
         {
-            Dictionary<PlayerHandle,int> scores = GlobalDataContainer.Instance.Data[GlobalDataContainerKeys.Score] as Dictionary<PlayerHandle,int>;
-            Debug.Assert(scores != null);
-            List<KeyValuePair<float, PlayerHandle>> points = new List<KeyValuePair<float, PlayerHandle>>();
+            List<PlayerHandle> runnerPlayerHandles = PlayerManager.Instance.RunnerPlayerHandles;
 
-            foreach(PlayerHandle playerHandle in PlayerManager.Instance.RunnerPlayerHandles)
+            for(int i = 0; i < runnerPlayerHandles.Count; ++i)
             {
-                int score;
-                scores.TryGetValue(playerHandle,out score);
-                points.Add(new KeyValuePair<float, PlayerHandle>(score, playerHandle));
-            }
+                GameObject runner = Instantiate(runnerPrefabManager.GetRunner(runnerPlayerHandles[i].CharacterType), spawnPoints[i].transform, false);
 
-            points.Sort((a, b) => b.Key.CompareTo(a.Key));
+                float scale = i == 0 ? winnerScale : othersScale;
+                runner.transform.localScale = scale * Vector3.one;
 
-            bool isWinner = true;
-
-            for(int i = 0; i < points.Count; ++i)
-            {
-                GameObject runnerSlot = Instantiate(runnerSlotPrefab, spawnPoints[i].transform, false);
-                GameObject runner = Instantiate(runnerPrefabManager.GetRunner(points[i].Value.CharacterType), runnerSlot.transform, false);
-
-                float scale = othersScale;
-
-                if(isWinner)
-                {
-                    isWinner = false;
-                    scale = winnerScale;
-                    runner.GetComponent<Animator>().Play(winnerAnimation);
-                }
-                else
-                {
-                    runner.GetComponent<Animator>().Play(otherAnimation);
-                }
-
-                runnerSlot.transform.localScale = scale * Vector3.one;
-
-                runnerSlot.GetComponentInChildren<TextMeshPro>().text = ((int)Mathf.Round(points[i].Key)).ToString();
+                runner.GetComponent<Animator>().Play(winnerAnimation);
             }
         }
     }

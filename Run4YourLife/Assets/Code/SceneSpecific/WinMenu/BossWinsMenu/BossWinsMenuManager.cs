@@ -12,7 +12,6 @@ namespace Run4YourLife.SceneSpecific.WinMenu
 
         void Awake()
         {
-            GlobalDataContainer.Instance.Data.Remove(GlobalDataContainerKeys.Score);
             bossAnimator.Play(bossAnimation);
         }
     }
