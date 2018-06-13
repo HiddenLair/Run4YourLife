@@ -57,7 +57,7 @@ namespace MonsterLove.StateMachine
 
 		private Dictionary<object, StateMapping> stateLookup;
 
-		private readonly string[] ignoredNames = new[] { "add", "remove", "get", "set" };
+		//private readonly string[] ignoredNames = new[] { "add", "remove", "get", "set" };
 
 		private bool isInTransition = false;
 		private IEnumerator currentTransition;
