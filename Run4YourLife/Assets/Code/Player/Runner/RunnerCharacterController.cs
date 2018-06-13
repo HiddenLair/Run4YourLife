@@ -746,24 +746,13 @@ namespace Run4YourLife.Player
 
         private void Push_Update()
         {
-            /*while(m_velocity.x != 0.0f)
+            GravityAndDrag();
+            MoveCharacterContoller(m_velocity * Time.deltaTime);
+
+            if(m_velocity.x == 0f)
             {
-                yield return null;
-                GravityAndDrag();
-                MoveCharacterContoller(m_velocity * Time.deltaTime);
+                m_stateMachine.ChangeState(States.Move);
             }
-
-            float endOfMovement = Time.time + 0.5f;
-            while (Time.time < endOfMovement)
-            {
-                yield return null;
-                GravityAndDrag();
-                MoveCharacterContoller(m_velocity * Time.deltaTime);
-            }*/
-
-            Debug.Log("Push Not implemented");
-
-            m_stateMachine.ChangeState(States.Move);
         }
 
         #endregion
