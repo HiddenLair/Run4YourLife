@@ -10,37 +10,45 @@ namespace Run4YourLife.Player {
     [CanEditMultipleObjects]
     public class EarthPikeEditor : BaseSkillEditor
     {
-        SerializedProperty earhtPikeGameObject;
         SerializedProperty width;
-
+        SerializedProperty delayHit;
+        SerializedProperty timeToGrow;
+        SerializedProperty timeToBreak;
+        SerializedProperty adviseParticles;
+        SerializedProperty earthPikeEffect;
         private void OnEnable()
         {
             base.Init();
             Init();
         }
-        public override void OnInspectorGUI()
-        {
-            base.OnInspectorGUI();
-
-            serializedObject.Update();
-
-            EditorGUILayout.PropertyField(earhtPikeGameObject);
-            EditorGUILayout.PropertyField(width);
-
-            SkillBase.Phase actualPhase = (SkillBase.Phase)phase.intValue;
-            if (actualPhase == SkillBase.Phase.PHASE2 || actualPhase == SkillBase.Phase.PHASE3)
-            {
-            }
-            if (actualPhase == SkillBase.Phase.PHASE3)
-            {
-            }
-            serializedObject.ApplyModifiedProperties();
-        }
 
         new public void Init()
         {
-            earhtPikeGameObject = serializedObject.FindProperty("earhtPikeGameObject");
             width = serializedObject.FindProperty("width");
+            delayHit = serializedObject.FindProperty("delayHit");
+            timeToGrow = serializedObject.FindProperty("timeToGrow"); 
+            timeToBreak = serializedObject.FindProperty("timeToBreak");
+            adviseParticles = serializedObject.FindProperty("adviseParticles");
+            earthPikeEffect = serializedObject.FindProperty("earthPikeEffect");
+        }
+
+        public override void OnGuiPhase1()
+        {
+            EditorGUILayout.PropertyField(width);
+            EditorGUILayout.PropertyField(delayHit);
+            EditorGUILayout.PropertyField(timeToGrow);
+            EditorGUILayout.PropertyField(timeToBreak);
+            EditorGUILayout.PropertyField(adviseParticles);
+            EditorGUILayout.PropertyField(earthPikeEffect);
+        }
+        public override void OnGuiPhase2()
+        {
+            base.OnGuiPhase2();
+        }
+
+        public override void OnGuiPhase3()
+        {
+            base.OnGuiPhase3();
         }
     }
 
@@ -49,15 +57,28 @@ namespace Run4YourLife.Player {
         #region Inspector
 
         [SerializeField]
-        private GameObject earhtPikeGameObject;
+        private float width;
 
         [SerializeField]
-        private float width;
+        private float delayHit;
+
+        [SerializeField]
+        private float timeToGrow;
+
+        [SerializeField]
+        private float timeToBreak;
+
+        [SerializeField]
+        private GameObject adviseParticles;
+
+        [SerializeField]
+        private GameObject earthPikeEffect;
 
         #endregion
 
         #region Variables
 
+        private int maximumIterNumToCheck = 5;
         private float maxPercent;
         //Add a little offset to vectors, in order to raycast well
         float offset = 0.1f;
@@ -94,6 +115,7 @@ namespace Run4YourLife.Player {
                 while(info == null)
                 {
                     info = currentIterTransform.parent.GetComponent<StageInfo>();
+                    Debug.Assert(currentIterTransform == transform.root);
                 }
 
                 Vector3 newPos = transform.position;
@@ -108,6 +130,7 @@ namespace Run4YourLife.Player {
                         return false;
                     }
                     transform.position = newPos;
+                    transform.SetParent(currentIterTransform);
                     return true;
                 }
             }
@@ -121,6 +144,7 @@ namespace Run4YourLife.Player {
                     return true;
                 }
                 transform.position = hitInfo.point;
+                transform.SetParent(hitInfo.transform);
                 return true;
             }
 
@@ -134,27 +158,34 @@ namespace Run4YourLife.Player {
             transform.position = newPos;
         }
 
-        private void OnEnable()
+        public override void StartSkill()
         {
             float radius = width / 2;
             Vector3 centerPos = transform.position;
             centerPos.y += offset;//Added offset to check
-            float leftMax = CheckForGround(new Vector3(centerPos.x - radius,centerPos.y,centerPos.z),centerPos,radius,true);
-            float rightMax = CheckForGround(centerPos,new Vector3(centerPos.x + radius, centerPos.y, centerPos.z), radius,false);
+            float leftMax = CheckForGround(new Vector3(centerPos.x - radius,centerPos.y,centerPos.z),centerPos,false);
+            float rightMax = CheckForGround(centerPos,new Vector3(centerPos.x + radius, centerPos.y, centerPos.z),true);
 
-            float xOffset = centerPos.x - leftMax + centerPos.x - rightMax;
-            transform.Translate(new Vector3(xOffset/2,0,0));
+            float xOffset = leftMax - centerPos.x + rightMax - centerPos.x;
+            transform.Translate(new Vector3(xOffset/4,0,0));
 
             float maxLenght = rightMax - leftMax;
-            maxPercent = maxLenght / radius;
+            maxPercent = maxLenght / width;
 
             StartCoroutine(StartAdvise());
         }
 
-        private float CheckForGround(Vector3 min, Vector3 max, float actualRadiusCheck,bool takeMax)
+        private float CheckForGround(Vector3 min, Vector3 max, bool takeMax)
         {
-            bool minCheck = Physics.Raycast(min, Vector3.down, offset, Layers.Stage, QueryTriggerInteraction.Ignore);
-            bool maxCheck = Physics.Raycast(max, Vector3.down, offset, Layers.Stage, QueryTriggerInteraction.Ignore);
+            return CheckForGround(min,max,takeMax,1);
+        }
+
+        private float CheckForGround(Vector3 min, Vector3 max,bool takeMax, int iterationNumber)
+        {
+            bool minCheck = takeMax;
+            bool maxCheck = !takeMax;
+            minCheck |= Physics.Raycast(min, Vector3.down, offset*2, Layers.Stage, QueryTriggerInteraction.Ignore);
+            maxCheck |= Physics.Raycast(max, Vector3.down, offset*2, Layers.Stage, QueryTriggerInteraction.Ignore);
 
             if(minCheck && maxCheck)
             {
@@ -167,40 +198,74 @@ namespace Run4YourLife.Player {
                     return min.x;
                 }
             }
+            else if (iterationNumber > maximumIterNumToCheck)//Exit if to many iterations
+            {
+                if (minCheck)
+                {
+                    return min.x;
+                }
+                else
+                {
+                    return max.x;
+                }
+            }
             else { 
                 if (minCheck)
                 {
                     Vector3 mid = max;
-                    actualRadiusCheck /= 2;
+                    float radius = width / 2;
+                    float actualRadiusCheck= radius / (2* iterationNumber);
                     mid.x -= actualRadiusCheck;
-                    if (Physics.Raycast(mid, Vector3.down, offset, Layers.Stage, QueryTriggerInteraction.Ignore))
+                    if (Physics.Raycast(mid, Vector3.down, offset*2, Layers.Stage, QueryTriggerInteraction.Ignore))
                     {
-                        return CheckForGround(mid,max,actualRadiusCheck,takeMax);
+                        return CheckForGround(mid,max,takeMax,++iterationNumber);
                     }
-                    return CheckForGround(min,mid,actualRadiusCheck,takeMax);
+                    return CheckForGround(min,mid,takeMax,++iterationNumber);
                 }
                 else
                 {
                     Vector3 mid = min;
-                    actualRadiusCheck /= 2;
-                    mid.x -= actualRadiusCheck;
+                    float radius = width / 2;
+                    float actualRadiusCheck = radius / (2 * iterationNumber);
+                    mid.x += actualRadiusCheck;
                     if (Physics.Raycast(mid, Vector3.down, offset, Layers.Stage, QueryTriggerInteraction.Ignore))
                     {
-                        return CheckForGround(min, mid, actualRadiusCheck, takeMax);
+                        return CheckForGround(min, mid, takeMax,++iterationNumber);
                     }
-                    return CheckForGround(mid,max,actualRadiusCheck,takeMax);
+                    return CheckForGround(mid,max,takeMax,++iterationNumber);
                 }
             }           
         }
 
         IEnumerator StartAdvise()
         {
-            yield return null;
+            adviseParticles.transform.localScale = new Vector3(maxPercent * width, maxPercent * width, maxPercent * width);
+            adviseParticles.SetActive(true);
+            yield return new WaitForSeconds(delayHit);
+            adviseParticles.SetActive(false);
+            StartCoroutine(StartPikeGrow());
         }
 
         IEnumerator StartPikeGrow()
         {
-            yield return null;
+            Vector3 currentScale = transform.localScale = Vector3.zero;
+            earthPikeEffect.SetActive(true);
+            float growBySecond = maxPercent / timeToGrow;
+            Vector3 increaseVector = new Vector3(growBySecond,growBySecond,growBySecond);
+            while (currentScale.magnitude < maxPercent)
+            {
+                currentScale += increaseVector * Time.deltaTime;
+                transform.localScale = currentScale * width;
+                yield return null;
+            }
+            yield return new WaitForSeconds(timeToBreak);
+            earthPikeEffect.SetActive(false);
+            Break();
+        }
+        private void Break()
+        {
+            //We should make a copy of the pike, but allready broken, and break it here
+            gameObject.SetActive(false);
         }
     }
 }

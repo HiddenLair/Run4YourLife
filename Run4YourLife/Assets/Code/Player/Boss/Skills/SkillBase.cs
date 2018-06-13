@@ -25,6 +25,19 @@ namespace Run4YourLife.Player
             EditorGUILayout.PropertyField(m_skillTriggerClip);
             EditorGUILayout.PropertyField(m_cooldown);
 
+            OnGuiPhase1();
+
+            SkillBase.Phase actualPhase = (SkillBase.Phase)phase.intValue;
+            if (actualPhase != SkillBase.Phase.PHASE1)
+            {
+                OnGuiPhase2();
+            }
+            if (actualPhase == SkillBase.Phase.PHASE3)
+            {
+                OnGuiPhase3();
+            }
+
+
             serializedObject.ApplyModifiedProperties();
         }
 
@@ -34,6 +47,10 @@ namespace Run4YourLife.Player
             m_skillTriggerClip = serializedObject.FindProperty("m_skillTriggerClip");
             m_cooldown = serializedObject.FindProperty("m_cooldown");
         }
+
+        virtual public void OnGuiPhase1() {}
+        virtual public void OnGuiPhase2() {}
+        virtual public void OnGuiPhase3() {}
     }
 
     [RequireComponent(typeof(AudioSource))]
@@ -58,5 +75,6 @@ namespace Run4YourLife.Player
         {
             return true;
         }
+        virtual public void StartSkill() { }
     }
 }

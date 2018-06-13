@@ -29,34 +29,6 @@ namespace Run4YourLife.Player {
             base.Init();
             Init();
         }
-        public override void OnInspectorGUI()
-        {
-            base.OnInspectorGUI();
-
-            serializedObject.Update();
-
-            EditorGUILayout.PropertyField(width);
-            EditorGUILayout.PropertyField(delayHit);
-            EditorGUILayout.PropertyField(flashEffect);
-            EditorGUILayout.PropertyField(lighningEffect);
-
-            SkillBase.Phase actualPhase = (SkillBase.Phase)phase.intValue;
-            if (actualPhase == SkillBase.Phase.PHASE2 || actualPhase == SkillBase.Phase.PHASE3)
-            {
-                EditorGUILayout.PropertyField(trapGameObject);
-            }
-            if (actualPhase == SkillBase.Phase.PHASE3)
-            {
-                EditorGUILayout.PropertyField(delayBetweenLightnings);
-                EditorGUILayout.PropertyField(delayBetweenLightningsProgresion);
-                EditorGUILayout.PropertyField(newLightningsDelayHit);
-                EditorGUILayout.PropertyField(newLightningsDelayHitProgresion);
-                EditorGUILayout.PropertyField(newLightningsDistance);
-                EditorGUILayout.PropertyField(newLightningsDistanceProgresion);
-                EditorGUILayout.PropertyField(lightningGameObject);
-            }
-            serializedObject.ApplyModifiedProperties();
-        }
 
         new public void Init()
         {
@@ -72,6 +44,30 @@ namespace Run4YourLife.Player {
             newLightningsDistance = serializedObject.FindProperty("newLightningsDistance");
             newLightningsDistanceProgresion = serializedObject.FindProperty("newLightningsDistanceProgresion");
             lightningGameObject = serializedObject.FindProperty("lightningGameObject");
+        }
+
+        public override void OnGuiPhase1()
+        {
+            EditorGUILayout.PropertyField(width);
+            EditorGUILayout.PropertyField(delayHit);
+            EditorGUILayout.PropertyField(flashEffect);
+            EditorGUILayout.PropertyField(lighningEffect);
+        }
+
+        public override void OnGuiPhase2()
+        {
+            EditorGUILayout.PropertyField(trapGameObject);
+        }
+
+        public override void OnGuiPhase3()
+        {
+            EditorGUILayout.PropertyField(delayBetweenLightnings);
+            EditorGUILayout.PropertyField(delayBetweenLightningsProgresion);
+            EditorGUILayout.PropertyField(newLightningsDelayHit);
+            EditorGUILayout.PropertyField(newLightningsDelayHitProgresion);
+            EditorGUILayout.PropertyField(newLightningsDistance);
+            EditorGUILayout.PropertyField(newLightningsDistanceProgresion);
+            EditorGUILayout.PropertyField(lightningGameObject);
         }
     }
 
@@ -122,7 +118,7 @@ namespace Run4YourLife.Player {
             lightningDelay = new WaitForSeconds(delayHit);
         }
 
-        private void OnEnable()
+        public override void StartSkill()
         {
             Vector3 position = transform.position;
             position.y = CameraManager.Instance.MainCamera.ScreenToWorldPoint(new Vector3(0, 0, Mathf.Abs(CameraManager.Instance.MainCamera.transform.position.z - transform.position.z))).y;
@@ -158,9 +154,10 @@ namespace Run4YourLife.Player {
             pos.y = mainCamera.ScreenToWorldPoint(new Vector3(0, mainCamera.pixelHeight, Mathf.Abs(mainCamera.transform.position.z - pos.z))).y;
             lighningEffect.transform.localPosition = pos;
 
+            LayerMask finalMask = Layers.Runner | Layers.Stage;
 
             RaycastHit[] hits;
-            hits = Physics.SphereCastAll(lighningEffect.transform.position, width/2, Vector3.down, pos.y - transform.position.y);
+            hits = Physics.SphereCastAll(lighningEffect.transform.position, width/2, Vector3.down, pos.y - transform.position.y,finalMask,QueryTriggerInteraction.Ignore);
 
             foreach (RaycastHit hit in hits)
             {
@@ -217,6 +214,7 @@ namespace Run4YourLife.Player {
             position.x -= newLightningsDistance * Mathf.Pow( newLightningsDistanceProgresion , iterationNumber);
             GameObject instance = BossPoolManager.Instance.InstantiateBossElement(lightningGameObject, position);
             instance.GetComponent<Lightning>().SetDelayHit(newLightningsDelayHit * Mathf.Pow(newLightningsDelayHitProgresion,iterationNumber));
+            instance.GetComponent<SkillBase>().StartSkill();
 
             Camera mainCamera = Camera.main;
             float leftScreen = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, Math.Abs(mainCamera.transform.position.z - transform.position.z))).x;
@@ -245,6 +243,7 @@ namespace Run4YourLife.Player {
             position.x += newLightningsDistance * Mathf.Pow(newLightningsDistanceProgresion, iterationNumber);
             GameObject instance = BossPoolManager.Instance.InstantiateBossElement(lightningGameObject, position);
             instance.GetComponent<Lightning>().SetDelayHit(newLightningsDelayHit * Mathf.Pow(newLightningsDelayHitProgresion, iterationNumber));
+            instance.GetComponent<SkillBase>().StartSkill();
 
             Camera mainCamera = Camera.main;
             float rightScreen = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, Math.Abs(mainCamera.transform.position.z - transform.position.z))).x;

@@ -156,6 +156,7 @@ namespace Run4YourLife.Player
         void SetElementCallback(GameObject gameObject)
         {
             gameObject.SetActive(true);
+            gameObject.GetComponent<SkillBase>().StartSkill();
             crossHairControl.TotalUnlock();
         }
 
