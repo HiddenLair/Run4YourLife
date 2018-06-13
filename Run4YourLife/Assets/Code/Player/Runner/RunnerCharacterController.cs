@@ -122,21 +122,12 @@ namespace Run4YourLife.Player
 
         #endregion
 
-        #region Private Variables
+        #region Private Members
 
         private StateMachine<States> m_stateMachine;
 
-        private WaitForSeconds m_waitForSecondsCoyoteGroundedTime;
-
-        private bool m_isGroundedOrCoyoteGrounded;
-        private bool m_isJumping;
-        private bool m_isBouncing;
-        private bool m_wantsToBounce;
-        private bool m_isBeingImpulsed;
-        private bool m_isDashing;
         private bool m_isReadyToDash = true;
         private bool m_ceilingCollision;
-        private bool m_jumpedWhileFalling;
         private bool m_isFacingRight = true;
 
         private Vector3 m_velocity;
@@ -164,7 +155,7 @@ namespace Run4YourLife.Player
 
         public Vector3 ExternalVelocity { get; set; }
 
-        public bool IsDashing { get { return m_isDashing; } }
+        public bool IsDashing { get { return m_stateMachine.State == States.Dash; } }
 
         public bool CheckOutScreen { get { return m_checkOutOfScreen; } set { m_checkOutOfScreen = value; } }
         #endregion
@@ -191,8 +182,6 @@ namespace Run4YourLife.Player
 
             m_gravity = m_baseGravity;
             m_horizontalDrag = m_baseHorizontalDrag;
-
-            m_waitForSecondsCoyoteGroundedTime = new WaitForSeconds(m_coyoteGroundedTime);
         }
 
         private void OnEnable()
@@ -209,11 +198,6 @@ namespace Run4YourLife.Player
             m_horizontalDrag = m_baseHorizontalDrag;
             m_velocity = Vector3.zero;
 
-            m_isGroundedOrCoyoteGrounded = false;
-            m_isJumping = false;
-            m_isBouncing = false;
-            m_isBeingImpulsed = false;
-            m_isDashing = false;
             m_isReadyToDash = true;
             m_ceilingCollision = false;
             m_dashTrail.gameObject.SetActive(false);
@@ -238,12 +222,12 @@ namespace Run4YourLife.Player
 
         private void OnControllerColliderHit(ControllerColliderHit hit)
         {       
-            if(m_isJumping && RunnerHitItsHead(hit))
+            if(m_stateMachine.State == States.Jump && RunnerHitItsHead(hit))
             {
                 OnRunnerHitItsHead();
             }
 
-            if (!m_isJumping && m_characterController.isGrounded)
+            if (m_stateMachine.State != States.Jump && m_characterController.isGrounded)
             {
                 m_velocity.y = 0.0f;
             }
@@ -413,13 +397,20 @@ namespace Run4YourLife.Player
             GravityAndDrag();
             Move();
 
-            if (!m_characterController.isGrounded)
+            if(m_runnerControlScheme.Move.Value() != 0 || m_velocity.sqrMagnitude > 0)
             {
-                m_stateMachine.ChangeState(States.CoyoteMove);
+                if (!m_characterController.isGrounded)
+                {
+                    m_stateMachine.ChangeState(States.CoyoteMove);
+                }
+                else if(m_inputController.Started(m_runnerControlScheme.Jump))
+                {
+                    m_stateMachine.ChangeState(States.Jump);
+                }
             }
-            else if(m_inputController.Started(m_runnerControlScheme.Jump))
+            else
             {
-                m_stateMachine.ChangeState(States.Jump);
+                m_stateMachine.ChangeState(States.Idle);
             }
         }
 
@@ -472,8 +463,6 @@ namespace Run4YourLife.Player
 
         private void Jump_Enter()
         {
-            m_isJumping = true;
-
             AudioManager.Instance.PlaySFX(m_jumpClip);
             m_animator.SetTrigger(RunnerAnimation.jump);
 
@@ -481,12 +470,6 @@ namespace Run4YourLife.Player
             m_velocity.y = HeightToVelocity(m_runnerAttributeController.GetAttribute(RunnerAttribute.JumpHeight));
             m_jump_previousPositionY = transform.position.y;
         }
-
-        private void Jump_Exit()
-        {
-            m_isJumping = false;
-        }
-
         private void Jump_Update()
         {
             GravityAndDrag();
@@ -519,7 +502,6 @@ namespace Run4YourLife.Player
         private void SecondJump_Enter()
         {
             m_canDoubleJumpAgain = false;
-            m_isJumping = true;
 
             AudioManager.Instance.PlaySFX(m_fartClip);
             fartReceiver.PlayFx();
@@ -532,11 +514,6 @@ namespace Run4YourLife.Player
             m_velocity.y = HeightToVelocity(jumpHeight);
 
             m_secondJump_previousYPosition = transform.position.y;
-        }
-
-        private void SecondJump_Exit()
-        {
-            m_isJumping = false;
         }
 
         private void SecondJump_Update()
@@ -660,8 +637,6 @@ namespace Run4YourLife.Player
         {
             m_canDoubleJumpAgain = true;
 
-            m_isBouncing = true;
-
             AudioManager.Instance.PlaySFX(m_bounceClip);
             if (m_isFacingRight)
             {
@@ -696,11 +671,6 @@ namespace Run4YourLife.Player
             }
         }
 
-        private void Bounce_Exit()
-        {
-            m_isBouncing = false;
-        }
-
         #endregion
     
         #region Dash
@@ -711,7 +681,6 @@ namespace Run4YourLife.Player
         {
             AudioManager.Instance.PlaySFX(m_dashClip);
 
-            m_isDashing = true;
             m_isReadyToDash = false;
             m_animator.SetTrigger(RunnerAnimation.dash);
 
@@ -728,7 +697,6 @@ namespace Run4YourLife.Player
         {
             m_velocity.x = 0;   
             m_dashTrail.gameObject.SetActive(false);
-            m_isDashing = false;
         }
 
         private void Dash_Update()
@@ -737,7 +705,15 @@ namespace Run4YourLife.Player
             if (Time.time >= m_dash_endTime)
             {
                 StartCoroutine(YieldHelper.WaitForSeconds(() => m_isReadyToDash = true, m_dashCooldown)); // set ready to dash after some time
-                m_stateMachine.ChangeState(States.Move);
+                
+                if(m_characterController.isGrounded)
+                {
+                    m_stateMachine.ChangeState(States.Move);
+                }
+                else
+                {
+                    m_stateMachine.ChangeState(States.Fall);
+                }
             }
         }
 
@@ -755,7 +731,6 @@ namespace Run4YourLife.Player
 
         private void Push_Enter()
         {
-            m_isBeingImpulsed = true;
             m_horizontalDrag = m_impulseHorizontalDrag;
 
             m_animator.SetTrigger(RunnerAnimation.push);
@@ -767,7 +742,6 @@ namespace Run4YourLife.Player
         private void Push_Exit()
         {
             m_horizontalDrag = m_baseHorizontalDrag;
-            m_isBeingImpulsed = false;
         }
 
         private void Push_Update()
