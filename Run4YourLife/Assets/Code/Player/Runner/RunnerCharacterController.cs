@@ -12,22 +12,7 @@ using Run4YourLife.InputManagement;
 using Run4YourLife.Utils;
 
 namespace Run4YourLife.Player
-{
-    public enum States {
-        Idle,
-        Move, 
-        CoyoteMove,
-        Jump,
-        SecondJump,
-        JumpSpeedReduction,
-        JumpHover,
-        Fall,
-        Bounce,
-        Dash,
-        Push,
-        Shock
-    }
-    
+{    
     [RequireComponent(typeof(RunnerControlScheme))]
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(RunnerAttributeController))]
@@ -36,6 +21,21 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(RunnerBounceController))]
     public class RunnerCharacterController : MonoBehaviour
     {
+        private enum States {
+            Idle,
+            Move, 
+            CoyoteMove,
+            Jump,
+            SecondJump,
+            JumpSpeedReduction,
+            JumpHover,
+            Fall,
+            Bounce,
+            Dash,
+            Push,
+            Shock
+        }
+
         #region InspectorVariables
 
         [SerializeField]
