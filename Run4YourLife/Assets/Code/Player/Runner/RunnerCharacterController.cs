@@ -721,11 +721,11 @@ namespace Run4YourLife.Player
     
         #region Push
 
-        private Vector3 _push_force;
+        private Vector3 m_push_force;
 
         public void Push(Vector3 force)
         {
-            _push_force = force;
+            m_push_force = force;
             m_stateMachine.ChangeState(States.Push);
         }
 
@@ -734,9 +734,9 @@ namespace Run4YourLife.Player
             m_horizontalDrag = m_impulseHorizontalDrag;
 
             m_animator.SetTrigger(RunnerAnimation.push);
-            m_animator.SetFloat(RunnerAnimation.pushForce, _push_force.x);
+            m_animator.SetFloat(RunnerAnimation.pushForce, m_push_force.x);
 
-            m_velocity += _push_force;
+            m_velocity += m_push_force;
         }
 
         private void Push_Exit()
@@ -752,6 +752,38 @@ namespace Run4YourLife.Player
             if(m_velocity.x == 0f)
             {
                 m_stateMachine.ChangeState(States.Move);
+            }
+        }
+
+        #endregion
+
+        #region Shock
+
+        private float m_shock_endTime;
+
+        void Shock(float shockLenght)
+        {
+            m_shock_endTime = Time.time + shockLenght;
+            m_stateMachine.ChangeState(States.Shock);
+        }
+
+        private void Shock_Enter()
+        {
+            //Activate particle effects
+            //Activate shock animation
+        }
+
+        private void Shock_Exit()
+        {
+            //Deactivate particle effects
+            //Deactivate animation
+        }
+
+        private void Shock_Update()
+        {
+            if(Time.time >= m_shock_endTime)
+            {
+                m_stateMachine.ChangeState(States.Idle);
             }
         }
 
