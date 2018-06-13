@@ -18,6 +18,7 @@ namespace Run4YourLife.Player.CustomEditors
         SerializedProperty timeToBreak;
         SerializedProperty adviseParticles;
         SerializedProperty earthPikeEffect;
+        SerializedProperty wallGameObject;
         private void OnEnable()
         {
             base.Init();
@@ -32,6 +33,7 @@ namespace Run4YourLife.Player.CustomEditors
             timeToBreak = serializedObject.FindProperty("timeToBreak");
             adviseParticles = serializedObject.FindProperty("adviseParticles");
             earthPikeEffect = serializedObject.FindProperty("earthPikeEffect");
+            wallGameObject = serializedObject.FindProperty("wallGameObject");
         }
 
         public override void OnGuiPhase1()
@@ -42,10 +44,11 @@ namespace Run4YourLife.Player.CustomEditors
             EditorGUILayout.PropertyField(timeToBreak);
             EditorGUILayout.PropertyField(adviseParticles);
             EditorGUILayout.PropertyField(earthPikeEffect);
+
         }
         public override void OnGuiPhase2()
         {
-            base.OnGuiPhase2();
+            EditorGUILayout.PropertyField(wallGameObject);
         }
 
         public override void OnGuiPhase3()

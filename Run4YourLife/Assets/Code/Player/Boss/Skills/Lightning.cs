@@ -103,7 +103,8 @@ namespace Run4YourLife.Player {
                 }
                 else if(phase != SkillBase.Phase.PHASE1)
                 {
-                    BossPoolManager.Instance.InstantiateBossElement(trapGameObject, hit.point);
+                    GameObject instance = BossPoolManager.Instance.InstantiateBossElement(trapGameObject, hit.point);
+                    instance.transform.SetParent(hit.transform);
                 }
             }
             lighningEffect.SetActive(true);

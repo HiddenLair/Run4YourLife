@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
+using Run4YourLife.GameManagement;
 
 using UnityEngine;
 
@@ -26,6 +26,9 @@ namespace Run4YourLife.Player {
 
         [SerializeField]
         private GameObject earthPikeEffect;
+
+        [SerializeField]
+        private GameObject wallGameObject;
 
         #endregion
 
@@ -217,7 +220,16 @@ namespace Run4YourLife.Player {
         }
         private void Break()
         {
+            if(phase != SkillBase.Phase.PHASE1)
+            {
+                GameObject instance = BossPoolManager.Instance.InstantiateBossElement(wallGameObject, transform.position);
+                Vector3 currentScale = new Vector3(maxPercent, maxPercent, maxPercent);
+                instance.transform.localScale = currentScale * width;
+                instance.transform.SetParent(transform.parent);
+            }
+
             //We should make a copy of the pike, but allready broken, and break it here
+
             gameObject.SetActive(false);
         }
     }
