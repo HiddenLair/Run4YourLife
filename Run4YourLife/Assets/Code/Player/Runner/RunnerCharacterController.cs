@@ -564,9 +564,9 @@ namespace Run4YourLife.Player
 
         #endregion
 
-        #region JumpSpeedRedution
+        #region JumpSpeedReduction
 
-        private void JumpSpeedRedution_Update()
+        private void JumpSpeedReduction_Update()
         {
             m_velocity.y = Mathf.Lerp(m_velocity.y, 0.0f, m_releaseJumpButtonVelocityReductor * Time.deltaTime);
 
