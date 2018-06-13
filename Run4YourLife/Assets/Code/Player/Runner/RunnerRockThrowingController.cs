@@ -32,7 +32,7 @@ namespace Run4YourLife.Player {
         private PlayerInstance m_playerInstance;
         private InputController m_inputController;
         private RunnerControlScheme m_runnerControlScheme;
-        private new Collider collider;
+        private Collider m_collider;
 
         private Transform m_graphics;
 
@@ -43,7 +43,7 @@ namespace Run4YourLife.Player {
             m_playerInstance = GetComponent<PlayerInstance>();
             m_inputController = GetComponent<InputController>();
             m_runnerControlScheme = GetComponent<RunnerControlScheme>();
-            collider = GetComponent<Collider>();
+            m_collider = GetComponent<Collider>();
 
             m_graphics = transform.Find("Graphics");
             Debug.Assert(m_graphics != null, "Graphics object not found in hierarchy");
@@ -64,7 +64,7 @@ namespace Run4YourLife.Player {
         {
             AudioManager.Instance.PlaySFX(m_throwRockClip);
             GameObject rock = Instantiate(m_rockPrefab, m_rockInstantiationTransform.position, Quaternion.identity);
-            Physics.IgnoreCollision(rock.GetComponent<Collider>(), collider);
+            Physics.IgnoreCollision(rock.GetComponent<Collider>(), m_collider);
             Rigidbody rigidbody = rock.GetComponent<Rigidbody>();
             rigidbody.velocity = GetThrowVelocity(force, angle);
 

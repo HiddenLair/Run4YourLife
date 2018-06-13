@@ -1,58 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System;
-using UnityEditor;
+
 using UnityEngine;
 
 namespace Run4YourLife.Player {
-
-    [CustomEditor(typeof(EarthPike))]
-    [CanEditMultipleObjects]
-    public class EarthPikeEditor : BaseSkillEditor
-    {
-        SerializedProperty width;
-        SerializedProperty delayHit;
-        SerializedProperty timeToGrow;
-        SerializedProperty timeToBreak;
-        SerializedProperty adviseParticles;
-        SerializedProperty earthPikeEffect;
-        private void OnEnable()
-        {
-            base.Init();
-            Init();
-        }
-
-        new public void Init()
-        {
-            width = serializedObject.FindProperty("width");
-            delayHit = serializedObject.FindProperty("delayHit");
-            timeToGrow = serializedObject.FindProperty("timeToGrow"); 
-            timeToBreak = serializedObject.FindProperty("timeToBreak");
-            adviseParticles = serializedObject.FindProperty("adviseParticles");
-            earthPikeEffect = serializedObject.FindProperty("earthPikeEffect");
-        }
-
-        public override void OnGuiPhase1()
-        {
-            EditorGUILayout.PropertyField(width);
-            EditorGUILayout.PropertyField(delayHit);
-            EditorGUILayout.PropertyField(timeToGrow);
-            EditorGUILayout.PropertyField(timeToBreak);
-            EditorGUILayout.PropertyField(adviseParticles);
-            EditorGUILayout.PropertyField(earthPikeEffect);
-        }
-        public override void OnGuiPhase2()
-        {
-            base.OnGuiPhase2();
-        }
-
-        public override void OnGuiPhase3()
-        {
-            base.OnGuiPhase3();
-        }
-    }
-
-    public class EarthPike : SkillBase {
+    public class EarthSpike : SkillBase {
 
         #region Inspector
 

@@ -5,12 +5,12 @@ public class ForceAspectRatio : MonoBehaviour
 {
     private const float TARGET_ASPECT_RATIO = 16.0f / 9.0f;
 
-    private new Camera camera;
+    private Camera m_camera;
     private float previousWindowAspectRatio;
 
     void Awake()
     {
-        camera = GetComponent<Camera>();
+        m_camera = GetComponent<Camera>();
         previousWindowAspectRatio = -1.0f;
     }
 
@@ -20,7 +20,7 @@ public class ForceAspectRatio : MonoBehaviour
 
         if(currentWindowAspectRatio != previousWindowAspectRatio)
         {
-            Rect rect = camera.rect;
+            Rect rect = m_camera.rect;
             float scaleHeight = currentWindowAspectRatio / TARGET_ASPECT_RATIO;
 
             if(scaleHeight < 1.0f)
@@ -36,7 +36,7 @@ public class ForceAspectRatio : MonoBehaviour
                 rect.x = (1.0f - scalewidth) / 2.0f; rect.y = 0.0f;
             }
 
-            camera.rect = rect;
+            m_camera.rect = rect;
             previousWindowAspectRatio = currentWindowAspectRatio;
         }
     }

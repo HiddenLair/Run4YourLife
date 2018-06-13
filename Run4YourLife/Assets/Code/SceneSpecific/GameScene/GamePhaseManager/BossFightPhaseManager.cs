@@ -37,7 +37,7 @@ namespace Run4YourLife.GameManagement
 
         private PlayerSpawner m_playerSpawner;
 
-        private GameObject m_ui; // TODO this value is allways null
+        private GameObject m_ui;
 
         #endregion
 
@@ -45,6 +45,8 @@ namespace Run4YourLife.GameManagement
 
         private void Awake()
         {
+            m_ui = GameObject.FindGameObjectWithTag(Tags.UI);
+
             m_playerSpawner = GetComponent<PlayerSpawner>();
             Debug.Assert(m_playerSpawner != null);
         }
