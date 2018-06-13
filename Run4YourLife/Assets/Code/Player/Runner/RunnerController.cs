@@ -108,7 +108,7 @@ namespace Run4YourLife.Player
         public void Impulse(Vector3 force)
         {
             if (!ConsumeShieldIfAviable() && !m_recentlyRevived) {
-                m_runnerCharacterController.Impulse(force);
+                m_runnerCharacterController.Push(force);
             }
         }
 

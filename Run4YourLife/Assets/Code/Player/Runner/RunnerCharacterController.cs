@@ -1,16 +1,18 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-using Run4YourLife.InputManagement;
-using System;
 using UnityEngine.EventSystems;
+
+using MonsterLove.StateMachine;
+
 using Run4YourLife.GameManagement;
 using Run4YourLife.GameManagement.AudioManagement;
+using Run4YourLife.InputManagement;
 using Run4YourLife.Utils;
 
 namespace Run4YourLife.Player
-{
+{    
     [RequireComponent(typeof(RunnerControlScheme))]
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(RunnerAttributeController))]
@@ -19,6 +21,21 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(RunnerBounceController))]
     public class RunnerCharacterController : MonoBehaviour
     {
+        private enum States {
+            Idle,
+            Move, 
+            CoyoteMove,
+            Jump,
+            SecondJump,
+            JumpSpeedReduction,
+            JumpHover,
+            Fall,
+            Bounce,
+            Dash,
+            Push,
+            Shock
+        }
+
         #region InspectorVariables
 
         [SerializeField]
@@ -82,10 +99,10 @@ namespace Run4YourLife.Player
         private FXReceiver fartReceiver;
 
         [SerializeField]
-        private FXReceiver leftdustReceiver;
+        private FXReceiver leftReceiver;
 
         [SerializeField]
-        private FXReceiver rightdustReceiver;
+        private FXReceiver rightReceiver;
 
         #endregion
 
@@ -105,20 +122,12 @@ namespace Run4YourLife.Player
 
         #endregion
 
-        #region Private Variables
+        #region Private Members
 
-        private WaitForSeconds m_waitForSecondsCoyoteGroundedTime;
-        private WaitForSeconds m_waitForSecondsDashCooldown;
+        private StateMachine<States> m_stateMachine;
 
-        private bool m_isGroundedOrCoyoteGrounded;
-        private bool m_isJumping;
-        private bool m_isBouncing;
-        private bool m_wantsToBounce;
-        private bool m_isBeingImpulsed;
-        private bool m_isDashing;
         private bool m_isReadyToDash = true;
         private bool m_ceilingCollision;
-        private bool m_jumpedWhileFalling;
         private bool m_isFacingRight = true;
 
         private Vector3 m_velocity;
@@ -128,6 +137,8 @@ namespace Run4YourLife.Player
         private bool m_checkOutOfScreen;
 
         private float m_idleTimer;
+
+        private bool m_canDoubleJumpAgain;
 
         private readonly float m_baseHorizontalDrag = 2f; // Hard coded because DragToVelocity calculates with a magic number
 
@@ -144,13 +155,15 @@ namespace Run4YourLife.Player
 
         public Vector3 ExternalVelocity { get; set; }
 
-        public bool IsDashing { get { return m_isDashing; } }
+        public bool IsDashing { get { return m_stateMachine.State == States.Dash; } }
 
         public bool CheckOutScreen { get { return m_checkOutOfScreen; } set { m_checkOutOfScreen = value; } }
         #endregion
 
-        void Awake()
+        private void Awake()
         {
+            m_stateMachine = StateMachine<States>.Initialize(this);
+
             m_runnerControlScheme = GetComponent<RunnerControlScheme>();
             m_characterController = GetComponent<CharacterController>();
             m_runnerAttributeController = GetComponent<RunnerAttributeController>();
@@ -169,18 +182,14 @@ namespace Run4YourLife.Player
 
             m_gravity = m_baseGravity;
             m_horizontalDrag = m_baseHorizontalDrag;
-
-            m_waitForSecondsCoyoteGroundedTime = new WaitForSeconds(m_coyoteGroundedTime);
-            m_waitForSecondsDashCooldown = new WaitForSeconds(m_dashCooldown);
         }
 
         private void OnEnable()
         {
-            StartCoroutine(CoyoteGroundedCoroutine());
-            StartCoroutine(AnimationCallbacks.OnTransitionFromTo(m_animator, "idle", "correr", () => Dust(), true));
+            ResetMembers();
             m_runnerControlScheme.Active = true;
 
-            ResetMembers();
+            m_stateMachine.ChangeState(States.Idle);
         }
 
         private void ResetMembers()
@@ -189,11 +198,6 @@ namespace Run4YourLife.Player
             m_horizontalDrag = m_baseHorizontalDrag;
             m_velocity = Vector3.zero;
 
-            m_isGroundedOrCoyoteGrounded = false;
-            m_isJumping = false;
-            m_isBouncing = false;
-            m_isBeingImpulsed = false;
-            m_isDashing = false;
             m_isReadyToDash = true;
             m_ceilingCollision = false;
             m_dashTrail.gameObject.SetActive(false);
@@ -204,81 +208,46 @@ namespace Run4YourLife.Player
         {
             StopAllCoroutines();
             m_runnerControlScheme.Active = false;
-        }
+        }      
 
-        private IEnumerator CoyoteGroundedCoroutine()
+        private void Update()
         {
-            while(true)
+            if(m_isReadyToDash && m_inputController.Started(m_runnerControlScheme.Dash))
             {
-                if (m_characterController.isGrounded)
-                {
-                    m_isGroundedOrCoyoteGrounded = true;
-                }
-                else
-                {
-                    if(m_isGroundedOrCoyoteGrounded)
-                    {
-                        yield return m_waitForSecondsCoyoteGroundedTime;
-                        m_isGroundedOrCoyoteGrounded = false;
-                    }
-                }
-                yield return null;
+                m_stateMachine.ChangeState(States.Dash);
+            }
+        }  
+
+        #region Collision
+
+        private void OnControllerColliderHit(ControllerColliderHit hit)
+        {       
+            if(m_stateMachine.State == States.Jump && RunnerHitItsHead(hit))
+            {
+                OnRunnerHitItsHead();
+            }
+
+            if (m_stateMachine.State != States.Jump && m_characterController.isGrounded)
+            {
+                m_velocity.y = 0.0f;
             }
         }
 
-        void Update()
+        private bool RunnerHitItsHead(ControllerColliderHit hit)
         {
-            if (!m_isBeingImpulsed && !m_isDashing)
-            {
-                GravityAndDrag();
-
-                if (m_isGroundedOrCoyoteGrounded && m_inputController.Started(m_runnerControlScheme.Jump))
-                {
-                    Jump();
-                }
-
-                if (m_isReadyToDash && m_inputController.Started(m_runnerControlScheme.Dash))
-                {
-                    Dash();
-                }
-
-                Move();
-            }
-            m_animator.SetFloat(RunnerAnimation.ySpeed,m_velocity.y);
-            m_animator.SetBool(RunnerAnimation.isGrounded, m_characterController.isGrounded);
+            Vector3 hitVector = hit.point - transform.position;
+            return hitVector.y > 0.3f && hitVector.x == 0;
         }
 
-        private void Dash()
+        private void OnRunnerHitItsHead()
         {
-            StartCoroutine(DashCoroutine());
+            m_ceilingCollision = true;
+            m_velocity.y = 0;
         }
 
-        private IEnumerator DashCoroutine()
-        {
-            AudioManager.Instance.PlaySFX(m_dashClip);
+        #endregion
 
-            m_isDashing = true;
-            m_isReadyToDash = false;
-            m_animator.SetTrigger(RunnerAnimation.dash);
-
-            m_dashTrail.gameObject.SetActive(true);
-
-            float facingRight = m_isFacingRight ? 1 : -1;
-            m_velocity.x = facingRight * m_dashDistance/m_dashTime;
-            m_velocity.y = 0.0f;
-            float endTime = Time.time + m_dashTime;
-            while (Time.time < endTime)
-            {
-                MoveCharacterContoller(m_velocity * Time.deltaTime);
-                yield return null;
-            }
-            m_velocity.x = 0;   
-            m_dashTrail.gameObject.SetActive(false);
-
-            m_isDashing = false;
-            yield return m_waitForSecondsDashCooldown;
-            m_isReadyToDash = true;
-        }
+        #region Movement Utilities
 
         private void GravityAndDrag()
         {
@@ -298,31 +267,6 @@ namespace Run4YourLife.Player
             {
                 m_velocity.x = 0;
             }
-        }
-
-        private void OnControllerColliderHit(ControllerColliderHit hit)
-        {       
-            if(m_isJumping && RunnerHitItsHead(hit))
-            {
-                OnRunnerHitItsHead();
-            }
-
-            if (!m_isJumping && m_characterController.isGrounded)
-            {
-                m_velocity.y = 0.0f;
-            }
-        }
-
-        private bool RunnerHitItsHead(ControllerColliderHit hit)
-        {
-            Vector3 hitVector = hit.point - transform.position;
-            return hitVector.y > 0.3f && hitVector.x == 0;
-        }
-
-        void OnRunnerHitItsHead()
-        {
-            m_ceilingCollision = true;
-            m_velocity.y = 0;
         }
 
         private void Move()
@@ -361,6 +305,9 @@ namespace Run4YourLife.Player
             }
 
             m_animator.SetFloat(RunnerAnimation.xSpeed, Mathf.Abs(movement.x));
+            m_animator.SetFloat(RunnerAnimation.ySpeed,m_velocity.y);
+            m_animator.SetBool(RunnerAnimation.isGrounded, m_characterController.isGrounded);
+
             LookAtMovingSide();
             UpdateIdleTimer(movement);
         }
@@ -391,13 +338,113 @@ namespace Run4YourLife.Player
             m_animator.SetFloat(RunnerAnimation.idleTime, m_idleTimer);
         }
 
+        #endregion
+
+        #region ParticlesManagement
+
+        private void PlayDustParticles()
+        {            
+            if (m_isFacingRight)
+            {
+                rightReceiver.PlayFx();
+            }
+            else
+            {
+                leftReceiver.PlayFx();
+            }
+        }
+
+        #endregion
+
+        #region Idle
+
+        private void Idle_Enter()
+        {
+            m_canDoubleJumpAgain = true;
+        }
+
+        private void Idle_Update()
+        {
+            GravityAndDrag();
+            Move();
+
+            if(m_runnerControlScheme.Move.Value() != 0 || m_velocity.sqrMagnitude != 0f)
+            {
+                m_stateMachine.ChangeState(States.Move);
+            }
+            else if(m_inputController.Started(m_runnerControlScheme.Jump))
+            {
+                m_stateMachine.ChangeState(States.Jump);
+            }
+        }
+
+        #endregion
+
+        #region Move
+
+        private void Move_Enter()
+        {
+            m_canDoubleJumpAgain = true;
+
+            if(m_stateMachine.LastState == States.Idle)
+            {
+                PlayDustParticles();
+            }
+        }
+
+        private void Move_Update()
+        {
+            GravityAndDrag();
+            Move();
+
+            if(m_runnerControlScheme.Move.Value() != 0 || m_velocity.sqrMagnitude > 0)
+            {
+                if (!m_characterController.isGrounded)
+                {
+                    m_stateMachine.ChangeState(States.CoyoteMove);
+                }
+                else if(m_inputController.Started(m_runnerControlScheme.Jump))
+                {
+                    m_stateMachine.ChangeState(States.Jump);
+                }
+            }
+            else
+            {
+                m_stateMachine.ChangeState(States.Idle);
+            }
+        }
+
+        #endregion
+
+        #region CoyoteMove
+
+        private float m_coyoteMove_endTime;
+
+        private void CoyoteMove_Enter()
+        {
+            m_coyoteMove_endTime = Time.time + m_coyoteGroundedTime;
+        }
+
+        private void CoyoteMove_Update()
+        {
+            GravityAndDrag();
+            Move();
+
+            if (m_characterController.isGrounded)
+            {
+                m_stateMachine.ChangeState(States.Move);
+            }
+            else if(Time.time >= m_coyoteMove_endTime)
+            {
+                m_stateMachine.ChangeState(States.Fall);
+            }
+        }
+
+        #endregion
+
         #region Jump
 
-        private void Jump()
-        {
-            m_isGroundedOrCoyoteGrounded = false;
-            StartCoroutine(JumpCoroutine());
-        }
+        private float m_jump_previousPositionY;
 
         private float HeightToVelocity(float height)
         {
@@ -414,142 +461,47 @@ namespace Run4YourLife.Player
             return 2.1129f * dragDistance;
         }
 
-        private IEnumerator WaitUntilApexOfJumpOrReleaseButtonOrCeiling(bool ignoreJump)
+        private void Jump_Enter()
         {
-            float previousPositionY = transform.position.y;
-            yield return null;
-
-            while (m_runnerControlScheme.Jump.Persists() && 
-                    previousPositionY < transform.position.y && 
-                    !m_ceilingCollision)
-            {                
-                previousPositionY = transform.position.y;
-                yield return null;
-            }
-        }
-
-        #endregion
-
-        public void AddVelocity(Vector3 velocity)
-        {
-            m_velocity += velocity;
-        }
-
-        #region Impulse
-
-        public void Impulse(Vector3 force)
-        {
-            StartCoroutine(ImpulseCoroutine(force));
-        }
-
-        IEnumerator ImpulseCoroutine(Vector3 force)
-        {
-            m_isBeingImpulsed = true;
-            m_horizontalDrag = m_impulseHorizontalDrag;
-
-            m_animator.SetTrigger(RunnerAnimation.push);
-            m_animator.SetFloat(RunnerAnimation.pushForce, force.x);
-
-            AddVelocity(force);
-
-            while(m_velocity.x != 0.0f)
-            {
-                yield return null;
-                GravityAndDrag();
-                MoveCharacterContoller(m_velocity * Time.deltaTime);
-            }
-
-            float endOfMovement = Time.time + 0.5f;
-            while (Time.time < endOfMovement)
-            {
-                yield return null;
-                GravityAndDrag();
-                MoveCharacterContoller(m_velocity * Time.deltaTime);
-            }
-
-            m_horizontalDrag = m_baseHorizontalDrag;
-            m_isBeingImpulsed = false;
-        }
-
-        #endregion
-
-        #region DustParticlesManagement
-
-        void Dust()
-        {            
-            if (m_isFacingRight)
-            {
-                rightdustReceiver.PlayFx();
-            }
-            else
-            {
-                leftdustReceiver.PlayFx();
-            }
-        }
-
-        #endregion
-
-
-
-        IEnumerator JumpCoroutine()
-        {
-            m_isJumping = true;
-
             AudioManager.Instance.PlaySFX(m_jumpClip);
             m_animator.SetTrigger(RunnerAnimation.jump);
 
             //set vertical velocity to the velocity needed to reach maxJumpHeight
             m_velocity.y = HeightToVelocity(m_runnerAttributeController.GetAttribute(RunnerAttribute.JumpHeight));
+            m_jump_previousPositionY = transform.position.y;
+        }
+        private void Jump_Update()
+        {
+            GravityAndDrag();
+            Move();
 
-
-            //Wait Until end apex of jump or hit the ceiling or jump
-            float previousPositionY = transform.position.y;
-            yield return null;
-
-            while (m_runnerControlScheme.Jump.Persists() && 
-                    previousPositionY < transform.position.y && 
-                    !m_ceilingCollision)
-            {                
-                previousPositionY = transform.position.y;
-                yield return null;
-            }
-
-            m_isJumping = false;
-
-            //Transitions to next states
-            if(m_runnerControlScheme.Jump.Persists() && !m_ceilingCollision)
+            if (m_ceilingCollision || m_runnerControlScheme.Jump.Ended() || m_jump_previousPositionY >= transform.position.y)
             {
-                StartCoroutine(JumpHoverCoroutine());
+                //Transitions to next states
+                if(m_runnerControlScheme.Jump.Persists() && !m_ceilingCollision)
+                {
+                    m_stateMachine.ChangeState(States.JumpSpeedReduction);
+                }
+                else
+                {
+                    m_ceilingCollision = false;
+
+                    m_stateMachine.ChangeState(States.Fall);
+                }
             }
-            else
-            {
-                m_ceilingCollision = false;
-                StartCoroutine(FallingCoroutine(true));
-            }
+
+            m_jump_previousPositionY = transform.position.y;
         }
 
-        IEnumerator JumpHoverCoroutine()
+        #endregion
+
+        #region SecondJump
+
+        private float m_secondJump_previousYPosition;
+
+        private void SecondJump_Enter()
         {
-            while(m_velocity.y > 0f && m_runnerControlScheme.Jump.Persists())
-            {
-                m_velocity.y = Mathf.Lerp(m_velocity.y, 0.0f, m_releaseJumpButtonVelocityReductor * Time.deltaTime);
-                yield return null;
-            }
-
-            m_gravity = m_hoverGravity;
-
-            float endTime = Time.time + m_hoverDuration;
-            yield return new WaitUntil(() => Time.time >= endTime || m_runnerControlScheme.Jump.Ended() || m_characterController.isGrounded || m_isBouncing);
-
-            m_gravity = m_baseGravity;
-
-            //Transitions to next states
-            StartCoroutine(FallingCoroutine(true));
-        }
-
-        IEnumerator SecondJumpCoroutine()
-        {
-            m_isJumping = true;
+            m_canDoubleJumpAgain = false;
 
             AudioManager.Instance.PlaySFX(m_fartClip);
             fartReceiver.PlayFx();
@@ -561,81 +513,130 @@ namespace Run4YourLife.Player
             }
             m_velocity.y = HeightToVelocity(jumpHeight);
 
-
-            //Wait Until end apex of jump or hit the ceiling or end jump
-            float previousPositionY = transform.position.y;
-            yield return null;
-
-            while (m_runnerControlScheme.Jump.Persists() && 
-                    previousPositionY < transform.position.y && 
-                    !m_ceilingCollision)
-            {                
-                previousPositionY = transform.position.y;
-                yield return null;
-            }
-
-            m_isJumping = false;
-
-            //Transitions to next states
-            if(m_runnerControlScheme.Jump.Persists() && !m_ceilingCollision)
-            {
-                StartCoroutine(SecondJumpHoverCoroutine());
-            }
-            else
-            {
-                m_ceilingCollision = false;
-                StartCoroutine(FallingCoroutine(false));
-            }
+            m_secondJump_previousYPosition = transform.position.y;
         }
 
-        IEnumerator SecondJumpHoverCoroutine()
+        private void SecondJump_Update()
         {
-            while(m_velocity.y > 0f && m_runnerControlScheme.Jump.Persists())
+            GravityAndDrag();
+            Move();
+
+            if (m_ceilingCollision || m_runnerControlScheme.Jump.Ended() || m_secondJump_previousYPosition >= transform.position.y)
             {
-                m_velocity.y = Mathf.Lerp(m_velocity.y, 0.0f, m_releaseJumpButtonVelocityReductor * Time.deltaTime);
-                yield return null;
+                //Transitions to next states
+                if(m_runnerControlScheme.Jump.Persists() && !m_ceilingCollision)
+                {
+                    m_stateMachine.ChangeState(States.JumpSpeedReduction);
+                }
+                else
+                {
+                    m_ceilingCollision = false;
+
+                    m_stateMachine.ChangeState(States.Fall);
+                }
             }
 
-            m_gravity = m_hoverGravity;
-
-            float endTime = Time.time + m_hoverDuration;
-            yield return new WaitUntil(() => Time.time >= endTime || m_runnerControlScheme.Jump.Ended() || m_characterController.isGrounded || m_isBouncing);
-
-            m_gravity = m_baseGravity;
-
-            //Transitions to next states
-            StartCoroutine(FallingCoroutine(false));
+            m_secondJump_previousYPosition = transform.position.y;
         }
 
-        IEnumerator FallingCoroutine(bool canSecondJump)
+        #endregion
+
+        #region JumpSpeedReduction
+
+        private void JumpSpeedReduction_Update()
+        {
+            m_velocity.y = Mathf.Lerp(m_velocity.y, 0.0f, m_releaseJumpButtonVelocityReductor * Time.deltaTime);
+
+            GravityAndDrag();
+            Move();
+
+            if(m_velocity.y <= 0f || m_runnerControlScheme.Jump.Ended())
+            {
+                m_stateMachine.ChangeState(States.JumpHover);
+            }
+        }
+
+        #endregion
+
+        #region JumpHover
+        
+        private float m_secondJumpHover_EndTimer;
+
+        void JumpHover_Enter()
+        {
+            m_gravity = m_hoverGravity;
+            m_secondJumpHover_EndTimer = Time.time + m_hoverDuration;
+        }
+
+        private void JumpHover_Exit()
+        {
+            m_gravity = m_baseGravity;
+        }
+
+        private void JumpHover_Update()
+        {
+            GravityAndDrag();
+            Move();
+
+            if (Time.time >= m_secondJumpHover_EndTimer || m_runnerControlScheme.Jump.Ended())
+            {
+                m_stateMachine.ChangeState(States.Fall);
+            }
+        }
+
+        #endregion
+
+        #region Fall
+
+        private void Fall_Enter()
         {
             m_gravity += m_endOfJumpGravity;
-            yield return new WaitUntil(() => m_characterController.isGrounded || m_isBouncing || m_runnerControlScheme.Jump.Started());
-            m_gravity -= m_endOfJumpGravity;
+        }
 
-            if(!m_isBouncing && m_runnerControlScheme.Jump.Started())
+        private void Fall_Exit()
+        {
+            m_gravity -= m_endOfJumpGravity;
+        }
+
+        private void Fall_Update()
+        {
+            GravityAndDrag();
+            Move();
+
+            if (m_runnerControlScheme.Jump.Started())
             {
                 if(!m_runnerBounceController.ExecuteBounceIfPossible()) // This will trigger a call that will start a bounce
                 {
-                    if(canSecondJump)
+                    if(m_canDoubleJumpAgain)
                     {
-                        StartCoroutine(SecondJumpCoroutine());
+                        m_stateMachine.ChangeState(States.SecondJump);
                     }
                 }
             }
+            else if(m_characterController.isGrounded)
+            {
+                m_stateMachine.ChangeState(States.Move);
+            }
         }
 
+        #endregion
+
+        #region Bounce
+
+        private Vector3 _bounce_bounceForce;
+
+        private float m_bounce_previousY;
 
         public void Bounce(Vector3 bounceForce)
         {
-            StartCoroutine(BounceCoroutine(bounceForce));
+            _bounce_bounceForce = bounceForce;
+            m_stateMachine.ChangeState(States.Bounce);            
         }
 
-        IEnumerator BounceCoroutine(Vector3 bounceForce)
+        private IEnumerator Bounce_Enter()
         {
-            m_isBouncing = true;
+            m_canDoubleJumpAgain = true;
 
-            //On Bounce Started
             AudioManager.Instance.PlaySFX(m_bounceClip);
             if (m_isFacingRight)
             {
@@ -646,23 +647,146 @@ namespace Run4YourLife.Player
                 leftbounceReceiver.PlayFx();
             }
 
-            // Set speed values
-            m_velocity.x = DragToVelocity(bounceForce.x);
-            m_velocity.y = HeightToVelocity(bounceForce.y);
+            m_velocity.x = DragToVelocity(_bounce_bounceForce.x);
+            m_velocity.y = HeightToVelocity(_bounce_bounceForce.y);
 
-            yield return null; // skip one frame because jump.started may be true
-
-            //Wait until apex of jump or jump
-            float previousPositionY = transform.position.y;
-            while (previousPositionY <= transform.position.y && !m_runnerControlScheme.Jump.Started())
-            {
-                previousPositionY = transform.position.y;
-                yield return null;
-            }
-
-            m_isBouncing = false;
-
-            StartCoroutine(FallingCoroutine(true));
+            m_bounce_previousY = transform.position.y;
+            // bounce may have been cause by a jump we have to wait one frame 
+            //so that it does not detect the same input as a second jump
+            yield return null; 
         }
+
+        private void Bounce_Update()
+        {
+            GravityAndDrag();
+            Move();
+
+            if (m_jump_previousPositionY >= transform.position.y)
+            {
+                m_stateMachine.ChangeState(States.Fall);
+            }
+            else if(m_runnerControlScheme.Jump.Started())
+            {
+                m_stateMachine.ChangeState(States.SecondJump);
+            }
+        }
+
+        #endregion
+    
+        #region Dash
+
+        private float m_dash_endTime;
+
+        private void Dash_Enter()
+        {
+            AudioManager.Instance.PlaySFX(m_dashClip);
+
+            m_isReadyToDash = false;
+            m_animator.SetTrigger(RunnerAnimation.dash);
+
+            m_dashTrail.gameObject.SetActive(true);
+
+            float facingRight = m_isFacingRight ? 1 : -1;
+            m_velocity.x = facingRight * m_dashDistance/m_dashTime;
+            m_velocity.y = 0.0f;
+            
+            m_dash_endTime = Time.time + m_dashTime;
+        }
+
+        void Dash_Exit()
+        {
+            m_velocity.x = 0;   
+            m_dashTrail.gameObject.SetActive(false);
+        }
+
+        private void Dash_Update()
+        {
+            MoveCharacterContoller(m_velocity * Time.deltaTime);
+            if (Time.time >= m_dash_endTime)
+            {
+                StartCoroutine(YieldHelper.WaitForSeconds(() => m_isReadyToDash = true, m_dashCooldown)); // set ready to dash after some time
+                
+                if(m_characterController.isGrounded)
+                {
+                    m_stateMachine.ChangeState(States.Move);
+                }
+                else
+                {
+                    m_stateMachine.ChangeState(States.Fall);
+                }
+            }
+        }
+
+        #endregion
+    
+        #region Push
+
+        private Vector3 m_push_force;
+
+        public void Push(Vector3 force)
+        {
+            m_push_force = force;
+            m_stateMachine.ChangeState(States.Push);
+        }
+
+        private void Push_Enter()
+        {
+            m_horizontalDrag = m_impulseHorizontalDrag;
+
+            m_animator.SetTrigger(RunnerAnimation.push);
+            m_animator.SetFloat(RunnerAnimation.pushForce, m_push_force.x);
+
+            m_velocity += m_push_force;
+        }
+
+        private void Push_Exit()
+        {
+            m_horizontalDrag = m_baseHorizontalDrag;
+        }
+
+        private void Push_Update()
+        {
+            GravityAndDrag();
+            MoveCharacterContoller(m_velocity * Time.deltaTime);
+
+            if(m_velocity.x == 0f)
+            {
+                m_stateMachine.ChangeState(States.Move);
+            }
+        }
+
+        #endregion
+
+        #region Shock
+
+        private float m_shock_endTime;
+
+        void Shock(float shockLenght)
+        {
+            m_shock_endTime = Time.time + shockLenght;
+            m_stateMachine.ChangeState(States.Shock);
+        }
+
+        private void Shock_Enter()
+        {
+            //Activate particle effects
+            //Activate shock animation
+        }
+
+        private void Shock_Exit()
+        {
+            //Deactivate particle effects
+            //Deactivate animation
+        }
+
+        private void Shock_Update()
+        {
+            if(Time.time >= m_shock_endTime)
+            {
+                m_stateMachine.ChangeState(States.Idle);
+            }
+        }
+
+        #endregion
     }
 }
