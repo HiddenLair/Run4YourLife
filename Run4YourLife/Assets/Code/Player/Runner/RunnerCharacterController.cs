@@ -163,7 +163,7 @@ namespace Run4YourLife.Player
         private void Awake()
         {
             m_stateMachine = StateMachine<States>.Initialize(this);
-            m_stateMachine.Changed += (state) => Debug.Log(state); // Debug statement for characters
+            //m_stateMachine.Changed += (state) => Debug.Log(state); // Debug statement for characters
 
             m_runnerControlScheme = GetComponent<RunnerControlScheme>();
             m_characterController = GetComponent<CharacterController>();
