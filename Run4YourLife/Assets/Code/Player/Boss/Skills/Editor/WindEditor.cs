@@ -12,6 +12,10 @@ namespace Run4YourLife.Player.CustomEditors
         SerializedProperty windDuration;
         SerializedProperty windFillScreenTime;
         SerializedProperty windParticles;
+        SerializedProperty flyingItem;
+        SerializedProperty timeBetweenFlyingItems;
+        SerializedProperty tornado;
+        SerializedProperty timeBetweenTornados;
 
         private void OnEnable()
         {
@@ -27,6 +31,10 @@ namespace Run4YourLife.Player.CustomEditors
             windDuration = serializedObject.FindProperty("windDuration");
             windFillScreenTime = serializedObject.FindProperty("windFillScreenTime");
             windParticles = serializedObject.FindProperty("windParticles");
+            flyingItem = serializedObject.FindProperty("flyingItem");
+            timeBetweenFlyingItems = serializedObject.FindProperty("timeBetweenFlyingItems");
+            tornado = serializedObject.FindProperty("tornado");
+            timeBetweenTornados = serializedObject.FindProperty("timeBetweenTornados");
         }
 
         public override void OnGuiPhase1()
@@ -40,11 +48,14 @@ namespace Run4YourLife.Player.CustomEditors
         }
         public override void OnGuiPhase2()
         {
+            EditorGUILayout.PropertyField(flyingItem);
+            EditorGUILayout.PropertyField(timeBetweenFlyingItems);
         }
 
         public override void OnGuiPhase3()
         {
-            base.OnGuiPhase3();
+            EditorGUILayout.PropertyField(tornado);
+            EditorGUILayout.PropertyField(timeBetweenTornados);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using System;
+using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.Player
 {
@@ -29,11 +30,26 @@ namespace Run4YourLife.Player
         [SerializeField]
         private GameObject windParticles;
 
+        [SerializeField]
+        private GameObject flyingItem;
+
+        [SerializeField]
+        private float timeBetweenFlyingItems;
+
+        [SerializeField]
+        private GameObject tornado;
+
+        [SerializeField]
+        private float timeBetweenTornados;
+
         #endregion
 
         #region Variables
 
         private float actualFillPercent =0.0f;
+
+        private float flyingItemTimer = 0.0f;
+        private float tornadoTimer = 0.0f;
 
         #endregion
 
@@ -48,6 +64,9 @@ namespace Run4YourLife.Player
             transform.localScale = newScale;
 
             windParticles.SetActive(true);
+
+            tornadoTimer = timeBetweenTornados;
+            flyingItemTimer = timeBetweenFlyingItems;
 
             StartCoroutine(FillScreen());
         }
@@ -93,9 +112,48 @@ namespace Run4YourLife.Player
                 transform.localScale = actualScale;
                 transform.position = actualPos;
 
+                if(phase != SkillBase.Phase.PHASE1)
+                {
+                    if (flyingItemTimer >= timeBetweenFlyingItems)
+                    {
+                        Vector3 flyingItemPos = new Vector3(topRight.x, UnityEngine.Random.Range(bottomLeft.y, topRight.y), transform.position.z);
+                        BossPoolManager.Instance.InstantiateBossElement(flyingItem, flyingItemPos);
+                        flyingItemTimer = 0.0f;
+                    }
+                    flyingItemTimer += Time.deltaTime;
+                }
+                if(phase == SkillBase.Phase.PHASE3)
+                {
+                    if (tornadoTimer >= timeBetweenTornados)
+                    {
+                        Vector3 tornadoPos = GetTornadoSpawn();
+                        BossPoolManager.Instance.InstantiateBossElement(tornado, tornadoPos);
+                        tornadoTimer = 0.0f;
+                    }
+                    tornadoTimer += Time.deltaTime;
+                }
+
                 yield return null;
             }
             StartCoroutine(EndWind());
+        }
+
+        private Vector3 GetTornadoSpawn()
+        {
+            Bounds colliderBounds = GetComponentInChildren<Collider>().bounds;
+            Vector3 pos;
+            pos.z = transform.position.z;
+            while (true)
+            {
+                pos.x = UnityEngine.Random.Range(colliderBounds.min.x, colliderBounds.max.x);
+                pos.y = UnityEngine.Random.Range(colliderBounds.min.y, colliderBounds.max.y);
+
+                Collider[] colliders = Physics.OverlapBox(pos,Vector3.one,Quaternion.identity,Layers.Stage,QueryTriggerInteraction.Ignore);
+                if(colliders.Length == 0)
+                {
+                    return pos;
+                }
+            }
         }
 
         IEnumerator EndWind()
