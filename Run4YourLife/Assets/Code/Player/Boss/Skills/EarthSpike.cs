@@ -112,6 +112,7 @@ namespace Run4YourLife.Player {
             Vector3 newPos = transform.position;
             newPos.y = collider.bounds.min.y;
             transform.position = newPos;
+            transform.SetParent(collider.transform.parent);
         }
 
         public override void StartSkill()

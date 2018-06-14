@@ -36,6 +36,11 @@ namespace Run4YourLife.Interactables
             }
         }
 
+        public void ManualBreak()
+        {
+            Break();
+        }
+
         private void Break()
         {
             if (receiver != null)
