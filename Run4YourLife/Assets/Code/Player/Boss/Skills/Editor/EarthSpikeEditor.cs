@@ -1,10 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-using UnityEngine;
-using UnityEditor;
-
-using Run4YourLife.Player;
+﻿using UnityEditor;
 
 namespace Run4YourLife.Player.CustomEditors
 {

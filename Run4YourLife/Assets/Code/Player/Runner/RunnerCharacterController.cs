@@ -142,6 +142,8 @@ namespace Run4YourLife.Player
 
         private readonly float m_baseHorizontalDrag = 2f; // Hard coded because DragToVelocity calculates with a magic number
 
+
+
         #endregion
 
         #region Attributes
@@ -152,6 +154,8 @@ namespace Run4YourLife.Player
                 return m_velocity;
             }
         }
+
+        public float WindForceRelative { get; set; }
 
         public Vector3 ExternalVelocity { get; set; }
 
@@ -202,6 +206,7 @@ namespace Run4YourLife.Player
             m_isReadyToDash = true;
             m_ceilingCollision = false;
             m_dashTrail.gameObject.SetActive(false);
+            WindForceRelative = 0.0f;
             m_animator.Rebind();
         }
 
@@ -274,27 +279,14 @@ namespace Run4YourLife.Player
         {
             float horizontal = m_inputController.Value(m_runnerControlScheme.Move);
 
-            Vector3 modifiers = AddModifiersToSpeed();
-
+            Vector3 windMovement = (Vector3.left * m_runnerAttributeController.GetAttribute(RunnerAttribute.Speed) * Time.deltaTime)*WindForceRelative;
+            Debug.Log(WindForceRelative);
             Vector3 inputMovement = transform.right * (horizontal * m_runnerAttributeController.GetAttribute(RunnerAttribute.Speed) * Time.deltaTime);
-            Vector3 totalMovement = inputMovement + (m_velocity + modifiers) * Time.deltaTime + ExternalVelocity * Time.deltaTime;
+            Vector3 totalMovement = inputMovement + (m_velocity + windMovement) * Time.deltaTime + ExternalVelocity * Time.deltaTime;
 
             ExternalVelocity = Vector3.zero;
 
             MoveCharacterContoller(totalMovement);
-        }
-
-        private Vector3 AddModifiersToSpeed()
-        {
-            Vector3 toReturn = new Vector3(0, 0, 0);
-
-            Wind windModifier = GetComponent<Wind>();
-            if(windModifier)
-            {
-                toReturn.x += windModifier.GetWindForce();
-            }
-
-            return toReturn;
         }
 
         private void MoveCharacterContoller(Vector3 movement)
