@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
+using System.Collections.Generic;
 
 namespace Run4YourLife.SceneSpecific.OptionsMenu
 {
@@ -14,56 +9,69 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
         [SerializeField]
         private TextMeshProUGUI resolutionText;
 
-        private Resolution[] availableResolutions;
-        private int resolutionIndex;        
+        private int resolutionIndex = -1;
+        private List<Resolution> availableResolutions = new List<Resolution>();
 
         protected override void Awake()
         {
             base.Awake();
-            availableResolutions = Screen.resolutions;
 
-            for (int i = 0; i < availableResolutions.Length; ++i)
-            {
-                if (availableResolutions[i].width == Screen.currentResolution.width &&
-                   availableResolutions[i].height == Screen.currentResolution.height)
-                {
-                    resolutionIndex = i;
-                }
-            }
-
-            UpdateUI();
-        }
-
-        private void SetResolution(int resIndex)
-        {
-            Screen.SetResolution(availableResolutions[resIndex].width, availableResolutions[resIndex].height, Screen.fullScreen);
-        }
-
-        private void UpdateUI()
-        {
-            resolutionText.text = availableResolutions[resolutionIndex].width + " x " + availableResolutions[resolutionIndex].height;
+            BuildResolutionsList();
+            FindInitialResolutionIndex();
+            UpdateResolutionText();
         }
 
         protected override void OnArrowEvent(MoveEvent moveEvent)
         {
-            switch(moveEvent)
+            resolutionIndex += 2 * (int)moveEvent - 1;
+            resolutionIndex = Mathf.Clamp(resolutionIndex, 0, availableResolutions.Count - 1);
+
+            UpdateResolution();
+        }
+
+        private void BuildResolutionsList()
+        {
+            // Find all available resolutions while ignoring their refresh rate
+            // They are sorted by their width and height
+
+            Resolution[] resolutions = Screen.resolutions;
+
+            availableResolutions.Add(resolutions[0]);
+
+            foreach(Resolution resolution in resolutions)
             {
-                case MoveEvent.Left:
-                    if (resolutionIndex > 0)
-                    {
-                        resolutionIndex--;
-                        SetResolution(resolutionIndex);
-                    }
-                    break;
-                case MoveEvent.Right:
-                    if (resolutionIndex < availableResolutions.Length-1)
-                    {
-                        resolutionIndex++;
-                        SetResolution(resolutionIndex);
-                    }
-                    break;
+                Resolution lastResolutionAdded = availableResolutions[availableResolutions.Count - 1];
+
+                if(resolution.width != lastResolutionAdded.width || resolution.height != lastResolutionAdded.height)
+                {
+                    availableResolutions.Add(resolution);
+                }
             }
-            UpdateUI();
+        }
+
+        private void FindInitialResolutionIndex()
+        {
+            resolutionIndex = availableResolutions.Count - 1;
+
+            for(int i = 0; i < availableResolutions.Count; ++i)
+            {
+                if(availableResolutions[i].width == Screen.width && availableResolutions[i].height == Screen.height)
+                {
+                    resolutionIndex = i;
+                    break;
+                }
+            }
+        }
+
+        private void UpdateResolution()
+        {
+            Screen.SetResolution(availableResolutions[resolutionIndex].width, availableResolutions[resolutionIndex].height, Screen.fullScreen);
+            UpdateResolutionText();
+        }
+
+        private void UpdateResolutionText()
+        {
+            resolutionText.text = availableResolutions[resolutionIndex].width + " x " + availableResolutions[resolutionIndex].height;
         }
     }
 }

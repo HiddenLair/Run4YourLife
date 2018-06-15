@@ -1,22 +1,18 @@
 ﻿using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace Run4YourLife.SceneSpecific.OptionsMenu
 {
     public class GraphicsSwitch : MenuEntryArrowed
     {
-        public TextMeshProUGUI m_graphicsText;
+        [SerializeField]
+        private TextMeshProUGUI m_graphicsText;
 
         protected override void Awake()
         {
             base.Awake();
-            UpdateUI();
-        }
 
-        private void UpdateUI()
-        {
-            m_graphicsText.SetText(QualitySettings.names[QualitySettings.GetQualityLevel()]);
+            UpdateGraphicsText();
         }
 
         protected override void OnArrowEvent(MoveEvent moveEvent)
@@ -30,7 +26,13 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
                     QualitySettings.IncreaseLevel();
                     break;
             }
-            UpdateUI();
+
+            UpdateGraphicsText();
+        }
+
+        private void UpdateGraphicsText()
+        {
+            m_graphicsText.SetText(QualitySettings.names[QualitySettings.GetQualityLevel()]);
         }
     }
 }
