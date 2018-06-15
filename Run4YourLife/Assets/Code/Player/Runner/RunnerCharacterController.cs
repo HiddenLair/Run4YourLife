@@ -280,7 +280,6 @@ namespace Run4YourLife.Player
             float horizontal = m_inputController.Value(m_runnerControlScheme.Move);
 
             Vector3 windMovement = (Vector3.left * m_runnerAttributeController.GetAttribute(RunnerAttribute.Speed) * Time.deltaTime)*WindForceRelative;
-            Debug.Log(WindForceRelative);
             Vector3 inputMovement = transform.right * (horizontal * m_runnerAttributeController.GetAttribute(RunnerAttribute.Speed) * Time.deltaTime);
             Vector3 totalMovement = inputMovement + (m_velocity + windMovement) * Time.deltaTime + ExternalVelocity * Time.deltaTime;
 

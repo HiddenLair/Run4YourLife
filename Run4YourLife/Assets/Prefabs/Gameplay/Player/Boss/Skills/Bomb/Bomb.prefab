@@ -38,11 +38,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4733664109319810}
   - component: {fileID: 65687488831705326}
-  - component: {fileID: 114521536942929264}
+  - component: {fileID: 114383793237765762}
   - component: {fileID: 114521514397068992}
   - component: {fileID: 82909533667519590}
   m_Layer: 9
-  m_Name: ExplosionTrap
+  m_Name: Bomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -114,7 +114,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1674844452342998}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -7.761451, y: -0.29477406, z: 2.408472}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4475558695245332}
@@ -285,6 +285,36 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114383793237765762
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1674844452342998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61a0db5801fcd884f8af618e1265be8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase: 0
+  m_skillTriggerClip: {fileID: 8300000, guid: 4a235b16048326246adf6fdd4f2cecee, type: 3}
+  m_cooldown: 1
+  m_trapDetonationClip: {fileID: 8300000, guid: c7089bbb0eef8b94989d7d2458034bcb,
+    type: 3}
+  m_fadeInTime: 1
+  rayCheckerLenght: 100
+  gravity: -9.8
+  initialSpeed: -5
+  indicatorParticles: {fileID: 1751776643570596, guid: fa8134d7703a4c34bb96cae308ef5c96,
+    type: 2}
+  m_explosionRatius: 1.5
+  activationParticles: {fileID: 1751776643570596, guid: fa8134d7703a4c34bb96cae308ef5c96,
+    type: 2}
+  fireGameObject: {fileID: 0}
+  timeBetweenFire: 0
+  fireDuration: 0
+  timeBetweenJumps: 0
+  jumpHeight: 0
 --- !u!114 &114521514397068992
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -305,29 +335,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114521536942929264
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1674844452342998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ff8f2f097d240743b317e140ad7c3a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_trapDetonationClip: {fileID: 8300000, guid: c7089bbb0eef8b94989d7d2458034bcb,
-    type: 3}
-  m_fadeInTime: 0.3
-  m_cooldown: 7.5
-  rayCheckerLenght: 100
-  gravity: -9.8
-  initialSpeed: -15
-  indicatorParticles: {fileID: 1764183873561094, guid: 5a224e9b89d444a4598bf89dff6adf9a,
-    type: 2}
-  m_explosionRatius: 1.2
-  activationParticles: {fileID: 1394625515734414, guid: f264e05d59f3182498f76aa564400582,
-    type: 2}
 --- !u!198 &198789257350375134
 ParticleSystem:
   m_ObjectHideFlags: 1
