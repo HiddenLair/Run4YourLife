@@ -11,10 +11,14 @@ public class BossFightGemManager : MonoBehaviour
     [SerializeField]
     private List<GameObject> unactiveGems;
 
+    [SerializeField]
+    private List<GameObject> activeGemSupports;
+
     private List<GameObject> activeGems = new List<GameObject>();
 
     public void ActivateGems(GameObject gemToActivate)
     {
+        gemToActivate.SetActive(false);
         unactiveGems.Remove(gemToActivate);
         activeGems.Add(gemToActivate);
 

@@ -48,8 +48,14 @@ namespace Run4YourLife.Interactables
                 receiver.PlayFx();
             }
 
-            gameObject.SetActive(false);
-            m_onBrokenByDash.Invoke();
+            if (m_onBrokenByDash.GetPersistentEventCount() == 0)
+            {
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                m_onBrokenByDash.Invoke();
+            }
         }
     }
 }
