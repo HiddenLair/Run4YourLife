@@ -23,6 +23,7 @@ namespace Run4YourLife.Player.CustomEditors
         SerializedProperty newLightningsDistance;
         SerializedProperty newLightningsDistanceProgresion;
         SerializedProperty lightningGameObject;
+        SerializedProperty maxNumberOfLightnings;
 
         private void OnEnable()
         {
@@ -44,6 +45,7 @@ namespace Run4YourLife.Player.CustomEditors
             newLightningsDistance = serializedObject.FindProperty("newLightningsDistance");
             newLightningsDistanceProgresion = serializedObject.FindProperty("newLightningsDistanceProgresion");
             lightningGameObject = serializedObject.FindProperty("lightningGameObject");
+            maxNumberOfLightnings = serializedObject.FindProperty("maxNumberOfLightnings");
         }
 
         public override void OnGuiPhase1()
@@ -68,6 +70,7 @@ namespace Run4YourLife.Player.CustomEditors
             EditorGUILayout.PropertyField(newLightningsDistance);
             EditorGUILayout.PropertyField(newLightningsDistanceProgresion);
             EditorGUILayout.PropertyField(lightningGameObject);
+            EditorGUILayout.PropertyField(maxNumberOfLightnings);
         }
     }
 }

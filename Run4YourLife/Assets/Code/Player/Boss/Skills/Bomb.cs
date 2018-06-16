@@ -94,10 +94,14 @@ namespace Run4YourLife.Player
             return true;
         }
 
-        public override void StartSkill()
+        protected override void Reset()
         {
             speed.y = initialSpeed;
+            destroyOnLanding = false;
+        }
 
+        protected override void StartSkillImplementation()
+        {
             RaycastHit info;
             if (Physics.Raycast(transform.position, Vector3.down, out info, rayCheckerLenght, Layers.Stage))
             {

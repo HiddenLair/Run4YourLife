@@ -37,10 +37,10 @@ namespace Run4YourLife.Player {
 
         #region Variables
 
-        private int maximumIterNumToCheck = 5;
+        private const int maximumIterNumToCheck = 5;
         private float maxPercent;
         //Add a little offset to vectors, in order to raycast well
-        float offset = 0.1f;
+        private const float offset = 0.1f;
 
         #endregion
 
@@ -123,7 +123,12 @@ namespace Run4YourLife.Player {
             transform.SetParent(actualParent);
         }
 
-        public override void StartSkill()
+        protected override void Reset()
+        {
+            maxPercent = 0.0f;
+        }
+
+        protected override void StartSkillImplementation()
         {
             float radius = width / 2;
             Vector3 centerPos = transform.position;

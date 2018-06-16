@@ -26,6 +26,13 @@ namespace Run4YourLife.Player
         {
             return true;
         }
-        virtual public void StartSkill() { }
+
+        virtual protected void Reset() { }
+
+        virtual public void StartSkill() {
+            Reset();
+            StartSkillImplementation();
+        }
+        virtual protected void StartSkillImplementation() { }
     }
 }

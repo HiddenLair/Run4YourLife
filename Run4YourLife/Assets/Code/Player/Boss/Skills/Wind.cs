@@ -53,7 +53,14 @@ namespace Run4YourLife.Player
 
         #endregion
 
-        public override void StartSkill()
+        protected override void Reset()
+        {
+            actualFillPercent = 0.0f;
+            tornadoTimer = timeBetweenTornados;
+            flyingItemTimer = timeBetweenFlyingItems;
+        }
+
+        protected override void StartSkillImplementation()
         {
             Camera mainCamera = Camera.main;
             Vector3 topRight = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, Math.Abs(mainCamera.transform.position.z - transform.position.z)));
@@ -64,10 +71,7 @@ namespace Run4YourLife.Player
             transform.localScale = newScale;
 
             windParticles.SetActive(true);
-
-            tornadoTimer = timeBetweenTornados;
-            flyingItemTimer = timeBetweenFlyingItems;
-
+           
             StartCoroutine(FillScreen());
         }
 

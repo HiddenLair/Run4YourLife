@@ -39,6 +39,8 @@ namespace Run4YourLife.Player {
         private float newLightningsDistanceProgresion;
         [SerializeField]
         private GameObject lightningGameObject;
+        [SerializeField]
+        private int maxNumberOfLightnings;
 
         #endregion
 
@@ -54,7 +56,12 @@ namespace Run4YourLife.Player {
             lightningDelay = new WaitForSeconds(delayHit);
         }
 
-        public override void StartSkill()
+        protected override void Reset()
+        {
+            oneLightningSideFinished = false;
+        }
+
+        protected override void StartSkillImplementation()
         {
             Vector3 position = transform.position;
             position.y = CameraManager.Instance.MainCamera.ScreenToWorldPoint(new Vector3(0, 0, Mathf.Abs(CameraManager.Instance.MainCamera.transform.position.z - transform.position.z))).y;
@@ -156,7 +163,7 @@ namespace Run4YourLife.Player {
             Camera mainCamera = Camera.main;
             float leftScreen = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, Math.Abs(mainCamera.transform.position.z - transform.position.z))).x;
 
-            if (position.x > leftScreen)
+            if (position.x > leftScreen && iterationNumber < maxNumberOfLightnings)
             {
                 StartCoroutine(StartNewLeftLightning(++iterationNumber, position));
             }
@@ -185,7 +192,7 @@ namespace Run4YourLife.Player {
             Camera mainCamera = Camera.main;
             float rightScreen = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, Math.Abs(mainCamera.transform.position.z - transform.position.z))).x;
 
-            if (position.x < rightScreen) {
+            if (position.x < rightScreen && iterationNumber < maxNumberOfLightnings) {
                 StartCoroutine(StartNewRightLightning(++iterationNumber,position));
             }
             else

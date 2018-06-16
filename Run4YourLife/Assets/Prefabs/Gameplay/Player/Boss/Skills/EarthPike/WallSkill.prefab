@@ -53,7 +53,6 @@ GameObject:
   - component: {fileID: 114114631040832786}
   - component: {fileID: 65938181299197256}
   - component: {fileID: 54073771859843826}
-  - component: {fileID: 114738417837508592}
   - component: {fileID: 114014028240481856}
   m_Layer: 9
   m_Name: WallSkill
@@ -100,7 +99,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1705394957324018}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -4.0571766, y: 25.789738, z: -59.603344}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4187672786156926}
@@ -186,10 +185,10 @@ Rigidbody:
   m_Mass: 10000
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 122
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!65 &65738815012924788
 BoxCollider:
@@ -262,17 +261,3 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114738417837508592
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1705394957324018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b1e1a3aca409f144b8651912e0abb3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  phase: 0
-  m_skillTriggerClip: {fileID: 0}
-  m_cooldown: 1
