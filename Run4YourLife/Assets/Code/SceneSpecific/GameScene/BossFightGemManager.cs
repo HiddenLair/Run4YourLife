@@ -26,6 +26,7 @@ public class BossFightGemManager : MonoBehaviour
 
     public void ActivateGems(Transform gemStand)
     {
+        activeGem.GetComponent<MoveThroughPoints>().enabled = false;
         activeGem.SetActive(false);
         unactiveGems.Remove(activeGem);
         activeGems.Add(activeGem);
