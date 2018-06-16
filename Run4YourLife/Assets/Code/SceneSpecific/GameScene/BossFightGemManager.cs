@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Run4YourLife.Utils;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,28 +13,38 @@ public class BossFightGemManager : MonoBehaviour
     private List<GameObject> unactiveGems;
 
     [SerializeField]
-    private List<GameObject> activeGemSupports;
+    private Transform activeGemPosition;
 
     private List<GameObject> activeGems = new List<GameObject>();
 
-    public void ActivateGems(GameObject gemToActivate)
+    public void ActivateGems(GameObject activatedGem)
     {
-        gemToActivate.SetActive(false);
-        unactiveGems.Remove(gemToActivate);
-        activeGems.Add(gemToActivate);
+        unactiveGems.Remove(activatedGem);
+        activeGems.Add(activatedGem);
 
-        if(unactiveGems.Count == 0)
+        StartCoroutine(YieldHelper.WaitForSeconds(() => MoveGemToStand(activatedGem), 1));
+
+        if (unactiveGems.Count == 0)
         {
             m_onAllGemsActive.Invoke();
         }
         else
         {
-            ActivateNextGem();
-        }
+            StartCoroutine(YieldHelper.WaitForSeconds(()=>ActivateNextGem(), 2));
+        }      
     }
 
-    private void ActivateNextGem()
+    public void MoveGemToStand(GameObject activatedGem)
     {
-        unactiveGems[0].SetActive(true);
+        activatedGem.transform.position += new Vector3(0, 0, 1.75f);
+    }
+
+    public void ActivateNextGem()
+    {
+        GameObject activeGem = unactiveGems[0];
+        activeGem.transform.position = activeGemPosition.position;
+
+        //FLASHY APPEAR WITH SOUND NEEDED
+        activeGem.SetActive(true);
     }
 }
