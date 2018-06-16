@@ -16,7 +16,15 @@ public class DestroyWallOnCollision : MonoBehaviour {
     {
         if (other.tag == Tags.Wall)
         {
-            other.gameObject.GetComponent<BreakByDash>().ManualBreak();
+            Transform currentTransform = other.gameObject.transform;
+            BreakByDash breaker= currentTransform.GetComponent<BreakByDash>();
+            while (breaker == null)
+            {
+                currentTransform = currentTransform.parent;
+                breaker = currentTransform.GetComponent<BreakByDash>();
+                Debug.Assert(currentTransform != transform.root);
+            }
+            breaker.ManualBreak();
         }
     }
 }

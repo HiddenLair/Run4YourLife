@@ -19,6 +19,9 @@ namespace Run4YourLife.Player {
         private float timeToGrow;
 
         [SerializeField]
+        private Collider stageCollider;
+
+        [SerializeField]
         private float timeToBreak;
 
         [SerializeField]
@@ -112,7 +115,12 @@ namespace Run4YourLife.Player {
             Vector3 newPos = transform.position;
             newPos.y = collider.bounds.min.y;
             transform.position = newPos;
-            transform.SetParent(collider.transform.parent);
+            Transform actualParent = collider.transform.parent;
+            while (actualParent.tag == Tags.Wall)
+            {
+                actualParent = actualParent.parent;
+            }
+            transform.SetParent(actualParent);
         }
 
         public override void StartSkill()
@@ -209,16 +217,29 @@ namespace Run4YourLife.Player {
             earthPikeEffect.SetActive(true);
             float growBySecond = maxPercent / timeToGrow;
             Vector3 increaseVector = new Vector3(growBySecond,growBySecond,growBySecond);
-            while (currentScale.magnitude < maxPercent)
+            while (CheckForSpace() && currentScale.magnitude < maxPercent)
             {
                 currentScale += increaseVector * Time.deltaTime;
                 transform.localScale = currentScale * width;
+                transform.Translate(0, 0, 0);
                 yield return null;
             }
             yield return new WaitForSeconds(timeToBreak);
             earthPikeEffect.SetActive(false);
             Break();
         }
+
+        private bool CheckForSpace()
+        {
+            bool ret = false;
+            RaycastHit info;
+            ret |= Physics.Raycast(stageCollider.bounds.center, Vector3.right, out info, stageCollider.bounds.extents.x,Layers.Stage,QueryTriggerInteraction.Ignore);
+            ret |= Physics.Raycast(stageCollider.bounds.center, Vector3.left, out info, stageCollider.bounds.extents.x, Layers.Stage, QueryTriggerInteraction.Ignore);
+            ret |= Physics.Raycast(stageCollider.bounds.center, Vector3.up, out info, stageCollider.bounds.extents.y, Layers.Stage, QueryTriggerInteraction.Ignore);
+
+            return !ret;
+        }
+
         private void Break()
         {
             if(phase != SkillBase.Phase.PHASE1)

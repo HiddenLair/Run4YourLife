@@ -9,6 +9,7 @@ namespace Run4YourLife.Player.CustomEditors
         SerializedProperty width;
         SerializedProperty delayHit;
         SerializedProperty timeToGrow;
+        SerializedProperty stageCollider;
         SerializedProperty timeToBreak;
         SerializedProperty adviseParticles;
         SerializedProperty earthPikeEffect;
@@ -23,7 +24,8 @@ namespace Run4YourLife.Player.CustomEditors
         {
             width = serializedObject.FindProperty("width");
             delayHit = serializedObject.FindProperty("delayHit");
-            timeToGrow = serializedObject.FindProperty("timeToGrow"); 
+            timeToGrow = serializedObject.FindProperty("timeToGrow");
+            stageCollider = serializedObject.FindProperty("stageCollider");
             timeToBreak = serializedObject.FindProperty("timeToBreak");
             adviseParticles = serializedObject.FindProperty("adviseParticles");
             earthPikeEffect = serializedObject.FindProperty("earthPikeEffect");
@@ -35,6 +37,7 @@ namespace Run4YourLife.Player.CustomEditors
             EditorGUILayout.PropertyField(width);
             EditorGUILayout.PropertyField(delayHit);
             EditorGUILayout.PropertyField(timeToGrow);
+            EditorGUILayout.PropertyField(stageCollider);
             EditorGUILayout.PropertyField(timeToBreak);
             EditorGUILayout.PropertyField(adviseParticles);
             EditorGUILayout.PropertyField(earthPikeEffect);

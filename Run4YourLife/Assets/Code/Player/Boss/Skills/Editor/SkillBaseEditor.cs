@@ -11,6 +11,7 @@ namespace Run4YourLife.Player.CustomEditors
     [CanEditMultipleObjects]
     public class SkillBaseEditor : Editor
     {
+        SerializedProperty prop;
         protected SerializedProperty phase;
         SerializedProperty m_skillTriggerClip;
         SerializedProperty m_cooldown;
@@ -22,6 +23,7 @@ namespace Run4YourLife.Player.CustomEditors
         {
             serializedObject.Update();
 
+            EditorGUILayout.PropertyField(prop, true, new GUILayoutOption[0]);
             EditorGUILayout.PropertyField(phase);
             EditorGUILayout.PropertyField(m_skillTriggerClip);
             EditorGUILayout.PropertyField(m_cooldown);
@@ -44,6 +46,7 @@ namespace Run4YourLife.Player.CustomEditors
 
         public void Init()
         {
+            prop = serializedObject.FindProperty("m_Script");
             phase = serializedObject.FindProperty("phase");
             m_skillTriggerClip = serializedObject.FindProperty("m_skillTriggerClip");
             m_cooldown = serializedObject.FindProperty("m_cooldown");
