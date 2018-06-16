@@ -15,14 +15,22 @@ public class BossFightGemManager : MonoBehaviour
     [SerializeField]
     private Transform activeGemPosition;
 
+    [SerializeField]
+    private float m_timeBetweenGems = 2;
+
+    [SerializeField]
+    private float m_timeToGoToStand = 0.75f;
+
     private List<GameObject> activeGems = new List<GameObject>();
+    private GameObject activeGem = null;
 
-    public void ActivateGems(GameObject activatedGem)
+    public void ActivateGems(Transform gemStand)
     {
-        unactiveGems.Remove(activatedGem);
-        activeGems.Add(activatedGem);
-
-        StartCoroutine(YieldHelper.WaitForSeconds(() => MoveGemToStand(activatedGem), 1));
+        activeGem.SetActive(false);
+        unactiveGems.Remove(activeGem);
+        activeGems.Add(activeGem);
+        
+        StartCoroutine(YieldHelper.WaitForSeconds(() => MoveGemToStand(gemStand), m_timeToGoToStand));
 
         if (unactiveGems.Count == 0)
         {
@@ -30,18 +38,19 @@ public class BossFightGemManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(YieldHelper.WaitForSeconds(()=>ActivateNextGem(), 2));
+            StartCoroutine(YieldHelper.WaitForSeconds(()=>ActivateNextGem(), m_timeBetweenGems));
         }      
     }
 
-    public void MoveGemToStand(GameObject activatedGem)
+    public void MoveGemToStand(Transform gemStand)
     {
-        activatedGem.transform.position += new Vector3(0, 0, 1.75f);
+        activeGem.transform.position = gemStand.position;
+        activeGem.SetActive(true);
     }
 
     public void ActivateNextGem()
     {
-        GameObject activeGem = unactiveGems[0];
+        activeGem = unactiveGems[0];
         activeGem.transform.position = activeGemPosition.position;
 
         //FLASHY APPEAR WITH SOUND NEEDED
