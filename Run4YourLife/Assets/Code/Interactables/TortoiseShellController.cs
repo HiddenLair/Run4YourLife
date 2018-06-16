@@ -16,6 +16,8 @@ namespace Run4YourLife.Interactables
         private float acceleration = 10.0f;
         [SerializeField]
         private float sinkMaxDistance = 5.0f;
+        [SerializeField]
+        private Animator animator;
         #endregion
 
         #region Variables
@@ -86,6 +88,8 @@ namespace Run4YourLife.Interactables
 
         private void MovePlayers(float speedValue)
         {
+            players.RemoveAll(p => !p.gameObject.activeInHierarchy);
+
             foreach (Transform transform in players)
             {
                 transform.Translate(new Vector3(0, speedValue * Time.deltaTime, 0), Space.World);
@@ -100,6 +104,7 @@ namespace Run4YourLife.Interactables
                 if (triggerLogicActive)
                 {
                     triggerLogicActive = false;
+                    animator.SetTrigger("Enter");
                     StartCoroutine(ChangeStateDelayed(State.SINKING, sinkDelay));
                 }
             }
