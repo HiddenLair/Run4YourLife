@@ -39,6 +39,8 @@ namespace Run4YourLife.GameManagement
 
         private GameObject m_ui;
 
+        private BossFightGemManager m_bossFightGemManager;
+
         #endregion
 
         #region Initialization
@@ -46,8 +48,8 @@ namespace Run4YourLife.GameManagement
         private void Awake()
         {
             m_ui = GameObject.FindGameObjectWithTag(Tags.UI);
-
             m_playerSpawner = GetComponent<PlayerSpawner>();
+            m_bossFightGemManager = GetComponent<BossFightGemManager>();
             Debug.Assert(m_playerSpawner != null);
         }
 
@@ -59,6 +61,7 @@ namespace Run4YourLife.GameManagement
         {
             m_playerSpawner.ActivateBoss();
             StartPhaseCommon();
+            StartCoroutine(YieldHelper.WaitForSeconds(() => m_bossFightGemManager.ActivateNextGem(), 3));
         }
 
         void StartPhaseCommon()
@@ -118,6 +121,7 @@ namespace Run4YourLife.GameManagement
             m_virtualCamera.transform.position = m_bossFightStartingCameraPositionDebug.position;
 
             StartPhaseCommon();
+            StartCoroutine(YieldHelper.WaitForSeconds(() => m_bossFightGemManager.ActivateNextGem(), 3));
         }
 
         public override void DebugEndPhase()
