@@ -1,4 +1,5 @@
-﻿using Run4YourLife.Utils;
+﻿using Run4YourLife.GameManagement.AudioManagement;
+using Run4YourLife.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,12 @@ public class BossFightGemManager : MonoBehaviour
 
     [SerializeField]
     private float m_timeToGoToStand = 0.75f;
+
+    [SerializeField]
+    private GameObject m_spawnParticles;
+
+    [SerializeField]
+    private AudioClip m_spawnSound;
 
     private List<GameObject> activeGems = new List<GameObject>();
     private GameObject activeGem = null;
@@ -52,9 +59,13 @@ public class BossFightGemManager : MonoBehaviour
     public void ActivateNextGem()
     {
         activeGem = unactiveGems[0];
-        activeGem.transform.position = activeGemPosition.position;
-
-        //FLASHY APPEAR WITH SOUND NEEDED
+        activeGem.transform.position = activeGemPosition.position;   
+        
+        //Add Particles (m_spawnParticles)
+        
         activeGem.SetActive(true);
+
+        AudioManager.Instance.PlaySFX(m_spawnSound);
+        Instantiate(m_spawnParticles, activeGem.transform.position, Quaternion.identity);
     }
 }
