@@ -7,6 +7,28 @@ public class FXManager : SingletonMonoBehaviour<FXManager> {
     public Transform fxDefaultParent;
     Dictionary<GameObject, List<GameObject>> fxPool = new Dictionary<GameObject, List<GameObject>>();
 
+    private Transform ParentForInstance(FXReceiver receiver, bool setAsParent)
+    {
+        Transform parent = fxDefaultParent;
+        if (setAsParent)
+        {
+            parent = receiver.transform;
+        }
+        return parent;
+    }
+
+    private GameObject AviableInstanceForPrefab(GameObject prefab)
+    {
+        foreach(GameObject instance in fxPool[prefab])
+        {
+            if (!instance.activeInHierarchy)
+            {
+                return instance;
+            }
+        }
+        return null;
+    }
+    
     public GameObject InstantiateFromReceiver(FXReceiver receiver,GameObject prefab,bool setAsParent = false)
     {
         if (!fxPool.ContainsKey(prefab))
@@ -14,28 +36,22 @@ public class FXManager : SingletonMonoBehaviour<FXManager> {
             fxPool.Add(prefab,new List<GameObject>());
         }
 
-        Transform parent = fxDefaultParent;
-        if (setAsParent)
-        {
-            parent = receiver.transform;
-        }
+        Transform parent = ParentForInstance(receiver, setAsParent);
 
-        List<GameObject> tempList = fxPool[prefab];
-        for(int i=0; i<tempList.Count; ++i)
+        GameObject instance = AviableInstanceForPrefab(prefab);
+        if(instance != null)
         {
-            GameObject tempG = tempList[i];
-            if (!tempG.activeInHierarchy)
-            {
-                tempG.transform.position = receiver.transform.position;
-                tempG.transform.rotation = receiver.transform.rotation;
-                tempG.transform.SetParent(parent);
-                tempG.SetActive(true);
-                return tempG;
-            }
+            instance.transform.position = receiver.transform.position;
+            instance.transform.rotation = receiver.transform.rotation;
+            instance.transform.SetParent(parent);
+            instance.SetActive(true);
         }
-        GameObject newG = Instantiate(prefab,receiver.transform.position,receiver.transform.rotation, parent);
-        tempList.Add(newG);
-        return newG;
+        else
+        {
+            instance = Instantiate(prefab,receiver.transform.position,receiver.transform.rotation, parent);
+            fxPool[prefab].Add(instance);
+        }
+        return instance;
     }
 
     public GameObject InstantiateFromValues(Vector3 position,Quaternion rotation, GameObject prefab, Transform parent=null)
