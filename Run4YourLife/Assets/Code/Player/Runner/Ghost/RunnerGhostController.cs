@@ -16,8 +16,6 @@ namespace Run4YourLife.Player {
         [SerializeField]
         [HideInInspector]
         private RunnerGhostControlScheme m_controlScheme;
-
-        private Camera m_camera;
         
         private void Reset()
         {
