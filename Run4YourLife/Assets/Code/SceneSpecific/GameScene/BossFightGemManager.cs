@@ -61,8 +61,6 @@ public class BossFightGemManager : MonoBehaviour
         activeGem = unactiveGems[0];
         activeGem.transform.position = activeGemPosition.position;   
         
-        //Add Particles (m_spawnParticles)
-        
         activeGem.SetActive(true);
 
         AudioManager.Instance.PlaySFX(m_spawnSound);

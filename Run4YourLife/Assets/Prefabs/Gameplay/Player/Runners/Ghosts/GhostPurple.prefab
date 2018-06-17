@@ -38,8 +38,8 @@ GameObject:
   - component: {fileID: 4854242608518792}
   - component: {fileID: 135040572192186148}
   - component: {fileID: 114863429849426290}
-  - component: {fileID: 114277883545484926}
   - component: {fileID: 54043490087742076}
+  - component: {fileID: 114576560282144636}
   m_Layer: 9
   m_Name: GhostPurple
   m_TagString: Untagged
@@ -159,7 +159,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
---- !u!114 &114277883545484926
+--- !u!114 &114576560282144636
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1541431132995286}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67d256071968d944793b20e43cfc5a0d, type: 3}
+  m_Script: {fileID: 11500000, guid: 89eb5f2e15475e44099bc2a463a4251d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114863429849426290
@@ -181,7 +181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd533a5bce7eb8c49a46be4599e06458, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  m_speed: 3
+  m_controlScheme: {fileID: 114576560282144636}
 --- !u!135 &135040572192186148
 SphereCollider:
   m_ObjectHideFlags: 1
