@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Run4YourLife.Utils
 {
     [RequireComponent(typeof(Animator))]
-    public class GameObjectEnablerTimelineController : MonoBehaviour
+    public class CameraEnablerTimelineController : MonoBehaviour
     {
         private const string ENABLE_STR = "Enable";
         private const string DISABLE_STR = "Disable";
@@ -24,7 +24,7 @@ namespace Run4YourLife.Utils
         private AnimatorEventData[] animatorEventsDatas;
 
         [SerializeField]
-        private GameObject[] gameObjects;
+        private Camera[] gameObjects;
 
         private Animator animator;
 
@@ -59,7 +59,7 @@ namespace Run4YourLife.Utils
         {
             if(gameObjectIndex < gameObjects.Length)
             {
-                gameObjects[gameObjectIndex].SetActive(true);
+                gameObjects[gameObjectIndex].enabled = true;
             }
         }
 
@@ -67,7 +67,7 @@ namespace Run4YourLife.Utils
         {
             if(gameObjectIndex < gameObjects.Length)
             {
-                gameObjects[gameObjectIndex].SetActive(false);
+                gameObjects[gameObjectIndex].enabled = false;
             }
         }
     }
