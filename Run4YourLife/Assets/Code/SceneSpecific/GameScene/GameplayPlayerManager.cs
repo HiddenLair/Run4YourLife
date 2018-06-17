@@ -192,7 +192,7 @@ namespace Run4YourLife.GameManagement {
             m_runnersAlive.Remove(runner);
 
             DeactivateRunner(playerHandle);
-            RunnerGhost(playerHandle,runner.transform.position);
+            ActivateRunnerGhost(playerHandle,runner.transform.position);
 
             if (runner.GetComponent<RunnerController>().GetReviveMode())
             {
@@ -204,7 +204,7 @@ namespace Run4YourLife.GameManagement {
             }
         }
 
-        private void RunnerGhost(PlayerHandle playerhandle, Vector3 position)
+        private void ActivateRunnerGhost(PlayerHandle playerhandle, Vector3 position)
         {
             GameObject ghost = m_ghostGameObject[playerhandle];
 

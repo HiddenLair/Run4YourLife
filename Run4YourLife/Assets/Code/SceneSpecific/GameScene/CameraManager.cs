@@ -9,12 +9,12 @@ namespace Run4YourLife.GameManagement
 
         public Camera MainCamera {
             get {
-                if(m_camera == null)
+                if(m_mainCamera == null)
                 {
-                    m_camera = Camera.main;
-                    Debug.Assert(m_camera != null, "Main Camera Not Found");
+                    m_mainCamera = Camera.main;
+                    Debug.Assert(m_mainCamera != null);
                 }
-                return m_camera;
+                return m_mainCamera;
             }
         }
 
@@ -23,13 +23,13 @@ namespace Run4YourLife.GameManagement
                 if (m_cinemachineBrain == null)
                 {
                     m_cinemachineBrain = MainCamera.GetComponent<CinemachineBrain>();
-                    Debug.Assert(m_cinemachineBrain != null, "Cinemachine Brain Not Found");
+                    Debug.Assert(m_cinemachineBrain != null);
                 }
                 return m_cinemachineBrain;
             }
         }
 
-        private Camera m_camera;
+        private Camera m_mainCamera;
         private CinemachineBrain m_cinemachineBrain;
 
         public void TransitionToCamera(ICinemachineCamera cinemachineCamera)
