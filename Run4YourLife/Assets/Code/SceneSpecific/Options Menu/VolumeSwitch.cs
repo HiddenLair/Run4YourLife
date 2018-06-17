@@ -6,6 +6,8 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
 {
     public class VolumeSwitch : MenuEntryArrowed
     {
+        private const float LOGARITHMIC_CORRECTION_POW = 1.75f;
+
         [SerializeField]
         private Sprite activeMusicalNote;
         
@@ -37,12 +39,12 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
 
         private float ComputeVolume()
         {
-            return volumeLevel / (float)musicalNotes.Length;
+            return Mathf.Pow(volumeLevel / (float)musicalNotes.Length, LOGARITHMIC_CORRECTION_POW);
         }
 
         private int ComputeVolumeLevel()
         {
-            return (int)(AudioListener.volume * musicalNotes.Length);
+            return (int)(Mathf.Pow(AudioListener.volume * Mathf.Pow(musicalNotes.Length, LOGARITHMIC_CORRECTION_POW), 1.0f / LOGARITHMIC_CORRECTION_POW));
         }
 
         private void UpdateVolume(bool updateNote)
