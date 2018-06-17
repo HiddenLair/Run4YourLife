@@ -61,6 +61,8 @@ namespace Run4YourLife.Player
         private Transform fatherTransformStorage;
         private float fatherInitialY;
 
+        private Fire[] fireScripts;
+
         #endregion
 
         private void Awake()
@@ -69,6 +71,11 @@ namespace Run4YourLife.Player
             m_renderer = GetComponentInChildren<Renderer>();
             Debug.Assert(m_renderer != null);
             m_collider.enabled = false;
+
+            if(phase != SkillBase.Phase.PHASE1)
+            {
+                fireScripts = GetComponentsInChildren<Fire>();
+            }
 
             speed.y = initialSpeed;
 
@@ -80,7 +87,7 @@ namespace Run4YourLife.Player
             StopAllCoroutines();
             if (fireGameObject != null)
             {
-                fireGameObject.SetActive(false);
+               // fireGameObject.SetActive(false);
             }
         }
 
@@ -98,6 +105,10 @@ namespace Run4YourLife.Player
         {
             speed.y = initialSpeed;
             destroyOnLanding = false;
+            //foreach (Fire f in fireScripts)
+            //{
+            //    f.Stop();
+            //}
         }
 
         protected override void StartSkillImplementation()
@@ -179,9 +190,15 @@ namespace Run4YourLife.Player
             while (true)
             {
                 yield return new WaitForSeconds(timeBetweenFire);
-                fireGameObject.SetActive(true);
-                yield return new WaitForSeconds(fireDuration);
-                fireGameObject.SetActive(false);
+                //foreach(Fire f in fireScripts)
+                //{
+                //    f.Play();
+                //}
+                //yield return new WaitForSeconds(fireDuration);
+                //foreach (Fire f in fireScripts)
+                //{
+                //    f.Stop();
+                //}
             }
         }
 
