@@ -15,7 +15,6 @@ public class CoconutController : MonoBehaviour {
     {
         m_rigidbody = GetComponent<Rigidbody>();   
         Reset();
- 
     }
 
     public void Fall()
