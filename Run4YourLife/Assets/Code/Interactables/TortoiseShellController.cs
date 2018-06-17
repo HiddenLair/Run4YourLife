@@ -31,7 +31,6 @@ namespace Run4YourLife.Interactables
         private bool changingStateFlag = false;
         #endregion
 
-        // Update is called once per frame
         void Update()
         {
             switch (state)

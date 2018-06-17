@@ -54,7 +54,7 @@ namespace Run4YourLife.Player
         {
             transform.position = bounceable.GetStartingBouncePosition(m_runnerCharacterController);
             m_runnerCharacterController.Bounce(bounceable.BounceForce);
-            bounceable.BouncedOn();    
+            bounceable.BouncedOn();
         }
 
         private void OnDrawGizmosSelected()

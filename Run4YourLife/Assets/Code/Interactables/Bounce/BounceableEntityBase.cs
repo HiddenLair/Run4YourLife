@@ -9,9 +9,20 @@ namespace Run4YourLife.Interactables
     {
         public abstract Vector3 BounceForce { get; }
 
+        private FXReceiver m_bounceParticle;
+
+        protected virtual void Awake()
+        {
+            m_bounceParticle = GetComponentInChildren<FXReceiver>();
+            Debug.Assert(m_bounceParticle != null);
+        }
+
         public abstract Vector3 GetStartingBouncePosition(RunnerCharacterController runnerCharacterController);
         public abstract bool ShouldBounceByContact(RunnerCharacterController runnerCharacterController);
-        public abstract void BouncedOn();
+        public virtual void BouncedOn()
+        {
+            m_bounceParticle.PlayFx(false);
+        }
 
         private void OnDrawGizmosSelected()
         {

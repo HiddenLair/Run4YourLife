@@ -90,12 +90,6 @@ namespace Run4YourLife.Player
         private float m_timeToIdle;
 
         [SerializeField]
-        private FXReceiver leftbounceReceiver;
-
-        [SerializeField]
-        private FXReceiver rightbounceReceiver;
-
-        [SerializeField]
         private FXReceiver fartReceiver;
 
         [SerializeField]
@@ -630,14 +624,6 @@ namespace Run4YourLife.Player
             m_canDoubleJumpAgain = true;
 
             AudioManager.Instance.PlaySFX(m_bounceClip);
-            if (m_isFacingRight)
-            {
-                rightbounceReceiver.PlayFx();
-            }
-            else
-            {
-                leftbounceReceiver.PlayFx();
-            }
 
             m_velocity.x = DragToVelocity(_bounce_bounceForce.x);
             m_velocity.y = HeightToVelocity(_bounce_bounceForce.y);

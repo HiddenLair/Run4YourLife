@@ -24,8 +24,9 @@ namespace Run4YourLife.Interactables
             }
         }
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             m_collider = GetComponent<Collider>();
             Debug.Assert(m_collider != null);
 
@@ -49,6 +50,7 @@ namespace Run4YourLife.Interactables
 
         public override void BouncedOn()
         {
+            base.BouncedOn();
             m_bumpController.Bump();
         }
 

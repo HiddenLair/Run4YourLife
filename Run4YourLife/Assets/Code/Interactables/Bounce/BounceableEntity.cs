@@ -26,8 +26,9 @@ namespace Run4YourLife.Interactables
         private Animator m_animator;
         private Collider m_collider;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             m_animator = GetComponentInChildren<Animator>();
             Debug.Assert(m_animator != null);
 
@@ -45,6 +46,7 @@ namespace Run4YourLife.Interactables
 
         public override void BouncedOn()
         {
+            base.BouncedOn();
             m_animator.SetTrigger("bump");
         }
 
