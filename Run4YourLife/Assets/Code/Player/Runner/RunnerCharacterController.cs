@@ -90,13 +90,10 @@ namespace Run4YourLife.Player
         private float m_timeToIdle;
 
         [SerializeField]
-        private FXReceiver fartReceiver;
+        private FXReceiver m_fartParticleReceiver;
 
         [SerializeField]
-        private FXReceiver leftReceiver;
-
-        [SerializeField]
-        private FXReceiver rightReceiver;
+        private FXReceiver m_dustParticleReceiver;
 
         #endregion
 
@@ -326,22 +323,6 @@ namespace Run4YourLife.Player
 
         #endregion
 
-        #region ParticlesManagement
-
-        private void PlayDustParticles()
-        {            
-            if (m_isFacingRight)
-            {
-                rightReceiver.PlayFx();
-            }
-            else
-            {
-                leftReceiver.PlayFx();
-            }
-        }
-
-        #endregion
-
         #region Idle
 
         private void Idle_Enter()
@@ -374,7 +355,7 @@ namespace Run4YourLife.Player
 
             if(m_stateMachine.LastState == States.Idle)
             {
-                PlayDustParticles();
+                m_dustParticleReceiver.PlayFx(false);
             }
         }
 
@@ -490,7 +471,7 @@ namespace Run4YourLife.Player
             m_canDoubleJumpAgain = false;
 
             AudioManager.Instance.PlaySFX(m_fartClip);
-            fartReceiver.PlayFx();
+            m_fartParticleReceiver.PlayFx();
             
             float jumpHeight = m_secondJumpHeight;
             if(m_velocity.y > 0)
