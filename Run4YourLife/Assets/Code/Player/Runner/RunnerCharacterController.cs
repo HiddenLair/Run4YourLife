@@ -127,8 +127,6 @@ namespace Run4YourLife.Player
 
         private bool m_checkOutOfScreen;
 
-        private float m_idleTimer;
-
         private bool m_canDoubleJumpAgain;
 
         private readonly float m_baseHorizontalDrag = 2f; // Hard coded because DragToVelocity calculates with a magic number
@@ -292,7 +290,6 @@ namespace Run4YourLife.Player
             m_animator.SetBool(RunnerAnimation.isGrounded, m_characterController.isGrounded);
 
             LookAtMovingSide();
-            UpdateIdleTimer(movement);
         }
 
         private void TrimPlayerPositionHorizontalInsideCameraView()
@@ -314,13 +311,6 @@ namespace Run4YourLife.Player
             }
         }
 
-        private void UpdateIdleTimer(Vector3 totalMovement)
-        {
-            bool isMoving = totalMovement != Vector3.zero;
-            m_idleTimer = isMoving ? m_idleTimer + Time.deltaTime : 0.0f;
-            m_animator.SetFloat(RunnerAnimation.idleTime, m_idleTimer);
-        }
-
         #endregion
 
         #region Idle
@@ -328,6 +318,7 @@ namespace Run4YourLife.Player
         private void Idle_Enter()
         {
             m_canDoubleJumpAgain = true;
+            m_animator.SetTrigger(RunnerAnimation.idle);
         }
 
         private void Idle_Update()
