@@ -71,7 +71,7 @@ namespace Run4YourLife.Debugging
             runner.GetComponent<RunnerController>().SetReviveMode(true);
             if (!runner.activeInHierarchy)
             {
-                GameplayPlayerManager.Instance.RunnerRevive(runner.GetComponent<PlayerInstance>().PlayerHandle, GetRandomSpawnPosition());
+                GameplayPlayerManager.Instance.ReviveRunner(runner.GetComponent<PlayerInstance>().PlayerHandle, GetRandomSpawnPosition());
             }
         }
 

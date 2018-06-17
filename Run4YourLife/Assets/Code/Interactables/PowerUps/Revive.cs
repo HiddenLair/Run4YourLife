@@ -11,7 +11,7 @@ namespace Run4YourLife.Interactables
 
         public override void Apply(GameObject runner)
         {
-            ExecuteEvents.Execute<IGameplayPlayerEvents>(GameplayPlayerManager.InstanceGameObject, null, (x, y) => x.OnRunnerReviveRequest(transform.position));
+            ExecuteEvents.Execute<IGameplayPlayerEvents>(GameplayPlayerManager.InstanceGameObject, null, (x, y) => x.OnReviveRunnerRequest(transform.position));
         }
     }
 }

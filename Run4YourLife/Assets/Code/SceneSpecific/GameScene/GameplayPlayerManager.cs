@@ -11,7 +11,7 @@ namespace Run4YourLife.GameManagement {
     public interface IGameplayPlayerEvents : IEventSystemHandler
     {
         void OnRunnerDeath(GameObject player);
-        void OnRunnerReviveRequest(Vector3 position);
+        void OnReviveRunnerRequest(Vector3 position);
     }
 
     [System.Serializable]
@@ -196,7 +196,7 @@ namespace Run4YourLife.GameManagement {
 
             if (runner.GetComponent<RunnerController>().GetReviveMode())
             {
-                RunnerRevive(playerHandle, GetRandomSpawnPosition());
+                ReviveRunner(playerHandle, GetRandomSpawnPosition());
             }
             else if (m_runnersAlive.Count == 0)
             {
@@ -212,16 +212,16 @@ namespace Run4YourLife.GameManagement {
             ghost.SetActive(true);
         }
 
-        public void OnRunnerReviveRequest(Vector3 position)
+        public void OnReviveRunnerRequest(Vector3 position)
         {
             if(m_deadRunners.Count > 0)
             { 
                 PlayerHandle playerHandle = m_deadRunners.Dequeue();
-                RunnerRevive(playerHandle,position);
+                ReviveRunner(playerHandle,position);
             }
         }
 
-        public void RunnerRevive(PlayerHandle playerHandle,Vector3 position)
+        public void ReviveRunner(PlayerHandle playerHandle,Vector3 position)
         {
             DeactivateGhost(playerHandle);
             GameObject runner = ActivateRunner(playerHandle, position);
@@ -305,7 +305,7 @@ namespace Run4YourLife.GameManagement {
             while(m_deadRunners.Count > 0)
             {
                 Vector3 position = GetRandomSpawnPosition();
-                OnRunnerReviveRequest(position);
+                OnReviveRunnerRequest(position);
             }
         }
 

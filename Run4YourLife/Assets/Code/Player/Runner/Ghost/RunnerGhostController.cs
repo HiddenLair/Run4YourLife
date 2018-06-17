@@ -8,6 +8,7 @@ using Run4YourLife.GameManagement;
 namespace Run4YourLife.Player {
 
     [RequireComponent(typeof(RunnerGhostControlScheme))]
+    [RequireComponent(typeof(PlayerInstance))]
     public class RunnerGhostController : MonoBehaviour {
 
         [SerializeField]
@@ -16,10 +17,13 @@ namespace Run4YourLife.Player {
         [SerializeField]
         [HideInInspector]
         private RunnerGhostControlScheme m_controlScheme;
+
+        private PlayerInstance m_playerInstance;
         
         private void Reset()
         {
-            m_controlScheme = GetComponent<RunnerGhostControlScheme>(); 
+            m_controlScheme = GetComponent<RunnerGhostControlScheme>();
+            m_playerInstance = GetComponent<PlayerInstance>(); 
         }
 
         private void OnEnable()
@@ -60,6 +64,11 @@ namespace Run4YourLife.Player {
             trimmedPosition.x = Mathf.Clamp(trimmedPosition.x, bottomLeft.x, topRight.x);
             trimmedPosition.y = Mathf.Clamp(trimmedPosition.y, bottomLeft.y, topRight.y);
             transform.position = trimmedPosition;
+        }
+
+        public void ReviveGhost()
+        {
+            GameplayPlayerManager.Instance.ReviveRunner(m_playerInstance.PlayerHandle, transform.position);
         }
     }
 }
