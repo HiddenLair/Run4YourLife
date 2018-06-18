@@ -70,7 +70,7 @@ namespace Run4YourLife.Player {
 
         public void ReviveGhost()
         {
-            GameplayPlayerManager.Instance.ReviveRunner(m_playerInstance.PlayerHandle, transform.position);
+            GameplayPlayerManager.Instance.OnRunnerRevive(m_playerInstance.PlayerHandle, transform.position);
         }
     }
 }

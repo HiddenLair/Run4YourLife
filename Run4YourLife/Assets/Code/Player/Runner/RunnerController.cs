@@ -92,7 +92,7 @@ namespace Run4YourLife.Player
             if (!ConsumeShieldIfAviable() && !m_recentlyRevived)
             {
                 deathReceiver.PlayFx();
-                ExecuteEvents.Execute<IGameplayPlayerEvents>(GameplayPlayerManager.InstanceGameObject, null, (x, y) => x.OnRunnerDeath(gameObject));
+                GameplayPlayerManager.Instance.OnRunnerDeath(GetComponent<PlayerInstance>().PlayerHandle, transform.position);
             }
         }
 
@@ -102,7 +102,7 @@ namespace Run4YourLife.Player
 
             ConsumeShieldIfAviable();
             deathReceiver.PlayFx();
-            ExecuteEvents.Execute<IGameplayPlayerEvents>(GameplayPlayerManager.InstanceGameObject, null, (x, y) => x.OnRunnerDeath(gameObject));
+            GameplayPlayerManager.Instance.OnRunnerDeath(GetComponent<PlayerInstance>().PlayerHandle, transform.position);
         }
 
         public void Impulse(Vector3 force)

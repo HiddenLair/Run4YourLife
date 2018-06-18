@@ -12,7 +12,6 @@ namespace Run4YourLife.Debugging
 
         private string m_invincibleActiveText = "Runners Invincible";
 
-
         protected override string GetPanelName()
         {
             return "Runner revive mode";
@@ -36,59 +35,19 @@ namespace Run4YourLife.Debugging
             }
         }
 
-        //Dictionary<GameObject, bool> toggleValues = new Dictionary<GameObject, bool>();
-
-        /*protected override void OnCustomDrawGUI()
-        {
-            GUILayout.BeginHorizontal();
-
-            List<GameObject> runners = GameplayPlayerManager.Instance.Runners;
-            
-            for (int i = 0; i < runners.Count; ++i)
-            {
-                GameObject runner = runners[i];
-
-                PlayerHandle runnerHandle = runner.GetComponent<PlayerInstance>().PlayerHandle;
-
-                bool value;
-                toggleValues.TryGetValue(runner,out value);
-                toggleValues[runner] = GUILayout.Toggle(value, "Runner " + runnerHandle.ID);
-                if (toggleValues[runner])
-                {
-                    Activate(runner);
-                }
-                else
-                {
-                    Deactivate(runner);
-                }
-            }
-
-            GUILayout.EndHorizontal();
-        }*/
-
         private void Activate(GameObject runner)
         {
             runner.GetComponent<RunnerController>().SetReviveMode(true);
             if (!runner.activeInHierarchy)
             {
-                GameplayPlayerManager.Instance.ReviveRunner(runner.GetComponent<PlayerInstance>().PlayerHandle, GetRandomSpawnPosition());
+                PlayerHandle playerHandle = runner.GetComponent<PlayerInstance>().PlayerHandle;
+                GameplayPlayerManager.Instance.OnRunnerRevive(playerHandle, transform.position);
             }
         }
 
         private void Deactivate(GameObject runner)
         {
             runner.GetComponent<RunnerController>().SetReviveMode(false);
-        }
-
-        private Vector3 GetRandomSpawnPosition()
-        {
-            Vector3 position = CameraManager.Instance.MainCamera.transform.position;
-
-            position.x += Random.Range(-3, 6);
-            position.y += Random.Range(-2, 5);
-            position.z = 0;
-
-            return position;
         }
     }
 }

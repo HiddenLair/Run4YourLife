@@ -10,7 +10,9 @@ using Run4YourLife.Debugging;
 namespace Run4YourLife.GameManagement {
     public interface IGameplayPlayerEvents : IEventSystemHandler
     {
-        void OnRunnerDeath(GameObject player);
+        void OnRunnerDeath(PlayerHandle player, Vector3 position);
+        void OnRunnerRevive(PlayerHandle playerHandle, Vector3 position);
+        void OnRunnerActivate(PlayerHandle playerHandle, Vector3 position);
     }
 
     [System.Serializable]
@@ -25,10 +27,6 @@ namespace Run4YourLife.GameManagement {
         [SerializeField]
         [Tooltip("All the phase bosses that can be used in the game")]
         private List<GameObject> m_sceneBosses;
-
-        [SerializeField]
-        [Tooltip("Event that will be fired when a playerIsRevived")]
-        private OnPlayerReviveEvent m_onPlayerRevived;
 
         [SerializeField]
         [Tooltip("Objects in the hierarchy where the runners will be spawned at")]
@@ -184,16 +182,14 @@ namespace Run4YourLife.GameManagement {
 
         #endregion
 
-        public void OnRunnerDeath(GameObject runner)
+        public void OnRunnerDeath(PlayerHandle playerHandle, Vector3 position)
         {
-            PlayerHandle playerHandle = runner.GetComponent<PlayerInstance>().PlayerHandle;
-
             DeactivateRunner(playerHandle);
-            ActivateRunnerGhost(playerHandle,runner.transform.position);
+            ActivateRunnerGhost(playerHandle, position);
 
-            if (runner.GetComponent<RunnerController>().GetReviveMode()) // TODO: this means if it is invincible naming is bad
+            if (m_runnerGameObject[playerHandle].GetComponent<RunnerController>().GetReviveMode()) // TODO: this means if it is invincible naming is bad
             {
-                ReviveRunner(playerHandle, GetRandomSpawnPosition());
+                OnRunnerRevive(playerHandle, GetRandomSpawnPosition());
             }
             else if (m_runnersAlive.Count == 0)
             {
@@ -201,11 +197,16 @@ namespace Run4YourLife.GameManagement {
             }
         }
 
-        public void ReviveRunner(PlayerHandle playerHandle, Vector3 position)
+        public void OnRunnerRevive(PlayerHandle playerHandle, Vector3 position)
         {
             DeactivateGhost(playerHandle);
-            GameObject runner = ActivateRunner(playerHandle, position, true);
-            m_onPlayerRevived.Invoke(runner);
+            ActivateRunner(playerHandle, position, true);
+        }
+
+        public void OnRunnerActivate(PlayerHandle playerHandle, Vector3 position) 
+        {
+            DeactivateGhost(playerHandle);
+            ActivateRunner(playerHandle, position, false);
         }
 
         public GameObject ActivateRunner(PlayerHandle playerHandle, Vector3 position, bool revived = false)
@@ -304,7 +305,7 @@ namespace Run4YourLife.GameManagement {
                 GameObject ghost = m_ghostsAlive[m_ghostsAlive.Count - 1];
                 PlayerHandle ghostPlayerHandle = ghost.GetComponent<PlayerInstance>().PlayerHandle;
                 Vector3 position = GetRandomSpawnPosition();
-                ReviveRunner(ghostPlayerHandle, position);
+                OnRunnerRevive(ghostPlayerHandle, position);
             }
         }
 
