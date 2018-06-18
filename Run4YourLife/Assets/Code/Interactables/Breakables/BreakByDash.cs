@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 namespace Run4YourLife.Interactables
 {
-    public class BreakByDash : MonoBehaviour
+    public class BreakByDash : MonoBehaviour, IBreakable
     {
         [SerializeField]
         private FXReceiver receiver;
