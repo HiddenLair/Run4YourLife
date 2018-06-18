@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveThroughPoints : MonoBehaviour {
-
-    [SerializeField]
-    private float m_gemSpeed = 3.0f;
-
+public class MoveThroughPoints : MonoBehaviour
+{
     [SerializeField]
     private List<Transform> pointsToFollow;
 
@@ -19,16 +16,15 @@ public class MoveThroughPoints : MonoBehaviour {
     private float timeOnPoint = 0;
 
     private Renderer rend;
-
-    private Random randomGenerator = new Random();
-
+    private Collider collider;
     private Vector3 previousPosition = new Vector3(0, 0, 0);
     private Vector3 targetPosition = new Vector3(0, 0, 0);
 
     private void Start()
     {
         previousPosition = new Vector3(0, 0, 0);
-        rend = GetComponent<Renderer>();
+        rend = GetComponentInChildren<Renderer>();
+        collider = GetComponentInChildren<Collider>();
         timeOnPoint = Time.time;
     }
 
@@ -61,10 +57,12 @@ public class MoveThroughPoints : MonoBehaviour {
     {
         //Fancy disappear
         rend.enabled = false;
+        collider.enabled = false;
 
         yield return new WaitForSeconds(seconds);
 
         //Fancy appear
+        collider.enabled = true;
         rend.enabled = true;
     }
 }
