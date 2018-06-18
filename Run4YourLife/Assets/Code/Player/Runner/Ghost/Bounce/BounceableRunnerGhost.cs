@@ -7,8 +7,7 @@ using Run4YourLife.Interactables;
 namespace Run4YourLife.Player.Runner.Ghost
 {
     [RequireComponent(typeof(Collider))]
-    [RequireComponent(typeof(RunnerGhostController))]
-    public class RunnerGhostBounceController : BounceableEntityBase
+    public class BounceableRunnerGhost : BounceableEntityBase
     {
         [SerializeField]
         private float m_bounceForce;

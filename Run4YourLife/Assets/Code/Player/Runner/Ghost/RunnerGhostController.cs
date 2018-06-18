@@ -18,6 +18,8 @@ namespace Run4YourLife.Player {
         [HideInInspector]
         private RunnerGhostControlScheme m_controlScheme;
 
+        [SerializeField]
+        [HideInInspector]
         private PlayerInstance m_playerInstance;
         
         private void Reset()
