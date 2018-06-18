@@ -15,7 +15,7 @@ namespace Run4YourLife.GameManagement
 
         public override void StartPhase()
         {
-            GameManager.Instance.EndExecutingPhaseAndStartPhase(GamePhase.HardMoveHorizontal);
+            GameManager.Instance.ChangeGamePhase(GamePhase.HardMoveHorizontal);
         }       
 
         public override void EndPhase()

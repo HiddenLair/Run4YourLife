@@ -39,7 +39,7 @@ namespace Run4YourLife.GameManagement
             //yield return new WaitUntil(() => m_startingCutscene.state != PlayState.Playing); // wait until cutscene has completed
             m_playerSpawner.ActivateBoss();
             yield return null;
-            GameManager.Instance.EndExecutingPhaseAndStartPhase(GamePhase.EasyMoveHorizontal);
+            GameManager.Instance.ChangeGamePhase(GamePhase.EasyMoveHorizontal);
         }
 
         public override void EndPhase()

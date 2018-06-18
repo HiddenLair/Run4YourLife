@@ -14,17 +14,6 @@ namespace Run4YourLife.Interactables
         [SerializeField]
         private UnityEvent m_onBrokenByDash;
 
-        private void OnTriggerEnter(Collider other)
-        {
-            if(other.CompareTag(Tags.Runner))
-            {
-                if (other.GetComponent<RunnerCharacterController>().IsDashing)
-                {
-                    Break();
-                }
-            }
-        }
-
         private void OnTriggerStay(Collider other)
         {
             if (other.CompareTag(Tags.Runner))
@@ -36,26 +25,11 @@ namespace Run4YourLife.Interactables
             }
         }
 
-        public void ManualBreak()
+        public void Break()
         {
-            Break();
-        }
-
-        private void Break()
-        {
-            if (receiver != null)
-            {
-                receiver.PlayFx();
-            }
-
-            if (m_onBrokenByDash.GetPersistentEventCount() == 0)
-            {
-                gameObject.SetActive(false);
-            }
-            else
-            {
-                m_onBrokenByDash.Invoke();
-            }
+            m_onBrokenByDash.Invoke();
+            gameObject.SetActive(false);
+            receiver.PlayFx();
         }
     }
 }

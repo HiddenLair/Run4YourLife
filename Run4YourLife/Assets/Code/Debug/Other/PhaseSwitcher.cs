@@ -34,7 +34,7 @@ namespace Run4YourLife.Debugging
 
         private void GoPhase(GamePhase gamePhase)
         {
-            StartCoroutine(YieldHelper.SkipFrame(GameManager.Instance.DebugEndExecutingPhaseAndDebugStartPhase, gamePhase));
+            StartCoroutine(YieldHelper.SkipFrame(GameManager.Instance.DebugChangePhase, gamePhase));
         }
     }
 }

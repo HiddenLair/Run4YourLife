@@ -11,7 +11,7 @@ namespace Run4YourLife.GameManagement
 
         public void ExecuteNextPhase()
         {
-            GameManager.Instance.EndExecutingPhaseAndStartPhase(m_nextGamePhase);
+            GameManager.Instance.ChangeGamePhase(m_nextGamePhase);
         }
     }
 }

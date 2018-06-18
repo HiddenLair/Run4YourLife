@@ -12,7 +12,7 @@ namespace Run4YourLife.GameManagement
 
         public override void StartPhase()
         {                     
-            GameManager.Instance.EndExecutingPhaseAndStartPhase(GamePhase.BossFight);
+            GameManager.Instance.ChangeGamePhase(GamePhase.BossFight);
         }
 
         public override void EndPhase()

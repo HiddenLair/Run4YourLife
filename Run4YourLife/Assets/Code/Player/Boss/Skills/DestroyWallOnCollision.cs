@@ -8,13 +8,13 @@ public class DestroyWallOnCollision : MonoBehaviour {
     {
         if(collision.collider.tag == Tags.Wall)
         {
-            collision.gameObject.GetComponent<BreakByDash>().ManualBreak();
+            collision.gameObject.GetComponent<BreakByDash>().Break();
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == Tags.Wall)
+        if (other.CompareTag(Tags.Wall))
         {
             Transform currentTransform = other.gameObject.transform;
             BreakByDash breaker= currentTransform.GetComponent<BreakByDash>();
@@ -24,7 +24,7 @@ public class DestroyWallOnCollision : MonoBehaviour {
                 breaker = currentTransform.GetComponent<BreakByDash>();
                 Debug.Assert(currentTransform != transform.root);
             }
-            breaker.ManualBreak();
+            breaker.Break();
         }
     }
 }

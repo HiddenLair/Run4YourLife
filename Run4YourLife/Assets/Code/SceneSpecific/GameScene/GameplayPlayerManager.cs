@@ -48,7 +48,7 @@ namespace Run4YourLife.GameManagement {
 
         #endregion
 
-        #region Private Members
+        #region Members
 
         private GameObject m_boss;
         private List<GameObject> m_runners = new List<GameObject>();
@@ -61,6 +61,8 @@ namespace Run4YourLife.GameManagement {
 
         private RunnerPrefabManager m_runnerPrefabManager;
 
+        private IGameplayEvents m_gameplayEvents;
+
         #endregion
 
         #region Initialize
@@ -68,9 +70,7 @@ namespace Run4YourLife.GameManagement {
         private void Awake()
         {
             m_runnerPrefabManager = GetComponent<RunnerPrefabManager>();
-
-            GameManager gameManager = GetComponent<GameManager>();
-            gameManager.onGamePhaseChanged.AddListener(OnGamePhaseChanged);
+            m_gameplayEvents = GetComponent<IGameplayEvents>();
         }
 
         private void Start()
@@ -193,7 +193,7 @@ namespace Run4YourLife.GameManagement {
             }
             else if (m_runnersAlive.Count == 0)
             {
-                ExecuteEvents.Execute<IGameplayEvents>(gameObject, null, (x,y) =>x.OnGameEnded(GameEndResult.BossWin));
+                m_gameplayEvents.EndGame_BossWin();
             }
         }
 
@@ -287,14 +287,6 @@ namespace Run4YourLife.GameManagement {
                 {
                     DebugReviveAllRunners();
                 }
-            }
-        }
-
-        public void OnGamePhaseChanged(GamePhase gamePhase)
-        {
-            if(gamePhase.Equals(GamePhase.TransitionToBossFight) || gamePhase.Equals(GamePhase.TransitionToHardMoveHorizontal))
-            {
-                DebugReviveAllRunners(); 
             }
         }
 

@@ -93,7 +93,7 @@ namespace Run4YourLife.GameManagement
 
         public void StartNextPhase()
         {
-            GameManager.Instance.EndExecutingPhaseAndStartPhase(GamePhase.BossFightRockTransition);
+            GameManager.Instance.ChangeGamePhase(GamePhase.BossFightRockTransition);
         }
 
         public override void EndPhase()

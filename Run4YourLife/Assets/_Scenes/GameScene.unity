@@ -5233,11 +5233,6 @@ MonoBehaviour:
   - {fileID: 333569448}
   - {fileID: 1612476507}
   - {fileID: 790668659}
-  m_onPlayerRevived:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: Run4YourLife.GameManagement.OnPlayerReviveEvent, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   m_runnerSlot:
   - {fileID: 482043309}
   - {fileID: 1034038310}
@@ -26995,8 +26990,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_cinemachineScreenTransposerData:
-    m_offsetFromTarget: {x: -1.7, y: -1.2, z: 0}
-    m_verticalHeight: 10
+    m_offsetFromTarget: {x: -3, y: -1.5, z: 0}
+    m_verticalHeight: 16
     m_screenX: 0
     m_screenY: 1
 --- !u!114 &792545590
@@ -35330,6 +35325,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 1884482418}
     m_Modifications:
+    - target: {fileID: 114983468303368926, guid: 82e5f869fd23d8747ba74e09e03e38da,
+        type: 2}
+      propertyPath: m_onBrokenByDash.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4680598691483688, guid: 82e5f869fd23d8747ba74e09e03e38da, type: 2}
       propertyPath: m_LocalPosition.x
       value: 54.17
@@ -35367,6 +35367,26 @@ Prefab:
       propertyPath: m_onBrokenByDash.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 168087532}
+    - target: {fileID: 114983468303368926, guid: 82e5f869fd23d8747ba74e09e03e38da,
+        type: 2}
+      propertyPath: m_onBrokenByDash.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EndGame_RunnersWin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114983468303368926, guid: 82e5f869fd23d8747ba74e09e03e38da,
+        type: 2}
+      propertyPath: m_onBrokenByDash.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114983468303368926, guid: 82e5f869fd23d8747ba74e09e03e38da,
+        type: 2}
+      propertyPath: m_onBrokenByDash.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114983468303368926, guid: 82e5f869fd23d8747ba74e09e03e38da,
+        type: 2}
+      propertyPath: m_onBrokenByDash.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 82e5f869fd23d8747ba74e09e03e38da, type: 2}
   m_IsPrefabParent: 0

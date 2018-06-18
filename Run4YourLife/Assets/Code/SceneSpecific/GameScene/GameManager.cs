@@ -11,15 +11,12 @@ using Run4YourLife.Debugging;
 
 namespace Run4YourLife.GameManagement
 {
-    public enum GameEndResult 
-    {
-        RunnersWin,
-        BossWin
-    }
-
     public interface IGameplayEvents : IEventSystemHandler
     {
-        void OnGameEnded(GameEndResult gameEndResult);
+        void ChangeGamePhase(GamePhase gamePhase);
+        void DebugChangePhase(GamePhase gamePhase);
+        void EndGame_RunnersWin();
+        void EndGame_BossWin();
     }
 
     public class GameManager : SingletonMonoBehaviour<GameManager>, IGameplayEvents
@@ -48,12 +45,12 @@ namespace Run4YourLife.GameManagement
 
         private void Start()
         {
-            StartCoroutine(YieldHelper.SkipFrame(() => EndExecutingPhaseAndStartPhase(GamePhase.TransitionToEasyMoveHorizontal)));
+            StartCoroutine(YieldHelper.SkipFrame(() => ChangeGamePhase(GamePhase.TransitionToEasyMoveHorizontal)));
         }
 
         #region Phase Execution
 
-        public void EndExecutingPhaseAndStartPhase(GamePhase gamePhase)
+        public void ChangeGamePhase(GamePhase gamePhase)
         {
             onGamePhaseChanged.Invoke(gamePhase);
 
@@ -61,7 +58,7 @@ namespace Run4YourLife.GameManagement
             PhaseStart(gamePhase);
         }
 
-        public void DebugEndExecutingPhaseAndDebugStartPhase(GamePhase gamePhase)
+        public void DebugChangePhase(GamePhase gamePhase)
         {
             onGamePhaseChanged.Invoke(gamePhase);
 
@@ -69,7 +66,7 @@ namespace Run4YourLife.GameManagement
             DebugPhaseStart(gamePhase);
         }
 
-        public void PhaseStart(GamePhase gamePhase)
+        private void PhaseStart(GamePhase gamePhase)
         {
             Debug.Assert(m_executingGamePhaseManager == null);
 
@@ -77,7 +74,7 @@ namespace Run4YourLife.GameManagement
             m_executingGamePhaseManager.StartPhase();
         }
 
-        public void PhaseEnd()
+        private void PhaseEnd()
         {
             if(m_executingGamePhaseManager != null)
             {
@@ -86,7 +83,7 @@ namespace Run4YourLife.GameManagement
             }
         }
 
-        public void DebugPhaseStart(GamePhase gamePhase)
+        private void DebugPhaseStart(GamePhase gamePhase)
         {
             Debug.Assert(m_executingGamePhaseManager == null);
 
@@ -94,7 +91,7 @@ namespace Run4YourLife.GameManagement
             m_executingGamePhaseManager.DebugStartPhase();
         }
 
-        public void DebugPhaseEnd()
+        private void DebugPhaseEnd()
         {
             if (m_executingGamePhaseManager != null)
             {
@@ -122,47 +119,37 @@ namespace Run4YourLife.GameManagement
             {
                 if(Input.GetKeyDown(KeyCode.Keypad1))
                 {
-                    DebugEndExecutingPhaseAndDebugStartPhase(GamePhase.EasyMoveHorizontal);
+                    DebugChangePhase(GamePhase.EasyMoveHorizontal);
                 }
                 else if(Input.GetKeyDown(KeyCode.Keypad2))
                 {
-                    DebugEndExecutingPhaseAndDebugStartPhase(GamePhase.BossFight);
+                    DebugChangePhase(GamePhase.BossFight);
                 }
                 else if(Input.GetKeyDown(KeyCode.Keypad3))
                 {
-                    DebugEndExecutingPhaseAndDebugStartPhase(GamePhase.HardMoveHorizontal);
+                    DebugChangePhase(GamePhase.HardMoveHorizontal);
                 }
                 else if(Input.GetKeyDown(KeyCode.Keypad4))
                 {
-                    EndExecutingPhaseAndStartPhase(GamePhase.TransitionToBossFight);
+                    ChangeGamePhase(GamePhase.TransitionToBossFight);
                 }
                 else if(Input.GetKeyDown(KeyCode.Keypad5))
                 {
-                    EndExecutingPhaseAndStartPhase(GamePhase.TransitionToHardMoveHorizontal);
+                    ChangeGamePhase(GamePhase.TransitionToHardMoveHorizontal);
                 }
             }
         }
 
-        
-
         #endregion
         
-        public void OnGameEnded(GameEndResult gameEndResult)
+        public void EndGame_RunnersWin()
         {
-            switch(gameEndResult)
-            {
-                case GameEndResult.BossWin:
-                    StartCoroutine(YieldHelper.SkipFrame(() => m_loadBossWinMenu.Execute()));
-                    break;
-                case GameEndResult.RunnersWin:
-                    StartCoroutine(YieldHelper.SkipFrame(() => m_loadRunnersWinMenu.Execute()));
-                    break;
-            }
+            StartCoroutine(YieldHelper.SkipFrame(() => m_loadBossWinMenu.Execute()));
         }
 
-        public void OnFinalRockDestroyed()
+        public void EndGame_BossWin()
         {
-            ExecuteEvents.Execute<IGameplayEvents>(gameObject, null, (a, b) => a.OnGameEnded(GameEndResult.RunnersWin));
+            StartCoroutine(YieldHelper.SkipFrame(() => m_loadRunnersWinMenu.Execute()));
         }
     }
 }
