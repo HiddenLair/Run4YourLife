@@ -209,7 +209,7 @@ namespace Run4YourLife.GameManagement {
             ActivateRunner(playerHandle, position, false);
         }
 
-        public GameObject ActivateRunner(PlayerHandle playerHandle, Vector3 position, bool revived = false)
+        private GameObject ActivateRunner(PlayerHandle playerHandle, Vector3 position, bool revived = false)
         {
             GameObject runner = m_runnerGameObject[playerHandle];
             runner.transform.position = position;

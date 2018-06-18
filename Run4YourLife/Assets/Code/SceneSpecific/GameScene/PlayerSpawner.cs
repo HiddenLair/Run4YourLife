@@ -17,39 +17,25 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private Transform m_bossSpawn;
 
-        public GameObject[] ActivatePlayers()
+        public void ActivatePlayers()
         {
-            GameObject[] players = new GameObject[PlayerManager.Instance.PlayerCount];
-            uint index = 0;
-
-            ActivateRunners(players, ref index);
-            players[index] = ActivateBoss();
-
-            return players;
+            ActivateRunners();
+            ActivateBoss();
         }
 
-        public GameObject[] ActivateRunners()
-        {
-            GameObject[] runners = new GameObject[GameplayPlayerManager.Instance.Runners.Count];
-            uint index = 0;
-
-            ActivateRunners(runners, ref index);
-
-            return runners;
-        }
-
-        private void ActivateRunners(GameObject[] players, ref uint index)
-        {
+        public void ActivateRunners()
+        {            
+            int index = 0;
             foreach (PlayerHandle runnerPlayerHandle in PlayerManager.Instance.RunnerPlayerHandles)
             {
-                players[index] = GameplayPlayerManager.Instance.ActivateRunner(runnerPlayerHandle, m_runnerSpawns[index].position);
+                GameplayPlayerManager.Instance.OnRunnerActivate(runnerPlayerHandle, m_runnerSpawns[index].position);
                 index++;
             }
         }
 
-        public GameObject ActivateBoss()
+        public void ActivateBoss()
         {
-            return GameplayPlayerManager.Instance.ActivateBoss(m_bossGameObjectPhase, m_bossSpawn.position);
+            GameplayPlayerManager.Instance.ActivateBoss(m_bossGameObjectPhase, m_bossSpawn.position);
         }
     }
 }
