@@ -130,7 +130,7 @@ namespace Run4YourLife.Debugging
                 bossPathWalker.m_speed = 0;
                 bossPathWalker.m_acceleration = 0;
 
-                GameplayPlayerManager.Instance.DebugClearAllRunners();
+                GameplayPlayerManager.Instance.DebugClearRunners();
 
                 InputSource horizontalInputSource = new InputSource(Axis.LEFT_HORIZONTAL, InputDeviceManager.Instance.DefaultInputDevice);
                 while(!Input.GetKeyDown(KeyCode.P))
@@ -143,7 +143,7 @@ namespace Run4YourLife.Debugging
                 bossPathWalker.m_speed = startingWalkerSpeed;
                 bossPathWalker.m_acceleration = startingWalkerAcceleration;
 
-                GameplayPlayerManager.Instance.DebugActivateAllRunners();
+                GameplayPlayerManager.Instance.DebugActivateRunners();
             }
 
             enabled = true;
