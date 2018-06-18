@@ -144,20 +144,28 @@ namespace Run4YourLife.Player
 
         private Vector3 GetTornadoSpawn()
         {
+            //Bounds colliderBounds = GetComponentInChildren<Collider>().bounds;
+            //Vector3 pos;
+            //pos.z = transform.position.z;
+            //while (true)
+            //{
+            //    pos.x = UnityEngine.Random.Range(colliderBounds.min.x, colliderBounds.max.x);
+            //    pos.y = UnityEngine.Random.Range(colliderBounds.min.y, colliderBounds.max.y);
+
+            //    Collider[] colliders = Physics.OverlapBox(pos,Vector3.one,Quaternion.identity,Layers.Stage,QueryTriggerInteraction.Ignore);
+            //    if(colliders.Length == 0)
+            //    {
+            //        return pos;
+            //    }
+            //}
             Bounds colliderBounds = GetComponentInChildren<Collider>().bounds;
             Vector3 pos;
             pos.z = transform.position.z;
-            while (true)
-            {
-                pos.x = UnityEngine.Random.Range(colliderBounds.min.x, colliderBounds.max.x);
-                pos.y = UnityEngine.Random.Range(colliderBounds.min.y, colliderBounds.max.y);
 
-                Collider[] colliders = Physics.OverlapBox(pos,Vector3.one,Quaternion.identity,Layers.Stage,QueryTriggerInteraction.Ignore);
-                if(colliders.Length == 0)
-                {
-                    return pos;
-                }
-            }
+            pos.x = UnityEngine.Random.Range(colliderBounds.min.x, colliderBounds.max.x);
+            pos.y = UnityEngine.Random.Range(colliderBounds.min.y, colliderBounds.max.y);
+
+            return pos;
         }
 
         IEnumerator EndWind()
