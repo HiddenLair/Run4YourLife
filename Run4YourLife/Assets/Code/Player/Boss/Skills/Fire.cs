@@ -13,37 +13,65 @@ namespace Run4YourLife.Player {
 
         [SerializeField]
         private StatusEffectSet m_burnStatusEffectSet;
+
+        [SerializeField]
+        private float minScale;
+
+        [SerializeField]
+        private float maxScale;
        
 
-        private ParticleSystem particles;
-        private AudioSource source;
-
-        private void Awake()
+        private void OnDisable()
         {
-            particles = GetComponent<ParticleSystem>();
-            source = GetComponent<AudioSource>();
+            StopAllCoroutines();
         }
 
-        public void Play()
+        public void Play(float growDuration,float stableDuration)
         {
-            particles.Play();
-            source.Play();
+            gameObject.SetActive(true);
+            transform.localScale = (new Vector3(minScale,minScale,minScale));
+            StartCoroutine(Implementation(growDuration,stableDuration));
+        }
+
+        IEnumerator Implementation(float growDuration,float stableDuration)
+        {
+            float lifeTimeIncreasePerSec = (maxScale-minScale)/growDuration;
+            float timer = Time.time + growDuration;
+            Vector3 actualScale = transform.localScale;
+            while (timer > Time.time)
+            {
+                float offset = lifeTimeIncreasePerSec * Time.deltaTime;
+                actualScale += new Vector3(offset,offset,offset);
+                transform.localScale = actualScale;
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(stableDuration);
+
+            timer = Time.time + growDuration;
+            while (timer > Time.time)
+            {
+                float offset = lifeTimeIncreasePerSec * Time.deltaTime;
+                actualScale -= new Vector3(offset, offset, offset);
+                transform.localScale = actualScale;
+                yield return null;
+            }
+            Stop();
         }
 
         public void Stop()
         {
-            particles.Stop();
-            source.Stop();
+            gameObject.SetActive(false);
         }
 
-        void OnParticleCollision(GameObject other)
+        void OnTriggerEnter(Collider other)
         {
             if(other.tag == Tags.Runner)
             {
                 Burned burned = other.gameObject.GetComponent<Burned>();
                 if (burned == null)
                 {
-                    burned = other.AddComponent<Burned>();
+                    burned = other.gameObject.AddComponent<Burned>();
                     burned.Init(m_burnTime, m_burnStatusEffectSet);
                 }
 

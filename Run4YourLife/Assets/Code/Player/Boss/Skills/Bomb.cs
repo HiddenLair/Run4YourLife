@@ -35,13 +35,16 @@ namespace Run4YourLife.Player
         private GameObject activationParticles;
 
         [SerializeField]
-        private GameObject fireGameObject;
-
-        [SerializeField]
         private float timeBetweenFire;
 
         [SerializeField]
-        private float fireDuration;
+        private float fireGrowDuration;
+
+        [SerializeField]
+        private float fireStableDuration;
+
+        [SerializeField]
+        private Fire fireScript;
 
         [SerializeField]
         private float timeBetweenJumps;
@@ -72,11 +75,6 @@ namespace Run4YourLife.Player
             Debug.Assert(m_renderer != null);
             m_collider.enabled = false;
 
-            if(phase != SkillBase.Phase.PHASE1)
-            {
-                fireScripts = GetComponentsInChildren<Fire>();
-            }
-
             speed.y = initialSpeed;
 
             SetInitialTiling(m_renderer.material);
@@ -85,9 +83,9 @@ namespace Run4YourLife.Player
         private void OnDisable()
         {
             StopAllCoroutines();
-            if (fireGameObject != null)
+            if (fireScript != null)
             {
-               // fireGameObject.SetActive(false);
+                fireScript.Stop();
             }
         }
 
@@ -190,15 +188,7 @@ namespace Run4YourLife.Player
             while (true)
             {
                 yield return new WaitForSeconds(timeBetweenFire);
-                //foreach(Fire f in fireScripts)
-                //{
-                //    f.Play();
-                //}
-                //yield return new WaitForSeconds(fireDuration);
-                //foreach (Fire f in fireScripts)
-                //{
-                //    f.Stop();
-                //}
+                fireScript.Play(fireGrowDuration, fireStableDuration);
             }
         }
 
@@ -245,6 +235,8 @@ namespace Run4YourLife.Player
 
         private void Explode()
         {
+            StopAllCoroutines();
+
             Collider[] collisions = Physics.OverlapSphere(transform.position, m_explosionRatius, Layers.Runner);
 
             foreach (Collider c in collisions)

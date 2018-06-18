@@ -14,9 +14,10 @@ namespace Run4YourLife.Player.CustomEditors
         SerializedProperty indicatorParticles;
         SerializedProperty m_explosionRatius;
         SerializedProperty activationParticles;
-        SerializedProperty fireGameObject;
         SerializedProperty timeBetweenFire;
-        SerializedProperty fireDuration;
+        SerializedProperty fireGrowDuration;
+        SerializedProperty fireStableDuration;
+        SerializedProperty fireScript;
         SerializedProperty timeBetweenJumps;
         SerializedProperty jumpHeight;
 
@@ -36,9 +37,10 @@ namespace Run4YourLife.Player.CustomEditors
             indicatorParticles = serializedObject.FindProperty("indicatorParticles");
             m_explosionRatius = serializedObject.FindProperty("m_explosionRatius");
             activationParticles = serializedObject.FindProperty("activationParticles");
-            fireGameObject = serializedObject.FindProperty("fireGameObject");
             timeBetweenFire = serializedObject.FindProperty("timeBetweenFire");
-            fireDuration = serializedObject.FindProperty("fireDuration");
+            fireGrowDuration = serializedObject.FindProperty("fireGrowDuration");
+            fireStableDuration = serializedObject.FindProperty("fireStableDuration");
+            fireScript = serializedObject.FindProperty("fireScript");
             timeBetweenJumps = serializedObject.FindProperty("timeBetweenJumps");
             jumpHeight = serializedObject.FindProperty("jumpHeight");
         }
@@ -56,9 +58,10 @@ namespace Run4YourLife.Player.CustomEditors
         }
         public override void OnGuiPhase2()
         {
-            EditorGUILayout.PropertyField(fireGameObject);
             EditorGUILayout.PropertyField(timeBetweenFire);
-            EditorGUILayout.PropertyField(fireDuration);
+            EditorGUILayout.PropertyField(fireGrowDuration);
+            EditorGUILayout.PropertyField(fireStableDuration);
+            EditorGUILayout.PropertyField(fireScript);
         }
 
         public override void OnGuiPhase3()
