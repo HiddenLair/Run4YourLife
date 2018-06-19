@@ -745,14 +745,15 @@ namespace Run4YourLife.Player
 
         private float m_shock_endTime;
 
-        void Shock(float shockLenght)
+        public void Shock(float time)
         {
-            m_shock_endTime = Time.time + shockLenght;
+            m_shock_endTime = Time.time + time;
             m_stateMachine.ChangeState(States.Shock);
         }
 
         private void Shock_Enter()
         {
+            m_velocity.x = 0;
             //Activate particle effects
             //Activate shock animation
         }
@@ -765,6 +766,9 @@ namespace Run4YourLife.Player
 
         private void Shock_Update()
         {
+            GravityAndDrag();
+            MoveCharacterContoller(m_velocity * Time.deltaTime);
+
             if(Time.time >= m_shock_endTime)
             {
                 m_stateMachine.ChangeState(States.Idle);
@@ -849,14 +853,7 @@ namespace Run4YourLife.Player
             {
                 if(fadeTimer <= Time.time)
                 {
-                    if (faded)
-                    {
-                        FadeByRender(true);
-                    }
-                    else
-                    {
-                        FadeByRender(false);
-                    }
+                    FadeByRender(faded);
                     faded = !faded;
                     fadeTimer = Time.time + fadePeriodAfterRevive;
                 }
