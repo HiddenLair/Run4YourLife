@@ -22,18 +22,12 @@ public class BossFightGemManager : MonoBehaviour
     [SerializeField]
     private float m_timeToGoToStand = 0.75f;
 
-    [SerializeField]
-    private GameObject m_spawnParticles;
-
-    [SerializeField]
-    private AudioClip m_spawnSound;
-
     private List<GameObject> activeGems = new List<GameObject>();
     private GameObject activeGem = null;
 
     public void ActivateGems(Transform gemStand)
     {
-        activeGem.GetComponent<MoveThroughPoints>().enabled = false;
+        activeGem.GetComponent<GemController>().enabled = false;
         activeGem.SetActive(false);
         unactiveGems.Remove(activeGem);
         activeGems.Add(activeGem);
@@ -59,11 +53,7 @@ public class BossFightGemManager : MonoBehaviour
     public void ActivateNextGem()
     {
         activeGem = unactiveGems[0];
-        activeGem.transform.position = activeGemPosition.position;   
-        
+        activeGem.transform.position = activeGemPosition.position;          
         activeGem.SetActive(true);
-
-        AudioManager.Instance.PlaySFX(m_spawnSound);
-        Instantiate(m_spawnParticles, activeGem.transform.position, Quaternion.identity);
     }
 }

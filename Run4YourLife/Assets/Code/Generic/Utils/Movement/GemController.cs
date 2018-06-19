@@ -1,9 +1,19 @@
-﻿using System.Collections;
+﻿using Run4YourLife.GameManagement.AudioManagement;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveThroughPoints : MonoBehaviour
+public class GemController : MonoBehaviour
 {
+    [SerializeField]
+    private FXReceiver m_destructionReceiver;
+
+    [SerializeField]
+    private FXReceiver m_baseAppearReceiver;
+
+    [SerializeField]
+    private FXReceiver m_spawnReceiver;
+
     [SerializeField]
     private List<Transform> pointsToFollow;
 
@@ -55,14 +65,19 @@ public class MoveThroughPoints : MonoBehaviour
 
     private IEnumerator TeleportingCoroutine(float seconds)
     {
-        //Fancy disappear
+        m_baseAppearReceiver.PlayFx(false);
         rend.enabled = false;
         collider.enabled = false;
 
         yield return new WaitForSeconds(seconds);
 
-        //Fancy appear
+        m_spawnReceiver.PlayFx(false);
         collider.enabled = true;
         rend.enabled = true;
+    }
+
+    private void OnEnable()
+    {
+        m_spawnReceiver.PlayFx(false);
     }
 }
