@@ -15,12 +15,20 @@ namespace Run4YourLife.Player {
         private float m_speed;
 
         [SerializeField]
+        private Vector2 m_clampMin;
+
+        [SerializeField]
+        private Vector2 m_clampMax;
+
+        [SerializeField]
         [HideInInspector]
         private RunnerGhostControlScheme m_controlScheme;
 
         [SerializeField]
         [HideInInspector]
         private PlayerInstance m_playerInstance;
+
+        private Vector2 m_screenPosition;
         
         private void Reset()
         {
@@ -30,8 +38,19 @@ namespace Run4YourLife.Player {
 
         private void OnEnable()
         {
+            m_screenPosition = GetScreenPositionFromCurrentPosition();
+
             m_controlScheme.Active = true;
             //Todo Execute spawn playable
+        }
+
+        private Vector2 GetScreenPositionFromCurrentPosition()
+        {
+            Camera camera = CameraManager.Instance.MainCamera;
+            Vector2 screenPosition = camera.WorldToScreenPoint(transform.position);
+            screenPosition.x = screenPosition.x/camera.pixelWidth;
+            screenPosition.y = screenPosition.y/camera.pixelHeight;
+            return screenPosition;
         }
 
         private void OnDisable()
@@ -43,18 +62,22 @@ namespace Run4YourLife.Player {
         void Update()
         {
             MoveRunnerGhost();
-            TrimPositionHorizontallyInsideCameraView();
         }
 
         private void MoveRunnerGhost()
         {
-            Vector3 velocity = new Vector3()
+            m_screenPosition.x = Mathf.Clamp(m_screenPosition.x + m_speed * m_controlScheme.Horizontal.Value() * Time.deltaTime, m_clampMin.x, m_clampMax.x);
+            m_screenPosition.y = Mathf.Clamp(m_screenPosition.y + m_speed * m_controlScheme.Vertical.Value()   * Time.deltaTime, m_clampMin.y, m_clampMax.y);
+
+            Camera m_mainCamera = CameraManager.Instance.MainCamera;
+            Vector3 screenSpacePosition = new Vector3()
             {
-                x = m_speed * m_controlScheme.Horizontal.Value(),
-                y = m_speed * m_controlScheme.Vertical.Value()
+                x = m_screenPosition.x * m_mainCamera.pixelWidth,
+                y = m_screenPosition.y * m_mainCamera.pixelHeight,
+                z = Math.Abs(m_mainCamera.transform.position.z - transform.position.z)
             };
 
-            transform.Translate(velocity * Time.deltaTime);
+            transform.position = m_mainCamera.ScreenToWorldPoint(screenSpacePosition);
         }
 
         private void TrimPositionHorizontallyInsideCameraView()
