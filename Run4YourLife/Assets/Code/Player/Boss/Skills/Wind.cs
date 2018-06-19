@@ -196,7 +196,7 @@ namespace Run4YourLife.Player
         private void OnTriggerStay(Collider other)
         {
 
-            if(other.tag == Tags.Runner)
+            if(other.CompareTag(Tags.Runner))
             {
                 Camera mainCamera = Camera.main;
                 Vector3 topRight = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, Math.Abs(mainCamera.transform.position.z - transform.position.z)));
@@ -220,7 +220,7 @@ namespace Run4YourLife.Player
 
         private void OnTriggerExit(Collider other)
         {
-            if(other.tag == Tags.Runner)
+            if(other.CompareTag(Tags.Runner))
             {
                 other.GetComponent<RunnerController>().WindForceRelative = 0.0f;
             }

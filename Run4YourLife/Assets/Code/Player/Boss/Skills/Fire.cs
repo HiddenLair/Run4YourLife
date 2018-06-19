@@ -66,7 +66,7 @@ namespace Run4YourLife.Player {
 
         void OnTriggerEnter(Collider other)
         {
-            if(other.tag == Tags.Runner)
+            if(other.CompareTag(Tags.Runner))
             {
                 Burned burned = other.gameObject.GetComponent<Burned>();
                 if (burned == null)
