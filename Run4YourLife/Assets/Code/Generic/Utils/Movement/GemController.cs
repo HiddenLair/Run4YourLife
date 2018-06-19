@@ -26,7 +26,7 @@ public class GemController : MonoBehaviour
     private float timeOnPoint = 0;
 
     private Renderer rend;
-    private Collider collider;
+    private Collider gemCollider;
     private Vector3 previousPosition = new Vector3(0, 0, 0);
     private Vector3 targetPosition = new Vector3(0, 0, 0);
 
@@ -34,7 +34,7 @@ public class GemController : MonoBehaviour
     {
         previousPosition = new Vector3(0, 0, 0);
         rend = GetComponentInChildren<Renderer>();
-        collider = GetComponentInChildren<Collider>();
+        gemCollider = GetComponentInChildren<Collider>();
         timeOnPoint = Time.time;
     }
 
@@ -67,12 +67,12 @@ public class GemController : MonoBehaviour
     {
         m_baseAppearReceiver.PlayFx(false);
         rend.enabled = false;
-        collider.enabled = false;
+        gemCollider.enabled = false;
 
         yield return new WaitForSeconds(seconds);
 
         m_spawnReceiver.PlayFx(false);
-        collider.enabled = true;
+        gemCollider.enabled = true;
         rend.enabled = true;
     }
 
