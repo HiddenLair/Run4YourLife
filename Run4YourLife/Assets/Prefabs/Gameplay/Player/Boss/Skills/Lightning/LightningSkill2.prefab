@@ -215,7 +215,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 061f1f8e08f75c74f85f940c4c95fe2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 23395741325128468}
   speed: {x: 0.1, y: 0.1}
 --- !u!114 &114927342613256348
 MonoBehaviour:
@@ -235,7 +234,7 @@ MonoBehaviour:
   delayHit: 0.5
   flashEffect: {fileID: 1927621431372500}
   lighningEffect: {fileID: 1736345212424306}
-  trapGameObject: {fileID: 1218025138136624, guid: 7ef66400632761a4fb9ba63c58b3d04d,
+  electricFieldGameObject: {fileID: 1218025138136624, guid: 7ef66400632761a4fb9ba63c58b3d04d,
     type: 2}
   delayBetweenLightnings: 0
   delayBetweenLightningsProgresion: 0
@@ -244,6 +243,7 @@ MonoBehaviour:
   newLightningsDistance: 0
   newLightningsDistanceProgresion: 0
   lightningGameObject: {fileID: 0}
+  maxNumberOfLightnings: 0
 --- !u!198 &198042769102767212
 ParticleSystem:
   m_ObjectHideFlags: 1

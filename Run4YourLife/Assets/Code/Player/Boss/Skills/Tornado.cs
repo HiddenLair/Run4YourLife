@@ -89,7 +89,6 @@ namespace Run4YourLife.Interactables {
         IEnumerator Turn()
         {
             float actualLerp = 0.0f;
-            float lerpPerSec = 1.0f / timeToTurn;
 
             Vector3 lastDirector = actualDirector;
             Vector3 newDirector = GenerateRandomDirector();

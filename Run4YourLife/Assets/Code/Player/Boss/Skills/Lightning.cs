@@ -2,7 +2,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using System.Linq;
+using System.Collections.Generic;
 using Run4YourLife.GameManagement;
 using Run4YourLife.GameManagement.AudioManagement;
 
@@ -24,7 +25,7 @@ namespace Run4YourLife.Player {
         private GameObject lighningEffect;
 
         [SerializeField]
-        private GameObject trapGameObject;
+        private GameObject electricFieldGameObject;
         [SerializeField]
         private float delayBetweenLightnings;
         [SerializeField]
@@ -104,19 +105,59 @@ namespace Run4YourLife.Player {
 
             foreach (RaycastHit hit in hits)
             {
-                if (hit.collider.tag == Tags.Runner)
+                if (hit.collider.CompareTag(Tags.Runner))
                 {
                     ExecuteEvents.Execute<ICharacterEvents>(hit.collider.gameObject, null, (x, y) => x.Kill());
                 }
-                else if(phase != SkillBase.Phase.PHASE1)
-                {
-                    GameObject instance = BossPoolManager.Instance.InstantiateBossElement(trapGameObject, hit.point);
-                    instance.transform.SetParent(hit.transform);
-                }
             }
+            if(phase != SkillBase.Phase.PHASE1)
+            {
+                SetElectricFields(hits);
+            }
+
             lighningEffect.SetActive(true);
             ParticleSystem[] lightning = lighningEffect.GetComponentsInChildren<ParticleSystem>();
             StartCoroutine(WaitForParticleSystems(lightning,lighningEffect));
+        }
+
+        private void SetElectricFields(RaycastHit[] hits)
+        {
+
+            const float delta = 0.15f;
+
+            List<RaycastHit> spawnFieldHits = new List<RaycastHit>();
+            hits.OrderBy(a => a.distance);
+            for(int i = 0;i<hits.Length; ++i)
+            {
+                if(hits[i].collider.CompareTag(Tags.Runner))
+                {
+                    continue;
+                }
+                else
+                {
+                    spawnFieldHits.Add(hits[i]);
+                }
+
+                while (i+1 < hits.Length)
+                {
+                    Collider c1 = hits[i].collider;
+                    Collider c2 = hits[i + 1].collider;
+
+                    if(c1.bounds.min.y < c2.bounds.max.y + delta)
+                    {
+                        ++i;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+
+            foreach (RaycastHit hit in spawnFieldHits)
+            {
+                BossPoolManager.Instance.InstantiateBossElement(electricFieldGameObject, hit.point);
+            }
         }
 
         IEnumerator WaitForParticleSystems(ParticleSystem[] particles,GameObject particleSystem)

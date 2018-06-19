@@ -17,7 +17,7 @@ namespace Run4YourLife.Player.CustomEditors
         SerializedProperty lighningEffect;
         SerializedProperty delayBetweenLightnings;
         SerializedProperty delayBetweenLightningsProgresion;
-        SerializedProperty trapGameObject;
+        SerializedProperty electricFieldGameObject;
         SerializedProperty newLightningsDelayHit;
         SerializedProperty newLightningsDelayHitProgresion;
         SerializedProperty newLightningsDistance;
@@ -37,7 +37,7 @@ namespace Run4YourLife.Player.CustomEditors
             delayHit = serializedObject.FindProperty("delayHit");
             flashEffect = serializedObject.FindProperty("flashEffect");
             lighningEffect = serializedObject.FindProperty("lighningEffect");
-            trapGameObject = serializedObject.FindProperty("trapGameObject");
+            electricFieldGameObject = serializedObject.FindProperty("electricFieldGameObject");
             delayBetweenLightnings = serializedObject.FindProperty("delayBetweenLightnings"); ;
             delayBetweenLightningsProgresion = serializedObject.FindProperty("delayBetweenLightningsProgresion");
             newLightningsDelayHit = serializedObject.FindProperty("newLightningsDelayHit");
@@ -58,7 +58,7 @@ namespace Run4YourLife.Player.CustomEditors
 
         public override void OnGuiPhase2()
         {
-            EditorGUILayout.PropertyField(trapGameObject);
+            EditorGUILayout.PropertyField(electricFieldGameObject);
         }
 
         public override void OnGuiPhase3()
