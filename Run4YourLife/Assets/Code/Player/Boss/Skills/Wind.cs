@@ -208,12 +208,12 @@ namespace Run4YourLife.Player
 
                 if(percentaje < 0)
                 {
-                    other.GetComponent<RunnerCharacterController>().WindForceRelative = windMinForceRelative;
+                    other.GetComponent<RunnerController>().WindForceRelative = windMinForceRelative;
                 }
                 else
                 {
                     float increasePerPercentaje = windMaxForceRelative - windMinForceRelative / 100;
-                    other.GetComponent<RunnerCharacterController>().WindForceRelative = (increasePerPercentaje * percentaje) +windMinForceRelative;
+                    other.GetComponent<RunnerController>().WindForceRelative = (increasePerPercentaje * percentaje) +windMinForceRelative;
                 }               
             }
         }
@@ -222,7 +222,7 @@ namespace Run4YourLife.Player
         {
             if(other.tag == Tags.Runner)
             {
-                other.GetComponent<RunnerCharacterController>().WindForceRelative = 0.0f;
+                other.GetComponent<RunnerController>().WindForceRelative = 0.0f;
             }
         }
     }

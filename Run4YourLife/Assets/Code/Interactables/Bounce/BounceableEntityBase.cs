@@ -17,8 +17,8 @@ namespace Run4YourLife.Interactables
             Debug.Assert(m_bounceParticle != null);
         }
 
-        public abstract Vector3 GetStartingBouncePosition(RunnerCharacterController runnerCharacterController);
-        public abstract bool ShouldBounceByContact(RunnerCharacterController runnerCharacterController);
+        public abstract Vector3 GetStartingBouncePosition(RunnerController runnerCharacterController);
+        public abstract bool ShouldBounceByContact(RunnerController runnerCharacterController);
         public virtual void BouncedOn()
         {
             m_bounceParticle.PlayFx(false);

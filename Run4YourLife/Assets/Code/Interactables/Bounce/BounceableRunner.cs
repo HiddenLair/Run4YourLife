@@ -8,7 +8,7 @@ namespace Run4YourLife.Interactables
 {
     public class BounceableRunner : BounceableEntityBase {
 
-        private RunnerCharacterController m_runnerCharacterController;
+        private RunnerController m_runnerCharacterController;
         private RunnerAttributeController m_runnerAttributeController;
         private BumpController m_bumpController;
 
@@ -36,14 +36,14 @@ namespace Run4YourLife.Interactables
             m_runnerAttributeController = GetComponentInParent<RunnerAttributeController>();
             Debug.Assert(m_runnerAttributeController != null);
 
-            m_runnerCharacterController = GetComponentInParent<RunnerCharacterController>();
+            m_runnerCharacterController = GetComponentInParent<RunnerController>();
             Debug.Assert(m_runnerCharacterController != null);
 
             // We ignore collisions with the runner because otherwise we would collide with it all the time
             Physics.IgnoreCollision(m_collider, GetComponentInParent<Collider>());
         }
 
-        public override bool ShouldBounceByContact(RunnerCharacterController runnerCharacterController)
+        public override bool ShouldBounceByContact(RunnerController runnerCharacterController)
         {
             return false;
         }
@@ -54,7 +54,7 @@ namespace Run4YourLife.Interactables
             m_bumpController.Bump();
         }
 
-        public override Vector3 GetStartingBouncePosition(RunnerCharacterController runnerCharacterController)
+        public override Vector3 GetStartingBouncePosition(RunnerController runnerCharacterController)
         {
             Vector3 startingBouncePosition = runnerCharacterController.transform.position;
             startingBouncePosition.y = m_collider.bounds.max.y;

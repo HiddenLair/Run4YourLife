@@ -1077,7 +1077,6 @@ GameObject:
   - component: {fileID: 114870244662351562}
   - component: {fileID: 114334311496393270}
   - component: {fileID: 114944513227704966}
-  - component: {fileID: 114644628182617302}
   - component: {fileID: 114931194875886578}
   - component: {fileID: 114401220212922244}
   - component: {fileID: 114531655735769042}
@@ -1380,7 +1379,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1837875320852082}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.19189, y: 0, z: -0.15992689}
+  m_LocalPosition: {x: 74.488914, y: 0, z: 0.5385598}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4593702343663260}
@@ -2620,25 +2619,6 @@ MonoBehaviour:
   leftEye: {fileID: 137624744854759776}
   head: {fileID: 137426927464821120}
   bumpTime: 0.25
---- !u!114 &114644628182617302
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1837875320852082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6968e196e4f7a1344bc4744e2b7cc4eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_deathClip: {fileID: 8300000, guid: 02e3ffb56ccad4e43af9e6698800a22a, type: 3}
-  deathReceiver: {fileID: 114339687676433898}
-  inmuneTimeAfterRevive: 2
-  fadePeriodAfterRevive: 0.1
-  m_renderersToFade:
-  - {fileID: 137426927464821120}
-  - {fileID: 137624744854759776}
-  - {fileID: 137615049434199850}
 --- !u!114 &114788627494545874
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2726,6 +2706,10 @@ MonoBehaviour:
   m_timeToIdle: 5
   m_fartParticleReceiver: {fileID: 114788627494545874}
   m_dustParticleReceiver: {fileID: 114249765130331864}
+  deathReceiver: {fileID: 114339687676433898}
+  inmuneTimeAfterRevive: 2
+  fadePeriodAfterRevive: 0.1
+  m_renderersToFade: []
 --- !u!114 &114944513227704966
 MonoBehaviour:
   m_ObjectHideFlags: 1

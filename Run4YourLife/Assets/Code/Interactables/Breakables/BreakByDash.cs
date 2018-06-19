@@ -18,7 +18,7 @@ namespace Run4YourLife.Interactables
         {
             if (other.CompareTag(Tags.Runner))
             {
-                if (other.GetComponent<RunnerCharacterController>().IsDashing)
+                if (other.GetComponent<RunnerController>().IsDashing)
                 {
                     Break();
                 }

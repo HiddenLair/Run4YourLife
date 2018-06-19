@@ -42,14 +42,14 @@ namespace Run4YourLife.Player.Runner.Ghost
             m_runnerGhostController.ReviveGhost();
         }
 
-        public override Vector3 GetStartingBouncePosition(RunnerCharacterController runnerCharacterController)
+        public override Vector3 GetStartingBouncePosition(RunnerController runnerCharacterController)
         {
             Vector3 startingBouncePosition = runnerCharacterController.transform.position;
             startingBouncePosition.y = m_collider.bounds.max.y;
             return startingBouncePosition;
         }
 
-        public override bool ShouldBounceByContact(RunnerCharacterController runnerCharacterController)
+        public override bool ShouldBounceByContact(RunnerController runnerCharacterController)
         {
             return false;
         }

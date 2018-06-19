@@ -6,7 +6,7 @@ using Run4YourLife.Interactables;
 
 namespace Run4YourLife.Player
 {
-    [RequireComponent(typeof(RunnerCharacterController))]
+    [RequireComponent(typeof(RunnerController))]
     public class RunnerBounceController : MonoBehaviour {
 
         [SerializeField]
@@ -17,11 +17,11 @@ namespace Run4YourLife.Player
 
         [SerializeField]
         private Vector3 m_colliderSize;
-        private RunnerCharacterController m_runnerCharacterController;
+        private RunnerController m_runnerCharacterController;
 
         private void Awake()
         {
-            m_runnerCharacterController = GetComponent<RunnerCharacterController>();    
+            m_runnerCharacterController = GetComponent<RunnerController>();    
         }
 
         private void OnTriggerEnter(Collider other)

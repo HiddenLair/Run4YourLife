@@ -85,7 +85,7 @@ namespace Run4YourLife.GameManagement
             {
                 GameObject runner = GameplayPlayerManager.Instance.Runners[i];
                 runner.transform.position = m_runnerSpawns[i].position;
-                RunnerCharacterController runnerCharacterController = runner.GetComponent<RunnerCharacterController>();
+                RunnerController runnerCharacterController = runner.GetComponent<RunnerController>();
                 runnerCharacterController.CheckOutScreen = true;
             }
         }
@@ -101,7 +101,7 @@ namespace Run4YourLife.GameManagement
 
             foreach (GameObject runner in GameplayPlayerManager.Instance.Runners)
             {
-                RunnerCharacterController runnerCharacterController = runner.GetComponent<RunnerCharacterController>();
+                RunnerController runnerCharacterController = runner.GetComponent<RunnerController>();
                 runnerCharacterController.CheckOutScreen = false;
             }
             ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (a,b) => a.HideCrossHair());

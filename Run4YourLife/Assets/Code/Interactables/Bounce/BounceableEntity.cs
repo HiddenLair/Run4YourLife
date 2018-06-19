@@ -50,12 +50,12 @@ namespace Run4YourLife.Interactables
             m_animator.SetTrigger("bump");
         }
 
-        public override bool ShouldBounceByContact(RunnerCharacterController runnerCharacterController)
+        public override bool ShouldBounceByContact(RunnerController runnerCharacterController)
         {
             return m_bounceTrigger == BounceTrigger.Allways || (m_bounceTrigger == BounceTrigger.NegativeVerticalVelocity && runnerCharacterController.Velocity.y < 0);
         }
 
-        public override Vector3 GetStartingBouncePosition(RunnerCharacterController runnerCharacterController)
+        public override Vector3 GetStartingBouncePosition(RunnerController runnerCharacterController)
         {
             Vector3 startingBouncePosition = runnerCharacterController.transform.position;
             startingBouncePosition.y = m_collider.bounds.max.y;

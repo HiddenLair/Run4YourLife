@@ -7,7 +7,7 @@ namespace Run4YourLife.Interactables
 
         Vector3 BounceForce { get; }
         void BouncedOn();
-        bool ShouldBounceByContact(RunnerCharacterController runnerCharacterController);
-        Vector3 GetStartingBouncePosition(RunnerCharacterController runnerCharacterController);
+        bool ShouldBounceByContact(RunnerController runnerCharacterController);
+        Vector3 GetStartingBouncePosition(RunnerController runnerCharacterController);
     }
 }
