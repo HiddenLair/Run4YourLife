@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using Run4YourLife.GameManagement.AudioManagement;
 
+using Run4YourLife.Player;
+
 namespace Run4YourLife.Interactables
 {
     public class SlowTrapController : TrapBase
