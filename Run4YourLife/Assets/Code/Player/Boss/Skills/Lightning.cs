@@ -103,16 +103,21 @@ namespace Run4YourLife.Player {
             RaycastHit[] hits;
             hits = Physics.SphereCastAll(lighningEffect.transform.position, width/2, Vector3.down, pos.y - transform.position.y,finalMask,QueryTriggerInteraction.Ignore);
 
+            List<RaycastHit> nonRunnersHits = new List<RaycastHit>();
             foreach (RaycastHit hit in hits)
             {
                 if (hit.collider.CompareTag(Tags.Runner))
                 {
                     ExecuteEvents.Execute<ICharacterEvents>(hit.collider.gameObject, null, (x, y) => x.Kill());
                 }
+                else
+                {
+                    nonRunnersHits.Add(hit);
+                }
             }
             if(phase != SkillBase.Phase.PHASE1)
             {
-                SetElectricFields(hits);
+                SetElectricFields(nonRunnersHits);
             }
 
             lighningEffect.SetActive(true);
@@ -120,14 +125,14 @@ namespace Run4YourLife.Player {
             StartCoroutine(WaitForParticleSystems(lightning,lighningEffect));
         }
 
-        private void SetElectricFields(RaycastHit[] hits)
+        private void SetElectricFields(List<RaycastHit> hits)
         {
 
             const float delta = 0.15f;
 
             List<RaycastHit> spawnFieldHits = new List<RaycastHit>();
-            hits.OrderBy(a => a.distance);
-            for(int i = 0;i<hits.Length; ++i)
+            hits = hits.OrderBy(a => a.distance).ToList();
+            for(int i = 0;i<hits.Count; ++i)
             {
                 if(hits[i].collider.CompareTag(Tags.Runner))
                 {
@@ -138,7 +143,7 @@ namespace Run4YourLife.Player {
                     spawnFieldHits.Add(hits[i]);
                 }
 
-                while (i+1 < hits.Length)
+                while (i+1 < hits.Count)
                 {
                     Collider c1 = hits[i].collider;
                     Collider c2 = hits[i + 1].collider;
