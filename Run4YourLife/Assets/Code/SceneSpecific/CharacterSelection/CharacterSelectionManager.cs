@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-using Run4YourLife.InputManagement;
 using Run4YourLife.Player;
+using Run4YourLife.InputManagement;
 using Run4YourLife.SceneManagement;
 
 namespace Run4YourLife.SceneSpecific.CharacterSelection
@@ -9,8 +9,14 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
     [RequireComponent(typeof(InputDeviceDetector))]
     public class CharacterSelectionManager : SingletonMonoBehaviour<CharacterSelectionManager>
     {
+        public enum CharacterSelectionTarget { Game, Tutorial }
+        public static string CharacterSelectionTargetKey = "CharacterSelectionTarget";
+
         [SerializeField]
         private SceneTransitionRequest m_gameLoadRequest;
+
+        [SerializeField]
+        private SceneTransitionRequest m_tutorialLoadRequest;
 
         [SerializeField]
         private SceneTransitionRequest m_mainMenuLoadRequest;
@@ -48,7 +54,15 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         public void OnGameStart()
         {
-            m_gameLoadRequest.Execute();
+            SceneTransitionRequest sceneTransitionRequest = m_gameLoadRequest;
+            object characterSelectionTargetObject = GlobalDataContainer.Instance.Get(CharacterSelectionTargetKey);
+
+            if(characterSelectionTargetObject != null && (CharacterSelectionTarget)characterSelectionTargetObject == CharacterSelectionTarget.Tutorial)
+            {
+                sceneTransitionRequest = m_tutorialLoadRequest;
+            }
+
+            sceneTransitionRequest.Execute();
         }
 
         public void OnMainMenuStart()
