@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class DontDestroyOnLoad : MonoBehaviour {
-
-    private void Awake()
+namespace Run4YourLife.Utils
+{
+    public class DontDestroyOnLoad : MonoBehaviour
     {
-        DontDestroyOnLoad(gameObject);
+        private void Awake()
+        {
+            DontDestroyOnLoad(gameObject);
+        }
     }
 }

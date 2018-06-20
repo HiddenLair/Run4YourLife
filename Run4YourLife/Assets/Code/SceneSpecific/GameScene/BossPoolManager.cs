@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using Run4YourLife.Utils;
 
 namespace Run4YourLife.GameManagement
 {
@@ -19,7 +18,6 @@ namespace Run4YourLife.GameManagement
 
         private GameObjectPool m_gameObjectPool;
         private ManualPrefabInstantiator m_manualPrefabInstantiator;
-
 
         private void Awake()
         {

@@ -15,21 +15,21 @@ namespace Run4YourLife.Utils
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (!activatedFlag)
+            if(!activatedFlag)
             {
-                // StartCoroutine(ChangeDelayed());
                 StartCoroutine(YieldHelper.WaitForSeconds(Change, delayActivation));
             }
+
             activatedFlag = true;
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!activatedFlag)
+            if(!activatedFlag)
             {
-                // StartCoroutine(ChangeDelayed());
                 StartCoroutine(YieldHelper.WaitForSeconds(Change, delayActivation));
             }
+
             activatedFlag = true;
         }
 
