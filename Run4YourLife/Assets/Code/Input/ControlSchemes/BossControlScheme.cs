@@ -9,8 +9,8 @@ namespace Run4YourLife.InputManagement
 {
     public class BossControlScheme : PlayerControlScheme
     {
-        public InputAction MoveTrapIndicatorVertical { get; private set; }
-        public InputAction MoveTrapIndicatorHorizontal { get; private set; }
+        public InputAction CrosshairVertical { get; private set; }
+        public InputAction CrosshairHorizontal { get; private set; }
 
         public InputAction Skill1 { get; private set; }
         public InputAction Skill2 { get; private set; }
@@ -28,8 +28,8 @@ namespace Run4YourLife.InputManagement
 
         public BossControlScheme()
         {
-            InputActions.Add(MoveTrapIndicatorVertical = new InputAction(new InputSource(Axis.LEFT_VERTICAL), "MoveTrapIndicatorVertical"));
-            InputActions.Add(MoveTrapIndicatorHorizontal = new InputAction(new InputSource(Axis.LEFT_HORIZONTAL), "MoveTrapIndicatorHorizontal"));
+            InputActions.Add(CrosshairVertical = new InputAction(new InputSource(Axis.LEFT_VERTICAL), "MoveTrapIndicatorVertical"));
+            InputActions.Add(CrosshairHorizontal = new InputAction(new InputSource(Axis.LEFT_HORIZONTAL), "MoveTrapIndicatorHorizontal"));
 
             InputActions.Add(Skill1 = new InputAction(new InputSource(Button.A), "Skill1"));
             InputActions.Add(Skill2 = new InputAction(new InputSource(Button.X), "Skill2"));

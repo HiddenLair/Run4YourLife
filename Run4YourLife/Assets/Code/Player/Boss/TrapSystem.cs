@@ -71,7 +71,6 @@ namespace Run4YourLife.Player
 
         void Update()
         {
-            Move();
 
             if (ready.Get() && !trapCooldownBool)
             {
@@ -81,14 +80,6 @@ namespace Run4YourLife.Player
             }       
         }
 
-        void Move()
-        {
-            float xInput = bossControlScheme.MoveTrapIndicatorHorizontal.Value();
-            float yInput = bossControlScheme.MoveTrapIndicatorVertical.Value();
-            Vector2 input = new Vector2(xInput, yInput);
-
-            crossHairControl.Move(input);
-        }
 
         void SelectElementToSet()
         {
@@ -142,7 +133,7 @@ namespace Run4YourLife.Player
         {
             gameObject.SetActive(true);
             gameObject.GetComponent<SkillBase>().StartSkill();
-            crossHairControl.TotalUnlock();
+            crossHairControl.UnlockPositionAndMovement();
         }
 
         bool SkillCheckWorldAvailability(GameObject skill,out GameObject instance)
@@ -152,7 +143,7 @@ namespace Run4YourLife.Player
             bool ret = instance.GetComponent<SkillBase>().Check();
             if (ret)
             {
-                crossHairControl.TotalLock();
+                crossHairControl.LockPositionAndMovement();
             }
             return ret;
         }

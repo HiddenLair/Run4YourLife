@@ -95,7 +95,7 @@ namespace Run4YourLife.Player
                         ShootByAnim();
                         currentTimeS = Time.time + reloadTimeS;
                         shootTrigger = true;
-                        crossHairControl.Lock();
+                        crossHairControl.LockMovement();
 
                         ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.SHOOT, reloadTimeS));
                     }
@@ -103,7 +103,7 @@ namespace Run4YourLife.Player
                 else
                 {
                     shootTrigger = false;
-                    crossHairControl.Unlock();
+                    crossHairControl.UnlockMovement();
                 }
             }
         }

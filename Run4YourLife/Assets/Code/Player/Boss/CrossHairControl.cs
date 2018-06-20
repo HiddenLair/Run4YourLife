@@ -1,12 +1,21 @@
 ﻿using System;
 using Run4YourLife.GameManagement;
+using Run4YourLife.InputManagement;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Run4YourLife.Player
 {
+    [RequireComponent(typeof(BossControlScheme))]
     public class CrossHairControl : MonoBehaviour
     {
+        private enum State
+        {
+            Default,
+            MovementLocked,
+            PositionAndMovementLocked
+        }
+
         [SerializeField]
         private float m_speed;
 
@@ -16,15 +25,18 @@ namespace Run4YourLife.Player
         [SerializeField]
         private Vector2 m_clampMax;
 
-
-
-        private bool m_isLocked;
-        private bool m_totalLocked;
-
         // Normalized position range from (0,0) to (1,1)
         private Vector2 m_screenPosition;
+        // World position the crosshair keeps when position is locked
+        private Vector3 m_lockedPosition;
+        private State m_state;
 
-        private Vector3 lastPos;
+        private BossControlScheme m_controlScheme;
+
+        private void Awake()
+        {
+            m_controlScheme = GetComponent<BossControlScheme>();
+        }
 
         public Vector3 Position
         {
@@ -42,54 +54,53 @@ namespace Run4YourLife.Player
             }
         }
 
-        public void Move(Vector2 input)
+        private void Update()
         {
-            if(!m_isLocked)
-            {
-                m_screenPosition.x = Mathf.Clamp(m_screenPosition.x + m_speed * input.x * Time.deltaTime, m_clampMin.x, m_clampMax.x);
-                m_screenPosition.y = Mathf.Clamp(m_screenPosition.y + m_speed * input.y * Time.deltaTime, m_clampMin.y, m_clampMax.y);
+            Move();
+            UICrossHair.Instance.UpdatePosition(Position);
+        }
 
-                UICrossHair.Instance.UpdatePosition(Position);
+        public void Move()
+        {
+            switch(m_state)
+            {
+                case State.Default:
+                    float xInput = m_controlScheme.CrosshairHorizontal.Value();
+                    float yInput = m_controlScheme.CrosshairVertical.Value();
+
+                    m_screenPosition.x = Mathf.Clamp(m_screenPosition.x + m_speed * xInput * Time.deltaTime, m_clampMin.x, m_clampMax.x);
+                    m_screenPosition.y = Mathf.Clamp(m_screenPosition.y + m_speed * yInput * Time.deltaTime, m_clampMin.y, m_clampMax.y);
+                    break;
+                case State.MovementLocked:
+                    break;
+                case State.PositionAndMovementLocked:
+                    m_screenPosition = CameraManager.Instance.MainCamera.WorldToScreenPoint(m_lockedPosition);
+                    break;
             }
         }
 
-        /*void Update()
+        public void LockMovement()
         {
-            if (m_totalLocked)
-            {
-                m_crossHairGameObject.transform.position = lastPos;
-                OverrideZ();
-            } 
-        }*/
-
-        public void Lock()
-        {
-            m_isLocked = true;
+            Debug.Assert(m_state == State.Default);
+            m_state = State.MovementLocked;
         }
 
-        public void Unlock()
+        public void UnlockMovement()
         {
-            m_isLocked = false;
+            Debug.Assert(m_state == State.MovementLocked || m_state == State.Default);
+            m_state = State.Default;
         }
 
-        public void TotalLock()
+        public void LockPositionAndMovement()
         {
-            Lock();
-            m_totalLocked = true;
-            //lastPos = m_crossHairGameObject.transform.position;
+            Debug.Assert(m_state == State.Default);
+            m_state = State.PositionAndMovementLocked;
         }
 
-        public void TotalUnlock()
+        public void UnlockPositionAndMovement()
         {
-            Unlock();
-            m_totalLocked = false;
-        }
-
-        private void OnDrawGizmosSelected()
-        {
-            Gizmos.DrawSphere(Position, 0.5f);
-            Gizmos.DrawLine(transform.position, Position);
-            Debug.Log(Position);
+            Debug.Assert(m_state == State.PositionAndMovementLocked || m_state == State.Default);
+            m_state = State.Default;
         }
     }
 }
