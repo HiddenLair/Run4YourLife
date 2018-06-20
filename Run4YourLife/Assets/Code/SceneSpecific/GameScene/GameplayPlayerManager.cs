@@ -11,8 +11,8 @@ namespace Run4YourLife.GameManagement {
     public interface IGameplayPlayerEvents : IEventSystemHandler
     {
         void OnRunnerDeath(PlayerHandle player, Vector3 position);
-        void OnRunnerRevive(PlayerHandle playerHandle, Vector3 position);
-        void OnRunnerActivate(PlayerHandle playerHandle, Vector3 position);
+        GameObject OnRunnerRevive(PlayerHandle playerHandle, Vector3 position);
+        GameObject OnRunnerActivate(PlayerHandle playerHandle, Vector3 position);
     }
 
     [System.Serializable]
@@ -50,6 +50,7 @@ namespace Run4YourLife.GameManagement {
 
         #region Members
 
+        private bool firstDeath = false;
         private GameObject m_boss;
         private List<GameObject> m_runners = new List<GameObject>();
         private List<GameObject> m_runnersAlive = new List<GameObject>();
@@ -184,6 +185,12 @@ namespace Run4YourLife.GameManagement {
 
         public void OnRunnerDeath(PlayerHandle playerHandle, Vector3 position)
         {
+            if (firstDeath && FirstKillManager.Instance != null)
+            {
+                FirstKillManager.Instance.ShowReviveInfo();
+                firstDeath = false;
+            }
+
             DeactivateRunner(playerHandle);
             ActivateRunnerGhost(playerHandle, position);
 
@@ -197,16 +204,16 @@ namespace Run4YourLife.GameManagement {
             }
         }
 
-        public void OnRunnerRevive(PlayerHandle playerHandle, Vector3 position)
+        public GameObject OnRunnerRevive(PlayerHandle playerHandle, Vector3 position)
         {
             DeactivateGhost(playerHandle);
-            ActivateRunner(playerHandle, position, true);
+            return ActivateRunner(playerHandle, position, true);
         }
 
-        public void OnRunnerActivate(PlayerHandle playerHandle, Vector3 position) 
+        public GameObject OnRunnerActivate(PlayerHandle playerHandle, Vector3 position) 
         {
             DeactivateGhost(playerHandle);
-            ActivateRunner(playerHandle, position, false);
+            return ActivateRunner(playerHandle, position, false);
         }
 
         private GameObject ActivateRunner(PlayerHandle playerHandle, Vector3 position, bool revived = false)

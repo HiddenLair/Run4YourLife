@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 using Run4YourLife.Player;
 using System;
@@ -23,14 +23,16 @@ namespace Run4YourLife.GameManagement
             ActivateBoss();
         }
 
-        public void ActivateRunners()
+        public List<GameObject> ActivateRunners()
         {            
             int index = 0;
+            List<GameObject> runners = new List<GameObject>();
             foreach (PlayerHandle runnerPlayerHandle in PlayerManager.Instance.RunnerPlayerHandles)
             {
-                GameplayPlayerManager.Instance.OnRunnerActivate(runnerPlayerHandle, m_runnerSpawns[index].position);
+                runners.Add(GameplayPlayerManager.Instance.OnRunnerActivate(runnerPlayerHandle, m_runnerSpawns[index].position));
                 index++;
             }
+            return runners;
         }
 
         public void ActivateBoss()

@@ -27,14 +27,23 @@ namespace Run4YourLife.GameManagement
 
         public override void StartPhase()
         {
-
-            m_playerSpawner.ActivateRunners();
+            List<GameObject> runners = m_playerSpawner.ActivateRunners();
 
             AudioManager.Instance.PlayMusic(m_phase1MusicClip);
 
             m_virtualCamera.Follow = null;
             m_virtualCamera.LookAt = null;
             CameraManager.Instance.TransitionToCamera(m_virtualCamera);
+
+            Camera cam = CameraManager.Instance.MainCamera;
+            List<Transform> runnersTransform = new List<Transform>();
+            foreach(GameObject o in runners)
+            {
+                runnersTransform.Add(o.transform);
+            }
+            SharedCamera script = cam.GetComponent<SharedCamera>();
+            script.SetTargets(runnersTransform.ToArray());
+            script.enabled = true;
 
             foreach (GameObject runner in GameplayPlayerManager.Instance.Runners)
             {
