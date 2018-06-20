@@ -1,26 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Run4YourLife.Player;
 
-public class EnableOnVisible : MonoBehaviour
+namespace Run4YourLife.Utils
 {
-    [SerializeField]
-    private GameObject[] m_elementsToEnable;
-
-    private void OnBecameVisible()
+    public class EnableOnVisible : MonoBehaviour
     {
-        foreach (GameObject element in m_elementsToEnable)
+        [SerializeField]
+        private GameObject[] m_elementsToEnable;
+
+        private void OnBecameVisible()
         {
-            element.GetComponent<ICustomVisibleInvisible>().OnCustomBecameVisible();
+            foreach(GameObject element in m_elementsToEnable)
+            {
+                element.GetComponent<ICustomVisibleInvisible>().OnCustomBecameVisible();
+            }
         }
-    }
 
-    private void OnBecameInvisible()
-    {
-        foreach (GameObject element in m_elementsToEnable)
+        private void OnBecameInvisible()
         {
-            element.GetComponent<ICustomVisibleInvisible>().OnCustomBecameInvisible();
+            foreach(GameObject element in m_elementsToEnable)
+            {
+                element.GetComponent<ICustomVisibleInvisible>().OnCustomBecameInvisible();
+            }
         }
     }
 }

@@ -1,54 +1,57 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(MeshRenderer))]
-public class MaterialFadeOut : MonoBehaviour
+namespace Run4YourLife.Utils
 {
-    private float endTimeS;
-    private float durationS;
-    private Material material;
-    private float initialAlpha;
-
-    private bool activated = false;
-
-    void Awake()
+    [RequireComponent(typeof(MeshRenderer))]
+    public class MaterialFadeOut : MonoBehaviour
     {
-        material = GetComponent<MeshRenderer>().material;
-        initialAlpha = material.color.a;
-    }
+        private float endTimeS;
+        private float durationS;
+        private Material material;
+        private float initialAlpha;
 
-	void Update()
-    {
-        if(activated)
+        private bool activated = false;
+
+        void Awake()
         {
-            if(Time.time >= endTimeS)
+            material = GetComponent<MeshRenderer>().material;
+            initialAlpha = material.color.a;
+        }
+
+        void Update()
+        {
+            if(activated)
             {
-                activated = false;
-            }
-            else
-            {
-                UpdateAlpha((endTimeS - Time.time) / durationS);
+                if(Time.time >= endTimeS)
+                {
+                    activated = false;
+                }
+                else
+                {
+                    UpdateAlpha((endTimeS - Time.time) / durationS);
+                }
             }
         }
-	}
 
-    public void Activate(float durationS)
-    {
-        ResetAlpha();
+        public void Activate(float durationS)
+        {
+            ResetAlpha();
 
-        activated = true;
-        this.durationS = durationS;
-        endTimeS = Time.time + durationS;
-    }
+            activated = true;
+            this.durationS = durationS;
+            endTimeS = Time.time + durationS;
+        }
 
-    private void ResetAlpha()
-    {
-        UpdateAlpha(1.0f);
-    }
+        private void ResetAlpha()
+        {
+            UpdateAlpha(1.0f);
+        }
 
-    private void UpdateAlpha(float t)
-    {
-        Color color = material.color;
-        color.a = t * initialAlpha;
-        material.color = color;
+        private void UpdateAlpha(float t)
+        {
+            Color color = material.color;
+            color.a = t * initialAlpha;
+            material.color = color;
+        }
     }
 }
