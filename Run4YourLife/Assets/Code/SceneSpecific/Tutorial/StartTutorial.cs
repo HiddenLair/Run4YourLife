@@ -32,9 +32,6 @@ namespace Run4YourLife.GameManagement
 
             AudioManager.Instance.PlayMusic(m_phase1MusicClip);
 
-            GameObject boss = GameplayPlayerManager.Instance.Boss;
-            Debug.Assert(boss != null);
-
             m_virtualCamera.Follow = null;
             m_virtualCamera.LookAt = null;
             CameraManager.Instance.TransitionToCamera(m_virtualCamera);
