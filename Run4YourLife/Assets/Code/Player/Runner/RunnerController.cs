@@ -386,18 +386,15 @@ namespace Run4YourLife.Player
             GravityAndDrag();
             Move();
 
-            if(m_runnerControlScheme.Move.Value() != 0 || m_velocity.sqrMagnitude > 0)
+            if(m_inputController.Started(m_runnerControlScheme.Jump))
             {
-                if (!m_characterController.isGrounded)
-                {
-                    m_stateMachine.ChangeState(States.CoyoteMove);
-                }
-                else if(m_inputController.Started(m_runnerControlScheme.Jump))
-                {
-                    m_stateMachine.ChangeState(States.Jump);
-                }
+                m_stateMachine.ChangeState(States.Jump);
+            } 
+            else if(!m_characterController.isGrounded)
+            {
+                m_stateMachine.ChangeState(States.CoyoteMove);
             }
-            else
+            else if(m_runnerControlScheme.Move.Value() == 0 && m_velocity == Vector3.zero)
             {
                 m_stateMachine.ChangeState(States.Idle);
             }
@@ -419,7 +416,11 @@ namespace Run4YourLife.Player
             GravityAndDrag();
             Move();
 
-            if (m_characterController.isGrounded)
+            if(m_inputController.Started(m_runnerControlScheme.Jump))
+            {
+                m_stateMachine.ChangeState(States.Jump);
+            } 
+            else if (m_characterController.isGrounded)
             {
                 m_stateMachine.ChangeState(States.Move);
             }
@@ -579,12 +580,12 @@ namespace Run4YourLife.Player
 
         private void Fall_Enter()
         {
-            m_gravity += m_endOfJumpGravity;
+            m_gravity = m_endOfJumpGravity;
         }
 
         private void Fall_Exit()
         {
-            m_gravity -= m_endOfJumpGravity;
+            m_gravity = m_baseGravity;
         }
 
         private void Fall_Update()
@@ -594,12 +595,10 @@ namespace Run4YourLife.Player
 
             if (m_runnerControlScheme.Jump.Started())
             {
-                if(!m_runnerBounceController.ExecuteBounceIfPossible()) // This will trigger a call that will start a bounce
+                bool didExecuteBounce = m_runnerBounceController.ExecuteBounceIfPossible();
+                if(!didExecuteBounce && m_canDoubleJumpAgain)
                 {
-                    if(m_canDoubleJumpAgain)
-                    {
-                        m_stateMachine.ChangeState(States.SecondJump);
-                    }
+                    m_stateMachine.ChangeState(States.SecondJump);
                 }
             }
             else if(m_characterController.isGrounded)
