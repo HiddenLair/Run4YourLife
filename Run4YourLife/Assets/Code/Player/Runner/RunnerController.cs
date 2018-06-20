@@ -386,18 +386,15 @@ namespace Run4YourLife.Player
             GravityAndDrag();
             Move();
 
-            if(m_runnerControlScheme.Move.Value() != 0 || m_velocity.sqrMagnitude > 0)
+            if(m_inputController.Started(m_runnerControlScheme.Jump))
             {
-                if (!m_characterController.isGrounded)
-                {
-                    m_stateMachine.ChangeState(States.CoyoteMove);
-                }
-                else if(m_inputController.Started(m_runnerControlScheme.Jump))
-                {
-                    m_stateMachine.ChangeState(States.Jump);
-                }
+                m_stateMachine.ChangeState(States.Jump);
+            } 
+            else if(!m_characterController.isGrounded)
+            {
+                m_stateMachine.ChangeState(States.CoyoteMove);
             }
-            else
+            else if(m_runnerControlScheme.Move.Value() == 0 && m_velocity == Vector3.zero)
             {
                 m_stateMachine.ChangeState(States.Idle);
             }
@@ -419,7 +416,11 @@ namespace Run4YourLife.Player
             GravityAndDrag();
             Move();
 
-            if (m_characterController.isGrounded)
+            if(m_inputController.Started(m_runnerControlScheme.Jump))
+            {
+                m_stateMachine.ChangeState(States.Jump);
+            } 
+            else if (m_characterController.isGrounded)
             {
                 m_stateMachine.ChangeState(States.Move);
             }
