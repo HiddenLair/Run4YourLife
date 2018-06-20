@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿using System.Collections.Generic;
 
 namespace Run4YourLife
 {
@@ -9,7 +6,29 @@ namespace Run4YourLife
 
         private Dictionary<string, object> m_data = new Dictionary<string, object>();
 
-        public Dictionary<string,object> Data { get { return m_data; } }  
+        public bool Has(string key)
+        {
+            return m_data.ContainsKey(key);
+        }
+
+        public object Get(string key)
+        {
+            object data = null;
+            m_data.TryGetValue(key, out data);
+
+            return data;
+        }
+
+        public void Set(string key, object data)
+        {
+            if(Has(key))
+            {
+                m_data[key] = data;
+            }
+            else
+            {
+                m_data.Add(key, data);
+            }
+        }
     }
 }
-

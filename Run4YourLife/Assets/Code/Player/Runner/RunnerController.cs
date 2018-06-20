@@ -626,6 +626,7 @@ namespace Run4YourLife.Player
             m_canDoubleJumpAgain = true;
 
             AudioManager.Instance.PlaySFX(m_bounceClip);
+            m_animator.SetTrigger(RunnerAnimation.bounce);
 
             m_velocity.x = DragToVelocity(_bounce_bounceForce.x);
             m_velocity.y = HeightToVelocity(_bounce_bounceForce.y);
