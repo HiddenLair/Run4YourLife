@@ -78,10 +78,15 @@ namespace Run4YourLife.UI
             else
             {
                 ActiveAll(true);
-                progress.gameObject.SetActive(phaseType != PhaseType.SECOND);
+                if (progress != null)
+                {
+                    progress.gameObject.SetActive(phaseType != PhaseType.SECOND);
+                }
             }
-
-            progress.SetPhase(phaseType);
+            if (progress != null)
+            {
+                progress.SetPhase(phaseType);
+            }
         }
 
         public void OnActionUsed(ActionType actionType, float cooldown)
@@ -91,7 +96,10 @@ namespace Run4YourLife.UI
 
         public void OnBossProgress(float percent)
         {
-            progress.SetPercent(percent);
+            if (progress != null)
+            {
+                progress.SetPercent(percent);
+            }
         }
 
         private PhaseType GamePhaseConversor(GamePhase phase)

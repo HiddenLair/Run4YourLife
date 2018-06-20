@@ -14,7 +14,9 @@ namespace Run4YourLife.GameManagement
         BossFightRockTransition,
         TransitionToHardMoveHorizontal,
         HardMoveHorizontal,
-        End
+        End,
+        StartTutorial,
+        BossTutorial
     }
 
     [System.Serializable]

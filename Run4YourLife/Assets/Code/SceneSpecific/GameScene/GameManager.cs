@@ -21,6 +21,9 @@ namespace Run4YourLife.GameManagement
 
     public class GameManager : SingletonMonoBehaviour<GameManager>, IGameplayEvents
     {
+        [SerializeField]
+        GamePhase StartGamePhase;
+
         public GamePhaseEvent onGamePhaseChanged;
 
         [SerializeField]
@@ -45,7 +48,7 @@ namespace Run4YourLife.GameManagement
 
         private void Start()
         {
-            StartCoroutine(YieldHelper.SkipFrame(() => ChangeGamePhase(GamePhase.TransitionToEasyMoveHorizontal)));
+            StartCoroutine(YieldHelper.SkipFrame(() => ChangeGamePhase(StartGamePhase)));
         }
 
         #region Phase Execution
