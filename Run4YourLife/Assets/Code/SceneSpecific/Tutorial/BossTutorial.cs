@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Run4YourLife.GameManagement.AudioManagement;
 using Run4YourLife.Player;
@@ -7,12 +6,12 @@ using Cinemachine;
 
 namespace Run4YourLife.GameManagement
 {
-    public class StartTutorial : GamePhaseManager
+    public class BossTutorial : GamePhaseManager
     {
-        public override GamePhase GamePhase { get { return GamePhase.StartTutorial; } }
+        public override GamePhase GamePhase { get { return GamePhase.BossTutorial; } }
 
         [SerializeField]
-        private AudioClip m_phase1MusicClip;
+        private Vector3 fixCameraPosition;
 
         private PlayerSpawner m_playerSpawner;
 
@@ -24,25 +23,14 @@ namespace Run4YourLife.GameManagement
 
         public override void StartPhase()
         {
-            List<GameObject> runners = m_playerSpawner.ActivateRunners();
-
-            AudioManager.Instance.PlayMusic(m_phase1MusicClip);
-
             Camera cam = CameraManager.Instance.MainCamera;
-            List<Transform> runnersTransform = new List<Transform>();
-            foreach(GameObject o in runners)
-            {
-                runnersTransform.Add(o.transform);
-            }
             SharedCamera script = cam.GetComponent<SharedCamera>();
-            script.SetTargets(runnersTransform.ToArray());
-            script.enabled = true;
+            script.FixCameraAtPosition(fixCameraPosition,()=>SpawnBoss());
+        }
 
-            foreach (GameObject runner in GameplayPlayerManager.Instance.Runners)
-            {
-                RunnerController runnerCharacterController = runner.GetComponent<RunnerController>();
-                runnerCharacterController.CheckOutScreen = true;
-            }
+        private void SpawnBoss()
+        {
+            m_playerSpawner.ActivateBoss();
         }
 
         public override void EndPhase()

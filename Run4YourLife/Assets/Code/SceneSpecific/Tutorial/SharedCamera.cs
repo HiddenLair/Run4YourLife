@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System;
+using System.Collections;
 
 public class SharedCamera : MonoBehaviour {
 
@@ -16,6 +18,9 @@ public class SharedCamera : MonoBehaviour {
 
     [SerializeField]
     private float zoomSpeed = 20f;
+
+    [SerializeField]
+    private float fixCameraTime;
 
     private Camera cam;
     private Transform[] targets;
@@ -81,5 +86,23 @@ public class SharedCamera : MonoBehaviour {
             orthographicSize = Mathf.Abs(boundingBox.height) / 2f;
 
         return (orthographicSize / Mathf.Tan((Camera.main.fieldOfView * Mathf.Deg2Rad) / 2f));
+    }
+
+    public void FixCameraAtPosition(Vector3 position,Action callback)
+    {
+        StartCoroutine(FixCamera(position,callback));
+    }
+
+    IEnumerator FixCamera(Vector3 position, Action callback)
+    {
+        float actualLerp = 0.0f;
+        Vector3 initialPos = transform.position;
+        while (actualLerp < 1)
+        {
+            actualLerp += Time.deltaTime / fixCameraTime;
+            transform.position = Vector3.Lerp(initialPos,position,actualLerp);
+            yield return null;
+        }
+        callback.Invoke();
     }
 }
