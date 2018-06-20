@@ -144,12 +144,12 @@ namespace Run4YourLife.GameManagement
         
         public void EndGame_RunnersWin()
         {
-            StartCoroutine(YieldHelper.SkipFrame(() => m_loadBossWinMenu.Execute()));
+            StartCoroutine(YieldHelper.SkipFrame(() => m_loadRunnersWinMenu.Execute()));
         }
 
         public void EndGame_BossWin()
         {
-            StartCoroutine(YieldHelper.SkipFrame(() => m_loadRunnersWinMenu.Execute()));
+            StartCoroutine(YieldHelper.SkipFrame(() => m_loadBossWinMenu.Execute()));
         }
     }
 }
