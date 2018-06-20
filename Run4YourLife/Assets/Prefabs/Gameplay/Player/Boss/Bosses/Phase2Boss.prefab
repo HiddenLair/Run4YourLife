@@ -1095,23 +1095,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1869380077687036
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4131931927975490}
-  - component: {fileID: 65615731807290916}
-  - component: {fileID: 54951010552184082}
-  m_Layer: 12
-  m_Name: CrossHairWorld
-  m_TagString: Untagged
-  m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1870261923581168
 GameObject:
   m_ObjectHideFlags: 1
@@ -1460,19 +1443,6 @@ Transform:
   m_Father: {fileID: 4005214923202486}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4131931927975490
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1869380077687036}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.5, z: -10}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
-  m_Children: []
-  m_Father: {fileID: 4162217030126272}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4133972443971416
 Transform:
   m_ObjectHideFlags: 1
@@ -1499,7 +1469,6 @@ Transform:
   m_Children:
   - {fileID: 4430257929087806}
   - {fileID: 4088062288324568}
-  - {fileID: 4131931927975490}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2492,33 +2461,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1361824148126018}
   m_Mesh: {fileID: 4300000, guid: 78cbea455c89ac44db5a308576511c83, type: 3}
---- !u!54 &54951010552184082
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1869380077687036}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 120
-  m_CollisionDetection: 0
---- !u!65 &65615731807290916
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1869380077687036}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!82 &82647131118960548
 AudioSource:
   m_ObjectHideFlags: 1
@@ -2678,9 +2620,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ae855258506e3b44bc9e3c2c4b23169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_crossHairGameObject: {fileID: 1869380077687036}
-  m_speed: 10
-  desiredZ: -10
+  m_speed: 0.5
+  m_clampMin: {x: 0.025, y: 0.05}
+  m_clampMax: {x: 0.975, y: 0.95}
 --- !u!114 &114218938578317234
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2754,10 +2696,10 @@ MonoBehaviour:
   m_castClip: {fileID: 8300000, guid: 4a235b16048326246adf6fdd4f2cecee, type: 3}
   screenLeftLimitPercentaje: 0
   screenBottomLimitPercentaje: 0
-  skillA: {fileID: 1392325496747952, guid: 51ca4f89786442b43970d93af24d9878, type: 2}
-  skillX: {fileID: 1919952662679816, guid: 0e0278c361a7ea340a30ade8fded1ab1, type: 2}
-  skillY: {fileID: 1705394957324018, guid: 6419794bc2429ea43b90d76b1153e827, type: 2}
-  skillB: {fileID: 1463452844622424, guid: 7e170bbe1f8b8ea4eb65d2fe06bf9368, type: 2}
+  skillA: {fileID: 1096296802443346, guid: 7b75228d62a32a446b38630536b4dfd8, type: 2}
+  skillX: {fileID: 1778254393714324, guid: 8ecb33c5bbbad76499d8943f2f854a67, type: 2}
+  skillY: {fileID: 1439577150476730, guid: bfa617fe4fd98a94d94fb4bb81723b3b, type: 2}
+  skillB: {fileID: 1930766281004810, guid: 7de77abf0e906934d8cc162a2b5ea514, type: 2}
 --- !u!114 &114804406637999624
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2781,7 +2723,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff4e6999a7f30fe4aa9f4d8d89f65bd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_pauseOpenClip: {fileID: 0}
+  m_pauseOpenClip: {fileID: 8300000, guid: 5259d4cbf8ef2634c96b07ff8d5e4b9b, type: 3}
 --- !u!137 &137099777782005922
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

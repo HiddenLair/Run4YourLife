@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using Run4YourLife.GameManagement;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Run4YourLife.Player
@@ -6,74 +8,59 @@ namespace Run4YourLife.Player
     public class CrossHairControl : MonoBehaviour
     {
         [SerializeField]
-        private GameObject m_crossHairGameObject;
-
-        [SerializeField]
         private float m_speed;
 
         [SerializeField]
-        private float desiredZ = 0.0f;
+        private Vector2 m_clampMin;
 
-        private Transform m_crossHairTransform;
-        private GameObject m_ui;
+        [SerializeField]
+        private Vector2 m_clampMax;
+
+
 
         private bool m_isLocked;
         private bool m_totalLocked;
+
+        // Normalized position range from (0,0) to (1,1)
+        private Vector2 m_screenPosition;
+
         private Vector3 lastPos;
-
-        private void Awake()
-        {
-            m_crossHairTransform = m_crossHairGameObject.transform;
-            
-            m_ui = GameObject.FindGameObjectWithTag(Tags.UI);
-            Debug.Assert(m_ui != null);
-        }
-
-        private void OnEnable()
-        {
-            ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (a,b) => a.AttachCrossHair(m_crossHairTransform));
-        }
-
-        private void OnDisable()
-        {
-            ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (a,b) => a.DeatachCrossHair());
-        }
 
         public Vector3 Position
         {
             get
             {
-                return m_crossHairTransform.position;
+                Camera m_mainCamera = CameraManager.Instance.MainCamera;
+                Vector3 screenSpacePosition = new Vector3()
+                {
+                    x = m_screenPosition.x * m_mainCamera.pixelWidth,
+                    y = m_screenPosition.y * m_mainCamera.pixelHeight,
+                    z = Math.Abs(m_mainCamera.transform.position.z)
+                };
+
+                return m_mainCamera.ScreenToWorldPoint(screenSpacePosition);
             }
         }
 
-        public void Translate(Vector3 input)
+        public void Move(Vector2 input)
         {
             if(!m_isLocked)
             {
-                m_crossHairTransform.Translate(input * m_speed * Time.deltaTime);
-                OverrideZ();
+                m_screenPosition.x = Mathf.Clamp(m_screenPosition.x + m_speed * input.x * Time.deltaTime, m_clampMin.x, m_clampMax.x);
+                m_screenPosition.y = Mathf.Clamp(m_screenPosition.y + m_speed * input.y * Time.deltaTime, m_clampMin.y, m_clampMax.y);
+
+                UICrossHair.Instance.UpdatePosition(Position);
             }
         }
 
-        public void ChangePosition(Vector3 newPosition)
-        {
-            if(!m_isLocked)
-            {
-                m_crossHairGameObject.transform.position = newPosition;
-                OverrideZ();
-            }
-
-        }
-
-        void Update()
+        /*void Update()
         {
             if (m_totalLocked)
             {
                 m_crossHairGameObject.transform.position = lastPos;
                 OverrideZ();
             } 
-        }
+        }*/
 
         public void Lock()
         {
@@ -89,7 +76,7 @@ namespace Run4YourLife.Player
         {
             Lock();
             m_totalLocked = true;
-            lastPos = m_crossHairGameObject.transform.position;
+            //lastPos = m_crossHairGameObject.transform.position;
         }
 
         public void TotalUnlock()
@@ -98,10 +85,11 @@ namespace Run4YourLife.Player
             m_totalLocked = false;
         }
 
-        private void OverrideZ()
+        private void OnDrawGizmosSelected()
         {
-            Vector3 tmpPosition = m_crossHairTransform.localPosition; tmpPosition.z = desiredZ;
-            m_crossHairTransform.localPosition = tmpPosition;
+            Gizmos.DrawSphere(Position, 0.5f);
+            Gizmos.DrawLine(transform.position, Position);
+            Debug.Log(Position);
         }
     }
 }

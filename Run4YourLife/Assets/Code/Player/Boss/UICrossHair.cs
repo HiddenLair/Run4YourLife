@@ -10,11 +10,10 @@ namespace Run4YourLife.Player
     {
         void ShowCrossHair();
         void HideCrossHair();
-        void AttachCrossHair(Transform crossHair);
-        void DeatachCrossHair();
+        void UpdatePosition(Vector3 position);
     }
 
-    public class UICrossHair : MonoBehaviour, IUICrossHairEvents
+    public class UICrossHair : SingletonMonoBehaviour<UICrossHair>, IUICrossHairEvents
     {
         [SerializeField]
         private GameObject m_crossHairUi;
@@ -31,8 +30,6 @@ namespace Run4YourLife.Player
         private Camera m_mainCamera;
         private Image m_crossHairImage;
 
-        private Transform m_attachedCrossHairTransform;
-
         private void Awake()
         {
             m_canvasTransform = GetComponent<RectTransform>();
@@ -48,17 +45,19 @@ namespace Run4YourLife.Player
             Debug.Assert(m_mainCamera != null);
         }
 
-        private void Update()
+        public void ShowCrossHair()
         {
-            if(m_attachedCrossHairTransform != null)
-            {
-                UpdatePosition();
-            }
+            m_crossHairUi.SetActive(true);
         }
 
-        void UpdatePosition()
+        public void HideCrossHair()
         {
-            Vector2 viewportPosition = m_mainCamera.WorldToViewportPoint(m_attachedCrossHairTransform.position);
+            m_crossHairUi.SetActive(false);
+        }
+
+        public void UpdatePosition(Vector3 position)
+        {
+            Vector2 viewportPosition = m_mainCamera.WorldToViewportPoint(position);
 
             float deltaX = m_canvasTransform.sizeDelta.x;
             float deltaY = m_canvasTransform.sizeDelta.y;
@@ -70,26 +69,6 @@ namespace Run4YourLife.Player
             };
 
             m_crossHairUiTransform.anchoredPosition = crossHairScreenPosition;
-        }
-
-        public void ShowCrossHair()
-        {
-            m_crossHairUi.SetActive(true);
-        }
-
-        public void HideCrossHair()
-        {
-            m_crossHairUi.SetActive(false);
-        }
-
-        public void AttachCrossHair(Transform crossHair)
-        {
-            m_attachedCrossHairTransform = crossHair;
-        }
-
-        public void DeatachCrossHair()
-        {
-            m_attachedCrossHairTransform = null;
         }
     }
 }

@@ -85,24 +85,9 @@ namespace Run4YourLife.Player
         {
             float xInput = bossControlScheme.MoveTrapIndicatorHorizontal.Value();
             float yInput = bossControlScheme.MoveTrapIndicatorVertical.Value();
-            Vector3 input = new Vector3(xInput, yInput);
+            Vector2 input = new Vector2(xInput, yInput);
 
-            crossHairControl.Translate(input);
-            ClampPositionInsideScreen();
-        }
-
-        void ClampPositionInsideScreen()
-        {
-            Camera mainCamera = CameraManager.Instance.MainCamera;
-
-            Vector3 screenTopRight = mainCamera.ViewportToWorldPoint(new Vector3(1.0f, 1.0f, Mathf.Abs(mainCamera.transform.position.z - crossHairControl.Position.z)));
-            Vector3 screenBottomLeft = mainCamera.ViewportToWorldPoint(new Vector3(screenLeftLimitPercentaje, screenBottomLimitPercentaje, Mathf.Abs(mainCamera.transform.position.z - crossHairControl.Position.z)));
-
-            Vector3 clampedPosition = crossHairControl.Position;
-            clampedPosition.x = Mathf.Clamp(crossHairControl.Position.x, screenBottomLeft.x, screenTopRight.x);
-            clampedPosition.y = Mathf.Clamp(crossHairControl.Position.y, screenBottomLeft.y, screenTopRight.y);
-
-            crossHairControl.ChangePosition(clampedPosition);
+            crossHairControl.Move(input);
         }
 
         void SelectElementToSet()
