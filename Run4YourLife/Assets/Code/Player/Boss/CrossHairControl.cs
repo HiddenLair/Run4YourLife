@@ -9,13 +9,6 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(BossControlScheme))]
     public class CrossHairControl : MonoBehaviour
     {
-        private enum State
-        {
-            Default,
-            MovementLocked,
-            PositionAndMovementLocked
-        }
-
         [SerializeField]
         private float m_speed;
 
@@ -29,7 +22,9 @@ namespace Run4YourLife.Player
         private Vector2 m_screenPosition;
         // World position the crosshair keeps when position is locked
         private Vector3 m_lockedPosition;
-        private State m_state;
+        private bool m_isMovementLocked;
+        private bool m_isPositionLocked;
+
 
         private BossControlScheme m_controlScheme;
 
@@ -57,50 +52,66 @@ namespace Run4YourLife.Player
         private void Update()
         {
             Move();
-            UICrossHair.Instance.UpdatePosition(Position);
+            UpdateUI();
+        }
+
+        private void UpdateUI()
+        {
+            if(m_isPositionLocked)
+            {
+                UICrossHair.Instance.UpdatePosition(m_lockedPosition);
+            }
+            else
+            {
+                UICrossHair.Instance.UpdatePosition(Position);
+            }
         }
 
         public void Move()
         {
-            switch(m_state)
+            if(!m_isMovementLocked && !m_isPositionLocked)
             {
-                case State.Default:
-                    float xInput = m_controlScheme.CrosshairHorizontal.Value();
-                    float yInput = m_controlScheme.CrosshairVertical.Value();
+                float xInput = m_controlScheme.CrosshairHorizontal.Value();
+                float yInput = m_controlScheme.CrosshairVertical.Value();
 
-                    m_screenPosition.x = Mathf.Clamp(m_screenPosition.x + m_speed * xInput * Time.deltaTime, m_clampMin.x, m_clampMax.x);
-                    m_screenPosition.y = Mathf.Clamp(m_screenPosition.y + m_speed * yInput * Time.deltaTime, m_clampMin.y, m_clampMax.y);
-                    break;
-                case State.MovementLocked:
-                    break;
-                case State.PositionAndMovementLocked:
-                    m_screenPosition = CameraManager.Instance.MainCamera.WorldToScreenPoint(m_lockedPosition);
-                    break;
+                m_screenPosition.x = Mathf.Clamp(m_screenPosition.x + m_speed * xInput * Time.deltaTime, m_clampMin.x, m_clampMax.x);
+                m_screenPosition.y = Mathf.Clamp(m_screenPosition.y + m_speed * yInput * Time.deltaTime, m_clampMin.y, m_clampMax.y);
             }
         }
 
         public void LockMovement()
         {
-            Debug.Assert(m_state == State.Default);
-            m_state = State.MovementLocked;
+            m_isMovementLocked = true;
         }
 
         public void UnlockMovement()
         {
-            Debug.Assert(m_state == State.MovementLocked || m_state == State.Default);
-            m_state = State.Default;
+            m_isMovementLocked = false;
+        }
+
+        public void LockPosition()
+        {
+            m_isPositionLocked = true;
+            m_lockedPosition = Position;
+        }
+
+        public void UnlockPosition()
+        {
+            
+            m_isPositionLocked = false;
+            m_screenPosition = CameraManager.Instance.MainCamera.WorldToViewportPoint(m_lockedPosition);
         }
 
         public void LockPositionAndMovement()
         {
-            Debug.Assert(m_state == State.Default);
-            m_state = State.PositionAndMovementLocked;
+            LockMovement();
+            LockPosition();
         }
 
         public void UnlockPositionAndMovement()
         {
-            Debug.Assert(m_state == State.PositionAndMovementLocked || m_state == State.Default);
-            m_state = State.Default;
+            UnlockMovement();
+            UnlockPosition();
         }
     }
 }
