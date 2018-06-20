@@ -2,6 +2,7 @@
 
 using Run4YourLife.SceneManagement;
 using Run4YourLife.GameManagement.AudioManagement;
+using Run4YourLife.SceneSpecific.CharacterSelection;
 
 namespace Run4YourLife.SceneSpecific.MainMenu
 {
@@ -23,6 +24,13 @@ namespace Run4YourLife.SceneSpecific.MainMenu
 
         public void OnPlayButtonPressed()
         {
+            GlobalDataContainer.Instance.Set(CharacterSelectionManager.CharacterSelectionTargetKey, CharacterSelectionManager.CharacterSelectionTarget.Game);
+            m_characterSelectionLoadRequest.Execute();
+        }
+
+        public void OnTutorialButtonPressed()
+        {
+            GlobalDataContainer.Instance.Set(CharacterSelectionManager.CharacterSelectionTargetKey, CharacterSelectionManager.CharacterSelectionTarget.Tutorial);
             m_characterSelectionLoadRequest.Execute();
         }
 
