@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Run4YourLife.GameManagement;
+﻿using UnityEngine;
 
 public class SharedCamera : MonoBehaviour {
 
@@ -84,7 +81,5 @@ public class SharedCamera : MonoBehaviour {
             orthographicSize = Mathf.Abs(boundingBox.height) / 2f;
 
         return (orthographicSize / Mathf.Tan((Camera.main.fieldOfView * Mathf.Deg2Rad) / 2f));
-
-        //return Mathf.Clamp(Mathf.Lerp(cam.orthographicSize, orthographicSize, Time.deltaTime * zoomSpeed), minimumOrthographicSize, Mathf.Infinity);
     }
 }
