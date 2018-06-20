@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using Run4YourLife.GameManagement.AudioManagement;
-using Run4YourLife.Player;
-using Cinemachine;
+﻿using UnityEngine;
 
 namespace Run4YourLife.GameManagement
 {
@@ -13,19 +9,23 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private Vector3 fixCameraPosition;
 
+        [SerializeField]
+        private float timeToChangeCamera;
+
         private PlayerSpawner m_playerSpawner;
 
         private void Awake()
         {
             m_playerSpawner = GetComponent<PlayerSpawner>();
             Debug.Assert(m_playerSpawner != null);
+
         }
 
         public override void StartPhase()
         {
             Camera cam = CameraManager.Instance.MainCamera;
             SharedCamera script = cam.GetComponent<SharedCamera>();
-            script.FixCameraAtPosition(fixCameraPosition,()=>SpawnBoss());
+            script.FixCameraAtPosition(fixCameraPosition,timeToChangeCamera,()=>SpawnBoss());
         }
 
         private void SpawnBoss()
@@ -35,7 +35,7 @@ namespace Run4YourLife.GameManagement
 
         public override void EndPhase()
         {
-            throw new System.NotImplementedException();
+            
         }
 
         public override void DebugStartPhase()

@@ -19,11 +19,9 @@ public class SharedCamera : MonoBehaviour {
     [SerializeField]
     private float zoomSpeed = 20f;
 
-    [SerializeField]
-    private float fixCameraTime;
-
     private Camera cam;
     private Transform[] targets;
+    private bool fixCamera = false;
 
     void Awake()
     {
@@ -37,12 +35,15 @@ public class SharedCamera : MonoBehaviour {
 
     void LateUpdate()
     {
-        Rect boundingBox = CalculateTargetsBoundingBox();
-        Vector3 pos;
-        pos.x = boundingBox.center.x;
-        pos.y = yPosition;
-        pos.z = Mathf.Clamp((minimumZDistance - CalculateOrthographicSize(boundingBox)), maximumZDistance, minimumZDistance);
-        transform.position = pos;
+        if (!fixCamera)
+        {
+            Rect boundingBox = CalculateTargetsBoundingBox();
+            Vector3 pos;
+            pos.x = boundingBox.center.x;
+            pos.y = yPosition;
+            pos.z = Mathf.Clamp((minimumZDistance - CalculateOrthographicSize(boundingBox)), maximumZDistance, minimumZDistance);
+            transform.position = pos;
+        }
     }
 
     /// <summary>
@@ -80,26 +81,27 @@ public class SharedCamera : MonoBehaviour {
         Vector3 topRight = new Vector3(boundingBox.x + boundingBox.width, boundingBox.y, 0f);
         Vector3 topRightAsViewport = cam.WorldToViewportPoint(topRight);
 
-        if (topRightAsViewport.x >= topRightAsViewport.y)
+        //if (topRightAsViewport.x >= topRightAsViewport.y)
             orthographicSize = Mathf.Abs(boundingBox.width) / cam.aspect / 2f;
-        else
-            orthographicSize = Mathf.Abs(boundingBox.height) / 2f;
+        //else
+        //   orthographicSize = Mathf.Abs(boundingBox.height) / 2f;
 
         return (orthographicSize / Mathf.Tan((Camera.main.fieldOfView * Mathf.Deg2Rad) / 2f));
     }
 
-    public void FixCameraAtPosition(Vector3 position,Action callback)
+    public void FixCameraAtPosition(Vector3 position,float timeToLerp,Action callback)
     {
-        StartCoroutine(FixCamera(position,callback));
+        fixCamera = true;
+        StartCoroutine(FixCamera(position,timeToLerp,callback));
     }
 
-    IEnumerator FixCamera(Vector3 position, Action callback)
+    IEnumerator FixCamera(Vector3 position, float timeToLerp, Action callback)
     {
         float actualLerp = 0.0f;
         Vector3 initialPos = transform.position;
         while (actualLerp < 1)
         {
-            actualLerp += Time.deltaTime / fixCameraTime;
+            actualLerp += Time.deltaTime / timeToLerp;
             transform.position = Vector3.Lerp(initialPos,position,actualLerp);
             yield return null;
         }

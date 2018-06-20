@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Run4YourLife.GameManagement.AudioManagement;
 using Run4YourLife.Player;
-using Cinemachine;
 
 namespace Run4YourLife.GameManagement
 {
@@ -47,7 +45,7 @@ namespace Run4YourLife.GameManagement
 
         public override void EndPhase()
         {
-            throw new System.NotImplementedException();
+
         }
 
         public override void DebugStartPhase()

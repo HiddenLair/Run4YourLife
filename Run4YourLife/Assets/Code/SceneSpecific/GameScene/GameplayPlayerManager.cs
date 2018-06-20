@@ -50,7 +50,7 @@ namespace Run4YourLife.GameManagement {
 
         #region Members
 
-        private bool firstDeath = false;
+        private bool firstDeath = true;
         private GameObject m_boss;
         private List<GameObject> m_runners = new List<GameObject>();
         private List<GameObject> m_runnersAlive = new List<GameObject>();
@@ -185,12 +185,6 @@ namespace Run4YourLife.GameManagement {
 
         public void OnRunnerDeath(PlayerHandle playerHandle, Vector3 position)
         {
-            if (firstDeath && FirstKillManager.Instance != null)
-            {
-                FirstKillManager.Instance.ShowReviveInfo();
-                firstDeath = false;
-            }
-
             DeactivateRunner(playerHandle);
             ActivateRunnerGhost(playerHandle, position);
 
@@ -201,6 +195,11 @@ namespace Run4YourLife.GameManagement {
             else if (m_runnersAlive.Count == 0)
             {
                 m_gameplayEvents.EndGame_BossWin();
+            }
+            else if (firstDeath && FirstKillManager.Instance != null)//If we are not alone in the tutorial, we will show the revive text
+            {
+                FirstKillManager.Instance.ShowReviveInfo();
+                firstDeath = false;
             }
         }
 
