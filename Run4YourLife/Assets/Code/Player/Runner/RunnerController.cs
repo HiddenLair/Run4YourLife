@@ -580,12 +580,12 @@ namespace Run4YourLife.Player
 
         private void Fall_Enter()
         {
-            m_gravity += m_endOfJumpGravity;
+            m_gravity = m_endOfJumpGravity;
         }
 
         private void Fall_Exit()
         {
-            m_gravity -= m_endOfJumpGravity;
+            m_gravity = m_baseGravity;
         }
 
         private void Fall_Update()
@@ -595,12 +595,10 @@ namespace Run4YourLife.Player
 
             if (m_runnerControlScheme.Jump.Started())
             {
-                if(!m_runnerBounceController.ExecuteBounceIfPossible()) // This will trigger a call that will start a bounce
+                bool didExecuteBounce = m_runnerBounceController.ExecuteBounceIfPossible();
+                if(!didExecuteBounce && m_canDoubleJumpAgain)
                 {
-                    if(m_canDoubleJumpAgain)
-                    {
-                        m_stateMachine.ChangeState(States.SecondJump);
-                    }
+                    m_stateMachine.ChangeState(States.SecondJump);
                 }
             }
             else if(m_characterController.isGrounded)
