@@ -180,7 +180,7 @@ namespace Run4YourLife.Player
         private void Awake()
         {
             m_stateMachine = StateMachine<States>.Initialize(this);
-            //m_stateMachine.Changed += (state) => Debug.Log(state); // Debug statement for characters
+            m_stateMachine.Changed += (state) => Debug.Log(state); // Debug statement for characters
 
             m_runnerControlScheme = GetComponent<RunnerControlScheme>();
             m_characterController = GetComponent<CharacterController>();
@@ -618,6 +618,7 @@ namespace Run4YourLife.Player
         public void Bounce(Vector3 bounceForce)
         {
             _bounce_bounceForce = bounceForce;
+
             m_stateMachine.ChangeState(States.Bounce);            
         }
 
