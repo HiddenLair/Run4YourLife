@@ -121,11 +121,6 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                     OnReady();
                 }
             }
-            
-            if(m_playerStandControlScheme.Exit.Started())
-            {
-                PlayerStandsManager.Instance.GoMainMenu();
-            }
         }
 
         protected abstract void OnReady();
