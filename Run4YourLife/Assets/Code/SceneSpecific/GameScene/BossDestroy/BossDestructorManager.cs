@@ -78,6 +78,43 @@ namespace Run4YourLife.GameManagement
 
         private void DestroyAndRegenerateDynamicElements(float xBossPosition)
         {
+            if(m_destroyedDynamicElements.Count > 0)
+            {
+                for (int i = m_destroyedDynamicElements.Count - 1; i >= 0 ; i--) 
+                {
+                    BossDestructedInstance bossDestructedInstance = m_destroyedDynamicElements[i];
+                    if(xBossPosition < bossDestructedInstance.DestroyPosition)
+                    {
+                        bossDestructedInstance.OnRegenerate();
+                        m_temporalActiveDynamicElements.Add(bossDestructedInstance);
+                        m_destroyedDynamicElements.RemoveAt(i);
+                    }
+                }
+            }
+
+
+            if(m_activeDynamicElements.Count > 0)
+            {
+                for (int i = m_activeDynamicElements.Count - 1; i >= 0 ; i--) 
+                {
+                    BossDestructedInstance bossDestructedInstance = m_activeDynamicElements[i];
+                    if(xBossPosition >= bossDestructedInstance.DestroyPosition)
+                    {
+                        bossDestructedInstance.OnBossDestroy();
+                        m_activeDynamicElements.RemoveAt(i);
+                        m_destroyedDynamicElements.Add(bossDestructedInstance);
+                        //Remove
+                    }
+                }
+            }
+
+            m_activeDynamicElements.AddRange(m_temporalActiveDynamicElements);
+            m_temporalActiveDynamicElements.Clear();
+        }
+
+        /*
+        private void DestroyAndRegenerateDynamicElements(float xBossPosition)
+        {
             foreach(BossDestructedInstance bossDestructedInstance in m_destroyedDynamicElements)
             {
                 if(xBossPosition < bossDestructedInstance.DestroyPosition)
@@ -129,6 +166,7 @@ namespace Run4YourLife.GameManagement
             m_activeDynamicElements.AddRange(m_temporalActiveDynamicElements);
             m_temporalActiveDynamicElements.Clear();
         }
+        */
 
         private void DestroyAndRegenerateStaticElements(float xBossPosition)
         {

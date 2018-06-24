@@ -89,7 +89,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4311667955463766}
   - component: {fileID: 65853227322658792}
-  - component: {fileID: 114564656812144770}
   - component: {fileID: 114884983407201280}
   m_Layer: 10
   m_Name: PlatformSmallDisolve (2)
@@ -127,6 +126,7 @@ GameObject:
   - component: {fileID: 114206248397471340}
   - component: {fileID: 114046933023278440}
   - component: {fileID: 65747638677513526}
+  - component: {fileID: 114140594301223600}
   m_Layer: 10
   m_Name: PlatformDown
   m_TagString: Untagged
@@ -143,7 +143,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4646281398499830}
   - component: {fileID: 65158837668102942}
-  - component: {fileID: 114187846715013174}
   - component: {fileID: 114711910586309712}
   m_Layer: 10
   m_Name: PlatformBorderSmallDisolve
@@ -179,7 +178,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4418865742686266}
   - component: {fileID: 65769520119067270}
-  - component: {fileID: 114615132157769806}
   - component: {fileID: 114801156683264322}
   m_Layer: 10
   m_Name: PlatformSmallDisolve
@@ -227,7 +225,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4992958548370442}
   - component: {fileID: 65286805877181178}
-  - component: {fileID: 114816008270847490}
   - component: {fileID: 114799638725972290}
   m_Layer: 10
   m_Name: PlatformSmallDisolve (1)
@@ -278,7 +275,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4846241996599248}
   - component: {fileID: 65163632099432442}
-  - component: {fileID: 114142820414093624}
   - component: {fileID: 114585560923403522}
   m_Layer: 10
   m_Name: PlatformBorderSmallDisolve (1)
@@ -485,7 +481,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1544942685355322}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7, y: 0.56, z: 0}
+  m_LocalPosition: {x: 153.6961, y: 0, z: 0.8213959}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4846241996599248}
@@ -898,20 +894,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c0c5c604a1074d44a3b71c29d3a47fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114142820414093624
+--- !u!114 &114140594301223600
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1953149591915516}
+  m_GameObject: {fileID: 1544942685355322}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_distance: -3
+  m_distance: -4
   m_isDynamic: 1
-  m_alphaAnimationLenght: 0.5
+  m_alphaAnimationLenght: 1
   m_activateOnRegenerate: 0
   m_onRegenerated:
     m_PersistentCalls:
@@ -930,26 +926,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_velocity: {x: 0, y: -2, z: 0}
---- !u!114 &114187846715013174
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1590406424410612}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_distance: -3
-  m_isDynamic: 1
-  m_alphaAnimationLenght: 0.5
-  m_activateOnRegenerate: 0
-  m_onRegenerated:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114206248397471340
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -973,26 +949,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdb75e9e9fec50b4ea9b1cd69d5fe9a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114564656812144770
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1366120656992316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_distance: -3
-  m_isDynamic: 1
-  m_alphaAnimationLenght: 0.5
-  m_activateOnRegenerate: 0
-  m_onRegenerated:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114585560923403522
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1005,26 +961,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGround: 0
---- !u!114 &114615132157769806
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1716075574548038}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_distance: -3
-  m_isDynamic: 1
-  m_alphaAnimationLenght: 0.5
-  m_activateOnRegenerate: 0
-  m_onRegenerated:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114711910586309712
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1061,26 +997,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGround: 0
---- !u!114 &114816008270847490
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1802794118283528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_distance: -3
-  m_isDynamic: 1
-  m_alphaAnimationLenght: 0.5
-  m_activateOnRegenerate: 0
-  m_onRegenerated:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114884983407201280
 MonoBehaviour:
   m_ObjectHideFlags: 1
