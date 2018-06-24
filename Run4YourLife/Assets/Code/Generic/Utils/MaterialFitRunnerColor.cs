@@ -7,11 +7,6 @@ namespace Run4YourLife.Utils
     [RequireComponent(typeof(MeshRenderer))]
     public class MaterialFitRunnerColor : MonoBehaviour
     {
-        private static Color red = Color.red;
-        private static Color green = Color.green;
-        private static Color white = Color.white;
-        private static Color purple = new Color(1.0f, 0.0f, 1.0f);
-
         private Material material;
 
         void Awake()
@@ -26,16 +21,16 @@ namespace Run4YourLife.Utils
             switch(characterType)
             {
                 case CharacterType.Red:
-                    color = red;
+                    color = Color.red;
                     break;
                 case CharacterType.Green:
-                    color = green;
+                    color = Color.green;
                     break;
                 case CharacterType.White:
-                    color = white;
+                    color = Color.white;
                     break;
                 case CharacterType.Purple:
-                    color = purple;
+                    color = Color.magenta;
                     break;
             }
 
