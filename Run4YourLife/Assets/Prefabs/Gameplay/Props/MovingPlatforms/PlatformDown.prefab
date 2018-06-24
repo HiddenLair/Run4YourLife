@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 4311667955463766}
   - component: {fileID: 65853227322658792}
   - component: {fileID: 114884983407201280}
+  - component: {fileID: 114917189517575892}
   m_Layer: 10
   m_Name: PlatformSmallDisolve (2)
   m_TagString: Untagged
@@ -126,7 +127,6 @@ GameObject:
   - component: {fileID: 114206248397471340}
   - component: {fileID: 114046933023278440}
   - component: {fileID: 65747638677513526}
-  - component: {fileID: 114140594301223600}
   m_Layer: 10
   m_Name: PlatformDown
   m_TagString: Untagged
@@ -144,6 +144,7 @@ GameObject:
   - component: {fileID: 4646281398499830}
   - component: {fileID: 65158837668102942}
   - component: {fileID: 114711910586309712}
+  - component: {fileID: 114685047624929548}
   m_Layer: 10
   m_Name: PlatformBorderSmallDisolve
   m_TagString: Untagged
@@ -179,6 +180,7 @@ GameObject:
   - component: {fileID: 4418865742686266}
   - component: {fileID: 65769520119067270}
   - component: {fileID: 114801156683264322}
+  - component: {fileID: 114737457453337064}
   m_Layer: 10
   m_Name: PlatformSmallDisolve
   m_TagString: Untagged
@@ -226,6 +228,7 @@ GameObject:
   - component: {fileID: 4992958548370442}
   - component: {fileID: 65286805877181178}
   - component: {fileID: 114799638725972290}
+  - component: {fileID: 114917670472874734}
   m_Layer: 10
   m_Name: PlatformSmallDisolve (1)
   m_TagString: Untagged
@@ -276,6 +279,7 @@ GameObject:
   - component: {fileID: 4846241996599248}
   - component: {fileID: 65163632099432442}
   - component: {fileID: 114585560923403522}
+  - component: {fileID: 114758873900061456}
   m_Layer: 10
   m_Name: PlatformBorderSmallDisolve (1)
   m_TagString: Untagged
@@ -894,26 +898,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c0c5c604a1074d44a3b71c29d3a47fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114140594301223600
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1544942685355322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_distance: -4
-  m_isDynamic: 1
-  m_alphaAnimationLenght: 1
-  m_activateOnRegenerate: 0
-  m_onRegenerated:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114165154303753150
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -961,6 +945,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGround: 0
+--- !u!114 &114685047624929548
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1590406424410612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_distance: -3
+  m_isDynamic: 1
+  m_alphaAnimationLenght: 0.5
+  m_activateOnRegenerate: 1
+  m_onRegenerated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114711910586309712
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -973,6 +977,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGround: 0
+--- !u!114 &114737457453337064
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1716075574548038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_distance: -3
+  m_isDynamic: 1
+  m_alphaAnimationLenght: 0.5
+  m_activateOnRegenerate: 1
+  m_onRegenerated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &114758873900061456
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1953149591915516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_distance: -3
+  m_isDynamic: 1
+  m_alphaAnimationLenght: 0.5
+  m_activateOnRegenerate: 1
+  m_onRegenerated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114799638725972290
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1009,3 +1053,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGround: 0
+--- !u!114 &114917189517575892
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1366120656992316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_distance: -3
+  m_isDynamic: 1
+  m_alphaAnimationLenght: 0.5
+  m_activateOnRegenerate: 1
+  m_onRegenerated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &114917670472874734
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1802794118283528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_distance: -3
+  m_isDynamic: 1
+  m_alphaAnimationLenght: 0.5
+  m_activateOnRegenerate: 1
+  m_onRegenerated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
