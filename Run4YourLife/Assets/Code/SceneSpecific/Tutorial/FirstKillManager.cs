@@ -4,9 +4,8 @@ using UnityEngine;
 
 namespace Run4YourLife.GameManagement
 {
-    public class FirstKillManager : SingletonMonoBehaviour<FirstKillManager>
+    public class FirstKillManager : MonoBehaviour
     {
-
         [SerializeField]
         private GameObject reviveText;
 

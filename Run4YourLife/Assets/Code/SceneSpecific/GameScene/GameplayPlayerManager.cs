@@ -63,6 +63,7 @@ namespace Run4YourLife.GameManagement {
         private RunnerPrefabManager m_runnerPrefabManager;
 
         private IGameplayEvents m_gameplayEvents;
+        private FirstKillManager m_firstKillManager;
 
         #endregion
 
@@ -72,6 +73,7 @@ namespace Run4YourLife.GameManagement {
         {
             m_runnerPrefabManager = GetComponent<RunnerPrefabManager>();
             m_gameplayEvents = GetComponent<IGameplayEvents>();
+            m_firstKillManager = FindObjectOfType<FirstKillManager>();
         }
 
         private void Start()
@@ -196,9 +198,9 @@ namespace Run4YourLife.GameManagement {
             {
                 m_gameplayEvents.EndGame_BossWin();
             }
-            else if (firstDeath && FirstKillManager.Instance != null)//If we are not alone in the tutorial, we will show the revive text
+            else if (firstDeath && m_firstKillManager != null)//If we are not alone in the tutorial, we will show the revive text
             {
-                FirstKillManager.Instance.ShowReviveInfo();
+                m_firstKillManager.ShowReviveInfo();
                 firstDeath = false;
             }
         }
