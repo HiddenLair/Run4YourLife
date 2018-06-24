@@ -25,16 +25,16 @@ namespace Run4YourLife.Utils
 
             switch(characterType)
             {
-                case CharacterType.Green:
+                case CharacterType.Red:
                     color = red;
                     break;
-                case CharacterType.Blue:
+                case CharacterType.Green:
                     color = green;
                     break;
-                case CharacterType.Purple:
+                case CharacterType.White:
                     color = white;
                     break;
-                case CharacterType.Orange:
+                case CharacterType.Purple:
                     color = purple;
                     break;
             }

@@ -11,10 +11,10 @@ namespace Run4YourLife.Player
 
     public enum CharacterType
     {
+        White,
         Purple,
-        Orange,
-        Green,
-        Blue
+        Red,
+        Green
     }
 
     public class PlayerHandle
