@@ -151,6 +151,7 @@ namespace Run4YourLife.Player
 
         private GameObject m_shieldGameObject;
         private MaterialFadeOut m_shieldMaterialFadeOut;
+        private MaterialFitRunnerColor materialFitRunnerColor;
 
         private Coroutine shieldCooldownDestroy;
         private RunnerController m_runnerCharacterController;
@@ -207,6 +208,7 @@ namespace Run4YourLife.Player
             Debug.Assert(shieldTransform != null);
             m_shieldGameObject = shieldTransform.gameObject;
             m_shieldMaterialFadeOut = m_shieldGameObject.GetComponent<MaterialFadeOut>();
+            materialFitRunnerColor = m_shieldGameObject.GetComponent<MaterialFitRunnerColor>();
         }
 
         private void OnEnable()
@@ -785,6 +787,7 @@ namespace Run4YourLife.Player
             m_isShielded = true;
             m_shieldGameObject.SetActive(true);
             m_shieldMaterialFadeOut.Activate(shieldTime);
+            materialFitRunnerColor.Activate(GetComponent<PlayerInstance>().PlayerHandle.CharacterType);
         }
 
         public void DeactivateShield()
