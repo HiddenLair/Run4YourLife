@@ -1,24 +1,30 @@
-﻿using System;
+﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Run4YourLife.SceneManagement
 {
     public class SceneTransitionManager : SingletonMonoBehaviour<SceneTransitionManager>
     {
+        private bool loadingScene = false;
+
         public void ExecuteRequest(SceneTransitionRequestData data)
         {
-            if (data.loadScene && data.unloadScene)
+            if(data.loadScene && data.unloadScene)
             {
-                StartCoroutine(LoadUnloadScene(data));
+                if(!loadingScene)
+                {
+                    StartCoroutine(LoadUnloadScene(data));
+                }
             }
-            else if (data.loadScene)
+            else if(data.loadScene)
             {
-                LoadScene(data);
+                if(!loadingScene)
+                {
+                    LoadScene(data);
+                }
             }
-            else if (data.unloadScene)
+            else if(data.unloadScene)
             {
                 UnloadScene(data);
             }
@@ -28,30 +34,35 @@ namespace Run4YourLife.SceneManagement
             }
         }
         
-        private void UnloadScene(SceneTransitionRequestData data)
+        private AsyncOperation UnloadScene(SceneTransitionRequestData data)
         {
-            SceneManager.UnloadSceneAsync(data.unloadedSceneName);
+            return SceneManager.UnloadSceneAsync(data.unloadedSceneName);
         }
 
-        private void LoadScene(SceneTransitionRequestData data)
+        private AsyncOperation LoadScene(SceneTransitionRequestData data)
         {
-            SceneManager.LoadSceneAsync(data.sceneName, data.loadSceneMode);
+            loadingScene = true;
+
+            AsyncOperation loadSceneAsync = SceneManager.LoadSceneAsync(data.sceneName, data.loadSceneMode);
+            loadSceneAsync.completed += (op) => { loadingScene = false; };
+
+            return loadSceneAsync;
         }
 
         private IEnumerator LoadUnloadScene(SceneTransitionRequestData data)
         {
-            AsyncOperation unloadSceneAsync = SceneManager.UnloadSceneAsync(data.unloadedSceneName);
+            AsyncOperation unloadSceneAsync = UnloadScene(data);
 
-            AsyncOperation loadSceneAsync = SceneManager.LoadSceneAsync(data.sceneName, data.loadSceneMode);
+            AsyncOperation loadSceneAsync = LoadScene(data);
             loadSceneAsync.allowSceneActivation = false;
 
-            while (!loadSceneAsync.isDone)
+            while(!loadSceneAsync.isDone)
             {
                 // loading bar progress
                 //_loadingProgress = Mathf.Clamp01(asyncScene.progress / 0.9f) * 100;
 
                 // scene has loaded as much as possible, the last 10% can't be multi-threaded
-                if (loadSceneAsync.progress >= 0.9f)
+                if(loadSceneAsync.progress >= 0.9f)
                 {
                     yield return new WaitUntil(() => unloadSceneAsync.isDone);
                     loadSceneAsync.allowSceneActivation = true;
