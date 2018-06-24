@@ -16,7 +16,11 @@ namespace Run4YourLife.Interactables
         {
             if (collider.CompareTag(Tags.Runner))
             {
-                GenerateHitParticle(collider.gameObject);
+                GenerateHitParticle(collider.transform.position);
+            }
+            else
+            {
+                GenerateHitParticle(transform.position);
             }
         }
 
@@ -24,13 +28,17 @@ namespace Run4YourLife.Interactables
         {
             if (collision.gameObject.CompareTag(Tags.Runner))
             {
-                GenerateHitParticle(collision.gameObject);
+                GenerateHitParticle(collision.transform.position);
+            }
+            else
+            {
+                GenerateHitParticle(transform.position);
             }
         }
 
-        void GenerateHitParticle(GameObject runner)
+        void GenerateHitParticle(Vector3 pos)
         {
-            FXManager.Instance.InstantiateFromValues(runner.transform.position,Quaternion.identity,hitParticles);
+            FXManager.Instance.InstantiateFromValues(pos, Quaternion.identity,hitParticles);
         }
     }
 }
