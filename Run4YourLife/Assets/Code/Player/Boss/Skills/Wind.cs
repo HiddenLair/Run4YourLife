@@ -67,7 +67,7 @@ namespace Run4YourLife.Player
             Vector3 bottomLeft = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, Math.Abs(mainCamera.transform.position.z - transform.position.z)));
             Vector3 newPos = new Vector3(topRight.x,mainCamera.transform.position.y,transform.position.z);
             transform.position = newPos;
-            Vector3 newScale = new Vector3(0,topRight.y-bottomLeft.y,2);//z 2 is an arbitrary number, you can change if you need
+            Vector3 newScale = new Vector3(0, topRight.y - bottomLeft.y, 2);//z 2 is an arbitrary number, you can change if you need
             transform.localScale = newScale;
 
             windParticles.SetActive(true);
@@ -181,7 +181,7 @@ namespace Run4YourLife.Player
                 actualFillPercent -= decreasePerSec * Time.deltaTime;
 
                 actualScale.y = topRight.y - bottomLeft.y;
-                actualPos.x = bottomLeft.x + ((topRight.x - bottomLeft.x)*actualFillPercent/100);
+                actualPos.x = bottomLeft.x + ((topRight.x - bottomLeft.x) * actualFillPercent / 100);
                 actualPos.y = mainCamera.transform.position.y;
 
                 transform.position = actualPos;
@@ -195,7 +195,6 @@ namespace Run4YourLife.Player
 
         private void OnTriggerStay(Collider other)
         {
-
             if(other.CompareTag(Tags.Runner))
             {
                 Camera mainCamera = Camera.main;
