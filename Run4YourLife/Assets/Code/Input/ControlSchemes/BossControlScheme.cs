@@ -12,10 +12,10 @@ namespace Run4YourLife.InputManagement
         public InputAction CrosshairVertical { get; private set; }
         public InputAction CrosshairHorizontal { get; private set; }
 
-        public InputAction Skill1 { get; private set; }
-        public InputAction Skill2 { get; private set; }
-        public InputAction Skill3 { get; private set; }
-        public InputAction Skill4 { get; private set; }
+        public InputAction Lightning { get; private set; }
+        public InputAction EarthSpike { get; private set; }
+        public InputAction Wind { get; private set; }
+        public InputAction Bomb { get; private set; }
 
         public InputAction NextSet { get; private set; }
         public InputAction PreviousSet { get; private set; }
@@ -31,10 +31,10 @@ namespace Run4YourLife.InputManagement
             InputActions.Add(CrosshairVertical = new InputAction(new InputSource(Axis.LEFT_VERTICAL), "MoveTrapIndicatorVertical"));
             InputActions.Add(CrosshairHorizontal = new InputAction(new InputSource(Axis.LEFT_HORIZONTAL), "MoveTrapIndicatorHorizontal"));
 
-            InputActions.Add(Skill1 = new InputAction(new InputSource(Button.A), "Skill1"));
-            InputActions.Add(Skill2 = new InputAction(new InputSource(Button.X), "Skill2"));
-            InputActions.Add(Skill3 = new InputAction(new InputSource(Button.Y), "Skill3"));
-            InputActions.Add(Skill4 = new InputAction(new InputSource(Button.B), "Skill4"));
+            InputActions.Add(Lightning = new InputAction(new InputSource(Button.A), "Skill1"));
+            InputActions.Add(EarthSpike = new InputAction(new InputSource(Button.X), "Skill2"));
+            InputActions.Add(Wind = new InputAction(new InputSource(Button.Y), "Skill3"));
+            InputActions.Add(Bomb = new InputAction(new InputSource(Button.B), "Skill4"));
 
             InputActions.Add(NextSet = new InputAction(new InputSource(Button.RB), "NextSet"));
             InputActions.Add(PreviousSet = new InputAction(new InputSource(Button.LB), "PreviousSet"));

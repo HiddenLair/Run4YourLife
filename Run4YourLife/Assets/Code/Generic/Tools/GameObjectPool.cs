@@ -62,6 +62,14 @@ public class GameObjectPool : MonoBehaviour {
         return Add(key);
     }
 
+    public GameObject GetAndPosition(GameObject key, Vector3 position, Quaternion rotation)
+    {
+        GameObject instance = Get(key);
+        instance.transform.position = position;
+        instance.transform.rotation = rotation;
+        return instance;
+    }
+
     private void Update()
     {
         if(m_nextRetrivalTime <= Time.time)

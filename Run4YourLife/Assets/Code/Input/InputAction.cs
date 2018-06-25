@@ -39,6 +39,11 @@
             return value;
         }
 
+        public bool BoolValue(float threshold = 0.2f)
+        {
+            return Value() > threshold;
+        }
+
         public bool Triggered(float percentage)
         {
             return Enabled && InputSource.Value() >= percentage;
