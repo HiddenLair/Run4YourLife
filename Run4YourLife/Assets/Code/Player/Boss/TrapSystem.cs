@@ -21,16 +21,16 @@ namespace Run4YourLife.Player
         private AudioClip m_castClip;
 
         [SerializeField]
-        private GameObject skillA;
+        private SkillBase m_lightningSkill;
         
         [SerializeField]
-        private GameObject skillX;
+        private SkillBase m_earthSpikeSkill;
         
         [SerializeField]
-        private GameObject skillY;
+        private SkillBase m_windSkill;
         
         [SerializeField]
-        private GameObject skillB;
+        private SkillBase m_bombSkill;
         
         [SerializeField]
         private float m_normalizedTimeToSpawnTrap = 0.2f;
@@ -38,10 +38,10 @@ namespace Run4YourLife.Player
         #endregion
 
         #region Members
-        private float m_xReadyTime;
-        private float m_yReadyTime;
-        private float m_bReadyTime;
-        private float m_aReadyTime;
+        private float m_earthSpikeReadyTime;
+        private float m_windReadyTime;
+        private float m_bombReadyTime;
+        private float m_lightningReadyTime;
 
         private BossControlScheme m_controlScheme;
         private Animator m_animator;
@@ -62,21 +62,25 @@ namespace Run4YourLife.Player
         {
             if (IsReadyToUseSkill())
             {
-                if (m_controlScheme.Skill1.Started() && (m_aReadyTime <= Time.time))
+                if (m_controlScheme.Skill1.Started() && (m_lightningReadyTime <= Time.time) && m_lightningSkill.CanBePlacedAtPosition(m_crossHairControl.Position))
                 {
-                    m_aReadyTime = Time.time + CheckToSetElement(skillA, ActionType.A);             
+                    m_lightningReadyTime = Time.time + m_lightningSkill.Cooldown;
+                    ExecuteSkill(m_lightningSkill, ActionType.A);             
                 }
-                else if (m_controlScheme.Skill2.Started() && (m_xReadyTime <= Time.time))
+                else if (m_controlScheme.Skill2.Started() && (m_earthSpikeReadyTime <= Time.time) && m_earthSpikeSkill.CanBePlacedAtPosition(m_crossHairControl.Position))
                 {
-                    m_xReadyTime = Time.time + CheckToSetElement(skillX, ActionType.X);
+                    m_earthSpikeReadyTime = Time.time + m_earthSpikeSkill.Cooldown;
+                    ExecuteSkill(m_earthSpikeSkill, ActionType.X);
                 }
-                else if (m_controlScheme.Skill3.Started() && (m_yReadyTime <= Time.time))
+                else if (m_controlScheme.Skill3.Started() && (m_windReadyTime <= Time.time) && m_windSkill.CanBePlacedAtPosition(m_crossHairControl.Position))
                 {
-                    m_yReadyTime = Time.time + CheckToSetElement(skillY, ActionType.Y);
+                    m_windReadyTime = Time.time + m_windSkill.Cooldown;
+                    ExecuteSkill(m_windSkill, ActionType.Y);
                 }
-                else if (m_controlScheme.Skill4.Started() && (m_bReadyTime <= Time.time))
+                else if (m_controlScheme.Skill4.Started() && (m_bombReadyTime <= Time.time) && m_bombSkill.CanBePlacedAtPosition(m_crossHairControl.Position))
                 {
-                    m_bReadyTime = Time.time + CheckToSetElement(skillB, ActionType.B);
+                    m_bombReadyTime = Time.time + m_bombSkill.Cooldown;
+                    ExecuteSkill(m_bombSkill, ActionType.B);
                 }
             }       
         }
@@ -86,47 +90,19 @@ namespace Run4YourLife.Player
             return AnimatorQuery.IsInStateCompletely(m_animator, BossAnimation.StateNames.Move);
         }
 
-        private float CheckToSetElement(GameObject skill,ActionType type)
+        private void ExecuteSkill(SkillBase skill, ActionType type)
         {
-            GameObject instance;
-
-            if (!SkillCheckWorldAvailability(skill, out instance))
-            {
-                UnableToUseSkill();
-                return 0.0f;
-            }
-            float skillReadyTime = PlaceSkillAtAnimation(instance);
-
-            ExecuteEvents.Execute<IUIEvents>(m_ui, null, (x, y) => x.OnActionUsed(type, skillReadyTime));
-            return skillReadyTime;
-        }
-
-        private bool SkillCheckWorldAvailability(GameObject skill,out GameObject instance)
-        {
-            instance = BossPoolManager.Instance.InstantiateBossElement(skill, m_crossHairControl.Position, false);
-            return instance.GetComponent<SkillBase>().Check();
-        }
-
-        private float PlaceSkillAtAnimation(GameObject skill)
-        {
-            AudioManager.Instance.PlaySFX(m_castClip);
+            GameObject instance = BossPoolManager.Instance.InstantiateBossElement(skill.gameObject, m_crossHairControl.Position, false);
             m_animator.SetTrigger(BossAnimation.Triggers.Cast);
-            
-            StartCoroutine(AnimationCallbacks.AfterStateAtNormalizedTime(m_animator, BossAnimation.StateNames.Move, m_normalizedTimeToSpawnTrap, () => PlaceSkillAtAnimationCallback(skill)));
-
-            return skill.GetComponent<SkillBase>().Cooldown;
+            StartCoroutine(AnimationCallbacks.AfterStateAtNormalizedTime(m_animator, BossAnimation.StateNames.Move, m_normalizedTimeToSpawnTrap, () => PlaceSkillAtAnimationCallback(instance)));
+            AudioManager.Instance.PlaySFX(m_castClip);
+            ExecuteEvents.Execute<IUIEvents>(m_ui, null, (x, y) => x.OnActionUsed(type, skill.Cooldown));
         }
 
-        private void PlaceSkillAtAnimationCallback(GameObject skillInstance)
+        private void PlaceSkillAtAnimationCallback(GameObject instance)
         {
-            skillInstance.SetActive(true);
-            skillInstance.GetComponent<SkillBase>().StartSkill();
-        }
-
-
-        private void UnableToUseSkill()
-        {
-            //Do something
+            instance.SetActive(true);
+            instance.GetComponent<SkillBase>().StartSkill();
         }
     }
 }

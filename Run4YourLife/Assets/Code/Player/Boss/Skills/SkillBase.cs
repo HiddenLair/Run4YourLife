@@ -22,7 +22,7 @@ namespace Run4YourLife.Player
 
         public float Cooldown { get { return m_cooldown; } }
 
-        virtual public bool Check()
+        virtual public bool CanBePlacedAtPosition(Vector3 position)
         {
             return true;
         }

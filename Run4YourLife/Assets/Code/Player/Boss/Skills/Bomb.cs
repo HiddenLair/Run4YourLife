@@ -89,9 +89,9 @@ namespace Run4YourLife.Player
             }
         }
 
-        public override bool Check()
+        public override bool CanBePlacedAtPosition(Vector3 position)
         {
-            Collider[] colliders = Physics.OverlapBox(transform.position, m_renderer.bounds.extents, Quaternion.identity, Layers.Stage, QueryTriggerInteraction.Ignore);
+            Collider[] colliders = Physics.OverlapBox(position, m_renderer.bounds.extents, Quaternion.identity, Layers.Stage, QueryTriggerInteraction.Ignore);
             if (colliders.Length != 0)
             {
                 return false;

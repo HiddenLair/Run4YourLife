@@ -44,8 +44,13 @@ namespace Run4YourLife.Player {
 
         #endregion
 
-        public override bool Check()
+        public override bool CanBePlacedAtPosition(Vector3 position)
         {
+            Debug.Log("This does not work. We have to fix it");
+
+            //ALERT: This method should only check weather the provided position is a valid place for the skill to be placed at
+            //When the skill is placed, is when it should be repositioned at the proper position
+
             Vector3 raycastPosition = transform.position;
             Collider[] colliders = Physics.OverlapBox(transform.position,new Vector3(0.1f,0.1f,0.1f),Quaternion.identity,Layers.Stage,QueryTriggerInteraction.Ignore);
             if(colliders.Length != 0)
