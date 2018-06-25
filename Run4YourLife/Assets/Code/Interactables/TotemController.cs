@@ -4,6 +4,7 @@ using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.Interactables
 {
+    [RequireComponent(typeof(AudioSource))]
     public class TotemController : MonoBehaviour
     {
 
@@ -13,10 +14,18 @@ namespace Run4YourLife.Interactables
 
         [SerializeField]
         private TrembleConfig trembleConfig;
+        [SerializeField]
+        private AudioClip trembleSound;
 
         private float currentFallSpeed;
         private float currentRotation = 0.0f;
         private Collider triger;
+        private AudioSource source;
+
+        private void Awake()
+        {
+            source = GetComponent<AudioSource>();
+        }
 
         private void Start()
         {
@@ -49,6 +58,7 @@ namespace Run4YourLife.Interactables
                 yield return new WaitForEndOfFrame();
             }
             TrembleManager.Instance.Tremble(trembleConfig);
+            source.PlayOneShot(trembleSound);
         }
     }
 }

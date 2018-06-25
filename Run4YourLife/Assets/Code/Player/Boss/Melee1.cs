@@ -13,7 +13,7 @@ namespace Run4YourLife.Player
         {
             m_animator.SetTrigger(BossAnimation.Triggers.Melee);
             AudioManager.Instance.PlaySFX(m_meleeClip);
-            StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator,BossAnimation.StateNames.Mele,0.5f,()=>TrembleManager.Instance.Tremble(trembleValues)));
+            StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator,BossAnimation.StateNames.Mele,0.6f,()=>TrembleManager.Instance.Tremble(trembleValues)));
         }
     }
 }
