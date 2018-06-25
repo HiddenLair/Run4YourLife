@@ -58,7 +58,6 @@ namespace Run4YourLife.Player
                     m_readyToMeleeTime = Time.time + reloadTimeS;
 
                     ExecuteMelee();
-                    ExecuteEvents.Execute<IUIEvents>(m_ui, null, (x, y) => x.OnActionUsed(ActionType.MELE, reloadTimeS));
                 }
             }
         }
