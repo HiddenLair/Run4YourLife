@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4424415456715648}
   - component: {fileID: 198019355396659698}
   - component: {fileID: 199323319278883814}
-  - component: {fileID: 114296659388083682}
+  - component: {fileID: 114938419366437850}
   m_Layer: 9
   m_Name: Shot_aura
   m_TagString: Untagged
@@ -54,13 +54,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4846887696143886}
-  - component: {fileID: 114946949731346962}
-  - component: {fileID: 114375096072483962}
-  - component: {fileID: 136957052827606210}
-  - component: {fileID: 54417531336440742}
-  - component: {fileID: 114592325569483270}
   - component: {fileID: 82886296401742486}
-  - component: {fileID: 114963868218843722}
+  - component: {fileID: 54417531336440742}
+  - component: {fileID: 136957052827606210}
+  - component: {fileID: 114225426005217026}
   m_Layer: 9
   m_Name: Boss_Shot
   m_TagString: Shoot
@@ -101,7 +98,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1781781690259230}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.955868, y: 4.28, z: 0.65535927}
+  m_LocalPosition: {x: -0.3559071, y: 0, z: 1.9341482}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 4424415456715648}
@@ -179,7 +176,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -203,8 +200,21 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!114 &114296659388083682
+    m_RotationOrder: 0
+--- !u!114 &114225426005217026
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1781781690259230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c214bdc4d503e840adcfb8dea683853, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_hitParticles: {fileID: 1637268079511322, guid: 64c492ff39cd4e1469e0714cc3f49da0,
+    type: 2}
+--- !u!114 &114938419366437850
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -212,61 +222,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1290425827005308}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c91dda2a36d983649a66f2bf601d3a30, type: 3}
+  m_Script: {fileID: 11500000, guid: 5662dafbde388d04bbacc018d90f277d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hierarchyUpLevels: 1
---- !u!114 &114375096072483962
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1781781690259230}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57011c5b505caa14391fef1be874907b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitParticles: {fileID: 1637268079511322, guid: 64c492ff39cd4e1469e0714cc3f49da0,
-    type: 2}
---- !u!114 &114592325569483270
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1781781690259230}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a209290dd529d7949b8bdc0f67ce24e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114946949731346962
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1781781690259230}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 412452455570aa44bac37005f9813a6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114963868218843722
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1781781690259230}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ef1997ddd5ce36449ca30f23bf6ee92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  layers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  trembleConfig: {fileID: 11400000, guid: cedd707519a2b98458accab40af743c3, type: 2}
-  collisionSound: {fileID: 8300000, guid: 10363cd06fd7f5c409fd202e13434b76, type: 3}
 --- !u!136 &136957052827606210
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -340,7 +298,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1342457997
+  randomSeed: 1838381933
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3701,7 +3659,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 147459736
+  randomSeed: -1627414116
   InitialModule:
     serializedVersion: 3
     enabled: 1

@@ -9,6 +9,7 @@ using Run4YourLife.Utils;
 using Run4YourLife.InputManagement;
 using Run4YourLife.UI;
 using Run4YourLife.GameManagement.AudioManagement;
+using System;
 
 namespace Run4YourLife.Player
 {
@@ -16,16 +17,17 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(BossControlScheme))]
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(CrossHairControl))]
-    public class BossController : MonoBehaviour {
+    public abstract class BossController : MonoBehaviour {
 
         #region Inspector
         [SerializeField]
-        private float m_shootCooldown;
-
-        
+        private float m_meleeCooldown;
 
         [SerializeField]
-        private float m_normalizedTimeToSpawnTrap = 0.2f;
+        private float m_shootCooldown;
+
+        [SerializeField]
+        private float m_normalizedTimeToSpawnTrap;
 
         [SerializeField]
         private SkillBase m_lightningSkill;
@@ -40,9 +42,8 @@ namespace Run4YourLife.Player
         private SkillBase m_bombSkill;
 
         [SerializeField]
-        [Range(-90, 90)]
-        [Tooltip("Offset from wich the head will look, used to shoot with the mouth instead of the beak")]
-        private float m_headLookAtOffset;
+        [Tooltip("Offset in euler angles from wich the head will look, used to shoot with the mouth instead of the beak")]
+        private Vector3 m_headLookAtOffset;
 
         [SerializeField]
         private Transform m_headBone;
@@ -51,16 +52,18 @@ namespace Run4YourLife.Player
         protected Transform m_shotSpawn;
 
         [SerializeField]
-        [Tooltip("Audio clip that playes when the boss uses a skill")]
+        [Tooltip("Audio clip that plays when the boss uses a skill")]
         private AudioClip m_castClip;
 
         [SerializeField]
+        [Tooltip("Audio clip that plays when the boss shoots a bullet")]
         protected AudioClip m_shotClip;
 
         [SerializeField]
-        private GameObjectPool m_gameObjectPool;
+        protected AudioClip m_meleeClip;
 
-
+        [SerializeField]
+        protected GameObjectPool m_gameObjectPool;
 
         #endregion
 
@@ -69,14 +72,15 @@ namespace Run4YourLife.Player
         private float m_bombReadyTime;
         private float m_lightningReadyTime;
         private float m_shootReadyTime;
+        private float m_meleeReadyTime;
         protected Quaternion m_initialHeadRotation;
 
 
 
-        private BossControlScheme m_controlScheme;
-        private Animator m_animator;
-        private GameObject m_ui;
-        private CrossHairControl m_crossHairControl;
+        protected BossControlScheme m_controlScheme;
+        protected Animator m_animator;
+        protected GameObject m_ui;
+        protected CrossHairControl m_crossHairControl;
 
         private void Awake()
         {
@@ -87,6 +91,11 @@ namespace Run4YourLife.Player
             Debug.Assert(m_ui != null);
 
             m_initialHeadRotation = m_headBone.rotation; // We have to store the starting position to in order to rotate it properly
+        }
+
+        private void Start()
+        {
+            m_controlScheme.Active = true;
         }
 
         void Update() {
@@ -114,10 +123,20 @@ namespace Run4YourLife.Player
                 } 
                 else if(m_controlScheme.Shoot.BoolValue() && m_shootReadyTime <= Time.time)
                 {
-                    m_shootCooldown = Time.time + m_shootCooldown;
+                    m_shootReadyTime = Time.time + m_shootCooldown;
                     ExecuteShoot();
                 }
+                else if(m_controlScheme.Melee.BoolValue() && m_meleeReadyTime <= Time.time)
+                {
+                    m_meleeReadyTime = Time.time + m_meleeCooldown;
+                    ExecuteMelee();
+                }
             }
+        }
+
+        protected virtual void ExecuteMelee()
+        {
+            ExecuteEvents.Execute<IUIEvents>(m_ui, null, (x, y) => x.OnActionUsed(ActionType.MELE, m_meleeCooldown));
         }
 
         private void LateUpdate()
@@ -151,11 +170,11 @@ namespace Run4YourLife.Player
             ExecuteEvents.Execute<IUIEvents>(m_ui, null, (x, y) => x.OnActionUsed(ActionType.SHOOT, m_shootCooldown));
         }
 
-        protected virtual void RotateHead()
+        private void RotateHead()
         {
             m_headBone.LookAt(m_crossHairControl.Position);
-            m_headBone.Rotate(0, -90, m_headLookAtOffset);
-            m_headBone.rotation *= m_initialHeadRotation;
+            //m_headBone.Rotate(0, -90, m_headLookAtOffset);
+            m_headBone.rotation *= Quaternion.Euler(m_headLookAtOffset.x, m_headLookAtOffset.y, m_headLookAtOffset.z) * m_initialHeadRotation;
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Run4YourLife.SceneSpecific.Global
             Debug.Assert(uiSkipInfoTime0 <= uiSkipInfoTime1 && uiSkipInfoTime0 >= 0.0f, "TransitionToMainMenuGloboalSceneController: Specified times are not correct!");
 
             StartCoroutine(UISkipInfoUpdater());
-            StartCoroutine(YieldHelper.WaitForSeconds(()=> m_sceneTransitionRequest.Execute(), 17.0f));
+            StartCoroutine(YieldHelper.WaitForSeconds(() => m_sceneTransitionRequest.Execute(), 16.25f));
         }
 
         private IEnumerator UISkipInfoUpdater()
