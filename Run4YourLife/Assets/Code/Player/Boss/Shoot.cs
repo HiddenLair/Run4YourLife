@@ -43,7 +43,6 @@ namespace Run4YourLife.Player
 
 
         private float m_readyToShootTime;
-        private bool m_shootTrigger;
 
         private GameObject m_ui;
         
@@ -84,18 +83,13 @@ namespace Run4YourLife.Player
         {
             if(m_controlScheme.Shoot.Value() > triggerSensivility) 
             {
-                if(!m_shootTrigger && m_readyToShootTime <= Time.time && IsReadyToShoot())
+                if(m_readyToShootTime <= Time.time && IsReadyToShoot())
                 {
-                    m_shootTrigger = true;
                     ShootByAnim();
                     m_readyToShootTime = Time.time + reloadTimeS;
 
                     ExecuteEvents.Execute<IUIEvents>(m_ui, null, (x, y) => x.OnActionUsed(ActionType.SHOOT, reloadTimeS));
                 }
-            } 
-            else 
-            {
-                m_shootTrigger = false;
             }
         }
 

@@ -25,7 +25,6 @@ namespace Run4YourLife.Player
         #endregion
 
         private float m_readyToMeleeTime;
-        private bool m_buttonWasReleased;
 
         private BossControlScheme m_controlScheme;
         private GameObject m_ui;
@@ -54,18 +53,13 @@ namespace Run4YourLife.Player
         {
             if(m_controlScheme.Melee.Value() > triggerSensivility)
             {
-                if(m_buttonWasReleased && m_readyToMeleeTime <= Time.time && IsReadyToMelee())
+                if(m_readyToMeleeTime <= Time.time && IsReadyToMelee())
                 {
-                    m_buttonWasReleased = false;
                     m_readyToMeleeTime = Time.time + reloadTimeS;
 
                     ExecuteMelee();
                     ExecuteEvents.Execute<IUIEvents>(m_ui, null, (x, y) => x.OnActionUsed(ActionType.MELE, reloadTimeS));
                 }
-            }
-            else
-            {
-                m_buttonWasReleased = true;
             }
         }
 
