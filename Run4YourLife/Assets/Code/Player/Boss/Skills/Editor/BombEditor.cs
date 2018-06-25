@@ -23,6 +23,7 @@ namespace Run4YourLife.Player.CustomEditors
         SerializedProperty fireScript;
         SerializedProperty timeBetweenJumps;
         SerializedProperty jumpHeight;
+        SerializedProperty bossSpawnCheckCollider;
 
         private void OnEnable()
         {
@@ -49,6 +50,7 @@ namespace Run4YourLife.Player.CustomEditors
             fireScript = serializedObject.FindProperty("fireScript");
             timeBetweenJumps = serializedObject.FindProperty("timeBetweenJumps");
             jumpHeight = serializedObject.FindProperty("jumpHeight");
+            bossSpawnCheckCollider = serializedObject.FindProperty("bossSpawnCheckCollider");
         }
 
         public override void OnGuiPhase1()
@@ -64,7 +66,9 @@ namespace Run4YourLife.Player.CustomEditors
             EditorGUILayout.PropertyField(activationParticles);
             EditorGUILayout.PropertyField(trembleFall);
             EditorGUILayout.PropertyField(trembleExplosion);
+            EditorGUILayout.PropertyField(bossSpawnCheckCollider);
         }
+        
         public override void OnGuiPhase2()
         {
             EditorGUILayout.PropertyField(timeBetweenFire);
