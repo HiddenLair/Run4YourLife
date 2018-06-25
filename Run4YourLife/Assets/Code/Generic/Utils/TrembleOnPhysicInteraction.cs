@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Run4YourLife;
 using Run4YourLife.GameManagement;
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.Utils
 {
@@ -38,7 +38,14 @@ namespace Run4YourLife.Utils
             if (((1 << g.layer) & layers) != 0)
             {
                 TrembleManager.Instance.Tremble(trembleConfig);
-                source.PlayOneShot(collisionSound);
+                if (source.isActiveAndEnabled)
+                {
+                    source.PlayOneShot(collisionSound);
+                }
+                else
+                {
+                    AudioManager.Instance.PlaySFX(collisionSound);
+                }
             }
         }
     }
