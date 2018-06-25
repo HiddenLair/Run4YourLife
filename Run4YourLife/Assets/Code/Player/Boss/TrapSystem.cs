@@ -10,7 +10,7 @@ using Run4YourLife.Utils;
 
 namespace Run4YourLife.Player
 {
-    [RequireComponent(typeof(Ready))]
+    [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(BossControlScheme))]
     [RequireComponent(typeof(CrossHairControl))]
     public class TrapSystem : MonoBehaviour
@@ -21,134 +21,110 @@ namespace Run4YourLife.Player
         private AudioClip m_castClip;
 
         [SerializeField]
-        [Range(0, 1)]
-        private float screenLeftLimitPercentaje = 0.2f;
-
-        [SerializeField]
-        [Range(0, 1)]
-        private float screenBottomLimitPercentaje = 0.2f;
-
-        [SerializeField]
         private GameObject skillA;
+        
         [SerializeField]
         private GameObject skillX;
+        
         [SerializeField]
         private GameObject skillY;
+        
         [SerializeField]
         private GameObject skillB;
+        
+        [SerializeField]
+        private float m_normalizedTimeToSpawnTrap = 0.2f;
 
         #endregion
 
-        #region Variables
+        #region Members
+        private float m_xReadyTime;
+        private float m_yReadyTime;
+        private float m_bReadyTime;
+        private float m_aReadyTime;
 
-        Ready ready;
-        BossControlScheme bossControlScheme;
-        private Animator anim;
-        private GameObject uiManager;
-        private CrossHairControl crossHairControl;
-
-        private float timeToSpawnTrapsFromAnim = 0.2f;
-        private bool trapCooldownBool = false;
-        #endregion
-
-        #region Timers
-
-        private float xButtonCooldown = 0.0f;
-        private float yButtonCooldown = 0.0f;
-        private float bButtonCooldown = 0.0f;
-        private float aButtonCooldown = 0.0f;
+        private BossControlScheme m_controlScheme;
+        private Animator m_animator;
+        private GameObject m_ui;
+        private CrossHairControl m_crossHairControl;
 
         #endregion
 
         private void Awake()
         {
-            ready = GetComponent<Ready>();
-            anim = GetComponent<Animator>();
-            bossControlScheme = GetComponent<BossControlScheme>();
-            crossHairControl = GetComponent<CrossHairControl>();
-            uiManager = GameObject.FindGameObjectWithTag(Tags.UI);
+            m_animator = GetComponent<Animator>();
+            m_controlScheme = GetComponent<BossControlScheme>();
+            m_crossHairControl = GetComponent<CrossHairControl>();
+            m_ui = GameObject.FindGameObjectWithTag(Tags.UI);
         }
 
-        void Update()
+        private void Update()
         {
-
-            if (ready.Get() && !trapCooldownBool)
+            if (IsReadyToUseSkill())
             {
-                trapCooldownBool = true;
-                SelectElementToSet();
-                trapCooldownBool = false;
+                if (m_controlScheme.Skill1.Started() && (m_aReadyTime <= Time.time))
+                {
+                    m_aReadyTime = Time.time + CheckToSetElement(skillA, ActionType.A);             
+                }
+                else if (m_controlScheme.Skill2.Started() && (m_xReadyTime <= Time.time))
+                {
+                    m_xReadyTime = Time.time + CheckToSetElement(skillX, ActionType.X);
+                }
+                else if (m_controlScheme.Skill3.Started() && (m_yReadyTime <= Time.time))
+                {
+                    m_yReadyTime = Time.time + CheckToSetElement(skillY, ActionType.Y);
+                }
+                else if (m_controlScheme.Skill4.Started() && (m_bReadyTime <= Time.time))
+                {
+                    m_bReadyTime = Time.time + CheckToSetElement(skillB, ActionType.B);
+                }
             }       
         }
 
-
-        void SelectElementToSet()
+        private bool IsReadyToUseSkill()
         {
-            if (bossControlScheme.Skill1.Started() && (aButtonCooldown <= Time.time))
-            {
-                aButtonCooldown = Time.time + CheckToSetElement(skillA, ActionType.A);             
-            }
-            else if (bossControlScheme.Skill2.Started() && (xButtonCooldown <= Time.time))
-            {
-                xButtonCooldown = Time.time + CheckToSetElement(skillX, ActionType.X);
-            }
-            else if (bossControlScheme.Skill3.Started() && (yButtonCooldown <= Time.time))
-            {
-                yButtonCooldown = Time.time + CheckToSetElement(skillY, ActionType.Y);
-            }
-            else if (bossControlScheme.Skill4.Started() && (bButtonCooldown <= Time.time))
-            {
-                bButtonCooldown = Time.time + CheckToSetElement(skillB, ActionType.B);
-            }
+            return AnimatorQuery.IsInStateCompletely(m_animator, BossAnimation.StateNames.Move);
         }
 
-        float CheckToSetElement(GameObject skill,ActionType type)
+        private float CheckToSetElement(GameObject skill,ActionType type)
         {
             GameObject instance;
 
             if (!SkillCheckWorldAvailability(skill, out instance))
             {
-                CanNotPlace();
+                UnableToUseSkill();
                 return 0.0f;
             }
-            float buttonCooldown = SetElement(instance);
+            float skillReadyTime = PlaceSkillAtAnimation(instance);
 
-            ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(type, buttonCooldown));
-            return buttonCooldown;
+            ExecuteEvents.Execute<IUIEvents>(m_ui, null, (x, y) => x.OnActionUsed(type, skillReadyTime));
+            return skillReadyTime;
         }
 
-        float SetElement(GameObject skill)
+        private bool SkillCheckWorldAvailability(GameObject skill,out GameObject instance)
+        {
+            instance = BossPoolManager.Instance.InstantiateBossElement(skill, m_crossHairControl.Position, false);
+            return instance.GetComponent<SkillBase>().Check();
+        }
+
+        private float PlaceSkillAtAnimation(GameObject skill)
         {
             AudioManager.Instance.PlaySFX(m_castClip);
-            anim.SetTrigger("Casting");
+            m_animator.SetTrigger(BossAnimation.Triggers.Cast);
             
-            float cooldown = 0.0f ;
+            StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator, BossAnimation.StateNames.Cast, m_normalizedTimeToSpawnTrap, () => PlaceSkillAtAnimationCallback(skill)));
 
-            cooldown = skill.GetComponent<SkillBase>().Cooldown;
-            StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(anim, "Cast", timeToSpawnTrapsFromAnim, () => SetElementCallback(skill)));
-
-            return cooldown;
+            return skill.GetComponent<SkillBase>().Cooldown;
         }
 
-        void SetElementCallback(GameObject gameObject)
+        private void PlaceSkillAtAnimationCallback(GameObject skillInstance)
         {
-            gameObject.SetActive(true);
-            gameObject.GetComponent<SkillBase>().StartSkill();
-            crossHairControl.UnlockPositionAndMovement();
+            skillInstance.SetActive(true);
+            skillInstance.GetComponent<SkillBase>().StartSkill();
         }
 
-        bool SkillCheckWorldAvailability(GameObject skill,out GameObject instance)
-        {
-           
-            instance = BossPoolManager.Instance.InstantiateBossElement(skill, crossHairControl.Position,false);
-            bool ret = instance.GetComponent<SkillBase>().Check();
-            if (ret)
-            {
-                crossHairControl.LockPositionAndMovement();
-            }
-            return ret;
-        }
 
-        void CanNotPlace()
+        private void UnableToUseSkill()
         {
             //Do something
         }

@@ -35,7 +35,7 @@ namespace Run4YourLife.GameManagement
 
         public GameObject InstantiateBossElement(GameObject g, Vector3 instancePosition, bool activate=true)
         {
-           return m_manualPrefabInstantiator.ManualInstantiate(g, instancePosition,activate);
+           return m_manualPrefabInstantiator.ManualInstantiate(g, instancePosition, activate);
         }
     }
 }
