@@ -148,7 +148,7 @@ namespace Run4YourLife.Player
 
         protected virtual void ExecuteShoot()
         {
-            ExecuteEvents.Execute<IUIEvents>(m_ui, null, (x, y) => x.OnActionUsed(ActionType.SHOOT, reloadTimeS));
+            ExecuteEvents.Execute<IUIEvents>(m_ui, null, (x, y) => x.OnActionUsed(ActionType.SHOOT, m_shootCooldown));
         }
 
         protected virtual void RotateHead()
