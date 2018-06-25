@@ -110,12 +110,12 @@ namespace Run4YourLife.GameManagement {
                 new PlayerHandle() {
                     CharacterType = CharacterType.Purple,
                     InputDevice = InputDeviceManager.Instance.InputDevices[0],
-                    IsBoss = false
+                    IsBoss = true
                 },
                 new PlayerHandle() {
                     CharacterType = CharacterType.Green,
                     InputDevice = InputDeviceManager.Instance.InputDevices[1],
-                    IsBoss = true
+                    IsBoss = false
                 },
                 new PlayerHandle() {
                     CharacterType = CharacterType.White,
