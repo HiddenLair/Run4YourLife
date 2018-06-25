@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Run4YourLife.GameManagement;
 using Cinemachine;
 
 namespace Run4YourLife.Cinemachine
@@ -30,6 +30,16 @@ namespace Run4YourLife.Cinemachine
         {
             CinemachineVirtualCameraBase cinemachineVirtualCameraBase = GetComponent<CinemachineVirtualCameraBase>();
             AddTrauma(cinemachineVirtualCameraBase, config);
+        }
+
+        private void OnEnable()
+        {
+            TrembleManager.Instance.Subscribe(this);
+        }
+
+        private void OnDisable()
+        {
+            TrembleManager.Instance.Unsubscribe(this);
         }
 
 

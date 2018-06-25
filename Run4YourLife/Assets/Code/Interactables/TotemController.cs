@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.Interactables
 {
@@ -9,6 +10,9 @@ namespace Run4YourLife.Interactables
         public float initialFallSpeed = 5;
         public float gravity = 40;
         public float maxRotation;
+
+        [SerializeField]
+        private TrembleConfig trembleConfig;
 
         private float currentFallSpeed;
         private float currentRotation = 0.0f;
@@ -44,6 +48,7 @@ namespace Run4YourLife.Interactables
                 transform.Rotate(currentFallSpeed * Time.deltaTime, 0, 0);
                 yield return new WaitForEndOfFrame();
             }
+            TrembleManager.Instance.Tremble(trembleConfig);
         }
     }
 }
