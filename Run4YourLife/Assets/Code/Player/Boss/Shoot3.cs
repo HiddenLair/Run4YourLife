@@ -61,9 +61,9 @@ namespace Run4YourLife.Player
 
             AudioManager.Instance.PlaySFX(m_shotClip);
             loadShootReceiver.PlayFx(true);
-            animator.SetTrigger("Shoot");
-            StartCoroutine(AnimationCallbacks.AfterStateAtNormalizedTime(animator, "ChargeShoot", timeToShootFromAnim, () => Shoot()));
-            StartCoroutine(AnimationCallbacks.AfterStateAtNormalizedTime(animator, "ChargeShoot", 0.0f, () => StopIndicator()));
+            m_animator.SetTrigger("Shoot");
+            StartCoroutine(AnimationCallbacks.AfterStateAtNormalizedTime(m_animator, "ChargeShoot", timeToShootFromAnim, () => Shoot()));
+            StartCoroutine(AnimationCallbacks.AfterStateAtNormalizedTime(m_animator, "ChargeShoot", 0.0f, () => StopIndicator()));
             dangerIndicator.SetActive(true);
         }
 
@@ -74,7 +74,7 @@ namespace Run4YourLife.Player
 
         void Shoot()
         {
-            Vector3 director = (crossHairControl.Position - loadShootReceiver.transform.position).normalized;
+            Vector3 director = (m_crossHairControl.Position - loadShootReceiver.transform.position).normalized;
 
             RaycastHit[] targetLocation;
             GameObject particle = FXManager.Instance.InstantiateFromValues(loadShootReceiver.transform.position, Quaternion.identity, loadedShootParticles,loadShootReceiver.transform);
@@ -93,7 +93,7 @@ namespace Run4YourLife.Player
 
             loadShootReceiver.transform.position = head.position + rot.normalized * distanceToFollow;
 
-            Vector3 director = (crossHairControl.Position - loadShootReceiver.transform.position).normalized;
+            Vector3 director = (m_crossHairControl.Position - loadShootReceiver.transform.position).normalized;
             Quaternion rotation = Quaternion.FromToRotation(Vector3.right, director);
 
             loadShootReceiver.transform.localRotation = rotation;

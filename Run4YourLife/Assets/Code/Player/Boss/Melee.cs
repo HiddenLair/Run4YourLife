@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
+
 using Run4YourLife.UI;
 using Run4YourLife.InputManagement;
-using UnityEngine.EventSystems;
+using Run4YourLife.Utils;
 
 namespace Run4YourLife.Player
 {
-    [RequireComponent(typeof(Ready))]
     [RequireComponent(typeof(BossControlScheme))]
     public abstract class Melee : MonoBehaviour
     {
@@ -23,59 +24,56 @@ namespace Run4YourLife.Player
 
         #endregion
 
-        private float currentTimeS = 0;
-        private bool alreadyPressed = false;
+        private float m_readyToMeleeTime;
+        private bool m_buttonWasReleased;
 
-        private Ready ready;
-        private BossControlScheme controlScheme;
-        
-        private GameObject uiManager;
+        private BossControlScheme m_controlScheme;
+        private GameObject m_ui;
+        protected Animator m_animator;
 
         protected virtual void Awake()
         {
-            currentTimeS = reloadTimeS;
-
-            ready = GetComponent<Ready>();
-            controlScheme = GetComponent<BossControlScheme>();
-
-            uiManager = GameObject.FindGameObjectWithTag(Tags.UI);
+            m_readyToMeleeTime = Time.time + reloadTimeS;
+            m_controlScheme = GetComponent<BossControlScheme>();
+            m_animator = GetComponent<Animator>();
+            m_ui = GameObject.FindGameObjectWithTag(Tags.UI);
+            Debug.Assert(m_ui != null);
         }
 
         private void Start()
         {
-            controlScheme.Active = true;
+            m_controlScheme.Active = true;
         }
 
-        void Update()
+        private void Update()
         {
-            currentTimeS = Mathf.Min(currentTimeS + Time.deltaTime, reloadTimeS);
-
-            Verify();
+            CheckExecuteMelee();
         }
 
-        private void Verify()
+        private void CheckExecuteMelee()
         {
-            if(ready.Get())
+            if(m_controlScheme.Melee.Value() > triggerSensivility)
             {
-                if(controlScheme.Melee.Value() > triggerSensivility)
+                if(m_buttonWasReleased && m_readyToMeleeTime <= Time.time && IsReadyToMelee())
                 {
-                    if(currentTimeS >= reloadTimeS && !alreadyPressed)
-                    {
-                        OnSuccess();
+                    m_buttonWasReleased = false;
+                    m_readyToMeleeTime = Time.time + reloadTimeS;
 
-                        currentTimeS = 0.0f;
-                        alreadyPressed = true;
-
-                        ExecuteEvents.Execute<IUIEvents>(uiManager, null, (x, y) => x.OnActionUsed(ActionType.MELE, reloadTimeS));
-                    }
+                    ExecuteMelee();
+                    ExecuteEvents.Execute<IUIEvents>(m_ui, null, (x, y) => x.OnActionUsed(ActionType.MELE, reloadTimeS));
                 }
-                else
-                {
-                    alreadyPressed = false;
-                }
+            }
+            else
+            {
+                m_buttonWasReleased = true;
             }
         }
 
-        protected abstract void OnSuccess();
+        private bool IsReadyToMelee()
+        {
+            return AnimatorQuery.IsInStateCompletely(m_animator, BossAnimation.StateNames.Move);
+        }
+
+        protected abstract void ExecuteMelee();
     }
 }

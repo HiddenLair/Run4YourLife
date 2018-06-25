@@ -33,19 +33,17 @@ namespace Run4YourLife.Player
         private bool right = false;
 
         private CrossHairControl crossHairControl;
-        private Animator m_animator;
         private Camera m_mainCamera;
 
         protected override void Awake()
         {
             base.Awake();
-            m_animator = GetComponent<Animator>();
             m_mainCamera = CameraManager.Instance.MainCamera;
             crossHairControl = GetComponent<CrossHairControl>();
             Debug.Assert(m_mainCamera != null);
         }
 
-        protected override void OnSuccess()
+        protected override void ExecuteMelee()
         {
             //Only shoot when the boss has both hands. No double shoot is allowed.
             if (handR.activeInHierarchy && handL.activeInHierarchy)

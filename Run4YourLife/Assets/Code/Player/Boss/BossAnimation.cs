@@ -17,7 +17,7 @@ namespace Run4YourLife.Player
 
         public class Triggers {
             public static readonly string Shoot = "Shoot";
-            public static readonly string Mele = "Mele";
+            public static readonly string Melee = "Mele";
             public static readonly string Cast = "Casting";
             public static readonly string Laugh = "Laugh";
         }

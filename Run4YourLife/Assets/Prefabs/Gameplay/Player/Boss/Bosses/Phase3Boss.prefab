@@ -425,7 +425,6 @@ GameObject:
   - component: {fileID: 114654113143466030}
   - component: {fileID: 114221571004702038}
   - component: {fileID: 114099030480956222}
-  - component: {fileID: 114154188997543654}
   - component: {fileID: 114891650166769830}
   - component: {fileID: 65399253425502934}
   - component: {fileID: 114648588520097026}
@@ -2835,18 +2834,6 @@ MonoBehaviour:
   triggerSensivility: 0.2
   reloadTimeS: 8
   m_meleeClip: {fileID: 8300000, guid: 5a17a99919f460e4f961de3bb2f63aa7, type: 3}
---- !u!114 &114154188997543654
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1432021327500220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a758af56ddef8734abf63f53157a3017, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animationReadyName: Move
 --- !u!114 &114221571004702038
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2858,11 +2845,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f60e24d963f6d5145812a2b310284b6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  head: {fileID: 4584662799879848}
+  reloadTimeS: 10
   shootInitZone: {fileID: 0}
   m_shotClip: {fileID: 8300000, guid: c3833cf9a9803f145bb95bbf5defe584, type: 3}
   triggerSensivility: 0.2
-  reloadTimeS: 10
+  head: {fileID: 4584662799879848}
   m_lookAtOffset: 20
   dangerIndicator: {fileID: 1728473321792840}
   dangerRotator: {fileID: 4492174773157854}
@@ -2944,12 +2931,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_castClip: {fileID: 8300000, guid: 4a235b16048326246adf6fdd4f2cecee, type: 3}
-  screenLeftLimitPercentaje: 0.3
-  screenBottomLimitPercentaje: 0.3
   skillA: {fileID: 1424958542492264, guid: e80cea234969eb1418ec055119ef78bc, type: 2}
   skillX: {fileID: 1080337908671738, guid: 789f74a666f93f84b86520d78a2460e4, type: 2}
   skillY: {fileID: 1491269538652688, guid: d7cbd517b32be8e4d8eaed34ca5180ba, type: 2}
   skillB: {fileID: 1917008379314224, guid: 2064cae466c7b35478bf63deeaaa36e9, type: 2}
+  m_normalizedTimeToSpawnTrap: 0.2
 --- !u!114 &114772048301559046
 MonoBehaviour:
   m_ObjectHideFlags: 1

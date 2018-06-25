@@ -675,7 +675,6 @@ GameObject:
   - component: {fileID: 114665498606883428}
   - component: {fileID: 114276679277859536}
   - component: {fileID: 114640674816687074}
-  - component: {fileID: 114804406637999624}
   - component: {fileID: 114902076369322454}
   - component: {fileID: 114004692947530906}
   m_Layer: 11
@@ -2645,11 +2644,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff05d4a01207b0243b1fa45b3ba126ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  head: {fileID: 4384441747692872}
+  reloadTimeS: 4
   shootInitZone: {fileID: 4630429362345324}
   m_shotClip: {fileID: 8300000, guid: c3833cf9a9803f145bb95bbf5defe584, type: 3}
   triggerSensivility: 0.2
-  reloadTimeS: 4
+  head: {fileID: 4384441747692872}
   m_lookAtOffset: 20
   instance: {fileID: 1214334319900842, guid: e49eed30291e49844809c8393cf7819c, type: 2}
   bulletSpeed: 500
@@ -2694,24 +2693,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_castClip: {fileID: 8300000, guid: 4a235b16048326246adf6fdd4f2cecee, type: 3}
-  screenLeftLimitPercentaje: 0
-  screenBottomLimitPercentaje: 0
   skillA: {fileID: 1096296802443346, guid: 7b75228d62a32a446b38630536b4dfd8, type: 2}
   skillX: {fileID: 1778254393714324, guid: 8ecb33c5bbbad76499d8943f2f854a67, type: 2}
   skillY: {fileID: 1439577150476730, guid: bfa617fe4fd98a94d94fb4bb81723b3b, type: 2}
   skillB: {fileID: 1930766281004810, guid: 7de77abf0e906934d8cc162a2b5ea514, type: 2}
---- !u!114 &114804406637999624
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1490842876409522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a758af56ddef8734abf63f53157a3017, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animationReadyName: Idle
+  m_normalizedTimeToSpawnTrap: 0.2
 --- !u!114 &114902076369322454
 MonoBehaviour:
   m_ObjectHideFlags: 1

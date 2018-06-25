@@ -22,16 +22,16 @@ namespace Run4YourLife.Player
 
         public override void ShootByAnim()
         {
-            animator.SetTrigger("Shoot");
-            StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(animator, "Shoot", timeToShootFromAnim, () => Shoot()));
+            m_animator.SetTrigger(BossAnimation.Triggers.Shoot);
+            StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator, BossAnimation.StateNames.Shoot, timeToShootFromAnim, () => Shoot()));
         }
 
         void Shoot()
         {
             AudioManager.Instance.PlaySFX(m_shotClip);
-            Vector3 cPos = crossHairControl.Position;
+            Vector3 cPos = m_crossHairControl.Position;
             cPos.z = 0;
-            Vector3 director = (crossHairControl.Position - shootInitZone.position).normalized;
+            Vector3 director = (m_crossHairControl.Position - shootInitZone.position).normalized;
             Quaternion rot = Quaternion.FromToRotation(Vector3.right,director);
             GameObject tempInstance = Instantiate(instance, shootInitZone.position, instance.transform.rotation * rot);
             tempInstance.GetComponent<Rigidbody>().velocity = director * bulletSpeed * Time.deltaTime;

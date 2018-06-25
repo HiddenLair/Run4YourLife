@@ -23,25 +23,25 @@ namespace Run4YourLife.Player
 
         public override void ShootByAnim()
         {
-            animator.SetTrigger("Shoot");
-            StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(animator, "Shoot", timeToShootFromAnim, () => Shoot()));
+            m_animator.SetTrigger("Shoot");
+            StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator, "Shoot", timeToShootFromAnim, () => Shoot()));
         }
 
         void Shoot()
         {
             AudioManager.Instance.PlaySFX(m_shotClip);
 
-            Vector3 director = (crossHairControl.Position - shootInitZone.position).normalized;
+            Vector3 director = (m_crossHairControl.Position - shootInitZone.position).normalized;
             GameObject tempInstance = Instantiate(instance, shootInitZone.position, instance.transform.rotation);
             tempInstance.GetComponent<Rigidbody>().velocity = director * bulletSpeed * Time.deltaTime;
-            tempInstance.GetComponent<ChargedBullet>().SetZValue(crossHairControl.Position.z);
+            tempInstance.GetComponent<ChargedBullet>().SetZValue(m_crossHairControl.Position.z);
         }
 
         public override void RotateHead()
         {
-            head.LookAt(crossHairControl.Position);
+            head.LookAt(m_crossHairControl.Position);
             head.Rotate(0, -180, 0);
-            head.rotation *= initialRotation;
+            head.rotation *= m_initialHeadRotation;
         }
     }
 }

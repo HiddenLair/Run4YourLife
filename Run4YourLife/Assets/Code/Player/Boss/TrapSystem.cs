@@ -112,7 +112,7 @@ namespace Run4YourLife.Player
             AudioManager.Instance.PlaySFX(m_castClip);
             m_animator.SetTrigger(BossAnimation.Triggers.Cast);
             
-            StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator, BossAnimation.StateNames.Cast, m_normalizedTimeToSpawnTrap, () => PlaceSkillAtAnimationCallback(skill)));
+            StartCoroutine(AnimationCallbacks.AfterStateAtNormalizedTime(m_animator, BossAnimation.StateNames.Move, m_normalizedTimeToSpawnTrap, () => PlaceSkillAtAnimationCallback(skill)));
 
             return skill.GetComponent<SkillBase>().Cooldown;
         }

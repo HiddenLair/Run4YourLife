@@ -3,21 +3,11 @@ using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.Player
 {
-    [RequireComponent(typeof(Animator))]
     public class Melee3 : Melee
     {
-        private Animator animator;
-
-        protected override void Awake()
+        protected override void ExecuteMelee()
         {
-            base.Awake();
-
-            animator = GetComponent<Animator>();
-        }
-
-        protected override void OnSuccess()
-        {
-            animator.SetTrigger("Mele");
+            m_animator.SetTrigger(BossAnimation.Triggers.Melee);
             AudioManager.Instance.PlaySFX(m_meleeClip);
         }
     }
