@@ -25,6 +25,9 @@ namespace Run4YourLife.Player {
         private GameObject lighningEffect;
 
         [SerializeField]
+        private TrembleConfig trembleConfig;
+
+        [SerializeField]
         private GameObject electricFieldGameObject;
         [SerializeField]
         private float delayBetweenLightnings;
@@ -93,6 +96,7 @@ namespace Run4YourLife.Player {
         private void LightningHit()
         {
             AudioManager.Instance.PlaySFX(m_skillTriggerClip);
+            TrembleManager.Instance.Tremble(trembleConfig);
             Camera mainCamera = CameraManager.Instance.MainCamera;
             Vector3 pos = Vector3.zero;
             pos.y = mainCamera.ScreenToWorldPoint(new Vector3(0, mainCamera.pixelHeight, Mathf.Abs(mainCamera.transform.position.z - pos.z))).y;

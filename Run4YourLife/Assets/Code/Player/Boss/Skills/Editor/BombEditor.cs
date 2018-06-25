@@ -6,6 +6,7 @@ namespace Run4YourLife.Player.CustomEditors
     [CanEditMultipleObjects]
     public class BombEditor : SkillBaseEditor
     {
+        SerializedProperty m_trapfallClip;
         SerializedProperty m_trapDetonationClip;
         SerializedProperty m_fadeInTime;
         SerializedProperty rayCheckerLenght;
@@ -14,6 +15,8 @@ namespace Run4YourLife.Player.CustomEditors
         SerializedProperty indicatorParticles;
         SerializedProperty m_explosionRatius;
         SerializedProperty activationParticles;
+        SerializedProperty trembleFall;
+        SerializedProperty trembleExplosion;
         SerializedProperty timeBetweenFire;
         SerializedProperty fireGrowDuration;
         SerializedProperty fireStableDuration;
@@ -29,6 +32,7 @@ namespace Run4YourLife.Player.CustomEditors
 
         new public void Init()
         {
+            m_trapfallClip = serializedObject.FindProperty("m_trapfallClip");
             m_trapDetonationClip = serializedObject.FindProperty("m_trapDetonationClip");
             m_fadeInTime = serializedObject.FindProperty("m_fadeInTime");
             rayCheckerLenght = serializedObject.FindProperty("rayCheckerLenght");
@@ -37,6 +41,8 @@ namespace Run4YourLife.Player.CustomEditors
             indicatorParticles = serializedObject.FindProperty("indicatorParticles");
             m_explosionRatius = serializedObject.FindProperty("m_explosionRatius");
             activationParticles = serializedObject.FindProperty("activationParticles");
+            trembleFall = serializedObject.FindProperty("trembleFall");
+            trembleExplosion = serializedObject.FindProperty("trembleExplosion");
             timeBetweenFire = serializedObject.FindProperty("timeBetweenFire");
             fireGrowDuration = serializedObject.FindProperty("fireGrowDuration");
             fireStableDuration = serializedObject.FindProperty("fireStableDuration");
@@ -47,6 +53,7 @@ namespace Run4YourLife.Player.CustomEditors
 
         public override void OnGuiPhase1()
         {
+            EditorGUILayout.PropertyField(m_trapfallClip);
             EditorGUILayout.PropertyField(m_trapDetonationClip);
             EditorGUILayout.PropertyField(m_fadeInTime);
             EditorGUILayout.PropertyField(rayCheckerLenght);
@@ -55,6 +62,8 @@ namespace Run4YourLife.Player.CustomEditors
             EditorGUILayout.PropertyField(indicatorParticles);
             EditorGUILayout.PropertyField(m_explosionRatius);
             EditorGUILayout.PropertyField(activationParticles);
+            EditorGUILayout.PropertyField(trembleFall);
+            EditorGUILayout.PropertyField(trembleExplosion);
         }
         public override void OnGuiPhase2()
         {

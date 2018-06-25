@@ -31,6 +31,12 @@ namespace Run4YourLife.Player {
         private GameObject earthPikeEffect;
 
         [SerializeField]
+        private TrembleConfig trembleConfig;
+
+        [SerializeField]
+        private AudioClip growingClip;
+
+        [SerializeField]
         private GameObject wallGameObject;
 
         #endregion
@@ -214,6 +220,9 @@ namespace Run4YourLife.Player {
 
         IEnumerator StartAdvise()
         {
+            m_skillAudioSource.clip = growingClip;
+            m_skillAudioSource.loop = true;
+            m_skillAudioSource.Play();
             adviseParticles.transform.localScale = new Vector3(maxPercent * width, maxPercent * width, maxPercent * width);
             adviseParticles.SetActive(true);
             yield return new WaitForSeconds(delayHit);
@@ -223,6 +232,7 @@ namespace Run4YourLife.Player {
 
         IEnumerator StartPikeGrow()
         {
+            TrembleManager.Instance.Tremble(trembleConfig);
             Vector3 currentScale = transform.localScale = Vector3.zero;
             earthPikeEffect.SetActive(true);
             float growBySecond = maxPercent / timeToGrow;
@@ -236,6 +246,7 @@ namespace Run4YourLife.Player {
             }
             yield return new WaitForSeconds(timeToBreak);
             earthPikeEffect.SetActive(false);
+            m_skillAudioSource.Stop();
             Break();
         }
 

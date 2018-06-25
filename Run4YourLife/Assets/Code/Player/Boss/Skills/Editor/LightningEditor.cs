@@ -15,6 +15,7 @@ namespace Run4YourLife.Player.CustomEditors
         SerializedProperty delayHit;
         SerializedProperty flashEffect;
         SerializedProperty lighningEffect;
+        SerializedProperty trembleConfig;
         SerializedProperty delayBetweenLightnings;
         SerializedProperty delayBetweenLightningsProgresion;
         SerializedProperty electricFieldGameObject;
@@ -37,8 +38,9 @@ namespace Run4YourLife.Player.CustomEditors
             delayHit = serializedObject.FindProperty("delayHit");
             flashEffect = serializedObject.FindProperty("flashEffect");
             lighningEffect = serializedObject.FindProperty("lighningEffect");
+            trembleConfig = serializedObject.FindProperty("trembleConfig");
             electricFieldGameObject = serializedObject.FindProperty("electricFieldGameObject");
-            delayBetweenLightnings = serializedObject.FindProperty("delayBetweenLightnings"); ;
+            delayBetweenLightnings = serializedObject.FindProperty("delayBetweenLightnings");
             delayBetweenLightningsProgresion = serializedObject.FindProperty("delayBetweenLightningsProgresion");
             newLightningsDelayHit = serializedObject.FindProperty("newLightningsDelayHit");
             newLightningsDelayHitProgresion = serializedObject.FindProperty("newLightningsDelayHitProgresion");
@@ -54,6 +56,7 @@ namespace Run4YourLife.Player.CustomEditors
             EditorGUILayout.PropertyField(delayHit);
             EditorGUILayout.PropertyField(flashEffect);
             EditorGUILayout.PropertyField(lighningEffect);
+            EditorGUILayout.PropertyField(trembleConfig);
         }
 
         public override void OnGuiPhase2()

@@ -10,6 +10,10 @@ namespace Run4YourLife.Player
     {
 
         #region Inspector
+
+        [SerializeField]
+        protected AudioClip m_trapfallClip;
+
         [SerializeField]
         protected AudioClip m_trapDetonationClip;
 
@@ -33,6 +37,12 @@ namespace Run4YourLife.Player
 
         [SerializeField]
         private GameObject activationParticles;
+
+        [SerializeField]
+        TrembleConfig trembleFall;
+
+        [SerializeField]
+        TrembleConfig trembleExplosion;
 
         [SerializeField]
         private float timeBetweenFire;
@@ -181,6 +191,8 @@ namespace Run4YourLife.Player
                 speed.y += gravity * Time.deltaTime;
                 yield return null;
             }
+            TrembleManager.Instance.Tremble(trembleFall);
+            m_skillAudioSource.PlayOneShot(m_trapfallClip);
         }
 
         IEnumerator Fire()
@@ -248,6 +260,7 @@ namespace Run4YourLife.Player
             }
 
             AudioManager.Instance.PlaySFX(m_trapDetonationClip);
+            TrembleManager.Instance.Tremble(trembleExplosion);
             Instantiate(activationParticles, transform.position, transform.rotation);
             gameObject.SetActive(false);
         }
