@@ -59,10 +59,10 @@ public class CustomButton : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     void Update()
     {
-        currentButtonScaleMultiplierOnFocus = Mathf.Lerp(currentButtonScaleMultiplierOnFocus, currentTargetButtonScaleMultiplierOnFocus, scaleTransitionSpeed * Time.deltaTime);
-        currentTextScaleMultiplierOnFocus = Mathf.Lerp(currentTextScaleMultiplierOnFocus, currentTargetTextScaleMultiplierOnFocus, scaleTransitionSpeed * Time.deltaTime);
+        currentButtonScaleMultiplierOnFocus = Mathf.Lerp(currentButtonScaleMultiplierOnFocus, currentTargetButtonScaleMultiplierOnFocus, scaleTransitionSpeed * Time.unscaledDeltaTime);
+        currentTextScaleMultiplierOnFocus = Mathf.Lerp(currentTextScaleMultiplierOnFocus, currentTargetTextScaleMultiplierOnFocus, scaleTransitionSpeed * Time.unscaledDeltaTime);
 
-        currentColor = Color32.Lerp(currentColor, currentTargetColor, colorTransitionSpeed * Time.deltaTime);
+        currentColor = Color32.Lerp(currentColor, currentTargetColor, colorTransitionSpeed * Time.unscaledDeltaTime);
 
         rectTransform.sizeDelta = currentButtonScaleMultiplierOnFocus * initialButtonTransformSizeDelta;
 
