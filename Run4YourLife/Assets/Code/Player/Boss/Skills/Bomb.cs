@@ -36,6 +36,9 @@ namespace Run4YourLife.Player
         private float m_explosionRatius;
 
         [SerializeField]
+        private FXReceiver explosionParticles;
+
+        [SerializeField]
         private GameObject activationParticles;
 
         [SerializeField]
@@ -86,7 +89,7 @@ namespace Run4YourLife.Player
             m_collider = GetComponent<Collider>();
             m_renderer = GetComponentInChildren<Renderer>();
             Debug.Assert(m_renderer != null);
-            m_collider.enabled = false;
+            //m_collider.enabled = false;
 
             speed.y = initialSpeed;
 
@@ -195,7 +198,8 @@ namespace Run4YourLife.Player
                 yield return null;
             }
             TrembleManager.Instance.Tremble(trembleFall);
-            m_skillAudioSource.PlayOneShot(m_trapfallClip);
+            AudioManager.Instance.PlaySFX(m_trapfallClip);
+            //m_skillAudioSource.PlayOneShot(m_trapfallClip);
         }
 
         IEnumerator Fire()
@@ -264,7 +268,7 @@ namespace Run4YourLife.Player
 
             AudioManager.Instance.PlaySFX(m_trapDetonationClip);
             TrembleManager.Instance.Tremble(trembleExplosion);
-            Instantiate(activationParticles, transform.position, transform.rotation);
+            explosionParticles.PlayFx(false);
             gameObject.SetActive(false);
         }
 

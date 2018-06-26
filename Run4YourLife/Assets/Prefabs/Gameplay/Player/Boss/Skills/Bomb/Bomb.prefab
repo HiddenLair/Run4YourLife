@@ -85,6 +85,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1855392622981348
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4528153222086614}
+  - component: {fileID: 114984591473477910}
+  m_Layer: 0
+  m_Name: Explosion
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1894405131329674
 GameObject:
   m_ObjectHideFlags: 1
@@ -129,7 +145,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4733664109319810}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4475558695245332
 Transform:
@@ -145,6 +161,19 @@ Transform:
   m_Father: {fileID: 4733664109319810}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4528153222086614
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1855392622981348}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4733664109319810}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4727843829268804
 Transform:
   m_ObjectHideFlags: 1
@@ -156,7 +185,7 @@ Transform:
   m_LocalScale: {x: 1.6, y: 1.6, z: 1.6}
   m_Children: []
   m_Father: {fileID: 4733664109319810}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!4 &4733664109319810
 Transform:
@@ -169,6 +198,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4475558695245332}
+  - {fileID: 4528153222086614}
   - {fileID: 4727843829268804}
   - {fileID: 4391896503621404}
   - {fileID: 4899360909559282}
@@ -199,7 +229,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4733664109319810}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23992769392933480
 MeshRenderer:
@@ -499,8 +529,8 @@ MonoBehaviour:
   indicatorParticles: {fileID: 1876708485271496, guid: 14aa9b2669f5a8e40b3b34edc370d9a5,
     type: 2}
   m_explosionRatius: 1.5
-  activationParticles: {fileID: 1835936433109772, guid: 0207b8b69e78b124aaa59730de13dad9,
-    type: 2}
+  explosionParticles: {fileID: 114984591473477910}
+  activationParticles: {fileID: 1855392622981348}
   trembleFall: {fileID: 11400000, guid: cedd707519a2b98458accab40af743c3, type: 2}
   trembleExplosion: {fileID: 11400000, guid: 55d95d3ec5be1ae42b0bf5e6a245738b, type: 2}
   timeBetweenFire: 2
@@ -530,6 +560,20 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114984591473477910
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1855392622981348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cb52b0f7a8d8b1458965b078cdc7767, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fx: {fileID: 1835936433109772, guid: 0207b8b69e78b124aaa59730de13dad9, type: 2}
+  anim: {fileID: 0}
+  sfx: {fileID: 0}
 --- !u!135 &135206787080930730
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -537,7 +581,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1450047522667756}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.32
@@ -564,7 +608,7 @@ ParticleSystem:
   lengthInSec: 5
   simulationSpeed: 1
   stopAction: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -614,7 +658,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -274873929
+  randomSeed: 1796545612
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3975,7 +4019,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1031598936
+  randomSeed: 1887348792
   InitialModule:
     serializedVersion: 3
     enabled: 1

@@ -6,6 +6,7 @@ namespace Run4YourLife.Player.CustomEditors
     [CanEditMultipleObjects]
     public class BombEditor : SkillBaseEditor
     {
+        SerializedProperty explosionParticles;
         SerializedProperty m_trapfallClip;
         SerializedProperty m_trapDetonationClip;
         SerializedProperty m_fadeInTime;
@@ -33,6 +34,7 @@ namespace Run4YourLife.Player.CustomEditors
 
         new public void Init()
         {
+            explosionParticles = serializedObject.FindProperty("explosionParticles");
             m_trapfallClip = serializedObject.FindProperty("m_trapfallClip");
             m_trapDetonationClip = serializedObject.FindProperty("m_trapDetonationClip");
             m_fadeInTime = serializedObject.FindProperty("m_fadeInTime");
@@ -55,6 +57,7 @@ namespace Run4YourLife.Player.CustomEditors
 
         public override void OnGuiPhase1()
         {
+            EditorGUILayout.PropertyField(explosionParticles);
             EditorGUILayout.PropertyField(m_trapfallClip);
             EditorGUILayout.PropertyField(m_trapDetonationClip);
             EditorGUILayout.PropertyField(m_fadeInTime);
@@ -71,6 +74,7 @@ namespace Run4YourLife.Player.CustomEditors
         
         public override void OnGuiPhase2()
         {
+            EditorGUILayout.PropertyField(explosionParticles);
             EditorGUILayout.PropertyField(timeBetweenFire);
             EditorGUILayout.PropertyField(fireGrowDuration);
             EditorGUILayout.PropertyField(fireStableDuration);
@@ -79,6 +83,7 @@ namespace Run4YourLife.Player.CustomEditors
 
         public override void OnGuiPhase3()
         {
+            EditorGUILayout.PropertyField(explosionParticles);
             EditorGUILayout.PropertyField(timeBetweenJumps);
             EditorGUILayout.PropertyField(jumpHeight);
         }
