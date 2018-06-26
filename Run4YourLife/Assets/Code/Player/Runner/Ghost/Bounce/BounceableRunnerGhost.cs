@@ -51,7 +51,7 @@ namespace Run4YourLife.Player.Runner.Ghost
 
         public override bool ShouldBounceByContact(RunnerController runnerCharacterController)
         {
-            return false;
+            return runnerCharacterController.Velocity.y < 0;
         }
     }
 }
