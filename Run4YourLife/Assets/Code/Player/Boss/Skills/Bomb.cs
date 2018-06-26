@@ -164,7 +164,6 @@ namespace Run4YourLife.Player
         private IEnumerator GenerateTrap()
         {
             float endTime = Time.time + m_fadeInTime;
-            float startTime = Time.time;
             while (Time.time < endTime)
             {
                 if (m_renderer.material.HasProperty("_Dissolveamout"))

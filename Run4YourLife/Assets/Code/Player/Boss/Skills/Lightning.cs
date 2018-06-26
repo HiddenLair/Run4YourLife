@@ -89,7 +89,7 @@ namespace Run4YourLife.Player {
             flashBody.localPosition = new Vector3(0, newSize.y);
             flashEffect.SetActive(true);
             yield return lightningDelay;
-            flashEffect.SetActive(false);
+            //flashEffect.SetActive(false);
             LightningHit();
         }
 

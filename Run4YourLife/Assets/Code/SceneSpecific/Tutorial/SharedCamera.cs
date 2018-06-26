@@ -16,8 +16,8 @@ public class SharedCamera : MonoBehaviour {
     [SerializeField]
     private float maximumZDistance;
 
-    [SerializeField]
-    private float zoomSpeed = 20f;
+    /*[SerializeField]
+    private float zoomSpeed = 20f;*/
 
     private Camera cam;
     private Transform[] targets;
@@ -78,8 +78,8 @@ public class SharedCamera : MonoBehaviour {
     float CalculateOrthographicSize(Rect boundingBox)
     {
         float orthographicSize = cam.orthographicSize;
-        Vector3 topRight = new Vector3(boundingBox.x + boundingBox.width, boundingBox.y, 0f);
-        Vector3 topRightAsViewport = cam.WorldToViewportPoint(topRight);
+        //Vector3 topRight = new Vector3(boundingBox.x + boundingBox.width, boundingBox.y, 0f);
+        //Vector3 topRightAsViewport = cam.WorldToViewportPoint(topRight);
 
         //if (topRightAsViewport.x >= topRightAsViewport.y)
             orthographicSize = Mathf.Abs(boundingBox.width) / cam.aspect / 2f;
