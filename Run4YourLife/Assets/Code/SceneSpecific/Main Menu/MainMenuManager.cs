@@ -19,7 +19,10 @@ namespace Run4YourLife.SceneSpecific.MainMenu
 
         private void Start()
         {
-            AudioManager.Instance.PlayMusic(m_mainMenuMusicClip);
+            if (!AudioManager.Instance.isMusicPlaying())
+            {
+                AudioManager.Instance.PlayMusic(m_mainMenuMusicClip);
+            }
         }
 
         public void OnPlayButtonPressed()

@@ -33,5 +33,10 @@ namespace Run4YourLife.GameManagement.AudioManagement
             m_musicAudioSource.loop = false;
             m_musicAudioSource.Stop();
         }
+
+        public bool isMusicPlaying()
+        {
+            return m_musicAudioSource.isPlaying;
+        }
     }
 }
