@@ -304,8 +304,7 @@ namespace Run4YourLife.GameManagement {
             {
                 GameObject ghost = m_ghostsAlive[m_ghostsAlive.Count - 1];
                 PlayerHandle ghostPlayerHandle = ghost.GetComponent<PlayerInstance>().PlayerHandle;
-                Vector3 position = GetRandomSpawnPosition();
-                OnRunnerRevive(ghostPlayerHandle, position);
+                OnRunnerRevive(ghostPlayerHandle, ghost.transform.position);
             }
         }
 
