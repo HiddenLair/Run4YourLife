@@ -10,8 +10,10 @@ public class TransformTweenMixerBehaviour : PlayableBehaviour
     {
         Transform trackBinding = playerData as Transform;
 
-        if(trackBinding == null)
+        if (trackBinding == null)
+        {
             return;
+        }
 
         Vector3 defaultPosition = trackBinding.position;
         Quaternion defaultRotation = trackBinding.rotation;

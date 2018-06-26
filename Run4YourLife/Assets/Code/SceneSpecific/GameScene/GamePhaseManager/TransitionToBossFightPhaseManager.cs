@@ -14,6 +14,9 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private PlayableDirector m_startingCutscene;
 
+        [SerializeField]
+        private CinemachineVirtualCamera m_virtualCamera;
+
         private TimelineAsset timelineAsset;
 
         public override void StartPhase()
@@ -23,8 +26,9 @@ namespace Run4YourLife.GameManagement
 
         private IEnumerator StartPhaseCoroutine()
         {
-
-            List<GameObject> runners = GameplayPlayerManager.Instance.Runners;
+            CameraManager.Instance.TransitionToCamera(m_virtualCamera);
+            List<GameObject> runners = GameplayPlayerManager.Instance.RunnersAlive;
+            runners.AddRange(GameplayPlayerManager.Instance.GhostsAlive);
             foreach (GameObject runner in runners)
             {
                 DeactivateScripts(runner);
@@ -33,16 +37,16 @@ namespace Run4YourLife.GameManagement
             DeactivateScripts(boss);
 
             BindTimelineTracks(runners, boss);
-            m_startingCutscene.RebuildGraph();
             m_startingCutscene.Play();
             yield return new WaitUntil(() => m_startingCutscene.state != PlayState.Playing); // wait until cutscene has completed
             Unbind();
-            foreach (GameObject runner in runners)
-            {
-                ActivateScripts(runner);
-            }
-            ActivateScripts(boss);
-            GameManager.Instance.ChangeGamePhase(GamePhase.BossFight);
+            //foreach (GameObject runner in runners)
+            //{
+            //    ActivateScripts(runner);
+            //}
+            //ActivateScripts(boss);
+            //GameManager.Instance.ChangeGamePhase(GamePhase.BossFight);
+            GameManager.Instance.EndGame_RunnersWin();
         }
 
         private void DeactivateScripts(GameObject g)
@@ -69,24 +73,57 @@ namespace Run4YourLife.GameManagement
         {
             timelineAsset = (TimelineAsset)m_startingCutscene.playableAsset;
             var outputs = timelineAsset.outputs;
-            foreach (var itm in outputs)
-            {              
-                if (itm.streamName.Contains("Player1") && runners.Count > 0)
+            foreach (PlayableBinding itm in outputs)
+            {
+                if (itm.streamName.Contains("Move"))
                 {
-                    m_startingCutscene.SetGenericBinding(itm.sourceObject, runners[0]);
+                    SetTrackBindingByTransform(itm, runners, boss);
                 }
-                else if (itm.streamName.Contains("Player2") && runners.Count > 1)
+                else
                 {
-                    m_startingCutscene.SetGenericBinding(itm.sourceObject, runners[1]);
+                    SentTrackBindingByObject(itm,runners,boss);
                 }
-                else if (itm.streamName.Contains("Player3") && runners.Count > 2)
-                {
-                    m_startingCutscene.SetGenericBinding(itm.sourceObject, runners[2]);
-                }
-                else if (itm.streamName.Contains("Boss"))
-                {
-                    m_startingCutscene.SetGenericBinding(itm.sourceObject, boss);
-                }
+                
+            }
+        }
+
+        private void SetTrackBindingByTransform(PlayableBinding itm, List<GameObject> runners, GameObject boss)
+        {
+            if (itm.streamName.Contains("Player1") && runners.Count > 0)
+            {
+                m_startingCutscene.SetGenericBinding(itm.sourceObject, runners[0].transform);
+            }
+            else if (itm.streamName.Contains("Player2") && runners.Count > 1)
+            {
+                m_startingCutscene.SetGenericBinding(itm.sourceObject, runners[1].transform);
+            }
+            else if (itm.streamName.Contains("Player3") && runners.Count > 2)
+            {
+                m_startingCutscene.SetGenericBinding(itm.sourceObject, runners[2].transform);
+            }
+            else if (itm.streamName.Contains("Boss"))
+            {
+                m_startingCutscene.SetGenericBinding(itm.sourceObject, boss.transform);
+            }
+        }
+
+        private void SentTrackBindingByObject(PlayableBinding itm, List<GameObject> runners, GameObject boss)
+        {
+            if (itm.streamName.Contains("Player1") && runners.Count > 0)
+            {
+                m_startingCutscene.SetGenericBinding(itm.sourceObject, runners[0]);
+            }
+            else if (itm.streamName.Contains("Player2") && runners.Count > 1)
+            {
+                m_startingCutscene.SetGenericBinding(itm.sourceObject, runners[1]);
+            }
+            else if (itm.streamName.Contains("Player3") && runners.Count > 2)
+            {
+                m_startingCutscene.SetGenericBinding(itm.sourceObject, runners[2]);
+            }
+            else if (itm.streamName.Contains("Boss"))
+            {
+                m_startingCutscene.SetGenericBinding(itm.sourceObject, boss);
             }
         }
 
