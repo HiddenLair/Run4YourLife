@@ -16,11 +16,14 @@ namespace Run4YourLife.Interactables
 
         private Rigidbody m_rigidbody;
 
+        private Animator m_animator;
+
         private bool activatedFlag = false;
         private Vector3 m_startingPosition;
 
         private void OnEnable()
         {
+            m_animator = GetComponentInChildren<Animator>();
             m_rigidbody = GetComponent<Rigidbody>();
             Debug.Assert(m_rigidbody != null);
             m_startingPosition = m_rigidbody.transform.localPosition;
@@ -36,6 +39,7 @@ namespace Run4YourLife.Interactables
 
         private void Fall()
         {
+            m_animator.enabled = false;
             m_rigidbody.useGravity = true;
             m_rigidbody.isKinematic = false;
             m_FallingCollider.SetActive(true);

@@ -9,10 +9,15 @@ namespace Run4YourLife.Interactables
         [SerializeField]
         private int m_duration;
 
+        [SerializeField]
+        private FXReceiver pickParticle;
+
         protected override PowerUpType Type { get { return PowerUpType.Shared; } }
 
         public override void Apply(GameObject runner)
         {
+            pickParticle.PlayFx(false);
+
             Shielded shielded = runner.GetComponent<Shielded>();
             if(shielded == null)
             {
