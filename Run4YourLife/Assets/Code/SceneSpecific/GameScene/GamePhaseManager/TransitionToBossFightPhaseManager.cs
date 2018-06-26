@@ -14,12 +14,11 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private PlayableDirector m_startingCutscene;
 
-        private Coroutine m_startPhaseCoroutine;
         private TimelineAsset timelineAsset;
 
         public override void StartPhase()
         {
-            m_startPhaseCoroutine = StartCoroutine(StartPhaseCoroutine());
+            StartCoroutine(StartPhaseCoroutine());
         }
 
         private IEnumerator StartPhaseCoroutine()
