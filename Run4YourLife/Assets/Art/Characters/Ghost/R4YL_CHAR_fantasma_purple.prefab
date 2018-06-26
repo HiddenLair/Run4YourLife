@@ -20,8 +20,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4660040245517588}
   - component: {fileID: 95653156191609644}
+  - component: {fileID: 114377773593328054}
+  - component: {fileID: 114985703846658294}
+  - component: {fileID: 114669744217344600}
   m_Layer: 0
-  m_Name: R4YL_CHAR_fantasma (1)
+  m_Name: R4YL_CHAR_fantasma_purple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -264,6 +267,44 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114377773593328054
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1106369356668528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cec698f25fa65f47a9e9032dfde8efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114669744217344600
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1106369356668528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd533a5bce7eb8c49a46be4599e06458, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_speed: 0.2
+  m_clampMin: {x: 0.05, y: 0.1}
+  m_clampMax: {x: 0.95, y: 0.95}
+  m_controlScheme: {fileID: 114985703846658294}
+  m_playerInstance: {fileID: 114377773593328054}
+--- !u!114 &114985703846658294
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1106369356668528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89eb5f2e15475e44099bc2a463a4251d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &198641582813088772
 ParticleSystem:
   m_ObjectHideFlags: 1
