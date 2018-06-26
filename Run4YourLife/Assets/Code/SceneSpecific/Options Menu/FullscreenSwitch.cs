@@ -1,17 +1,13 @@
-﻿using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 
 using Run4YourLife.Utils;
 
 namespace Run4YourLife.SceneSpecific.OptionsMenu
 {
-    public class FullscreenSwitch : MenuEntryArrowed
+    public class FullscreenSwitch : MenuEntryArrowedContentText
     {
-        private const string ON_FULLSCREEN_STRING = "ON";
-        private const string OFF_FULLSCREEN_STRING = "OFF";
-
-        [SerializeField]
-        private TextMeshProUGUI m_fullscreenText;
+        private const string ON_FULLSCREEN_STRING = "On";
+        private const string OFF_FULLSCREEN_STRING = "Off";
 
         protected override void Awake()
         {
@@ -28,7 +24,7 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
 
         private void UpdateFullscreenText()
         {
-            m_fullscreenText.text = Screen.fullScreen ? ON_FULLSCREEN_STRING : OFF_FULLSCREEN_STRING;
+            text.text = Screen.fullScreen ? ON_FULLSCREEN_STRING : OFF_FULLSCREEN_STRING;
         }
     }
 }

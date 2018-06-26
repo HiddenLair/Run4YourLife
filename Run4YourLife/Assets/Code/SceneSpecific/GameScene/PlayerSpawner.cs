@@ -35,9 +35,9 @@ namespace Run4YourLife.GameManagement
             return runners;
         }
 
-        public void ActivateBoss()
+        public GameObject ActivateBoss()
         {
-            GameplayPlayerManager.Instance.ActivateBoss(m_bossGameObjectPhase, m_bossSpawn.position);
+            return GameplayPlayerManager.Instance.ActivateBoss(m_bossGameObjectPhase, m_bossSpawn.position);
         }
     }
 }

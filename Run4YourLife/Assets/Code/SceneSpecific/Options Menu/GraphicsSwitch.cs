@@ -1,13 +1,9 @@
-﻿using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Run4YourLife.SceneSpecific.OptionsMenu
 {
-    public class GraphicsSwitch : MenuEntryArrowed
+    public class GraphicsSwitch : MenuEntryArrowedContentText
     {
-        [SerializeField]
-        private TextMeshProUGUI m_graphicsText;
-
         protected override void Awake()
         {
             base.Awake();
@@ -32,7 +28,7 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
 
         private void UpdateGraphicsText()
         {
-            m_graphicsText.SetText(QualitySettings.names[QualitySettings.GetQualityLevel()]);
+            text.SetText(QualitySettings.names[QualitySettings.GetQualityLevel()]);
         }
     }
 }

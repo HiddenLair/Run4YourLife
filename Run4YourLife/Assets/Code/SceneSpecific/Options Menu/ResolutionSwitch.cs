@@ -1,14 +1,10 @@
-﻿using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 
 namespace Run4YourLife.SceneSpecific.OptionsMenu
 {
-    public class ResolutionSwitch : MenuEntryArrowed
+    public class ResolutionSwitch : MenuEntryArrowedContentText
     {
-        [SerializeField]
-        private TextMeshProUGUI resolutionText;
-
         private int resolutionIndex = -1;
         private List<Resolution> availableResolutions = new List<Resolution>();
 
@@ -71,7 +67,7 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
 
         private void UpdateResolutionText()
         {
-            resolutionText.text = availableResolutions[resolutionIndex].width + " x " + availableResolutions[resolutionIndex].height;
+            text.text = availableResolutions[resolutionIndex].width + " x " + availableResolutions[resolutionIndex].height;
         }
     }
 }
