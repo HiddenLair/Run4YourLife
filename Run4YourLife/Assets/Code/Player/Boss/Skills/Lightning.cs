@@ -84,9 +84,9 @@ namespace Run4YourLife.Player {
             Vector3 newSize = Vector3.one;
             newSize.x = newSize.z = width;
             float topScreen = CameraManager.Instance.MainCamera.ScreenToWorldPoint(new Vector3(0, CameraManager.Instance.MainCamera.pixelHeight, Mathf.Abs(CameraManager.Instance.MainCamera.transform.position.z - flashBody.position.z))).y;
-            newSize.y = (topScreen - transform.position.y) / 2;
-            flashBody.localScale = newSize;
-            flashBody.localPosition = new Vector3(0, newSize.y);
+            newSize.y = (topScreen - transform.position.y);// / 2;
+            //flashBody.localScale = newSize;
+            flashBody.localPosition = new Vector3(0, newSize.y - 0.5f, -1);
             flashEffect.SetActive(true);
             yield return lightningDelay;
             //flashEffect.SetActive(false);
