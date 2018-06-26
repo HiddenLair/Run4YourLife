@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Run4YourLife.GameManagement;
-
+using Run4YourLife.GameManagement.AudioManagement;
 using UnityEngine;
 
 namespace Run4YourLife.Player {
@@ -50,57 +50,39 @@ namespace Run4YourLife.Player {
 
         #endregion
 
-        public override bool CanBePlacedAtPosition(Vector3 position)
+        public override bool CanBePlacedAt(ref SkillSpawnData skillSpawnData)
         {
-            Debug.Log("This does not work. We have to fix it");
-
-            //ALERT: This method should only check weather the provided position is a valid place for the skill to be placed at
-            //When the skill is placed, is when it should be repositioned at the proper position
-
-            /*Vector3 raycastPosition = transform.position;
-            Collider[] colliders = Physics.OverlapBox(transform.position,new Vector3(0.1f,0.1f,0.1f),Quaternion.identity,Layers.Stage,QueryTriggerInteraction.Ignore);
-            if(colliders.Length != 0)
+            Vector3 raycastPosition = skillSpawnData.position;
+            Collider[] colliders = Physics.OverlapBox(skillSpawnData.position,new Vector3(0.1f,0.1f,0.1f),Quaternion.identity,Layers.Stage,QueryTriggerInteraction.Ignore);
+            if(colliders.Length > 0)
             {
-                //Allways take the left collider
-                Collider leftCollider = null;
-                float xOffset = Mathf.Infinity;
-                foreach(Collider c in colliders)
-                {
-                    if(c.bounds.center.x < xOffset)
-                    {
-                        xOffset = c.bounds.center.x;
-                        leftCollider = c;
-                    }
-                }
+                Collider collider = LeftMostCollider(colliders);
 
                 //Especial Case
-                if (leftCollider.tag == Tags.Wall)
+                if (collider.CompareTag(Tags.Wall))
                 {
-                    SpawnUnder(leftCollider);
+                    SpawnUnder(collider, ref skillSpawnData);
                     return true;
                 }
 
-                Transform currentIterTransform = leftCollider.transform;
-                StageInfo info = currentIterTransform.GetComponent<StageInfo>();
-                while(info == null)
-                {
-                    info = currentIterTransform.parent.GetComponent<StageInfo>();
-                    Debug.Assert(currentIterTransform == transform.root);
-                }
+                StageInfo info = FindStageInfoForCollider(collider);
+                Debug.Assert(info != null);
 
-                Vector3 newPos = transform.position;
-                Camera mainCamera = Camera.main;
-                float bottomScreen = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, Math.Abs(mainCamera.transform.position.z - transform.position.z))).y;
-                if (!info.GetMinValue(out raycastPosition.y) || raycastPosition.y < bottomScreen)
+                Camera mainCamera = CameraManager.Instance.MainCamera;
+                float bottomScreen = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, Math.Abs(mainCamera.transform.position.z - skillSpawnData.position.z))).y;
+
+                float minValue;
+                if (!info.GetMinValue(out minValue) || minValue < bottomScreen)
                 {
+                    Vector3 newPos = transform.position;
                     newPos.y = info.GetTopValue();
-                    float topScreen = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, Math.Abs(mainCamera.transform.position.z - transform.position.z))).y;
+                    float topScreen = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, Math.Abs(mainCamera.transform.position.z - skillSpawnData.position.z))).y;
                     if (newPos.y > topScreen)
                     {
                         return false;
                     }
-                    transform.position = newPos;
-                    transform.SetParent(currentIterTransform);
+                    skillSpawnData.position = newPos;
+                    skillSpawnData.parent = info.transform;
                     return true;
                 }
             }
@@ -108,32 +90,58 @@ namespace Run4YourLife.Player {
             RaycastHit hitInfo;
             if (Physics.Raycast(raycastPosition, Vector3.down,out hitInfo, Mathf.Infinity, Layers.Stage, QueryTriggerInteraction.Ignore))
             {
-                if(hitInfo.collider.tag == Tags.Wall)
+                if(hitInfo.collider.CompareTag(Tags.Wall))
                 {
-                    SpawnUnder(hitInfo.collider);
+                    SpawnUnder(hitInfo.collider, ref skillSpawnData);
                     return true;
                 }
-                transform.position = hitInfo.point;
-                transform.SetParent(hitInfo.transform);
+                skillSpawnData.position = hitInfo.point;
+                skillSpawnData.parent = hitInfo.transform;
                 return true;
             }
 
             return false;
-            */
-                return true;
         }
 
-        private void SpawnUnder(Collider collider)
+        private StageInfo FindStageInfoForCollider(Collider collider)
+        {
+            Transform t = collider.transform;
+            StageInfo stageInfo = t.GetComponent<StageInfo>();
+            while (stageInfo == null && t != transform.root)
+            {
+                t = t.parent;
+                stageInfo = t.GetComponent<StageInfo>();
+            }
+            return stageInfo;
+        }
+
+        private static Collider LeftMostCollider(Collider[] colliders)
+        {
+            Collider leftCollider = null;
+            float xOffset = Mathf.Infinity;
+            foreach (Collider c in colliders)
+            {
+                if (c.bounds.center.x < xOffset)
+                {
+                    xOffset = c.bounds.center.x;
+                    leftCollider = c;
+                }
+            }
+
+            return leftCollider;
+        }
+
+        private void SpawnUnder(Collider collider, ref SkillSpawnData skillSpawnData)
         {
             Vector3 newPos = transform.position;
             newPos.y = collider.bounds.min.y;
-            transform.position = newPos;
+            skillSpawnData.position = newPos;
             Transform actualParent = collider.transform.parent;
             while (actualParent.tag == Tags.Wall)
             {
                 actualParent = actualParent.parent;
             }
-            transform.SetParent(actualParent);
+            skillSpawnData.parent = actualParent;
         }
 
         protected override void Reset()
@@ -222,9 +230,10 @@ namespace Run4YourLife.Player {
 
         IEnumerator StartAdvise()
         {
-            m_skillAudioSource.clip = growingClip;
+            AudioManager.Instance.PlaySFX(growingClip);
+            /*m_skillAudioSource.clip = growingClip;
             m_skillAudioSource.loop = true;
-            m_skillAudioSource.Play();
+            m_skillAudioSource.Play();*/
             adviseParticles.transform.localScale = new Vector3(maxPercent * width, maxPercent * width, maxPercent * width);
             adviseParticles.SetActive(true);
             yield return new WaitForSeconds(delayHit);
@@ -248,7 +257,7 @@ namespace Run4YourLife.Player {
             }
             yield return new WaitForSeconds(timeToBreak);
             earthPikeEffect.SetActive(false);
-            m_skillAudioSource.Stop();
+            //m_skillAudioSource.Stop();
             Break();
         }
 

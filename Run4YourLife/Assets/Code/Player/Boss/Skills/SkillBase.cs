@@ -7,6 +7,11 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(AudioSource))]
     public abstract class SkillBase : MonoBehaviour {
 
+        public struct SkillSpawnData {
+            public Vector3 position;
+            public Transform parent;
+        }
+
         public enum Phase {PHASE1,PHASE2,PHASE3 };
 
         [SerializeField]
@@ -22,7 +27,7 @@ namespace Run4YourLife.Player
 
         public float Cooldown { get { return m_cooldown; } }
 
-        virtual public bool CanBePlacedAtPosition(Vector3 position)
+        virtual public bool CanBePlacedAt(ref SkillSpawnData skillSpawnData)
         {
             return true;
         }

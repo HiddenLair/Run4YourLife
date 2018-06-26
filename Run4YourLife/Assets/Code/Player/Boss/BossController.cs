@@ -75,8 +75,6 @@ namespace Run4YourLife.Player
         private float m_meleeReadyTime;
         protected Quaternion m_initialHeadRotation;
 
-
-
         protected BossControlScheme m_controlScheme;
         protected Animator m_animator;
         protected GameObject m_ui;
@@ -101,25 +99,26 @@ namespace Run4YourLife.Player
         void Update() {
             if(IsReadyToAttack())
             {
-                if (m_controlScheme.Lightning.Started() && (m_lightningReadyTime <= Time.time) && m_lightningSkill.CanBePlacedAtPosition(m_crossHairControl.Position))
+                SkillBase.SkillSpawnData skillSpawnData = new SkillBase.SkillSpawnData() { position = m_crossHairControl.Position };
+                if (m_controlScheme.Lightning.Started() && (m_lightningReadyTime <= Time.time) && m_lightningSkill.CanBePlacedAt(ref skillSpawnData))
                 {
                     m_lightningReadyTime = Time.time + m_lightningSkill.Cooldown;
-                    ExecuteSkill(m_lightningSkill, ActionType.A);             
+                    ExecuteSkill(m_lightningSkill, ActionType.A, skillSpawnData);             
                 }
-                else if (m_controlScheme.EarthSpike.Started() && (m_earthSpikeReadyTime <= Time.time) && m_earthSpikeSkill.CanBePlacedAtPosition(m_crossHairControl.Position))
+                else if (m_controlScheme.EarthSpike.Started() && (m_earthSpikeReadyTime <= Time.time) && m_earthSpikeSkill.CanBePlacedAt(ref skillSpawnData))
                 {
                     m_earthSpikeReadyTime = Time.time + m_earthSpikeSkill.Cooldown;
-                    ExecuteSkill(m_earthSpikeSkill, ActionType.X);
+                    ExecuteSkill(m_earthSpikeSkill, ActionType.X, skillSpawnData);
                 }
-                else if (m_controlScheme.Wind.Started() && (m_windReadyTime <= Time.time) && m_windSkill.CanBePlacedAtPosition(m_crossHairControl.Position))
+                else if (m_controlScheme.Wind.Started() && (m_windReadyTime <= Time.time) && m_windSkill.CanBePlacedAt(ref skillSpawnData))
                 {
                     m_windReadyTime = Time.time + m_windSkill.Cooldown;
-                    ExecuteSkill(m_windSkill, ActionType.Y);
+                    ExecuteSkill(m_windSkill, ActionType.Y, skillSpawnData);
                 }
-                else if (m_controlScheme.Bomb.Started() && (m_bombReadyTime <= Time.time) && m_bombSkill.CanBePlacedAtPosition(m_crossHairControl.Position))
+                else if (m_controlScheme.Bomb.Started() && (m_bombReadyTime <= Time.time) && m_bombSkill.CanBePlacedAt(ref skillSpawnData))
                 {
                     m_bombReadyTime = Time.time + m_bombSkill.Cooldown;
-                    ExecuteSkill(m_bombSkill, ActionType.B);
+                    ExecuteSkill(m_bombSkill, ActionType.B, skillSpawnData);
                 } 
                 else if(m_controlScheme.Shoot.BoolValue() && m_shootReadyTime <= Time.time)
                 {
@@ -149,9 +148,14 @@ namespace Run4YourLife.Player
             return AnimatorQuery.IsInStateCompletely(m_animator, BossAnimation.StateNames.Move);
         }
 
-        private void ExecuteSkill(SkillBase skill, ActionType type)
+        private void ExecuteSkill(SkillBase skill, ActionType type, SkillBase.SkillSpawnData skillSpawnData)
         {
-            GameObject instance = m_gameObjectPool.GetAndPosition(skill.gameObject, m_crossHairControl.Position, Quaternion.identity);          
+            GameObject instance = m_gameObjectPool.GetAndPosition(skill.gameObject, skillSpawnData.position, Quaternion.identity);
+            if(skillSpawnData.parent != null)
+            {
+                instance.transform.SetParent(skillSpawnData.parent);
+            }
+
             m_animator.SetTrigger(BossAnimation.Triggers.Cast);
             StartCoroutine(AnimationCallbacks.AfterStateAtNormalizedTime(m_animator, BossAnimation.StateNames.Move, m_normalizedTimeToSpawnTrap, () => PlaceSkillAtAnimationCallback(instance)));
             AudioManager.Instance.PlaySFX(m_castClip);

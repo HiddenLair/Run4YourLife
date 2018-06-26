@@ -105,9 +105,9 @@ namespace Run4YourLife.Player
             }
         }
 
-        public override bool CanBePlacedAtPosition(Vector3 position)
+        public override bool CanBePlacedAt(ref SkillSpawnData skillSpawnData)
         {
-            Collider[] colliders = Physics.OverlapBox(position, bossSpawnCheckCollider.bounds.extents, Quaternion.identity, Layers.Stage, QueryTriggerInteraction.Ignore);
+            Collider[] colliders = Physics.OverlapBox(skillSpawnData.position, bossSpawnCheckCollider.bounds.extents, Quaternion.identity, Layers.Stage, QueryTriggerInteraction.Ignore);
             if (colliders.Length != 0)
             {
                 return false;

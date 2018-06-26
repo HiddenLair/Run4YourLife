@@ -45,7 +45,7 @@ namespace Run4YourLife.Interactables
 
         public override bool ShouldBounceByContact(RunnerController runnerCharacterController)
         {
-            return false;
+            return runnerCharacterController.Velocity.y < 0;
         }
 
         public override void BouncedOn()
