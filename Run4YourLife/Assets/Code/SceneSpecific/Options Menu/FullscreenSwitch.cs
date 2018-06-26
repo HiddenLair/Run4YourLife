@@ -6,8 +6,8 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
 {
     public class FullscreenSwitch : MenuEntryArrowedContentText
     {
-        private const string ON_FULLSCREEN_STRING = "On";
-        private const string OFF_FULLSCREEN_STRING = "Off";
+        private const string ON_FULLSCREEN_STRING = "ON";
+        private const string OFF_FULLSCREEN_STRING = "OFF";
 
         protected override void Awake()
         {
