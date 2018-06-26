@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Playables;
 using Run4YourLife.GameManagement.AudioManagement;
@@ -7,12 +8,7 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
 {
     public abstract class MenuEntryArrowed : MonoBehaviour, IMoveHandler, ISelectHandler, IDeselectHandler
     {
-
-        protected enum MoveEvent
-            {
-                Left,
-                Right
-            }
+        protected enum MoveEvent { Left, Right }
 
         [SerializeField]
         private AudioClip m_switchClip;
@@ -23,19 +19,34 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
         [SerializeField]
         private GameObject m_rightArrow;
 
+        [SerializeField]
+        private Sprite arrowNotSelected;
+
+        [SerializeField]
+        private Sprite arrowSelected;
+
+        private Image leftArrowImage;
+        private Image rightArrowImage;
+
         private PlayableDirector m_leftArrowPlayableDirector;
         private PlayableDirector m_rightArrowPlayableDirector;
 
         protected virtual void Awake()
         {
+            leftArrowImage = m_leftArrow.GetComponent<Image>();
+            Debug.Assert(leftArrowImage != null);
+
+            rightArrowImage = m_rightArrow.GetComponent<Image>();
+            Debug.Assert(rightArrowImage != null);
+
             m_leftArrowPlayableDirector = m_leftArrow.GetComponent<PlayableDirector>();
             Debug.Assert(m_leftArrowPlayableDirector != null);
 
             m_rightArrowPlayableDirector = m_rightArrow.GetComponent<PlayableDirector>();
             Debug.Assert(m_rightArrowPlayableDirector != null);
 
-            m_leftArrow.SetActive(false);
-            m_rightArrow.SetActive(false);
+            leftArrowImage.sprite = arrowNotSelected;
+            rightArrowImage.sprite = arrowNotSelected;
         }
 
         public void OnMove(AxisEventData eventData)
@@ -53,16 +64,17 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
             }
         }
 
-        public void OnSelect(BaseEventData eventData)
+        public virtual void OnSelect(BaseEventData eventData)
         {
-            m_leftArrow.SetActive(true);
-            m_rightArrow.SetActive(true);
+            leftArrowImage.sprite = arrowSelected;
+            rightArrowImage.sprite = arrowSelected;
         }
 
-        public void OnDeselect(BaseEventData eventData)
+        public virtual void OnDeselect(BaseEventData eventData)
         {
-            m_leftArrow.SetActive(false);
-            m_rightArrow.SetActive(false);
+            leftArrowImage.sprite = arrowNotSelected;
+            rightArrowImage.sprite = arrowNotSelected;
+
             AudioManager.Instance.PlaySFX(m_switchClip);
         }
 
