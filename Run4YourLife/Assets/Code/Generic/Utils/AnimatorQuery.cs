@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Run4YourLife.Utils
 {
-    public class AnimatorQuery : MonoBehaviour {
+    public class AnimatorQuery  {
 
         public static bool IsInStateCompletely(Animator animator, string state)
         {
