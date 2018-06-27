@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Run4YourLife.GameManagement.AudioManagement;
+using UnityEngine;
 
 namespace Run4YourLife.SceneSpecific.WinMenu
 {
@@ -12,6 +13,11 @@ namespace Run4YourLife.SceneSpecific.WinMenu
 
         void Awake()
         {
+            if(m_sceneMusic != null)
+            {
+                AudioManager.Instance.PlayMusic(m_sceneMusic);
+            }
+
             bossAnimator.Play(bossAnimation);
         }
     }

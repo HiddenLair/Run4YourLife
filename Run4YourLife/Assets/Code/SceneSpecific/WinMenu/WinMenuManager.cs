@@ -7,6 +7,9 @@ namespace Run4YourLife.SceneSpecific.WinMenu
     public abstract class WinMenuManager : MonoBehaviour
     {
         [SerializeField]
+        protected AudioClip m_sceneMusic;
+
+        [SerializeField]
         private GameObject gameLoadRequest;
 
         [SerializeField]

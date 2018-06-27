@@ -6,16 +6,12 @@ using Cinemachine;
 
 using Run4YourLife.Player;
 using Run4YourLife.UI;
-using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.GameManagement
 {
     public class EasyMoveHorizontalPhaseManager : GamePhaseManager
     {
         public override GamePhase GamePhase { get { return GamePhase.EasyMoveHorizontal; } }
-
-        [SerializeField]
-        private AudioClip m_phase1MusicClip;
 
         [SerializeField]
         private CinemachineVirtualCamera m_virtualCamera;
@@ -45,8 +41,6 @@ namespace Run4YourLife.GameManagement
 
         void StartPhaseCommon()
         {
-            AudioManager.Instance.PlayMusic(m_phase1MusicClip);
-
             GameObject boss = GameplayPlayerManager.Instance.Boss;
             Debug.Assert(boss != null);
 

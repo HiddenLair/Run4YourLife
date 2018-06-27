@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.Playables;
 using Cinemachine;
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.GameManagement
 {
@@ -16,6 +17,9 @@ namespace Run4YourLife.GameManagement
 
         [SerializeField]
         private CinemachineVirtualCamera m_cinemachineVirtualCamera;
+
+        [SerializeField]
+        private AudioClip phaseMusic;
 
         private PlayerSpawner m_playerSpawner;
 
@@ -35,6 +39,11 @@ namespace Run4YourLife.GameManagement
 
         public override void StartPhase()
         {
+            if(phaseMusic != null)
+            {
+                AudioManager.Instance.PlayMusic(phaseMusic);
+            }
+
             m_startPhaseCoroutine = StartCoroutine(StartPhaseCoroutine());
         }
 
