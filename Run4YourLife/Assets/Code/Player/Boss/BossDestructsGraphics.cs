@@ -32,7 +32,7 @@ namespace Run4YourLife.Interactables
         public override void OnBossDestroy()
         {
             IsDestructed = true;
-            if(gameObject.activeSelf)
+            if(gameObject.activeInHierarchy)
             {
                 foreach (Renderer renderer in m_renderer)
                 {
@@ -46,16 +46,25 @@ namespace Run4YourLife.Interactables
         public override void OnRegenerate()
         {
             IsDestructed = false;
+            ResetRenderer();
 
+            m_onRegenerated.Invoke();
+
+            gameObject.SetActive(m_activateOnRegenerate);
+        }
+
+        private void OnDisable()
+        {
+            ResetRenderer();
+        }
+
+        private void ResetRenderer()
+        {
             StopAllCoroutines();
             for (int i = 0; i < m_renderer.Length; i++)
             {
                 m_renderer[i].material = m_sharedMaterials[i];
             }
-
-            m_onRegenerated.Invoke();
-
-            gameObject.SetActive(m_activateOnRegenerate);
         }
 
         private IEnumerator AlphaAnimation()
