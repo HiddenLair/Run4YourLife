@@ -18,6 +18,11 @@ namespace Run4YourLife.SceneSpecific.WinMenu
                 AudioManager.Instance.PlayMusic(m_sceneMusic);
             }
 
+            if (m_characterSound != null)
+            {
+                AudioManager.Instance.PlaySFX(m_characterSound);
+            }
+
             bossAnimator.Play(bossAnimation);
         }
     }

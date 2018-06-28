@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using Run4YourLife.Player;
 using Run4YourLife.InputManagement;
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.SceneSpecific.WinMenu
 {
@@ -25,7 +26,17 @@ namespace Run4YourLife.SceneSpecific.WinMenu
 
         void Awake()
         {
-            runnerPrefabManager = GetComponent<RunnerPrefabManager>();         
+            runnerPrefabManager = GetComponent<RunnerPrefabManager>();
+
+            if (m_sceneMusic != null)
+            {
+                AudioManager.Instance.PlayMusic(m_sceneMusic);
+            }
+
+            if (m_characterSound != null)
+            {
+                AudioManager.Instance.PlaySFX(m_characterSound);
+            }
         }
 
         private void Start()
