@@ -31,9 +31,9 @@ namespace Run4YourLife.InputManagement
             InputActions.Add(CrosshairVertical = new InputAction(new InputSource(Axis.LEFT_VERTICAL), "MoveTrapIndicatorVertical"));
             InputActions.Add(CrosshairHorizontal = new InputAction(new InputSource(Axis.LEFT_HORIZONTAL), "MoveTrapIndicatorHorizontal"));
 
-            InputActions.Add(Lightning = new InputAction(new InputSource(Button.A), "Skill1"));
-            InputActions.Add(EarthSpike = new InputAction(new InputSource(Button.X), "Skill2"));
-            InputActions.Add(Wind = new InputAction(new InputSource(Button.Y), "Skill3"));
+            InputActions.Add(Lightning = new InputAction(new InputSource(Button.Y), "Skill1"));
+            InputActions.Add(EarthSpike = new InputAction(new InputSource(Button.A), "Skill2"));
+            InputActions.Add(Wind = new InputAction(new InputSource(Button.X), "Skill3"));
             InputActions.Add(Bomb = new InputAction(new InputSource(Button.B), "Skill4"));
 
             InputActions.Add(NextSet = new InputAction(new InputSource(Button.RB), "NextSet"));
