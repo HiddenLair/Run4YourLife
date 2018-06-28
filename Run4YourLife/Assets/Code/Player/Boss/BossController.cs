@@ -103,17 +103,17 @@ namespace Run4YourLife.Player
                 if (m_controlScheme.Lightning.Started() && (m_lightningReadyTime <= Time.time) && m_lightningSkill.CanBePlacedAt(ref skillSpawnData))
                 {
                     m_lightningReadyTime = Time.time + m_lightningSkill.Cooldown;
-                    ExecuteSkill(m_lightningSkill, ActionType.A, skillSpawnData);             
+                    ExecuteSkill(m_lightningSkill, ActionType.Y, skillSpawnData);             
                 }
                 else if (m_controlScheme.EarthSpike.Started() && (m_earthSpikeReadyTime <= Time.time) && m_earthSpikeSkill.CanBePlacedAt(ref skillSpawnData))
                 {
                     m_earthSpikeReadyTime = Time.time + m_earthSpikeSkill.Cooldown;
-                    ExecuteSkill(m_earthSpikeSkill, ActionType.X, skillSpawnData);
+                    ExecuteSkill(m_earthSpikeSkill, ActionType.A, skillSpawnData);
                 }
                 else if (m_controlScheme.Wind.Started() && (m_windReadyTime <= Time.time) && m_windSkill.CanBePlacedAt(ref skillSpawnData))
                 {
                     m_windReadyTime = Time.time + m_windSkill.Cooldown;
-                    ExecuteSkill(m_windSkill, ActionType.Y, skillSpawnData);
+                    ExecuteSkill(m_windSkill, ActionType.X, skillSpawnData);
                 }
                 else if (m_controlScheme.Bomb.Started() && (m_bombReadyTime <= Time.time) && m_bombSkill.CanBePlacedAt(ref skillSpawnData))
                 {
