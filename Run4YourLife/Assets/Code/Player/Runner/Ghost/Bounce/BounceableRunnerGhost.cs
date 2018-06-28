@@ -18,8 +18,9 @@ namespace Run4YourLife.Player.Runner.Ghost
         [SerializeField]
         private RunnerGhostController m_runnerGhostController;
 
-        private void Reset()
+        protected override void Awake()
         {
+            base.Awake();
             m_collider = GetComponent<Collider>();
             m_runnerGhostController = GetComponentInParent<RunnerGhostController>();
             Debug.Assert(m_runnerGhostController != null);

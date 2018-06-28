@@ -89,7 +89,7 @@ namespace Run4YourLife.Player
             m_collider = GetComponent<Collider>();
             m_renderer = GetComponentInChildren<Renderer>();
             Debug.Assert(m_renderer != null);
-            //m_collider.enabled = false;
+            m_collider.enabled = false;
 
             speed.y = initialSpeed;
 
@@ -147,9 +147,8 @@ namespace Run4YourLife.Player
         private IEnumerator FadeInAndFall()
         {
             yield return StartCoroutine(GenerateTrap());
-            yield return StartCoroutine(Fall());
-
             m_collider.enabled = true;
+            yield return StartCoroutine(Fall());
 
             if(phase != SkillBase.Phase.PHASE1)
             {
