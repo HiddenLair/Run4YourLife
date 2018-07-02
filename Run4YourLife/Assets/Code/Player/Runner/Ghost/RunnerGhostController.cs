@@ -17,12 +17,6 @@ namespace Run4YourLife.Player {
         private float m_speed;
 
         [SerializeField]
-        private Vector2 m_clampMin;
-
-        [SerializeField]
-        private Vector2 m_clampMax;
-
-        [SerializeField]
         [Tooltip("Offset that will be added to ghost's transform. Where the runner will be revived at")]
         private Vector3 m_reviveRunnerOffset;
 
@@ -37,8 +31,6 @@ namespace Run4YourLife.Player {
         
         [SerializeField]
         private FXReceiver m_reviveParticles;
-
-        private Vector2 m_screenPosition;
         
         private void Reset()
         {
@@ -49,18 +41,8 @@ namespace Run4YourLife.Player {
 
         private void OnEnable()
         {
-            m_screenPosition = GetScreenPositionFromCurrentPosition();
             m_controlScheme.Active = true;
             //Todo Execute ghost spawn playable
-        }
-
-        private Vector2 GetScreenPositionFromCurrentPosition()
-        {
-            Camera camera = CameraManager.Instance.MainCamera;
-            Vector2 screenPosition = camera.WorldToScreenPoint(transform.position);
-            screenPosition.x = screenPosition.x/camera.pixelWidth;
-            screenPosition.y = screenPosition.y/camera.pixelHeight;
-            return screenPosition;
         }
 
         private void OnDisable()
@@ -76,29 +58,25 @@ namespace Run4YourLife.Player {
 
         private void MoveRunnerGhost()
         {
-            m_screenPosition.x = Mathf.Clamp(m_screenPosition.x + m_speed * m_controlScheme.Horizontal.Value() * Time.deltaTime, m_clampMin.x, m_clampMax.x);
-            m_screenPosition.y = Mathf.Clamp(m_screenPosition.y + m_speed * m_controlScheme.Vertical.Value()   * Time.deltaTime, m_clampMin.y, m_clampMax.y);
-
-            Camera m_mainCamera = CameraManager.Instance.MainCamera;
-            Vector3 screenSpacePosition = new Vector3()
-            {
-                x = m_screenPosition.x * m_mainCamera.pixelWidth,
-                y = m_screenPosition.y * m_mainCamera.pixelHeight,
-                z = Math.Abs(m_mainCamera.transform.position.z - transform.position.z)
-            };
-
-            transform.position = m_mainCamera.ScreenToWorldPoint(screenSpacePosition);
+            Vector3 position = transform.position;
+            
+            position.x = position.x + m_speed * m_controlScheme.Horizontal.Value() * Time.deltaTime;
+            position.y = position.y + m_speed * m_controlScheme.Vertical.Value()   * Time.deltaTime;
+            
+            TrimPlayerPositionInsideCameraView(ref position);
+            
+            transform.position = position;
         }
 
-        private void TrimPositionHorizontallyInsideCameraView()
+        private void TrimPlayerPositionInsideCameraView(ref Vector3 position)
         {
-            Camera m_mainCamera = CameraManager.Instance.MainCamera;
-            Vector3 bottomLeft = m_mainCamera.ScreenToWorldPoint(new Vector3(0, 0, Math.Abs(m_mainCamera.transform.position.z - transform.position.z)));
-            Vector3 topRight = m_mainCamera.ScreenToWorldPoint(new Vector3(m_mainCamera.pixelWidth, m_mainCamera.pixelHeight, Math.Abs(m_mainCamera.transform.position.z - transform.position.z)));
-            Vector3 trimmedPosition = transform.position;
-            trimmedPosition.x = Mathf.Clamp(trimmedPosition.x, bottomLeft.x, topRight.x);
-            trimmedPosition.y = Mathf.Clamp(trimmedPosition.y, bottomLeft.y, topRight.y);
-            transform.position = trimmedPosition;
+            Camera mainCamera = CameraManager.Instance.MainCamera;
+            float gameplanePlaneCameraZ = Math.Abs(mainCamera.transform.position.z - transform.position.z);
+            Vector3 screenBottomLeft = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, gameplanePlaneCameraZ));
+            Vector3 screenTopRight = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, gameplanePlaneCameraZ));
+
+            position.x = Mathf.Clamp(position.x, screenBottomLeft.x, screenTopRight.x);
+            position.y = Mathf.Clamp(position.y, screenBottomLeft.y, screenTopRight.y);
         }
 
         private void ReviveRunner()
