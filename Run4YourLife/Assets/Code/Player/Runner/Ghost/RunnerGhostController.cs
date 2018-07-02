@@ -1,9 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+
 using UnityEngine;
-using System;
+
 using Run4YourLife.InputManagement;
 using Run4YourLife.GameManagement;
+using Run4YourLife.GameManagement.AudioManagement;
+
 
 namespace Run4YourLife.Player {
 
@@ -21,12 +23,20 @@ namespace Run4YourLife.Player {
         private Vector2 m_clampMax;
 
         [SerializeField]
-        [HideInInspector]
+        [Tooltip("Offset that will be added to ghost's transform. Where the runner will be revived at")]
+        private Vector3 m_reviveRunnerOffset;
+
+        [SerializeField]
+        private AudioClip m_revivePlayerSound;
+
+        [SerializeField]
         private RunnerGhostControlScheme m_controlScheme;
 
         [SerializeField]
-        [HideInInspector]
         private PlayerInstance m_playerInstance;
+        
+        [SerializeField]
+        private FXReceiver m_reviveParticles;
 
         private Vector2 m_screenPosition;
         
@@ -34,14 +44,14 @@ namespace Run4YourLife.Player {
         {
             m_controlScheme = GetComponent<RunnerGhostControlScheme>();
             m_playerInstance = GetComponent<PlayerInstance>(); 
+            m_reviveParticles = transform.Find("ReviveParticles").GetComponent<FXReceiver>();
         }
 
         private void OnEnable()
         {
             m_screenPosition = GetScreenPositionFromCurrentPosition();
-
             m_controlScheme.Active = true;
-            //Todo Execute spawn playable
+            //Todo Execute ghost spawn playable
         }
 
         private Vector2 GetScreenPositionFromCurrentPosition()
@@ -91,9 +101,17 @@ namespace Run4YourLife.Player {
             transform.position = trimmedPosition;
         }
 
-        public void ReviveGhost()
+        private void ReviveRunner()
         {
-            GameplayPlayerManager.Instance.OnRunnerRevive(m_playerInstance.PlayerHandle, transform.position);
+            AudioManager.Instance.PlaySFX(m_revivePlayerSound);
+            m_reviveParticles.PlayFx(false);
+
+            GameplayPlayerManager.Instance.OnRunnerRevive(m_playerInstance.PlayerHandle, transform.position + m_reviveRunnerOffset);
+        }
+
+        public void OnOtherRunnerCollidedGhost()
+        {
+            ReviveRunner();
         }
     }
 }

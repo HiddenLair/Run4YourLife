@@ -20,9 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4448734298294460}
   - component: {fileID: 135791389432080706}
-  - component: {fileID: 114247830100970650}
+  - component: {fileID: 114524484064483102}
   m_Layer: 9
-  m_Name: Bounce
+  m_Name: ReviveArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -146,6 +146,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1897919675527752
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4126007468743192}
+  - component: {fileID: 114249493886985634}
+  m_Layer: 0
+  m_Name: ReviveParticles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &4124200585534932
 Transform:
   m_ObjectHideFlags: 1
@@ -153,13 +169,27 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1590768367569610}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.4572, y: 7.977117, z: -14.053966}
+  m_LocalPosition: {x: 10.667785, y: -3.61131, z: -77.35276}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4218791367876970}
   - {fileID: 4448734298294460}
+  - {fileID: 4126007468743192}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4126007468743192
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1897919675527752}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 5.328635, y: 5.8848495, z: 1.99337}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4124200585534932}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4218791367876970
 Transform:
@@ -381,20 +411,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89eb5f2e15475e44099bc2a463a4251d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114247830100970650
+--- !u!114 &114249493886985634
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1098397342429666}
+  m_GameObject: {fileID: 1897919675527752}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7314b22e5da3e7e46890640468f4e915, type: 3}
+  m_Script: {fileID: 11500000, guid: 6cb52b0f7a8d8b1458965b078cdc7767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_bounceForce: 3
-  m_collider: {fileID: 135791389432080706}
-  m_runnerGhostController: {fileID: 114275713208884918}
+  fx: {fileID: 1895639254101028, guid: 8452dd8d57c69f347b465c4a2926e19f, type: 2}
+  anim: {fileID: 0}
+  sfx: {fileID: 0}
 --- !u!114 &114275713208884918
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -409,8 +439,22 @@ MonoBehaviour:
   m_speed: 0.2
   m_clampMin: {x: 0.05, y: 0.1}
   m_clampMax: {x: 0.95, y: 0.95}
+  m_reviveRunnerOffset: {x: 0, y: -0.3, z: 0}
+  m_revivePlayerSound: {fileID: 8300000, guid: a9a25dc4091142545bbba88564584c67, type: 3}
   m_controlScheme: {fileID: 114236506133000784}
   m_playerInstance: {fileID: 114897956888761062}
+  m_reviveParticles: {fileID: 114249493886985634}
+--- !u!114 &114524484064483102
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1098397342429666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec6c031f179938f4ca1d6b3e4d707ed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114897956888761062
 MonoBehaviour:
   m_ObjectHideFlags: 1
