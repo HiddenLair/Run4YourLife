@@ -5,6 +5,7 @@ using UnityEngine.Timeline;
 using UnityEngine.Playables;
 using Cinemachine;
 using Run4YourLife.GameManagement.AudioManagement;
+using System;
 
 namespace Run4YourLife.GameManagement
 {
@@ -50,25 +51,40 @@ namespace Run4YourLife.GameManagement
         private IEnumerator StartPhaseCoroutine()
         {
             CameraManager.Instance.TransitionToCamera(m_cinemachineVirtualCamera);
-
-            List<GameObject> runners = m_playerSpawner.ActivateRunners();
-            foreach(GameObject runner in runners)
-            {
-                DeactivateScripts(runner);
-            }
-            GameObject boss = m_playerSpawner.ActivateBoss();
-            DeactivateScripts(boss);
-
-            BindTimelineTracks(runners, boss);
-            m_startingCutscene.Play();
+            
+            StartCutscene();
+            
             yield return new WaitUntil(() => m_startingCutscene.state != PlayState.Playing); // wait until cutscene has completed
-            Unbind();
-            foreach(GameObject runner in runners)
+            
+            EndCutscene();
+
+            GameManager.Instance.ChangeGamePhase(GamePhase.EasyMoveHorizontal);
+        }
+
+        private void EndCutscene()
+        {
+            UnbindTimelineTracks();
+            foreach(GameObject runner in GameplayPlayerManager.Instance.Runners)
             {
                 ActivateScripts(runner);
             }
-            ActivateScripts(boss);
-            GameManager.Instance.ChangeGamePhase(GamePhase.EasyMoveHorizontal);
+            ActivateScripts(GameplayPlayerManager.Instance.Boss);
+        }
+
+        private void StartCutscene()
+        {
+            m_playerSpawner.ActivateRunners();
+            m_playerSpawner.ActivateBoss();
+
+            foreach(GameObject runner in GameplayPlayerManager.Instance.Runners)
+            {
+                DeactivateScripts(runner);
+            }
+
+            DeactivateScripts(GameplayPlayerManager.Instance.Boss);
+
+            BindTimelineTracks(GameplayPlayerManager.Instance.Runners, GameplayPlayerManager.Instance.Boss);
+            m_startingCutscene.Play();
         }
 
         private void DeactivateScripts(GameObject g)
@@ -116,7 +132,7 @@ namespace Run4YourLife.GameManagement
             }
         }
 
-        private void Unbind()
+        private void UnbindTimelineTracks()
         {
             timelineAsset = (TimelineAsset)m_startingCutscene.playableAsset;
             var outputs = timelineAsset.outputs;
@@ -138,8 +154,9 @@ namespace Run4YourLife.GameManagement
         public override void DebugEndPhase()
         {
             StopCoroutine(m_startPhaseCoroutine);
-            m_startingCutscene.Stop();
-            m_startPhaseCoroutine = null;
+                m_startPhaseCoroutine = null;
+
+            EndCutscene();
         }
     }
 }
