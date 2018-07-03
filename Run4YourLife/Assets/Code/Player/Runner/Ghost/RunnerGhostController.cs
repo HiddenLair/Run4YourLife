@@ -31,12 +31,18 @@ namespace Run4YourLife.Player {
         
         [SerializeField]
         private FXReceiver m_reviveParticles;
+
+        [SerializeField]
+        private Transform m_graphics;
+
+        private bool m_isFacingRight = true;
         
         private void Reset()
         {
             m_controlScheme = GetComponent<RunnerGhostControlScheme>();
-            m_playerInstance = GetComponent<PlayerInstance>(); 
+            m_playerInstance = GetComponent<PlayerInstance>();
             m_reviveParticles = transform.Find("ReviveParticles").GetComponent<FXReceiver>();
+            m_graphics = transform.Find("Graphics");
         }
 
         private void OnEnable()
@@ -63,6 +69,7 @@ namespace Run4YourLife.Player {
             position.x = position.x + m_speed * m_controlScheme.Horizontal.Value() * Time.deltaTime;
             position.y = position.y + m_speed * m_controlScheme.Vertical.Value()   * Time.deltaTime;
             
+            LookAtMovingSide();
             TrimPlayerPositionInsideCameraView(ref position);
             
             transform.position = position;
@@ -77,6 +84,16 @@ namespace Run4YourLife.Player {
 
             position.x = Mathf.Clamp(position.x, screenBottomLeft.x, screenTopRight.x);
             position.y = Mathf.Clamp(position.y, screenBottomLeft.y, screenTopRight.y);
+        }
+
+        private void LookAtMovingSide()
+        {
+            bool shouldFaceTheOtherWay = (m_isFacingRight && m_controlScheme.Horizontal.Value() < 0) || (!m_isFacingRight && m_controlScheme.Horizontal.Value() > 0);
+            if (shouldFaceTheOtherWay)
+            {
+                m_graphics.Rotate(Vector3.up, 180);
+                m_isFacingRight = !m_isFacingRight;
+            }
         }
 
         private void ReviveRunner()

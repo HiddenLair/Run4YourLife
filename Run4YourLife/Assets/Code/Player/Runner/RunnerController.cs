@@ -679,8 +679,7 @@ namespace Run4YourLife.Player
 
             m_dashTrail.gameObject.SetActive(true);
 
-            float facingRight = m_isFacingRight ? 1 : -1;
-            m_velocity.x = facingRight * m_dashDistance/m_dashTime;
+            m_velocity.x = Convert.ToSingle(m_isFacingRight) * m_dashDistance/m_dashTime;
             m_velocity.y = 0.0f;
             
             m_dash_endTime = Time.time + m_dashTime;
