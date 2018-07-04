@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 using Run4YourLife.GameManagement;
-using UnityEngine.EventSystems;
 
 namespace Run4YourLife.Player
 {
@@ -18,31 +17,20 @@ namespace Run4YourLife.Player
         [SerializeField]
         private GameObject m_crossHairUi;
 
-        [SerializeField]
-        private Color enabledColor;
-
-        [SerializeField]
-        private Color disabledColor;
-
-
+        private Camera m_mainCamera;
         private RectTransform m_canvasTransform;
         private RectTransform m_crossHairUiTransform;
-        private Camera m_mainCamera;
-        private Image m_crossHairImage;
 
         private void Awake()
         {
+            m_mainCamera = CameraManager.Instance.MainCamera;
+            Debug.Assert(m_mainCamera != null);
+
             m_canvasTransform = GetComponent<RectTransform>();
             Debug.Assert(m_canvasTransform != null);
 
             m_crossHairUiTransform = m_crossHairUi.GetComponent<RectTransform>();
             Debug.Assert(m_crossHairUiTransform != null);
-
-            m_crossHairImage = m_crossHairUi.GetComponent<Image>();
-            Debug.Assert(m_crossHairImage != null);
-
-            m_mainCamera = CameraManager.Instance.MainCamera;
-            Debug.Assert(m_mainCamera != null);
         }
 
         public void ShowCrossHair()

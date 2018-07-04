@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.Events;
 using UnityEngine.Playables;
 
 namespace Run4YourLife.UI
@@ -12,6 +13,12 @@ namespace Run4YourLife.UI
 
         [SerializeField]
         private Image m_cooldownImage;
+
+        [SerializeField]
+        private UnityEvent onUseStart;
+
+        [SerializeField]
+        private UnityEvent onUseEnd;
 
         private Coroutine useCoroutine;
 
@@ -39,6 +46,8 @@ namespace Run4YourLife.UI
 
         private IEnumerator UseCoroutine(float cooldown)
         {
+            onUseStart.Invoke();
+
             float startTime = Time.time;
             float endTime = startTime + cooldown;
             
@@ -50,7 +59,9 @@ namespace Run4YourLife.UI
                 yield return null;
             }
 
-            m_cooldownImage.fillAmount = 0; 
+            m_cooldownImage.fillAmount = 0;
+
+            onUseEnd.Invoke();
         }
     }
 }
