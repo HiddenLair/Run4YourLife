@@ -174,10 +174,12 @@ namespace Run4YourLife.Player
 
         public Vector3 ExternalVelocity { get; set; }
 
-        public bool IsDashing { get { return m_stateMachine.State == States.Dash; } }
-
         public bool CheckOutScreen { get { return m_checkOutOfScreen; } set { m_checkOutOfScreen = value; } }
+
         #endregion
+
+        private bool IsDashing { get { return m_stateMachine.State == States.Dash; } }
+
 
         private void Awake()
         {
@@ -259,6 +261,15 @@ namespace Run4YourLife.Player
             if (m_stateMachine.State != States.Jump && m_characterController.isGrounded)
             {
                 m_velocity.y = 0.0f;
+            }
+
+            if(IsDashing)
+            {
+                IRunnerDashBreakable breakable = hit.gameObject.GetComponent<IRunnerDashBreakable>();
+                if(breakable != null)
+                {
+                    breakable.Break();
+                }
             }
         }
 
