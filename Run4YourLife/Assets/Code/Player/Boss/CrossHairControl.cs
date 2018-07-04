@@ -1,8 +1,11 @@
 ﻿using System;
-using Run4YourLife.GameManagement;
-using Run4YourLife.InputManagement;
+
 using UnityEngine;
 using UnityEngine.EventSystems;
+
+using Run4YourLife.GameManagement;
+using Run4YourLife.InputManagement;
+using Run4YourLife.CameraUtils;
 
 namespace Run4YourLife.Player
 {
@@ -32,15 +35,23 @@ namespace Run4YourLife.Player
         {
             get
             {
-                Camera m_mainCamera = CameraManager.Instance.MainCamera;
-                Vector3 screenSpacePosition = new Vector3()
+                Camera mainCamera = CameraManager.Instance.MainCamera;
+                /*Vector3 screenSpacePosition = new Vector3()
                 {
                     x = m_screenPosition.x * m_mainCamera.pixelWidth,
                     y = m_screenPosition.y * m_mainCamera.pixelHeight,
                     z = Math.Abs(m_mainCamera.transform.position.z)
                 };
 
-                return m_mainCamera.ScreenToWorldPoint(screenSpacePosition);
+                return m_mainCamera.ScreenToWorldPoint(screenSpacePosition);*/
+
+                Vector3 normalizedViewport = new Vector3()
+                {
+                    x = m_screenPosition.x,
+                    y = m_screenPosition.y,
+                    z = Math.Abs(mainCamera.transform.position.z)
+                };
+                return CameraConverter.NormalizedViewportToWorldPosition(mainCamera, normalizedViewport);
             }
         }
 
