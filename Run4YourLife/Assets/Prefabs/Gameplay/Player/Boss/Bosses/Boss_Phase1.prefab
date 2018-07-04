@@ -2822,7 +2822,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_meleeCooldown: 1
-  m_shootCooldown: 1
+  m_shootCooldown: 4
   m_normalizedTimeToSpawnTrap: 0.2
   m_lightningSkill: {fileID: 114577542301879746, guid: 7e170bbe1f8b8ea4eb65d2fe06bf9368,
     type: 2}
@@ -2841,7 +2841,7 @@ MonoBehaviour:
   m_gameObjectPool: {fileID: 114860624554142218}
   m_bulletPrefab: {fileID: 1781781690259230, guid: 4c137c15fa0b70749b76fbe566527326,
     type: 2}
-  m_bulletSpeed: 5
+  m_bulletSpeed: 15
   m_shootBulletNormalizedTime: 0.6
   m_meleeNormalizedTime: 0.5
   m_meleeTrembleConfig: {fileID: 11400000, guid: 4006b2eaffe9f2a4a84931b482ea4bf6,
@@ -2862,7 +2862,17 @@ MonoBehaviour:
   m_speed: 3
   m_acceleration: 0
   m_position: 0
-  bossStatsPathModifiers: []
+  bossStatsPathModifiers:
+  - waypointIndex: 0
+    speedMultiplier: 0.75
+    accelerationMultiplier: 0
+    blendingStartingPercentage: 0
+    blendingType: 0
+  - waypointIndex: 1
+    speedMultiplier: 1
+    accelerationMultiplier: 0
+    blendingStartingPercentage: 0
+    blendingType: 0
 --- !u!137 &137264742435327442
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -3169,7 +3179,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: ed38d65e280fc7741bafc34792c3f5b2, type: 2}
+  - {fileID: 2100000, guid: 15d8fd2a507bef24e970b351a4e012a0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
