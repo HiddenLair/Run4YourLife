@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 using Run4YourLife.GameManagement;
+using Run4YourLife.CameraUtils;
 
 namespace Run4YourLife.SceneSpecific.GameScene
 {
@@ -17,8 +18,8 @@ namespace Run4YourLife.SceneSpecific.GameScene
         
         // Update is called once per frame
         void Update () {
-            float bottomYCameraPosition = m_mainCamera.ScreenToWorldPoint(new Vector3(0, 0, Mathf.Abs(m_mainCamera.transform.position.z - transform.position.z))).y;
-            
+            float bottomYCameraPosition = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(m_mainCamera, new Vector2(0.5f, 0)).y;
+
             Vector3 newPos = transform.position;
             newPos.y  = bottomYCameraPosition + m_offset;
             

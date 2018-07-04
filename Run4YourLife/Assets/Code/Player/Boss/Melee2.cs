@@ -3,6 +3,7 @@
 using Run4YourLife.GameManagement;
 using Run4YourLife.GameManagement.AudioManagement;
 using Run4YourLife.Utils;
+using Run4YourLife.CameraUtils;
 
 namespace Run4YourLife.Player
 {
@@ -57,7 +58,7 @@ namespace Run4YourLife.Player
                 {
                     m_animator.SetTrigger("MeleR");
                     StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator, "MeleRight", timeToMeleFromAnim, () => ArmInstantiate()));
-                    trapPos.x = m_mainCamera.ScreenToWorldPoint(new Vector3(m_mainCamera.pixelWidth, 0, m_mainCamera.transform.position.z - trapPos.z)).x;
+                    trapPos.x = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(m_mainCamera, new Vector2(1,0)).x;
                     rotation = Quaternion.Euler(0, 0, 0);
                     right = true;
                 }
@@ -65,7 +66,7 @@ namespace Run4YourLife.Player
                 {
                     m_animator.SetTrigger("MeleL");
                     StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator, "MeleLeft", timeToMeleFromAnim, () => ArmInstantiate()));
-                    trapPos.x = m_mainCamera.ScreenToWorldPoint(new Vector3(0, 0, m_mainCamera.transform.position.z - trapPos.z)).x;
+                    trapPos.x = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(m_mainCamera, new Vector2(0,0)).x;
                     rotation = Quaternion.Euler(0, 180, 0);
                     right = false;
                 }

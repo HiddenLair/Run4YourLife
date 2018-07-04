@@ -5,7 +5,7 @@ using UnityEngine;
 using Run4YourLife.InputManagement;
 using Run4YourLife.GameManagement;
 using Run4YourLife.GameManagement.AudioManagement;
-
+using Run4YourLife.CameraUtils;
 
 namespace Run4YourLife.Player {
 
@@ -78,9 +78,9 @@ namespace Run4YourLife.Player {
         private void TrimPlayerPositionInsideCameraView(ref Vector3 position)
         {
             Camera mainCamera = CameraManager.Instance.MainCamera;
-            float gameplanePlaneCameraZ = Math.Abs(mainCamera.transform.position.z - transform.position.z);
-            Vector3 screenBottomLeft = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, gameplanePlaneCameraZ));
-            Vector3 screenTopRight = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, gameplanePlaneCameraZ));
+            
+            Vector3 screenBottomLeft = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0));
+            Vector3 screenTopRight = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1));
 
             position.x = Mathf.Clamp(position.x, screenBottomLeft.x, screenTopRight.x);
             position.y = Mathf.Clamp(position.y, screenBottomLeft.y, screenTopRight.y);

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections;
+
+using UnityEngine;
+
+using Run4YourLife.CameraUtils;
 using Run4YourLife.GameManagement;
 using Run4YourLife.GameManagement.AudioManagement;
-using UnityEngine;
 
 namespace Run4YourLife.Player {
     public class EarthSpike : SkillBase {
@@ -69,14 +72,14 @@ namespace Run4YourLife.Player {
                 Debug.Assert(info != null);
 
                 Camera mainCamera = CameraManager.Instance.MainCamera;
-                float bottomScreen = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, Math.Abs(mainCamera.transform.position.z - skillSpawnData.position.z))).y;
+                float bottomScreen = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0)).y;
 
                 float minValue;
                 if (!info.GetMinValue(out minValue) || minValue < bottomScreen)
                 {
                     Vector3 newPos = transform.position;
                     newPos.y = info.GetTopValue();
-                    float topScreen = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, Math.Abs(mainCamera.transform.position.z - skillSpawnData.position.z))).y;
+                    float topScreen = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1)).y;
                     if (newPos.y > topScreen)
                     {
                         return false;

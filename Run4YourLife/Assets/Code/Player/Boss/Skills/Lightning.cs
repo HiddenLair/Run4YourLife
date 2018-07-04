@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+
 using UnityEngine;
 using UnityEngine.EventSystems;
-using System.Linq;
-using System.Collections.Generic;
+
 using Run4YourLife.GameManagement;
 using Run4YourLife.GameManagement.AudioManagement;
+using Run4YourLife.CameraUtils;
 
 namespace Run4YourLife.Player {
     public class Lightning : SkillBase
@@ -68,7 +71,7 @@ namespace Run4YourLife.Player {
         protected override void StartSkillImplementation()
         {
             Vector3 position = transform.position;
-            position.y = CameraManager.Instance.MainCamera.ScreenToWorldPoint(new Vector3(0, 0, Mathf.Abs(CameraManager.Instance.MainCamera.transform.position.z - transform.position.z))).y;
+            position.y = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, new Vector2(0,0)).y;
             transform.position = position;
             StartCoroutine(Flash());
             if (phase == SkillBase.Phase.PHASE3)
@@ -83,7 +86,8 @@ namespace Run4YourLife.Player {
             Transform flashBody = flashEffect.transform;
             Vector3 newSize = Vector3.one;
             newSize.x = newSize.z = width;
-            float topScreen = CameraManager.Instance.MainCamera.ScreenToWorldPoint(new Vector3(0, CameraManager.Instance.MainCamera.pixelHeight, Mathf.Abs(CameraManager.Instance.MainCamera.transform.position.z - flashBody.position.z))).y;
+            
+            float topScreen = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, new Vector2(0,1)).y;
             newSize.y = (topScreen - transform.position.y);// / 2;
             //flashBody.localScale = newSize;
             flashBody.localPosition = new Vector3(0, newSize.y - 0.5f, -1);
@@ -99,7 +103,9 @@ namespace Run4YourLife.Player {
             TrembleManager.Instance.Tremble(trembleConfig);
             Camera mainCamera = CameraManager.Instance.MainCamera;
             Vector3 pos = Vector3.zero;
-            pos.y = mainCamera.ScreenToWorldPoint(new Vector3(0, mainCamera.pixelHeight, Mathf.Abs(mainCamera.transform.position.z - pos.z))).y;
+
+            
+            pos.y = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, new Vector2(0,1)).y;
             lighningEffect.transform.localPosition = pos;
 
             LayerMask finalMask = Layers.Runner | Layers.Stage;
@@ -210,8 +216,7 @@ namespace Run4YourLife.Player {
             instance.GetComponent<Lightning>().SetDelayHit(newLightningsDelayHit * Mathf.Pow(newLightningsDelayHitProgresion,iterationNumber));
             instance.GetComponent<SkillBase>().StartSkill();
 
-            Camera mainCamera = CameraManager.Instance.MainCamera;
-            float leftScreen = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, Math.Abs(mainCamera.transform.position.z - transform.position.z))).x;
+            float leftScreen = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, new Vector2(0,0)).x;
 
             if (position.x > leftScreen && iterationNumber < maxNumberOfLightnings)
             {
@@ -239,8 +244,7 @@ namespace Run4YourLife.Player {
             instance.GetComponent<Lightning>().SetDelayHit(newLightningsDelayHit * Mathf.Pow(newLightningsDelayHitProgresion, iterationNumber));
             instance.GetComponent<SkillBase>().StartSkill();
 
-            Camera mainCamera = CameraManager.Instance.MainCamera;
-            float rightScreen = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, Math.Abs(mainCamera.transform.position.z - transform.position.z))).x;
+            float rightScreen = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, new Vector2(1,1)).x;
 
             if (position.x < rightScreen && iterationNumber < maxNumberOfLightnings) {
                 StartCoroutine(StartNewRightLightning(++iterationNumber,position));
