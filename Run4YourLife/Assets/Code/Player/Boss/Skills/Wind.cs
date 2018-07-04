@@ -67,8 +67,8 @@ namespace Run4YourLife.Player
         {
             Camera mainCamera = CameraManager.Instance.MainCamera;
                         
-            Vector3 bottomLeft = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0));
-            Vector3 topRight = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1));
+            Vector3 bottomLeft = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0));
+            Vector3 topRight = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1));
             
             Vector3 newPos = new Vector3(topRight.x,mainCamera.transform.position.y,transform.position.z);
             transform.position = newPos;
@@ -88,8 +88,8 @@ namespace Run4YourLife.Player
             Vector3 actualPos = transform.position;
             while (actualFillPercent < 100)
             {
-                Vector3 bottomLeft = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0));
-                Vector3 topRight = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1));
+                Vector3 bottomLeft = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0));
+                Vector3 topRight = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1));
                 actualFillPercent += increasePerSec * Time.deltaTime;
                 actualScale.x = (topRight.x - bottomLeft.x) * actualFillPercent / 100;
                 actualScale.y = topRight.y - bottomLeft.y;
@@ -110,8 +110,8 @@ namespace Run4YourLife.Player
             Vector3 actualPos = transform.position;
             while(timer >= Time.time)
             {
-                Vector3 bottomLeft = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0));
-                Vector3 topRight = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1));
+                Vector3 bottomLeft = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0));
+                Vector3 topRight = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1));
 
                 actualScale.x = topRight.x - bottomLeft.x;
                 actualScale.y = topRight.y - bottomLeft.y;
@@ -181,8 +181,8 @@ namespace Run4YourLife.Player
             float decreasePerSec = 100 / windFillScreenTime;
 
             while (actualFillPercent > 0) {
-                Vector3 bottomLeft = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0));
-                Vector3 topRight = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1));
+                Vector3 bottomLeft = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0));
+                Vector3 topRight = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1));
                 
                 actualFillPercent -= decreasePerSec * Time.deltaTime;
 
@@ -204,8 +204,8 @@ namespace Run4YourLife.Player
             if(other.CompareTag(Tags.Runner))
             {
                 Camera mainCamera = CameraManager.Instance.MainCamera;
-                Vector3 bottomLeft = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0));
-                Vector3 topRight = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1));
+                Vector3 bottomLeft = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0));
+                Vector3 topRight = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1));
 
                 float hitOffset = (other.transform.position.x - bottomLeft.x) -((topRight.x - bottomLeft.x) * screenMinWind / 100);
                 float screenOffset = (topRight.x - bottomLeft.x) - ((topRight.x -bottomLeft.x)*screenMinWind/100);

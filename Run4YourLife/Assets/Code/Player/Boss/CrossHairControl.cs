@@ -35,7 +35,7 @@ namespace Run4YourLife.Player
         {
             get
             {
-                return CameraConverter.NormalizedViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, m_screenPosition);
+                return CameraConverter.ViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, m_screenPosition);
             }
         }
 

@@ -328,8 +328,8 @@ namespace Run4YourLife.Player
 
         private void TrimPlayerPositionHorizontalInsideGameplayArea()
         {
-            float xScreenLeft = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(m_mainCamera, new Vector2(0,0)).x;
-            float xScreenRight = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(m_mainCamera, new Vector2(1,1)).x;
+            float xScreenLeft = CameraConverter.ViewportToGamePlaneWorldPosition(m_mainCamera, new Vector2(0,0)).x;
+            float xScreenRight = CameraConverter.ViewportToGamePlaneWorldPosition(m_mainCamera, new Vector2(1,1)).x;
 
             Vector3 trimmedPosition = new Vector3()
             {

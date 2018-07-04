@@ -18,7 +18,7 @@ namespace Run4YourLife.SceneSpecific.GameScene
         
         // Update is called once per frame
         void Update () {
-            float bottomYCameraPosition = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(m_mainCamera, new Vector2(0.5f, 0)).y;
+            float bottomYCameraPosition = CameraConverter.ViewportToGamePlaneWorldPosition(m_mainCamera, new Vector2(0.5f, 0)).y;
 
             Vector3 newPos = transform.position;
             newPos.y  = bottomYCameraPosition + m_offset;

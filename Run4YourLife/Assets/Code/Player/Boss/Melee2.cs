@@ -52,13 +52,13 @@ namespace Run4YourLife.Player
                 AudioManager.Instance.PlaySFX(m_meleeClip);
 
                 trapPos = crossHairControl.Position;
-                Vector3 screenPos = m_mainCamera.WorldToScreenPoint(trapPos);
+                Vector3 screenPos = m_mainCamera.WorldToViewportPoint(trapPos);
 
-                if (screenPos.x <= 0.5f * m_mainCamera.pixelWidth)
+                if (screenPos.x <= 0.5f)
                 {
                     m_animator.SetTrigger("MeleR");
                     StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator, "MeleRight", timeToMeleFromAnim, () => ArmInstantiate()));
-                    trapPos.x = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(m_mainCamera, new Vector2(1,0)).x;
+                    trapPos.x = CameraConverter.ViewportToGamePlaneWorldPosition(m_mainCamera, new Vector2(1,0)).x;
                     rotation = Quaternion.Euler(0, 0, 0);
                     right = true;
                 }
@@ -66,7 +66,7 @@ namespace Run4YourLife.Player
                 {
                     m_animator.SetTrigger("MeleL");
                     StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator, "MeleLeft", timeToMeleFromAnim, () => ArmInstantiate()));
-                    trapPos.x = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(m_mainCamera, new Vector2(0,0)).x;
+                    trapPos.x = CameraConverter.ViewportToGamePlaneWorldPosition(m_mainCamera, new Vector2(0,0)).x;
                     rotation = Quaternion.Euler(0, 180, 0);
                     right = false;
                 }

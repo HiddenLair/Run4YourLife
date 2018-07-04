@@ -72,14 +72,14 @@ namespace Run4YourLife.Player {
                 Debug.Assert(info != null);
 
                 Camera mainCamera = CameraManager.Instance.MainCamera;
-                float bottomScreen = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0)).y;
+                float bottomScreen = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0)).y;
 
                 float minValue;
                 if (!info.GetMinValue(out minValue) || minValue < bottomScreen)
                 {
                     Vector3 newPos = transform.position;
                     newPos.y = info.GetTopValue();
-                    float topScreen = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1)).y;
+                    float topScreen = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1)).y;
                     if (newPos.y > topScreen)
                     {
                         return false;

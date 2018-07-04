@@ -79,8 +79,8 @@ namespace Run4YourLife.Player {
         {
             Camera mainCamera = CameraManager.Instance.MainCamera;
             
-            Vector3 screenBottomLeft = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0));
-            Vector3 screenTopRight = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1));
+            Vector3 screenBottomLeft = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0));
+            Vector3 screenTopRight = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1));
 
             position.x = Mathf.Clamp(position.x, screenBottomLeft.x, screenTopRight.x);
             position.y = Mathf.Clamp(position.y, screenBottomLeft.y, screenTopRight.y);
