@@ -36,14 +36,12 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4997752413175202}
-  - component: {fileID: 33124531000956016}
-  - component: {fileID: 23377468460152482}
-  - component: {fileID: 95432708830950158}
   - component: {fileID: 54020414325086402}
-  - component: {fileID: 114115540373305822}
   - component: {fileID: 65237439222670880}
   - component: {fileID: 114709820626051892}
   - component: {fileID: 114114000410836740}
+  - component: {fileID: 114115540373305822}
+  - component: {fileID: 23614608170910872}
   m_Layer: 16
   m_Name: Phase2Hand
   m_TagString: Shoot
@@ -71,7 +69,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1316436286298340}
   m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 113.97638, y: 1.7767392, z: -1.900635}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 4941309479061162}
@@ -112,7 +110,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!23 &23377468460152482
+--- !u!23 &23614608170910872
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -146,13 +144,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33124531000956016
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1316436286298340}
-  m_Mesh: {fileID: 4300000, guid: 09d8e59c87ee1e74e89b5eb9fff49bfe, type: 3}
 --- !u!33 &33254922632115410
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -187,23 +178,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.794595, y: 1.0294505, z: 1.723733}
   m_Center: {x: 1.3103555, y: -0.12886597, z: -0.11}
---- !u!95 &95432708830950158
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1316436286298340}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 09d8e59c87ee1e74e89b5eb9fff49bfe, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114114000410836740
 MonoBehaviour:
   m_ObjectHideFlags: 1

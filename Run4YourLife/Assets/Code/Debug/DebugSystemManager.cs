@@ -18,7 +18,6 @@ namespace Run4YourLife.Debugging
     [RequireComponent(typeof(VertexAndTriangleCounter))]
     [RequireComponent(typeof(WalkerController))]
     [RequireComponent(typeof(PhaseSwitcher))]
-    [RequireComponent(typeof(RunnerGodMode))]
     public class DebugSystemManager : MonoBehaviour
     {
         private const string cachedWindowNameStr = "Debugging Tools";
@@ -103,7 +102,6 @@ namespace Run4YourLife.Debugging
         private void AddOtherDebugFeatures()
         {
             otherDebugFeatures.Add(GetComponent<PhaseSwitcher>());
-            otherDebugFeatures.Add(GetComponent<RunnerGodMode>());
             otherDebugFeatures.Add(GetComponent<PlayerInvencible>());
         }
 
