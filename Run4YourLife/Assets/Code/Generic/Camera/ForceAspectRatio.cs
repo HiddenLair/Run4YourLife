@@ -1,34 +1,44 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Camera))]
-public class ForceAspectRatio : MonoBehaviour
+namespace Run4YourLife.CameraUtils
 {
-    private const float TARGET_ASPECT_RATIO = 16.0f / 9.0f;
 
-    private Camera m_camera;
-    private float previousWindowAspectRatio;
-
-    void Awake()
+    [RequireComponent(typeof(Camera))]
+    public class ForceAspectRatio : MonoBehaviour
     {
-        m_camera = GetComponent<Camera>();
-        previousWindowAspectRatio = -1.0f;
-    }
+        private const float TARGET_ASPECT_RATIO = 16.0f / 9.0f;
 
-    void Update()
-    {
-        float currentWindowAspectRatio = (float)Screen.width / (float)Screen.height;
+        private Camera m_camera;
+        private float previousWindowAspectRatio;
 
-        if(currentWindowAspectRatio != previousWindowAspectRatio)
+        void Awake()
+        {
+            m_camera = GetComponent<Camera>();
+            previousWindowAspectRatio = -1.0f;
+        }
+
+        void Update()
+        {
+            float currentWindowAspectRatio = (float)Screen.width / (float)Screen.height;
+
+            if(currentWindowAspectRatio != previousWindowAspectRatio)
+            {
+                OnAspectRatioChanged(currentWindowAspectRatio);
+                previousWindowAspectRatio = currentWindowAspectRatio;
+            }
+        }
+
+        private void OnAspectRatioChanged(float aspectRatio)
         {
             Rect rect = m_camera.rect;
-            float scaleHeight = currentWindowAspectRatio / TARGET_ASPECT_RATIO;
+            float scaleHeight = aspectRatio / TARGET_ASPECT_RATIO;
 
-            if(scaleHeight < 1.0f)
+            if(scaleHeight < 1.0f) // horizontal black bars top and bottom
             {
                 rect.width = 1.0f; rect.height = scaleHeight;
                 rect.x = 0.0f; rect.y = (1.0f - scaleHeight) / 2.0f;
             }
-            else
+            else // vertical black bars left and right
             {
                 float scalewidth = 1.0f / scaleHeight;
 
@@ -37,7 +47,6 @@ public class ForceAspectRatio : MonoBehaviour
             }
 
             m_camera.rect = rect;
-            previousWindowAspectRatio = currentWindowAspectRatio;
         }
     }
 }

@@ -62,7 +62,7 @@ namespace Run4YourLife.Player
 
         protected override void StartSkillImplementation()
         {
-            Camera mainCamera = Camera.main;
+            Camera mainCamera = CameraManager.Instance.MainCamera;
             Vector3 topRight = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, Math.Abs(mainCamera.transform.position.z - transform.position.z)));
             Vector3 bottomLeft = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, Math.Abs(mainCamera.transform.position.z - transform.position.z)));
             Vector3 newPos = new Vector3(topRight.x,mainCamera.transform.position.y,transform.position.z);
@@ -77,7 +77,7 @@ namespace Run4YourLife.Player
 
         IEnumerator FillScreen()
         {
-            Camera mainCamera = Camera.main;
+            Camera mainCamera = CameraManager.Instance.MainCamera;
             float increasePerSec = 100 / windFillScreenTime;
             Vector3 actualScale = transform.localScale;
             Vector3 actualPos = transform.position;
@@ -99,7 +99,7 @@ namespace Run4YourLife.Player
 
         IEnumerator CustomUpdate()
         {
-            Camera mainCamera = Camera.main;
+            Camera mainCamera = CameraManager.Instance.MainCamera;
             float timer = Time.time + windDuration;
             Vector3 actualScale = transform.localScale;
             Vector3 actualPos = transform.position;
@@ -170,7 +170,7 @@ namespace Run4YourLife.Player
 
         IEnumerator EndWind()
         {
-            Camera mainCamera = Camera.main;
+            Camera mainCamera = CameraManager.Instance.MainCamera;
             Vector3 actualPos = transform.position;
             Vector3 actualScale = transform.localScale;
             float decreasePerSec = 100 / windFillScreenTime;
@@ -197,7 +197,7 @@ namespace Run4YourLife.Player
         {
             if(other.CompareTag(Tags.Runner))
             {
-                Camera mainCamera = Camera.main;
+                Camera mainCamera = CameraManager.Instance.MainCamera;
                 Vector3 topRight = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, Math.Abs(mainCamera.transform.position.z - transform.position.z)));
                 Vector3 bottomLeft = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, Math.Abs(mainCamera.transform.position.z - transform.position.z)));
                 float hitOffset = (other.transform.position.x - bottomLeft.x) -((topRight.x - bottomLeft.x) * screenMinWind / 100);

@@ -210,7 +210,7 @@ namespace Run4YourLife.Player {
             instance.GetComponent<Lightning>().SetDelayHit(newLightningsDelayHit * Mathf.Pow(newLightningsDelayHitProgresion,iterationNumber));
             instance.GetComponent<SkillBase>().StartSkill();
 
-            Camera mainCamera = Camera.main;
+            Camera mainCamera = CameraManager.Instance.MainCamera;
             float leftScreen = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, Math.Abs(mainCamera.transform.position.z - transform.position.z))).x;
 
             if (position.x > leftScreen && iterationNumber < maxNumberOfLightnings)
@@ -239,7 +239,7 @@ namespace Run4YourLife.Player {
             instance.GetComponent<Lightning>().SetDelayHit(newLightningsDelayHit * Mathf.Pow(newLightningsDelayHitProgresion, iterationNumber));
             instance.GetComponent<SkillBase>().StartSkill();
 
-            Camera mainCamera = Camera.main;
+            Camera mainCamera = CameraManager.Instance.MainCamera;
             float rightScreen = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, Math.Abs(mainCamera.transform.position.z - transform.position.z))).x;
 
             if (position.x < rightScreen && iterationNumber < maxNumberOfLightnings) {
