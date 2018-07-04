@@ -15,6 +15,10 @@ namespace Run4YourLife.GameManagement.AudioManagement
 
         public void PlaySFX(AudioClip sfxClip)
         {
+            if(sfxClip == null)
+            {
+                Debug.LogWarning("Trying to play null audio clip");
+            }
             m_sfxAudioSource.PlayOneShot(sfxClip);
         }
 
