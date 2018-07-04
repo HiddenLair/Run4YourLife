@@ -83,7 +83,7 @@ namespace Run4YourLife.Player
             targetLocation = Physics.SphereCastAll(loadShootReceiver.transform.position, laserWidth, director, maxLaserDistance, Layers.Runner | Layers.Trap);
             foreach (RaycastHit r in targetLocation)
             {
-                ExecuteEvents.Execute<ICharacterEvents>(r.transform.gameObject, null, (x, y) => x.Kill());
+                ExecuteEvents.Execute<IRunnerEvents>(r.transform.gameObject, null, (x, y) => x.Kill());
             }
         }
 

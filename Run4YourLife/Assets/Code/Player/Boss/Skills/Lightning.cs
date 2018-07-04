@@ -118,7 +118,7 @@ namespace Run4YourLife.Player {
             {
                 if (hit.collider.CompareTag(Tags.Runner))
                 {
-                    ExecuteEvents.Execute<ICharacterEvents>(hit.collider.gameObject, null, (x, y) => x.Kill());
+                    ExecuteEvents.Execute<IRunnerEvents>(hit.collider.gameObject, null, (x, y) => x.Kill());
                 }
                 else
                 {

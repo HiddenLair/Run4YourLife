@@ -115,7 +115,7 @@ namespace Run4YourLife.Interactables {
 
         private void OnTriggerEnter(Collider other)
         {
-            ExecuteEvents.Execute<ICharacterEvents>(other.gameObject, null, (x, y) => x.Impulse(new Vector3(0, pushForce, 0)));
+            ExecuteEvents.Execute<IRunnerEvents>(other.gameObject, null, (x, y) => x.Impulse(new Vector3(0, pushForce, 0)));
         }
     }
 }

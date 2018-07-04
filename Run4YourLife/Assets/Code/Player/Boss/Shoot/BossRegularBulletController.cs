@@ -17,7 +17,7 @@ namespace Run4YourLife.Player.Boss
         {
             if (other.CompareTag(Tags.Runner))
             {
-                ExecuteEvents.Execute<ICharacterEvents>(other.gameObject, null, (x, y) => x.Kill());
+                ExecuteEvents.Execute<IRunnerEvents>(other.gameObject, null, (x, y) => x.Kill());
             }
                 
             GenerateHitParticle(transform.position);

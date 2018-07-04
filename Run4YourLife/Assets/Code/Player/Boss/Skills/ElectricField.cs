@@ -41,7 +41,7 @@ namespace Run4YourLife.Interactables
 
         private void OnTriggerEnter(Collider other)
         {
-            ExecuteEvents.Execute<ICharacterEvents>(other.gameObject, null, (x, y) => x.Shock(fieldDuration - timeElapsed));
+            ExecuteEvents.Execute<IRunnerEvents>(other.gameObject, null, (x, y) => x.Shock(fieldDuration - timeElapsed));
         }
     }
 }

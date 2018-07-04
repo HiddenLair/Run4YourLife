@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Run4YourLife.Interactables
 {
-    public class CononutLauncher : MonoBehaviour {
+    public class LauncherPlantController : MonoBehaviour {
 
         #region Inspector
 

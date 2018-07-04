@@ -8,7 +8,7 @@ using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.Player
 {
-    public class BossController1 : BossController {
+    public class BossControllerPhase1 : BossController {
 
         [SerializeField]
         private GameObject m_bulletPrefab;

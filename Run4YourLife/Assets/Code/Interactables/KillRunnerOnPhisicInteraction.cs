@@ -26,7 +26,7 @@ namespace Run4YourLife.Interactables
 
         void SendKillEvent(GameObject runner)
         {
-            ExecuteEvents.Execute<ICharacterEvents>(runner, null, (x, y) => x.Kill());
+            ExecuteEvents.Execute<IRunnerEvents>(runner, null, (x, y) => x.Kill());
         }
     }
 }

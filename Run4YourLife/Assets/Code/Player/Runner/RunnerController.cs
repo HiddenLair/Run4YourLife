@@ -20,7 +20,7 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(InputController))]
     [RequireComponent(typeof(RunnerBounceController))]
-    public class RunnerController : MonoBehaviour, ICharacterEvents
+    public class RunnerController : MonoBehaviour, IRunnerEvents
     {
         private enum States {
             Idle,

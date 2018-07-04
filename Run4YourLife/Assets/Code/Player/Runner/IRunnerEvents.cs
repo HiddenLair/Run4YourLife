@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace Run4YourLife.Player
 {
-    public interface ICharacterEvents : IEventSystemHandler
+    public interface IRunnerEvents : IEventSystemHandler
     {
         void Kill();
         void AbsoluteKill();

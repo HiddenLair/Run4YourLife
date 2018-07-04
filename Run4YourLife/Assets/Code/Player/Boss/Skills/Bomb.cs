@@ -260,7 +260,7 @@ namespace Run4YourLife.Player
             {
                 if (!Physics.Linecast(transform.position, c.bounds.center, Layers.Stage))
                 {
-                    ExecuteEvents.Execute<ICharacterEvents>(c.gameObject, null, (x, y) => x.Kill());
+                    ExecuteEvents.Execute<IRunnerEvents>(c.gameObject, null, (x, y) => x.Kill());
                 }
             }
 
