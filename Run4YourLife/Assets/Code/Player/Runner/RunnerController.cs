@@ -10,6 +10,7 @@ using Run4YourLife.GameManagement;
 using Run4YourLife.GameManagement.AudioManagement;
 using Run4YourLife.InputManagement;
 using Run4YourLife.Utils;
+using Run4YourLife.CameraUtils;
 
 namespace Run4YourLife.Player
 {    
@@ -315,7 +316,7 @@ namespace Run4YourLife.Player
             m_characterController.Move(movement);
             if (m_checkOutOfScreen)
             {
-                TrimPlayerPositionHorizontalInsideCameraView();
+                TrimPlayerPositionHorizontalInsideGameplayArea();
             }
 
             m_animator.SetFloat(RunnerAnimation.xSpeed, Mathf.Abs(movement.x));
@@ -325,12 +326,17 @@ namespace Run4YourLife.Player
             LookAtMovingSide();
         }
 
-        private void TrimPlayerPositionHorizontalInsideCameraView()
+        private void TrimPlayerPositionHorizontalInsideGameplayArea()
         {
-            float xScreenLeft = m_mainCamera.ScreenToWorldPoint(new Vector3(0, 0, Math.Abs(m_mainCamera.transform.position.z - transform.position.z))).x;
-            float xScreenRight = m_mainCamera.ScreenToWorldPoint(new Vector3(m_mainCamera.pixelWidth, 0, Math.Abs(m_mainCamera.transform.position.z - transform.position.z))).x;
-            Vector3 trimmedPosition = transform.position;
-            trimmedPosition.x = Mathf.Clamp(trimmedPosition.x, xScreenLeft, xScreenRight);
+            float xScreenLeft = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(m_mainCamera, new Vector2(0,0)).x;
+            float xScreenRight = CameraConverter.NormalizedViewportToGamePlaneWorldPosition(m_mainCamera, new Vector2(1,1)).x;
+
+            Vector3 trimmedPosition = new Vector3()
+            {
+                x = Mathf.Clamp(transform.position.x, xScreenLeft, xScreenRight),
+                y = transform.position.y,
+                z = 0
+            };
             transform.position = trimmedPosition;
         }
 
