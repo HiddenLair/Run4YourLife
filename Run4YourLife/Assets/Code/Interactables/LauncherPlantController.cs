@@ -20,35 +20,37 @@ namespace Run4YourLife.Interactables
         [SerializeField]
         private GameObject bullet;
 
-        #endregion
-
-        #region Variables
-
-        private float timer=0.0f;
-        private Animator anim;
+        [SerializeField]
+        private int m_nBulletCached;
 
         #endregion
+
+        private float m_nextLaunchTime;
+        private Animator m_animator;
+        private GameObjectPool m_gameObjectPool;
 
         private void Awake()
         {
-            timer = Time.time + timeBetweenShoots;
-            anim = GetComponentInChildren<Animator>();
+            m_nextLaunchTime = Time.time + timeBetweenShoots;
+            m_animator = GetComponentInChildren<Animator>();
+            m_gameObjectPool = GetComponent<GameObjectPool>();
+            m_gameObjectPool.Add(bullet, m_nBulletCached);
         }
 
-        // Update is called once per frame
         void Update () {
-		    if(timer <= Time.time)
+		    if(m_nextLaunchTime <= Time.time)
             {
-                anim.SetTrigger("Shoot");
+                m_animator.SetTrigger("Shoot");
                 Shoot();
-                timer = Time.time + timeBetweenShoots;
+                m_nextLaunchTime = Time.time + timeBetweenShoots;
             }
 	    }
 
         private void Shoot()
         {
-            GameObject g = Instantiate(bullet,shootInitZone.position,shootInitZone.rotation*bullet.transform.rotation, transform);
-            g.GetComponent<Rigidbody>().AddForce(g.transform.up * shootForce);
+            GameObject instance = m_gameObjectPool.GetAndPosition(bullet, shootInitZone.position, shootInitZone.rotation);
+            instance.SetActive(true);
+            instance.GetComponent<Rigidbody>().AddForce(instance.transform.up * shootForce);
         }
     }
 }
