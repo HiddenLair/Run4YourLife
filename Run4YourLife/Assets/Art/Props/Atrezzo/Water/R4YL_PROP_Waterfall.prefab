@@ -120,6 +120,8 @@ GameObject:
   - component: {fileID: 33413247943881382}
   - component: {fileID: 23577453463100264}
   - component: {fileID: 95909117871615214}
+  - component: {fileID: 114948982138489064}
+  - component: {fileID: 114161163883398350}
   m_Layer: 0
   m_Name: R4YL_PROP_Waterfall
   m_TagString: Untagged
@@ -159,13 +161,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1192002830984956}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.70079887, y: -0.09423907, z: 0.094239086, w: 0.70079887}
+  m_LocalPosition: {x: -0.21, y: 0.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4827693569268736}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -105.31799, y: 89.99999, z: -90}
 --- !u!4 &4209386010094160
 Transform:
   m_ObjectHideFlags: 1
@@ -187,15 +189,15 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1987078544089144}
-  m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.577092, y: 4.217005, z: 77.10251}
+  m_LocalRotation: {x: 0.00000019861236, y: 0.7071068, z: -0.7071068, w: 0.00000019861236}
+  m_LocalPosition: {x: -182.13388, y: 8.660002, z: -20.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4827693569268736}
   - {fileID: 4209386010094160}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: -179.99998}
 --- !u!4 &4827693569268736
 Transform:
   m_ObjectHideFlags: 1
@@ -282,6 +284,31 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114161163883398350
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1987078544089144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef3d3a5956ab5dd44a5b3b53dfd8bcb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  step: 4
+  coordinateSystem: 2
+--- !u!114 &114948982138489064
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1987078544089144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061f1f8e08f75c74f85f940c4c95fe2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: {x: 0, y: 2}
 --- !u!198 &198241053575794214
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -349,7 +376,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -390,7 +417,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 4
+      scalar: 10
       minScalar: 2
       maxCurve:
         serializedVersion: 2
@@ -902,7 +929,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 150
+      scalar: 200
       minScalar: 10
       maxCurve:
         serializedVersion: 2
