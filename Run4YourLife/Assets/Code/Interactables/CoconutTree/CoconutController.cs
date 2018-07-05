@@ -37,8 +37,12 @@ public class CoconutController : MonoBehaviour {
     {
         if(!Aviable) // it is falling
         {
-            ExecuteEvents.Execute<IRunnerEvents>(other.gameObject, null, (x, y) => x.Kill());
-            gameObject.SetActive(false);
+            IRunnerEvents runnerEvents = other.gameObject.GetComponent<IRunnerEvents>();
+            if(runnerEvents != null)
+            {
+                gameObject.SetActive(false);
+                runnerEvents.Kill();
+            }
         }
     }
 }
