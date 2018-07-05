@@ -50,7 +50,9 @@ namespace Run4YourLife.Interactables
         {
             GameObject instance = m_gameObjectPool.GetAndPosition(bullet, shootInitZone.position, shootInitZone.rotation);
             instance.SetActive(true);
-            instance.GetComponent<Rigidbody>().AddForce(instance.transform.up * shootForce);
+            Rigidbody rb = instance.GetComponent<Rigidbody>();
+            rb.velocity = Vector3.zero;
+            rb.AddForce(instance.transform.up * shootForce);
         }
     }
 }
