@@ -839,10 +839,9 @@ namespace Run4YourLife.Player
 
         public void Kill()
         {
-            AudioManager.Instance.PlaySFX(m_deathClip);
-
             if (!ConsumeShieldIfAviable() && !m_recentlyRevived)
             {
+                AudioManager.Instance.PlaySFX(m_deathClip);
                 deathReceiver.PlayFx();
                 GameplayPlayerManager.Instance.OnRunnerDeath(GetComponent<PlayerInstance>().PlayerHandle, transform.position);
             }
