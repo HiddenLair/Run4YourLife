@@ -16,7 +16,9 @@ namespace Run4YourLife.GameManagement
         HardMoveHorizontal,
         End,
         StartTutorial,
-        BossTutorial
+        BossTutorial,
+        RunnersWin,
+        BossWin
     }
 
     [System.Serializable]
