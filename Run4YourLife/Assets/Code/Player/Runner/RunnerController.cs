@@ -319,7 +319,13 @@ namespace Run4YourLife.Player
 
             ExternalVelocity = Vector3.zero;
 
-            MoveCharacterContoller(totalMovement);
+            Move(totalMovement);
+        }
+
+        private void Move(Vector3 movement)
+        {
+            MoveCharacterContoller(movement);
+            LookAtMovingSide();
         }
 
         private void MoveCharacterContoller(Vector3 movement)
@@ -333,8 +339,6 @@ namespace Run4YourLife.Player
             m_animator.SetFloat(RunnerAnimation.xSpeed, Mathf.Abs(movement.x));
             m_animator.SetFloat(RunnerAnimation.ySpeed,m_velocity.y);
             m_animator.SetBool(RunnerAnimation.isGrounded, m_characterController.isGrounded);
-
-            LookAtMovingSide();
         }
 
         private void TrimPlayerPositionHorizontalInsideGameplayArea()
@@ -357,9 +361,14 @@ namespace Run4YourLife.Player
             if (shouldFaceTheOtherWay)
             {
                 m_isFacingRight = !m_isFacingRight;
-                float sign = m_isFacingRight ? -1 : 1;
-                m_graphics.rotation = Quaternion.Euler(0, sign * 90, 0);
+                RotateGraphicsAtFacingDirection();
             }
+        }
+
+        private void RotateGraphicsAtFacingDirection()
+        {
+            float sign = m_isFacingRight ? -1 : 1;
+            m_graphics.rotation = Quaternion.Euler(0, sign * 90, 0);
         }
 
         #endregion
@@ -708,7 +717,7 @@ namespace Run4YourLife.Player
 
         private void Dash_Update()
         {
-            MoveCharacterContoller(m_velocity * Time.deltaTime);
+            Move(m_velocity * Time.deltaTime);
             if (Time.time >= m_dash_endTime)
             {
                 StartCoroutine(YieldHelper.WaitForSeconds(() => m_isReadyToDash = true, m_dashCooldown)); // set ready to dash after some time
@@ -754,7 +763,7 @@ namespace Run4YourLife.Player
         private void Push_Update()
         {
             GravityAndDrag();
-            MoveCharacterContoller(m_velocity * Time.deltaTime);
+            Move(m_velocity * Time.deltaTime);
 
             if(m_velocity.x == 0f)
             {
@@ -777,12 +786,14 @@ namespace Run4YourLife.Player
         private void Shock_Enter()
         {
             m_velocity.x = 0;
+            m_graphics.rotation = Quaternion.identity;
             //Activate particle effects
             //Activate shock animation
         }
 
         private void Shock_Exit()
         {
+            RotateGraphicsAtFacingDirection();
             //Deactivate particle effects
             //Deactivate animation
         }
