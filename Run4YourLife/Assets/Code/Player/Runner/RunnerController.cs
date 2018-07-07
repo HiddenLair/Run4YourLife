@@ -356,8 +356,9 @@ namespace Run4YourLife.Player
             bool shouldFaceTheOtherWay = (m_isFacingRight && m_runnerControlScheme.Move.Value() < 0) || (!m_isFacingRight && m_runnerControlScheme.Move.Value() > 0);
             if (shouldFaceTheOtherWay)
             {
-                m_graphics.Rotate(Vector3.up, 180);
                 m_isFacingRight = !m_isFacingRight;
+                float sign = m_isFacingRight ? -1 : 1;
+                m_graphics.rotation = Quaternion.Euler(0, sign * 90, 0);
             }
         }
 
