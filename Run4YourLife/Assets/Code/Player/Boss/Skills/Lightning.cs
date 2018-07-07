@@ -16,6 +16,9 @@ namespace Run4YourLife.Player {
         #region Inspector
 
         [SerializeField]
+        private float shockDuration;
+
+        [SerializeField]
         private float width;
 
         [SerializeField]
@@ -118,7 +121,7 @@ namespace Run4YourLife.Player {
             {
                 if (hit.collider.CompareTag(Tags.Runner))
                 {
-                    ExecuteEvents.Execute<IRunnerEvents>(hit.collider.gameObject, null, (x, y) => x.Kill());
+                    ExecuteEvents.Execute<IRunnerEvents>(hit.collider.gameObject, null, (x, y) => x.Shock(shockDuration));
                 }
                 else
                 {

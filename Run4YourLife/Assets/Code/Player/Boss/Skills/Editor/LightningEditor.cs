@@ -11,6 +11,7 @@ namespace Run4YourLife.Player.CustomEditors
     [CanEditMultipleObjects]
     public class LightningEditor : SkillBaseEditor
     {
+        SerializedProperty shockDuration;
         SerializedProperty width;
         SerializedProperty delayHit;
         SerializedProperty flashEffect;
@@ -34,6 +35,7 @@ namespace Run4YourLife.Player.CustomEditors
 
         new public void Init()
         {
+            shockDuration = serializedObject.FindProperty("shockDuration");
             width = serializedObject.FindProperty("width");
             delayHit = serializedObject.FindProperty("delayHit");
             flashEffect = serializedObject.FindProperty("flashEffect");
@@ -52,6 +54,7 @@ namespace Run4YourLife.Player.CustomEditors
 
         public override void OnGuiPhase1()
         {
+            EditorGUILayout.PropertyField(shockDuration);
             EditorGUILayout.PropertyField(width);
             EditorGUILayout.PropertyField(delayHit);
             EditorGUILayout.PropertyField(flashEffect);
