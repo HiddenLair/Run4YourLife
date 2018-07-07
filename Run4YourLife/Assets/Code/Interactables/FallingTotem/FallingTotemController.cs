@@ -13,7 +13,13 @@ namespace Run4YourLife.Interactables
         private TrembleConfig m_trembleConfig;
 
         [SerializeField]
+        private AudioClip m_detectRunnerSound;
+
+        [SerializeField]
         private AudioClip m_groundHitSound;
+
+        [SerializeField]
+        private float m_delayBetweenDetectionAndFall;
 
         [SerializeField]
         private float m_initialFallSpeed;
@@ -58,6 +64,11 @@ namespace Run4YourLife.Interactables
         private IEnumerator ExecuteTotemFall()
         {
             m_fallingTotemTrigger.enabled = false;
+
+            AudioManager.Instance.PlaySFX(m_detectRunnerSound);
+
+            yield return new WaitForSeconds(m_delayBetweenDetectionAndFall);
+            
             m_rotationSpeed = m_initialFallSpeed;
 
             Quaternion startingRotation = m_rigidbody.rotation;

@@ -124,6 +124,8 @@ GameObject:
   - component: {fileID: 65719679887865174}
   - component: {fileID: 114848492460960250}
   - component: {fileID: 114859428582270222}
+  - component: {fileID: 114303740841339082}
+  - component: {fileID: 114895971798037580}
   m_Layer: 9
   m_Name: FallingTotem_1
   m_TagString: Untagged
@@ -1022,6 +1024,34 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114303740841339082
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1427856991486428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a0572a1c2548b0449e25f2032ffa139, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  events:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114848492460960250}
+        m_MethodName: OnRunnerTriggeredTotemFall
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  key: 102
 --- !u!114 &114383314649889752
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1071,7 +1101,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_trembleConfig: {fileID: 11400000, guid: 13176b9acad1dbe42b5a1668868c8a2b, type: 2}
+  m_detectRunnerSound: {fileID: 8300000, guid: 05baf6ede86915b44b5fa708c94d3fbb, type: 3}
   m_groundHitSound: {fileID: 8300000, guid: 6e26a31914a009f4fa23e9f47949d137, type: 3}
+  m_delayBetweenDetectionAndFall: 0.1
   m_initialFallSpeed: 0
   m_gravity: 3
   m_endRotationX: -90
@@ -1109,3 +1141,31 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114895971798037580
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1427856991486428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a0572a1c2548b0449e25f2032ffa139, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  events:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114848492460960250}
+        m_MethodName: ResetTotem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  key: 103
