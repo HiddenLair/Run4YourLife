@@ -20,6 +20,7 @@ namespace Run4YourLife.Player
         private Camera m_mainCamera;
         private RectTransform m_canvasTransform;
         private RectTransform m_crossHairUiTransform;
+        private CanvasGroup crossHairCanvasGroup;
 
         private void Awake()
         {
@@ -31,16 +32,19 @@ namespace Run4YourLife.Player
 
             m_crossHairUiTransform = m_crossHairUi.GetComponent<RectTransform>();
             Debug.Assert(m_crossHairUiTransform != null);
+
+            crossHairCanvasGroup = m_crossHairUi.GetComponent<CanvasGroup>();
+            Debug.Assert(crossHairCanvasGroup != null);
         }
 
         public void ShowCrossHair()
         {
-            m_crossHairUi.SetActive(true);
+            crossHairCanvasGroup.alpha = 1.0f;
         }
 
         public void HideCrossHair()
         {
-            m_crossHairUi.SetActive(false);
+            crossHairCanvasGroup.alpha = 0.0f;
         }
 
         public void UpdatePosition(Vector3 position)
