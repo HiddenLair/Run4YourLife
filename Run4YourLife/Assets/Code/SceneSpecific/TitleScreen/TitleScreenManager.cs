@@ -5,9 +5,9 @@ using UnityEngine;
 using Run4YourLife.SceneManagement;
 using Run4YourLife.InputManagement;
 
-namespace Run4YourLife.SceneSpecific.SplashScreen
+namespace Run4YourLife.SceneSpecific.TitleScreen
 {
-    public class SplashScreenManager : MonoBehaviour {
+    public class TitleScreenManager : MonoBehaviour {
 
         [SerializeField]
         private SceneTransitionRequest m_mainMenuLoad;
