@@ -6,9 +6,9 @@ using Run4YourLife.Player;
 
 namespace Run4YourLife.GameManagement
 {
-    public class BossFightRockTransition : GamePhaseManager
+    public class TransitionPhase2End : GamePhaseManager
     {
-        public override GamePhase GamePhase { get { return GamePhase.BossFightRockTransition; } }
+        public override GamePhase GamePhase { get { return GamePhase.TransitionPhase2End; } }
 
         #region Inspector
         [SerializeField]

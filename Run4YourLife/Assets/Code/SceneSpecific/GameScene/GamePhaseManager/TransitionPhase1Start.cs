@@ -9,9 +9,9 @@ using System;
 
 namespace Run4YourLife.GameManagement
 {
-    public class TransitionToEasyMoveHorizontalPhaseManager : GamePhaseManager
+    public class TransitionPhase1Start : GamePhaseManager
     {
-        public override GamePhase GamePhase { get { return GamePhase.TransitionToEasyMoveHorizontal; } }
+        public override GamePhase GamePhase { get { return GamePhase.TransitionPhase1Start; } }
 
         [SerializeField]
         private PlayableDirector m_startingCutscene;

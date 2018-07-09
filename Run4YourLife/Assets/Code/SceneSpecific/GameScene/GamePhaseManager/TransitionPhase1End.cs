@@ -7,9 +7,9 @@ using Cinemachine;
 
 namespace Run4YourLife.GameManagement
 {
-    public class TransitionToBossFightPhaseManager : GamePhaseManager
+    public class TransitionPhase1End : GamePhaseManager
     {
-        public override GamePhase GamePhase { get { return GamePhase.TransitionToBossFight; } }
+        public override GamePhase GamePhase { get { return GamePhase.TransitionPhase1End; } }
 
         [SerializeField]
         private PlayableDirector m_startingCutscene;

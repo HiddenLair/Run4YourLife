@@ -6,9 +6,9 @@ using Cinemachine;
 
 namespace Run4YourLife.GameManagement
 {
-    public class TransitionToHardMoveHorizontal : GamePhaseManager
+    public class TransitionPhase3Start : GamePhaseManager
     {
-        public override GamePhase GamePhase { get { return GamePhase.TransitionToHardMoveHorizontal;  } }
+        public override GamePhase GamePhase { get { return GamePhase.TransitionPhase3Start;  } }
 
         #region Regular Execution
 

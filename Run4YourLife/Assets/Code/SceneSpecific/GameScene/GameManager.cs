@@ -134,11 +134,11 @@ namespace Run4YourLife.GameManagement
                 }
                 else if(Input.GetKeyDown(KeyCode.Keypad4))
                 {
-                    ChangeGamePhase(GamePhase.TransitionToBossFight);
+                    ChangeGamePhase(GamePhase.TransitionPhase1End);
                 }
                 else if(Input.GetKeyDown(KeyCode.Keypad5))
                 {
-                    ChangeGamePhase(GamePhase.TransitionToHardMoveHorizontal);
+                    ChangeGamePhase(GamePhase.TransitionPhase3Start);
                 }
             }
         }

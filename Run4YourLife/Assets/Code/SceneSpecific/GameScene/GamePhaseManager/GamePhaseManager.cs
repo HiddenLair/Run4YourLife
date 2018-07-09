@@ -7,12 +7,13 @@ namespace Run4YourLife.GameManagement
 {
     public enum GamePhase
     {
-        TransitionToEasyMoveHorizontal,
+        TransitionPhase1Start,
         EasyMoveHorizontal,
-        TransitionToBossFight,
+        TransitionPhase1End,
+        TransitionPhase2Start,
         BossFight,
-        BossFightRockTransition,
-        TransitionToHardMoveHorizontal,
+        TransitionPhase2End,
+        TransitionPhase3Start,
         HardMoveHorizontal,
         End,
         StartTutorial,

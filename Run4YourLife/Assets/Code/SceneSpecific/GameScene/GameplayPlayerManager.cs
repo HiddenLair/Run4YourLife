@@ -273,12 +273,15 @@ namespace Run4YourLife.GameManagement {
             switch(gamePhase)
             {
                 case GamePhase.EasyMoveHorizontal:
-                case GamePhase.TransitionToEasyMoveHorizontal:
+                case GamePhase.TransitionPhase1Start:
+                case GamePhase.TransitionPhase1End:
                     return m_sceneBosses[0];
-                case GamePhase.TransitionToBossFight:
+                case GamePhase.TransitionPhase2Start:
+                case GamePhase.TransitionPhase2End:
                 case GamePhase.BossFight:
                     return m_sceneBosses[1];
-                case GamePhase.TransitionToHardMoveHorizontal:
+                case GamePhase.TransitionPhase3Start:
+                case GamePhase.RunnersWin:
                 case GamePhase.HardMoveHorizontal:
                     return m_sceneBosses[2];
                 default:
