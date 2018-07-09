@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
+
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.Interactables
 {
@@ -23,6 +26,9 @@ namespace Run4YourLife.Interactables
         [SerializeField]
         private int m_nBulletCached;
 
+        [SerializeField]
+        private AudioClip m_launchAudioClip;
+
         #endregion
 
         private float m_nextLaunchTime;
@@ -31,28 +37,34 @@ namespace Run4YourLife.Interactables
 
         private void Awake()
         {
-            m_nextLaunchTime = Time.time + timeBetweenShoots;
             m_animator = GetComponentInChildren<Animator>();
             m_gameObjectPool = GetComponent<GameObjectPool>();
             m_gameObjectPool.Add(bullet, m_nBulletCached);
         }
 
+        private void OnEnable()
+        {
+            m_nextLaunchTime = Time.time + timeBetweenShoots;
+        }
+
         void Update () {
 		    if(m_nextLaunchTime <= Time.time)
             {
-                m_animator.SetTrigger("Shoot");
                 Shoot();
-                m_nextLaunchTime = Time.time + timeBetweenShoots;
+                m_nextLaunchTime += timeBetweenShoots;
             }
 	    }
 
         private void Shoot()
         {
+            AudioManager.Instance.PlaySFX(m_launchAudioClip);
             GameObject instance = m_gameObjectPool.GetAndPosition(bullet, shootInitZone.position, shootInitZone.rotation);
             instance.SetActive(true);
             Rigidbody rb = instance.GetComponent<Rigidbody>();
             rb.velocity = Vector3.zero;
             rb.AddForce(instance.transform.up * shootForce);
+
+            m_animator.SetTrigger("Shoot");
         }
     }
 }
