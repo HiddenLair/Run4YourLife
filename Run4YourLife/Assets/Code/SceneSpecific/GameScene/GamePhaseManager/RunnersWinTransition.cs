@@ -47,13 +47,24 @@ namespace Run4YourLife.GameManagement
         private IEnumerator StartPhaseCoroutine()
         {
             CameraManager.Instance.TransitionToCamera(m_virtualCamera);
-            
+
             //Unable players input, in order to make them fall to ground from jumps
-            List<GameObject> runners = GameplayPlayerManager.Instance.RunnersAlive;
-            runners.AddRange(GameplayPlayerManager.Instance.GhostsAlive); // Alert: You are modifying gameplay player manager list.
-            foreach(GameObject g in runners)
+            List<GameObject> runners = new List<GameObject>();
+            runners.AddRange(GameplayPlayerManager.Instance.RunnersAlive);
+            runners.AddRange(GameplayPlayerManager.Instance.GhostsAlive);
+            List<GameObject> ghosts = GameplayPlayerManager.Instance.GhostsAlive;
+            List<GameObject> aliveRunners = GameplayPlayerManager.Instance.RunnersAlive;
+            foreach (GameObject g in aliveRunners)
             {
                 PlayerInstance instance = g.GetComponent<PlayerInstance>(); // Alert: Player instance is a class used to hold playerhandle for the player. It does not control movement
+                instance.enabled = false;
+            }
+            //We store handles to revive ghost late
+            Dictionary<GameObject, PlayerHandle> handles = new Dictionary<GameObject, PlayerHandle>();
+            foreach(GameObject g in ghosts)
+            {
+                PlayerInstance instance = g.GetComponent<PlayerInstance>(); // Alert: Player instance is a class used to hold playerhandle for the player. It does not control movement
+                handles[g] = instance.PlayerHandle;
                 instance.enabled = false;
             }
 
@@ -71,7 +82,7 @@ namespace Run4YourLife.GameManagement
             while (!done)
             {
                 done = true;
-                foreach (GameObject g in GameplayPlayerManager.Instance.RunnersAlive)
+                foreach (GameObject g in aliveRunners)
                 {
                     if (!g.GetComponent<CharacterController>().isGrounded)
                     {
@@ -97,10 +108,10 @@ namespace Run4YourLife.GameManagement
             Unbind(m_positioningCutscene);
 
             //Revive Players
-            List<GameObject> ghosts = GameplayPlayerManager.Instance.GhostsAlive;
-            foreach (GameObject g in ghosts)
+
+            for(int i = 0; i< ghosts.Count;)
             {
-                GameObject revivedRunner = GameplayPlayerManager.Instance.OnRunnerRevive(g.GetComponent<PlayerHandle>(), g.transform.position);
+                GameObject revivedRunner = GameplayPlayerManager.Instance.OnRunnerRevive(handles[ghosts[i]], ghosts[i].transform.position);
                 DeactivateScripts(revivedRunner);
             }
 

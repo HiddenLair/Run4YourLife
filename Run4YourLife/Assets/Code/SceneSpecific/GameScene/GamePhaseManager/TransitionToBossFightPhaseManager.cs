@@ -27,7 +27,8 @@ namespace Run4YourLife.GameManagement
         private IEnumerator StartPhaseCoroutine()
         {
             CameraManager.Instance.TransitionToCamera(m_virtualCamera);
-            List<GameObject> runners = GameplayPlayerManager.Instance.RunnersAlive;
+            List<GameObject> runners = new List<GameObject>();
+            runners.AddRange( GameplayPlayerManager.Instance.RunnersAlive);
             runners.AddRange(GameplayPlayerManager.Instance.GhostsAlive);
             foreach (GameObject runner in runners)
             {
