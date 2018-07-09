@@ -34,8 +34,6 @@ namespace Run4YourLife.GameManagement
 
         private PlayerSpawner m_playerSpawner;
 
-        private GameObject m_ui;
-
         private BossFightGemManager m_bossFightGemManager;
 
         #endregion
@@ -44,7 +42,6 @@ namespace Run4YourLife.GameManagement
 
         private void Awake()
         {
-            m_ui = GameObject.FindGameObjectWithTag(Tags.UI);
             m_playerSpawner = GetComponent<PlayerSpawner>();
             m_bossFightGemManager = GetComponent<BossFightGemManager>();
             Debug.Assert(m_playerSpawner != null);
@@ -69,8 +66,6 @@ namespace Run4YourLife.GameManagement
             m_virtualCamera.Follow = boss.transform;
             m_virtualCamera.LookAt = boss.transform;
             CameraManager.Instance.TransitionToCamera(m_virtualCamera);
-
-            ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (a,b) => a.ShowCrossHair());
 
             StartCoroutine(YieldHelper.SkipFrame(()=>MoveRunners()));           
         }
@@ -103,7 +98,6 @@ namespace Run4YourLife.GameManagement
                 RunnerController runnerCharacterController = runner.GetComponent<RunnerController>(); 
                 runnerCharacterController.CheckOutScreen = false; 
             }
-            ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (a,b) => a.HideCrossHair());
         }
 
         #endregion

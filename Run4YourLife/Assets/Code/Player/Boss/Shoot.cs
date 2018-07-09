@@ -88,7 +88,7 @@ namespace Run4YourLife.Player
                     ShootByAnim();
                     m_readyToShootTime = Time.time + reloadTimeS;
 
-                    ExecuteEvents.Execute<IUIEvents>(m_ui, null, (x, y) => x.OnActionUsed(ActionType.SHOOT, reloadTimeS));
+                    ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (x, y) => x.OnActionUsed(ActionType.SHOOT, reloadTimeS));
                 }
             }
         }

@@ -28,7 +28,7 @@ namespace Run4YourLife.GameManagement
                 IProgressProvider progressProvider = boss.GetComponent<IProgressProvider>();
                 if(progressProvider != null)
                 {
-                    ExecuteEvents.Execute<IUIEvents>(m_uiManager, null, (x, y) => x.OnBossProgress(progressProvider.Progress));
+                    ExecuteEvents.Execute<IUIProgressEvents>(m_uiManager, null, (x, y) => x.OnBossProgress(progressProvider.Progress));
                 }
             }
         }

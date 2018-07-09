@@ -6,6 +6,7 @@ using UnityEngine.Timeline;
 using UnityEngine.Playables;
 using Cinemachine;
 using Run4YourLife.Player;
+using Run4YourLife.UI;
 
 namespace Run4YourLife.GameManagement
 {
@@ -30,17 +31,8 @@ namespace Run4YourLife.GameManagement
 
         private TimelineAsset timelineAsset;
 
-        private GameObject m_ui;
-
-        private void Awake()
-        {
-            m_ui = GameObject.FindGameObjectWithTag(Tags.UI);
-            Debug.Assert(m_ui != null);
-        }
-
         public override void StartPhase()
         {
-            ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (a, b) => a.HideCrossHair());
             StartCoroutine(StartPhaseCoroutine());
         }
 

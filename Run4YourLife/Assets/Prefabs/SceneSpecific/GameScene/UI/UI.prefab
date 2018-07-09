@@ -219,6 +219,7 @@ GameObject:
   - component: {fileID: 114625077181335556}
   - component: {fileID: 222642860536619708}
   - component: {fileID: 114999716623515486}
+  - component: {fileID: 225759883991259952}
   m_Layer: 5
   m_Name: BossProgress
   m_TagString: Untagged
@@ -306,7 +307,7 @@ GameObject:
   - component: {fileID: 224411898347654110}
   - component: {fileID: 223268166632867628}
   - component: {fileID: 114256861709653166}
-  - component: {fileID: 114923568026538286}
+  - component: {fileID: 114555419947258918}
   - component: {fileID: 114834907179015938}
   m_Layer: 5
   m_Name: UI
@@ -953,6 +954,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114555419947258918
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1607582914678852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1777b2bbe1ab7ef4cbc0dc83bb94f48b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  progressUI: {fileID: 1517699186750722}
 --- !u!114 &114579448927066598
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1265,24 +1278,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_crossHairUi: {fileID: 1755753670321862}
---- !u!114 &114923568026538286
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1607582914678852}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 080bbefeba24ef545bcd309be0a151f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   m_melee: {fileID: 114684124407690388}
   m_shoot: {fileID: 114473349347298538}
   m_A: {fileID: 114365384873919160}
   m_B: {fileID: 114006306190343832}
   m_X: {fileID: 114593484206392636}
   m_Y: {fileID: 114420582225665192}
-  progress: {fileID: 114625077181335556}
 --- !u!114 &114954877737287096
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1981,7 +1982,18 @@ CanvasGroup:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1755753670321862}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
+--- !u!225 &225759883991259952
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1517699186750722}
+  m_Enabled: 1
+  m_Alpha: 0
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0

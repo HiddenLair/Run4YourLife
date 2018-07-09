@@ -1,6 +1,8 @@
 ﻿using UnityEngine.EventSystems;
 using UnityEngine;
 
+using Run4YourLife.UI;
+
 namespace Run4YourLife.Player {
     public class BossUnlock : MonoBehaviour {
 
@@ -12,15 +14,11 @@ namespace Run4YourLife.Player {
 
         private MonoBehaviour[] toUnlock;
         private BossPathWalker walker;
-        private GameObject m_ui;
 
         private void Awake()
         {
             walker = GetComponent<BossPathWalker>();
             Debug.Assert(walker != null);
-
-            m_ui = GameObject.FindGameObjectWithTag(Tags.UI);
-            Debug.Assert(m_ui != null);
 
             toUnlock = gameObject.GetComponents<MonoBehaviour>();
         }
@@ -39,7 +37,6 @@ namespace Run4YourLife.Player {
             {
                 m.enabled = true;
             }
-            ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (a, b) => a.ShowCrossHair());
             uiActions.SetActive(true);
         }
     }
