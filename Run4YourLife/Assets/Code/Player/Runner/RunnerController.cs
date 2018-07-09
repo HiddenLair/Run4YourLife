@@ -678,11 +678,14 @@ namespace Run4YourLife.Player
             GravityAndDrag();
             Move();
 
-            if (m_bounce_previousY >= transform.position.y)
+            if(m_runnerControlScheme.Jump.Started())
+            {
+                m_stateMachine.ChangeState(States.SecondJump);
+            }
+            else if (m_bounce_previousY >= transform.position.y)
             {
                 m_stateMachine.ChangeState(States.Fall);
             }
-            else 
 
             m_bounce_previousY = transform.position.y;
         }
