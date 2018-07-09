@@ -40,8 +40,7 @@ namespace Run4YourLife.Player.Runner.Ghost
         public override void BouncedOn()
         {
             base.BouncedOn();
-            Debug.Log("Runner Ghost Bounce is no longer used. Deprecated");
-            //m_runnerGhostController.ReviveGhost();
+            m_runnerGhostController.ReviveRunner();
         }
 
         public override Vector3 GetStartingBouncePosition(RunnerController runnerCharacterController)

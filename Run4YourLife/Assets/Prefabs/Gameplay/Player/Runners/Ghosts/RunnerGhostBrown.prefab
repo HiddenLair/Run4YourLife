@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4448734298294460}
   - component: {fileID: 135791389432080706}
-  - component: {fileID: 114524484064483102}
+  - component: {fileID: 114145103620325940}
   m_Layer: 9
   m_Name: ReviveArea
   m_TagString: Untagged
@@ -169,7 +169,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1590768367569610}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.667785, y: -3.61131, z: -77.35276}
+  m_LocalPosition: {x: 46.51992, y: 0, z: 0.69653225}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4218791367876970}
@@ -386,6 +386,20 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114145103620325940
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1098397342429666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7314b22e5da3e7e46890640468f4e915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_bounceForce: 2
+  m_collider: {fileID: 135791389432080706}
+  m_runnerGhostController: {fileID: 114275713208884918}
 --- !u!114 &114219583622784792
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -443,17 +457,6 @@ MonoBehaviour:
   m_playerInstance: {fileID: 114897956888761062}
   m_reviveParticles: {fileID: 114249493886985634}
   m_graphics: {fileID: 4218791367876970}
---- !u!114 &114524484064483102
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1098397342429666}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec6c031f179938f4ca1d6b3e4d707ed2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114897956888761062
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -19,7 +19,7 @@ namespace Run4YourLife.Player.Runner.Ghost
         {
             if(other.CompareTag(Tags.Runner))
             {
-                m_runnerGhostController.OnOtherRunnerCollidedGhost();
+                m_runnerGhostController.ReviveRunner();
             }
         }
     }

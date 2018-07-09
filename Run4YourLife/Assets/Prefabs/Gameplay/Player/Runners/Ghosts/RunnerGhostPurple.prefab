@@ -71,7 +71,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4675059375010332}
   - component: {fileID: 135719725062303896}
-  - component: {fileID: 114094002214547414}
+  - component: {fileID: 114316682589431516}
   m_Layer: 9
   m_Name: ReviveArea
   m_TagString: Untagged
@@ -238,7 +238,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1106369356668528}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.741203, y: -3.9699383, z: -76.58895}
+  m_LocalPosition: {x: 46.841194, y: 0, z: 0.5381384}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4262779508876518}
@@ -387,7 +387,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114094002214547414
+--- !u!114 &114316682589431516
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -395,9 +395,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1474135723348068}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec6c031f179938f4ca1d6b3e4d707ed2, type: 3}
+  m_Script: {fileID: 11500000, guid: 7314b22e5da3e7e46890640468f4e915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_bounceForce: 2
+  m_collider: {fileID: 135719725062303896}
+  m_runnerGhostController: {fileID: 114669744217344600}
 --- !u!114 &114377773593328054
 MonoBehaviour:
   m_ObjectHideFlags: 1

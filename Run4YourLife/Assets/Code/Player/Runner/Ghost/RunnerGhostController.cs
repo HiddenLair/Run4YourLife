@@ -96,17 +96,12 @@ namespace Run4YourLife.Player {
             }
         }
 
-        private void ReviveRunner()
+        public void ReviveRunner()
         {
             AudioManager.Instance.PlaySFX(m_revivePlayerSound);
             m_reviveParticles.PlayFx(false);
 
             GameplayPlayerManager.Instance.OnRunnerRevive(m_playerInstance.PlayerHandle, transform.position + m_reviveRunnerOffset);
-        }
-
-        public void OnOtherRunnerCollidedGhost()
-        {
-            ReviveRunner();
         }
     }
 }
