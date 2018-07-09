@@ -3,9 +3,14 @@ using UnityEngine.EventSystems;
 
 using Run4YourLife.Player;
 using Run4YourLife.Utils;
+using Run4YourLife.GameManagement.AudioManagement;
 
 [RequireComponent(typeof(Rigidbody))]
 public class CoconutController : MonoBehaviour {
+
+    [SerializeField]
+    private AudioClip m_hitGroundAudioClip;
+
 
     public bool Aviable { get; private set; }
 
@@ -40,9 +45,15 @@ public class CoconutController : MonoBehaviour {
             IRunnerEvents runnerEvents = other.gameObject.GetComponent<IRunnerEvents>();
             if(runnerEvents != null)
             {
-                gameObject.SetActive(false);
                 runnerEvents.Kill();
             }
+            else
+            {
+                AudioManager.Instance.PlaySFX(m_hitGroundAudioClip);
+            }
+
+            gameObject.SetActive(false);
+
         }
     }
 }
