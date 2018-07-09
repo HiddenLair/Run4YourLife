@@ -23,6 +23,7 @@ namespace Run4YourLife.Player
         private Vector2 m_clampMax;
 
         // Normalized position range from (0,0) to (1,1)
+        [SerializeField]
         private Vector2 m_screenPosition;
 
         private BossControlScheme m_controlScheme;
@@ -30,6 +31,8 @@ namespace Run4YourLife.Player
         private void Awake()
         {
             m_controlScheme = GetComponent<BossControlScheme>();
+
+            UICrossHair.Instance.UpdatePosition(Position);
         }
 
         public Vector3 Position
