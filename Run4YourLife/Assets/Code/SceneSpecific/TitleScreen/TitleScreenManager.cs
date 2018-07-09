@@ -12,13 +12,6 @@ namespace Run4YourLife.SceneSpecific.TitleScreen
         [SerializeField]
         private SceneTransitionRequest m_mainMenuLoad;
 
-        private InputDevice m_defaultInputDevice;
-
-        private void Start()
-        {
-            m_defaultInputDevice = InputManagement.InputDeviceManager.Instance.DefaultInputDevice;
-        }
-
         private void Update()
         {
             if(Input.anyKeyDown)
