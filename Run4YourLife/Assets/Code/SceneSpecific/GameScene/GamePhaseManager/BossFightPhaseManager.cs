@@ -26,9 +26,6 @@ namespace Run4YourLife.GameManagement
         private Transform m_bossFightStartingCameraPositionDebug;
 
         [SerializeField]
-        private Tiling m_backgroundTiling;
-
-        [SerializeField]
         private Transform[] m_runnerSpawns;
 
         #endregion
@@ -72,8 +69,6 @@ namespace Run4YourLife.GameManagement
             m_virtualCamera.Follow = boss.transform;
             m_virtualCamera.LookAt = boss.transform;
             CameraManager.Instance.TransitionToCamera(m_virtualCamera);
-
-            m_backgroundTiling.SetActive(false);
 
             ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (a,b) => a.ShowCrossHair());
 

@@ -24,9 +24,6 @@ namespace Run4YourLife.GameManagement
         private CinemachineVirtualCamera m_virtualCamera;
 
         [SerializeField]
-        private Tiling m_background;
-
-        [SerializeField]
         private Material m_newBackgroundMat;
 
         [SerializeField]
@@ -73,8 +70,6 @@ namespace Run4YourLife.GameManagement
             boss.GetComponent<BossPathWalker>().m_position = 0;
 
             StartCoroutine(YieldHelper.SkipFrame(() => MoveRunners()));
-
-            m_background.SetActive(true);
 
             ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (a,b) => a.ShowCrossHair());
         }
