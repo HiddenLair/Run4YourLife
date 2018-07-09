@@ -3,9 +3,10 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+using Run4YourLife.UI;
+using Run4YourLife.CameraUtils;
 using Run4YourLife.GameManagement;
 using Run4YourLife.InputManagement;
-using Run4YourLife.CameraUtils;
 
 namespace Run4YourLife.Player
 {

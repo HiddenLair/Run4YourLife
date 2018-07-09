@@ -102,7 +102,7 @@ namespace Run4YourLife.Player
             m_animator.SetTrigger(BossAnimation.Triggers.Cast);
             StartCoroutine(AnimationCallbacks.AfterStateAtNormalizedTime(m_animator, BossAnimation.StateNames.Move, m_normalizedTimeToSpawnTrap, () => PlaceSkillAtAnimationCallback(instance)));
             AudioManager.Instance.PlaySFX(m_castClip);
-            ExecuteEvents.Execute<IUIEvents>(m_ui, null, (x, y) => x.OnActionUsed(type, skill.Cooldown));
+            ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (x, y) => x.OnActionUsed(type, skill.Cooldown));
         }
 
         private void PlaceSkillAtAnimationCallback(GameObject instance)

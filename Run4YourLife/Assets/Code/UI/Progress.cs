@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+using Run4YourLife.GameManagement;
+
 namespace Run4YourLife.UI
 {
     public class Progress : MonoBehaviour
@@ -20,9 +22,6 @@ namespace Run4YourLife.UI
         [SerializeField]
         private Sprite bossIconPhase1;
 
-        // [SerializeField]
-        // private Sprite bossIconPhase2;
-
         [SerializeField]
         private Sprite bossIconPhase3;
 
@@ -33,24 +32,19 @@ namespace Run4YourLife.UI
 
         void Awake()
         {
-            SetPhase(PhaseType.FIRST);
+            SetPhase(GamePhase.EasyMoveHorizontal);
         }
 
-        public void SetPhase(PhaseType phaseType)
+        public void SetPhase(GamePhase gamePhase)
         {
-            switch(phaseType)
+            switch(gamePhase)
             {
-                case PhaseType.FIRST:
+                case GamePhase.EasyMoveHorizontal:
                     bossIcon.sprite = bossIconPhase1;
                     currentStart = pointStart;
                     currentEnd = pointMiddle0;
                     break;
-                /* case PhaseType.SECOND:
-                    bossIcon.sprite = bossIconPhase2;
-                    currentStart = pointMiddle0;
-                    currentEnd = pointMiddle1;
-                    break; */
-                case PhaseType.THIRD:
+                case GamePhase.HardMoveHorizontal:
                     bossIcon.sprite = bossIconPhase3;
                     currentStart = pointMiddle1;
                     currentEnd = pointEnd;
