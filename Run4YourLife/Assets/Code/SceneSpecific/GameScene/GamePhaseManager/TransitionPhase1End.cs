@@ -41,13 +41,12 @@ namespace Run4YourLife.GameManagement
             m_startingCutscene.Play();
             yield return new WaitUntil(() => m_startingCutscene.state != PlayState.Playing); // wait until cutscene has completed
             Unbind();
-            //foreach (GameObject runner in runners)
-            //{
-            //    ActivateScripts(runner);
-            //}
-            //ActivateScripts(boss);
-            //GameManager.Instance.ChangeGamePhase(GamePhase.BossFight);
-            GameManager.Instance.EndGame_RunnersWin();
+            foreach (GameObject runner in runners)
+            {
+                ActivateScripts(runner);
+            }
+            ActivateScripts(boss);
+            GameManager.Instance.ChangeGamePhase(GamePhase.TransitionPhase2Start);
         }
 
         private void DeactivateScripts(GameObject g)

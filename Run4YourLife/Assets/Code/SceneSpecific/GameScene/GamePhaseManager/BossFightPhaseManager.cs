@@ -55,8 +55,7 @@ namespace Run4YourLife.GameManagement
         #region Regular Execution
 
         public override void StartPhase()
-        {
-            m_playerSpawner.ActivateBoss();
+        {          
             StartPhaseCommon();
             StartCoroutine(YieldHelper.WaitForSeconds(() => m_bossFightGemManager.ActivateNextGem(), 3));
         }
@@ -70,20 +69,7 @@ namespace Run4YourLife.GameManagement
             m_virtualCamera.LookAt = boss.transform;
             CameraManager.Instance.TransitionToCamera(m_virtualCamera);
 
-            ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (a,b) => a.ShowCrossHair());
-
-            StartCoroutine(YieldHelper.SkipFrame(()=>MoveRunners()));           
-        }
-
-        private void MoveRunners()
-        {
-            for (int i = 0; i < GameplayPlayerManager.Instance.Runners.Count; i++)
-            {
-                GameObject runner = GameplayPlayerManager.Instance.Runners[i];
-                runner.transform.position = m_runnerSpawns[i].position;
-                RunnerController runnerCharacterController = runner.GetComponent<RunnerController>();
-                runnerCharacterController.CheckOutScreen = true;
-            }
+            ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (a,b) => a.ShowCrossHair());       
         }
 
         public void StartNextPhase()
@@ -112,6 +98,7 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugStartPhase()
         {
+            m_playerSpawner.ActivateBoss();
             m_playerSpawner.ActivatePlayers();
             m_virtualCamera.transform.position = m_bossFightStartingCameraPositionDebug.position;
 

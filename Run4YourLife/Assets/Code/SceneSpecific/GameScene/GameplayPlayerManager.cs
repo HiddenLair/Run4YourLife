@@ -205,6 +205,15 @@ namespace Run4YourLife.GameManagement {
             }
         }
 
+        //Revive all runners into their ghost positions(Mainly used for phase revival)
+        public void  ReviveAllRunners()
+        {
+            for(int i = 0; i< GhostsAlive.Count;)
+            {
+                OnRunnerRevive(GhostsAlive[i].GetComponent<PlayerHandle>(),GhostsAlive[i].transform.position);
+            }
+        }
+
         public GameObject OnRunnerRevive(PlayerHandle playerHandle, Vector3 position)
         {
             DeactivateGhost(playerHandle);

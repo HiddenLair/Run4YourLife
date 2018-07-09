@@ -18,9 +18,14 @@ MonoBehaviour:
       m_Style: 1
       m_Time: 2
   - m_From: CM_EasyBossHorizontalCamera
-    m_To: CM_EasyMoveHorizontalEndTransition
+    m_To: CM_Phase1EndTransition
     m_Blend:
       m_Style: 1
+      m_Time: 2
+  - m_From: CM_Phase1EndTransition
+    m_To: CM_BossFightCamera
+    m_Blend:
+      m_Style: 0
       m_Time: 2
   - m_From: CM_BossFightCamera
     m_To: CM_BossFightRockTransitionCamera
