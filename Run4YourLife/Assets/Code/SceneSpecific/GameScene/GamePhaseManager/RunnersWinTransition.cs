@@ -47,29 +47,31 @@ namespace Run4YourLife.GameManagement
         private IEnumerator StartPhaseCoroutine()
         {
             CameraManager.Instance.TransitionToCamera(m_virtualCamera);
-            List<GameObject> runners = GameplayPlayerManager.Instance.RunnersAlive;
-            GameObject boss = GameplayPlayerManager.Instance.Boss;
-            runners.AddRange(GameplayPlayerManager.Instance.GhostsAlive);
+            
             //Unable players input, in order to make them fall to ground from jumps
+            List<GameObject> runners = GameplayPlayerManager.Instance.RunnersAlive;
+            runners.AddRange(GameplayPlayerManager.Instance.GhostsAlive); // Alert: You are modifying gameplay player manager list.
             foreach(GameObject g in runners)
             {
-                PlayerInstance instance = g.GetComponent<PlayerInstance>();
+                PlayerInstance instance = g.GetComponent<PlayerInstance>(); // Alert: Player instance is a class used to hold playerhandle for the player. It does not control movement
                 instance.enabled = false;
             }
+
             //Stop boss and spawn defensive  wall
+            GameObject boss = GameplayPlayerManager.Instance.Boss;
             DeactivateScripts(boss);
+            //Note: Make it a transform on the hierarchy and use that position, I would not make it with and offset and the boss's position
             Vector3 wallPos = boss.transform.position;
             wallPos.x += xOffsetWall;
             wall.transform.position = wallPos;
             wall.SetActive(true);
 
             //Wait for all alive runners to touch ground
-            List<GameObject> aliveRunners = GameplayPlayerManager.Instance.RunnersAlive;
             bool done = false;
             while (!done)
             {
                 done = true;
-                foreach (GameObject g in aliveRunners)
+                foreach (GameObject g in GameplayPlayerManager.Instance.RunnersAlive)
                 {
                     if (!g.GetComponent<CharacterController>().isGrounded)
                     {
