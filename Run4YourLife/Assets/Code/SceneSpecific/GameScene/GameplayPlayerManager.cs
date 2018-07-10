@@ -196,7 +196,7 @@ namespace Run4YourLife.GameManagement {
             }
             else if (m_runnersAlive.Count == 0)
             {
-                m_gameplayEvents.EndGame_BossWin();
+                GameManager.Instance.ChangeGamePhase(GamePhase.BossWin);
             }
             else if (firstDeath && m_firstKillManager != null)//If we are not alone in the tutorial, we will show the revive text
             {
