@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Timeline;
+using UnityEngine.Playables;
 using Cinemachine;
-using Run4YourLife.Player;
 
 namespace Run4YourLife.GameManagement
 {
@@ -10,71 +11,144 @@ namespace Run4YourLife.GameManagement
     {
         public override GamePhase GamePhase { get { return GamePhase.TransitionPhase2End; } }
 
-        #region Inspector
+        [SerializeField]
+        private PlayableDirector m_startingCutscene;
+
         [SerializeField]
         private CinemachineVirtualCamera m_virtualCamera;
 
-        [SerializeField]
-        private GameObject bossRockToMove;
-
-        [SerializeField]
-        private GameObject cameraLookAtThis;
-
-        [SerializeField]
-        private float time;
-        #endregion
+        private TimelineAsset timelineAsset;
 
         public override void StartPhase()
         {
-            m_virtualCamera.LookAt=cameraLookAtThis.transform;
-            m_virtualCamera.Follow = cameraLookAtThis.transform;
-            CameraManager.Instance.TransitionToCamera(m_virtualCamera);
-
-            foreach (GameObject runner in GameplayPlayerManager.Instance.Runners)
-            {
-                RunnerController runnerCharacterController = runner.GetComponent<RunnerController>();
-                runnerCharacterController.CheckOutScreen = true;
-            }
-
-            Vector3 bossPos = bossRockToMove.transform.position;
-            StartCoroutine(SlowMove(bossRockToMove, new Vector3(bossPos.x, 0.5f, 0), time));
+            StartCoroutine(StartPhaseCoroutine());
         }
 
-        IEnumerator SlowMove(GameObject g, Vector3 destination, float time)
+        private IEnumerator StartPhaseCoroutine()
+        {         
+            List<GameObject> runners = new List<GameObject>();
+            runners.AddRange(GameplayPlayerManager.Instance.RunnersAlive);
+            runners.AddRange(GameplayPlayerManager.Instance.GhostsAlive);
+            foreach (GameObject runner in runners)
+            {
+                DeactivateScripts(runner);
+            }
+            GameObject boss = GameplayPlayerManager.Instance.Boss;
+            DeactivateScripts(boss);
+
+            BindTimelineTracks(runners, boss);
+            m_startingCutscene.Play();
+            yield return new WaitUntil(() => m_startingCutscene.state != PlayState.Playing); // wait until cutscene has completed
+            Unbind();
+            foreach (GameObject runner in runners)
+            {
+                ActivateScripts(runner);
+            }
+            ActivateScripts(boss);
+            GameManager.Instance.ChangeGamePhase(GamePhase.TransitionPhase3Start);
+        }
+
+        private void DeactivateScripts(GameObject g)
         {
-            float endTime = Time.time + time;
-            Vector3 gPos = g.transform.position;
-            Vector3 diference = destination - gPos;
-            while (Time.time < endTime)
+            foreach (MonoBehaviour mono in g.GetComponents<MonoBehaviour>())
             {
-                float var = (endTime - Time.time) / time;
-                g.transform.position = gPos + diference * (1 - var);
-                yield return null;
+                mono.enabled = false;
             }
         }
 
+        private void ActivateScripts(GameObject g)
+        {
+            foreach (MonoBehaviour mono in g.GetComponents<MonoBehaviour>())
+            {
+                mono.enabled = true;
+            }
+            Animator anim = g.GetComponent<Animator>();
+            Avatar temp = anim.avatar;
+            anim.avatar = null;
+            anim.avatar = temp;
+        }
+
+        private void BindTimelineTracks(List<GameObject> runners, GameObject boss)
+        {
+            timelineAsset = (TimelineAsset)m_startingCutscene.playableAsset;
+            var outputs = timelineAsset.outputs;
+            foreach (PlayableBinding itm in outputs)
+            {
+                if (itm.streamName.Contains("Move"))
+                {
+                    SetTrackBindingByTransform(itm, runners, boss);
+                }
+                else
+                {
+                    SentTrackBindingByObject(itm, runners, boss);
+                }
+
+            }
+        }
+
+        private void SetTrackBindingByTransform(PlayableBinding itm, List<GameObject> runners, GameObject boss)
+        {
+            if (itm.streamName.Contains("Player1") && runners.Count > 0)
+            {
+                m_startingCutscene.SetGenericBinding(itm.sourceObject, runners[0].transform);
+            }
+            else if (itm.streamName.Contains("Player2") && runners.Count > 1)
+            {
+                m_startingCutscene.SetGenericBinding(itm.sourceObject, runners[1].transform);
+            }
+            else if (itm.streamName.Contains("Player3") && runners.Count > 2)
+            {
+                m_startingCutscene.SetGenericBinding(itm.sourceObject, runners[2].transform);
+            }
+            else if (itm.streamName.Contains("Boss"))
+            {
+                m_startingCutscene.SetGenericBinding(itm.sourceObject, boss.transform);
+            }
+        }
+
+        private void SentTrackBindingByObject(PlayableBinding itm, List<GameObject> runners, GameObject boss)
+        {
+            if (itm.streamName.Contains("Player1") && runners.Count > 0)
+            {
+                m_startingCutscene.SetGenericBinding(itm.sourceObject, runners[0]);
+            }
+            else if (itm.streamName.Contains("Player2") && runners.Count > 1)
+            {
+                m_startingCutscene.SetGenericBinding(itm.sourceObject, runners[1]);
+            }
+            else if (itm.streamName.Contains("Player3") && runners.Count > 2)
+            {
+                m_startingCutscene.SetGenericBinding(itm.sourceObject, runners[2]);
+            }
+            else if (itm.streamName.Contains("Boss"))
+            {
+                m_startingCutscene.SetGenericBinding(itm.sourceObject, boss);
+            }
+        }
+
+        private void Unbind()
+        {
+            timelineAsset = (TimelineAsset)m_startingCutscene.playableAsset;
+            var outputs = timelineAsset.outputs;
+            foreach (var itm in outputs)
+            {
+                m_startingCutscene.SetGenericBinding(itm.sourceObject, null);
+            }
+        }
         public override void EndPhase()
         {
-            EndPhaseCommon();
-        }
 
-        private void EndPhaseCommon()
-        {
-            foreach (GameObject runner in GameplayPlayerManager.Instance.Runners)
-            {
-                RunnerController runnerCharacterController = runner.GetComponent<RunnerController>();
-                runnerCharacterController.CheckOutScreen = false;
-            }
         }
 
         public override void DebugStartPhase()
         {
-            Debug.LogError("This method should never be called");
+            CameraManager.Instance.TransitionToCamera(m_virtualCamera);
+            StartCoroutine(StartPhaseCoroutine());
         }
 
         public override void DebugEndPhase()
         {
-            EndPhaseCommon();
+
         }
     }
 }

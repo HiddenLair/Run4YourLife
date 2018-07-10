@@ -70,7 +70,7 @@ namespace Run4YourLife.GameManagement
             yield return new WaitUntil(() => m_BossCutscene.state != PlayState.Playing); // wait until cutscene has completed
             Unbind(m_BossCutscene);
             ActivateScripts(boss);
-            GameManager.Instance.ChangeGamePhase(GamePhase.BossFight);
+            GameManager.Instance.ChangeGamePhase(GamePhase.TransitionPhase2End);
         }
 
         private void DeactivateScripts(GameObject g)
