@@ -13,28 +13,29 @@ namespace Run4YourLife.GameManagement.AudioManagement
         [SerializeField]
         private AudioSource m_musicAudioSource;
 
-        public void PlaySFX(AudioClip sfxClip)
+        public void PlaySFX(AudioClip audioClip)
         {
-            if(sfxClip == null)
+            if(audioClip == null)
             {
                 Debug.LogWarning("Trying to play null audio clip");
             }
-            m_sfxAudioSource.PlayOneShot(sfxClip);
+            m_sfxAudioSource.PlayOneShot(audioClip);
         }
 
-        public void PlayMusic(AudioClip musicClip)
+        public void PlayMusic(AudioClip audioClip)
         {
-            StopMusic();
-
-            m_musicAudioSource.clip = musicClip;
-            m_musicAudioSource.loop = true;
-            m_musicAudioSource.Play();
+            if(m_musicAudioSource.clip != audioClip)
+            {
+                m_musicAudioSource.Stop();
+                m_musicAudioSource.clip = audioClip;
+                m_musicAudioSource.loop = true;
+                m_musicAudioSource.Play();
+            }
         }
 
         public void StopMusic()
         {
             m_musicAudioSource.clip = null;
-            m_musicAudioSource.loop = false;
             m_musicAudioSource.Stop();
         }
 

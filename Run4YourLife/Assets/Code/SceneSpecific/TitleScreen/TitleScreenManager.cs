@@ -4,6 +4,7 @@ using UnityEngine;
 
 using Run4YourLife.SceneManagement;
 using Run4YourLife.InputManagement;
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.SceneSpecific.TitleScreen
 {
