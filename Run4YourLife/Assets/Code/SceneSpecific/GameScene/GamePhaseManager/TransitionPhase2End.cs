@@ -14,9 +14,6 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private PlayableDirector m_startingCutscene;
 
-        [SerializeField]
-        private CinemachineVirtualCamera m_virtualCamera;
-
         private TimelineAsset timelineAsset;
 
         public override void StartPhase()
@@ -142,13 +139,12 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugStartPhase()
         {
-            CameraManager.Instance.TransitionToCamera(m_virtualCamera);
-            StartCoroutine(StartPhaseCoroutine());
+            Debug.Log("This method should not be called");
         }
 
         public override void DebugEndPhase()
         {
-
+            Debug.Log("This method should not be called");
         }
     }
 }

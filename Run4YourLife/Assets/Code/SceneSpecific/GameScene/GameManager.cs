@@ -134,11 +134,11 @@ namespace Run4YourLife.GameManagement
                 }
                 else if(Input.GetKeyDown(KeyCode.Keypad4))
                 {
-                    DebugChangePhase(GamePhase.TransitionPhase1End);
+                    DebugChangePhase(GamePhase.TransitionPhase2Start);
                 }
                 else if(Input.GetKeyDown(KeyCode.Keypad5))
                 {
-                    DebugChangePhase(GamePhase.TransitionPhase2Start);
+                    DebugChangePhase(GamePhase.TransitionPhase3Start);
                 }
             }
         }

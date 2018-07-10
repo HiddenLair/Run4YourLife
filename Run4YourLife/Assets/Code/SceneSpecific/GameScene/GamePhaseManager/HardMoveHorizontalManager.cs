@@ -24,12 +24,6 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private CinemachineVirtualCamera m_virtualCamera;
 
-        [SerializeField]
-        private Material m_newBackgroundMat;
-
-        [SerializeField]
-        private Transform[] m_runnerSpawns;
-
         #endregion
 
         #region Member Variables
@@ -53,7 +47,6 @@ namespace Run4YourLife.GameManagement
         public override void StartPhase()
         {
             m_checkPointManager.gameObject.SetActive(true);
-            m_playerSpawner.ActivateBoss();
             StartPhaseCommon();
         }
 
@@ -65,19 +58,6 @@ namespace Run4YourLife.GameManagement
             CameraManager.Instance.TransitionToCamera(m_virtualCamera);
 
             boss.GetComponent<BossPathWalker>().m_position = 0;
-
-            StartCoroutine(YieldHelper.SkipFrame(() => MoveRunners()));
-        }
-
-        private void MoveRunners()
-        {
-            for (int i = 0; i < GameplayPlayerManager.Instance.Runners.Count; i++)
-            {
-                GameObject runner = GameplayPlayerManager.Instance.Runners[i];
-                runner.transform.position = m_runnerSpawns[i].position;
-                RunnerController runnerCharacterController = runner.GetComponent<RunnerController>();
-                runnerCharacterController.CheckOutScreen = true;
-            }
         }
 
         public override void EndPhase()
@@ -104,7 +84,7 @@ namespace Run4YourLife.GameManagement
         {
             m_checkPointManager.gameObject.SetActive(true);
             m_playerSpawner.ActivatePlayers();
-
+            m_playerSpawner.ActivateBoss();
             StartPhaseCommon();
         }
 
