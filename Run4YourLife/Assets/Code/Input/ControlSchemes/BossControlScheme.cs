@@ -39,8 +39,8 @@ namespace Run4YourLife.InputManagement
             InputActions.Add(NextSet = new InputAction(new InputSource(Button.RB), "NextSet"));
             InputActions.Add(PreviousSet = new InputAction(new InputSource(Button.LB), "PreviousSet"));
 
-            InputActions.Add(Shoot = new InputAction(new InputSource(Trigger.RIGHT), "Shoot"));
-            InputActions.Add(Melee = new InputAction(new InputSource(Trigger.LEFT), "Melee"));
+            InputActions.Add(Shoot = new InputAction(new InputSource(Button.RB), "Shoot"));
+            InputActions.Add(Melee = new InputAction(new InputSource(Button.LB), "Melee"));
 
             InputActions.Add(MoveLaserVertical = new InputAction(new InputSource(Axis.RIGHT_VERTICAL), "MoveLaserVertical"));
             InputActions.Add(MoveLaserHorizontal = new InputAction(new InputSource(Axis.RIGHT_HORIZONTAL), "MoveLaserHorizontal"));

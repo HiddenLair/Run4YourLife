@@ -120,12 +120,12 @@ namespace Run4YourLife.Player
                     m_bombReadyTime = Time.time + m_bombSkill.Cooldown;
                     ExecuteSkill(m_bombSkill, ActionType.B, skillSpawnData);
                 } 
-                else if(m_controlScheme.Shoot.BoolValue() && m_shootReadyTime <= Time.time)
+                else if(m_controlScheme.Shoot.Started() && m_shootReadyTime <= Time.time)
                 {
                     m_shootReadyTime = Time.time + m_shootCooldown;
                     ExecuteShoot();
                 }
-                else if(m_controlScheme.Melee.BoolValue() && m_meleeReadyTime <= Time.time)
+                else if(m_controlScheme.Melee.Started() && m_meleeReadyTime <= Time.time)
                 {
                     m_meleeReadyTime = Time.time + m_meleeCooldown;
                     ExecuteMelee();
