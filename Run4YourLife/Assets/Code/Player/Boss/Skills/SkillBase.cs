@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Run4YourLife.Player
 {
-    [RequireComponent(typeof(AudioSource))]
     public abstract class SkillBase : MonoBehaviour {
 
         public struct SkillSpawnData {
@@ -19,8 +18,6 @@ namespace Run4YourLife.Player
 
         [SerializeField]
         protected AudioClip m_skillTriggerClip;
-
-        protected AudioSource m_skillAudioSource;
 
         [SerializeField]
         private float m_cooldown;
