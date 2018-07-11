@@ -11,7 +11,7 @@ namespace Run4YourLife.SceneSpecific.PauseMenu
     {
         public void OnContinueButtonClick()
         {
-            PauseManager.Instance.UnPauseGame();
+            PauseManager.Instance.ResumeGame();
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+
 using Run4YourLife.SceneManagement;
 using Run4YourLife.InputManagement;
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.GameManagement
 {
@@ -20,6 +22,12 @@ namespace Run4YourLife.GameManagement
 
         [SerializeField]
         private SceneTransitionRequest m_pauseSceneUnloader;
+
+        [SerializeField]
+        private AudioClip m_pauseGameAudioClip;
+
+        [SerializeField]
+        private AudioClip m_resumeGameAudioClip;
         
         private PauseState m_pauseState = PauseState.UNPAUSED;
         
@@ -40,7 +48,7 @@ namespace Run4YourLife.GameManagement
                 }
                 else
                 {
-                    UnPauseGame();
+                    ResumeGame();
                 }
             }
         }
@@ -52,6 +60,7 @@ namespace Run4YourLife.GameManagement
             Time.timeScale = 0;
             m_pauseSceneLoader.Execute();
             CameraManager.Instance.CinemachineBrain.enabled = false;
+            AudioManager.Instance.PlaySFX(m_pauseGameAudioClip);
 
             foreach(GameObject runner in GameplayPlayerManager.Instance.RunnersAlive)
             {
@@ -64,13 +73,14 @@ namespace Run4YourLife.GameManagement
             }
         }
 
-        public void UnPauseGame()
+        public void ResumeGame()
         {
             Debug.Assert(m_pauseState == PauseState.PAUSED);
             m_pauseState = PauseState.UNPAUSED;
             Time.timeScale = 1;
             m_pauseSceneUnloader.Execute();
             CameraManager.Instance.CinemachineBrain.enabled = true;
+            AudioManager.Instance.PlaySFX(m_resumeGameAudioClip);
 
             foreach(GameObject runner in GameplayPlayerManager.Instance.RunnersAlive)
             {
