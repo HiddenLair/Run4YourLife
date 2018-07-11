@@ -93,7 +93,6 @@ GameObject:
   - component: {fileID: 65225329854846206}
   - component: {fileID: 114854963285388418}
   - component: {fileID: 114649184513069464}
-  - component: {fileID: 82364100552190672}
   m_Layer: 9
   m_Name: Bomb3
   m_TagString: Untagged
@@ -121,7 +120,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1917008379314224}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.6005108, y: 3.322, z: -0.13933563}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4985582779121024}
@@ -318,86 +317,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!82 &82364100552190672
-AudioSource:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1917008379314224}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
 --- !u!95 &95312080584255480
 Animator:
   serializedVersion: 3
@@ -465,6 +384,7 @@ MonoBehaviour:
   phase: 2
   m_skillTriggerClip: {fileID: 8300000, guid: 4a235b16048326246adf6fdd4f2cecee, type: 3}
   m_cooldown: 1
+  m_trapfallClip: {fileID: 0}
   m_trapDetonationClip: {fileID: 8300000, guid: c7089bbb0eef8b94989d7d2458034bcb,
     type: 3}
   m_fadeInTime: 1
@@ -474,14 +394,18 @@ MonoBehaviour:
   indicatorParticles: {fileID: 1751776643570596, guid: fa8134d7703a4c34bb96cae308ef5c96,
     type: 2}
   m_explosionRatius: 1.5
+  explosionParticles: {fileID: 0}
   activationParticles: {fileID: 1751776643570596, guid: fa8134d7703a4c34bb96cae308ef5c96,
     type: 2}
+  trembleFall: {fileID: 0}
+  trembleExplosion: {fileID: 0}
   timeBetweenFire: 2
   fireGrowDuration: 0.5
   fireStableDuration: 0.5
   fireScript: {fileID: 114508517696187172}
   timeBetweenJumps: 2
   jumpHeight: 2
+  bossSpawnCheckCollider: {fileID: 0}
 --- !u!135 &135017099566873540
 SphereCollider:
   m_ObjectHideFlags: 1

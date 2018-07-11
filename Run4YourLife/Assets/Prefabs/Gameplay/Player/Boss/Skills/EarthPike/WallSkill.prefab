@@ -99,7 +99,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1705394957324018}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.0571766, y: 25.789738, z: -59.603344}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4187672786156926}
@@ -244,6 +244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fx: {fileID: 1230101138075350, guid: 7212caca91c358048947d36ac7208485, type: 2}
   anim: {fileID: 0}
+  sfx: {fileID: 0}
 --- !u!114 &114114631040832786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -255,9 +256,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b92ecf5f4d4d524cb0d9d3ae1970b3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  receiver: {fileID: 114014028240481856}
-  m_onBrokenByDash:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  m_receiver: {fileID: 0}
+  m_destroyClip: {fileID: 0}
