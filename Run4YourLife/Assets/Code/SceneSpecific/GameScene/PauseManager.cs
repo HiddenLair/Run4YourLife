@@ -2,6 +2,7 @@
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using Run4YourLife.SceneManagement;
+using Run4YourLife.InputManagement;
 
 namespace Run4YourLife.GameManagement
 {
@@ -11,57 +12,75 @@ namespace Run4YourLife.GameManagement
         UNPAUSED
     }
 
-    public interface IPauseEvent : IEventSystemHandler
+    [RequireComponent(typeof(PlayersGameControlScheme))]
+    public class PauseManager : SingletonMonoBehaviour<PauseManager>
     {
-        void OnPauseInput();
-        void AttachListener(UnityAction<PauseState> pauseListenerAction);
-        void DetachListener(UnityAction<PauseState> pauseListenerAction);
-    }
+        [SerializeField]
+        private SceneTransitionRequest m_pauseSceneLoader;
 
-    public class PauseStateChangeEvent : UnityEvent<PauseState> { }
+        [SerializeField]
+        private SceneTransitionRequest m_pauseSceneUnloader;
+        
+        private PauseState m_pauseState = PauseState.UNPAUSED;
+        
+        private PlayersGameControlScheme m_playersGameControlScheme;
 
-    public class PauseManager : SingletonMonoBehaviour<PauseManager>, IPauseEvent
-    {
-        private PauseState actualGameState = PauseState.UNPAUSED;
-        public SceneTransitionRequest m_pauseSceneLoader;
-        public SceneTransitionRequest m_pauseSceneUnloader;
-        private PauseStateChangeEvent PauseChangeEvent = new PauseStateChangeEvent();
-
-        public void OnPauseInput()
+        private void Awake()
         {
-            switch(actualGameState)
-            {
-                case PauseState.PAUSED:
-                    {
-                        CameraManager.Instance.CinemachineBrain.enabled = true;
-                        
-                        Time.timeScale = 1;
-                        actualGameState = PauseState.UNPAUSED;
-                        m_pauseSceneUnloader.Execute();
-                    }
-                    break;
-                case PauseState.UNPAUSED:
-                    {
-                        CameraManager.Instance.CinemachineBrain.enabled = false;
+            m_playersGameControlScheme = GetComponent<PlayersGameControlScheme>();
+        }
 
-                        Time.timeScale = 0;
-                        actualGameState = PauseState.PAUSED;
-                        m_pauseSceneLoader.Execute();
-                    }
-                    break;
+        private void Update()
+        {
+            if(m_playersGameControlScheme.Pause.Started())
+            {
+                if(m_pauseState == PauseState.UNPAUSED)
+                {
+                    PauseGame();
+                }
+                else
+                {
+                    UnPauseGame();
+                }
+            }
+        }
+
+        public void PauseGame()
+        {
+            Debug.Assert(m_pauseState == PauseState.UNPAUSED);
+            m_pauseState = PauseState.PAUSED;
+            Time.timeScale = 0;
+            m_pauseSceneLoader.Execute();
+            CameraManager.Instance.CinemachineBrain.enabled = false;
+
+            foreach(GameObject runner in GameplayPlayerManager.Instance.RunnersAlive)
+            {
+                runner.SetActive(false);
             }
 
-            PauseChangeEvent.Invoke(actualGameState);
+            foreach(GameObject ghost in GameplayPlayerManager.Instance.GhostsAlive)
+            {
+                ghost.SetActive(false);
+            }
         }
 
-        public void AttachListener(UnityAction<PauseState> pauseListenerAction)
+        public void UnPauseGame()
         {
-            PauseChangeEvent.AddListener(pauseListenerAction);
-        }
+            Debug.Assert(m_pauseState == PauseState.PAUSED);
+            m_pauseState = PauseState.UNPAUSED;
+            Time.timeScale = 1;
+            m_pauseSceneUnloader.Execute();
+            CameraManager.Instance.CinemachineBrain.enabled = true;
 
-        public void DetachListener(UnityAction<PauseState> pauseListenerAction)
-        {
-            PauseChangeEvent.RemoveListener(pauseListenerAction);
+            foreach(GameObject runner in GameplayPlayerManager.Instance.RunnersAlive)
+            {
+                runner.SetActive(true);
+            }
+
+            foreach(GameObject ghost in GameplayPlayerManager.Instance.GhostsAlive)
+            {
+                ghost.SetActive(true);
+            }
         }
     }
 }
