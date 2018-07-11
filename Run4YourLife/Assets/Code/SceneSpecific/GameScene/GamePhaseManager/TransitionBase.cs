@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.Playables;
-using Cinemachine;
-using Run4YourLife.GameManagement.AudioManagement;
-using System;
+
 
 namespace Run4YourLife.GameManagement
 {

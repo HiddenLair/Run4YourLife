@@ -1,13 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using UnityEngine.EventSystems;
-using Run4YourLife.UI;
-
+﻿using UnityEngine;
 using Run4YourLife.Player;
 using Run4YourLife.Utils;
-
 using Cinemachine;
 
 namespace Run4YourLife.GameManagement

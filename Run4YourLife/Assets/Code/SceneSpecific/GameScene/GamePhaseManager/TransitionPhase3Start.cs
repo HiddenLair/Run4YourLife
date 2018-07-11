@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Timeline;
 using UnityEngine.Playables;
 using Cinemachine;
 
@@ -27,7 +26,6 @@ namespace Run4YourLife.GameManagement
         private Vector3 offsetFromPortal = new Vector3(0, -0.5f, 0);
 
         private Coroutine m_startPhaseCoroutine;
-        private int cutSceneNumber = -1;
         private PlayerSpawner m_playerSpawner;
 
         private void Awake()
@@ -62,8 +60,6 @@ namespace Run4YourLife.GameManagement
 
         private void StartCutSceneRunners()
         {
-            cutSceneNumber = 0;
-
             List<GameObject> runners = GameplayPlayerManager.Instance.RunnersAlive;
             foreach (GameObject runner in runners)
             {
@@ -88,8 +84,6 @@ namespace Run4YourLife.GameManagement
 
         private void StartCutSceneBoss()
         {
-            cutSceneNumber = 1;
-
             //Boss intro
             GameObject boss = m_playerSpawner.ActivateBoss();
             DeactivateScripts(boss);
@@ -113,26 +107,14 @@ namespace Run4YourLife.GameManagement
             StopCoroutine(m_startPhaseCoroutine);
             m_startPhaseCoroutine = null;
 
-            switch (cutSceneNumber)
-            {
-                case 0:
-                    {
-                        EndCutSceneRunners();
-                    }
-                    break;
-                case 1:
-                    {
-                        EndCutSceneBoss();
-                    }
-                    break;
-            }
-            cutSceneNumber = -1;
+            EndCutSceneRunners();
+            EndCutSceneBoss();
         }
 
         public override void DebugStartPhase()
         {
             GameplayPlayerManager.Instance.ReviveAllRunners();
-            StartCoroutine(StartPhaseCoroutine());
+            m_startPhaseCoroutine = StartCoroutine(StartPhaseCoroutine());
         }
     }
 }

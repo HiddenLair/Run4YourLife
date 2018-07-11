@@ -26,6 +26,7 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private Vector3 offsetFromPortal = new Vector3 (0,-0.5f,0);
 
+        private Coroutine m_startPhaseCoroutine;
         private PlayerSpawner m_playerSpawner;
 
         private void Awake()
@@ -37,13 +38,30 @@ namespace Run4YourLife.GameManagement
         public override void StartPhase()
         {
             GameplayPlayerManager.Instance.ReviveAllRunners();
-            StartCoroutine(StartPhaseCoroutine());
+            m_startPhaseCoroutine = StartCoroutine(StartPhaseCoroutine());
         }
 
         private IEnumerator StartPhaseCoroutine()
         {
             CameraManager.Instance.TransitionToCamera(m_virtualCamera);
 
+            StartRunnersCutScene();
+            
+            yield return new WaitUntil(() => m_RunnersCutscene.state != PlayState.Playing); // wait until cutscene has completed
+
+            EndRunnersCutScene();
+
+            StartBossCutScene();
+            
+            yield return new WaitUntil(() => m_BossCutscene.state != PlayState.Playing); // wait until cutscene has completed
+
+            EndBossCutScene();
+
+            GameManager.Instance.ChangeGamePhase(GamePhase.TransitionPhase2End);
+        }
+
+        private void StartRunnersCutScene()
+        {
             List<GameObject> runners = GameplayPlayerManager.Instance.RunnersAlive;
             foreach (GameObject runner in runners)
             {
@@ -57,19 +75,28 @@ namespace Run4YourLife.GameManagement
             //Runners intro
             BindTimelineTracks(m_RunnersCutscene, runners, boss);
             m_RunnersCutscene.Play();
-            yield return new WaitUntil(() => m_RunnersCutscene.state != PlayState.Playing); // wait until cutscene has completed
+        }
+
+        private void EndRunnersCutScene()
+        {
             Unbind(m_RunnersCutscene);
-            foreach (GameObject runner in runners)
+            foreach (GameObject runner in GameplayPlayerManager.Instance.RunnersAlive)
             {
                 ActivateScripts(runner);
             }
+        }
+
+        private void StartBossCutScene()
+        {
             //Boss intro
-            BindTimelineTracks(m_BossCutscene,runners,boss);
+            BindTimelineTracks(m_BossCutscene, GameplayPlayerManager.Instance.RunnersAlive, GameplayPlayerManager.Instance.Boss);
             m_BossCutscene.Play();
-            yield return new WaitUntil(() => m_BossCutscene.state != PlayState.Playing); // wait until cutscene has completed
+        }
+
+        private void EndBossCutScene()
+        {
             Unbind(m_BossCutscene);
-            ActivateScripts(boss);
-            GameManager.Instance.ChangeGamePhase(GamePhase.TransitionPhase2End);
+            ActivateScripts(GameplayPlayerManager.Instance.Boss);
         }
 
         public override void EndPhase()
@@ -79,13 +106,17 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugEndPhase()
         {
-            Debug.LogError("This method should never be called");
+            StopCoroutine(m_startPhaseCoroutine);
+            m_startPhaseCoroutine = null;
+
+            EndRunnersCutScene();
+            EndBossCutScene();
         }
 
         public override void DebugStartPhase()
         {
             GameplayPlayerManager.Instance.ReviveAllRunners();
-            StartCoroutine(StartPhaseCoroutine());
+            m_startPhaseCoroutine = StartCoroutine(StartPhaseCoroutine());
         }
     }
 }

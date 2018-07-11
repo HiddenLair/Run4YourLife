@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.Timeline;
 using UnityEngine.Playables;
 using Cinemachine;
 using Run4YourLife.GameManagement.AudioManagement;
-using System;
 
 namespace Run4YourLife.GameManagement
 {
@@ -54,7 +51,7 @@ namespace Run4YourLife.GameManagement
             
             yield return new WaitUntil(() => m_startingCutscene.state != PlayState.Playing); // wait until cutscene has completed
             
-            EndCutscene();
+            EndCutScene();
 
             GameManager.Instance.ChangeGamePhase(GamePhase.EasyMoveHorizontal);
         }
@@ -75,7 +72,7 @@ namespace Run4YourLife.GameManagement
             m_startingCutscene.Play();
         }
 
-        private void EndCutscene()
+        private void EndCutScene()
         {
             Unbind(m_startingCutscene);
             foreach (GameObject runner in GameplayPlayerManager.Instance.Runners)
@@ -91,7 +88,8 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugStartPhase()
         {
-            Debug.LogError("This method should never be called");
+            AudioManager.Instance.PlayMusic(phaseMusic);
+            m_startPhaseCoroutine = StartCoroutine(StartPhaseCoroutine());
         }
 
         public override void DebugEndPhase()
@@ -99,7 +97,7 @@ namespace Run4YourLife.GameManagement
             StopCoroutine(m_startPhaseCoroutine);
                 m_startPhaseCoroutine = null;
 
-            EndCutscene();
+            EndCutScene();
         }
     }
 }

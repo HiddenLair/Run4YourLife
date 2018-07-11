@@ -15,12 +15,25 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private PlayableDirector m_startingCutscene;
 
+        private Coroutine m_startPhaseCoroutine;
+
         public override void StartPhase()
         {
-            StartCoroutine(StartPhaseCoroutine());
+            m_startPhaseCoroutine = StartCoroutine(StartPhaseCoroutine());
         }
 
         private IEnumerator StartPhaseCoroutine()
+        {
+            StartCutScene();
+
+            yield return new WaitUntil(() => m_startingCutscene.state != PlayState.Playing); // wait until cutscene has completed
+
+            EndCutScene();
+
+            GameManager.Instance.EndGame_BossWin();
+        }     
+
+        private void StartCutScene()
         {
             GameObject boss = GameplayPlayerManager.Instance.Boss;
             List<GameObject> ghosts = GameplayPlayerManager.Instance.Ghosts;
@@ -32,16 +45,15 @@ namespace Run4YourLife.GameManagement
 
             DeactivateScripts(boss);
 
-            BindTimelineTracks(m_startingCutscene,ghosts, boss);
-            BindEndLocationTransformReference(boss.GetComponent<AbsorbPartGetter>().GetPartToAbsorb(),"Move",0,0);
+            BindTimelineTracks(m_startingCutscene, ghosts, boss);
+            BindEndLocationTransformReference(boss.GetComponent<AbsorbPartGetter>().GetPartToAbsorb(), "Move", 0, 0);
             m_startingCutscene.Play();
+        }
 
-            yield return new WaitUntil(() => m_startingCutscene.state != PlayState.Playing); // wait until cutscene has completed
-
+        private void EndCutScene()
+        {
             Unbind(m_startingCutscene);
-
-            GameManager.Instance.EndGame_BossWin();
-        }     
+        }
 
         private void BindEndLocationTransformReference(Transform t,String trackStringId, int minClipNum , int maxClipNum)
         {
@@ -81,7 +93,15 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugEndPhase()
         {
-            Debug.LogError("This method should never be called");
+            StopCoroutine(m_startPhaseCoroutine);
+            m_startPhaseCoroutine = null;
+
+            EndCutScene();
+            foreach (GameObject ghost in GameplayPlayerManager.Instance.Ghosts)
+            {
+                ActivateScripts(ghost);
+            }
+            ActivateScripts(GameplayPlayerManager.Instance.Boss);
         }
     }
 }

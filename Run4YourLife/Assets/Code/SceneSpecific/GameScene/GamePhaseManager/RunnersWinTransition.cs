@@ -1,12 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Timeline;
 using UnityEngine.Playables;
 using Cinemachine;
 using Run4YourLife.Player;
-using Run4YourLife.UI;
 
 namespace Run4YourLife.GameManagement
 {
@@ -29,6 +26,9 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private float xOffsetWall = 2.0f;
 
+        private Coroutine m_startPhaseCoroutine;
+        private int cutSceneNumber = -1;
+
         public override void StartPhase()
         {
             StartCoroutine(StartPhaseCoroutine());
@@ -36,6 +36,7 @@ namespace Run4YourLife.GameManagement
 
         private IEnumerator StartPhaseCoroutine()
         {
+            cutSceneNumber = -1;
             CameraManager.Instance.TransitionToCamera(m_virtualCamera);
 
             //Unable players input, in order to make them fall to ground from jumps
@@ -83,19 +84,11 @@ namespace Run4YourLife.GameManagement
                 yield return null;
             }
 
-            //Now, we deactivate all, and start cinemachine
-            foreach (GameObject runner in runners)
-            {
-                DeactivateScripts(runner);
-            }           
-
-            //Place runners to revive them and start next timeline
-            BindTimelineTracks(m_positioningCutscene,runners, boss);
-
-            m_positioningCutscene.Play();
+            StartRunnersPositioningCutScene(runners);
+            
             yield return new WaitUntil(() => m_positioningCutscene.state != PlayState.Playing); // wait until cutscene has completed
 
-            Unbind(m_positioningCutscene);
+            EndRunnersPositioningCutScene();
 
             //Revive Players
 
@@ -105,16 +98,50 @@ namespace Run4YourLife.GameManagement
                 DeactivateScripts(revivedRunner);
             }
 
-            //Play end transition
-            BindTimelineTracks(m_endCutscene, GameplayPlayerManager.Instance.Runners, boss);
-
-            m_endCutscene.Play();
+            StartBossDeactivateCutScene();
+            
             yield return new WaitUntil(() => m_endCutscene.state != PlayState.Playing); // wait until cutscene has completed
 
-            Unbind(m_endCutscene);
+            EndBossDeactivateCutScene();
 
             GameManager.Instance.EndGame_RunnersWin();
         }      
+
+        private void StartRunnersPositioningCutScene(List<GameObject> runners)
+        {
+            cutSceneNumber = 0;
+
+            //Now, we deactivate all, and start cinemachine
+            foreach (GameObject runner in runners)
+            {
+                DeactivateScripts(runner);
+            }
+
+            //Place runners to revive them and start next timeline
+            BindTimelineTracks(m_positioningCutscene, runners, GameplayPlayerManager.Instance.Boss);
+
+            m_positioningCutscene.Play();
+        }
+
+        private void EndRunnersPositioningCutScene()
+        {
+            Unbind(m_positioningCutscene);
+        }
+
+        private void StartBossDeactivateCutScene()
+        {
+            cutSceneNumber = 1;
+
+            //Play end transition
+            BindTimelineTracks(m_endCutscene, GameplayPlayerManager.Instance.Runners, GameplayPlayerManager.Instance.Boss);
+
+            m_endCutscene.Play();
+        }
+
+        private void EndBossDeactivateCutScene()
+        {
+            Unbind(m_endCutscene);
+        }
 
         public override void EndPhase()
         {
@@ -128,7 +155,36 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugStartPhase()
         {
-            Debug.LogError("This method should never be called");
+            StopCoroutine(m_startPhaseCoroutine);
+            m_startPhaseCoroutine = null;
+
+
+            switch (cutSceneNumber)
+            {
+                case 0:
+                    {
+                        EndRunnersPositioningCutScene();
+                        List<GameObject> runners = new List<GameObject>();
+                        runners.AddRange(GameplayPlayerManager.Instance.RunnersAlive);
+                        runners.AddRange(GameplayPlayerManager.Instance.GhostsAlive);
+                        foreach(GameObject runner in runners)
+                        {
+                            ActivateScripts(runner);
+                        }
+                        ActivateScripts(GameplayPlayerManager.Instance.Boss);
+                    }
+                    break;
+                case 1:
+                    {
+                        EndBossDeactivateCutScene();
+                        foreach (GameObject runner in GameplayPlayerManager.Instance.Runners)
+                        {
+                            ActivateScripts(runner);
+                        }
+                        ActivateScripts(GameplayPlayerManager.Instance.Boss);
+                    }
+                    break;
+            }
         }
 
     }
