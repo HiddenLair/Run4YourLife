@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 using UnityEngine.Playables;
 
@@ -6,7 +7,7 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
 {
     public class VolumeSwitch : MenuEntryArrowed
     {
-        private const float LOGARITHMIC_CORRECTION_POW = 1.75f;
+        private static readonly float MIN_VOLUME = -80f;
 
         [SerializeField]
         private Sprite activeMusicalNote;
@@ -17,62 +18,70 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
         [SerializeField]
         private GameObject[] musicalNotes;
 
-        private int volumeLevel = -1;
+        [SerializeField]
+        private AudioMixerGroup audioMixerGroup;
+
+        private int nActiveMusicalNotes = 5;
 
         protected override void Awake()
         {
             base.Awake();
 
-            volumeLevel = ComputeVolumeLevel();
-            ActivateNotes();
+            UpdateVolume(false);
         }
 
         protected override void OnArrowEvent(MoveEvent moveEvent)
         {
-            int previousVolumeLevel = volumeLevel;
+            int previousActiveMusicalNotes = nActiveMusicalNotes;
+            
+            nActiveMusicalNotes = Mathf.Clamp(nActiveMusicalNotes+(int)moveEvent, 0, musicalNotes.Length);
 
-            volumeLevel += 2 * (int)moveEvent - 1;
-            volumeLevel = Mathf.Clamp(volumeLevel, 0, musicalNotes.Length);
-
-            UpdateVolume(previousVolumeLevel != volumeLevel);
+            // this will  make the last note to not pop up when keeping increasing the volume while at max volume
+            UpdateVolume(nActiveMusicalNotes != previousActiveMusicalNotes); 
         }
 
-        private float ComputeVolume()
+        private float ComputeVolume(int nActiveMusicalNotes)
         {
-            return Mathf.Pow(volumeLevel / (float)musicalNotes.Length, LOGARITHMIC_CORRECTION_POW);
-        }
+            if(nActiveMusicalNotes == 0)
+            {
+                return MIN_VOLUME;
+            }
 
-        private int ComputeVolumeLevel()
-        {
-            return (int)(Mathf.Pow(AudioListener.volume * Mathf.Pow(musicalNotes.Length, LOGARITHMIC_CORRECTION_POW), 1.0f / LOGARITHMIC_CORRECTION_POW));
+            return 30f * Mathf.Log10(((float)nActiveMusicalNotes/musicalNotes.Length));
         }
 
         private void UpdateVolume(bool updateNote)
         {
-            ActivateNotes();
+            UpdateMusicalNotes();
 
-            if(updateNote && volumeLevel > 0)
+            if(updateNote && nActiveMusicalNotes > 0)
             {
-                musicalNotes[volumeLevel - 1].GetComponent<PlayableDirector>().Play();
+                musicalNotes[nActiveMusicalNotes - 1].GetComponent<PlayableDirector>().Play();
             }
 
-            AudioListener.volume = ComputeVolume();
+            SetVolumeToAudioMixerGroup(ComputeVolume(nActiveMusicalNotes));
         }
 
-        private void ActivateNotes()
+        private void SetVolumeToAudioMixerGroup(float volume)
         {
-            for(int i = 0; i < volumeLevel; ++i)
+            string parameter = audioMixerGroup.name+"Volume";
+            audioMixerGroup.audioMixer.SetFloat(parameter, volume);
+        }
+
+        private void UpdateMusicalNotes()
+        {
+            for(int i = 0; i < nActiveMusicalNotes; ++i)
             {
-                ActivateNote(musicalNotes[i], true);
+                UpdateMusicalNote(musicalNotes[i], true);
             }
 
-            for(int i = volumeLevel; i < musicalNotes.Length; ++i)
+            for(int i = nActiveMusicalNotes; i < musicalNotes.Length; ++i)
             {
-                ActivateNote(musicalNotes[i], false);
+                UpdateMusicalNote(musicalNotes[i], false);
             }
         }
 
-        private void ActivateNote(GameObject note, bool active)
+        private void UpdateMusicalNote(GameObject note, bool active)
         {
             note.GetComponent<Image>().sprite = active ? activeMusicalNote : unactiveMusicalNote;
         }

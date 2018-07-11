@@ -24,8 +24,8 @@ GameObject:
   - component: {fileID: 114706112199367142}
   - component: {fileID: 114659316706354280}
   - component: {fileID: 114496176565780298}
-  - component: {fileID: 82512407529329464}
   - component: {fileID: 114436936969616780}
+  - component: {fileID: 82512407529329464}
   - component: {fileID: 82796104511236566}
   m_Layer: 0
   m_Name: GlobalManager
@@ -55,9 +55,10 @@ AudioSource:
   m_GameObject: {fileID: 1444515807158108}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243189551910729776, guid: 4548ecbfae7eea54282375c3e8f999c7,
+    type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -114,7 +115,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -135,9 +136,10 @@ AudioSource:
   m_GameObject: {fileID: 1444515807158108}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243518932095323286, guid: 4548ecbfae7eea54282375c3e8f999c7,
+    type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -194,7 +196,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -218,8 +220,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6645b4bdaef080947b192de362c2146b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_sfxAudioSource: {fileID: 82512407529329464}
-  m_musicAudioSource: {fileID: 82796104511236566}
+  m_sfxAudioSource: {fileID: 82796104511236566}
+  m_musicAudioSource: {fileID: 82512407529329464}
 --- !u!114 &114455861463305546
 MonoBehaviour:
   m_ObjectHideFlags: 1

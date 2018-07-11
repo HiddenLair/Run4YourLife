@@ -8,7 +8,7 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
 {
     public abstract class MenuEntryArrowed : MonoBehaviour, IMoveHandler, ISelectHandler, IDeselectHandler
     {
-        protected enum MoveEvent { Left, Right }
+        protected enum MoveEvent { Left = -1, Right = 1 }
 
         [SerializeField]
         private AudioClip m_switchClip;
