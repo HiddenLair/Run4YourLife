@@ -9,7 +9,7 @@ using System;
 
 namespace Run4YourLife.GameManagement
 {
-    public class TransitionPhase1Start : GamePhaseManager
+    public class TransitionPhase1Start : TransitionBase
     {
         public override GamePhase GamePhase { get { return GamePhase.TransitionPhase1Start; } }
 
@@ -24,9 +24,7 @@ namespace Run4YourLife.GameManagement
 
         private PlayerSpawner m_playerSpawner;
 
-        private Coroutine m_startPhaseCoroutine;
-        private TimelineAsset timelineAsset;
-       
+        private Coroutine m_startPhaseCoroutine;      
 
         #region Initialization
 
@@ -61,16 +59,6 @@ namespace Run4YourLife.GameManagement
             GameManager.Instance.ChangeGamePhase(GamePhase.EasyMoveHorizontal);
         }
 
-        private void EndCutscene()
-        {
-            UnbindTimelineTracks();
-            foreach(GameObject runner in GameplayPlayerManager.Instance.Runners)
-            {
-                ActivateScripts(runner);
-            }
-            ActivateScripts(GameplayPlayerManager.Instance.Boss);
-        }
-
         private void StartCutscene()
         {
             m_playerSpawner.ActivateRunners();
@@ -83,63 +71,18 @@ namespace Run4YourLife.GameManagement
 
             DeactivateScripts(GameplayPlayerManager.Instance.Boss);
 
-            BindTimelineTracks(GameplayPlayerManager.Instance.Runners, GameplayPlayerManager.Instance.Boss);
+            BindTimelineTracks(m_startingCutscene,GameplayPlayerManager.Instance.Runners, GameplayPlayerManager.Instance.Boss);
             m_startingCutscene.Play();
         }
 
-        private void DeactivateScripts(GameObject g)
+        private void EndCutscene()
         {
-            foreach(MonoBehaviour mono in g.GetComponents<MonoBehaviour>())
+            Unbind(m_startingCutscene);
+            foreach (GameObject runner in GameplayPlayerManager.Instance.Runners)
             {
-                mono.enabled = false;
+                ActivateScripts(runner);
             }
-        }
-
-        private void ActivateScripts(GameObject g)
-        {
-            foreach (MonoBehaviour mono in g.GetComponents<MonoBehaviour>())
-            {
-                mono.enabled = true;
-            }
-            Animator anim = g.GetComponent<Animator>();
-            Avatar temp = anim.avatar;
-            anim.avatar = null;
-            anim.avatar = temp;
-        }
-
-        private void BindTimelineTracks(List<GameObject> runners, GameObject boss)
-        {
-            timelineAsset = (TimelineAsset)m_startingCutscene.playableAsset;
-            var outputs = timelineAsset.outputs;
-            foreach (var itm in outputs)
-            {
-                if (itm.streamName.Contains("Player1") && runners.Count > 0)
-                {
-                    m_startingCutscene.SetGenericBinding(itm.sourceObject, runners[0]);
-                }
-                else if (itm.streamName.Contains("Player2") && runners.Count > 1)
-                {
-                    m_startingCutscene.SetGenericBinding(itm.sourceObject, runners[1]);
-                }
-                else if (itm.streamName.Contains("Player3") && runners.Count > 2)
-                {
-                    m_startingCutscene.SetGenericBinding(itm.sourceObject, runners[2]);
-                }
-                else if (itm.streamName.Contains("Boss"))
-                {
-                    m_startingCutscene.SetGenericBinding(itm.sourceObject, boss);
-                }
-            }
-        }
-
-        private void UnbindTimelineTracks()
-        {
-            timelineAsset = (TimelineAsset)m_startingCutscene.playableAsset;
-            var outputs = timelineAsset.outputs;
-            foreach (var itm in outputs)
-            {
-                m_startingCutscene.SetGenericBinding(itm.sourceObject, null);                
-            }
+            ActivateScripts(GameplayPlayerManager.Instance.Boss);
         }
 
         public override void EndPhase()

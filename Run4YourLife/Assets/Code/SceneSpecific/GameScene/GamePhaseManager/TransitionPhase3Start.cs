@@ -7,7 +7,7 @@ using Cinemachine;
 
 namespace Run4YourLife.GameManagement
 {
-    public class TransitionPhase3Start : GamePhaseManager
+    public class TransitionPhase3Start : TransitionBase
     {
         public override GamePhase GamePhase { get { return GamePhase.TransitionPhase3Start; } }
 
@@ -26,7 +26,8 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private Vector3 offsetFromPortal = new Vector3(0, -0.5f, 0);
 
-        private TimelineAsset timelineAsset;
+        private Coroutine m_startPhaseCoroutine;
+        private int cutSceneNumber = -1;
         private PlayerSpawner m_playerSpawner;
 
         private void Awake()
@@ -38,12 +39,30 @@ namespace Run4YourLife.GameManagement
         public override void StartPhase()
         {
             GameplayPlayerManager.Instance.ReviveAllRunners();
-            StartCoroutine(StartPhaseCoroutine());
+            m_startPhaseCoroutine = StartCoroutine(StartPhaseCoroutine());
         }
 
         private IEnumerator StartPhaseCoroutine()
         {
             CameraManager.Instance.TransitionToCamera(m_virtualCamera);
+
+            StartCutSceneRunners();
+
+            yield return new WaitUntil(() => m_RunnersCutscene.state != PlayState.Playing); // wait until cutscene has completed
+
+            EndCutSceneRunners();
+            StartCutSceneBoss();
+            
+            yield return new WaitUntil(() => m_BossCutscene.state != PlayState.Playing); // wait until cutscene has completed
+
+            EndCutSceneBoss();
+
+            GameManager.Instance.ChangeGamePhase(GamePhase.HardMoveHorizontal);
+        }
+
+        private void StartCutSceneRunners()
+        {
+            cutSceneNumber = 0;
 
             List<GameObject> runners = GameplayPlayerManager.Instance.RunnersAlive;
             foreach (GameObject runner in runners)
@@ -56,110 +75,32 @@ namespace Run4YourLife.GameManagement
             //Runners intro
             BindTimelineTracks(m_RunnersCutscene, runners, null);
             m_RunnersCutscene.Play();
-            yield return new WaitUntil(() => m_RunnersCutscene.state != PlayState.Playing); // wait until cutscene has completed
+        }
+
+        private void EndCutSceneRunners()
+        {
             Unbind(m_RunnersCutscene);
-            foreach (GameObject runner in runners)
+            foreach (GameObject runner in GameplayPlayerManager.Instance.RunnersAlive)
             {
                 ActivateScripts(runner);
             }
+        }
+
+        private void StartCutSceneBoss()
+        {
+            cutSceneNumber = 1;
 
             //Boss intro
             GameObject boss = m_playerSpawner.ActivateBoss();
             DeactivateScripts(boss);
-            BindTimelineTracks(m_BossCutscene, runners, boss);
+            BindTimelineTracks(m_BossCutscene, null, boss);
             m_BossCutscene.Play();
-            yield return new WaitUntil(() => m_BossCutscene.state != PlayState.Playing); // wait until cutscene has completed
+        }
+
+        private void EndCutSceneBoss()
+        {
             Unbind(m_BossCutscene);
-            ActivateScripts(boss);
-            GameManager.Instance.ChangeGamePhase(GamePhase.HardMoveHorizontal);
-        }
-
-        private void DeactivateScripts(GameObject g)
-        {
-            foreach (MonoBehaviour mono in g.GetComponents<MonoBehaviour>())
-            {
-                mono.enabled = false;
-            }
-        }
-
-        private void ActivateScripts(GameObject g)
-        {
-            foreach (MonoBehaviour mono in g.GetComponents<MonoBehaviour>())
-            {
-                mono.enabled = true;
-            }
-            Animator anim = g.GetComponent<Animator>();
-            Avatar temp = anim.avatar;
-            anim.avatar = null;
-            anim.avatar = temp;
-        }
-
-        private void BindTimelineTracks(PlayableDirector director, List<GameObject> runners, GameObject boss)
-        {
-            timelineAsset = (TimelineAsset)director.playableAsset;
-            var outputs = timelineAsset.outputs;
-            foreach (PlayableBinding itm in outputs)
-            {
-                if (itm.streamName.Contains("Move"))
-                {
-                    SetTrackBindingByTransform(director, itm, runners, boss);
-                }
-                else
-                {
-                    SentTrackBindingByObject(director, itm, runners, boss);
-                }
-
-            }
-        }
-
-        private void SetTrackBindingByTransform(PlayableDirector director, PlayableBinding itm, List<GameObject> runners, GameObject boss)
-        {
-            if (itm.streamName.Contains("Player1") && runners.Count > 0)
-            {
-                director.SetGenericBinding(itm.sourceObject, runners[0].transform);
-            }
-            else if (itm.streamName.Contains("Player2") && runners.Count > 1)
-            {
-                director.SetGenericBinding(itm.sourceObject, runners[1].transform);
-            }
-            else if (itm.streamName.Contains("Player3") && runners.Count > 2)
-            {
-                director.SetGenericBinding(itm.sourceObject, runners[2].transform);
-            }
-            else if (itm.streamName.Contains("Boss"))
-            {
-                director.SetGenericBinding(itm.sourceObject, boss.transform);
-            }
-        }
-
-        private void SentTrackBindingByObject(PlayableDirector director, PlayableBinding itm, List<GameObject> runners, GameObject boss)
-        {
-            if (itm.streamName.Contains("Player1") && runners.Count > 0)
-            {
-                director.SetGenericBinding(itm.sourceObject, runners[0]);
-            }
-            else if (itm.streamName.Contains("Player2") && runners.Count > 1)
-            {
-                director.SetGenericBinding(itm.sourceObject, runners[1]);
-            }
-            else if (itm.streamName.Contains("Player3") && runners.Count > 2)
-            {
-                director.SetGenericBinding(itm.sourceObject, runners[2]);
-            }
-            else if (itm.streamName.Contains("Boss"))
-            {
-                director.SetGenericBinding(itm.sourceObject, boss);
-            }
-        }
-
-        private void Unbind(PlayableDirector director)
-        {
-            timelineAsset = (TimelineAsset)director.playableAsset;
-            var outputs = timelineAsset.outputs;
-            foreach (var itm in outputs)
-            {
-                director.SetGenericBinding(itm.sourceObject, null);
-            }
+            ActivateScripts(GameplayPlayerManager.Instance.Boss);
         }
 
         public override void EndPhase()
@@ -169,7 +110,23 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugEndPhase()
         {
-            Debug.LogError("This method should never be called");
+            StopCoroutine(m_startPhaseCoroutine);
+            m_startPhaseCoroutine = null;
+
+            switch (cutSceneNumber)
+            {
+                case 0:
+                    {
+                        EndCutSceneRunners();
+                    }
+                    break;
+                case 1:
+                    {
+                        EndCutSceneBoss();
+                    }
+                    break;
+            }
+            cutSceneNumber = -1;
         }
 
         public override void DebugStartPhase()
