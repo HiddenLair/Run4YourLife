@@ -14,7 +14,6 @@ namespace Run4YourLife.Player.CustomEditors
         SerializedProperty adviseParticles;
         SerializedProperty earthPikeEffect;
         SerializedProperty trembleConfig;
-        SerializedProperty growingClip;
         SerializedProperty wallGameObject;
         private void OnEnable()
         {
@@ -32,7 +31,6 @@ namespace Run4YourLife.Player.CustomEditors
             adviseParticles = serializedObject.FindProperty("adviseParticles");
             earthPikeEffect = serializedObject.FindProperty("earthPikeEffect");
             trembleConfig = serializedObject.FindProperty("trembleConfig");
-            growingClip = serializedObject.FindProperty("growingClip");
             wallGameObject = serializedObject.FindProperty("wallGameObject");
         }
 
@@ -46,7 +44,6 @@ namespace Run4YourLife.Player.CustomEditors
             EditorGUILayout.PropertyField(adviseParticles);
             EditorGUILayout.PropertyField(earthPikeEffect);
             EditorGUILayout.PropertyField(trembleConfig);
-            EditorGUILayout.PropertyField(growingClip);
         }
         public override void OnGuiPhase2()
         {
