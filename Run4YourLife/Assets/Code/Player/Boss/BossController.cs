@@ -10,6 +10,7 @@ using Run4YourLife.InputManagement;
 using Run4YourLife.UI;
 using Run4YourLife.GameManagement.AudioManagement;
 using System;
+using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.Player
 {
@@ -86,6 +87,8 @@ namespace Run4YourLife.Player
             m_animator = GetComponent<Animator>();
             m_crossHairControl = GetComponent<CrossHairControl>();
             m_ui = GameObject.FindGameObjectWithTag(Tags.UI);
+            m_gameObjectPool = GetComponent<GameObjectPool>();
+
             Debug.Assert(m_ui != null);
 
             m_initialHeadRotation = m_headBone.rotation; // We have to store the starting position to in order to rotate it properly
@@ -150,7 +153,7 @@ namespace Run4YourLife.Player
 
         private void ExecuteSkill(SkillBase skill, ActionType type, SkillBase.SkillSpawnData skillSpawnData)
         {
-            GameObject instance = m_gameObjectPool.GetAndPosition(skill.gameObject, skillSpawnData.position, Quaternion.identity);
+            GameObject instance = BossPoolManager.m_gameObjectPool.GetAndPosition(skill.gameObject, skillSpawnData.position, Quaternion.identity);
             if(skillSpawnData.parent != null)
             {
                 instance.transform.SetParent(skillSpawnData.parent);

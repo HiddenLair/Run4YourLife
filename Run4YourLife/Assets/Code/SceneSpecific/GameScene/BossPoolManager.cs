@@ -16,7 +16,7 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private GameObject m_pool;
 
-        private GameObjectPool m_gameObjectPool;
+        public static GameObjectPool m_gameObjectPool;
         private ManualPrefabInstantiator m_manualPrefabInstantiator;
 
         private void Awake()
