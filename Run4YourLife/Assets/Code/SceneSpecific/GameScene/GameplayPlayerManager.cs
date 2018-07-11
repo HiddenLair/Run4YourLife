@@ -210,7 +210,7 @@ namespace Run4YourLife.GameManagement {
         {
             for(int i = 0; i< GhostsAlive.Count;)
             {
-                OnRunnerRevive(GhostsAlive[i].GetComponent<PlayerHandle>(),GhostsAlive[i].transform.position);
+                OnRunnerRevive(GhostsAlive[i].GetComponent<PlayerInstance>().PlayerHandle, GhostsAlive[i].transform.position);
             }
         }
 
