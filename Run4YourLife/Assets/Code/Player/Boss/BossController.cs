@@ -43,6 +43,18 @@ namespace Run4YourLife.Player
         private SkillBase m_bombSkill;
 
         [SerializeField]
+        private int m_nLightningPooled;
+        
+        [SerializeField]
+        private int m_nEarthSpikePooled;
+
+        [SerializeField]
+        private int m_nWindPooled;
+
+        [SerializeField]
+        private int m_nBombPooled;
+
+        [SerializeField]
         [Tooltip("Offset in euler angles from wich the head will look, used to shoot with the mouth instead of the beak")]
         private Vector3 m_headLookAtOffset;
 
@@ -88,6 +100,12 @@ namespace Run4YourLife.Player
             Debug.Assert(m_ui != null);
 
             m_initialHeadRotation = m_headBone.rotation; // We have to store the starting position to in order to rotate it properly
+        
+            // Pool the skills
+            DynamicObjectsManager.Instance.GameObjectPool.Add(m_lightningSkill.gameObject, m_nLightningPooled);
+            DynamicObjectsManager.Instance.GameObjectPool.Add(m_earthSpikeSkill.gameObject, m_nEarthSpikePooled);
+            DynamicObjectsManager.Instance.GameObjectPool.Add(m_windSkill.gameObject, m_nWindPooled);
+            DynamicObjectsManager.Instance.GameObjectPool.Add(m_bombSkill.gameObject, m_nBombPooled);
         }
 
         private void Start()
