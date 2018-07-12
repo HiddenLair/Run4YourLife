@@ -3607,34 +3607,6 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: f5a0de82fa5542d49815db57f2238cca, type: 3}
   m_PrefabInternal: {fileID: 127761520}
---- !u!1 &127977424
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 127977425}
-  m_Layer: 0
-  m_Name: TrapPool
-  m_TagString: Untagged
-  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &127977425
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 127977424}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 509.3, y: 32.33, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 191366217}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &128964870
 GameObject:
   m_ObjectHideFlags: 0
@@ -5634,12 +5606,11 @@ GameObject:
   - component: {fileID: 168087534}
   - component: {fileID: 168087527}
   - component: {fileID: 168087535}
-  - component: {fileID: 168087539}
-  - component: {fileID: 168087540}
-  - component: {fileID: 168087541}
   - component: {fileID: 168087528}
   - component: {fileID: 168087529}
   - component: {fileID: 168087533}
+  - component: {fileID: 168087539}
+  - component: {fileID: 168087540}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameController
@@ -5838,6 +5809,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20e74629eae6f3c49a956b69e190a8d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_gameObjectPool: {fileID: 168087540}
   m_objectRepetitions: 5
   m_objectsForPool:
   - {fileID: 1463452844622424, guid: 7e170bbe1f8b8ea4eb65d2fe06bf9368, type: 2}
@@ -5857,7 +5829,6 @@ MonoBehaviour:
   - {fileID: 1930766281004810, guid: 7de77abf0e906934d8cc162a2b5ea514, type: 2}
   - {fileID: 1917008379314224, guid: 2064cae466c7b35478bf63deeaaa36e9, type: 2}
   - {fileID: 1781781690259230, guid: 4c137c15fa0b70749b76fbe566527326, type: 2}
-  m_pool: {fileID: 127977424}
 --- !u!114 &168087540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5869,19 +5840,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8073855dcfad5724c94cad4bdb64b4aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_parent: {fileID: 127977425}
-  m_timeBetweenRetrivals: 10
---- !u!114 &168087541
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 168087525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0a0cd912d4956d41a198afebc9af656, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_parent: {fileID: 336594814}
+  m_timeBetweenRetrivals: 2
 --- !u!1001 &169568710
 Prefab:
   m_ObjectHideFlags: 0
@@ -7106,7 +7066,6 @@ Transform:
   - {fileID: 558103192}
   - {fileID: 1779293199}
   - {fileID: 790668658}
-  - {fileID: 127977425}
   m_Father: {fileID: 481047324}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -41554,7 +41513,7 @@ Prefab:
         type: 2}
       propertyPath: m_parent
       value: 
-      objectReference: {fileID: 127977425}
+      objectReference: {fileID: 0}
     - target: {fileID: 1339971389182100, guid: dea0b697af70e9c44a752e6c66a8df74, type: 2}
       propertyPath: m_IsActive
       value: 0

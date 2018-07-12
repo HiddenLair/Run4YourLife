@@ -171,7 +171,7 @@ namespace Run4YourLife.Player {
 
             foreach (RaycastHit hit in spawnFieldHits)
             {
-                BossPoolManager.Instance.InstantiateBossElement(electricFieldGameObject, hit.point);
+                DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(electricFieldGameObject, hit.point, Quaternion.identity, true);
             }
         }
 
@@ -212,7 +212,7 @@ namespace Run4YourLife.Player {
             yield return new WaitForSeconds(delayBetweenLightnings * Mathf.Pow(delayBetweenLightningsProgresion, iterationNumber));
 
             position.x -= newLightningsDistance * Mathf.Pow( newLightningsDistanceProgresion , iterationNumber);
-            GameObject instance = BossPoolManager.Instance.InstantiateBossElement(lightningGameObject, position);
+            GameObject instance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(lightningGameObject, position, Quaternion.identity, true);
             instance.GetComponent<Lightning>().SetDelayHit(newLightningsDelayHit * Mathf.Pow(newLightningsDelayHitProgresion,iterationNumber));
             instance.GetComponent<SkillBase>().StartSkill();
 
@@ -240,7 +240,7 @@ namespace Run4YourLife.Player {
             yield return new WaitForSeconds(delayBetweenLightnings * Mathf.Pow(delayBetweenLightningsProgresion,iterationNumber));
 
             position.x += newLightningsDistance * Mathf.Pow(newLightningsDistanceProgresion, iterationNumber);
-            GameObject instance = BossPoolManager.Instance.InstantiateBossElement(lightningGameObject, position);
+            GameObject instance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(lightningGameObject, position, Quaternion.identity, true);
             instance.GetComponent<Lightning>().SetDelayHit(newLightningsDelayHit * Mathf.Pow(newLightningsDelayHitProgresion, iterationNumber));
             instance.GetComponent<SkillBase>().StartSkill();
 

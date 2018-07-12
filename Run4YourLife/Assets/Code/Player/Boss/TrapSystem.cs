@@ -93,7 +93,7 @@ namespace Run4YourLife.Player
 
         private void ExecuteSkill(SkillBase skill, ActionType type, SkillBase.SkillSpawnData skillSpawnData)
         {
-            GameObject instance = BossPoolManager.Instance.InstantiateBossElement(skill.gameObject, skillSpawnData.position, false);
+            GameObject instance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(skill.gameObject, skillSpawnData.position, Quaternion.identity);
             if(skillSpawnData.parent != null)
             {
                 instance.transform.SetParent(skillSpawnData.parent);

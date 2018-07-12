@@ -63,9 +63,6 @@ namespace Run4YourLife.Player
         [SerializeField]
         protected AudioClip m_meleeClip;
 
-        [SerializeField]
-        protected GameObjectPool m_gameObjectPool;
-
         #endregion
 
         private float m_earthSpikeReadyTime;
@@ -87,7 +84,6 @@ namespace Run4YourLife.Player
             m_animator = GetComponent<Animator>();
             m_crossHairControl = GetComponent<CrossHairControl>();
             m_ui = GameObject.FindGameObjectWithTag(Tags.UI);
-            m_gameObjectPool = GetComponent<GameObjectPool>();
 
             Debug.Assert(m_ui != null);
 
@@ -153,7 +149,7 @@ namespace Run4YourLife.Player
 
         private void ExecuteSkill(SkillBase skill, ActionType type, SkillBase.SkillSpawnData skillSpawnData)
         {
-            GameObject instance = BossPoolManager.m_gameObjectPool.GetAndPosition(skill.gameObject, skillSpawnData.position, Quaternion.identity);
+            GameObject instance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(skill.gameObject, skillSpawnData.position, Quaternion.identity);
             if(skillSpawnData.parent != null)
             {
                 instance.transform.SetParent(skillSpawnData.parent);

@@ -456,7 +456,6 @@ GameObject:
   - component: {fileID: 114954735024820118}
   - component: {fileID: 114999108935031068}
   - component: {fileID: 114330724144454964}
-  - component: {fileID: 114860624554142218}
   m_Layer: 11
   m_Name: Boss_Phase1
   m_TagString: Boss
@@ -2774,19 +2773,6 @@ MonoBehaviour:
   m_clampMin: {x: 0.3, y: 0.15}
   m_clampMax: {x: 0.975, y: 0.8}
   m_screenPosition: {x: 0, y: 0}
---- !u!114 &114860624554142218
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1339971389182100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8073855dcfad5724c94cad4bdb64b4aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_parent: {fileID: 0}
-  m_timeBetweenRetrivals: 5
 --- !u!114 &114871553384709032
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2826,7 +2812,6 @@ MonoBehaviour:
   m_castClip: {fileID: 8300000, guid: 4a235b16048326246adf6fdd4f2cecee, type: 3}
   m_shotClip: {fileID: 8300000, guid: c3833cf9a9803f145bb95bbf5defe584, type: 3}
   m_meleeClip: {fileID: 8300000, guid: 5a17a99919f460e4f961de3bb2f63aa7, type: 3}
-  m_gameObjectPool: {fileID: 114860624554142218}
   m_bulletPrefab: {fileID: 1781781690259230, guid: 4c137c15fa0b70749b76fbe566527326,
     type: 2}
   m_bulletSpeed: 15

@@ -62,11 +62,12 @@ public class GameObjectPool : MonoBehaviour {
         return Add(key);
     }
 
-    public GameObject GetAndPosition(GameObject key, Vector3 position, Quaternion rotation)
+    public GameObject GetAndPosition(GameObject key, Vector3 position, Quaternion rotation, bool activate = false)
     {
         GameObject instance = Get(key);
         instance.transform.position = position;
         instance.transform.rotation = rotation;
+        instance.SetActive(activate);
         return instance;
     }
 

@@ -272,7 +272,7 @@ namespace Run4YourLife.Player {
         {
             if(phase != SkillBase.Phase.PHASE1)
             {
-                GameObject instance = BossPoolManager.Instance.InstantiateBossElement(wallGameObject, transform.position);
+                GameObject instance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(wallGameObject, transform.position, Quaternion.identity, true);
                 Vector3 currentScale = new Vector3(maxPercent, maxPercent, maxPercent);
                 instance.transform.localScale = currentScale * width;
                 instance.transform.SetParent(transform.parent);

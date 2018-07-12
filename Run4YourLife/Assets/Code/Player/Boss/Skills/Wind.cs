@@ -126,7 +126,7 @@ namespace Run4YourLife.Player
                     if (flyingItemTimer >= timeBetweenFlyingItems)
                     {
                         Vector3 flyingItemPos = new Vector3(topRight.x, UnityEngine.Random.Range(bottomLeft.y, topRight.y), transform.position.z);
-                        BossPoolManager.Instance.InstantiateBossElement(flyingItem, flyingItemPos);
+                        DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(flyingItem, flyingItemPos, Quaternion.identity, true);
                         flyingItemTimer = 0.0f;
                     }
                     flyingItemTimer += Time.deltaTime;
@@ -136,7 +136,7 @@ namespace Run4YourLife.Player
                     if (tornadoTimer >= timeBetweenTornados)
                     {
                         Vector3 tornadoPos = GetTornadoSpawn();
-                        BossPoolManager.Instance.InstantiateBossElement(tornado, tornadoPos);
+                        DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(tornado, tornadoPos, Quaternion.identity, true);
                         tornadoTimer = 0.0f;
                     }
                     tornadoTimer += Time.deltaTime;
