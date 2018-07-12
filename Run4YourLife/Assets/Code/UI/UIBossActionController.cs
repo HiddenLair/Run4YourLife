@@ -20,6 +20,12 @@ namespace Run4YourLife.UI
         [SerializeField]
         private UnityEvent onUseEnd;
 
+        [SerializeField]
+        private float minFillAmount = 0.0f;
+
+        [SerializeField]
+        private float maxFillAmount = 1.0f;
+
         private Coroutine useCoroutine;
 
         public void Use(float cooldown)
@@ -41,7 +47,7 @@ namespace Run4YourLife.UI
 
         private void ResetUseState()
         {
-            m_cooldownImage.fillAmount = 0; 
+            m_cooldownImage.fillAmount = ComputeFillAmount(0.0f);
         }
 
         private IEnumerator UseCoroutine(float cooldown)
@@ -50,18 +56,23 @@ namespace Run4YourLife.UI
 
             float startTime = Time.time;
             float endTime = startTime + cooldown;
-            
-            m_cooldownImage.fillAmount = 1; 
+
+            m_cooldownImage.fillAmount = ComputeFillAmount(1.0f);
             m_usePlayableDirector.Play();
             while(Time.time < endTime)
             {
-                m_cooldownImage.fillAmount = (endTime - Time.time) / cooldown; 
+                m_cooldownImage.fillAmount = ComputeFillAmount((endTime - Time.time) / cooldown); 
                 yield return null;
             }
 
-            m_cooldownImage.fillAmount = 0;
+            m_cooldownImage.fillAmount = ComputeFillAmount(0.0f);
 
             onUseEnd.Invoke();
+        }
+
+        private float ComputeFillAmount(float value)
+        {
+            return Mathf.Lerp(minFillAmount, maxFillAmount, value);
         }
     }
 }
