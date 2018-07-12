@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.Playables;
-
+using Run4YourLife.Player;
 
 namespace Run4YourLife.GameManagement
 {
@@ -37,7 +37,25 @@ namespace Run4YourLife.GameManagement
             var outputs = timelineAsset.outputs;
             foreach (PlayableBinding itm in outputs)
             {
-                if (itm.streamName.Contains("Move"))
+                if (itm.streamName.Contains("Animation"))
+                {
+
+                    if (CheckForGhost(itm, runners))
+                    {
+                        if (itm.streamName.Contains("Ghost"))
+                        {
+                            SentTrackBindingByObject(director, itm, runners, boss);
+                        }
+                    }
+                    else
+                    {
+                        if (!itm.streamName.Contains("Ghost"))
+                        {
+                            SentTrackBindingByObject(director, itm, runners, boss);
+                        }
+                    }
+                }
+                else if (itm.streamName.Contains("Move"))
                 {
                     SetTrackBindingByTransform(director, itm, runners, boss);
                 }
@@ -45,7 +63,6 @@ namespace Run4YourLife.GameManagement
                 {
                     SentTrackBindingByObject(director, itm, runners, boss);
                 }
-
             }
         }
 
@@ -87,6 +104,33 @@ namespace Run4YourLife.GameManagement
             {
                 director.SetGenericBinding(itm.sourceObject, boss);
             }
+        }
+
+        private bool CheckForGhost(PlayableBinding itm, List<GameObject> runners)
+        {
+            if (itm.streamName.Contains("Player1") && runners.Count > 0)
+            {
+                if(runners[0].CompareTag(Tags.Ghost))
+                {
+                    return true;
+                }
+            }
+            else if (itm.streamName.Contains("Player2") && runners.Count > 1)
+            {
+                if (runners[1].CompareTag(Tags.Ghost))
+                {
+                    return true;
+                }
+            }
+            else if (itm.streamName.Contains("Player3") && runners.Count > 2)
+            {
+                if (runners[2].CompareTag(Tags.Ghost))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         protected void Unbind(PlayableDirector director)

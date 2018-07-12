@@ -28,6 +28,7 @@ namespace Run4YourLife
         public readonly static string GlobalManager = "GlobalManager";
         public readonly static string Water = "Water";
         public readonly static string Wall = "Wall";
+        public readonly static string Ghost = "Ghost";
 
         #endregion
 
