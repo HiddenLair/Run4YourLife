@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -3288,7 +3288,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_trembleConfig: {fileID: 0}
+  m_detectRunnerSound: {fileID: 0}
   m_groundHitSound: {fileID: 0}
+  m_delayBetweenDetectionAndFall: 0
   m_initialFallSpeed: 0
   m_gravity: 0
   m_endRotationX: 0
@@ -8520,7 +8522,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_trembleConfig: {fileID: 0}
+  m_detectRunnerSound: {fileID: 0}
   m_groundHitSound: {fileID: 0}
+  m_delayBetweenDetectionAndFall: 0
   m_initialFallSpeed: 0
   m_gravity: 0
   m_endRotationX: 0
@@ -16335,6 +16339,51 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 548868024}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &555639364
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 555639366}
+  - component: {fileID: 555639365}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!320 &555639365
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 555639364}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: a658a871504861349a89b0d19477a71c, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings: []
+  m_ExposedReferences:
+    m_References: []
+--- !u!4 &555639366
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 555639364}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 250.61708, y: 5.379577, z: 6.841064}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &557976288 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4350504664586080, guid: 9cea68c59de8bde429c5f0e490ad43ad,
@@ -23500,7 +23549,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_trembleConfig: {fileID: 0}
+  m_detectRunnerSound: {fileID: 0}
   m_groundHitSound: {fileID: 0}
+  m_delayBetweenDetectionAndFall: 0
   m_initialFallSpeed: 0
   m_gravity: 0
   m_endRotationX: 0
@@ -56593,7 +56644,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_trembleConfig: {fileID: 0}
+  m_detectRunnerSound: {fileID: 0}
   m_groundHitSound: {fileID: 0}
+  m_delayBetweenDetectionAndFall: 0
   m_initialFallSpeed: 0
   m_gravity: 0
   m_endRotationX: 0
