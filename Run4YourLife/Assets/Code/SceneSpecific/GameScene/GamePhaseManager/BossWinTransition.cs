@@ -74,7 +74,7 @@ namespace Run4YourLife.GameManagement
                         TransformTweenClip clip = tlClip.underlyingAsset as TransformTweenClip;
                         if(i >= minClipNum && i <= maxClipNum)
                         {
-                            clip.endLocation.exposedName = UnityEditor.GUID.Generate().ToString();
+                            clip.endLocation.exposedName = UnityEngine.Random.Range(float.MinValue,float.MaxValue).ToString();
                             m_startingCutscene.SetReferenceValue(clip.endLocation.exposedName, t);
                         }
                         ++i;
