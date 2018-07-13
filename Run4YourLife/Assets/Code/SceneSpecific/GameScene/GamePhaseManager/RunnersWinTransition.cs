@@ -185,6 +185,8 @@ namespace Run4YourLife.GameManagement
                     }
                     break;
             }
+
+            GameplayPlayerManager.Instance.DebugClearPlayers();
         }
 
     }

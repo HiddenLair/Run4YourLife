@@ -102,6 +102,8 @@ namespace Run4YourLife.GameManagement
                 ActivateScripts(ghost);
             }
             ActivateScripts(GameplayPlayerManager.Instance.Boss);
+
+            GameplayPlayerManager.Instance.DebugClearPlayers();
         }
     }
 }

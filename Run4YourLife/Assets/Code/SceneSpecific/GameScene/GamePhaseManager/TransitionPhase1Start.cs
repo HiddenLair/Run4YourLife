@@ -88,6 +88,7 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugStartPhase()
         {
+            m_playerSpawner.ActivatePlayers();
             AudioManager.Instance.PlayMusic(phaseMusic);
             m_startPhaseCoroutine = StartCoroutine(StartPhaseCoroutine());
         }
@@ -98,6 +99,8 @@ namespace Run4YourLife.GameManagement
                 m_startPhaseCoroutine = null;
 
             EndCutScene();
+
+            GameplayPlayerManager.Instance.DebugClearPlayers();
         }
     }
 }

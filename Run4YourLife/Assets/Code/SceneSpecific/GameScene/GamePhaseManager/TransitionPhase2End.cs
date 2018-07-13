@@ -79,6 +79,8 @@ namespace Run4YourLife.GameManagement
             runners.AddRange(GameplayPlayerManager.Instance.RunnersAlive);
             runners.AddRange(GameplayPlayerManager.Instance.GhostsAlive);
             EndCutScene(runners);
+
+            GameplayPlayerManager.Instance.DebugClearPlayers();
         }
     }
 }

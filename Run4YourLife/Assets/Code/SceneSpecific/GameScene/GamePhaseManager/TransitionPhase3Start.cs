@@ -109,11 +109,13 @@ namespace Run4YourLife.GameManagement
 
             EndCutSceneRunners();
             EndCutSceneBoss();
+
+            GameplayPlayerManager.Instance.DebugClearPlayers();
         }
 
         public override void DebugStartPhase()
         {
-            GameplayPlayerManager.Instance.ReviveAllRunners();
+            m_playerSpawner.ActivateRunners();
             m_startPhaseCoroutine = StartCoroutine(StartPhaseCoroutine());
         }
     }
