@@ -74,6 +74,7 @@ namespace Run4YourLife.GameManagement
 
         private void EndCutScene()
         {
+            m_startingCutscene.Stop();
             Unbind(m_startingCutscene);
             foreach (GameObject runner in GameplayPlayerManager.Instance.Runners)
             {

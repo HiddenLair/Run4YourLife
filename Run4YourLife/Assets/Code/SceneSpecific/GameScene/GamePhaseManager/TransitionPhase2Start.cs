@@ -79,6 +79,7 @@ namespace Run4YourLife.GameManagement
 
         private void EndRunnersCutScene()
         {
+            m_RunnersCutscene.Stop();
             Unbind(m_RunnersCutscene);
             foreach (GameObject runner in GameplayPlayerManager.Instance.RunnersAlive)
             {
@@ -95,6 +96,7 @@ namespace Run4YourLife.GameManagement
 
         private void EndBossCutScene()
         {
+            m_BossCutscene.Stop();
             Unbind(m_BossCutscene);
             ActivateScripts(GameplayPlayerManager.Instance.Boss);
         }

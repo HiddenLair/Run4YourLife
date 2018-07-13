@@ -36,11 +36,69 @@ MonoBehaviour:
   m_Parent: {fileID: 114755209438201578}
   m_Children: []
   m_Clips:
-  - m_Start: 3.033333333333333
+  - m_Start: 3
     m_ClipIn: 0
     m_Asset: {fileID: 114857406487864842}
     m_UnderlyingAsset: {fileID: 114857406487864842}
-    m_Duration: 0.5
+    m_Duration: 0.016666666666666666
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: 114151116201555926}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: 0
+    m_BlendOutDuration: 0
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: TrembleClip
+    m_Version: 1
+  - m_Start: 4.083333333333333
+    m_ClipIn: 0
+    m_Asset: {fileID: 114604103152039250}
+    m_UnderlyingAsset: {fileID: 114604103152039250}
+    m_Duration: 0.05
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114151116201555926}
     m_EaseInDuration: 0
@@ -111,6 +169,20 @@ MonoBehaviour:
   m_UseTrackMatchFields: 0
   m_MatchTargetFields: 63
   m_RemoveStartOffset: 1
+--- !u!114 &114604103152039250
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a0ae1098c6538245932bc77eafe993e, type: 3}
+  m_Name: TrembleClip
+  m_EditorClassIdentifier: 
+  template:
+    trembleConfig: {fileID: 11400000, guid: af8ceb07d3cd9d44abdac4cf3b29f41e, type: 2}
+    useDuration: 1
 --- !u!114 &114697879058608574
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -133,13 +205,13 @@ MonoBehaviour:
     m_ClipIn: 0
     m_Asset: {fileID: 114553321680372732}
     m_UnderlyingAsset: {fileID: 7400004, guid: 78cbea455c89ac44db5a308576511c83, type: 3}
-    m_Duration: 3.3333333333333335
+    m_Duration: 3.5
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114697879058608574}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
     m_BlendInDuration: -1
-    m_BlendOutDuration: 0.3166666666666669
+    m_BlendOutDuration: 0.08333333333333348
     m_MixInCurve:
       serializedVersion: 2
       m_Curve:
@@ -160,19 +232,7 @@ MonoBehaviour:
       m_RotationOrder: 4
     m_MixOutCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -187,17 +247,17 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: transition
     m_Version: 1
-  - m_Start: 3.0166666666666666
+  - m_Start: 3.4166666666666665
     m_ClipIn: 0
     m_Asset: {fileID: 114737967525382292}
     m_UnderlyingAsset: {fileID: 7400024, guid: 78cbea455c89ac44db5a308576511c83, type: 3}
-    m_Duration: 1
+    m_Duration: 1.266666666666667
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114697879058608574}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
-    m_BlendInDuration: 0.3166666666666669
-    m_BlendOutDuration: 0.16666666666666652
+    m_BlendInDuration: 0.08333333333333348
+    m_BlendOutDuration: 0.34999999999999964
     m_MixInCurve:
       serializedVersion: 2
       m_Curve: []
@@ -221,7 +281,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: scream
     m_Version: 1
-  - m_Start: 3.85
+  - m_Start: 4.333333333333334
     m_ClipIn: 0
     m_Asset: {fileID: 114891058052900762}
     m_UnderlyingAsset: {fileID: 7400000, guid: 78cbea455c89ac44db5a308576511c83, type: 3}
@@ -230,29 +290,29 @@ MonoBehaviour:
     m_ParentTrack: {fileID: 114697879058608574}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
-    m_BlendInDuration: 0.16666666666666652
+    m_BlendInDuration: 0.34999999999999964
     m_BlendOutDuration: -1
     m_MixInCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_MixOutCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: 1
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
       - serializedVersion: 2
         time: 1
-        value: 0
+        value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4

@@ -125,6 +125,7 @@ namespace Run4YourLife.GameManagement
 
         private void EndRunnersPositioningCutScene()
         {
+            m_positioningCutscene.Stop();
             Unbind(m_positioningCutscene);
         }
 
@@ -140,6 +141,7 @@ namespace Run4YourLife.GameManagement
 
         private void EndBossDeactivateCutScene()
         {
+            m_endCutscene.Stop();
             Unbind(m_endCutscene);
         }
 
