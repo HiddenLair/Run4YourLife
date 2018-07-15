@@ -56,14 +56,14 @@ namespace Run4YourLife.Player
 
         #endregion
 
-        protected override void Reset()
+        protected override void ResetState()
         {
             actualFillPercent = 0.0f;
             tornadoTimer = timeBetweenTornados;
             flyingItemTimer = timeBetweenFlyingItems;
         }
 
-        protected override void StartSkillImplementation()
+        protected override void OnSkillStart()
         {
             Camera mainCamera = CameraManager.Instance.MainCamera;
                         

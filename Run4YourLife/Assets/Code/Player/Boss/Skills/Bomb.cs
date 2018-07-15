@@ -105,7 +105,7 @@ namespace Run4YourLife.Player
             }
         }
 
-        public override bool CanBePlacedAt(ref SkillSpawnData skillSpawnData)
+        public override bool CheckAndRepositionSkillSpawn(ref SkillSpawnData skillSpawnData)
         {
             Collider[] colliders = Physics.OverlapBox(skillSpawnData.position, bossSpawnCheckCollider.bounds.extents, Quaternion.identity, Layers.Stage, QueryTriggerInteraction.Ignore);
             if (colliders.Length != 0)
@@ -115,7 +115,7 @@ namespace Run4YourLife.Player
             return true;
         }
 
-        protected override void Reset()
+        protected override void ResetState()
         {
             speed.y = initialSpeed;
             destroyOnLanding = false;
@@ -125,7 +125,7 @@ namespace Run4YourLife.Player
             //}
         }
 
-        protected override void StartSkillImplementation()
+        protected override void OnSkillStart()
         {
             RaycastHit info;
             if (Physics.Raycast(transform.position, Vector3.down, out info, rayCheckerLenght, Layers.Stage))

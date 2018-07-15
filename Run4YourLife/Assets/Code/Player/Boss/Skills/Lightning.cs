@@ -63,12 +63,12 @@ namespace Run4YourLife.Player {
             lightningDelay = new WaitForSeconds(delayHit);
         }
 
-        protected override void Reset()
+        protected override void ResetState()
         {
             oneLightningSideFinished = false;
         }
 
-        protected override void StartSkillImplementation()
+        protected override void OnSkillStart()
         {
             Vector3 position = transform.position;
             position.y = CameraConverter.ViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, new Vector2(0,0)).y;
