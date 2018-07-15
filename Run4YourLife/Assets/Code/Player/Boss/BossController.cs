@@ -146,9 +146,12 @@ namespace Run4YourLife.Player
                 {
                     m_meleeReadyTime = Time.time + m_meleeCooldown;
                     ExecuteMelee();
+                    StartCoroutine(YieldHelper.WaitForSeconds(() => OnShootReady(), m_meleeReadyTime));
                 }
             }
         }
+
+        protected virtual void OnShootReady() { }
 
         protected virtual void ExecuteMelee()
         {
@@ -194,7 +197,6 @@ namespace Run4YourLife.Player
         private void RotateHead()
         {
             m_headBone.LookAt(m_crossHairControl.Position);
-            //m_headBone.Rotate(0, -90, m_headLookAtOffset);
             m_headBone.rotation *= Quaternion.Euler(m_headLookAtOffset.x, m_headLookAtOffset.y, m_headLookAtOffset.z) * m_initialHeadRotation;
         }
     }

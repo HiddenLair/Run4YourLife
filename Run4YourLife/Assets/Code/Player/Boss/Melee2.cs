@@ -79,12 +79,12 @@ namespace Run4YourLife.Player
             meleeInst.GetComponent<Rigidbody>().velocity = meleeInst.transform.right * instanceSpeed * Time.deltaTime;
             if (right)
             {
-                meleeInst.GetComponent<RegenerateHand>().SetHandToRecover(handR);
+                //meleeInst.GetComponent<RegenerateHand>().SetHandToRecover(handR);
                 handR.SetActive(false);
             }
             else
             {
-                meleeInst.GetComponent<RegenerateHand>().SetHandToRecover(handL);
+                //meleeInst.GetComponent<RegenerateHand>().SetHandToRecover(handL);
                 handL.SetActive(false);
             }
         }
