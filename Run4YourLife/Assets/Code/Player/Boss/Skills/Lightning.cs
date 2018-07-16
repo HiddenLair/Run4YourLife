@@ -32,20 +32,28 @@ namespace Run4YourLife.Player {
 
         [SerializeField]
         private GameObject electricFieldGameObject;
+
         [SerializeField]
         private float delayBetweenLightnings;
+
         [SerializeField]
         private float delayBetweenLightningsProgresion;
+
         [SerializeField]
         private float newLightningsDelayHit;
+
         [SerializeField]
         private float newLightningsDelayHitProgresion;
+
         [SerializeField]
         private float newLightningsDistance;
+
         [SerializeField]
         private float newLightningsDistanceProgresion;
+
         [SerializeField]
         private GameObject lightningGameObject;
+        
         [SerializeField]
         private int maxNumberOfLightnings;
 
