@@ -6393,34 +6393,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4521278684459360, guid: 0e3664b4aafd2ab40a354d01338a19b8,
     type: 2}
   m_PrefabInternal: {fileID: 2021645427}
---- !u!1 &179138783
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 179138784}
-  m_Layer: 11
-  m_Name: AbsorbTransformPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &179138784
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 179138783}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.707, y: 3.24, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 790668658}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &179846289 stripped
 SkinnedMeshRenderer:
   m_PrefabParentObject: {fileID: 13700000, guid: ebb57c9777ae3424b8d41b6aa7343aff,
@@ -18345,16 +18317,6 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114800066667396244, guid: 9304469b9d7b7d84b84226e301fd7e0a,
-        type: 2}
-      propertyPath: m_screenPosition.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114800066667396244, guid: 9304469b9d7b7d84b84226e301fd7e0a,
-        type: 2}
-      propertyPath: m_screenPosition.y
-      value: 0.3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9304469b9d7b7d84b84226e301fd7e0a, type: 2}
   m_IsPrefabParent: 0
@@ -28840,18 +28802,6 @@ GameObject:
   m_PrefabParentObject: {fileID: 1432021327500220, guid: 9304469b9d7b7d84b84226e301fd7e0a,
     type: 2}
   m_PrefabInternal: {fileID: 520591425}
---- !u!114 &790668660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 790668659}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d797b4b4bf43e424ba2cf80fc26e5e98, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  absorbPartTransform: {fileID: 179138784}
 --- !u!1001 &790715322
 Prefab:
   m_ObjectHideFlags: 0
