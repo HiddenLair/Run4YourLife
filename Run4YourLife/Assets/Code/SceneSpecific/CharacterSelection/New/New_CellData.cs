@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 
+using Run4YourLife.Player;
+
 namespace Run4YourLife.SceneSpecific.CharacterSelection
 {
     public class New_CellData : MonoBehaviour
     {
-        public GameObject characterPrefab;
+        public bool isBoss;
+        public CharacterType characterType;
 
         public New_CellData navigationUp;
         public New_CellData navigationDown;

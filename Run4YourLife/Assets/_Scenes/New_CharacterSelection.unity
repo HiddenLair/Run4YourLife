@@ -262,7 +262,7 @@ Prefab:
     - target: {fileID: 224532512713771464, guid: f0bb5bfe89276aa47a1c2f1c646c4c2e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 224532512713771464, guid: f0bb5bfe89276aa47a1c2f1c646c4c2e,
         type: 2}
@@ -545,6 +545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4634f0e9a3e6aae41ba2e8ae1eca4ca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: -200
   spawnPosition: {fileID: 47702356}
 --- !u!114 &47702361
 MonoBehaviour:
@@ -1230,6 +1231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4634f0e9a3e6aae41ba2e8ae1eca4ca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: -200
   spawnPosition: {fileID: 185615445}
 --- !u!114 &185615450
 MonoBehaviour:
@@ -1971,8 +1973,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10281c74b0d3b3147971ff5768413300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterPrefab: {fileID: 1749029966599466, guid: cc392689c19998f4598f2019743d09f6,
-    type: 2}
+  isBoss: 0
+  characterType: 0
   navigationUp: {fileID: 587608900}
   navigationDown: {fileID: 0}
   navigationLeft: {fileID: 0}
@@ -2020,6 +2022,7 @@ GameObject:
   - component: {fileID: 586758054}
   - component: {fileID: 586758058}
   - component: {fileID: 586758057}
+  - component: {fileID: 586758056}
   - component: {fileID: 586758055}
   m_Layer: 0
   m_Name: New_CharacterSelectionManager
@@ -2067,6 +2070,33 @@ MonoBehaviour:
   - {fileID: 1294164905}
   - {fileID: 185615449}
   - {fileID: 1334058361}
+--- !u!114 &586758056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 586758053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31bb683a1a598e14a8309585381b4a30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefabs:
+  - isBoss: 1
+    characterType: 0
+    prefab: {fileID: 1952039067271902, guid: 20073b34bb10fcd4d88c135b833d71da, type: 2}
+  - isBoss: 0
+    characterType: 0
+    prefab: {fileID: 1749029966599466, guid: cc392689c19998f4598f2019743d09f6, type: 2}
+  - isBoss: 0
+    characterType: 1
+    prefab: {fileID: 1749029966599466, guid: 854a7fa0e87c50b40b4bac79af3e1b33, type: 2}
+  - isBoss: 0
+    characterType: 2
+    prefab: {fileID: 1749029966599466, guid: 3b0e6ab3a52df4e4a9fc6bf3aec955bb, type: 2}
+  - isBoss: 0
+    characterType: 3
+    prefab: {fileID: 1749029966599466, guid: 8f522b0199c52dd409b5bfb3ac6a2a34, type: 2}
 --- !u!114 &586758057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2144,8 +2174,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10281c74b0d3b3147971ff5768413300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterPrefab: {fileID: 1952039067271902, guid: 20073b34bb10fcd4d88c135b833d71da,
-    type: 2}
+  isBoss: 1
+  characterType: 0
   navigationUp: {fileID: 0}
   navigationDown: {fileID: 583975992}
   navigationLeft: {fileID: 0}
@@ -2463,8 +2493,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10281c74b0d3b3147971ff5768413300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterPrefab: {fileID: 1749029966599466, guid: 854a7fa0e87c50b40b4bac79af3e1b33,
-    type: 2}
+  isBoss: 0
+  characterType: 1
   navigationUp: {fileID: 587608900}
   navigationDown: {fileID: 0}
   navigationLeft: {fileID: 583975992}
@@ -2886,8 +2916,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10281c74b0d3b3147971ff5768413300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterPrefab: {fileID: 1749029966599466, guid: 3b0e6ab3a52df4e4a9fc6bf3aec955bb,
-    type: 2}
+  isBoss: 0
+  characterType: 3
   navigationUp: {fileID: 587608900}
   navigationDown: {fileID: 0}
   navigationLeft: {fileID: 1992492183}
@@ -3663,6 +3693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4634f0e9a3e6aae41ba2e8ae1eca4ca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: -200
   spawnPosition: {fileID: 1294164901}
 --- !u!114 &1294164906
 MonoBehaviour:
@@ -4033,6 +4064,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4634f0e9a3e6aae41ba2e8ae1eca4ca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: -200
   spawnPosition: {fileID: 1334058357}
 --- !u!114 &1334058362
 MonoBehaviour:
@@ -5725,7 +5757,7 @@ Prefab:
     - target: {fileID: 224532512713771464, guid: f0bb5bfe89276aa47a1c2f1c646c4c2e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 224532512713771464, guid: f0bb5bfe89276aa47a1c2f1c646c4c2e,
         type: 2}
@@ -6337,8 +6369,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10281c74b0d3b3147971ff5768413300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterPrefab: {fileID: 1749029966599466, guid: 8f522b0199c52dd409b5bfb3ac6a2a34,
-    type: 2}
+  isBoss: 0
+  characterType: 2
   navigationUp: {fileID: 587608900}
   navigationDown: {fileID: 0}
   navigationLeft: {fileID: 747226467}

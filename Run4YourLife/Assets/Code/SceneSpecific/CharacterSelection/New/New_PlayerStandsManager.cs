@@ -6,6 +6,7 @@ using Run4YourLife.Player;
 
 namespace Run4YourLife.SceneSpecific.CharacterSelection
 {
+    [RequireComponent(typeof(New_PlayerPrefabManager))]
     public class New_PlayerStandsManager : SingletonMonoBehaviour<New_PlayerStandsManager>
     {
         [SerializeField]
@@ -17,12 +18,18 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         [SerializeField]
         private New_PlayerStandController[] playerStandControllers;
 
-        private Dictionary<PlayerHandle, New_CellData> playerCurrentCellDatas = new Dictionary<PlayerHandle, New_CellData>();
+        private New_PlayerPrefabManager playerPrefabManager;
+
+        private Dictionary<PlayerHandle, New_CellData> playersCurrentCell = new Dictionary<PlayerHandle, New_CellData>();
         private Dictionary<New_CellData, HashSet<PlayerHandle>> bossCellCurrentContainedPlayers = new Dictionary<New_CellData, HashSet<PlayerHandle>>();
         private Dictionary<New_CellData, HashSet<PlayerHandle>> runnerCellCurrentContainedPlayers = new Dictionary<New_CellData, HashSet<PlayerHandle>>();
 
+        private Dictionary<PlayerHandle, bool> playerSelectionDone = new Dictionary<PlayerHandle, bool>();
+
         void Awake()
         {
+            playerPrefabManager = GetComponent<New_PlayerPrefabManager>();
+
             foreach(New_CellData cellData in bossCellDatas)
             {
                 bossCellCurrentContainedPlayers.Add(cellData, new HashSet<PlayerHandle>());
@@ -48,7 +55,9 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         {
             FillStand(playerHandle);
 
-            playerCurrentCellDatas.Add(playerHandle, null);
+            playersCurrentCell.Add(playerHandle, null);
+            playerSelectionDone.Add(playerHandle, false);
+
             UpdateCurrentCell(playerHandle, FindFreeCellForPlayer());
         }
 
@@ -66,39 +75,42 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         private void UpdateCurrentCell(PlayerHandle playerHandle, New_CellData cellData)
         {
-            New_CellData previousCellData = playerCurrentCellDatas[playerHandle];
-
-            if(previousCellData != null)
+            if(cellData != null)
             {
-                if(bossCellCurrentContainedPlayers.ContainsKey(previousCellData))
+                New_CellData previousCellData = playersCurrentCell[playerHandle];
+
+                if(previousCellData != null)
                 {
-                    bossCellCurrentContainedPlayers[previousCellData].Remove(playerHandle);
+                    if(bossCellCurrentContainedPlayers.ContainsKey(previousCellData))
+                    {
+                        bossCellCurrentContainedPlayers[previousCellData].Remove(playerHandle);
+                    }
+
+                    if(runnerCellCurrentContainedPlayers.ContainsKey(previousCellData))
+                    {
+                        runnerCellCurrentContainedPlayers[previousCellData].Remove(playerHandle);
+                    }
                 }
 
-                if(runnerCellCurrentContainedPlayers.ContainsKey(previousCellData))
+                if(bossCellCurrentContainedPlayers.ContainsKey(cellData))
                 {
-                    runnerCellCurrentContainedPlayers[previousCellData].Remove(playerHandle);
+                    bossCellCurrentContainedPlayers[cellData].Add(playerHandle);
                 }
-            }
 
-            if(bossCellCurrentContainedPlayers.ContainsKey(cellData))
-            {
-                bossCellCurrentContainedPlayers[cellData].Add(playerHandle);
-            }
-
-            if(runnerCellCurrentContainedPlayers.ContainsKey(cellData))
-            {
-                runnerCellCurrentContainedPlayers[cellData].Add(playerHandle);
-            }
-
-            playerCurrentCellDatas[playerHandle] = cellData;
-
-            foreach(New_PlayerStandController playerStandController in playerStandControllers)
-            {
-                if(playerStandController.PlayerHandle == playerHandle)
+                if(runnerCellCurrentContainedPlayers.ContainsKey(cellData))
                 {
-                    playerStandController.SetCharacter(cellData.characterPrefab);
-                    break;
+                    runnerCellCurrentContainedPlayers[cellData].Add(playerHandle);
+                }
+
+                playersCurrentCell[playerHandle] = cellData;
+
+                foreach(New_PlayerStandController playerStandController in playerStandControllers)
+                {
+                    if(playerStandController.PlayerHandle == playerHandle)
+                    {
+                        playerStandController.SetCharacter(playerPrefabManager.Get(cellData.characterType, cellData.isBoss));
+                        break;
+                    }
                 }
             }
         }
@@ -126,39 +138,98 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         #region Player input management
 
-        public void OnPlayerInputSelect(PlayerHandle playerHandle)
+        public bool OnPlayerInputSelect(PlayerHandle playerHandle)
         {
             Debug.Log("OnPlayerInputSelect: " + playerHandle.InputDevice.ID);
+
+            New_CellData playerCell = playersCurrentCell[playerHandle];
+
+            foreach(KeyValuePair<PlayerHandle, New_CellData> playerCurrentCell in playersCurrentCell)
+            {
+                if(playerCurrentCell.Value == playerCell && playerSelectionDone[playerCurrentCell.Key])
+                {
+                    return false;
+                }
+            }
+
+            playerSelectionDone[playerHandle] = true;
+
+            return true;
         }
 
-        public void OnPlayerInputUnselect(PlayerHandle playerHandle)
+        public bool OnPlayerInputUnselect(PlayerHandle playerHandle)
         {
             Debug.Log("OnPlayerInputUnselect: " + playerHandle.InputDevice.ID);
+
+            bool selected = playerSelectionDone[playerHandle];
+
+            playerSelectionDone[playerHandle] = false;
+
+            return selected;
         }
 
-        public void OnPlayerInputReady(PlayerHandle playerHandle)
+        public bool OnPlayerInputReady(PlayerHandle playerHandle)
         {
             Debug.Log("OnPlayerInputReady: " + playerHandle.InputDevice.ID);
+
+            return true;
         }
 
-        public void OnPlayerInputUp(PlayerHandle playerHandle)
+        public bool OnPlayerInputUp(PlayerHandle playerHandle)
         {
             Debug.Log("OnPlayerInputUp: " + playerHandle.InputDevice.ID);
+
+            if(!playerSelectionDone[playerHandle])
+            {
+                UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationUp);
+                return true;
+            }
+
+            return false;
         }
 
-        public void OnPlayerInputDown(PlayerHandle playerHandle)
+        public bool OnPlayerInputDown(PlayerHandle playerHandle)
         {
             Debug.Log("OnPlayerInputDown: " + playerHandle.InputDevice.ID);
+
+            if(!playerSelectionDone[playerHandle])
+            {
+                UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationDown);
+                return true;
+            }
+
+            return false;
         }
 
-        public void OnPlayerInputLeft(PlayerHandle playerHandle)
+        public bool OnPlayerInputLeft(PlayerHandle playerHandle)
         {
             Debug.Log("OnPlayerInputLeft: " + playerHandle.InputDevice.ID);
+
+            if(!playerSelectionDone[playerHandle])
+            {
+                UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationLeft);
+                return true;
+            }
+
+            return false;
         }
 
-        public void OnPlayerInputRight(PlayerHandle playerHandle)
+        public bool OnPlayerInputRight(PlayerHandle playerHandle)
         {
             Debug.Log("OnPlayerInputRight: " + playerHandle.InputDevice.ID);
+
+            if(!playerSelectionDone[playerHandle])
+            {
+                UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationRight);
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool CanRotate(PlayerHandle playerHandle)
+        {
+            return playerSelectionDone[playerHandle];
         }
 
         #endregion
