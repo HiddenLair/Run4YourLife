@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 4690220110089234}
   - component: {fileID: 54765903492852008}
   - component: {fileID: 114326633767495542}
+  - component: {fileID: 114447743329548630}
   m_Layer: 9
   m_Name: Wind2
   m_TagString: Untagged
@@ -153,6 +154,20 @@ MonoBehaviour:
   timeBetweenFlyingItems: 1.5
   tornado: {fileID: 0}
   timeBetweenTornados: 0
+--- !u!114 &114447743329548630
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1439577150476730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa3158385adce204cb7b67e4bd002d46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_poolPetitions:
+  - prefab: {fileID: 1495642661319978, guid: 73843970960183f4192e07eb89bf7bee, type: 2}
+    amount: 2
 --- !u!198 &198280130018531196
 ParticleSystem:
   m_ObjectHideFlags: 1

@@ -102,10 +102,10 @@ namespace Run4YourLife.Player
             m_initialHeadRotation = m_headBone.rotation; // We have to store the starting position to in order to rotate it properly
         
             // Pool the skills
-            DynamicObjectsManager.Instance.GameObjectPool.Add(m_lightningSkill.gameObject, m_nLightningPooled);
-            DynamicObjectsManager.Instance.GameObjectPool.Add(m_earthSpikeSkill.gameObject, m_nEarthSpikePooled);
-            DynamicObjectsManager.Instance.GameObjectPool.Add(m_windSkill.gameObject, m_nWindPooled);
-            DynamicObjectsManager.Instance.GameObjectPool.Add(m_bombSkill.gameObject, m_nBombPooled);
+            DynamicObjectsManager.Instance.GameObjectPool.Request(m_lightningSkill.gameObject, m_nLightningPooled);
+            DynamicObjectsManager.Instance.GameObjectPool.Request(m_earthSpikeSkill.gameObject, m_nEarthSpikePooled);
+            DynamicObjectsManager.Instance.GameObjectPool.Request(m_windSkill.gameObject, m_nWindPooled);
+            DynamicObjectsManager.Instance.GameObjectPool.Request(m_bombSkill.gameObject, m_nBombPooled);
         }
 
         private void Start()

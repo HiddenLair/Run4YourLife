@@ -39,7 +39,7 @@ namespace Run4YourLife.Interactables
         {
             m_animator = GetComponentInChildren<Animator>();
             m_gameObjectPool = GetComponent<GameObjectPool>();
-            m_gameObjectPool.Add(bullet, m_nBulletCached);
+            m_gameObjectPool.Request(bullet, m_nBulletCached);
         }
 
         private void OnEnable()

@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(GameObjectPool))]
-public class AutomaticPrefabInstantiator : MonoBehaviour {
+public class AutomaticPrefabInstantiator : MonoBehaviour
+{
 
     #region Editor fields
 
@@ -37,7 +38,8 @@ public class AutomaticPrefabInstantiator : MonoBehaviour {
     {
         delayBetweenInstantiations = new WaitForSeconds(m_timeBetweenInstantiations);
         m_gameObjectPool = GetComponent<GameObjectPool>();
-        m_gameObjectPool.Add(m_prefab, m_numberPooledPrefabs);
+
+        m_gameObjectPool.Request(m_prefab, m_numberPooledPrefabs);
     }
 
     private void OnEnable()
@@ -52,7 +54,7 @@ public class AutomaticPrefabInstantiator : MonoBehaviour {
 
     private IEnumerator InstantiateObjects()
     {
-        while(m_isInfinite || m_instantiationCount-- > 0)
+        while (m_isInfinite || m_instantiationCount-- > 0)
         {
             GameObject instance = m_gameObjectPool.Get(m_prefab);
             instance.transform.position = transform.position;

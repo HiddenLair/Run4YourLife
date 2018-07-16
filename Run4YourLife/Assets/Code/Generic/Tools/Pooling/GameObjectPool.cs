@@ -2,6 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct PoolRequest
+{
+    public GameObject prefab;
+    public int amount;
+
+    //[Tooltip("Will pooled instances be shared with other objects")]
+    //Will pooled instances be shared with other objects
+    //private bool isShared;
+}
+
 public class GameObjectPool : MonoBehaviour {
 
     [SerializeField]
@@ -14,40 +25,56 @@ public class GameObjectPool : MonoBehaviour {
 
     private Dictionary<GameObject, List<GameObject>> m_pool = new Dictionary<GameObject, List<GameObject>>();
 
-
     private void OnEnable()
     {
         m_nextRetrivalTime = Time.time + m_timeBetweenRetrivals;
     }
 
-    public void Add(GameObject key, int amount)
+    public void Request(PoolRequest poolPetition)
+    {
+        Request(poolPetition.prefab, poolPetition.amount);
+    }
+
+    public void Request(GameObject prefab, int amount)
     {
         for (int i = 0; i < amount; i++)
         {
-            Add(key);
+            Add(prefab);
         }
     }
 
-    public GameObject Add(GameObject key)
+    public GameObject Add(GameObject prefab)
     {
-        GameObject instance = Instantiate(key, m_parent);
+        PoolableGameObject poolableGameObject = prefab.GetComponent<PoolableGameObject>();
+        Debug.Assert(poolableGameObject != null, "Prefab does not have poolableGameObject: "+prefab.name);
+
+        //Instantiate
+        GameObject instance = Instantiate(prefab, m_parent);
         instance.SetActive(false);
 
+        //Add instance to collection of pooled objects
         List<GameObject> instances;
-        m_pool.TryGetValue(key, out instances);
+        m_pool.TryGetValue(prefab, out instances);
         if(instances == null)
         {
             instances = new List<GameObject>();
-            m_pool.Add(key, instances);
+            m_pool.Add(prefab, instances);
         }
         instances.Add(instance);
+
+        //Add child pooled objects of instance
+        foreach(PoolRequest poolPetition in poolableGameObject.PoolPetitions)
+        {
+            Request(poolPetition);
+        }
+
         return instance;
     }
 
-    public GameObject Get(GameObject key)
+    public GameObject Get(GameObject prefab)
     {
         List<GameObject> instances;
-        m_pool.TryGetValue(key, out instances);
+        m_pool.TryGetValue(prefab, out instances);
         if(instances != null)
         {
             foreach(GameObject g in instances)
@@ -59,7 +86,7 @@ public class GameObjectPool : MonoBehaviour {
             }
         }
 
-        return Add(key);
+        return Add(prefab);
     }
 
     public GameObject GetAndPosition(GameObject key, Vector3 position, Quaternion rotation, bool activate = false)
