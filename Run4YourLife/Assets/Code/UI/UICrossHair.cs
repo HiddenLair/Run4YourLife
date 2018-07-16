@@ -44,7 +44,6 @@ namespace Run4YourLife.UI
 
         #endregion
 
-        private Camera m_mainCamera;
         private RectTransform m_canvasTransform;
         private RectTransform m_crossHairUiTransform;
         private CanvasGroup crossHairCanvasGroup;
@@ -52,9 +51,6 @@ namespace Run4YourLife.UI
 
         private void Awake()
         {
-            m_mainCamera = CameraManager.Instance.MainCamera;
-            Debug.Assert(m_mainCamera != null);
-
             m_canvasTransform = GetComponent<RectTransform>();
             Debug.Assert(m_canvasTransform != null);
 
@@ -95,7 +91,7 @@ namespace Run4YourLife.UI
 
         public void UpdatePosition(Vector3 position)
         {
-            Vector2 viewportPosition = m_mainCamera.WorldToViewportPoint(position);
+            Vector2 viewportPosition = CameraManager.Instance.MainCamera.WorldToViewportPoint(position);
 
             float deltaX = m_canvasTransform.sizeDelta.x;
             float deltaY = m_canvasTransform.sizeDelta.y;

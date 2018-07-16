@@ -53,16 +53,14 @@ namespace Run4YourLife.Player
         private float m_armSpeed;
 
         [SerializeField]
-        private GameObject m_leftHandGameObject;
+        private GameObject m_leftHandGraphics;
 
         [SerializeField]
-        private GameObject m_rightHandGameObject;
+        private GameObject m_rightHandGraphics; 
 
         [SerializeField]
         private float m_meleeNormalizedTime;
 
-        private Vector3 m_meleePosition;
-        private Quaternion m_meleeRotation;
         private bool m_isExecutingMeleeRight;
 
         protected override void ExecuteMelee()
@@ -71,55 +69,59 @@ namespace Run4YourLife.Player
 
             AudioManager.Instance.PlaySFX(m_meleeClip);
 
+            bool rightHand;
+            Quaternion rotation;
+            Vector3 position = m_crossHairControl.Position;
+            string animation;
 
-            m_meleePosition = m_crossHairControl.Position;
             Camera mainCamera = CameraManager.Instance.MainCamera;
-            Vector3 screenPos = mainCamera.WorldToViewportPoint(m_meleePosition);
-
+            Vector3 screenPos = mainCamera.WorldToViewportPoint(position);
             if (screenPos.x <= 0.5f)
             {
-                m_animator.SetTrigger("MeleR");
-                m_meleePosition.x = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1)).x;
-                m_meleeRotation = Quaternion.identity;
-                m_isExecutingMeleeRight = true;
-
-                StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator, "MeleRight", m_meleeNormalizedTime, () => ExecuteMeleeCallback()));
+                m_animator.SetTrigger("MeleR"); // Boss is flipped so it executes the inverted animation
+                position.x = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0)).x;
+                rotation = Quaternion.identity;
+                rightHand = true;
+                animation = "MeleRight";
             }
             else
             {
-                m_animator.SetTrigger("MeleL");
-                m_meleePosition.x = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0)).x;
-                m_meleeRotation = Quaternion.Euler(0, 180, 0);
-                m_isExecutingMeleeRight = false;
-
-                StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator, "MeleLeft", m_meleeNormalizedTime, () => ExecuteMeleeCallback()));
+                m_animator.SetTrigger("MeleL"); // Boss is flipped so it executes the inverted animation
+                position.x = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1)).x;
+                rotation = Quaternion.Euler(0, 180, 0);
+                rightHand = false;
+                animation = "MeleLeft";
             }
+
+            StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator, animation, m_meleeNormalizedTime, () => ExecuteMeleeCallback(position, rotation, rightHand)));
         }
 
-        private void ExecuteMeleeCallback()
+        private void ExecuteMeleeCallback(Vector3 position, Quaternion rotation, bool rightHand)
         {
-            GameObject handInstance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(m_handPrefab, m_meleePosition, m_meleeRotation, true);
+            GameObject handInstance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(m_handPrefab, position, rotation, true);
             handInstance.GetComponent<Rigidbody>().velocity = handInstance.transform.right * m_armSpeed * Time.deltaTime;
 
-            if (m_isExecutingMeleeRight)
+            if (rightHand)
             {
-                m_rightHandGameObject.SetActive(false);
+                m_rightHandGraphics.SetActive(false);
             }
             else
             {
-                m_leftHandGameObject.SetActive(false);
+                m_leftHandGraphics.SetActive(false);
             }
+
+            m_isExecutingMeleeRight = rightHand;
         }
 
         protected override void OnShootReady() 
         {
             if (m_isExecutingMeleeRight)
             {
-                m_rightHandGameObject.SetActive(true);
+                m_rightHandGraphics.SetActive(true);
             }
             else
             {
-                m_leftHandGameObject.SetActive(true);
+                m_leftHandGraphics.SetActive(true);
             }
         }
 

@@ -146,7 +146,7 @@ namespace Run4YourLife.Player
                 {
                     m_meleeReadyTime = Time.time + m_meleeCooldown;
                     ExecuteMelee();
-                    StartCoroutine(YieldHelper.WaitForSeconds(() => OnShootReady(), m_meleeReadyTime));
+                    StartCoroutine(YieldHelper.WaitForSeconds(() => OnShootReady(), m_meleeCooldown));
                 }
             }
         }
