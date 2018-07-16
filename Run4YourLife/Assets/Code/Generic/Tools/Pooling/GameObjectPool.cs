@@ -13,7 +13,8 @@ public struct PoolRequest
     //private bool isShared;
 }
 
-public class GameObjectPool : MonoBehaviour {
+public class GameObjectPool : MonoBehaviour
+{
 
     [SerializeField]
     private Transform m_parent;
@@ -45,9 +46,6 @@ public class GameObjectPool : MonoBehaviour {
 
     public GameObject Add(GameObject prefab)
     {
-        PoolableGameObject poolableGameObject = prefab.GetComponent<PoolableGameObject>();
-        Debug.Assert(poolableGameObject != null, "Prefab does not have poolableGameObject: "+prefab.name);
-
         //Instantiate
         GameObject instance = Instantiate(prefab, m_parent);
         instance.SetActive(false);
@@ -55,7 +53,7 @@ public class GameObjectPool : MonoBehaviour {
         //Add instance to collection of pooled objects
         List<GameObject> instances;
         m_pool.TryGetValue(prefab, out instances);
-        if(instances == null)
+        if (instances == null)
         {
             instances = new List<GameObject>();
             m_pool.Add(prefab, instances);
@@ -63,9 +61,13 @@ public class GameObjectPool : MonoBehaviour {
         instances.Add(instance);
 
         //Add child pooled objects of instance
-        foreach(PoolRequest poolPetition in poolableGameObject.PoolPetitions)
+        PooledGameObjectDependencies poolableGameObject = prefab.GetComponent<PooledGameObjectDependencies>();
+        if (poolableGameObject != null)
         {
-            Request(poolPetition);
+            foreach (PoolRequest poolPetition in poolableGameObject.PoolRequests)
+            {
+                Request(poolPetition);
+            }
         }
 
         return instance;
@@ -75,11 +77,11 @@ public class GameObjectPool : MonoBehaviour {
     {
         List<GameObject> instances;
         m_pool.TryGetValue(prefab, out instances);
-        if(instances != null)
+        if (instances != null)
         {
-            foreach(GameObject g in instances)
+            foreach (GameObject g in instances)
             {
-                if(!g.activeInHierarchy && (g.transform.parent == m_parent))
+                if (!g.activeInHierarchy && (g.transform.parent == m_parent))
                 {
                     return g;
                 }
@@ -100,7 +102,7 @@ public class GameObjectPool : MonoBehaviour {
 
     private void Update()
     {
-        if(m_nextRetrivalTime <= Time.time)
+        if (m_nextRetrivalTime <= Time.time)
         {
             RetrieveObjectsToPool();
             m_nextRetrivalTime = Time.time + m_timeBetweenRetrivals;
@@ -111,7 +113,7 @@ public class GameObjectPool : MonoBehaviour {
     {
         foreach (KeyValuePair<GameObject, List<GameObject>> item in m_pool)
         {
-            foreach(GameObject g in item.Value)
+            foreach (GameObject g in item.Value)
             {
                 if (!g.activeInHierarchy)
                 {

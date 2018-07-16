@@ -456,6 +456,7 @@ GameObject:
   - component: {fileID: 114999108935031068}
   - component: {fileID: 114330724144454964}
   - component: {fileID: 114106074611172382}
+  - component: {fileID: 114460337505168556}
   m_Layer: 11
   m_Name: Boss_Phase1
   m_TagString: Boss
@@ -1988,7 +1989,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1339971389182100}
   m_LocalRotation: {x: -0.00000009735359, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -20, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4073123601095190}
@@ -2734,6 +2735,26 @@ MonoBehaviour:
   m_clampMin: {x: 0.3, y: 0.15}
   m_clampMax: {x: 0.975, y: 0.8}
   m_screenPosition: {x: 0.5, y: 0.3}
+--- !u!114 &114460337505168556
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1339971389182100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ab5c4c55ba562a4abadaf3f57a845f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_poolRequests:
+  - prefab: {fileID: 1674844452342998, guid: 824cd44351d62dd4898f4369812cf9dd, type: 2}
+    amount: 2
+  - prefab: {fileID: 1526477959902814, guid: e51e504600397a144bc62ca1e2811630, type: 2}
+    amount: 1
+  - prefab: {fileID: 1696466390942686, guid: 6cdd85f2d5ebd354b948f9b13da65439, type: 2}
+    amount: 2
+  - prefab: {fileID: 1463452844622424, guid: 7e170bbe1f8b8ea4eb65d2fe06bf9368, type: 2}
+    amount: 1
 --- !u!114 &114871553384709032
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2767,10 +2788,6 @@ MonoBehaviour:
     type: 2}
   m_bombSkill: {fileID: 114383793237765762, guid: 824cd44351d62dd4898f4369812cf9dd,
     type: 2}
-  m_nLightningPooled: 2
-  m_nEarthSpikePooled: 2
-  m_nWindPooled: 2
-  m_nBombPooled: 2
   m_headLookAtOffset: {x: 0, y: -90, z: 17}
   m_headBone: {fileID: 4891549866721156}
   m_shotSpawn: {fileID: 4166836768581126}
