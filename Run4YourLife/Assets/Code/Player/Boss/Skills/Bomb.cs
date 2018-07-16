@@ -180,7 +180,7 @@ namespace Run4YourLife.Player
             while (true)
             {
                 transform.Translate(speed * Time.deltaTime);
-                float yVar = fatherTransformStorage.position.y - fatherInitialY;
+                float yVar = (fatherTransformStorage != null ? fatherTransformStorage.position.y - fatherInitialY : 0);
                 if (transform.position.y < finalPos.y + yVar)
                 {
                     finalPos.y += yVar;
