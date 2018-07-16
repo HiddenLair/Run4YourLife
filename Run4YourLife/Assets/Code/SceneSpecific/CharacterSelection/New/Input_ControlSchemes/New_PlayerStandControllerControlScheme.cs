@@ -1,6 +1,6 @@
 ﻿namespace Run4YourLife.InputManagement
 {
-    public abstract class New_PlayerStandControllerControlScheme : ControlScheme
+    public class New_PlayerStandControllerControlScheme : ControlScheme
     {
         public InputAction Select { get; private set; }
         public InputAction Unselect { get; private set; }
