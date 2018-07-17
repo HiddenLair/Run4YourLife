@@ -1,59 +1,106 @@
-﻿using Run4YourLife.GameManagement.AudioManagement;
-using Run4YourLife.Utils;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class BossFightGemManager : MonoBehaviour
+using Run4YourLife.GameManagement;
+using Run4YourLife.GameManagement.AudioManagement;
+using Run4YourLife.Utils;
+
+public class BossFightGemManager : SingletonMonoBehaviour<BossFightGemManager>
 {
     [SerializeField]
-    private UnityEvent m_onAllGemsActive;
+    private float m_timeBetweenGems;
 
     [SerializeField]
-    private List<GameObject> unactiveGems;
+    private float m_timeBetweenTeleports;
 
     [SerializeField]
-    private Transform activeGemPosition;
+    private float m_timeInvisibleAfterTeleport;
 
     [SerializeField]
-    private float m_timeBetweenGems = 2;
+    private GameObject m_gemPrefab;
 
     [SerializeField]
-    private float m_timeToGoToStand = 0.75f;
+    private Transform[] m_possibleGemPositions;
 
-    private List<GameObject> activeGems = new List<GameObject>();
-    private GameObject activeGem = null;
+    [SerializeField]
+    private GameObject[] m_standGems;
 
-    public void ActivateGems(Transform gemStand)
+    private GameObject m_gemInstance;
+    private GemController m_gemInstanceController;
+    private Coroutine m_gemBehaviour;
+
+    private int m_currentGemIndex;
+
+    private BossFightPhaseManager m_bossFightPhaseManager;
+
+    private void Awake()
     {
-        activeGem.GetComponent<GemController>().enabled = false;
-        activeGem.SetActive(false);
-        unactiveGems.Remove(activeGem);
-        activeGems.Add(activeGem);
-        
-        StartCoroutine(YieldHelper.WaitForSeconds(() => MoveGemToStand(gemStand), m_timeToGoToStand));
+        m_bossFightPhaseManager = GetComponent<BossFightPhaseManager>();
 
-        if (unactiveGems.Count == 0)
+        foreach(GameObject standGem in m_standGems)
         {
-            m_onAllGemsActive.Invoke();
+            standGem.SetActive(false);
+        }
+    }
+
+    private void Start()
+    {
+        m_gemInstance = DynamicObjectsManager.Instance.GameObjectPool.Get(m_gemPrefab);
+        m_gemInstanceController = m_gemInstance.GetComponent<GemController>();
+    }
+
+    public void PlaceFirstGem()
+    {
+        m_currentGemIndex = 0;
+        m_gemBehaviour = StartCoroutine(GemBehaviour(false));
+    }
+
+    public void OnGemHasBeenDestroyed()
+    {
+        StopCoroutine(m_gemBehaviour); 
+        m_gemBehaviour = null;
+        m_gemInstance.SetActive(false);
+
+        m_standGems[m_currentGemIndex].SetActive(true);
+        m_currentGemIndex++;
+
+        if (m_currentGemIndex < m_standGems.Length)
+        {
+            m_gemBehaviour = StartCoroutine(GemBehaviour(true));
         }
         else
         {
-            StartCoroutine(YieldHelper.WaitForSeconds(()=>ActivateNextGem(), m_timeBetweenGems));
-        }      
+            m_bossFightPhaseManager.StartNextPhase();
+        }
     }
 
-    public void MoveGemToStand(Transform gemStand)
+    private IEnumerator GemBehaviour(bool startingDelay)
     {
-        activeGem.transform.position = gemStand.position;
-        activeGem.SetActive(true);
+        if (startingDelay)
+        {
+            yield return new WaitForSeconds(m_timeBetweenGems);
+        }
+
+        m_gemInstance.SetActive(true);
+        m_gemInstanceController.PlaySpawn();
+
+        while (true)
+        {
+            Vector3 position = RandomDifferentTeleportPosition(m_gemInstance.transform.position);
+            m_gemInstanceController.TeleportToPositionAfterTime(position, m_timeInvisibleAfterTeleport);
+            yield return new WaitForSeconds(m_timeBetweenTeleports);
+        }
     }
 
-    public void ActivateNextGem()
+    private Vector3 RandomDifferentTeleportPosition(Vector3 position)
     {
-        activeGem = unactiveGems[0];
-        activeGem.transform.position = activeGemPosition.position;          
-        activeGem.SetActive(true);
+        Vector3 randomPosition;
+        do
+        {
+            randomPosition = m_possibleGemPositions[Random.Range(0, m_possibleGemPositions.Length)].position;
+        } while (randomPosition == position);
+        return randomPosition;
     }
 }
