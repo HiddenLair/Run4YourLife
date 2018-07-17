@@ -13,17 +13,15 @@ public class GemController : MonoBehaviour, IRunnerDashBreakable
     private FXReceiver m_destructionReceiver;
 
     [SerializeField]
-    private FXReceiver m_baseAppearReceiver;
+    private FXReceiver m_teleportReceiver;
 
     [SerializeField]
     private GameObject m_graphicsChild;
 
-    private Rigidbody m_rigidbody;
     private Collider m_collider;
 
     private void Awake()
     {
-        m_rigidbody = GetComponent<Rigidbody>();
         m_collider = GetComponent<Collider>();
     }
 
@@ -33,11 +31,6 @@ public class GemController : MonoBehaviour, IRunnerDashBreakable
         ResetState();
     }
 
-    public void PlaySpawn()
-    {
-        m_spawnReceiver.PlayFx(false);
-    }
-
     public void TeleportToPositionAfterTime(Vector3 position, float time)
     {
         StartCoroutine(TeleportToPositionAfterTimeCoroutine(position, time));
@@ -45,7 +38,7 @@ public class GemController : MonoBehaviour, IRunnerDashBreakable
 
     private IEnumerator TeleportToPositionAfterTimeCoroutine(Vector3 position, float time)
     {
-        m_baseAppearReceiver.PlayFx(false); // TODO What is this?
+        m_teleportReceiver.PlayFx(false);
 
         m_graphicsChild.SetActive(false);
         m_collider.enabled = false;

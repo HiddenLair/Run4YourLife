@@ -53,8 +53,19 @@ public class BossFightGemManager : SingletonMonoBehaviour<BossFightGemManager>
 
     public void PlaceFirstGem()
     {
-        m_currentGemIndex = 0;
+        ResetState();
+
         m_gemBehaviour = StartCoroutine(GemBehaviour(false));
+    }
+
+    private void ResetState()
+    {
+        m_gemInstance.SetActive(false);
+        m_currentGemIndex = 0;
+        foreach (GameObject standGem in m_standGems)
+        {
+            standGem.SetActive(false);
+        }
     }
 
     public void OnGemHasBeenDestroyed()
@@ -84,13 +95,18 @@ public class BossFightGemManager : SingletonMonoBehaviour<BossFightGemManager>
         }
 
         m_gemInstance.SetActive(true);
-        m_gemInstanceController.PlaySpawn();
+        Vector3 position;
+        
+        //Start by placing immediately the gem somewhere
+        position = RandomDifferentTeleportPosition(m_gemInstance.transform.position);
+        m_gemInstanceController.TeleportToPositionAfterTime(position, 0);
 
+        //Move the gem around at intervals
         while (true)
         {
-            Vector3 position = RandomDifferentTeleportPosition(m_gemInstance.transform.position);
-            m_gemInstanceController.TeleportToPositionAfterTime(position, m_timeInvisibleAfterTeleport);
             yield return new WaitForSeconds(m_timeBetweenTeleports);
+            position = RandomDifferentTeleportPosition(m_gemInstance.transform.position);
+            m_gemInstanceController.TeleportToPositionAfterTime(position, m_timeInvisibleAfterTeleport);
         }
     }
 
