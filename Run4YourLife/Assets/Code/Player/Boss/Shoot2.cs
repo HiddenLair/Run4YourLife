@@ -34,7 +34,7 @@ namespace Run4YourLife.Player
             Vector3 director = (m_crossHairControl.Position - shootInitZone.position).normalized;
             GameObject tempInstance = Instantiate(instance, shootInitZone.position, instance.transform.rotation);
             tempInstance.GetComponent<Rigidbody>().velocity = director * bulletSpeed * Time.deltaTime;
-            tempInstance.GetComponent<ChargedBullet>().SetZValue(m_crossHairControl.Position.z);
+            //tempInstance.GetComponent<ChargedBullet>().SetZValue(m_crossHairControl.Position.z);
         }
 
         public override void RotateHead()

@@ -7,6 +7,7 @@ using Run4YourLife.GameManagement.AudioManagement;
 using Run4YourLife.Utils;
 using Run4YourLife.GameManagement;
 using Run4YourLife.CameraUtils;
+using Run4YourLife.Player.Boss;
 
 namespace Run4YourLife.Player
 {
@@ -36,10 +37,7 @@ namespace Run4YourLife.Player
             AudioManager.Instance.PlaySFX(m_shotClip);
 
             GameObject bulletInstance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(m_bulletPrefab, m_shotSpawn.position, m_bulletPrefab.transform.rotation, true);
-            
-            Vector3 bulletDirection = (m_crossHairControl.Position - m_shotSpawn.position).normalized;
-            bulletInstance.GetComponent<Rigidbody>().velocity = bulletDirection * m_bulletSpeed * Time.deltaTime;
-            bulletInstance.GetComponent<ChargedBullet>().SetZValue(m_crossHairControl.Position.z);
+            bulletInstance.GetComponent<BossExplosiveBulletController>().LaunchBullet(m_crossHairControl.Position);
         }
         #endregion
 
