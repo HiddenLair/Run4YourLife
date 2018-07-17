@@ -15,6 +15,15 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         [SerializeField]
         private Transform spawnPosition;
 
+        [SerializeField]
+        private GameObject infoJoin;
+
+        [SerializeField]
+        private GameObject infoSelect;
+
+        [SerializeField]
+        private GameObject infoUnselect;
+
         private PlayerHandle playerHandle;
         private New_PlayerStandsManager playerStandsManager;
         private New_PlayerStandControllerControlScheme playerStandControlScheme;
@@ -33,6 +42,8 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         {
             playerStandsManager = New_PlayerStandsManager.Instance;
             playerStandControlScheme = GetComponent<New_PlayerStandControllerControlScheme>();
+
+            InfoShowJoin();
         }
 
         void Update()
@@ -57,6 +68,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         public RequestCompletionState SetCharacter(GameObject characterPrefab)
         {
             rotationY = 0.0f;
+            InfoShowSelect();
 
             if(characterPrefab != currentCharacterPrefab)
             {
@@ -87,6 +99,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 if(requestCompletionState == RequestCompletionState.Completed)
                 {
                     rotationY = 0.0f;
+                    InfoShowUnselect();
                     currentCharacter.GetComponent<Animator>().Play(playerStandsManager.GetAnimationNameOnSelected(playerHandle));
                 }
             }
@@ -98,6 +111,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 if(requestCompletionState == RequestCompletionState.Completed)
                 {
                     rotationY = 0.0f;
+                    InfoShowSelect();
                     currentCharacter.GetComponent<Animator>().Play(playerStandsManager.GetAnimationNameOnNotSelected(playerHandle));
                 }
             }
@@ -159,5 +173,30 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
             #endregion
         }
+
+        #region Info
+
+        private void InfoShowJoin()
+        {
+            infoJoin.SetActive(true);
+            infoSelect.SetActive(false);
+            infoUnselect.SetActive(false);
+        }
+
+        private void InfoShowSelect()
+        {
+            infoJoin.SetActive(false);
+            infoSelect.SetActive(true);
+            infoUnselect.SetActive(false);
+        }
+
+        private void InfoShowUnselect()
+        {
+            infoJoin.SetActive(false);
+            infoSelect.SetActive(false);
+            infoUnselect.SetActive(true);
+        }
+
+        #endregion
     }
 }
