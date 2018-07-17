@@ -6,6 +6,13 @@ using Run4YourLife.Player;
 
 namespace Run4YourLife.SceneSpecific.CharacterSelection
 {
+    public enum RequestCompletionState
+    {
+        Error,
+        Completed,
+        Unmodified
+    }
+
     [RequireComponent(typeof(New_PlayerPrefabManager))]
     public class New_PlayerStandsManager : SingletonMonoBehaviour<New_PlayerStandsManager>
     {
@@ -73,7 +80,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             }
         }
 
-        private void UpdateCurrentCell(PlayerHandle playerHandle, New_CellData cellData)
+        private RequestCompletionState UpdateCurrentCell(PlayerHandle playerHandle, New_CellData cellData)
         {
             if(cellData != null)
             {
@@ -108,11 +115,12 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 {
                     if(playerStandController.PlayerHandle == playerHandle)
                     {
-                        playerStandController.SetCharacter(playerPrefabManager.Get(cellData.characterType, cellData.isBoss));
-                        break;
+                        return playerStandController.SetCharacter(playerPrefabManager.Get(cellData.characterType, cellData.isBoss));
                     }
                 }
             }
+
+            return RequestCompletionState.Unmodified;
         }
 
         private New_CellData FindFreeCellForPlayer()
@@ -138,9 +146,13 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         #region Player input management
 
-        public bool OnPlayerInputSelect(PlayerHandle playerHandle)
+        public RequestCompletionState OnPlayerInputSelect(PlayerHandle playerHandle)
         {
-            Debug.Log("OnPlayerInputSelect: " + playerHandle.InputDevice.ID);
+            if(playerSelectionDone[playerHandle])
+            {
+                Debug.Log("OnPlayerInputSelect: " + playerHandle.InputDevice.ID + " Unmodified");
+                return RequestCompletionState.Unmodified;
+            }
 
             New_CellData playerCell = playersCurrentCell[playerHandle];
 
@@ -148,83 +160,85 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             {
                 if(playerCurrentCell.Value == playerCell && playerSelectionDone[playerCurrentCell.Key])
                 {
-                    return false;
+                    Debug.Log("OnPlayerInputSelect: " + playerHandle.InputDevice.ID + " Error");
+                    return RequestCompletionState.Error;
                 }
             }
 
             playerSelectionDone[playerHandle] = true;
 
-            return true;
+            Debug.Log("OnPlayerInputSelect: " + playerHandle.InputDevice.ID + " Completed");
+            return RequestCompletionState.Completed;
         }
 
-        public bool OnPlayerInputUnselect(PlayerHandle playerHandle)
+        public RequestCompletionState OnPlayerInputUnselect(PlayerHandle playerHandle)
         {
-            Debug.Log("OnPlayerInputUnselect: " + playerHandle.InputDevice.ID);
-
-            bool selected = playerSelectionDone[playerHandle];
+            if(!playerSelectionDone[playerHandle])
+            {
+                Debug.Log("OnPlayerInputUnselect: " + playerHandle.InputDevice.ID + " Unmodified");
+                return RequestCompletionState.Unmodified;
+            }
 
             playerSelectionDone[playerHandle] = false;
 
-            return selected;
+            Debug.Log("OnPlayerInputUnselect: " + playerHandle.InputDevice.ID + " Completed");
+            return RequestCompletionState.Completed;
         }
 
-        public bool OnPlayerInputReady(PlayerHandle playerHandle)
+        public RequestCompletionState OnPlayerInputUp(PlayerHandle playerHandle)
         {
-            Debug.Log("OnPlayerInputReady: " + playerHandle.InputDevice.ID);
-
-            return true;
-        }
-
-        public bool OnPlayerInputUp(PlayerHandle playerHandle)
-        {
-            Debug.Log("OnPlayerInputUp: " + playerHandle.InputDevice.ID);
-
-            if(!playerSelectionDone[playerHandle])
+            if(playerSelectionDone[playerHandle])
             {
-                UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationUp);
-                return true;
+                Debug.Log("OnPlayerInputUp: " + playerHandle.InputDevice.ID + " Error");
+                return RequestCompletionState.Error;
             }
 
-            return false;
+            RequestCompletionState requestCompletionState = UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationUp);
+
+            Debug.Log("OnPlayerInputUp: " + playerHandle.InputDevice.ID + " " + requestCompletionState);
+            return requestCompletionState;
         }
 
-        public bool OnPlayerInputDown(PlayerHandle playerHandle)
+        public RequestCompletionState OnPlayerInputDown(PlayerHandle playerHandle)
         {
-            Debug.Log("OnPlayerInputDown: " + playerHandle.InputDevice.ID);
-
-            if(!playerSelectionDone[playerHandle])
+            if(playerSelectionDone[playerHandle])
             {
-                UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationDown);
-                return true;
+                Debug.Log("OnPlayerInputDown: " + playerHandle.InputDevice.ID + " Error");
+                return RequestCompletionState.Error;
             }
 
-            return false;
+            RequestCompletionState requestCompletionState = UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationDown);
+
+            Debug.Log("OnPlayerInputDown: " + playerHandle.InputDevice.ID + " " + requestCompletionState);
+            return requestCompletionState;
         }
 
-        public bool OnPlayerInputLeft(PlayerHandle playerHandle)
+        public RequestCompletionState OnPlayerInputLeft(PlayerHandle playerHandle)
         {
-            Debug.Log("OnPlayerInputLeft: " + playerHandle.InputDevice.ID);
-
-            if(!playerSelectionDone[playerHandle])
+            if(playerSelectionDone[playerHandle])
             {
-                UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationLeft);
-                return true;
+                Debug.Log("OnPlayerInputLeft: " + playerHandle.InputDevice.ID + " Error");
+                return RequestCompletionState.Error;
             }
 
-            return false;
+            RequestCompletionState requestCompletionState = UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationLeft);
+
+            Debug.Log("OnPlayerInputLeft: " + playerHandle.InputDevice.ID + " " + requestCompletionState);
+            return requestCompletionState;
         }
 
-        public bool OnPlayerInputRight(PlayerHandle playerHandle)
+        public RequestCompletionState OnPlayerInputRight(PlayerHandle playerHandle)
         {
-            Debug.Log("OnPlayerInputRight: " + playerHandle.InputDevice.ID);
-
-            if(!playerSelectionDone[playerHandle])
+            if(playerSelectionDone[playerHandle])
             {
-                UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationRight);
-                return true;
+                Debug.Log("OnPlayerInputRight: " + playerHandle.InputDevice.ID + " Error");
+                return RequestCompletionState.Error;
             }
 
-            return false;
+            RequestCompletionState requestCompletionState = UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationRight);
+
+            Debug.Log("OnPlayerInputRight: " + playerHandle.InputDevice.ID + " " + requestCompletionState);
+            return requestCompletionState;
         }
 
         public bool CanRotate(PlayerHandle playerHandle)

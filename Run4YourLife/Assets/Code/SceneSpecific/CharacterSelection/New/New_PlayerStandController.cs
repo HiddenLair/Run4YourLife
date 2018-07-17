@@ -54,7 +54,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             StartCoroutine(YieldHelper.SkipFrame(() => playerStandControlScheme.Active = playerHandle != null));
         }
 
-        public void SetCharacter(GameObject characterPrefab)
+        public RequestCompletionState SetCharacter(GameObject characterPrefab)
         {
             rotationY = 0.0f;
 
@@ -68,12 +68,16 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 currentCharacter = Instantiate(characterPrefab, spawnPosition, false);
 
                 currentCharacterPrefab = characterPrefab;
+
+                return RequestCompletionState.Completed;
             }
+
+            return RequestCompletionState.Unmodified;
         }
 
         private void PlayerInput()
         {
-            #region Select, Unselect and Ready
+            #region Select and Unselect
 
             if(playerStandControlScheme.Select.Started())
             {
@@ -82,15 +86,12 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
             if(playerStandControlScheme.Unselect.Started())
             {
-                if(playerStandsManager.OnPlayerInputUnselect(playerHandle))
+                RequestCompletionState requestCompletionState = playerStandsManager.OnPlayerInputUnselect(playerHandle);
+
+                if(requestCompletionState == RequestCompletionState.Completed)
                 {
                     rotationY = 0.0f;
                 }
-            }
-
-            if(playerStandControlScheme.Ready.Started())
-            {
-                playerStandsManager.OnPlayerInputReady(playerHandle);
             }
 
             #endregion
