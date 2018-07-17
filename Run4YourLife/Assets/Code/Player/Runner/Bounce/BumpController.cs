@@ -15,6 +15,9 @@ public class BumpController : MonoBehaviour {
     private SkinnedMeshRenderer head;
 
     [SerializeField]
+    private SkinnedMeshRenderer helmet;
+
+    [SerializeField]
     private float bumpTime = 0.5f;
 
     #endregion
@@ -33,6 +36,7 @@ public class BumpController : MonoBehaviour {
             leftEye.SetBlendShapeWeight(0, weight);
             rightEye.SetBlendShapeWeight(0, weight);
             head.SetBlendShapeWeight(0, weight);
+            helmet.SetBlendShapeWeight(0, weight);
             growTime -= Time.deltaTime;
             yield return null;
         }
@@ -44,6 +48,7 @@ public class BumpController : MonoBehaviour {
             leftEye.SetBlendShapeWeight(0, weight);
             rightEye.SetBlendShapeWeight(0, weight);
             head.SetBlendShapeWeight(0, weight);
+            helmet.SetBlendShapeWeight(0, weight);
             decreaseTime -= Time.deltaTime;
             yield return null;
         }

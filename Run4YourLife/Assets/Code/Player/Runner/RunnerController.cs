@@ -530,6 +530,7 @@ namespace Run4YourLife.Player
 
             AudioManager.Instance.PlaySFX(m_fartClip);
             m_fartParticleReceiver.PlayFx();
+            m_animator.SetTrigger(RunnerAnimation.jump);
             
             float jumpHeight = m_secondJumpHeight;
             if(m_velocity.y > 0)
@@ -792,6 +793,7 @@ namespace Run4YourLife.Player
             m_graphics.rotation = Quaternion.identity;
             //Activate particle effects
             //Activate shock animation
+            m_animator.SetTrigger(RunnerAnimation.shock);
         }
 
         private void Shock_Exit()
@@ -799,6 +801,7 @@ namespace Run4YourLife.Player
             RotateGraphicsAtFacingDirection();
             //Deactivate particle effects
             //Deactivate animation
+            m_animator.SetTrigger(RunnerAnimation.stopShock);
         }
 
         private void Shock_Update()
