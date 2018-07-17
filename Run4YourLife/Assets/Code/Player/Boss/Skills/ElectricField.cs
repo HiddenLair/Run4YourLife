@@ -14,14 +14,17 @@ namespace Run4YourLife.Interactables
         private float fieldDuration;
 
         [SerializeField]
-        private ParticleSystem particles;
+        private ParticleSystem[] particles;
 
         private float timeElapsed;
 
         private void OnEnable()
         {
             timeElapsed = 0;
-            particles.Play();
+            foreach (ParticleSystem p in particles)
+            {
+                p.Play();
+            }
         }
 
         private void Update()
@@ -35,8 +38,11 @@ namespace Run4YourLife.Interactables
 
         private void Deactivate()
         {
-            particles.Stop();
-            StartCoroutine(YieldHelper.WaitUntil(()=>gameObject.SetActive(false),()=>!particles.IsAlive()));
+            foreach (ParticleSystem p in particles)
+            {
+                p.Stop();
+                StartCoroutine(YieldHelper.WaitUntil(() => gameObject.SetActive(false), () => !p.IsAlive()));
+            }          
         }
 
         private void OnTriggerEnter(Collider other)
