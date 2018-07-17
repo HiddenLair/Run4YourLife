@@ -13,7 +13,7 @@ using Run4YourLife.Utils;
 using Run4YourLife.CameraUtils;
 
 namespace Run4YourLife.Player
-{    
+{
     [RequireComponent(typeof(RunnerControlScheme))]
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(RunnerAttributeController))]
@@ -22,9 +22,10 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(RunnerBounceController))]
     public class RunnerController : MonoBehaviour, IRunnerEvents
     {
-        private enum States {
+        private enum States
+        {
             Idle,
-            Move, 
+            Move,
             CoyoteMove,
             Jump,
             SecondJump,
@@ -74,7 +75,7 @@ namespace Run4YourLife.Player
 
         [SerializeField]
         private float m_secondJumpHeight;
-        
+
         [SerializeField]
         private float m_endOfJumpGravity;
 
@@ -206,7 +207,7 @@ namespace Run4YourLife.Player
             m_horizontalDrag = m_baseHorizontalDrag;
 
             m_runnerCharacterController = GetComponent<RunnerController>();
-            
+
             Transform shieldTransform = transform.Find("Graphics/Shield");
             Debug.Assert(shieldTransform != null);
             m_shieldGameObject = shieldTransform.gameObject;
@@ -239,36 +240,39 @@ namespace Run4YourLife.Player
         {
             StopAllCoroutines();
             m_runnerControlScheme.Active = false;
-        }      
+        }
 
         private void Update()
         {
-            if(m_isReadyToDash && m_inputController.Started(m_runnerControlScheme.Dash))
+            if (m_isReadyToDash && m_inputController.Started(m_runnerControlScheme.Dash))
             {
                 m_stateMachine.ChangeState(States.Dash);
             }
-        }  
+        }
 
         #region Collision
 
         private void OnControllerColliderHit(ControllerColliderHit hit)
-        {       
-            if(m_stateMachine.State == States.Jump && RunnerHitItsHead(hit))
+        {
+            if (hit.gameObject.activeSelf)
             {
-                OnRunnerHitItsHead();
-            }
-
-            if (m_stateMachine.State != States.Jump && m_characterController.isGrounded)
-            {
-                m_velocity.y = 0.0f;
-            }
-
-            if(IsDashing)
-            {
-                IRunnerDashBreakable breakable = hit.gameObject.GetComponent<IRunnerDashBreakable>();
-                if(breakable != null)
+                if (m_stateMachine.State == States.Jump && RunnerHitItsHead(hit))
                 {
-                    breakable.Break();
+                    OnRunnerHitItsHead();
+                }
+
+                if (m_stateMachine.State != States.Jump && m_characterController.isGrounded)
+                {
+                    m_velocity.y = 0.0f;
+                }
+
+                if (IsDashing)
+                {
+                    IRunnerDashBreakable breakable = hit.gameObject.GetComponent<IRunnerDashBreakable>();
+                    if (breakable != null)
+                    {
+                        breakable.Break();
+                    }
                 }
             }
         }
@@ -313,7 +317,7 @@ namespace Run4YourLife.Player
         {
             float horizontal = m_inputController.ValueMaximized(m_runnerControlScheme.Move);
 
-            Vector3 windMovement = (Vector3.left * m_runnerAttributeController.GetAttribute(RunnerAttribute.Speed) * Time.deltaTime)*WindForceRelative;
+            Vector3 windMovement = (Vector3.left * m_runnerAttributeController.GetAttribute(RunnerAttribute.Speed) * Time.deltaTime) * WindForceRelative;
             Vector3 inputMovement = transform.right * (horizontal * m_runnerAttributeController.GetAttribute(RunnerAttribute.Speed) * Time.deltaTime);
             Vector3 totalMovement = inputMovement + (m_velocity + windMovement) * Time.deltaTime + ExternalVelocity * Time.deltaTime;
 
@@ -337,14 +341,14 @@ namespace Run4YourLife.Player
             }
 
             m_animator.SetFloat(RunnerAnimation.xSpeed, Mathf.Abs(movement.x));
-            m_animator.SetFloat(RunnerAnimation.ySpeed,m_velocity.y);
+            m_animator.SetFloat(RunnerAnimation.ySpeed, m_velocity.y);
             m_animator.SetBool(RunnerAnimation.isGrounded, m_characterController.isGrounded);
         }
 
         private void TrimPlayerPositionHorizontalInsideGameplayArea()
         {
-            float xScreenLeft = CameraConverter.ViewportToGamePlaneWorldPosition(m_mainCamera, new Vector2(0,0)).x;
-            float xScreenRight = CameraConverter.ViewportToGamePlaneWorldPosition(m_mainCamera, new Vector2(1,1)).x;
+            float xScreenLeft = CameraConverter.ViewportToGamePlaneWorldPosition(m_mainCamera, new Vector2(0, 0)).x;
+            float xScreenRight = CameraConverter.ViewportToGamePlaneWorldPosition(m_mainCamera, new Vector2(1, 1)).x;
 
             Vector3 trimmedPosition = new Vector3()
             {
@@ -386,23 +390,24 @@ namespace Run4YourLife.Player
             GravityAndDrag();
             Move();
 
-            if(m_inputController.Started(m_runnerControlScheme.Jump))
+            if (m_inputController.Started(m_runnerControlScheme.Jump))
             {
                 m_stateMachine.ChangeState(States.Jump);
-            } 
-            else if(m_characterController.isGrounded)
+            }
+            else if (m_characterController.isGrounded)
             {
-                if(m_runnerControlScheme.Move.ValueMaximized() != 0)
+                if (m_runnerControlScheme.Move.ValueMaximized() != 0)
                 {
                     m_dustParticleReceiver.PlayFx(false);
                     m_stateMachine.ChangeState(States.Move);
-                } 
-                else if(m_velocity.sqrMagnitude != 0)
+                }
+                else if (m_velocity.sqrMagnitude != 0)
                 {
                     m_stateMachine.ChangeState(States.Move);
                 }
             }
-            else { // !m_characterController.isGrounded
+            else
+            { // !m_characterController.isGrounded
                 m_stateMachine.ChangeState(States.Fall);
             }
         }
@@ -421,15 +426,15 @@ namespace Run4YourLife.Player
             GravityAndDrag();
             Move();
 
-            if(m_inputController.Started(m_runnerControlScheme.Jump))
+            if (m_inputController.Started(m_runnerControlScheme.Jump))
             {
                 m_stateMachine.ChangeState(States.Jump);
-            } 
-            else if(!m_characterController.isGrounded)
+            }
+            else if (!m_characterController.isGrounded)
             {
                 m_stateMachine.ChangeState(States.CoyoteMove);
             }
-            else if(m_runnerControlScheme.Move.ValueMaximized() == 0 && m_velocity == Vector3.zero)
+            else if (m_runnerControlScheme.Move.ValueMaximized() == 0 && m_velocity == Vector3.zero)
             {
                 m_stateMachine.ChangeState(States.Idle);
             }
@@ -451,15 +456,15 @@ namespace Run4YourLife.Player
             GravityAndDrag();
             Move();
 
-            if(m_inputController.Started(m_runnerControlScheme.Jump))
+            if (m_inputController.Started(m_runnerControlScheme.Jump))
             {
                 m_stateMachine.ChangeState(States.Jump);
-            } 
+            }
             else if (m_characterController.isGrounded)
             {
                 m_stateMachine.ChangeState(States.Move);
             }
-            else if(Time.time >= m_coyoteMove_endTime)
+            else if (Time.time >= m_coyoteMove_endTime)
             {
                 m_stateMachine.ChangeState(States.Fall);
             }
@@ -503,7 +508,7 @@ namespace Run4YourLife.Player
             if (m_ceilingCollision || m_runnerControlScheme.Jump.Ended() || m_jump_previousPositionY >= transform.position.y)
             {
                 //Transitions to next states
-                if(m_runnerControlScheme.Jump.Persists() && !m_ceilingCollision)
+                if (m_runnerControlScheme.Jump.Persists() && !m_ceilingCollision)
                 {
                     m_stateMachine.ChangeState(States.JumpSpeedReduction);
                 }
@@ -531,9 +536,9 @@ namespace Run4YourLife.Player
             AudioManager.Instance.PlaySFX(m_fartClip);
             m_fartParticleReceiver.PlayFx();
             m_animator.SetTrigger(RunnerAnimation.jump);
-            
+
             float jumpHeight = m_secondJumpHeight;
-            if(m_velocity.y > 0)
+            if (m_velocity.y > 0)
             {
                 jumpHeight += VelocityToHeight(m_velocity.y);
             }
@@ -550,7 +555,7 @@ namespace Run4YourLife.Player
             if (m_ceilingCollision || m_runnerControlScheme.Jump.Ended() || m_secondJump_previousYPosition >= transform.position.y)
             {
                 //Transitions to next states
-                if(m_runnerControlScheme.Jump.Persists() && !m_ceilingCollision)
+                if (m_runnerControlScheme.Jump.Persists() && !m_ceilingCollision)
                 {
                     m_stateMachine.ChangeState(States.JumpSpeedReduction);
                 }
@@ -576,7 +581,7 @@ namespace Run4YourLife.Player
             GravityAndDrag();
             Move();
 
-            if(m_velocity.y <= 0f || m_runnerControlScheme.Jump.Ended())
+            if (m_velocity.y <= 0f || m_runnerControlScheme.Jump.Ended())
             {
                 m_stateMachine.ChangeState(States.JumpHover);
             }
@@ -585,7 +590,7 @@ namespace Run4YourLife.Player
         #endregion
 
         #region JumpHover
-        
+
         private float m_secondJumpHover_EndTimer;
 
         void JumpHover_Enter()
@@ -632,12 +637,12 @@ namespace Run4YourLife.Player
             if (m_runnerControlScheme.Jump.Started())
             {
                 bool didExecuteBounce = m_runnerBounceController.ExecuteBounceIfPossible();
-                if(!didExecuteBounce && m_canDoubleJumpAgain)
+                if (!didExecuteBounce && m_canDoubleJumpAgain)
                 {
                     m_stateMachine.ChangeState(States.SecondJump);
                 }
             }
-            else if(m_characterController.isGrounded)
+            else if (m_characterController.isGrounded)
             {
                 m_stateMachine.ChangeState(States.Move);
             }
@@ -655,7 +660,7 @@ namespace Run4YourLife.Player
         {
             _bounce_bounceForce = bounceForce;
 
-            m_stateMachine.ChangeState(States.Bounce);            
+            m_stateMachine.ChangeState(States.Bounce);
         }
 
         private IEnumerator Bounce_Enter()
@@ -671,7 +676,7 @@ namespace Run4YourLife.Player
             m_bounce_previousY = transform.position.y;
             // bounce may have been cause by a jump we have to wait one frame 
             //so that it does not detect the same input as a second jump
-            yield return null; 
+            yield return null;
         }
 
         private void Bounce_Update()
@@ -679,7 +684,7 @@ namespace Run4YourLife.Player
             GravityAndDrag();
             Move();
 
-            if(m_runnerControlScheme.Jump.Started())
+            if (m_runnerControlScheme.Jump.Started())
             {
                 m_stateMachine.ChangeState(States.SecondJump);
             }
@@ -692,7 +697,7 @@ namespace Run4YourLife.Player
         }
 
         #endregion
-    
+
         #region Dash
 
         private float m_dash_endTime;
@@ -707,15 +712,15 @@ namespace Run4YourLife.Player
             m_dashTrail.gameObject.SetActive(true);
 
             float sign = m_isFacingRight ? 1 : -1;
-            m_velocity.x = sign * m_dashDistance/m_dashTime;
+            m_velocity.x = sign * m_dashDistance / m_dashTime;
             m_velocity.y = 0.0f;
-            
+
             m_dash_endTime = Time.time + m_dashTime;
         }
 
         void Dash_Exit()
         {
-            m_velocity.x = 0;   
+            m_velocity.x = 0;
             m_dashTrail.gameObject.SetActive(false);
         }
 
@@ -725,8 +730,8 @@ namespace Run4YourLife.Player
             if (Time.time >= m_dash_endTime)
             {
                 StartCoroutine(YieldHelper.WaitForSeconds(() => m_isReadyToDash = true, m_dashCooldown)); // set ready to dash after some time
-                
-                if(m_characterController.isGrounded)
+
+                if (m_characterController.isGrounded)
                 {
                     m_stateMachine.ChangeState(States.Move);
                 }
@@ -738,7 +743,7 @@ namespace Run4YourLife.Player
         }
 
         #endregion
-    
+
         #region Push
 
         private Vector3 m_push_force;
@@ -769,7 +774,7 @@ namespace Run4YourLife.Player
             GravityAndDrag();
             Move(m_velocity * Time.deltaTime);
 
-            if(m_velocity.x == 0f)
+            if (m_velocity.x == 0f)
             {
                 m_stateMachine.ChangeState(States.Move);
             }
@@ -809,7 +814,7 @@ namespace Run4YourLife.Player
             GravityAndDrag();
             MoveCharacterContoller(m_velocity * Time.deltaTime);
 
-            if(Time.time >= m_shock_endTime)
+            if (Time.time >= m_shock_endTime)
             {
                 m_stateMachine.ChangeState(States.Idle);
             }
@@ -839,7 +844,7 @@ namespace Run4YourLife.Player
         /// <returns>True when it had a shield, false when it did not have a shield</returns>
         public bool ConsumeShieldIfAviable()
         {
-            if(m_isShielded)
+            if (m_isShielded)
             {
                 Destroy(GetComponent<Shielded>()); // this will call deactivate shield
                 return true;
@@ -873,7 +878,8 @@ namespace Run4YourLife.Player
 
         public void Impulse(Vector3 force)
         {
-            if (!ConsumeShieldIfAviable() && !m_recentlyRevived) {
+            if (!ConsumeShieldIfAviable() && !m_recentlyRevived)
+            {
                 m_runnerCharacterController.Push(force);
             }
         }
@@ -891,7 +897,7 @@ namespace Run4YourLife.Player
             float fadeTimer = Time.time + fadePeriodAfterRevive;
             while (timer > Time.time)
             {
-                if(fadeTimer <= Time.time)
+                if (fadeTimer <= Time.time)
                 {
                     FadeByRender(faded);
                     faded = !faded;
