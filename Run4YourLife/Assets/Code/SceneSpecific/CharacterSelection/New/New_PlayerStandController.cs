@@ -66,6 +66,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 }
 
                 currentCharacter = Instantiate(characterPrefab, spawnPosition, false);
+                currentCharacter.GetComponent<Animator>().Play(playerStandsManager.GetAnimationNameOnNotSelected(playerHandle));
 
                 currentCharacterPrefab = characterPrefab;
 
@@ -81,7 +82,13 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
             if(playerStandControlScheme.Select.Started())
             {
-                playerStandsManager.OnPlayerInputSelect(playerHandle);
+                RequestCompletionState requestCompletionState = playerStandsManager.OnPlayerInputSelect(playerHandle);
+
+                if(requestCompletionState == RequestCompletionState.Completed)
+                {
+                    rotationY = 0.0f;
+                    currentCharacter.GetComponent<Animator>().Play(playerStandsManager.GetAnimationNameOnSelected(playerHandle));
+                }
             }
 
             if(playerStandControlScheme.Unselect.Started())
@@ -91,6 +98,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 if(requestCompletionState == RequestCompletionState.Completed)
                 {
                     rotationY = 0.0f;
+                    currentCharacter.GetComponent<Animator>().Play(playerStandsManager.GetAnimationNameOnNotSelected(playerHandle));
                 }
             }
 

@@ -241,11 +241,21 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             return requestCompletionState;
         }
 
+        #endregion
+
         public bool CanRotate(PlayerHandle playerHandle)
         {
             return playerSelectionDone[playerHandle];
         }
 
-        #endregion
+        public string GetAnimationNameOnSelected(PlayerHandle playerHandle)
+        {
+            return playersCurrentCell[playerHandle].animationNameOnSelected;
+        }
+
+        public string GetAnimationNameOnNotSelected(PlayerHandle playerHandle)
+        {
+            return playersCurrentCell[playerHandle].animationNameOnNotSelected;
+        }
     }
 }

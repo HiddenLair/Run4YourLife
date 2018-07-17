@@ -13,5 +13,8 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         public New_CellData navigationDown;
         public New_CellData navigationLeft;
         public New_CellData navigationRight;
+
+        public string animationNameOnSelected;
+        public string animationNameOnNotSelected;
     }
 }
