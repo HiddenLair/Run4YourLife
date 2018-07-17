@@ -311,7 +311,7 @@ namespace Run4YourLife.Player
 
         private void Move()
         {
-            float horizontal = m_inputController.Value(m_runnerControlScheme.Move);
+            float horizontal = m_inputController.ValueMaximized(m_runnerControlScheme.Move);
 
             Vector3 windMovement = (Vector3.left * m_runnerAttributeController.GetAttribute(RunnerAttribute.Speed) * Time.deltaTime)*WindForceRelative;
             Vector3 inputMovement = transform.right * (horizontal * m_runnerAttributeController.GetAttribute(RunnerAttribute.Speed) * Time.deltaTime);
@@ -357,7 +357,7 @@ namespace Run4YourLife.Player
 
         private void LookAtMovingSide()
         {
-            bool shouldFaceTheOtherWay = (m_isFacingRight && m_runnerControlScheme.Move.Value() < 0) || (!m_isFacingRight && m_runnerControlScheme.Move.Value() > 0);
+            bool shouldFaceTheOtherWay = (m_isFacingRight && m_runnerControlScheme.Move.ValueMaximized() < 0) || (!m_isFacingRight && m_runnerControlScheme.Move.ValueMaximized() > 0);
             if (shouldFaceTheOtherWay)
             {
                 m_isFacingRight = !m_isFacingRight;
@@ -392,7 +392,7 @@ namespace Run4YourLife.Player
             } 
             else if(m_characterController.isGrounded)
             {
-                if(m_runnerControlScheme.Move.Value() != 0)
+                if(m_runnerControlScheme.Move.ValueMaximized() != 0)
                 {
                     m_dustParticleReceiver.PlayFx(false);
                     m_stateMachine.ChangeState(States.Move);
@@ -429,7 +429,7 @@ namespace Run4YourLife.Player
             {
                 m_stateMachine.ChangeState(States.CoyoteMove);
             }
-            else if(m_runnerControlScheme.Move.Value() == 0 && m_velocity == Vector3.zero)
+            else if(m_runnerControlScheme.Move.ValueMaximized() == 0 && m_velocity == Vector3.zero)
             {
                 m_stateMachine.ChangeState(States.Idle);
             }

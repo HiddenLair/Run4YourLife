@@ -66,6 +66,29 @@ public class InputController : MonoBehaviour {
         return value;
     }
 
+    public float ValueMaximized(InputAction action)
+    {
+        Debug.Assert(action.InputSource.InputSourceType == InputSourceType.Axis || action.InputSource.InputSourceType == InputSourceType.Trigger);
+        float value = action.ValueMaximized();
+
+        foreach (InputStatusEffect inputStatusEffect in m_inputStatusEffects[action])
+        {
+            switch (inputStatusEffect.inputModifierType)
+            {
+                case InputModifierType.Override:
+                    value = inputStatusEffect.float_value;
+                    break;
+                case InputModifierType.Plain:
+                    value = value + inputStatusEffect.float_value;
+                    break;
+                case InputModifierType.Maximize:
+                    value = Mathf.Sign(action.LastValue);
+                    break;
+            }
+        }
+        return value;
+    }
+
     public void Add(InputStatusEffect inputStatusEffect)
     {
         InputAction action = m_controlScheme.GetByName(inputStatusEffect.actionName);
