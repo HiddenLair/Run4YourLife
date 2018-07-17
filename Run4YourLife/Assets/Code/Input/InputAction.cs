@@ -1,4 +1,6 @@
-﻿namespace Run4YourLife.InputManagement
+﻿using UnityEngine;
+
+namespace Run4YourLife.InputManagement
 {
     public class InputAction
     {
@@ -35,6 +37,17 @@
         public float Value()
         {
             float value = Enabled ? InputSource.Value() : 0.0f;
+            LastValue = value != 0 ? value : LastValue;
+            return value;
+        }
+
+        public float ValueMaximized()
+        {
+            float value = Enabled ? InputSource.Value() : 0.0f;
+            if (value != 0)
+            {
+                value = Mathf.Sign(value);
+            }
             LastValue = value != 0 ? value : LastValue;
             return value;
         }
