@@ -158,6 +158,8 @@ namespace Run4YourLife.Player
         private Coroutine shieldCooldownDestroy;
         private RunnerController m_runnerCharacterController;
 
+        private float idleTimer = 0.0f;
+
 
 
         #endregion
@@ -233,6 +235,7 @@ namespace Run4YourLife.Player
             m_ceilingCollision = false;
             m_dashTrail.gameObject.SetActive(false);
             WindForceRelative = 0.0f;
+            idleTimer = 0.0f;
             m_animator.Rebind();
         }
 
@@ -248,6 +251,8 @@ namespace Run4YourLife.Player
             {
                 m_stateMachine.ChangeState(States.Dash);
             }
+            //Idle time  manage
+            idleTimer += Time.deltaTime;
         }
 
         #region Collision
@@ -316,6 +321,11 @@ namespace Run4YourLife.Player
         private void Move()
         {
             float horizontal = m_inputController.ValueMaximized(m_runnerControlScheme.Move);
+
+            if(horizontal != 0)
+            {
+                idleTimer = 0.0f;//Reset idle timer
+            }
 
             Vector3 windMovement = (Vector3.left * m_runnerAttributeController.GetAttribute(RunnerAttribute.Speed) * Time.deltaTime) * WindForceRelative;
             Vector3 inputMovement = transform.right * (horizontal * m_runnerAttributeController.GetAttribute(RunnerAttribute.Speed) * Time.deltaTime);
@@ -434,7 +444,7 @@ namespace Run4YourLife.Player
             {
                 m_stateMachine.ChangeState(States.CoyoteMove);
             }
-            else if (m_runnerControlScheme.Move.ValueMaximized() == 0 && m_velocity == Vector3.zero)
+            else if (m_runnerControlScheme.Move.ValueMaximized() == 0 && m_velocity == Vector3.zero && idleTimer >= m_timeToIdle)
             {
                 m_stateMachine.ChangeState(States.Idle);
             }
@@ -668,7 +678,6 @@ namespace Run4YourLife.Player
             m_canDoubleJumpAgain = true;
 
             AudioManager.Instance.PlaySFX(m_bounceClip);
-            m_animator.SetTrigger(RunnerAnimation.bounce);
 
             m_velocity.x = DragToVelocity(_bounce_bounceForce.x);
             m_velocity.y = HeightToVelocity(_bounce_bounceForce.y);
