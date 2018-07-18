@@ -17,6 +17,5 @@
         public static readonly string stopShock = "stopShock";
         public static readonly string push = "push";
         public static readonly string idle = "idle";
-        public static readonly string bounce = "bounce";
     }
 }
