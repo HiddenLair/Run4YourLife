@@ -24,17 +24,17 @@ namespace Run4YourLife.Player
 
         public float Cooldown { get { return m_cooldown; } }
 
-        virtual public bool CheckAndRepositionSkillSpawn(ref SkillSpawnData skillSpawnData)
+        public virtual bool CheckAndRepositionSkillSpawn(ref SkillSpawnData skillSpawnData)
         {
             return true;
         }
-
-        virtual protected void ResetState() { }
 
         public void StartSkill() {
             ResetState();
             OnSkillStart();
         }
-        virtual protected void OnSkillStart() { }
+
+        protected virtual void ResetState() { }
+        protected virtual void OnSkillStart() { }
     }
 }

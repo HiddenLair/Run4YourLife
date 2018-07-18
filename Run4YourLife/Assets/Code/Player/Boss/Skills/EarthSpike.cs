@@ -39,14 +39,6 @@ namespace Run4YourLife.Player
         private GameObject m_breakableWallPrefab;
 
 
-        protected override void ResetState()
-        {
-            StopAllCoroutines();
-            m_warningSpikeParticles.SetActive(false);
-            m_earthSpikeChild.SetActive(false);
-        }
-
-
         public override bool CheckAndRepositionSkillSpawn(ref SkillSpawnData skillSpawnData)
         {
             Collider[] stageElements;
@@ -125,9 +117,6 @@ namespace Run4YourLife.Player
             return false;
         }
 
-
-
-
         /// Collider for the object
         /// Position to place the object. position.y should be equals to collider.bounds.max.y
         /// SkillSpawnData to update
@@ -175,6 +164,14 @@ namespace Run4YourLife.Player
             return stageInfo;
         }
 
+        protected override void ResetState()
+        {
+            StopAllCoroutines();
+            m_warningSpikeParticles.SetActive(false);
+            m_earthSpikeChild.SetActive(false);
+            m_earthSpikeChild.transform.localScale = Vector3.zero;
+        }
+
         protected override void OnSkillStart()
         {
             StartCoroutine(SkillBehaviuour());
@@ -197,7 +194,7 @@ namespace Run4YourLife.Player
             while (Time.time < endTime)
             {
                 float percentage = 1f - ((endTime - Time.time) / m_earthSpikeGrowthDuration);
-                transform.localScale = Vector3.one * percentage;
+                m_earthSpikeChild.transform.localScale = Vector3.one * percentage;
                 yield return null;
             }
 
