@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
 using Run4YourLife.Player;
+using Run4YourLife.InputManagement;
 
 namespace Run4YourLife.SceneSpecific.CharacterSelection
 {
@@ -24,6 +26,12 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         [SerializeField]
         private New_PlayerStandController[] playerStandControllers;
+
+        [SerializeField]
+        private Image back;
+
+        [SerializeField]
+        private New_OnButtonHeldControlScheme backControlScheme;
 
         private New_PlayerPrefabManager playerPrefabManager;
 
@@ -59,6 +67,11 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         void OnDisable()
         {
             PlayerManager.Instance.OnPlayerChanged.RemoveListener(OnPlayerAdded);
+        }
+
+        public void OnGoMainMenu()
+        {
+            CharacterSelectionManager.Instance.OnMainMenuStart();
         }
 
         private void OnPlayerAdded(PlayerHandle playerHandle)
@@ -159,7 +172,6 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         {
             if(playerSelectionDone[playerHandle])
             {
-                Debug.Log("OnPlayerInputSelect: " + playerHandle.InputDevice.ID + " Unmodified");
                 return RequestCompletionState.Unmodified;
             }
 
@@ -169,14 +181,12 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             {
                 if(playerCurrentCell.Value == playerCell && playerSelectionDone[playerCurrentCell.Key])
                 {
-                    Debug.Log("OnPlayerInputSelect: " + playerHandle.InputDevice.ID + " Error");
                     return RequestCompletionState.Error;
                 }
             }
 
             playerSelectionDone[playerHandle] = true;
 
-            Debug.Log("OnPlayerInputSelect: " + playerHandle.InputDevice.ID + " Completed");
             return RequestCompletionState.Completed;
         }
 
@@ -184,13 +194,11 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         {
             if(!playerSelectionDone[playerHandle])
             {
-                Debug.Log("OnPlayerInputUnselect: " + playerHandle.InputDevice.ID + " Unmodified");
                 return RequestCompletionState.Unmodified;
             }
 
             playerSelectionDone[playerHandle] = false;
 
-            Debug.Log("OnPlayerInputUnselect: " + playerHandle.InputDevice.ID + " Completed");
             return RequestCompletionState.Completed;
         }
 
@@ -198,56 +206,40 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         {
             if(playerSelectionDone[playerHandle])
             {
-                Debug.Log("OnPlayerInputUp: " + playerHandle.InputDevice.ID + " Error");
                 return RequestCompletionState.Error;
             }
 
-            RequestCompletionState requestCompletionState = UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationUp);
-
-            Debug.Log("OnPlayerInputUp: " + playerHandle.InputDevice.ID + " " + requestCompletionState);
-            return requestCompletionState;
+            return UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationUp);
         }
 
         public RequestCompletionState OnPlayerInputDown(PlayerHandle playerHandle)
         {
             if(playerSelectionDone[playerHandle])
             {
-                Debug.Log("OnPlayerInputDown: " + playerHandle.InputDevice.ID + " Error");
                 return RequestCompletionState.Error;
             }
 
-            RequestCompletionState requestCompletionState = UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationDown);
-
-            Debug.Log("OnPlayerInputDown: " + playerHandle.InputDevice.ID + " " + requestCompletionState);
-            return requestCompletionState;
+            return UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationDown);
         }
 
         public RequestCompletionState OnPlayerInputLeft(PlayerHandle playerHandle)
         {
             if(playerSelectionDone[playerHandle])
             {
-                Debug.Log("OnPlayerInputLeft: " + playerHandle.InputDevice.ID + " Error");
                 return RequestCompletionState.Error;
             }
 
-            RequestCompletionState requestCompletionState = UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationLeft);
-
-            Debug.Log("OnPlayerInputLeft: " + playerHandle.InputDevice.ID + " " + requestCompletionState);
-            return requestCompletionState;
+            return UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationLeft);
         }
 
         public RequestCompletionState OnPlayerInputRight(PlayerHandle playerHandle)
         {
             if(playerSelectionDone[playerHandle])
             {
-                Debug.Log("OnPlayerInputRight: " + playerHandle.InputDevice.ID + " Error");
                 return RequestCompletionState.Error;
             }
 
-            RequestCompletionState requestCompletionState = UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationRight);
-
-            Debug.Log("OnPlayerInputRight: " + playerHandle.InputDevice.ID + " " + requestCompletionState);
-            return requestCompletionState;
+            return UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationRight);
         }
 
         #endregion
@@ -265,6 +257,11 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         public string GetAnimationNameOnNotSelected(PlayerHandle playerHandle)
         {
             return playersCurrentCell[playerHandle].animationNameOnNotSelected;
+        }
+
+        public void UpdateBackFillAmount()
+        {
+            back.fillAmount = backControlScheme.GetPercent();
         }
     }
 }

@@ -9,7 +9,10 @@ namespace Run4YourLife.InputManagement
         private string buttonId;
 
         [SerializeField]
-        private UnityEvent onButtonPressed;
+        protected UnityEvent onButtonPressed;
+
+        [SerializeField]
+        protected UnityEvent onButtonReleased;
 
         public InputAction InputAction { get; private set; }
 
@@ -24,12 +27,27 @@ namespace Run4YourLife.InputManagement
             Active = true;
         }
 
-        void Update()
+        protected virtual void Update()
         {
             if(InputAction.Started())
             {
-                onButtonPressed.Invoke();
+                OnPressed();
             }
+
+            if(InputAction.Ended())
+            {
+                OnReleased();
+            }
+        }
+
+        protected virtual void OnPressed()
+        {
+            onButtonPressed.Invoke();
+        }
+
+        protected virtual void OnReleased()
+        {
+            onButtonReleased.Invoke();
         }
 
         private Button GetButton()
