@@ -59,6 +59,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1755501636185982
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4611677911695590}
+  - component: {fileID: 33416769907654926}
+  - component: {fileID: 23341053860149404}
+  - component: {fileID: 95145857363951834}
+  m_Layer: 0
+  m_Name: R4YL_PROP_trap_spike_sand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1778254393714324
 GameObject:
   m_ObjectHideFlags: 0
@@ -71,7 +89,7 @@ GameObject:
   - component: {fileID: 114821126489559806}
   - component: {fileID: 114337868035898724}
   m_Layer: 9
-  m_Name: EarthSpike2
+  m_Name: EarthSpike_Phase2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94,23 +112,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!1 &1984683475210516
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4886061998564074}
-  - component: {fileID: 33789998964533002}
-  - component: {fileID: 23544889011824036}
-  m_Layer: 9
-  m_Name: Cylinder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1996009535527342
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,7 +121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4879060076864262}
   m_Layer: 9
-  m_Name: Pike
+  m_Name: Spike
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -180,6 +181,19 @@ Transform:
   m_Father: {fileID: 4879060076864262}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4611677911695590
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1755501636185982}
+  m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 0.29999998, y: 0.29999998, z: 0.29999998}
+  m_Children: []
+  m_Father: {fileID: 4821045110249178}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4821045110249178
 Transform:
   m_ObjectHideFlags: 1
@@ -190,7 +204,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4886061998564074}
+  - {fileID: 4611677911695590}
   m_Father: {fileID: 4879060076864262}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -210,25 +224,12 @@ Transform:
   m_Father: {fileID: 4114878330995738}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4886061998564074
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1984683475210516}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4821045110249178}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23544889011824036
+--- !u!23 &23341053860149404
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1984683475210516}
+  m_GameObject: {fileID: 1755501636185982}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -237,7 +238,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 02586be755a554a4abb6c3fb18c26fc2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -245,7 +246,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
+  m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 0
@@ -257,13 +258,13 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33789998964533002
+--- !u!33 &33416769907654926
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1984683475210516}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  m_GameObject: {fileID: 1755501636185982}
+  m_Mesh: {fileID: 4300000, guid: b2a7699c335da2a42851e67aa5d2925d, type: 3}
 --- !u!54 &54094859709463614
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -303,6 +304,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5, z: 1}
   m_Center: {x: 0, y: 1.75, z: 0}
+--- !u!95 &95145857363951834
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1755501636185982}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: b2a7699c335da2a42851e67aa5d2925d, type: 3}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114337868035898724
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -341,15 +359,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 1
   m_skillTriggerClip: {fileID: 8300000, guid: cd67734886631124987345b869fa66d9, type: 3}
-  m_cooldown: 1
-  m_spawnColliderBounds: {x: 0, y: 0, z: 0}
-  m_warningParticlesDuration: 0
-  m_earthSpikeGrowthDuration: 0
-  m_breakEarthSpikeDelay: 0
-  m_warningSpikeParticles: {fileID: 0}
-  m_earthSpikeChild: {fileID: 0}
-  m_spikeGrowTrembleConfig: {fileID: 0}
-  m_breakableWallPrefab: {fileID: 0}
+  m_cooldown: 3
+  m_spawnColliderBounds: {x: 1, y: 1.5, z: 0.75}
+  m_warningParticlesDuration: 1
+  m_earthSpikeGrowthDuration: 0.4
+  m_breakEarthSpikeDelay: 0.25
+  m_warningSpikeParticles: {fileID: 1857002953596700}
+  m_earthSpikeChild: {fileID: 1996009535527342}
+  m_spikeGrowTrembleConfig: {fileID: 11400000, guid: c9816c4eae27df944b23abc59c202495,
+    type: 2}
+  m_breakableWallPrefab: {fileID: 1705394957324018, guid: 6419794bc2429ea43b90d76b1153e827,
+    type: 2}
 --- !u!198 &198234331497073912
 ParticleSystem:
   m_ObjectHideFlags: 1
