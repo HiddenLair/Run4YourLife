@@ -2,6 +2,7 @@
 
 using Run4YourLife.Utils;
 using Run4YourLife.Player;
+using Run4YourLife.GameManagement;
 using Run4YourLife.InputManagement;
 
 namespace Run4YourLife.SceneSpecific.CharacterSelection
@@ -79,10 +80,10 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             {
                 if(currentCharacter != null)
                 {
-                    Destroy(currentCharacter);
+                    currentCharacter.SetActive(false);
                 }
 
-                currentCharacter = Instantiate(characterPrefab, spawnPosition, false);
+                currentCharacter = DynamicObjectsManager.Instance.GameObjectPool.GetAndPositionAndScale(characterPrefab, spawnPosition.position, spawnPosition.rotation, spawnPosition.localScale, true);
                 currentCharacter.GetComponent<Animator>().Play(playerStandsManager.GetAnimationNameOnNotSelected(playerHandle));
 
                 currentCharacterPrefab = characterPrefab;

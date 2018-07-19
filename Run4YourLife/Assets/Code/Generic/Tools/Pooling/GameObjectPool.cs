@@ -100,6 +100,16 @@ public class GameObjectPool : MonoBehaviour
         return instance;
     }
 
+    public GameObject GetAndPositionAndScale(GameObject key, Vector3 position, Quaternion rotation, Vector3 scale, bool activate = false)
+    {
+        GameObject instance = Get(key);
+        instance.transform.position = position;
+        instance.transform.rotation = rotation;
+        instance.transform.localScale = scale;
+        instance.SetActive(activate);
+        return instance;
+    }
+
     private void Update()
     {
         if (m_nextRetrivalTime <= Time.time)
