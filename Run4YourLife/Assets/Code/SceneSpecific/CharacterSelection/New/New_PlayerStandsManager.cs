@@ -27,6 +27,9 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         private New_PlayerPrefabManager playerPrefabManager;
 
+        private uint currentId = 0;
+        private Dictionary<PlayerHandle, uint> playerIds = new Dictionary<PlayerHandle, uint>();
+
         private Dictionary<PlayerHandle, New_CellData> playersCurrentCell = new Dictionary<PlayerHandle, New_CellData>();
         private Dictionary<New_CellData, HashSet<PlayerHandle>> bossCellCurrentContainedPlayers = new Dictionary<New_CellData, HashSet<PlayerHandle>>();
         private Dictionary<New_CellData, HashSet<PlayerHandle>> runnerCellCurrentContainedPlayers = new Dictionary<New_CellData, HashSet<PlayerHandle>>();
@@ -61,6 +64,8 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         private void OnPlayerAdded(PlayerHandle playerHandle)
         {
             FillStand(playerHandle);
+
+            playerIds.Add(playerHandle, currentId++);
 
             playersCurrentCell.Add(playerHandle, null);
             playerSelectionDone.Add(playerHandle, false);
@@ -98,7 +103,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                         runnerCellCurrentContainedPlayers[previousCellData].Remove(playerHandle);
                     }
 
-                    previousCellData.GetComponentInChildren<New_CellPlayersImageController>().Hide(playerHandle.InputDevice.ID);
+                    previousCellData.GetComponentInChildren<New_CellPlayersImageController>().Hide(playerIds[playerHandle]);
                 }
 
                 if(bossCellCurrentContainedPlayers.ContainsKey(cellData))
@@ -113,7 +118,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
                 playersCurrentCell[playerHandle] = cellData;
 
-                cellData.GetComponentInChildren<New_CellPlayersImageController>().Show(playerHandle.InputDevice.ID);
+                cellData.GetComponentInChildren<New_CellPlayersImageController>().Show(playerIds[playerHandle]);
 
                 foreach(New_PlayerStandController playerStandController in playerStandControllers)
                 {
