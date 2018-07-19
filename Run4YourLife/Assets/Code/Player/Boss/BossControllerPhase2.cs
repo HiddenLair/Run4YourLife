@@ -36,7 +36,9 @@ namespace Run4YourLife.Player
         {
             AudioManager.Instance.PlaySFX(m_shotClip);
 
-            GameObject bulletInstance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(m_bulletPrefab, m_shotSpawn.position, m_bulletPrefab.transform.rotation, true);
+            Vector3 director = (m_crossHairControl.Position - m_shotSpawn.position).normalized;
+            Quaternion rotation = Quaternion.FromToRotation(Vector3.right, director);
+            GameObject bulletInstance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(m_bulletPrefab, m_shotSpawn.position, rotation, true);
             bulletInstance.GetComponent<BossExplosiveBulletController>().LaunchBullet(m_crossHairControl.Position);
         }
         #endregion
