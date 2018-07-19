@@ -97,6 +97,8 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                     {
                         runnerCellCurrentContainedPlayers[previousCellData].Remove(playerHandle);
                     }
+
+                    previousCellData.GetComponentInChildren<New_CellPlayersImageController>().Hide(playerHandle.InputDevice.ID);
                 }
 
                 if(bossCellCurrentContainedPlayers.ContainsKey(cellData))
@@ -110,6 +112,8 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 }
 
                 playersCurrentCell[playerHandle] = cellData;
+
+                cellData.GetComponentInChildren<New_CellPlayersImageController>().Show(playerHandle.InputDevice.ID);
 
                 foreach(New_PlayerStandController playerStandController in playerStandControllers)
                 {
