@@ -16,6 +16,9 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         private Transform spawnPosition;
 
         [SerializeField]
+        private GameObject infoIndex;
+
+        [SerializeField]
         private GameObject infoJoin;
 
         [SerializeField]
@@ -44,6 +47,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             playerStandControlScheme = GetComponent<New_PlayerStandControllerControlScheme>();
 
             InfoShowJoin();
+            infoIndex.SetActive(false);
         }
 
         void Update()
@@ -61,6 +65,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         public void OnPlayerHandleChanged(PlayerHandle playerHandle)
         {
+            infoIndex.SetActive(true);
             this.playerHandle = playerHandle;
             StartCoroutine(YieldHelper.SkipFrame(() => playerStandControlScheme.Active = playerHandle != null));
         }
