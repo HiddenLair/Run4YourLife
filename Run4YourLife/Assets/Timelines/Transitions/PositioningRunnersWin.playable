@@ -21,6 +21,23 @@ MonoBehaviour:
   m_EditorSettings:
     m_Framerate: 60
   m_DurationMode: 0
+--- !u!114 &114050986376755408
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 2024714994, guid: 6a10b2909283487f913b00d94cd3faf5, type: 3}
+  m_Name: AnimationPlayableAsset of PJ_animation_RUN
+  m_EditorClassIdentifier: 
+  m_Clip: {fileID: 7400002, guid: ebb57c9777ae3424b8d41b6aa7343aff, type: 3}
+  m_Position: {x: 0, y: 0, z: 0}
+  m_Rotation: {x: 0, y: 0, z: 0, w: 1}
+  m_UseTrackMatchFields: 0
+  m_MatchTargetFields: 63
+  m_RemoveStartOffset: 1
 --- !u!114 &114147546283097646
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -162,7 +179,19 @@ MonoBehaviour:
       m_RotationOrder: 4
     m_MixOutCurve:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -452,6 +481,23 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: TransformTweenClip
     m_Version: 1
+--- !u!114 &114471158852567230
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 2024714994, guid: 6a10b2909283487f913b00d94cd3faf5, type: 3}
+  m_Name: AnimationPlayableAsset of PJ_animation_RUN
+  m_EditorClassIdentifier: 
+  m_Clip: {fileID: 7400002, guid: ebb57c9777ae3424b8d41b6aa7343aff, type: 3}
+  m_Position: {x: 0, y: 0, z: 0}
+  m_Rotation: {x: 0, y: 0, z: 0, w: 1}
+  m_UseTrackMatchFields: 0
+  m_MatchTargetFields: 63
+  m_RemoveStartOffset: 1
 --- !u!114 &114541930553561446
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -472,8 +518,8 @@ MonoBehaviour:
   m_Clips:
   - m_Start: 0
     m_ClipIn: 0
-    m_Asset: {fileID: 114720536580809584}
-    m_UnderlyingAsset: {fileID: 7400002, guid: b85e432bcacc6694d9c4020a9035244f, type: 3}
+    m_Asset: {fileID: 114569160161220604}
+    m_UnderlyingAsset: {fileID: 7400002, guid: ebb57c9777ae3424b8d41b6aa7343aff, type: 3}
     m_Duration: 2.5
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114541930553561446}
@@ -526,7 +572,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 1
     m_PostExtrapolationTime: Infinity
     m_PreExtrapolationTime: 0
-    m_DisplayName: PJ_animation__RUN
+    m_DisplayName: PJ_animation_RUN
     m_Version: 1
   m_OpenClipPreExtrapolation: 0
   m_OpenClipPostExtrapolation: 0
@@ -539,6 +585,23 @@ MonoBehaviour:
   m_ApplyOffsets: 0
   m_AvatarMask: {fileID: 0}
   m_ApplyAvatarMask: 1
+--- !u!114 &114569160161220604
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 2024714994, guid: 6a10b2909283487f913b00d94cd3faf5, type: 3}
+  m_Name: AnimationPlayableAsset of PJ_animation_RUN
+  m_EditorClassIdentifier: 
+  m_Clip: {fileID: 7400002, guid: ebb57c9777ae3424b8d41b6aa7343aff, type: 3}
+  m_Position: {x: 0, y: 0, z: 0}
+  m_Rotation: {x: 0, y: 0, z: 0, w: 1}
+  m_UseTrackMatchFields: 0
+  m_MatchTargetFields: 63
+  m_RemoveStartOffset: 1
 --- !u!114 &114585268859453106
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -559,8 +622,8 @@ MonoBehaviour:
   m_Clips:
   - m_Start: 0
     m_ClipIn: 0
-    m_Asset: {fileID: 114600394759276382}
-    m_UnderlyingAsset: {fileID: 7400002, guid: b85e432bcacc6694d9c4020a9035244f, type: 3}
+    m_Asset: {fileID: 114050986376755408}
+    m_UnderlyingAsset: {fileID: 7400002, guid: ebb57c9777ae3424b8d41b6aa7343aff, type: 3}
     m_Duration: 2.5
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114585268859453106}
@@ -613,7 +676,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 1
     m_PostExtrapolationTime: Infinity
     m_PreExtrapolationTime: 0
-    m_DisplayName: PJ_animation__RUN
+    m_DisplayName: PJ_animation_RUN
     m_Version: 1
   m_OpenClipPreExtrapolation: 0
   m_OpenClipPostExtrapolation: 0
@@ -626,40 +689,6 @@ MonoBehaviour:
   m_ApplyOffsets: 0
   m_AvatarMask: {fileID: 0}
   m_ApplyAvatarMask: 1
---- !u!114 &114600394759276382
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 2024714994, guid: 6a10b2909283487f913b00d94cd3faf5, type: 3}
-  m_Name: AnimationPlayableAsset of PJ_animation__RUN
-  m_EditorClassIdentifier: 
-  m_Clip: {fileID: 7400002, guid: b85e432bcacc6694d9c4020a9035244f, type: 3}
-  m_Position: {x: 0, y: 0, z: 0}
-  m_Rotation: {x: 0, y: 0, z: 0, w: 1}
-  m_UseTrackMatchFields: 0
-  m_MatchTargetFields: 63
-  m_RemoveStartOffset: 1
---- !u!114 &114617052810316588
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 2024714994, guid: 6a10b2909283487f913b00d94cd3faf5, type: 3}
-  m_Name: AnimationPlayableAsset of PJ_animation__RUN
-  m_EditorClassIdentifier: 
-  m_Clip: {fileID: 7400002, guid: b85e432bcacc6694d9c4020a9035244f, type: 3}
-  m_Position: {x: 0, y: 0, z: 0}
-  m_Rotation: {x: 0, y: 0, z: 0, w: 1}
-  m_UseTrackMatchFields: 0
-  m_MatchTargetFields: 63
-  m_RemoveStartOffset: 1
 --- !u!114 &114676976629515892
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -680,8 +709,8 @@ MonoBehaviour:
   m_Clips:
   - m_Start: 0
     m_ClipIn: 0
-    m_Asset: {fileID: 114617052810316588}
-    m_UnderlyingAsset: {fileID: 7400002, guid: b85e432bcacc6694d9c4020a9035244f, type: 3}
+    m_Asset: {fileID: 114471158852567230}
+    m_UnderlyingAsset: {fileID: 7400002, guid: ebb57c9777ae3424b8d41b6aa7343aff, type: 3}
     m_Duration: 2.5
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114676976629515892}
@@ -734,7 +763,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 1
     m_PostExtrapolationTime: Infinity
     m_PreExtrapolationTime: 0
-    m_DisplayName: PJ_animation__RUN
+    m_DisplayName: PJ_animation_RUN
     m_Version: 1
   m_OpenClipPreExtrapolation: 0
   m_OpenClipPostExtrapolation: 0
@@ -747,23 +776,6 @@ MonoBehaviour:
   m_ApplyOffsets: 0
   m_AvatarMask: {fileID: 0}
   m_ApplyAvatarMask: 1
---- !u!114 &114720536580809584
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 2024714994, guid: 6a10b2909283487f913b00d94cd3faf5, type: 3}
-  m_Name: AnimationPlayableAsset of PJ_animation__RUN
-  m_EditorClassIdentifier: 
-  m_Clip: {fileID: 7400002, guid: b85e432bcacc6694d9c4020a9035244f, type: 3}
-  m_Position: {x: 0, y: 0, z: 0}
-  m_Rotation: {x: 0, y: 0, z: 0, w: 1}
-  m_UseTrackMatchFields: 0
-  m_MatchTargetFields: 63
-  m_RemoveStartOffset: 1
 --- !u!114 &114748212064763056
 MonoBehaviour:
   m_ObjectHideFlags: 1

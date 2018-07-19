@@ -677,6 +677,23 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_GenerateMotionCurves: 1
   m_Events: []
+--- !u!114 &114000301600610200
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 2024714994, guid: 6a10b2909283487f913b00d94cd3faf5, type: 3}
+  m_Name: AnimationPlayableAsset of PJ_animation_SCREAM
+  m_EditorClassIdentifier: 
+  m_Clip: {fileID: 7400026, guid: ebb57c9777ae3424b8d41b6aa7343aff, type: 3}
+  m_Position: {x: 0, y: 0, z: 0}
+  m_Rotation: {x: 0, y: 0, z: 0, w: 1}
+  m_UseTrackMatchFields: 0
+  m_MatchTargetFields: 63
+  m_RemoveStartOffset: 1
 --- !u!114 &114022722893592984
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -697,7 +714,7 @@ MonoBehaviour:
   - {fileID: 114925780838060030}
   - {fileID: 114871337422375056}
   m_Clips: []
---- !u!114 &114058338509952506
+--- !u!114 &114049632573205262
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -708,7 +725,7 @@ MonoBehaviour:
   m_Script: {fileID: 2024714994, guid: 6a10b2909283487f913b00d94cd3faf5, type: 3}
   m_Name: AnimationPlayableAsset of PJ_animation_SCREAM
   m_EditorClassIdentifier: 
-  m_Clip: {fileID: 7400026, guid: b85e432bcacc6694d9c4020a9035244f, type: 3}
+  m_Clip: {fileID: 7400026, guid: ebb57c9777ae3424b8d41b6aa7343aff, type: 3}
   m_Position: {x: 0, y: 0, z: 0}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_UseTrackMatchFields: 0
@@ -744,7 +761,7 @@ MonoBehaviour:
   m_Children: []
   m_Clips: []
   m_PostPlaybackState: 3
---- !u!114 &114135902733514514
+--- !u!114 &114163067874353304
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -753,9 +770,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 2024714994, guid: 6a10b2909283487f913b00d94cd3faf5, type: 3}
-  m_Name: AnimationPlayableAsset of PJ_animation__RUN
+  m_Name: AnimationPlayableAsset of PJ_animation_RUN
   m_EditorClassIdentifier: 
-  m_Clip: {fileID: 7400002, guid: b85e432bcacc6694d9c4020a9035244f, type: 3}
+  m_Clip: {fileID: 7400002, guid: ebb57c9777ae3424b8d41b6aa7343aff, type: 3}
   m_Position: {x: 0, y: 0, z: 0}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_UseTrackMatchFields: 0
@@ -781,8 +798,8 @@ MonoBehaviour:
   m_Clips:
   - m_Start: 0
     m_ClipIn: 0
-    m_Asset: {fileID: 114135902733514514}
-    m_UnderlyingAsset: {fileID: 7400002, guid: b85e432bcacc6694d9c4020a9035244f, type: 3}
+    m_Asset: {fileID: 114571277727498742}
+    m_UnderlyingAsset: {fileID: 7400002, guid: ebb57c9777ae3424b8d41b6aa7343aff, type: 3}
     m_Duration: 4.666666666666667
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114214840791020022}
@@ -792,19 +809,7 @@ MonoBehaviour:
     m_BlendOutDuration: 0.16666666666666696
     m_MixInCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -835,12 +840,12 @@ MonoBehaviour:
     m_PreExtrapolationMode: 1
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: PJ_animation__RUN
+    m_DisplayName: PJ_animation_RUN
     m_Version: 1
   - m_Start: 4.5
     m_ClipIn: 0
-    m_Asset: {fileID: 114609985355926094}
-    m_UnderlyingAsset: {fileID: 7400026, guid: b85e432bcacc6694d9c4020a9035244f, type: 3}
+    m_Asset: {fileID: 114049632573205262}
+    m_UnderlyingAsset: {fileID: 7400026, guid: ebb57c9777ae3424b8d41b6aa7343aff, type: 3}
     m_Duration: 1.5
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114214840791020022}
@@ -850,19 +855,7 @@ MonoBehaviour:
     m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -914,23 +907,6 @@ MonoBehaviour:
   - {fileID: 114214840791020022}
   - {fileID: 114565515998721222}
   m_Clips: []
---- !u!114 &114250236666581640
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 2024714994, guid: 6a10b2909283487f913b00d94cd3faf5, type: 3}
-  m_Name: AnimationPlayableAsset of PJ_animation__RUN
-  m_EditorClassIdentifier: 
-  m_Clip: {fileID: 7400002, guid: b85e432bcacc6694d9c4020a9035244f, type: 3}
-  m_Position: {x: 0, y: 0, z: 0}
-  m_Rotation: {x: 0, y: 0, z: 0, w: 1}
-  m_UseTrackMatchFields: 0
-  m_MatchTargetFields: 63
-  m_RemoveStartOffset: 1
 --- !u!114 &114251329869396854
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1184,30 +1160,18 @@ MonoBehaviour:
   m_Clips:
   - m_Start: 0
     m_ClipIn: 0
-    m_Asset: {fileID: 114250236666581640}
-    m_UnderlyingAsset: {fileID: 7400002, guid: b85e432bcacc6694d9c4020a9035244f, type: 3}
+    m_Asset: {fileID: 114498688920377580}
+    m_UnderlyingAsset: {fileID: 7400002, guid: ebb57c9777ae3424b8d41b6aa7343aff, type: 3}
     m_Duration: 4.666666666666667
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114479551854927694}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
     m_BlendInDuration: -1
-    m_BlendOutDuration: 0.18333333333333357
+    m_BlendOutDuration: 0.16666666666666696
     m_MixInCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -1238,40 +1202,40 @@ MonoBehaviour:
     m_PreExtrapolationMode: 1
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: PJ_animation__RUN
+    m_DisplayName: PJ_animation_RUN
     m_Version: 1
-  - m_Start: 4.483333333333333
-    m_ClipIn: 0.4833333333333334
-    m_Asset: {fileID: 114496672637283624}
-    m_UnderlyingAsset: {fileID: 7400026, guid: b85e432bcacc6694d9c4020a9035244f, type: 3}
-    m_Duration: 1.5166666666666666
+  - m_Start: 4.5
+    m_ClipIn: 0
+    m_Asset: {fileID: 114866955826829868}
+    m_UnderlyingAsset: {fileID: 7400026, guid: ebb57c9777ae3424b8d41b6aa7343aff, type: 3}
+    m_Duration: 1.5
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114479551854927694}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
-    m_BlendInDuration: 0.18333333333333357
+    m_BlendInDuration: 0.16666666666666696
     m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     m_MixOutCurve:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -1317,7 +1281,7 @@ MonoBehaviour:
   - {fileID: 114479551854927694}
   - {fileID: 114444202972765906}
   m_Clips: []
---- !u!114 &114496672637283624
+--- !u!114 &114498688920377580
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1326,9 +1290,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 2024714994, guid: 6a10b2909283487f913b00d94cd3faf5, type: 3}
-  m_Name: AnimationPlayableAsset of PJ_animation_SCREAM
+  m_Name: AnimationPlayableAsset of PJ_animation_RUN
   m_EditorClassIdentifier: 
-  m_Clip: {fileID: 7400026, guid: b85e432bcacc6694d9c4020a9035244f, type: 3}
+  m_Clip: {fileID: 7400002, guid: ebb57c9777ae3424b8d41b6aa7343aff, type: 3}
   m_Position: {x: 0, y: 0, z: 0}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_UseTrackMatchFields: 0
@@ -1440,37 +1404,13 @@ MonoBehaviour:
     m_BlendOutDuration: 0.5666666666666664
     m_MixInCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     m_MixOutCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -1498,19 +1438,7 @@ MonoBehaviour:
     m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -1583,6 +1511,23 @@ MonoBehaviour:
   m_ApplyOffsets: 0
   m_AvatarMask: {fileID: 0}
   m_ApplyAvatarMask: 1
+--- !u!114 &114571277727498742
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 2024714994, guid: 6a10b2909283487f913b00d94cd3faf5, type: 3}
+  m_Name: AnimationPlayableAsset of PJ_animation_RUN
+  m_EditorClassIdentifier: 
+  m_Clip: {fileID: 7400002, guid: ebb57c9777ae3424b8d41b6aa7343aff, type: 3}
+  m_Position: {x: 0, y: 0, z: 0}
+  m_Rotation: {x: 0, y: 0, z: 0, w: 1}
+  m_UseTrackMatchFields: 0
+  m_MatchTargetFields: 63
+  m_RemoveStartOffset: 1
 --- !u!114 &114573852763773256
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1641,23 +1586,6 @@ MonoBehaviour:
   m_ApplyOffsets: 0
   m_AvatarMask: {fileID: 0}
   m_ApplyAvatarMask: 1
---- !u!114 &114609985355926094
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 2024714994, guid: 6a10b2909283487f913b00d94cd3faf5, type: 3}
-  m_Name: AnimationPlayableAsset of PJ_animation_SCREAM
-  m_EditorClassIdentifier: 
-  m_Clip: {fileID: 7400026, guid: b85e432bcacc6694d9c4020a9035244f, type: 3}
-  m_Position: {x: 0, y: 0, z: 0}
-  m_Rotation: {x: 0, y: 0, z: 0, w: 1}
-  m_UseTrackMatchFields: 0
-  m_MatchTargetFields: 63
-  m_RemoveStartOffset: 1
 --- !u!114 &114624384264148446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1823,6 +1751,23 @@ MonoBehaviour:
   m_UseTrackMatchFields: 0
   m_MatchTargetFields: 63
   m_RemoveStartOffset: 1
+--- !u!114 &114866955826829868
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 2024714994, guid: 6a10b2909283487f913b00d94cd3faf5, type: 3}
+  m_Name: AnimationPlayableAsset of PJ_animation_SCREAM
+  m_EditorClassIdentifier: 
+  m_Clip: {fileID: 7400026, guid: ebb57c9777ae3424b8d41b6aa7343aff, type: 3}
+  m_Position: {x: 0, y: 0, z: 0}
+  m_Rotation: {x: 0, y: 0, z: 0, w: 1}
+  m_UseTrackMatchFields: 0
+  m_MatchTargetFields: 63
+  m_RemoveStartOffset: 1
 --- !u!114 &114868339864893452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1869,23 +1814,6 @@ MonoBehaviour:
   m_ApplyOffsets: 0
   m_AvatarMask: {fileID: 0}
   m_ApplyAvatarMask: 1
---- !u!114 &114883132922455808
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 2024714994, guid: 6a10b2909283487f913b00d94cd3faf5, type: 3}
-  m_Name: AnimationPlayableAsset of PJ_animation__RUN
-  m_EditorClassIdentifier: 
-  m_Clip: {fileID: 7400002, guid: b85e432bcacc6694d9c4020a9035244f, type: 3}
-  m_Position: {x: 0, y: 0, z: 0}
-  m_Rotation: {x: 0, y: 0, z: 0, w: 1}
-  m_UseTrackMatchFields: 0
-  m_MatchTargetFields: 63
-  m_RemoveStartOffset: 1
 --- !u!114 &114925780838060030
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1906,8 +1834,8 @@ MonoBehaviour:
   m_Clips:
   - m_Start: 0
     m_ClipIn: 0
-    m_Asset: {fileID: 114883132922455808}
-    m_UnderlyingAsset: {fileID: 7400002, guid: b85e432bcacc6694d9c4020a9035244f, type: 3}
+    m_Asset: {fileID: 114163067874353304}
+    m_UnderlyingAsset: {fileID: 7400002, guid: ebb57c9777ae3424b8d41b6aa7343aff, type: 3}
     m_Duration: 4.666666666666667
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114925780838060030}
@@ -1917,19 +1845,7 @@ MonoBehaviour:
     m_BlendOutDuration: 0.16666666666666696
     m_MixInCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -1958,14 +1874,14 @@ MonoBehaviour:
     m_Recordable: 0
     m_PostExtrapolationMode: 1
     m_PreExtrapolationMode: 1
-    m_PostExtrapolationTime: 0
+    m_PostExtrapolationTime: 1.2516244252522783
     m_PreExtrapolationTime: 0
-    m_DisplayName: PJ_animation__RUN
+    m_DisplayName: PJ_animation_RUN
     m_Version: 1
   - m_Start: 4.5
     m_ClipIn: 0
-    m_Asset: {fileID: 114058338509952506}
-    m_UnderlyingAsset: {fileID: 7400026, guid: b85e432bcacc6694d9c4020a9035244f, type: 3}
+    m_Asset: {fileID: 114000301600610200}
+    m_UnderlyingAsset: {fileID: 7400026, guid: ebb57c9777ae3424b8d41b6aa7343aff, type: 3}
     m_Duration: 1.5
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114925780838060030}
@@ -1975,37 +1891,13 @@ MonoBehaviour:
     m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     m_MixOutCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
