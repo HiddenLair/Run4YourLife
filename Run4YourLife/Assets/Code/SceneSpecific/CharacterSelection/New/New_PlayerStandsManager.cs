@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
@@ -32,6 +33,12 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         [SerializeField]
         private New_OnButtonHeldControlScheme backControlScheme;
+
+        [SerializeField]
+        private CanvasGroup[] showOnGameIsReady;
+
+        [SerializeField]
+        private CanvasGroup[] hideOnGameIsNotReady;
 
         private New_PlayerPrefabManager playerPrefabManager;
 
@@ -227,15 +234,21 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         private void UpdateGameReady()
         {
+            bool previousIsGameReady = isGameReady;
+
             isGameReady = IsGameReady();
 
-            if(isGameReady)
+            if(previousIsGameReady != isGameReady)
             {
+                foreach(CanvasGroup canvasGroup in showOnGameIsReady)
+                {
+                    canvasGroup.alpha = Convert.ToSingle(isGameReady);
+                }
 
-            }
-            else
-            {
-
+                foreach(CanvasGroup canvasGroup in hideOnGameIsNotReady)
+                {
+                    canvasGroup.alpha = Convert.ToSingle(!isGameReady);
+                }
             }
         }
 
