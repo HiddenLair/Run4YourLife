@@ -5,8 +5,6 @@ namespace Run4YourLife.InputManagement
 {
     public class New_OnButtonHeldControlScheme : OnButtonPressedControlScheme
     {
-        // IMPROVE: Prevent collision between different input sources
-
         [SerializeField]
         private UnityEvent onButtonHeld;
 
@@ -30,11 +28,20 @@ namespace Run4YourLife.InputManagement
 
         protected override void Update()
         {
-            base.Update();
-
             if(InputAction.Persists())
             {
-                OnHeld();
+                if(!started)
+                {
+                    OnPressed();
+                }
+                else
+                {
+                    OnHeld();
+                }
+            }
+            else if(InputAction.Ended())
+            {
+                OnReleased();
             }
         }
 
