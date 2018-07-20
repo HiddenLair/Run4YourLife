@@ -262,7 +262,7 @@ Prefab:
     - target: {fileID: 224532512713771464, guid: f0bb5bfe89276aa47a1c2f1c646c4c2e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224532512713771464, guid: f0bb5bfe89276aa47a1c2f1c646c4c2e,
         type: 2}
@@ -614,7 +614,7 @@ Prefab:
     - target: {fileID: 224733221923700848, guid: d3b7abf38e99b1046bccdf530cb21650,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224733221923700848, guid: d3b7abf38e99b1046bccdf530cb21650,
         type: 2}
@@ -1014,6 +1014,7 @@ GameObject:
   - component: {fileID: 586758055}
   - component: {fileID: 586758062}
   - component: {fileID: 586758064}
+  - component: {fileID: 586758063}
   m_Layer: 0
   m_Name: New_CharacterSelectionManager
   m_TagString: Untagged
@@ -1178,6 +1179,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_musicAudioClip: {fileID: 8300000, guid: 0fc43bf4b9c744142803a03e1f06f08b, type: 3}
+--- !u!114 &586758063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 586758053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c448e44e4f7587f40af685964692dd95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonId: start
+  onButtonPressed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 586758055}
+        m_MethodName: OnGoGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onButtonReleased:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &586758064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1595,7 +1629,7 @@ Prefab:
     - target: {fileID: 224733221923700848, guid: d3b7abf38e99b1046bccdf530cb21650,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224733221923700848, guid: d3b7abf38e99b1046bccdf530cb21650,
         type: 2}
@@ -2116,7 +2150,7 @@ Prefab:
     - target: {fileID: 224733221923700848, guid: d3b7abf38e99b1046bccdf530cb21650,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224733221923700848, guid: d3b7abf38e99b1046bccdf530cb21650,
         type: 2}
@@ -3442,7 +3476,7 @@ Prefab:
     - target: {fileID: 224733221923700848, guid: d3b7abf38e99b1046bccdf530cb21650,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224733221923700848, guid: d3b7abf38e99b1046bccdf530cb21650,
         type: 2}
@@ -3858,7 +3892,7 @@ Prefab:
     - target: {fileID: 224532512713771464, guid: f0bb5bfe89276aa47a1c2f1c646c4c2e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224532512713771464, guid: f0bb5bfe89276aa47a1c2f1c646c4c2e,
         type: 2}
@@ -4174,7 +4208,7 @@ Prefab:
     - target: {fileID: 224733221923700848, guid: d3b7abf38e99b1046bccdf530cb21650,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224733221923700848, guid: d3b7abf38e99b1046bccdf530cb21650,
         type: 2}
