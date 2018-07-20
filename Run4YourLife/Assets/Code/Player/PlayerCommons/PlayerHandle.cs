@@ -11,10 +11,11 @@ namespace Run4YourLife.Player
 
     public enum CharacterType
     {
-        White,
-        Purple,
-        Red,
-        Green
+        ACorn,
+        Skull,
+        Snake,
+        Plain,
+        NoColor
     }
 
     public class PlayerHandle
@@ -25,7 +26,7 @@ namespace Run4YourLife.Player
         public CharacterType CharacterType { get; set; }
 
         public static readonly PlayerHandle DebugDefaultPlayerHandle = new PlayerHandle() {
-            CharacterType = CharacterType.Purple,
+            CharacterType = CharacterType.ACorn,
             ID = 1,
             IsBoss = false,
             InputDevice = Run4YourLife.InputManagement.InputDeviceManager.Instance.DefaultInputDevice

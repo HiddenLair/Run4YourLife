@@ -108,25 +108,25 @@ namespace Run4YourLife.GameManagement {
             PlayerHandle[] playerHandles = new PlayerHandle[]
             {
                 new PlayerHandle() {
-                    CharacterType = CharacterType.Purple,
+                    CharacterType = CharacterType.Plain,
                     InputDevice = InputDeviceManager.Instance.InputDevices[0],
                     IsBoss = true
                 },
                 new PlayerHandle() {
-                    CharacterType = CharacterType.Green,
+                    CharacterType = CharacterType.ACorn,
                     InputDevice = InputDeviceManager.Instance.InputDevices[1],
                     IsBoss = false
                 },
                 new PlayerHandle() {
-                    CharacterType = CharacterType.White,
+                    CharacterType = CharacterType.Skull,
                     InputDevice = InputDeviceManager.Instance.InputDevices[2],
                     IsBoss = false
                 },
                 new PlayerHandle() {
-                    CharacterType = CharacterType.Red,
+                    CharacterType = CharacterType.Snake,
                     InputDevice = InputDeviceManager.Instance.InputDevices[3],
                     IsBoss = false
-                }
+                },
             };
 
             foreach (PlayerHandle playerHandle in playerHandles)

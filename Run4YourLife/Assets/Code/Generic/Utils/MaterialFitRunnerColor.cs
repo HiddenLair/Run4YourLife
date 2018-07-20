@@ -20,17 +20,20 @@ namespace Run4YourLife.Utils
 
             switch(characterType)
             {
-                case CharacterType.Red:
+                case CharacterType.ACorn:
+                    color = Color.blue;
+                    break;
+                case CharacterType.Skull:
+                    color = Color.magenta;
+                    break;
+                case CharacterType.Snake:
+                    color = Color.yellow;
+                    break;
+                case CharacterType.Plain:
                     color = Color.red;
                     break;
-                case CharacterType.Green:
-                    color = Color.green;
-                    break;
-                case CharacterType.White:
-                    color = Color.white;
-                    break;
-                case CharacterType.Purple:
-                    color = Color.magenta;
+                case CharacterType.NoColor:
+                    color = Color.gray;
                     break;
             }
 

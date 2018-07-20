@@ -86,7 +86,7 @@ namespace Run4YourLife.Player
 
         public CharacterType GetFirstAviablePlayerCharacterType()
         {
-            return GetFirstAviableCharacterType(CharacterType.Purple, 1);
+            return GetFirstAviableCharacterType(CharacterType.ACorn, 1);
         }
 
         public CharacterType GetFirstAviableCharacterType(CharacterType characterType, int direction)
