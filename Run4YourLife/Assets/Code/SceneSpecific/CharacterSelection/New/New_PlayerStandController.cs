@@ -104,7 +104,6 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
                 if(requestCompletionState == RequestCompletionState.Completed)
                 {
-                    rotationY = 0.0f;
                     InfoShowUnselect();
                     currentCharacter.GetComponent<Animator>().Play(playerStandsManager.GetAnimationNameOnSelected(playerHandle));
                 }
@@ -172,10 +171,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
             #region Rotate
 
-            if(playerStandsManager.CanRotate(playerHandle))
-            {
-                rotationY += rotationSpeed * playerStandControlScheme.Rotate.Value() * Time.deltaTime;
-            }
+            rotationY += rotationSpeed * playerStandControlScheme.Rotate.Value() * Time.deltaTime;
 
             #endregion
         }

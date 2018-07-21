@@ -35,10 +35,25 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         private New_OnButtonHeldControlScheme backControlScheme;
 
         [SerializeField]
-        private CanvasGroup[] showOnGameIsReady;
+        private CanvasGroup[] showOnGameReady;
 
         [SerializeField]
-        private CanvasGroup[] hideOnGameIsNotReady;
+        private CanvasGroup[] hideOnGameReady;
+
+        [SerializeField]
+        private Image checkOneBoss;
+
+        [SerializeField]
+        private Image checkOneOrMoreRunners;
+
+        [SerializeField]
+        private Image checkAllReady;
+
+        [SerializeField]
+        private Sprite checkReady;
+
+        [SerializeField]
+        private Sprite checkNotReady;
 
         private New_PlayerPrefabManager playerPrefabManager;
 
@@ -51,7 +66,6 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         private Dictionary<PlayerHandle, bool> playerSelectionDone = new Dictionary<PlayerHandle, bool>();
 
-        private bool isGameReady = false;
         private bool gameStarting = false;
 
         void Awake()
@@ -99,7 +113,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 return;
             }
 
-            if(isGameReady)
+            if(IsGameReady())
             {
                 gameStarting = true;
 
@@ -109,16 +123,6 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         }
 
         #endregion
-
-        public bool CanRotate(PlayerHandle playerHandle)
-        {
-            if(gameStarting)
-            {
-                return false;
-            }
-
-            return playerSelectionDone[playerHandle];
-        }
 
         public string GetAnimationNameOnSelected(PlayerHandle playerHandle)
         {
@@ -150,6 +154,8 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             playerSelectionDone.Add(playerHandle, false);
 
             UpdateCurrentCell(playerHandle, FindFreeCellForPlayer());
+
+            UpdateGameReady();
         }
 
         private void FillStand(PlayerHandle playerHandle)
@@ -234,45 +240,30 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         private void UpdateGameReady()
         {
-            bool previousIsGameReady = isGameReady;
+            checkOneBoss.sprite = OneBoss() ? checkReady : checkNotReady;
+            checkOneOrMoreRunners.sprite = OneOrMoreRunners() ? checkReady : checkNotReady;
+            checkAllReady.sprite = AllReady() ? checkReady : checkNotReady;
 
-            isGameReady = IsGameReady();
+            bool isGameReady = IsGameReady();
 
-            if(previousIsGameReady != isGameReady)
+            foreach(CanvasGroup canvasGroup in showOnGameReady)
             {
-                foreach(CanvasGroup canvasGroup in showOnGameIsReady)
-                {
-                    canvasGroup.alpha = Convert.ToSingle(isGameReady);
-                }
+                canvasGroup.alpha = Convert.ToSingle(isGameReady);
+            }
 
-                foreach(CanvasGroup canvasGroup in hideOnGameIsNotReady)
-                {
-                    canvasGroup.alpha = Convert.ToSingle(!isGameReady);
-                }
+            foreach(CanvasGroup canvasGroup in hideOnGameReady)
+            {
+                canvasGroup.alpha = Convert.ToSingle(!isGameReady);
             }
         }
 
         private bool IsGameReady()
         {
-            // 2 or more players
+            return AllReady() && OneBoss() && OneOrMoreRunners();
+        }
 
-            if(currentId < 2)
-            {
-                return false;
-            }
-
-            // All players have done their selection
-
-            foreach(KeyValuePair<PlayerHandle, bool> currentPlayerSelectionDone in playerSelectionDone)
-            {
-                if(!currentPlayerSelectionDone.Value)
-                {
-                    return false;
-                }
-            }
-
-            // There is just one boss
-
+        private bool OneBoss()
+        {
             bool bossFound = false;
 
             foreach(KeyValuePair<PlayerHandle, New_CellData> currentPlayerCurrentCell in playersCurrentCell)
@@ -291,6 +282,32 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             }
 
             return bossFound;
+        }
+
+        private bool OneOrMoreRunners()
+        {
+            foreach(KeyValuePair<PlayerHandle, New_CellData> currentPlayerCurrentCell in playersCurrentCell)
+            {
+                if(!currentPlayerCurrentCell.Value.isBoss)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool AllReady()
+        {
+            foreach(KeyValuePair<PlayerHandle, bool> currentPlayerSelectionDone in playerSelectionDone)
+            {
+                if(!currentPlayerSelectionDone.Value)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private void PreparePlayers()

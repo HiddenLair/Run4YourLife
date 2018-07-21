@@ -12,7 +12,7 @@
         {
             InputActions.Add(Select = new InputAction(new InputSource(Button.A), "Select"));
             InputActions.Add(Unselect = new InputAction(new InputSource(Button.B), "Unselect"));
-            InputActions.Add(Rotate = new InputAction(new InputSource(Axis.LEFT_HORIZONTAL), "Rotate"));
+            InputActions.Add(Rotate = new InputAction(new InputSource(Axis.RIGHT_HORIZONTAL), "Rotate"));
             InputActions.Add(VerticalStand = new InputAction(new InputSource(Axis.LEFT_VERTICAL), "VerticalStand"));
             InputActions.Add(HorizontalStand = new InputAction(new InputSource(Axis.LEFT_HORIZONTAL), "HorizontalStand"));
         }
