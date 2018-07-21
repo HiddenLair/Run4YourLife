@@ -209,7 +209,14 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 {
                     if(playerStandController.PlayerHandle == playerHandle)
                     {
-                        return playerStandController.SetCharacter(playerPrefabManager.Get(cellData.characterType, cellData.isBoss));
+                        RequestCompletionState requestCompletionState = playerStandController.SetCharacter(playerPrefabManager.Get(cellData.characterType, cellData.isBoss));
+
+                        if(requestCompletionState == RequestCompletionState.Completed)
+                        {
+                            UpdateGameReady();
+                        }
+
+                        return requestCompletionState;
                     }
                 }
             }
