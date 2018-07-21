@@ -28,6 +28,9 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         [SerializeField]
         private GameObject infoUnselect;
 
+        [SerializeField]
+        private GameObject infoReady;
+
         private PlayerHandle playerHandle;
         private New_PlayerStandsManager playerStandsManager;
         private New_PlayerStandControllerControlScheme playerStandControlScheme;
@@ -183,6 +186,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             infoJoin.SetActive(true);
             infoSelect.SetActive(false);
             infoUnselect.SetActive(false);
+            infoReady.SetActive(false);
         }
 
         private void InfoShowSelect()
@@ -190,6 +194,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             infoJoin.SetActive(false);
             infoSelect.SetActive(true);
             infoUnselect.SetActive(false);
+            infoReady.SetActive(false);
         }
 
         private void InfoShowUnselect()
@@ -197,6 +202,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             infoJoin.SetActive(false);
             infoSelect.SetActive(false);
             infoUnselect.SetActive(true);
+            infoReady.SetActive(true);
         }
 
         #endregion
