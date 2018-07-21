@@ -209,14 +209,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 {
                     if(playerStandController.PlayerHandle == playerHandle)
                     {
-                        RequestCompletionState requestCompletionState = playerStandController.SetCharacter(playerPrefabManager.Get(cellData.characterType, cellData.isBoss));
-
-                        if(requestCompletionState == RequestCompletionState.Completed)
-                        {
-                            UpdateGameReady();
-                        }
-
-                        return requestCompletionState;
+                        return playerStandController.SetCharacter(playerPrefabManager.Get(cellData.characterType, cellData.isBoss));
                     }
                 }
             }
@@ -397,7 +390,14 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 return RequestCompletionState.Error;
             }
 
-            return UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationUp);
+            RequestCompletionState requestCompletionState = UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationUp);
+
+            if(requestCompletionState == RequestCompletionState.Completed)
+            {
+                UpdateGameReady();
+            }
+
+            return requestCompletionState;
         }
 
         public RequestCompletionState OnPlayerInputDown(PlayerHandle playerHandle)
@@ -412,7 +412,14 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 return RequestCompletionState.Error;
             }
 
-            return UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationDown);
+            RequestCompletionState requestCompletionState = UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationDown);
+
+            if(requestCompletionState == RequestCompletionState.Completed)
+            {
+                UpdateGameReady();
+            }
+
+            return requestCompletionState;
         }
 
         public RequestCompletionState OnPlayerInputLeft(PlayerHandle playerHandle)
@@ -427,7 +434,14 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 return RequestCompletionState.Error;
             }
 
-            return UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationLeft);
+            RequestCompletionState requestCompletionState = UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationLeft);
+
+            if(requestCompletionState == RequestCompletionState.Completed)
+            {
+                UpdateGameReady();
+            }
+
+            return requestCompletionState;
         }
 
         public RequestCompletionState OnPlayerInputRight(PlayerHandle playerHandle)
@@ -442,7 +456,14 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 return RequestCompletionState.Error;
             }
 
-            return UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationRight);
+            RequestCompletionState requestCompletionState = UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationRight);
+
+            if(requestCompletionState == RequestCompletionState.Completed)
+            {
+                UpdateGameReady();
+            }
+
+            return requestCompletionState;
         }
 
         #endregion
