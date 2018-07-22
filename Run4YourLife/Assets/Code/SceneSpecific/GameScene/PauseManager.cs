@@ -28,9 +28,9 @@ namespace Run4YourLife.GameManagement
 
         [SerializeField]
         private AudioClip m_resumeGameAudioClip;
-        
+
         private PauseState m_pauseState = PauseState.UNPAUSED;
-        
+
         private PlayersGameControlScheme m_playersGameControlScheme;
 
         private void Awake()
@@ -40,9 +40,9 @@ namespace Run4YourLife.GameManagement
 
         private void Update()
         {
-            if(m_playersGameControlScheme.Pause.Started())
+            if (m_playersGameControlScheme.Pause.Started())
             {
-                if(m_pauseState == PauseState.UNPAUSED)
+                if (m_pauseState == PauseState.UNPAUSED)
                 {
                     PauseGame();
                 }
@@ -61,13 +61,15 @@ namespace Run4YourLife.GameManagement
             m_pauseSceneLoader.Execute();
             CameraManager.Instance.CinemachineBrain.enabled = false;
             AudioManager.Instance.PlaySFX(m_pauseGameAudioClip);
+            AudioManager.Instance.PauseMusic();
 
-            foreach(GameObject runner in GameplayPlayerManager.Instance.RunnersAlive)
+
+            foreach (GameObject runner in GameplayPlayerManager.Instance.RunnersAlive)
             {
                 runner.SetActive(false);
             }
 
-            foreach(GameObject ghost in GameplayPlayerManager.Instance.GhostsAlive)
+            foreach (GameObject ghost in GameplayPlayerManager.Instance.GhostsAlive)
             {
                 ghost.SetActive(false);
             }
@@ -81,13 +83,15 @@ namespace Run4YourLife.GameManagement
             m_pauseSceneUnloader.Execute();
             CameraManager.Instance.CinemachineBrain.enabled = true;
             AudioManager.Instance.PlaySFX(m_resumeGameAudioClip);
+            AudioManager.Instance.UnPauseMusic();
 
-            foreach(GameObject runner in GameplayPlayerManager.Instance.RunnersAlive)
+
+            foreach (GameObject runner in GameplayPlayerManager.Instance.RunnersAlive)
             {
                 runner.SetActive(true);
             }
 
-            foreach(GameObject ghost in GameplayPlayerManager.Instance.GhostsAlive)
+            foreach (GameObject ghost in GameplayPlayerManager.Instance.GhostsAlive)
             {
                 ghost.SetActive(true);
             }

@@ -15,7 +15,7 @@ namespace Run4YourLife.GameManagement.AudioManagement
 
         public void PlaySFX(AudioClip audioClip)
         {
-            if(audioClip == null)
+            if (audioClip == null)
             {
                 Debug.LogWarning("Trying to play null audio clip");
             }
@@ -24,7 +24,7 @@ namespace Run4YourLife.GameManagement.AudioManagement
 
         public void PlayMusic(AudioClip audioClip)
         {
-            if(m_musicAudioSource.clip != audioClip)
+            if (m_musicAudioSource.clip != audioClip)
             {
                 m_musicAudioSource.Stop();
                 m_musicAudioSource.clip = audioClip;
@@ -33,15 +33,23 @@ namespace Run4YourLife.GameManagement.AudioManagement
             }
         }
 
+        public void PauseMusic()
+        {
+            if (m_musicAudioSource.isPlaying)
+            {
+                m_musicAudioSource.Pause();
+            }
+        }
+
+        public void UnPauseMusic()
+        {
+            m_musicAudioSource.UnPause();
+        }
+
         public void StopMusic()
         {
             m_musicAudioSource.clip = null;
             m_musicAudioSource.Stop();
-        }
-
-        public bool isMusicPlaying()
-        {
-            return m_musicAudioSource.isPlaying;
         }
     }
 }
