@@ -22,6 +22,7 @@ namespace Run4YourLife.Player
         protected override void ExecuteShoot() //TODO: Move strings to BossAnimation
         {
             base.ExecuteShoot();
+            IsHeadLocked = true;
 
             m_animator.SetTrigger("Shoot");
             StartCoroutine(AnimationCallbacks.AfterStateAtNormalizedTime(m_animator, BossAnimation.StateNames.Move, m_fireLaserNormalizedTime, () => ExecuteShootCallback()));
@@ -34,6 +35,7 @@ namespace Run4YourLife.Player
             Vector3 director = (m_crossHairControl.Position - m_shotSpawn.position).normalized;
             Quaternion rotation = Quaternion.FromToRotation(Vector3.forward, director);
             DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(m_laserPrefab, m_shotSpawn.position, rotation, true);
+            StartCoroutine(AnimationCallbacks.OnState(m_animator, BossAnimation.StateNames.Shoot, () => IsHeadLocked = false));
         }
 
         protected override void ExecuteMelee()

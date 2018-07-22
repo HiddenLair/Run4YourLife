@@ -18,7 +18,8 @@ namespace Run4YourLife.Player
     [RequireComponent(typeof(BossControlScheme))]
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(CrossHairControl))]
-    public abstract class BossController : MonoBehaviour {
+    public abstract class BossController : MonoBehaviour
+    {
 
         #region Inspector
         [SerializeField]
@@ -32,19 +33,22 @@ namespace Run4YourLife.Player
 
         [SerializeField]
         private SkillBase m_lightningSkill;
-        
+
         [SerializeField]
         private SkillBase m_earthSpikeSkill;
-        
+
         [SerializeField]
         private SkillBase m_windSkill;
-        
+
         [SerializeField]
         private SkillBase m_bombSkill;
 
         [SerializeField]
         [Tooltip("Offset in euler angles from wich the head will look, used to shoot with the mouth instead of the beak")]
         private Vector3 m_headLookAtOffset;
+
+        [SerializeField]
+        private float m_headLerpFactor;
 
         [SerializeField]
         private Transform m_headBone;
@@ -71,12 +75,25 @@ namespace Run4YourLife.Player
         private float m_lightningReadyTime;
         private float m_shootReadyTime;
         private float m_meleeReadyTime;
+        private bool m_isHeadLocked;
+        private bool m_isHeadLookAtAttachedToCrosshair = true;
+        private Vector3 m_lookAtPosition;
         protected Quaternion m_initialHeadRotation;
 
         protected BossControlScheme m_controlScheme;
         protected Animator m_animator;
         protected GameObject m_ui;
         protected CrossHairControl m_crossHairControl;
+
+        protected bool IsHeadLocked
+        {
+            get { return m_isHeadLocked; }
+            set
+            {
+                m_isHeadLookAtAttachedToCrosshair = value;
+                m_isHeadLocked = value;
+            }
+        }
 
         private void Awake()
         {
@@ -90,19 +107,20 @@ namespace Run4YourLife.Player
             m_initialHeadRotation = m_headBone.rotation; // We have to store the starting position to in order to rotate it properly
         }
 
-        private void Start()
+        private void OnEnable()
         {
             m_controlScheme.Active = true;
         }
 
-        void Update() {
-            if(IsReadyToAttack())
+        void Update()
+        {
+            if (IsReadyToAttack())
             {
                 SkillBase.SkillSpawnData skillSpawnData = new SkillBase.SkillSpawnData() { position = m_crossHairControl.Position };
                 if (m_controlScheme.Lightning.Started() && (m_lightningReadyTime <= Time.time) && m_lightningSkill.CheckAndRepositionSkillSpawn(ref skillSpawnData))
                 {
                     m_lightningReadyTime = Time.time + m_lightningSkill.Cooldown;
-                    ExecuteSkill(m_lightningSkill, ActionType.Y, skillSpawnData);             
+                    ExecuteSkill(m_lightningSkill, ActionType.Y, skillSpawnData);
                 }
                 else if (m_controlScheme.EarthSpike.Started() && (m_earthSpikeReadyTime <= Time.time) && m_earthSpikeSkill.CheckAndRepositionSkillSpawn(ref skillSpawnData))
                 {
@@ -118,13 +136,13 @@ namespace Run4YourLife.Player
                 {
                     m_bombReadyTime = Time.time + m_bombSkill.Cooldown;
                     ExecuteSkill(m_bombSkill, ActionType.B, skillSpawnData);
-                } 
-                else if(m_controlScheme.Shoot.Started() && m_shootReadyTime <= Time.time)
+                }
+                else if (m_controlScheme.Shoot.Started() && m_shootReadyTime <= Time.time)
                 {
                     m_shootReadyTime = Time.time + m_shootCooldown;
                     ExecuteShoot();
                 }
-                else if(m_controlScheme.Melee.Started() && m_meleeReadyTime <= Time.time)
+                else if (m_controlScheme.Melee.Started() && m_meleeReadyTime <= Time.time)
                 {
                     m_meleeReadyTime = Time.time + m_meleeCooldown;
                     ExecuteMelee();
@@ -144,7 +162,7 @@ namespace Run4YourLife.Player
         {
             RotateHead();
         }
-        
+
         private bool IsReadyToAttack()
         {
             return AnimatorQuery.IsInStateCompletely(m_animator, BossAnimation.StateNames.Move);
@@ -153,7 +171,7 @@ namespace Run4YourLife.Player
         private void ExecuteSkill(SkillBase skill, ActionType type, SkillBase.SkillSpawnData skillSpawnData)
         {
             GameObject instance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(skill.gameObject, skillSpawnData.position, Quaternion.identity);
-            if(skillSpawnData.parent != null)
+            if (skillSpawnData.parent != null)
             {
                 instance.transform.SetParent(skillSpawnData.parent);
             }
@@ -178,7 +196,24 @@ namespace Run4YourLife.Player
 
         private void RotateHead()
         {
-            m_headBone.LookAt(m_crossHairControl.Position);
+            if (!m_isHeadLocked)
+            {
+                if (m_isHeadLookAtAttachedToCrosshair)
+                {
+                    m_lookAtPosition = m_crossHairControl.Position;
+                }
+                else if (Vector3.SqrMagnitude(m_lookAtPosition - m_crossHairControl.Position) < 0.07f)
+                {
+                    m_isHeadLookAtAttachedToCrosshair = true;
+                    m_lookAtPosition = m_crossHairControl.Position;
+                }
+                else
+                {
+                    m_lookAtPosition = Vector3.Lerp(m_lookAtPosition, m_crossHairControl.Position, m_headLerpFactor * Time.deltaTime);
+                }
+            }
+
+            m_headBone.LookAt(m_lookAtPosition);
             m_headBone.rotation *= Quaternion.Euler(m_headLookAtOffset.x, m_headLookAtOffset.y, m_headLookAtOffset.z) * m_initialHeadRotation;
         }
     }
