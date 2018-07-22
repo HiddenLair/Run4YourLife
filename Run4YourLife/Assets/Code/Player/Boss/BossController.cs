@@ -90,7 +90,10 @@ namespace Run4YourLife.Player
             get { return m_isHeadLocked; }
             set
             {
-                m_isHeadLookAtAttachedToCrosshair = value;
+                if (!value)
+                {
+                    m_isHeadLookAtAttachedToCrosshair = false;
+                }
                 m_isHeadLocked = value;
             }
         }
