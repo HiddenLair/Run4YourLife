@@ -71,6 +71,7 @@ ModelImporter:
     100126: Boss_Anim2:RightHand
     100128: Boss_Anim2:RightShoulder
     100130: //RootNode
+    100132: persp1
     400000: Boss_Anim2:Boss_Body
     400002: Boss_Anim2:Boss_eyebows
     400004: Boss_Anim2:Boss_Feathers
@@ -137,8 +138,11 @@ ModelImporter:
     400126: Boss_Anim2:RightHand
     400128: Boss_Anim2:RightShoulder
     400130: //RootNode
+    400132: persp1
+    2000000: persp1
     2100000: lambert1
     2100002: 'Material #0'
+    2100004: lambert2
     2300000: Boss_Anim2:Boss_Neckless
     3300000: Boss_Anim2:Boss_Neckless
     4300000: Boss_Anim2:Boss_Neckless
@@ -148,7 +152,7 @@ ModelImporter:
     4300008: Boss_Anim2:Boss_R_Hand
     4300010: Boss_Anim2:Boss_Feathers
     4300012: Boss_Anim2:Boss_Head
-    7400000: move
+    7400000: Phase3_end_loop
     7400002: melee_phase1
     7400004: transition
     7400006: shot_phase1
@@ -161,6 +165,8 @@ ModelImporter:
     7400020: idle_phase_2
     7400022: melee_phase3
     7400024: scream
+    7400026: Phase3_end_lie_down
+    7400028: phase3_end_break
     9500000: //RootNode
     11100000: //RootNode
     13700000: Boss_Anim2:Boss_Body
@@ -207,10 +213,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: move
+      name: Phase3_end_loop
       takeName: Take 001
-      firstFrame: 1
-      lastFrame: 100
+      firstFrame: 636
+      lastFrame: 680
       wrapMode: 2
       orientationOffsetY: 0
       level: 0
@@ -218,7 +224,7 @@ ModelImporter:
       loop: 1
       hasAdditiveReferencePose: 0
       loopTime: 1
-      loopBlend: 0
+      loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -547,6 +553,62 @@ ModelImporter:
       takeName: Take 001
       firstFrame: 257
       lastFrame: 281
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Phase3_end_lie_down
+      takeName: Take 001
+      firstFrame: 616
+      lastFrame: 635
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: phase3_end_break
+      takeName: Take 001
+      firstFrame: 681
+      lastFrame: 700
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
