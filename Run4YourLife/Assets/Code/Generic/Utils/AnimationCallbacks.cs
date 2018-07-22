@@ -5,7 +5,8 @@ using UnityEngine;
 
 namespace Run4YourLife.Utils
 {
-    public class AnimationCallbacks {
+    public class AnimationCallbacks
+    {
 
         ///<summary>
         /// When reaching the provided state at the provided normalized time
@@ -20,7 +21,21 @@ namespace Run4YourLife.Utils
                 yield return waitUntilState;
                 yield return waitUntilNormalizedTime;
                 action.Invoke();
-            } while(infinite);
+            } while (infinite);
+        }
+
+        ///<summary>
+        /// When reaching the provided state
+        ///</summary>
+        public static IEnumerator OnState(Animator anim, string state, Action action, bool infinite = false)
+        {
+            WaitUntil waitUntilState = new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName(state));
+
+            do
+            {
+                yield return waitUntilState;
+                action.Invoke();
+            } while (infinite);
         }
 
         ///<summary>
@@ -28,8 +43,8 @@ namespace Run4YourLife.Utils
         ///</summary>
         public static IEnumerator AfterStateAtNormalizedTime(Animator anim, string state, float time, Action action, bool infinite = false)
         {
-            WaitUntil waitUntilState = new WaitUntil(()=>anim.GetCurrentAnimatorStateInfo(0).IsName(state));
-            WaitUntil waitUntilTransition = new WaitUntil(()=>anim.IsInTransition(0));
+            WaitUntil waitUntilState = new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName(state));
+            WaitUntil waitUntilTransition = new WaitUntil(() => anim.IsInTransition(0));
             WaitUntil waitUntilNormalizedTime = new WaitUntil(() => Mathf.Repeat(anim.GetCurrentAnimatorStateInfo(0).normalizedTime * anim.GetCurrentAnimatorStateInfo(0).speed, 1.0f) >= time);
 
             do
@@ -38,7 +53,7 @@ namespace Run4YourLife.Utils
                 yield return waitUntilTransition;
                 yield return waitUntilNormalizedTime;
                 action.Invoke();
-            } while(infinite);
+            } while (infinite);
         }
 
         ///<summary>
@@ -60,7 +75,7 @@ namespace Run4YourLife.Utils
                         break;
                     }
                 }
-            } while(infinite);
+            } while (infinite);
         }
     }
 }
