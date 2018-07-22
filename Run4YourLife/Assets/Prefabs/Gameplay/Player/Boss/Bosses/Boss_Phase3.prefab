@@ -525,6 +525,7 @@ GameObject:
   - component: {fileID: 114891650166769830}
   - component: {fileID: 114800066667396244}
   - component: {fileID: 114006545318141672}
+  - component: {fileID: 114399716927243462}
   m_Layer: 11
   m_Name: Boss_Phase3
   m_TagString: Boss
@@ -3054,6 +3055,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cec698f25fa65f47a9e9032dfde8efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114399716927243462
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1432021327500220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ab5c4c55ba562a4abadaf3f57a845f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_poolRequests:
+  - prefab: {fileID: 1917008379314224, guid: 2064cae466c7b35478bf63deeaaa36e9, type: 2}
+    amount: 1
+  - prefab: {fileID: 1526477959902814, guid: 0bfe2032de56a7247a38c41e38c90195, type: 2}
+    amount: 1
+  - prefab: {fileID: 1778254393714324, guid: 8ecb33c5bbbad76499d8943f2f854a67, type: 2}
+    amount: 1
+  - prefab: {fileID: 1463452844622424, guid: 9d238db45ef3b59419750ebbf3084a66, type: 2}
+    amount: 1
+  - prefab: {fileID: 1110396084154354, guid: 045121e5642c5d844b10139b6ef8b6d6, type: 2}
+    amount: 1
 --- !u!114 &114481992341649112
 MonoBehaviour:
   m_ObjectHideFlags: 1
