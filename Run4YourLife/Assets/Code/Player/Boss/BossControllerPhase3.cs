@@ -24,7 +24,7 @@ namespace Run4YourLife.Player
             base.ExecuteShoot();
 
             m_animator.SetTrigger("Shoot");
-            StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator, BossAnimation.Triggers.Shoot, m_fireLaserNormalizedTime, () => ExecuteShootCallback()));
+            StartCoroutine(AnimationCallbacks.AfterStateAtNormalizedTime(m_animator, BossAnimation.StateNames.Move, m_fireLaserNormalizedTime, () => ExecuteShootCallback()));
         }
 
         private void ExecuteShootCallback()

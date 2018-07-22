@@ -40,12 +40,14 @@ namespace Run4YourLife.Player.Boss
 
         private void ResetState()
         {
+            m_chargeLaserReceiver.gameObject.SetActive(false);
         }
 
         private IEnumerator LaserBehaviour()
         {
             // Charge Laser
-            m_chargeLaserReceiver.PlayFx();
+            //m_chargeLaserReceiver.PlayFx();
+            m_chargeLaserReceiver.gameObject.SetActive(true);
             yield return new WaitForSeconds(m_chargeDuration);
 
             // Fire Laser
@@ -55,7 +57,8 @@ namespace Run4YourLife.Player.Boss
             Vector3 center = transform.position + transform.forward * laserDistance/2f;
             Vector3 halfExtents = new Vector3(m_laserCollisionWidth/2f, m_laserCollisionWidth/2f, laserDistance/2f);
 
-            m_laserReceiver.PlayFx();
+            m_laserReceiver.gameObject.SetActive(true);
+            //m_laserReceiver.PlayFx();
 
             // Check for players to kill
             Collider[] runnersHit = Physics.OverlapBox(center, halfExtents, transform.rotation, Layers.Runner, QueryTriggerInteraction.Ignore);
@@ -70,6 +73,8 @@ namespace Run4YourLife.Player.Boss
             }
 
             yield return new WaitForSeconds(m_laserDuration);
+            m_laserReceiver.gameObject.SetActive(false);
+            m_chargeLaserReceiver.gameObject.SetActive(false);
             gameObject.SetActive(false);
         }
 
