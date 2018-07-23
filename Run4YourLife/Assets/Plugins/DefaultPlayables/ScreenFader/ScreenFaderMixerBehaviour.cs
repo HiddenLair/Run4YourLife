@@ -7,9 +7,11 @@ using UnityEngine.UI;
 public class ScreenFaderMixerBehaviour : PlayableBehaviour
 {
     Color m_DefaultColor;
+    bool leaveColor = false;
 
     Image m_TrackBinding;
     bool m_FirstFrameHappened;
+    bool m_FirstFrameInsideForHappened;
 
     public override void ProcessFrame(Playable playable, FrameData info, object playerData)
     {
@@ -36,8 +38,14 @@ public class ScreenFaderMixerBehaviour : PlayableBehaviour
             float inputWeight = playable.GetInputWeight(i);
             ScriptPlayable<ScreenFaderBehaviour> inputPlayable = (ScriptPlayable<ScreenFaderBehaviour>)playable.GetInput(i);
             ScreenFaderBehaviour input = inputPlayable.GetBehaviour ();
-            
-            blendedColor += input.color * inputWeight;
+
+            if ( i==0 & input.leaveColor)
+            {
+                leaveColor = true;
+            }
+
+            float t = (float)(inputPlayable.GetTime() * input.inverseDuration);
+            blendedColor += Color.Lerp(m_DefaultColor,input.color,t ) * inputWeight;
             totalWeight += inputWeight;
 
             if (inputWeight > greatestWeight)
@@ -48,6 +56,7 @@ public class ScreenFaderMixerBehaviour : PlayableBehaviour
             if (!Mathf.Approximately (inputWeight, 0f))
                 currentInputs++;
         }
+        m_FirstFrameInsideForHappened = true;
 
         m_TrackBinding.color = blendedColor + m_DefaultColor * (1f - totalWeight);
     }
@@ -55,10 +64,14 @@ public class ScreenFaderMixerBehaviour : PlayableBehaviour
     public override void OnPlayableDestroy (Playable playable)
     {
         m_FirstFrameHappened = false;
+        m_FirstFrameInsideForHappened = false;
 
         if (m_TrackBinding == null)
             return;
 
-        m_TrackBinding.color = m_DefaultColor;
+        if (!leaveColor)
+        {
+            m_TrackBinding.color = m_DefaultColor;
+        }
     }
 }

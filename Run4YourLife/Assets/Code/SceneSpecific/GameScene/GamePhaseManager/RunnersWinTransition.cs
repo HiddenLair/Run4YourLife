@@ -66,7 +66,7 @@ namespace Run4YourLife.GameManagement
             Vector3 wallPos = boss.transform.position;
             wallPos.x += xOffsetWall;
             wall.transform.position = wallPos;
-            wall.SetActive(true);
+           // wall.SetActive(true);
 
             //Wait for all alive runners to touch ground
             bool done = false;
