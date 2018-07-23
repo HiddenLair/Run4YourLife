@@ -11,7 +11,6 @@ public class ScreenFaderMixerBehaviour : PlayableBehaviour
 
     Image m_TrackBinding;
     bool m_FirstFrameHappened;
-    bool m_FirstFrameInsideForHappened;
 
     public override void ProcessFrame(Playable playable, FrameData info, object playerData)
     {
@@ -56,7 +55,6 @@ public class ScreenFaderMixerBehaviour : PlayableBehaviour
             if (!Mathf.Approximately (inputWeight, 0f))
                 currentInputs++;
         }
-        m_FirstFrameInsideForHappened = true;
 
         m_TrackBinding.color = blendedColor + m_DefaultColor * (1f - totalWeight);
     }
@@ -64,7 +62,6 @@ public class ScreenFaderMixerBehaviour : PlayableBehaviour
     public override void OnPlayableDestroy (Playable playable)
     {
         m_FirstFrameHappened = false;
-        m_FirstFrameInsideForHappened = false;
 
         if (m_TrackBinding == null)
             return;
@@ -73,5 +70,7 @@ public class ScreenFaderMixerBehaviour : PlayableBehaviour
         {
             m_TrackBinding.color = m_DefaultColor;
         }
+
+        leaveColor = false;
     }
 }
