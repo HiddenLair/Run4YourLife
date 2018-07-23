@@ -20,12 +20,6 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private CinemachineVirtualCamera m_virtualCamera;
 
-        [SerializeField]
-        private GameObject wall;
-
-        [SerializeField]
-        private float xOffsetWall = 2.0f;
-
         private Coroutine m_startPhaseCoroutine;
         private int cutSceneNumber = -1;
 
@@ -62,11 +56,6 @@ namespace Run4YourLife.GameManagement
             //Stop boss and spawn defensive  wall
             GameObject boss = GameplayPlayerManager.Instance.Boss;
             DeactivateScripts(boss);
-            //Note: Make it a transform on the hierarchy and use that position, I would not make it with and offset and the boss's position
-            Vector3 wallPos = boss.transform.position;
-            wallPos.x += xOffsetWall;
-            wall.transform.position = wallPos;
-           // wall.SetActive(true);
 
             //Wait for all alive runners to touch ground
             bool done = false;
