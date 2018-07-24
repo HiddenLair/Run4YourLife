@@ -21,5 +21,13 @@ namespace Run4YourLife.UI
                 image.sprite = image.sprite == spriteA ? spriteB : spriteA;
             }
         }
+
+        public void Reset()
+        {
+            foreach(Image image in images)
+            {
+                image.sprite = spriteA;
+            }
+        }
     }
 }

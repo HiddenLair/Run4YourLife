@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
+using Run4YourLife.UI;
 using Run4YourLife.Player;
 using Run4YourLife.InputManagement;
 
@@ -54,6 +55,12 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         [SerializeField]
         private Sprite checkNotReady;
+
+        [SerializeField]
+        private SwapImages bossFace;
+
+        [SerializeField]
+        private SwapImages[] runnerFaces;
 
         private New_PlayerPrefabManager playerPrefabManager;
 
@@ -148,6 +155,16 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
             FillStand(playerHandle);
 
+            if(currentId == 0)
+            {
+                bossFace.gameObject.SetActive(true);
+                runnerFaces[0].gameObject.SetActive(true);
+            }
+            else if(currentId >= 2)
+            {
+                runnerFaces[currentId - 1].gameObject.SetActive(true);
+            }
+
             playerIds.Add(playerHandle, currentId++);
 
             playersCurrentCell.Add(playerHandle, null);
@@ -238,11 +255,12 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             return runnerCellDatas[0];
         }
 
+        #region Update game ready info
+
         private void UpdateGameReady()
         {
-            checkOneBoss.sprite = OneBoss() ? checkReady : checkNotReady;
-            checkOneOrMoreRunners.sprite = OneOrMoreRunners() ? checkReady : checkNotReady;
-            checkAllReady.sprite = AllReady() ? checkReady : checkNotReady;
+            UpdateCheckInfoGameReady();
+            UpdatePlayerFacesGameReady();
 
             bool isGameReady = IsGameReady();
 
@@ -256,6 +274,44 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 canvasGroup.alpha = Convert.ToSingle(!isGameReady);
             }
         }
+
+        private void UpdateCheckInfoGameReady()
+        {
+            checkOneBoss.sprite = OneBoss() ? checkReady : checkNotReady;
+            checkOneOrMoreRunners.sprite = OneOrMoreRunners() ? checkReady : checkNotReady;
+            checkAllReady.sprite = AllReady() ? checkReady : checkNotReady;
+        }
+
+        private void UpdatePlayerFacesGameReady()
+        {
+            uint currentRunnerIndex = 0;
+
+            bossFace.Reset();
+
+            foreach(SwapImages runnerFace in runnerFaces)
+            {
+                runnerFace.Reset();
+            }
+
+            foreach(KeyValuePair<PlayerHandle, bool> currentPlayerSelectionDone in playerSelectionDone)
+            {
+                if(currentPlayerSelectionDone.Value)
+                {
+                    bool isBoss = playersCurrentCell[currentPlayerSelectionDone.Key].isBoss;
+
+                    if(isBoss)
+                    {
+                        bossFace.Swap();
+                    }
+                    else
+                    {
+                        runnerFaces[currentRunnerIndex++].Swap();
+                    }
+                }
+            }
+        }
+
+        #endregion
 
         private bool IsGameReady()
         {
@@ -343,6 +399,19 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             }
 
             New_CellData playerCell = playersCurrentCell[playerHandle];
+
+            if(playerCell.isBoss)
+            {
+                // If a boss has already been selected, error
+
+                foreach(KeyValuePair<PlayerHandle, New_CellData> currentPlayerCurrentCell in playersCurrentCell)
+                {
+                    if(currentPlayerCurrentCell.Value.isBoss && playerSelectionDone[currentPlayerCurrentCell.Key])
+                    {
+                        return RequestCompletionState.Error;
+                    }
+                }
+            }
 
             foreach(KeyValuePair<PlayerHandle, New_CellData> playerCurrentCell in playersCurrentCell)
             {
