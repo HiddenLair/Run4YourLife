@@ -36,6 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4687121531141342}
   - component: {fileID: 114471262276803826}
+  - component: {fileID: 114869823734178278}
   m_Layer: 11
   m_Name: Boss_Phase3_Laser
   m_TagString: Untagged
@@ -76,7 +77,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1610727729719050
 GameObject:
   m_ObjectHideFlags: 1
@@ -94,7 +95,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4080255966300398
 Transform:
   m_ObjectHideFlags: 1
@@ -102,7 +103,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1599445147206190}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalPosition: {x: 0, y: 2, z: 10}
   m_LocalScale: {x: 0.4, y: 0.4, z: 20}
   m_Children: []
   m_Father: {fileID: 4994353182479508}
@@ -115,7 +116,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1610727729719050}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0.33}
   m_Children: []
   m_Father: {fileID: 4708504236955270}
@@ -282,7 +283,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fx: {fileID: 1464658711923784, guid: db7a136e382c08e4ab402fc5519cc48e, type: 2}
-  anim: {fileID: 0}
   sfx: {fileID: 0}
 --- !u!114 &114426291432268724
 MonoBehaviour:
@@ -296,7 +296,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fx: {fileID: 1159440621926546, guid: 0f4c4531ef8d3a94cb8169dbf92e5705, type: 2}
-  anim: {fileID: 0}
   sfx: {fileID: 0}
 --- !u!114 &114471262276803826
 MonoBehaviour:
@@ -310,8 +309,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_chargeDuration: 0.8
-  m_laserDuration: 0.05
+  m_laserDuration: 0.5
   m_maxLaserDistance: 40
   m_laserCollisionWidth: 0.4
   m_chargeLaserReceiver: {fileID: 114426291432268724}
   m_laserReceiver: {fileID: 114136416298486346}
+--- !u!114 &114869823734178278
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1110396084154354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70e9cb7816bdb52449dd2c5e895235d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_parent: {fileID: 0}
+  m_simulatePosition: 1
+  m_simualteRotation: 1

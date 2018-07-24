@@ -38,17 +38,17 @@ namespace Run4YourLife.Debugging
 
         protected override void OnCustomDrawGUI()
         {
-            if((currentUpdateTimeS += Time.deltaTime) >= updateTimeS)
+            if ((currentUpdateTimeS += Time.deltaTime) >= updateTimeS)
             {
                 Count(); // Updates current and last values
                 currentUpdateTimeS = 0.0f;
 
-                if(currentVertexCount != lastVertexCount)
+                if (currentVertexCount != lastVertexCount)
                 {
                     cachedCurrentVertexStr = cachedCurrentVertexHeaderStr + currentVertexCount;
                 }
 
-                if(currentTriangleCount != lastTriangleCount)
+                if (currentTriangleCount != lastTriangleCount)
                 {
                     cachedCurrentTriangleStr = cachedCurrentTriangleHeaderStr + currentTriangleCount;
                 }
@@ -68,22 +68,28 @@ namespace Run4YourLife.Debugging
 
             MeshRenderer[] meshes = FindObjectsOfType<MeshRenderer>();
 
-            for(int i = 0; i < meshes.Length; ++i)
+            for (int i = 0; i < meshes.Length; ++i)
             {
                 MeshRenderer meshRenderer = meshes[i];
 
                 // Vertex and triangle count does not work with static game objects
 
-                if(!meshRenderer.gameObject.isStatic && meshRenderer.isVisible)
+                if (!meshRenderer.gameObject.isStatic && meshRenderer.isVisible)
                 {
                     MeshFilter filter = meshRenderer.GetComponent<MeshFilter>();
 
-                    if(filter != null)
+                    if (filter != null)
                     {
                         Mesh mesh = filter.sharedMesh;
-
-                        currentVertexCount += mesh.vertexCount;
-                        currentTriangleCount += triangleCounterHelper.Get(mesh);
+                        if (mesh != null)
+                        {
+                            currentVertexCount += mesh.vertexCount;
+                            currentTriangleCount += triangleCounterHelper.Get(mesh);
+                        }
+                        else
+                        {
+                            Debug.LogWarning("Mesh filter on GameObject: <" + filter.gameObject.name + "> has a null mesh", filter.gameObject);
+                        }
                     }
                 }
             }
