@@ -4,16 +4,36 @@ using UnityEngine;
 
 using Run4YourLife.GameManagement;
 
-public class PoolRequester : MonoBehaviour {
+public class PoolRequester : MonoBehaviour
+{
+
+    private enum RequestObjective
+    {
+        DynamicObjectManager,
+        FXManager
+    }
+
+    [SerializeField]
+    private RequestObjective m_requestObjective;
 
     [SerializeField]
     private PoolRequest[] m_poolRequests;
 
     private void Awake()
     {
-        foreach(PoolRequest poolRequest in m_poolRequests)
+        if (m_requestObjective == RequestObjective.DynamicObjectManager)
         {
-            DynamicObjectsManager.Instance.GameObjectPool.Request(poolRequest);
+            foreach (PoolRequest poolRequest in m_poolRequests)
+            {
+                DynamicObjectsManager.Instance.GameObjectPool.Request(poolRequest);
+            }
+        }
+        else
+        {
+            foreach (PoolRequest poolRequest in m_poolRequests)
+            {
+                FXManager.Instance.GameObjectPool.Request(poolRequest);
+            }
         }
     }
 }

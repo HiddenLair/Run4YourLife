@@ -7,6 +7,8 @@ public class FXManager : SingletonMonoBehaviour<FXManager>
     [SerializeField]
     private GameObjectPool m_gameObjectPool;
 
+    public GameObjectPool GameObjectPool { get { return m_gameObjectPool; } }
+
     public GameObject InstantiateFromReceiver(FXReceiver receiver, GameObject prefab, bool setAsParent = false)
     {
         Transform parent = setAsParent ? receiver.transform : null;
