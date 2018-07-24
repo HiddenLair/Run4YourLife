@@ -23,8 +23,11 @@ public class SimulateChildOf : MonoBehaviour
         set
         {
             m_parent = value;
-            m_previousPosition = m_parent.position;
-            m_previousRotation = m_parent.rotation;
+            if (m_parent != null)
+            {
+                m_previousPosition = m_parent.position;
+                m_previousRotation = m_parent.rotation;
+            }
         }
     }
 
@@ -39,7 +42,6 @@ public class SimulateChildOf : MonoBehaviour
             m_previousRotation = m_parent.rotation;
         }
     }
-
     private void LateUpdate()
     {
         if (m_parent != null)
@@ -47,13 +49,13 @@ public class SimulateChildOf : MonoBehaviour
             if (m_simulatePosition)
             {
                 Vector3 positionDelta = m_parent.position - m_previousPosition;
-                transform.Translate(positionDelta);
+                transform.position += positionDelta;
             }
 
             if (m_simualteRotation)
             {
                 Quaternion rotationDelta = Quaternion.Inverse(m_parent.rotation) * m_previousRotation;
-                transform.rotation = transform.rotation * rotationDelta;
+                transform.rotation *= rotationDelta;
             }
 
             m_previousPosition = m_parent.position;

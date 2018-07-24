@@ -5511,7 +5511,6 @@ GameObject:
   - component: {fileID: 168087529}
   - component: {fileID: 168087533}
   - component: {fileID: 168087539}
-  - component: {fileID: 168087540}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameController
@@ -5679,7 +5678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1f9a2542d2bc0d44aba93f9019b8ecd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fxDefaultParent: {fileID: 977133028}
+  m_gameObjectPool: {fileID: 977133029}
 --- !u!114 &168087536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5713,20 +5712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20e74629eae6f3c49a956b69e190a8d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_gameObjectPool: {fileID: 168087540}
---- !u!114 &168087540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 168087525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8073855dcfad5724c94cad4bdb64b4aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_parent: {fileID: 336594814}
-  m_timeBetweenRetrivals: 2
+  m_gameObjectPool: {fileID: 336594815}
 --- !u!1001 &169568710
 Prefab:
   m_ObjectHideFlags: 0
@@ -11126,10 +11112,10 @@ Transform:
   m_Children:
   - {fileID: 823598524}
   - {fileID: 1342937719}
+  - {fileID: 1480691922}
   - {fileID: 1593934242}
   - {fileID: 1832422194}
   - {fileID: 296742370}
-  - {fileID: 1480691922}
   m_Father: {fileID: 1622332600}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11895,6 +11881,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 336594814}
+  - component: {fileID: 336594815}
   m_Layer: 0
   m_Name: Interactables
   m_TagString: Untagged
@@ -11915,6 +11902,19 @@ Transform:
   m_Father: {fileID: 917581624}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &336594815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 336594813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8073855dcfad5724c94cad4bdb64b4aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_parent: {fileID: 336594814}
+  m_timeBetweenRetrivals: 2
 --- !u!1 &336657936
 GameObject:
   m_ObjectHideFlags: 0
@@ -23623,7 +23623,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 3010f62590197d84a8b7932aa3150872, type: 3}
-        m_Scale: {x: 8.877554, y: 5}
+        m_Scale: {x: 8.797152, y: 5}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -36496,6 +36496,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 977133028}
+  - component: {fileID: 977133029}
   m_Layer: 0
   m_Name: FX
   m_TagString: Untagged
@@ -36516,6 +36517,19 @@ Transform:
   m_Father: {fileID: 917581624}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &977133029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 977133027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8073855dcfad5724c94cad4bdb64b4aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_parent: {fileID: 977133028}
+  m_timeBetweenRetrivals: 1e+31
 --- !u!1 &978305778
 GameObject:
   m_ObjectHideFlags: 0
@@ -60277,7 +60291,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fx: {fileID: 1230101138075350, guid: 7212caca91c358048947d36ac7208485, type: 2}
-  anim: {fileID: 0}
   sfx: {fileID: 0}
 --- !u!114 &1686951787
 MonoBehaviour:
