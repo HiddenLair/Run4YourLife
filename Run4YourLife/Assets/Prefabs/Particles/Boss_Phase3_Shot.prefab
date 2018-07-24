@@ -37,6 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4739295189778018}
   - component: {fileID: 114813659375805388}
+  - component: {fileID: 114090404348356570}
   m_Layer: 0
   m_Name: Boss_Phase3_Shot
   m_TagString: Untagged
@@ -145,7 +146,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1464658711923784}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20.17, y: 1.72, z: 4.3746586}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4900596703181834}
@@ -195,6 +196,20 @@ Transform:
   m_Father: {fileID: 4739295189778018}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114090404348356570
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1464658711923784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70e9cb7816bdb52449dd2c5e895235d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_parent: {fileID: 0}
+  m_simulatePosition: 1
+  m_simualteRotation: 1
 --- !u!114 &114813659375805388
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -266,7 +281,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1315415992
+  randomSeed: -1952146310
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3627,7 +3642,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1826547613
+  randomSeed: -26558329
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6988,7 +7003,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1491214881
+  randomSeed: -1730631758
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -7438,7 +7453,7 @@ ParticleSystem:
     radiusThickness: 1
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
-    m_Rotation: {x: 0, y: 90, z: 0}
+    m_Rotation: {x: 0, y: 0, z: 0}
     m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
@@ -10349,7 +10364,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -2024762417
+  randomSeed: -1546514993
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -13710,7 +13725,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 176864423
+  randomSeed: 1367523713
   InitialModule:
     serializedVersion: 3
     enabled: 1

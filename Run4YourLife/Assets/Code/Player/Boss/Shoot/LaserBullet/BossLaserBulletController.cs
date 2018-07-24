@@ -40,25 +40,26 @@ namespace Run4YourLife.Player.Boss
 
         private void ResetState()
         {
-            m_chargeLaserReceiver.gameObject.SetActive(false);
+            m_chargeLaserReceiver.transform.GetChild(0).gameObject.SetActive(false);
+            m_laserReceiver.transform.GetChild(0).gameObject.SetActive(false);
         }
 
         private IEnumerator LaserBehaviour()
         {
             // Charge Laser
-            //m_chargeLaserReceiver.PlayFx();
-            m_chargeLaserReceiver.gameObject.SetActive(true);
+            m_chargeLaserReceiver.PlayFx(true);
+            m_chargeLaserReceiver.transform.GetChild(0).gameObject.SetActive(true);
             yield return new WaitForSeconds(m_chargeDuration);
 
             // Fire Laser
             Vector3 laserEnd = LocateEndingLaserPosition();
             float laserDistance = Vector3.Distance(transform.position, laserEnd);
-            
-            Vector3 center = transform.position + transform.forward * laserDistance/2f;
-            Vector3 halfExtents = new Vector3(m_laserCollisionWidth/2f, m_laserCollisionWidth/2f, laserDistance/2f);
 
-            m_laserReceiver.gameObject.SetActive(true);
-            //m_laserReceiver.PlayFx();
+            Vector3 center = transform.position + transform.forward * laserDistance / 2f;
+            Vector3 halfExtents = new Vector3(m_laserCollisionWidth / 2f, m_laserCollisionWidth / 2f, laserDistance / 2f);
+
+            m_laserReceiver.transform.GetChild(0).gameObject.SetActive(true);
+            m_laserReceiver.PlayFx(true);
 
             // Check for players to kill
             Collider[] runnersHit = Physics.OverlapBox(center, halfExtents, transform.rotation, Layers.Runner, QueryTriggerInteraction.Ignore);
@@ -66,15 +67,15 @@ namespace Run4YourLife.Player.Boss
             {
                 IRunnerEvents runnerEvents = runnerHit.GetComponent<IRunnerEvents>();
                 Debug.Assert(runnerEvents != null);
-                if(runnerEvents != null)
+                if (runnerEvents != null)
                 {
                     runnerEvents.Kill();
                 }
             }
 
             yield return new WaitForSeconds(m_laserDuration);
-            m_laserReceiver.gameObject.SetActive(false);
-            m_chargeLaserReceiver.gameObject.SetActive(false);
+            m_chargeLaserReceiver.transform.GetChild(0).gameObject.SetActive(false);
+            m_laserReceiver.transform.GetChild(0).gameObject.SetActive(false);
             gameObject.SetActive(false);
         }
 
@@ -82,7 +83,7 @@ namespace Run4YourLife.Player.Boss
         {
             Vector3 position;
             RaycastHit raycastHit;
-            if(Physics.Raycast(transform.position, transform.forward, out raycastHit, m_maxLaserDistance, Layers.Stage, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(transform.position, transform.forward, out raycastHit, m_maxLaserDistance, Layers.Stage, QueryTriggerInteraction.Ignore))
             {
                 position = raycastHit.point;
             }
@@ -95,7 +96,7 @@ namespace Run4YourLife.Player.Boss
 
         private void OnDrawGizmosSelected()
         {
-            Vector3 center = transform.position + transform.forward * m_maxLaserDistance/2f;
+            Vector3 center = transform.position + transform.forward * m_maxLaserDistance / 2f;
             Vector3 size = new Vector3(m_laserCollisionWidth, m_laserCollisionWidth, m_maxLaserDistance);
             Gizmos.DrawWireCube(center, size);
         }

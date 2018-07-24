@@ -37,6 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4079725155895170}
   - component: {fileID: 114659492853864466}
+  - component: {fileID: 114102075199704528}
   m_Layer: 0
   m_Name: Boss_Phase3_LoadShot
   m_TagString: Untagged
@@ -119,7 +120,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1159440621926546}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.0456686, y: 0.5182247, z: 1.4341269}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4684088835435902}
@@ -195,6 +196,20 @@ Transform:
   m_Father: {fileID: 4079725155895170}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114102075199704528
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1159440621926546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70e9cb7816bdb52449dd2c5e895235d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_parent: {fileID: 0}
+  m_simulatePosition: 1
+  m_simualteRotation: 1
 --- !u!114 &114659492853864466
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -213,7 +228,7 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1563765514258824}
   serializedVersion: 5
-  lengthInSec: 0.85
+  lengthInSec: 0.5
   simulationSpeed: 1
   stopAction: 0
   looping: 0
@@ -266,14 +281,14 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1517245209
+  randomSeed: -489507970
   InitialModule:
     serializedVersion: 3
     enabled: 1
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.85
+      scalar: 0.5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -3574,7 +3589,7 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1269844452751510}
   serializedVersion: 5
-  lengthInSec: 0.85
+  lengthInSec: 0.5
   simulationSpeed: 1
   stopAction: 0
   looping: 0
@@ -3627,7 +3642,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1430381512
+  randomSeed: -782408034
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6935,7 +6950,7 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1342360805254678}
   serializedVersion: 5
-  lengthInSec: 0.85
+  lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
   looping: 0
@@ -6988,14 +7003,14 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 951653133
+  randomSeed: -592553346
   InitialModule:
     serializedVersion: 3
     enabled: 1
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.85
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -10296,7 +10311,7 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1787701586375750}
   serializedVersion: 5
-  lengthInSec: 0.85
+  lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
   looping: 0
@@ -10349,14 +10364,14 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1102085634
+  randomSeed: 926097135
   InitialModule:
     serializedVersion: 3
     enabled: 1
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.85
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -13657,7 +13672,7 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1087867928308968}
   serializedVersion: 5
-  lengthInSec: 0.85
+  lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
   looping: 0
@@ -13710,14 +13725,14 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -409047200
+  randomSeed: -1416606762
   InitialModule:
     serializedVersion: 3
     enabled: 1
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.85
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
