@@ -19,7 +19,7 @@ namespace Run4YourLife.Player.Boss
         private float m_explosionDuration;
 
         [SerializeField]
-        private GameObject m_explosionParticles;
+        private FXReceiver m_explosionReceiver;
 
         [SerializeField]
         private GameObject m_bulletGraphics;
@@ -45,11 +45,11 @@ namespace Run4YourLife.Player.Boss
 
             //Change graphics to explosion graphics
             m_bulletGraphics.SetActive(false);
-            m_explosionParticles.SetActive(true);
+            m_explosionReceiver.PlayFx();
 
             //Kill any runners in a circular area for the specified time
             float explosionEndTime = Time.time + m_explosionDuration;
-            while (Time.time < explosionEndTime)
+            do
             {
                 Collider[] collisions = Physics.OverlapSphere(transform.position, m_explosionRadius, Layers.Runner);
                 foreach (Collider c in collisions)
@@ -61,9 +61,9 @@ namespace Run4YourLife.Player.Boss
                     }
                 }
                 yield return null;
-            }
+            } while (Time.time < explosionEndTime);
 
-            gameObject.SetActive(false);
+                gameObject.SetActive(false);
         }
 
         private void OnDisable()
@@ -80,7 +80,6 @@ namespace Run4YourLife.Player.Boss
         private void ResetState()
         {
             m_bulletGraphics.SetActive(true);
-            m_explosionParticles.SetActive(false);
         }
 
         void OnDrawGizmos()

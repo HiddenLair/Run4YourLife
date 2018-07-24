@@ -47,7 +47,10 @@ namespace Run4YourLife.Player
                 
 
         [SerializeField]
-        private GameObject m_handPrefab;
+        private GameObject m_leftHandPrefab;
+
+        [SerializeField]
+        private GameObject m_rightHandPrefab;
 
         [SerializeField]
         private float m_armSpeed;
@@ -70,7 +73,6 @@ namespace Run4YourLife.Player
             AudioManager.Instance.PlaySFX(m_meleeClip);
 
             bool rightHand;
-            Quaternion rotation;
             Vector3 position = m_crossHairControl.Position;
             string animation;
 
@@ -80,7 +82,6 @@ namespace Run4YourLife.Player
             {
                 m_animator.SetTrigger("MeleR"); // Boss is flipped so it executes the inverted animation
                 position.x = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0)).x;
-                rotation = Quaternion.identity;
                 rightHand = true;
                 animation = "MeleRight";
             }
@@ -88,26 +89,26 @@ namespace Run4YourLife.Player
             {
                 m_animator.SetTrigger("MeleL"); // Boss is flipped so it executes the inverted animation
                 position.x = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1)).x;
-                rotation = Quaternion.Euler(0, 180, 0);
                 rightHand = false;
                 animation = "MeleLeft";
             }
 
-            StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator, animation, m_meleeNormalizedTime, () => ExecuteMeleeCallback(position, rotation, rightHand)));
+            StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator, animation, m_meleeNormalizedTime, () => ExecuteMeleeCallback(position, rightHand)));
         }
 
-        private void ExecuteMeleeCallback(Vector3 position, Quaternion rotation, bool rightHand)
+        private void ExecuteMeleeCallback(Vector3 position, bool rightHand)
         {
-            GameObject handInstance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(m_handPrefab, position, rotation, true);
-            handInstance.GetComponent<Rigidbody>().velocity = handInstance.transform.right * m_armSpeed * Time.deltaTime;
-
             if (rightHand)
             {
                 m_rightHandGraphics.SetActive(false);
+                GameObject handInstance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(m_rightHandPrefab, position, Quaternion.identity, true);
+                handInstance.GetComponent<Rigidbody>().velocity = handInstance.transform.right * m_armSpeed * Time.deltaTime;
             }
             else
             {
                 m_leftHandGraphics.SetActive(false);
+                GameObject handInstance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(m_leftHandPrefab, position, Quaternion.identity, true);
+                handInstance.GetComponent<Rigidbody>().velocity = -handInstance.transform.right * m_armSpeed * Time.deltaTime;
             }
 
             m_isExecutingMeleeRight = rightHand;
