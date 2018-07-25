@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Run4YourLife.Player;
+
 using UnityEngine;
+
+using Run4YourLife.Player.Runner;
 
 namespace Run4YourLife.Interactables
 {

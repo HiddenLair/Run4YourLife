@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
+
 using Run4YourLife.Player;
+using Run4YourLife.Player.Runner;
 using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.Debugging
@@ -21,10 +24,10 @@ namespace Run4YourLife.Debugging
         protected override void OnCustomDrawGUI()
         {
             m_isInvincibleActive = GUILayout.Toggle(m_isInvincibleActive, m_invincibleActiveText);
-                        
+
             foreach (GameObject runner in GameplayPlayerManager.Instance.Runners)
             {
-                if(m_isInvincibleActive)
+                if (m_isInvincibleActive)
                 {
                     Activate(runner);
                 }

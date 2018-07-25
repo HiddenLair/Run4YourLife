@@ -3,8 +3,10 @@ using UnityEngine;
 
 using Run4YourLife.UI;
 
-namespace Run4YourLife.Player {
-    public class BossUnlock : MonoBehaviour {
+namespace Run4YourLife.Player.Boss
+{
+    public class BossUnlock : MonoBehaviour
+    {
 
         [SerializeField]
         private float bossPathPosition = 10;
@@ -25,7 +27,7 @@ namespace Run4YourLife.Player {
 
         private void Update()
         {
-           if(walker.m_position >= bossPathPosition)
+            if (walker.m_position >= bossPathPosition)
             {
                 Unlock();
             }

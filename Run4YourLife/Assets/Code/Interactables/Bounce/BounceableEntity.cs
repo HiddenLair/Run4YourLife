@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using Run4YourLife.Player;
+using Run4YourLife.Player.Runner;
 using Run4YourLife.InputManagement;
 
 namespace Run4YourLife.Interactables
 {
-    public class BounceableEntity : BounceableEntityBase {
-        private enum BounceTrigger {
+    public class BounceableEntity : BounceableEntityBase
+    {
+        private enum BounceTrigger
+        {
             Allways,
             NegativeVerticalVelocity
         }
@@ -17,7 +19,7 @@ namespace Run4YourLife.Interactables
         private BounceTrigger m_bounceTrigger;
 
         [SerializeField]
-        [Range(0,360)]
+        [Range(0, 360)]
         private float m_angle;
 
         [SerializeField]

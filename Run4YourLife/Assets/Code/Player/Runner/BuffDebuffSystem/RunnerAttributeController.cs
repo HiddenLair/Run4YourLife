@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Run4YourLife.Player
+namespace Run4YourLife.Player.Runner
 {
     public enum RunnerAttribute
     {
@@ -33,7 +33,8 @@ namespace Run4YourLife.Player
     }
 
     [RequireComponent(typeof(StatusEffectController))]
-    public class RunnerAttributeController : MonoBehaviour {
+    public class RunnerAttributeController : MonoBehaviour
+    {
 
         [SerializeField]
         private float m_baseSpeed;
@@ -76,13 +77,13 @@ namespace Run4YourLife.Player
         public void RecalculateAttributes()
         {
             m_attributes.Clear();
-            foreach(var atribute in m_baseAttributes)
+            foreach (var atribute in m_baseAttributes)
             {
                 m_attributes.Add(atribute.Key, atribute.Value);
             }
 
             List<StatusEffect> statusEffects = m_statusEffectController.Get(StatusEffectType.Attribute);
-            foreach(StatusEffect statusEffect in statusEffects)
+            foreach (StatusEffect statusEffect in statusEffects)
             {
                 AttributeStatusEffect attributeStatusEffect = (AttributeStatusEffect)statusEffect;
                 ApplyStatusEffect(attributeStatusEffect);
@@ -93,7 +94,7 @@ namespace Run4YourLife.Player
         {
             float value = m_baseAttributes[attributeStatusEffect.runnerAttribute];
 
-            switch(attributeStatusEffect.attributeModifierType)
+            switch (attributeStatusEffect.attributeModifierType)
             {
                 case AttributeModifierType.Override:
                     value = attributeStatusEffect.value;

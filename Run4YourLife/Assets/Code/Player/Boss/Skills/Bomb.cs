@@ -4,7 +4,7 @@ using Run4YourLife.GameManagement.AudioManagement;
 using UnityEngine;
 using Run4YourLife.GameManagement;
 
-namespace Run4YourLife.Player
+namespace Run4YourLife.Player.Runner
 {
     public class Bomb : SkillBase
     {
@@ -154,11 +154,11 @@ namespace Run4YourLife.Player
             m_collider.enabled = true;
             yield return StartCoroutine(Fall());
 
-            if(phase != SkillBase.Phase.PHASE1)
+            if (phase != SkillBase.Phase.PHASE1)
             {
                 StartCoroutine(Fire());
             }
-            if(phase == SkillBase.Phase.PHASE3)
+            if (phase == SkillBase.Phase.PHASE3)
             {
                 StartCoroutine(Jump());
             }
@@ -220,7 +220,7 @@ namespace Run4YourLife.Player
                 yield return new WaitForSeconds(timeBetweenJumps);
                 fatherInitialY = transform.parent.position.y;
                 finalPos = transform.position;
-                yield return StartCoroutine(Jump(jumpHeight));               
+                yield return StartCoroutine(Jump(jumpHeight));
             }
         }
 

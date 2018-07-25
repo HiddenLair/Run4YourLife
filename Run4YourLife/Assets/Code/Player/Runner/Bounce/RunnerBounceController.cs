@@ -4,10 +4,11 @@ using Run4YourLife;
 using Run4YourLife.Interactables;
 
 
-namespace Run4YourLife.Player
+namespace Run4YourLife.Player.Runner
 {
     [RequireComponent(typeof(RunnerController))]
-    public class RunnerBounceController : MonoBehaviour {
+    public class RunnerBounceController : MonoBehaviour
+    {
 
         [SerializeField]
         private float m_bounceJumpButtonSphereCastRatius;
@@ -21,13 +22,13 @@ namespace Run4YourLife.Player
 
         private void Awake()
         {
-            m_runnerCharacterController = GetComponent<RunnerController>();    
+            m_runnerCharacterController = GetComponent<RunnerController>();
         }
 
         private void OnTriggerEnter(Collider other)
         {
             IBounceable bounceable = other.GetComponent<IBounceable>();
-            if(bounceable != null && bounceable.ShouldBounceByContact(m_runnerCharacterController))
+            if (bounceable != null && bounceable.ShouldBounceByContact(m_runnerCharacterController))
             {
                 ExecuteBounce(bounceable);
             }
@@ -36,11 +37,11 @@ namespace Run4YourLife.Player
         public bool ExecuteBounceIfPossible()
         {
             Vector3 position = transform.position + new Vector3(0, m_verticalOffset);
-            Collider[] colliders = Physics.OverlapBox(position, m_colliderSize/2.0f, Quaternion.identity, Layers.RunnerInteractable);
-            foreach(Collider collider in colliders)
+            Collider[] colliders = Physics.OverlapBox(position, m_colliderSize / 2.0f, Quaternion.identity, Layers.RunnerInteractable);
+            foreach (Collider collider in colliders)
             {
                 IBounceable bounceable = collider.GetComponent<IBounceable>();
-                if(bounceable != null)
+                if (bounceable != null)
                 {
                     ExecuteBounce(bounceable);
                     return true;
@@ -49,7 +50,7 @@ namespace Run4YourLife.Player
 
             return false;
         }
-        
+
         private void ExecuteBounce(IBounceable bounceable)
         {
             transform.position = bounceable.GetStartingBouncePosition(m_runnerCharacterController);

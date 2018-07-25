@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using Run4YourLife.GameManagement.AudioManagement;
-using Run4YourLife.Player;
+using Run4YourLife.Player.Runner;
 
 namespace Run4YourLife.GameManagement
 {
@@ -28,7 +28,7 @@ namespace Run4YourLife.GameManagement
 
             Camera cam = CameraManager.Instance.MainCamera;
             List<Transform> runnersTransform = new List<Transform>();
-            foreach(GameObject o in runners)
+            foreach (GameObject o in runners)
             {
                 runnersTransform.Add(o.transform);
             }

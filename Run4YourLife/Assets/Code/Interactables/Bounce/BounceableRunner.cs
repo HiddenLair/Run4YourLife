@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using Run4YourLife.Player;
+using Run4YourLife.Player.Runner;
 
 namespace Run4YourLife.Interactables
 {
-    public class BounceableRunner : BounceableEntityBase {
+    public class BounceableRunner : BounceableEntityBase
+    {
 
         private RunnerController m_runnerCharacterController;
         private RunnerAttributeController m_runnerAttributeController;
@@ -18,7 +19,8 @@ namespace Run4YourLife.Interactables
         {
             get
             {
-                return new Vector3() {
+                return new Vector3()
+                {
                     y = m_runnerAttributeController.GetAttribute(RunnerAttribute.BounceHeight)
                 };
             }

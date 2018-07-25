@@ -3,7 +3,7 @@ using System.Collections;
 
 using UnityEngine;
 
-using Run4YourLife.Player;
+using Run4YourLife.Player.Boss;
 using Run4YourLife.GameManagement;
 using Run4YourLife.InputManagement;
 
@@ -27,10 +27,10 @@ namespace Run4YourLife.Debugging
 
         protected override void OnCustomDrawGUI()
         {
-            if(GameplayPlayerManager.Instance.Boss != null)
+            if (GameplayPlayerManager.Instance.Boss != null)
             {
                 BossPathWalker bossPathWalker = GameplayPlayerManager.Instance.Boss.GetComponent<BossPathWalker>();
-                if(bossPathWalker != null)
+                if (bossPathWalker != null)
                 {
                     Speed(bossPathWalker);
                     Acceleration(bossPathWalker);
@@ -43,7 +43,7 @@ namespace Run4YourLife.Debugging
         {
             GUILayout.BeginHorizontal();
 
-            GUILayout.Label("Position: "+bossPathWalker.m_position);
+            GUILayout.Label("Position: " + bossPathWalker.m_position);
             m_positionText = GUILayout.TextField(m_positionText);
             if (GUILayout.Button("Apply"))
             {
@@ -62,7 +62,7 @@ namespace Run4YourLife.Debugging
         {
             GUILayout.BeginHorizontal();
 
-            GUILayout.Label("Speed: "+bossPathWalker.m_speed);
+            GUILayout.Label("Speed: " + bossPathWalker.m_speed);
             m_speedText = GUILayout.TextField(m_speedText);
             if (GUILayout.Button("Apply"))
             {
@@ -81,7 +81,7 @@ namespace Run4YourLife.Debugging
         {
             GUILayout.BeginHorizontal();
 
-            GUILayout.Label("Acceleration: "+bossPathWalker.m_acceleration);
+            GUILayout.Label("Acceleration: " + bossPathWalker.m_acceleration);
             m_accelerationText = GUILayout.TextField(m_accelerationText);
             if (GUILayout.Button("Apply"))
             {
@@ -98,12 +98,12 @@ namespace Run4YourLife.Debugging
 
         private void Update()
         {
-            if(Input.GetKeyDown(KeyCode.P))
+            if (Input.GetKeyDown(KeyCode.P))
             {
                 StartCoroutine(BossManual());
             }
 
-            if(Input.GetKeyDown(KeyCode.O))
+            if (Input.GetKeyDown(KeyCode.O))
             {
                 PauseResumeWalker();
             }
@@ -121,25 +121,25 @@ namespace Run4YourLife.Debugging
 
             BossPathWalker bossPathWalker = GameplayPlayerManager.Instance.Boss.GetComponent<BossPathWalker>();
 
-            if(bossPathWalker != null)
+            if (bossPathWalker != null)
             {
                 yield return null; // P Key down is true, wait one frame so that it does not skip the while
                 float startingWalkerSpeed = bossPathWalker.m_speed;
                 float startingWalkerAcceleration = bossPathWalker.m_acceleration;
-                
+
                 bossPathWalker.m_speed = 0;
                 bossPathWalker.m_acceleration = 0;
 
                 GameplayPlayerManager.Instance.DebugClearRunners();
 
                 InputSource horizontalInputSource = new InputSource(Axis.LEFT_HORIZONTAL, InputDeviceManager.Instance.DefaultInputDevice);
-                while(!Input.GetKeyDown(KeyCode.P))
+                while (!Input.GetKeyDown(KeyCode.P))
                 {
                     float speedMultiplier = Input.GetKey(KeyCode.LeftShift) ? 2.0f : 1.0f;
                     bossPathWalker.m_position += horizontalInputSource.Value() * speedMultiplier * m_manualSpeed * Time.deltaTime;
                     yield return null;
                 }
-                
+
                 bossPathWalker.m_speed = startingWalkerSpeed;
                 bossPathWalker.m_acceleration = startingWalkerAcceleration;
 

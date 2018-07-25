@@ -1,13 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.EventSystems;
+
 using Cinemachine;
 
 using Run4YourLife.Utils;
-using Run4YourLife.Player;
-using System;
-using System.Collections;
+using Run4YourLife.Player.Runner;
+using Run4YourLife.Player.Boss;
 using Run4YourLife.UI;
 
 namespace Run4YourLife.GameManagement

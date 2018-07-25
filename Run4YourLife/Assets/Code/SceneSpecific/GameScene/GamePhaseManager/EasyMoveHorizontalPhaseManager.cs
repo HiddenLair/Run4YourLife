@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Cinemachine;
 
-using Run4YourLife.Player;
+using Run4YourLife.Player.Runner;
+using Run4YourLife.Player.Boss;
 using Run4YourLife.UI;
 
 namespace Run4YourLife.GameManagement

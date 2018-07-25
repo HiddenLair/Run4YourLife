@@ -3,7 +3,7 @@ using UnityEngine;
 
 using Cinemachine;
 using Run4YourLife.GameManagement;
-using Run4YourLife.Player;
+using Run4YourLife.Player.Boss;
 
 namespace Run4YourLife.Cinemachine
 {
@@ -28,7 +28,7 @@ namespace Run4YourLife.Cinemachine
     public class CinemachineScreenTransposer : CinemachineComponentBase
     {
         public CinemachineScreenTransposerData m_cinemachineScreenTransposerData;
-        private Transform m_previousTarget; 
+        private Transform m_previousTarget;
 
         public override bool IsValid { get { return enabled && FollowTarget != null; } }
 

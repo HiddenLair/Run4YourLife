@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Run4YourLife.Player
+namespace Run4YourLife.Player.Runner
 {
     [RequireComponent(typeof(RunnerAttributeController))]
     [RequireComponent(typeof(StatusEffectController))]

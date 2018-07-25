@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-using Run4YourLife.Player;
+using Run4YourLife.Player.Runner;
 
 namespace Run4YourLife.Interactables
 {
@@ -19,7 +19,7 @@ namespace Run4YourLife.Interactables
             pickParticle.PlayFx(false);
 
             Shielded shielded = runner.GetComponent<Shielded>();
-            if(shielded == null)
+            if (shielded == null)
             {
                 shielded = runner.AddComponent<Shielded>();
             }

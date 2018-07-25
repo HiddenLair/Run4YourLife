@@ -1,10 +1,11 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Run4YourLife.Player
+namespace Run4YourLife.Player.Runner
 {
     [CreateAssetMenu(fileName = "AttributeStatusEffect", menuName = "Custom/StatusEffect/AttributeStatusEffect")]
-    public class AttributeStatusEffect : StatusEffect, IComparable<AttributeStatusEffect> {
+    public class AttributeStatusEffect : StatusEffect, IComparable<AttributeStatusEffect>
+    {
 
         public override StatusEffectType StatusEffectType { get { return StatusEffectType.Attribute; } }
 

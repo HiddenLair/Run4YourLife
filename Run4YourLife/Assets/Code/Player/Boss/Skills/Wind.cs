@@ -6,7 +6,7 @@ using UnityEngine;
 using Run4YourLife.GameManagement;
 using Run4YourLife.CameraUtils;
 
-namespace Run4YourLife.Player
+namespace Run4YourLife.Player.Runner
 {
     public class Wind : SkillBase
     {
@@ -49,7 +49,7 @@ namespace Run4YourLife.Player
 
         #region Variables
 
-        private float actualFillPercent =0.0f;
+        private float actualFillPercent = 0.0f;
 
         private float flyingItemTimer = 0.0f;
         private float tornadoTimer = 0.0f;
@@ -66,17 +66,17 @@ namespace Run4YourLife.Player
         protected override void OnSkillStart()
         {
             Camera mainCamera = CameraManager.Instance.MainCamera;
-                        
-            Vector3 bottomLeft = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0));
-            Vector3 topRight = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1));
-            
-            Vector3 newPos = new Vector3(topRight.x,mainCamera.transform.position.y,transform.position.z);
+
+            Vector3 bottomLeft = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0, 0));
+            Vector3 topRight = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1, 1));
+
+            Vector3 newPos = new Vector3(topRight.x, mainCamera.transform.position.y, transform.position.z);
             transform.position = newPos;
             Vector3 newScale = new Vector3(0, topRight.y - bottomLeft.y, 2);//z 2 is an arbitrary number, you can change if you need
             transform.localScale = newScale;
 
             windParticles.SetActive(true);
-           
+
             StartCoroutine(FillScreen());
         }
 
@@ -88,8 +88,8 @@ namespace Run4YourLife.Player
             Vector3 actualPos = transform.position;
             while (actualFillPercent < 100)
             {
-                Vector3 bottomLeft = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0));
-                Vector3 topRight = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1));
+                Vector3 bottomLeft = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0, 0));
+                Vector3 topRight = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1, 1));
                 actualFillPercent += increasePerSec * Time.deltaTime;
                 actualScale.x = (topRight.x - bottomLeft.x) * actualFillPercent / 100;
                 actualScale.y = topRight.y - bottomLeft.y;
@@ -108,10 +108,10 @@ namespace Run4YourLife.Player
             float timer = Time.time + windDuration;
             Vector3 actualScale = transform.localScale;
             Vector3 actualPos = transform.position;
-            while(timer >= Time.time)
+            while (timer >= Time.time)
             {
-                Vector3 bottomLeft = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0));
-                Vector3 topRight = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1));
+                Vector3 bottomLeft = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0, 0));
+                Vector3 topRight = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1, 1));
 
                 actualScale.x = topRight.x - bottomLeft.x;
                 actualScale.y = topRight.y - bottomLeft.y;
@@ -121,7 +121,7 @@ namespace Run4YourLife.Player
                 transform.localScale = actualScale;
                 transform.position = actualPos;
 
-                if(phase != SkillBase.Phase.PHASE1)
+                if (phase != SkillBase.Phase.PHASE1)
                 {
                     if (flyingItemTimer >= timeBetweenFlyingItems)
                     {
@@ -131,7 +131,7 @@ namespace Run4YourLife.Player
                     }
                     flyingItemTimer += Time.deltaTime;
                 }
-                if(phase == SkillBase.Phase.PHASE3)
+                if (phase == SkillBase.Phase.PHASE3)
                 {
                     if (tornadoTimer >= timeBetweenTornados)
                     {
@@ -180,10 +180,11 @@ namespace Run4YourLife.Player
             Vector3 actualScale = transform.localScale;
             float decreasePerSec = 100 / windFillScreenTime;
 
-            while (actualFillPercent > 0) {
-                Vector3 bottomLeft = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0));
-                Vector3 topRight = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1));
-                
+            while (actualFillPercent > 0)
+            {
+                Vector3 bottomLeft = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0, 0));
+                Vector3 topRight = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1, 1));
+
                 actualFillPercent -= decreasePerSec * Time.deltaTime;
 
                 actualScale.y = topRight.y - bottomLeft.y;
@@ -201,32 +202,32 @@ namespace Run4YourLife.Player
 
         private void OnTriggerStay(Collider other)
         {
-            if(other.CompareTag(Tags.Runner))
+            if (other.CompareTag(Tags.Runner))
             {
                 Camera mainCamera = CameraManager.Instance.MainCamera;
-                Vector3 bottomLeft = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0));
-                Vector3 topRight = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1));
+                Vector3 bottomLeft = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0, 0));
+                Vector3 topRight = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1, 1));
 
-                float hitOffset = (other.transform.position.x - bottomLeft.x) -((topRight.x - bottomLeft.x) * screenMinWind / 100);
-                float screenOffset = (topRight.x - bottomLeft.x) - ((topRight.x -bottomLeft.x)*screenMinWind/100);
+                float hitOffset = (other.transform.position.x - bottomLeft.x) - ((topRight.x - bottomLeft.x) * screenMinWind / 100);
+                float screenOffset = (topRight.x - bottomLeft.x) - ((topRight.x - bottomLeft.x) * screenMinWind / 100);
 
                 float percentaje = hitOffset / screenOffset;
 
-                if(percentaje < 0)
+                if (percentaje < 0)
                 {
                     other.GetComponent<RunnerController>().WindForceRelative = windMinForceRelative;
                 }
                 else
                 {
                     float increasePerPercentaje = windMaxForceRelative - windMinForceRelative / 100;
-                    other.GetComponent<RunnerController>().WindForceRelative = (increasePerPercentaje * percentaje) +windMinForceRelative;
-                }               
+                    other.GetComponent<RunnerController>().WindForceRelative = (increasePerPercentaje * percentaje) + windMinForceRelative;
+                }
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if(other.CompareTag(Tags.Runner))
+            if (other.CompareTag(Tags.Runner))
             {
                 other.GetComponent<RunnerController>().WindForceRelative = 0.0f;
             }

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Run4YourLife.Player
+namespace Run4YourLife.Player.Runner
 {
     [RequireComponent(typeof(RunnerController))]
-    public class Shielded : MonoBehaviour {
+    public class Shielded : MonoBehaviour
+    {
 
         private RunnerController m_runnerController;
 
@@ -25,7 +26,7 @@ namespace Run4YourLife.Player
 
         private void Update()
         {
-            if(m_shieldEndTime <= Time.time)
+            if (m_shieldEndTime <= Time.time)
             {
                 Destroy(this);
             }

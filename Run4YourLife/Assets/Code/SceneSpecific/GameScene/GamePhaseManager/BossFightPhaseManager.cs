@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
-using Run4YourLife.Player;
-using Run4YourLife.Utils;
 using Cinemachine;
+
+using Run4YourLife.Player.Runner;
+using Run4YourLife.Utils;
 
 namespace Run4YourLife.GameManagement
 {
@@ -45,7 +46,7 @@ namespace Run4YourLife.GameManagement
         #region Regular Execution
 
         public override void StartPhase()
-        {          
+        {
             StartPhaseCommon();
             StartCoroutine(YieldHelper.WaitForSeconds(() => m_bossFightGemManager.PlaceFirstGem(), 3));
         }
@@ -57,7 +58,7 @@ namespace Run4YourLife.GameManagement
 
             m_virtualCamera.Follow = boss.transform;
             m_virtualCamera.LookAt = boss.transform;
-            CameraManager.Instance.TransitionToCamera(m_virtualCamera);       
+            CameraManager.Instance.TransitionToCamera(m_virtualCamera);
         }
 
         public void StartNextPhase()
@@ -74,8 +75,8 @@ namespace Run4YourLife.GameManagement
         {
             foreach (GameObject runner in GameplayPlayerManager.Instance.Runners)
             {
-                RunnerController runnerCharacterController = runner.GetComponent<RunnerController>(); 
-                runnerCharacterController.CheckOutScreen = false; 
+                RunnerController runnerCharacterController = runner.GetComponent<RunnerController>();
+                runnerCharacterController.CheckOutScreen = false;
             }
         }
 

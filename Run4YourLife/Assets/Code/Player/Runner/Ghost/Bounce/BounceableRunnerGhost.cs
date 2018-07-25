@@ -14,7 +14,7 @@ namespace Run4YourLife.Player.Runner.Ghost
 
         [SerializeField]
         private Collider m_collider;
-        
+
         [SerializeField]
         private RunnerGhostController m_runnerGhostController;
 

@@ -1,13 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+
 using Run4YourLife.Player;
+using Run4YourLife.Player.Runner;
 using Run4YourLife.InputManagement;
 using Run4YourLife.Debugging;
 
-namespace Run4YourLife.GameManagement {
+namespace Run4YourLife.GameManagement
+{
     public interface IGameplayPlayerEvents : IEventSystemHandler
     {
         void OnRunnerDeath(PlayerHandle player, Vector3 position);
@@ -20,7 +24,8 @@ namespace Run4YourLife.GameManagement {
 
     [RequireComponent(typeof(GameManager))]
     [RequireComponent(typeof(RunnerPrefabManager))]
-    public class GameplayPlayerManager : SingletonMonoBehaviour<GameplayPlayerManager>, IGameplayPlayerEvents {
+    public class GameplayPlayerManager : SingletonMonoBehaviour<GameplayPlayerManager>, IGameplayPlayerEvents
+    {
 
         #region Editor
 
@@ -37,7 +42,7 @@ namespace Run4YourLife.GameManagement {
         #region Properties
 
         public GameObject Boss { get { return m_boss; } }
-        
+
         public List<GameObject> Runners { get { return m_runners; } }
         public List<GameObject> RunnersAlive { get { return m_runnersAlive; } }
         public Dictionary<PlayerHandle, GameObject> RunnerGameObject { get { return m_runnerGameObject; } }
@@ -83,7 +88,7 @@ namespace Run4YourLife.GameManagement {
 
         private void InitializePlayers()
         {
-            if(PlayerManager.Instance.PlayerHandles.Count == 0)
+            if (PlayerManager.Instance.PlayerHandles.Count == 0)
             {
                 CreateDebugPlayers();
             }
@@ -91,10 +96,11 @@ namespace Run4YourLife.GameManagement {
             int runnerIndex = 0;
             foreach (PlayerHandle playerHandle in PlayerManager.Instance.PlayerHandles)
             {
-                if(playerHandle.IsBoss)
+                if (playerHandle.IsBoss)
                 {
                     InitializeBoss(playerHandle);
-                } else
+                }
+                else
                 {
                     InitializeRunner(playerHandle, runnerIndex);
                     InitializeRunnerGhost(playerHandle, runnerIndex);
@@ -177,7 +183,7 @@ namespace Run4YourLife.GameManagement {
 
         public void OnplayerHandleChanged(GameObject player, PlayerHandle playerHandle)
         {
-            foreach(IPlayerHandleEvent playerHandleEvent in player.GetComponents<IPlayerHandleEvent>())
+            foreach (IPlayerHandleEvent playerHandleEvent in player.GetComponents<IPlayerHandleEvent>())
             {
                 playerHandleEvent.OnPlayerHandleChanged(playerHandle);
             }
@@ -206,9 +212,9 @@ namespace Run4YourLife.GameManagement {
         }
 
         //Revive all runners into their ghost positions(Mainly used for phase revival)
-        public void  ReviveAllRunners()
+        public void ReviveAllRunners()
         {
-            for(int i = 0; i< GhostsAlive.Count;)
+            for (int i = 0; i < GhostsAlive.Count;)
             {
                 OnRunnerRevive(GhostsAlive[i].GetComponent<PlayerInstance>().PlayerHandle, GhostsAlive[i].transform.position);
             }
@@ -220,7 +226,7 @@ namespace Run4YourLife.GameManagement {
             return ActivateRunner(playerHandle, position, true);
         }
 
-        public GameObject OnRunnerActivate(PlayerHandle playerHandle, Vector3 position) 
+        public GameObject OnRunnerActivate(PlayerHandle playerHandle, Vector3 position)
         {
             DeactivateGhost(playerHandle);
             return ActivateRunner(playerHandle, position, false);
@@ -233,7 +239,7 @@ namespace Run4YourLife.GameManagement {
             m_runnersAlive.Add(runner);
             runner.SetActive(true);
 
-            if(revived)
+            if (revived)
             {
                 runner.GetComponent<RunnerController>().RecentlyRevived();
             }
@@ -252,7 +258,7 @@ namespace Run4YourLife.GameManagement {
 
         public GameObject ActivateBoss(GamePhase gamePhase, Vector3 position)
         {
-            if(m_boss != null)
+            if (m_boss != null)
             {
                 m_boss.SetActive(false);
             }
@@ -279,7 +285,7 @@ namespace Run4YourLife.GameManagement {
 
         private GameObject GetBossForPhase(GamePhase gamePhase)
         {
-            switch(gamePhase)
+            switch (gamePhase)
             {
                 case GamePhase.EasyMoveHorizontal:
                 case GamePhase.TransitionPhase1Start:
@@ -301,9 +307,9 @@ namespace Run4YourLife.GameManagement {
 
         private void Update()
         {
-            if(DebugSystemManagerHelper.DebuggingToolsEnabled())
+            if (DebugSystemManagerHelper.DebuggingToolsEnabled())
             {
-                if(Input.GetKeyDown(KeyCode.R))
+                if (Input.GetKeyDown(KeyCode.R))
                 {
                     DebugReviveAllRunners();
                 }
@@ -312,7 +318,7 @@ namespace Run4YourLife.GameManagement {
 
         public void DebugReviveAllRunners()
         {
-            while(m_ghostsAlive.Count > 0)
+            while (m_ghostsAlive.Count > 0)
             {
                 GameObject ghost = m_ghostsAlive[m_ghostsAlive.Count - 1];
                 PlayerHandle ghostPlayerHandle = ghost.GetComponent<PlayerInstance>().PlayerHandle;
@@ -345,12 +351,12 @@ namespace Run4YourLife.GameManagement {
 
         public void DebugClearRunners()
         {
-            foreach(GameObject runner in m_runnersAlive)
+            foreach (GameObject runner in m_runnersAlive)
             {
                 runner.SetActive(false);
             }
 
-            foreach(GameObject ghost in m_ghostsAlive)
+            foreach (GameObject ghost in m_ghostsAlive)
             {
                 ghost.SetActive(false);
             }
@@ -361,7 +367,7 @@ namespace Run4YourLife.GameManagement {
 
         public void DebugActivateRunners()
         {
-            foreach(GameObject runner in m_runners)
+            foreach (GameObject runner in m_runners)
             {
                 m_runnersAlive.Add(runner);
                 runner.transform.position = GetRandomSpawnPosition();

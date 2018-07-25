@@ -5,7 +5,7 @@ using Cinemachine;
 
 using Run4YourLife.Cinemachine;
 
-namespace Run4YourLife.Player
+namespace Run4YourLife.Player.Boss
 {
     [RequireComponent(typeof(CinemachinePath))]
     [ExecuteInEditMode]
@@ -39,7 +39,7 @@ namespace Run4YourLife.Player
         {
             float pathUnitsPosition = position;
 
-            if(positionUnits == CinemachinePathBase.PositionUnits.Distance)
+            if (positionUnits == CinemachinePathBase.PositionUnits.Distance)
             {
                 pathUnitsPosition = m_path.GetPathPositionFromDistance(position);
             }
