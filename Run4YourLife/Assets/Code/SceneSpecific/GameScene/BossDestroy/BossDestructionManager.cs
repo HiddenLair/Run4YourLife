@@ -5,7 +5,7 @@ using UnityEngine;
 using Run4YourLife.Utils;
 
 
-namespace Run4YourLife.GameManagement.Refactor
+namespace Run4YourLife.GameManagement
 {
     public class BossDestructionManager : SingletonMonoBehaviour<BossDestructionManager>
     {

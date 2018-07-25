@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Run4YourLife.GameManagement.Refactor
+namespace Run4YourLife.GameManagement
 {
     public abstract class BossDestructibleBase : MonoBehaviour, IBossDestructible
     {

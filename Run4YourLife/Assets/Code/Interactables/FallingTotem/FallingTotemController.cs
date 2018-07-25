@@ -7,7 +7,7 @@ using Run4YourLife.GameManagement.AudioManagement;
 namespace Run4YourLife.Interactables
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class FallingTotemController : MonoBehaviour
+    public class FallingTotemController : MonoBehaviour, IBossDestructibleNotified
     {
         [SerializeField]
         private TrembleConfig m_trembleConfig;
@@ -53,7 +53,7 @@ namespace Run4YourLife.Interactables
             StartCoroutine(ExecuteTotemFall());
         }
 
-        public void ResetTotem()
+        private void ResetTotem()
         {
             StopAllCoroutines();
             m_fallingTotemTrigger.enabled = true;
@@ -68,11 +68,11 @@ namespace Run4YourLife.Interactables
             AudioManager.Instance.PlaySFX(m_detectRunnerSound);
 
             yield return new WaitForSeconds(m_delayBetweenDetectionAndFall);
-            
+
             m_rotationSpeed = m_initialFallSpeed;
 
             Quaternion startingRotation = m_rigidbody.rotation;
-            Quaternion desiredRotation = m_rigidbody.rotation * Quaternion.Euler(m_endRotationX,0,0);
+            Quaternion desiredRotation = m_rigidbody.rotation * Quaternion.Euler(m_endRotationX, 0, 0);
 
             float t = 0f;
 
@@ -90,5 +90,13 @@ namespace Run4YourLife.Interactables
             m_dustParticles.PlayFx(false);
         }
 
+        void IBossDestructibleNotified.OnDestroyed()
+        {
+        }
+
+        void IBossDestructibleNotified.OnRegenerated()
+        {
+            ResetTotem();
+        }
     }
 }
