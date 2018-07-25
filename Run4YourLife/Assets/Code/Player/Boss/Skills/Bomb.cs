@@ -89,6 +89,10 @@ namespace Run4YourLife.Player
             m_collider = GetComponent<Collider>();
             m_renderer = GetComponentInChildren<Renderer>();
             Debug.Assert(m_renderer != null);
+        }
+
+        private void OnEnable()
+        {
             m_collider.enabled = false;
 
             speed.y = initialSpeed;
