@@ -141,8 +141,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4634731815843350}
   - component: {fileID: 65835021260577582}
-  - component: {fileID: 114250694027480718}
   - component: {fileID: 114368144682352512}
+  - component: {fileID: 114716343443849470}
   m_Layer: 9
   m_Name: R4YL_PROP_bouncy_platform
   m_TagString: Untagged
@@ -451,26 +451,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114250694027480718
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1571806633034540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_distance: -3
-  m_isDynamic: 0
-  m_alphaAnimationLenght: 0.5
-  m_activateOnRegenerate: 1
-  m_onRegenerated:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114368144682352512
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -497,8 +477,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fx: {fileID: 1200353531548318, guid: 76cab33c44ee8e14c89e142f7ba0bbe6, type: 2}
-  anim: {fileID: 0}
   sfx: {fileID: 0}
+--- !u!114 &114716343443849470
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1571806633034540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e35964a0f9e19e40a451917be05e89b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_distance: -3
+  m_isStatic: 1
+  m_canBeRegenerated: 1
+  m_disolveAnimationDuration: 0.5
 --- !u!137 &137267466066886000
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

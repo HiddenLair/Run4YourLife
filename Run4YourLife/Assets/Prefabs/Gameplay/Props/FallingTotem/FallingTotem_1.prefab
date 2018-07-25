@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 54980793791216854}
   - component: {fileID: 65719679887865174}
   - component: {fileID: 114848492460960250}
-  - component: {fileID: 114859428582270222}
+  - component: {fileID: 114267732771071928}
   m_Layer: 9
   m_Name: FallingTotem_1
   m_TagString: Untagged
@@ -1022,6 +1022,21 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114267732771071928
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1427856991486428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e35964a0f9e19e40a451917be05e89b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_distance: -3
+  m_isStatic: 1
+  m_canBeRegenerated: 1
+  m_disolveAnimationDuration: 0.5
 --- !u!114 &114383314649889752
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1034,7 +1049,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fx: {fileID: 1230101138075350, guid: 7212caca91c358048947d36ac7208485, type: 2}
-  anim: {fileID: 0}
   sfx: {fileID: 0}
 --- !u!114 &114715067508370164
 MonoBehaviour:
@@ -1080,34 +1094,3 @@ MonoBehaviour:
   m_fallingTotemTrigger: {fileID: 65556220044898022}
   m_rigidbody: {fileID: 54980793791216854}
   m_dustParticles: {fileID: 114383314649889752}
---- !u!114 &114859428582270222
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1427856991486428}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_distance: -3
-  m_isDynamic: 0
-  m_alphaAnimationLenght: 0.5
-  m_activateOnRegenerate: 1
-  m_onRegenerated:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114848492460960250}
-        m_MethodName: ResetTotem
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null

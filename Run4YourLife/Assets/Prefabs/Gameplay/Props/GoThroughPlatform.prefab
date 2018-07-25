@@ -37,7 +37,7 @@ GameObject:
   - component: {fileID: 95060120618191712}
   - component: {fileID: 65465501952971852}
   - component: {fileID: 114741144147828616}
-  - component: {fileID: 114981881326291692}
+  - component: {fileID: 114892561623885212}
   - component: {fileID: 114977412555343632}
   m_Layer: 10
   m_Name: GoThroughPlatform
@@ -217,6 +217,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e4a17c0088cd6640be69e5236a694e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114892561623885212
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1374042687058224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e35964a0f9e19e40a451917be05e89b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_distance: -3
+  m_isStatic: 1
+  m_canBeRegenerated: 1
+  m_disolveAnimationDuration: 0.5
 --- !u!114 &114977412555343632
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -229,23 +244,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGround: 0
---- !u!114 &114981881326291692
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1374042687058224}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_distance: -3
-  m_isDynamic: 0
-  m_alphaAnimationLenght: 0.5
-  m_activateOnRegenerate: 1
-  m_onRegenerated:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null

@@ -53,7 +53,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4277308763249416}
   - component: {fileID: 65859012688875492}
-  - component: {fileID: 114093356198275172}
+  - component: {fileID: 114982303353773964}
   - component: {fileID: 114028618749969974}
   m_Layer: 10
   m_Name: RockPlatform
@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGround: 0
---- !u!114 &114093356198275172
+--- !u!114 &114982303353773964
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -193,15 +193,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1931461935420698}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e35964a0f9e19e40a451917be05e89b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_distance: -3
-  m_isDynamic: 0
-  m_alphaAnimationLenght: 0.5
-  m_activateOnRegenerate: 1
-  m_onRegenerated:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  m_isStatic: 1
+  m_canBeRegenerated: 1
+  m_disolveAnimationDuration: 0.5

@@ -53,7 +53,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4695086234895432}
   - component: {fileID: 65537635019972472}
-  - component: {fileID: 114732196268542152}
+  - component: {fileID: 114778461336988976}
   m_Layer: 10
   m_Name: MediumBigPlatformVegetacion
   m_TagString: Untagged
@@ -172,7 +172,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114732196268542152
+--- !u!114 &114778461336988976
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -180,15 +180,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1788118905974338}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e35964a0f9e19e40a451917be05e89b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_distance: -3
-  m_isDynamic: 0
-  m_alphaAnimationLenght: 0.5
-  m_activateOnRegenerate: 1
-  m_onRegenerated:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  m_isStatic: 1
+  m_canBeRegenerated: 1
+  m_disolveAnimationDuration: 0.5

@@ -37,8 +37,8 @@ GameObject:
   - component: {fileID: 4733664109319810}
   - component: {fileID: 65687488831705326}
   - component: {fileID: 114383793237765762}
-  - component: {fileID: 114521514397068992}
   - component: {fileID: 114138590175114846}
+  - component: {fileID: 114575912067514364}
   m_Layer: 9
   m_Name: Bomb_Phase1
   m_TagString: Untagged
@@ -459,7 +459,7 @@ MonoBehaviour:
   timeBetweenJumps: 2
   jumpHeight: 2
   bossSpawnCheckCollider: {fileID: 135206787080930730}
---- !u!114 &114521514397068992
+--- !u!114 &114575912067514364
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -467,18 +467,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1674844452342998}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e35964a0f9e19e40a451917be05e89b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_distance: -2
-  m_isDynamic: 1
-  m_alphaAnimationLenght: 0.5
-  m_activateOnRegenerate: 0
-  m_onRegenerated:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  m_distance: -3
+  m_isStatic: 0
+  m_canBeRegenerated: 0
+  m_disolveAnimationDuration: 0.5
 --- !u!114 &114984591473477910
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -491,7 +486,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fx: {fileID: 1835936433109772, guid: 0207b8b69e78b124aaa59730de13dad9, type: 2}
-  anim: {fileID: 0}
   sfx: {fileID: 0}
 --- !u!135 &135206787080930730
 SphereCollider:
