@@ -57,7 +57,7 @@ namespace Run4YourLife.GameManagement
 
             EndBossCutScene();
 
-            GameManager.Instance.ChangeGamePhase(GamePhase.TransitionPhase2End);
+            GameManager.Instance.ChangeGamePhase(GamePhase.BossFight);
         }
 
         private void StartRunnersCutScene()
