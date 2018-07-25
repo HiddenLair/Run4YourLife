@@ -17,7 +17,7 @@ public class TrembleClip : PlayableAsset, ITimelineClipAsset
     public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
     {
         var playable = ScriptPlayable<TrembleBehaviour>.Create(graph, template);
-        TrembleBehaviour clone = playable.GetBehaviour();
+        //TrembleBehaviour clone = playable.GetBehaviour();
         return playable;
     }
 }
