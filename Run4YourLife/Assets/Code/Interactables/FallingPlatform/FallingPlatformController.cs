@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using Run4YourLife;
 using Run4YourLife.Utils;
+using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.Interactables
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class FallingPlatformController : MonoBehaviour
+    public class FallingPlatformController : MonoBehaviour, IBossDestructibleNotified
     {
 
         [SerializeField]
@@ -21,7 +22,7 @@ namespace Run4YourLife.Interactables
         private bool activatedFlag = false;
         private Vector3 m_startingPosition;
 
-        private void OnEnable()
+        private void Awake()
         {
             m_animator = GetComponentInChildren<Animator>();
             m_rigidbody = GetComponent<Rigidbody>();
@@ -46,7 +47,7 @@ namespace Run4YourLife.Interactables
             activatedFlag = true;
         }
 
-        public void Regenerate()
+        private void ResetState()
         {
             m_rigidbody.transform.localPosition = m_startingPosition;
 
@@ -54,6 +55,15 @@ namespace Run4YourLife.Interactables
             m_rigidbody.isKinematic = true;
             m_FallingCollider.SetActive(false);
             activatedFlag = false;
+        }
+
+        void IBossDestructibleNotified.OnDestroyed()
+        {
+        }
+
+        void IBossDestructibleNotified.OnRegenerated()
+        {
+            ResetState();
         }
     }
 }

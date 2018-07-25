@@ -35,7 +35,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4178466417709714}
   - component: {fileID: 65133233958373604}
-  - component: {fileID: 114347397388331190}
+  - component: {fileID: 114577057291533312}
   m_Layer: 10
   m_Name: MediumSmallPlatform
   m_TagString: Untagged
@@ -172,7 +172,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114347397388331190
+--- !u!114 &114577057291533312
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -180,15 +180,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1784129428507244}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e35964a0f9e19e40a451917be05e89b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_distance: -3
-  m_isDynamic: 0
-  m_alphaAnimationLenght: 0.5
-  m_activateOnRegenerate: 1
-  m_onRegenerated:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  m_isStatic: 1
+  m_canBeRegenerated: 1
+  m_disolveAnimationDuration: 0.5

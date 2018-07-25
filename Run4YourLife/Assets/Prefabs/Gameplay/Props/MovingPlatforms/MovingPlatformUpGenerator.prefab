@@ -36,7 +36,7 @@ GameObject:
   - component: {fileID: 4217470266634950}
   - component: {fileID: 114641576717670180}
   - component: {fileID: 114066542080999358}
-  - component: {fileID: 114292526283095900}
+  - component: {fileID: 114509831883380362}
   m_Layer: 0
   m_Name: Behaviour
   m_TagString: Untagged
@@ -79,7 +79,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1797976266180184}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7, y: -1.51, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4217470266634950}
@@ -116,7 +116,7 @@ MonoBehaviour:
   m_instantiationCount: 0
   m_prefab: {fileID: 1084588529787208, guid: b1da3d5e51320964d8d5e5b71eb1e2eb, type: 2}
   m_numberPooledPrefabs: 3
---- !u!114 &114292526283095900
+--- !u!114 &114509831883380362
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -124,17 +124,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1611384926513604}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1659940a78172e49a0bba4c42efe87e, type: 3}
+  m_Script: {fileID: 11500000, guid: b0206316fa77ef14fb02f7ca5979bd62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_distance: -4.5
-  m_isDynamic: 0
-  m_activateOnRegenerate: 1
-  m_onRegenerated:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  m_isStatic: 1
+  m_canBeRegenerated: 1
 --- !u!114 &114641576717670180
 MonoBehaviour:
   m_ObjectHideFlags: 1

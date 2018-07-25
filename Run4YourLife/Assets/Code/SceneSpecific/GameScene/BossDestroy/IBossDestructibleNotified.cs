@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Run4YourLife.GameManagement.Refactor
+namespace Run4YourLife.GameManagement
 {
     public interface IBossDestructibleNotified
     {

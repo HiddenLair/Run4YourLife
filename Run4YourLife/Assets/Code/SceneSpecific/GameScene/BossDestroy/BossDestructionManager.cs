@@ -5,7 +5,7 @@ using UnityEngine;
 using Run4YourLife.Utils;
 
 
-namespace Run4YourLife.GameManagement.Refactor
+namespace Run4YourLife.GameManagement
 {
     public class BossDestructionManager : SingletonMonoBehaviour<BossDestructionManager>
     {
@@ -16,12 +16,7 @@ namespace Run4YourLife.GameManagement.Refactor
 
 
         //Dynamic Destructibles
-        private List<IBossDestructible> m_destroyedDynamicDestructibles = new List<IBossDestructible>();
-        private List<IBossDestructible> m_activeDynamicDestructibles = new List<IBossDestructible>();
-        ///<summay>
-        /// Used just to hold references and not create garbage each frame
-        ///</summary>
-        private List<IBossDestructible> m_temporalActiveDynamicDestructibles = new List<IBossDestructible>();
+        private List<IBossDestructible> m_dynamicDestructibles = new List<IBossDestructible>();
 
 
         /// <summary>
@@ -36,23 +31,12 @@ namespace Run4YourLife.GameManagement.Refactor
 
         public void AddDynamic(IBossDestructible bossDestructible)
         {
-            if (GameplayPlayerManager.Instance.Boss == null || bossDestructible.DestroyPosition > GameplayPlayerManager.Instance.Boss.transform.position.x || GameManager.Instance.GamePhase == GamePhase.BossFight)
-            {
-                m_activeDynamicDestructibles.Add(bossDestructible);
-            }
-            else
-            {
-                m_destroyedDynamicDestructibles.Add(bossDestructible);
-                bossDestructible.Destroy();
-            }
+            m_dynamicDestructibles.Add(bossDestructible);
         }
 
         public void RemoveDynamic(IBossDestructible bossDestructible)
         {
-            if (!m_destroyedDynamicDestructibles.Remove(bossDestructible))
-            {
-                Debug.Assert(m_activeDynamicDestructibles.Remove(bossDestructible));
-            }
+            Debug.Assert(m_dynamicDestructibles.Remove(bossDestructible));
         }
 
         private void Start()
@@ -80,37 +64,26 @@ namespace Run4YourLife.GameManagement.Refactor
 
         private void DestroyAndRegenerateDynamicElements(float xBossPosition)
         {
-            if (m_destroyedDynamicDestructibles.Count > 0)
+            foreach (IBossDestructible bossDestructible in m_dynamicDestructibles)
             {
-                for (int i = m_destroyedDynamicDestructibles.Count - 1; i >= 0; i--)
+                switch (bossDestructible.BossDestructibleState)
                 {
-                    IBossDestructible bossDestructedInstance = m_destroyedDynamicDestructibles[i];
-                    if (xBossPosition < bossDestructedInstance.DestroyPosition)
-                    {
-                        bossDestructedInstance.Regenerate();
-                        m_temporalActiveDynamicDestructibles.Add(bossDestructedInstance);
-                        m_destroyedDynamicDestructibles.RemoveAt(i);
-                    }
+                    case BossDestructibleState.Alive:
+                        if (bossDestructible.DestroyPosition <= xBossPosition)
+                        {
+                            bossDestructible.Destroy();
+                        }
+                        break;
+
+                    case BossDestructibleState.InDestruction:
+                    case BossDestructibleState.Destroyed:
+                        if (bossDestructible.DestroyPosition > xBossPosition)
+                        {
+                            bossDestructible.Regenerate();
+                        }
+                        break;
                 }
             }
-
-
-            if (m_activeDynamicDestructibles.Count > 0)
-            {
-                for (int i = m_activeDynamicDestructibles.Count - 1; i >= 0; i--)
-                {
-                    IBossDestructible bossDestructedInstance = m_activeDynamicDestructibles[i];
-                    if (xBossPosition >= bossDestructedInstance.DestroyPosition)
-                    {
-                        bossDestructedInstance.Destroy();
-                        m_activeDynamicDestructibles.RemoveAt(i);
-                        m_destroyedDynamicDestructibles.Add(bossDestructedInstance);
-                    }
-                }
-            }
-
-            m_activeDynamicDestructibles.AddRange(m_temporalActiveDynamicDestructibles);
-            m_temporalActiveDynamicDestructibles.Clear();
         }
 
         private void DestroyAndRegenerateStaticElements(float xBossPosition)
@@ -142,7 +115,11 @@ namespace Run4YourLife.GameManagement.Refactor
         {
             for (int i = Mathf.Max(fromIndex, 0); i <= toIndex; i++)
             {
-                m_staticDestructibles[i].Destroy();
+                IBossDestructible bossDestructible = m_staticDestructibles[i];
+                if (bossDestructible.BossDestructibleState == BossDestructibleState.Alive)
+                {
+                    m_staticDestructibles[i].Destroy();
+                }
             }
         }
 
@@ -150,7 +127,11 @@ namespace Run4YourLife.GameManagement.Refactor
         {
             for (int i = Mathf.Max(fromIndex, 0); i <= toIndex; i++)
             {
-                m_staticDestructibles[i].Regenerate();
+                IBossDestructible bossDestructible = m_staticDestructibles[i];
+                if (bossDestructible.BossDestructibleState == BossDestructibleState.Destroyed || bossDestructible.BossDestructibleState == BossDestructibleState.InDestruction)
+                {
+                    m_staticDestructibles[i].Regenerate();
+                }
             }
         }
     }

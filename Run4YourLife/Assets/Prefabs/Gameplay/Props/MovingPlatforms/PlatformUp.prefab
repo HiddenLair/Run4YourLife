@@ -19,12 +19,12 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4485888943538402}
-  - component: {fileID: 114422835612598762}
   - component: {fileID: 54763877123979814}
+  - component: {fileID: 65934927824867842}
+  - component: {fileID: 114817481724252516}
   - component: {fileID: 114234058463110892}
   - component: {fileID: 114890727110993142}
-  - component: {fileID: 114817481724252516}
-  - component: {fileID: 65934927824867842}
+  - component: {fileID: 114422835612598762}
   m_Layer: 10
   m_Name: PlatformUp
   m_TagString: Untagged
@@ -74,7 +74,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4162239430735910}
   - component: {fileID: 65603008593005874}
-  - component: {fileID: 114444017845279988}
+  - component: {fileID: 114982422442114876}
   - component: {fileID: 114400989387019276}
   m_Layer: 10
   m_Name: PlatformBorderSmallDisolve
@@ -107,7 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4616521363458802}
   - component: {fileID: 65061590280230148}
-  - component: {fileID: 114519151066124696}
+  - component: {fileID: 114922016556642356}
   - component: {fileID: 114982446925342624}
   m_Layer: 10
   m_Name: PlatformSmallDisolve (1)
@@ -191,7 +191,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4307093320838752}
   - component: {fileID: 65732526491767080}
-  - component: {fileID: 114776086169551666}
+  - component: {fileID: 114479162136241984}
   - component: {fileID: 114471212770381208}
   m_Layer: 10
   m_Name: PlatformBorderSmallDisolve (1)
@@ -209,7 +209,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4319118736528754}
   - component: {fileID: 65600802154481418}
-  - component: {fileID: 114623077476466556}
+  - component: {fileID: 114316961270723448}
   - component: {fileID: 114627683978451432}
   m_Layer: 10
   m_Name: PlatformSmallDisolve
@@ -227,7 +227,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4866152525895938}
   - component: {fileID: 65596152858689748}
-  - component: {fileID: 114409566768887178}
+  - component: {fileID: 114647824066756474}
   - component: {fileID: 114890180155189514}
   m_Layer: 10
   m_Name: PlatformSmallDisolve (2)
@@ -390,7 +390,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1084588529787208}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7, y: 0.56, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4307093320838752}
@@ -899,6 +899,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_velocity: {x: 0, y: 2, z: 0}
+--- !u!114 &114316961270723448
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1518134916801836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e35964a0f9e19e40a451917be05e89b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_distance: -3
+  m_isStatic: 1
+  m_canBeRegenerated: 1
+  m_disolveAnimationDuration: 0.5
 --- !u!114 &114400989387019276
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -911,26 +926,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGround: 0
---- !u!114 &114409566768887178
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1658309366519554}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_distance: -3
-  m_isDynamic: 1
-  m_alphaAnimationLenght: 0.5
-  m_activateOnRegenerate: 1
-  m_onRegenerated:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114422835612598762
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -942,26 +937,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdb75e9e9fec50b4ea9b1cd69d5fe9a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114444017845279988
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1280381929029088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_distance: -3
-  m_isDynamic: 1
-  m_alphaAnimationLenght: 0.5
-  m_activateOnRegenerate: 1
-  m_onRegenerated:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114471212770381208
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -974,46 +949,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGround: 0
---- !u!114 &114519151066124696
+--- !u!114 &114479162136241984
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1388050220125868}
+  m_GameObject: {fileID: 1507221622058584}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e35964a0f9e19e40a451917be05e89b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_distance: -3
-  m_isDynamic: 1
-  m_alphaAnimationLenght: 0.5
-  m_activateOnRegenerate: 1
-  m_onRegenerated:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
---- !u!114 &114623077476466556
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1518134916801836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_distance: -3
-  m_isDynamic: 1
-  m_alphaAnimationLenght: 0.5
-  m_activateOnRegenerate: 1
-  m_onRegenerated:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  m_isStatic: 1
+  m_canBeRegenerated: 1
+  m_disolveAnimationDuration: 0.5
 --- !u!114 &114627683978451432
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1026,26 +976,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGround: 0
---- !u!114 &114776086169551666
+--- !u!114 &114647824066756474
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1507221622058584}
+  m_GameObject: {fileID: 1658309366519554}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e35964a0f9e19e40a451917be05e89b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_distance: -3
-  m_isDynamic: 1
-  m_alphaAnimationLenght: 0.5
-  m_activateOnRegenerate: 1
-  m_onRegenerated:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  m_isStatic: 1
+  m_canBeRegenerated: 1
+  m_disolveAnimationDuration: 0.5
 --- !u!114 &114817481724252516
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1081,6 +1026,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_time: 6
+--- !u!114 &114922016556642356
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1388050220125868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e35964a0f9e19e40a451917be05e89b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_distance: -3
+  m_isStatic: 1
+  m_canBeRegenerated: 1
+  m_disolveAnimationDuration: 0.5
+--- !u!114 &114982422442114876
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1280381929029088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e35964a0f9e19e40a451917be05e89b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_distance: -3
+  m_isStatic: 1
+  m_canBeRegenerated: 1
+  m_disolveAnimationDuration: 0.5
 --- !u!114 &114982446925342624
 MonoBehaviour:
   m_ObjectHideFlags: 1

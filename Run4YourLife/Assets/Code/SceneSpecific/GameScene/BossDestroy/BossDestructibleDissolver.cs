@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Run4YourLife.GameManagement.Refactor
+namespace Run4YourLife.GameManagement
 {
     public class BossDestructibleDissolver : BossDestructibleBase
     {

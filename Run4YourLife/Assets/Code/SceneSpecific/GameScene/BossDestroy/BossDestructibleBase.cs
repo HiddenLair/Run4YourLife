@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Run4YourLife.GameManagement.Refactor
+namespace Run4YourLife.GameManagement
 {
     public abstract class BossDestructibleBase : MonoBehaviour, IBossDestructible
     {
@@ -9,10 +9,10 @@ namespace Run4YourLife.GameManagement.Refactor
         private float m_distance;
 
         [SerializeField]
-        private bool m_isStatic;
+        private bool m_isStatic = true;
 
         [SerializeField]
-        private bool m_canBeRegenerated;
+        private bool m_canBeRegenerated = true;
 
         private BossDestructibleState m_bossDestructibleState;
 

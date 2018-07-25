@@ -71,7 +71,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4800388884493094}
   - component: {fileID: 114061187623184080}
-  - component: {fileID: 114309826630073812}
+  - component: {fileID: 114890502731949702}
   m_Layer: 9
   m_Name: CoconutTree
   m_TagString: Untagged
@@ -537,7 +537,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_hitGroundAudioClip: {fileID: 8300000, guid: b3d46335740960349a39ff5b11020be9,
     type: 3}
---- !u!114 &114309826630073812
+--- !u!114 &114890502731949702
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -545,18 +545,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1434260518461170}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 387b41f5596ca334a9017e39bd8c2b71, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e35964a0f9e19e40a451917be05e89b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_distance: -3
-  m_isDynamic: 0
-  m_alphaAnimationLenght: 0.5
-  m_activateOnRegenerate: 1
-  m_onRegenerated:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  m_isStatic: 1
+  m_canBeRegenerated: 1
+  m_disolveAnimationDuration: 0.5
 --- !u!198 &198445766522601028
 ParticleSystem:
   m_ObjectHideFlags: 1
