@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using System.Collections.Generic;
 using Run4YourLife.GameManagement;
 using Run4YourLife.GameManagement.AudioManagement;
 
@@ -39,6 +40,9 @@ namespace Run4YourLife.Interactables
         [SerializeField]
         private FXReceiver m_dustParticles;
 
+        [SerializeField]
+        private List<FXReceiver> eyesReceivers = new List<FXReceiver>();
+
         private float m_rotationSpeed;
 
         private void Reset()
@@ -66,6 +70,10 @@ namespace Run4YourLife.Interactables
             m_fallingTotemTrigger.enabled = false;
 
             AudioManager.Instance.PlaySFX(m_detectRunnerSound);
+            foreach(FXReceiver receiver in eyesReceivers)
+            {
+                receiver.PlayFx(true);
+            }
 
             yield return new WaitForSeconds(m_delayBetweenDetectionAndFall);
 
