@@ -12,7 +12,10 @@ namespace Run4YourLife.GameManagement
         public override GamePhase GamePhase { get { return GamePhase.TransitionPhase2End; } }
 
         [SerializeField]
-        private PlayableDirector m_startingCutscene;
+        private PlayableDirector m_portalCutscene;
+
+        [SerializeField]
+        private PlayableDirector m_endCutScene;
 
         private Coroutine m_startPhaseCoroutine;
 
@@ -27,16 +30,32 @@ namespace Run4YourLife.GameManagement
             runners.AddRange(GameplayPlayerManager.Instance.RunnersAlive);
             runners.AddRange(GameplayPlayerManager.Instance.GhostsAlive);
 
-            StartCutScene(runners);
+            StartPortalCutScene();
 
-            yield return new WaitUntil(() => m_startingCutscene.state != PlayState.Playing); // wait until cutscene has completed
+            yield return new WaitUntil(() => m_portalCutscene.state != PlayState.Playing); // wait until cutscene has completed
+
+            EndPortalCutScene();
+
+            StartEndCutScene(runners);
+
+            yield return new WaitUntil(() => m_endCutScene.state != PlayState.Playing); // wait until cutscene has completed
 
             EndCutScene(runners);
 
             GameManager.Instance.ChangeGamePhase(GamePhase.TransitionPhase3Start);
         }
 
-        private void StartCutScene(List<GameObject> runners)
+        private void StartPortalCutScene()
+        {
+            m_portalCutscene.Play();
+        }
+
+        private void EndPortalCutScene()
+        {
+            m_portalCutscene.Stop();
+        }
+
+        private void StartEndCutScene(List<GameObject> runners)
         {
 
             foreach (GameObject runner in runners)
@@ -46,14 +65,14 @@ namespace Run4YourLife.GameManagement
             GameObject boss = GameplayPlayerManager.Instance.Boss;
             DeactivateScripts(boss);
 
-            BindTimelineTracks(m_startingCutscene, runners, boss);
-            m_startingCutscene.Play();
+            BindTimelineTracks(m_endCutScene, runners, boss);
+            m_endCutScene.Play();
         }
 
         private void EndCutScene(List<GameObject> runners)
         {
-            m_startingCutscene.Stop();
-            Unbind(m_startingCutscene);
+            m_endCutScene.Stop();
+            Unbind(m_endCutScene);
             foreach (GameObject runner in runners)
             {
                 ActivateScripts(runner);
@@ -79,6 +98,7 @@ namespace Run4YourLife.GameManagement
             List<GameObject> runners = new List<GameObject>();
             runners.AddRange(GameplayPlayerManager.Instance.RunnersAlive);
             runners.AddRange(GameplayPlayerManager.Instance.GhostsAlive);
+            EndPortalCutScene();
             EndCutScene(runners);
 
             GameplayPlayerManager.Instance.DebugClearPlayers();
