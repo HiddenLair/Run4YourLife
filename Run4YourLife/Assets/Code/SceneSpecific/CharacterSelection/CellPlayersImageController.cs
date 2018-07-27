@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace Run4YourLife.SceneSpecific.CharacterSelection
 {
-    public class New_CellPlayersImageController : MonoBehaviour
+    public class CellPlayersImageController : MonoBehaviour
     {
         [SerializeField]
         private Image[] images;

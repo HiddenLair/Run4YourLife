@@ -17,23 +17,23 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         Unmodified
     }
 
-    [RequireComponent(typeof(New_PlayerPrefabManager))]
-    public class New_PlayerStandsManager : SingletonMonoBehaviour<New_PlayerStandsManager>
+    [RequireComponent(typeof(PlayerPrefabManager))]
+    public class PlayerStandsManager : SingletonMonoBehaviour<PlayerStandsManager>
     {
         [SerializeField]
-        private New_CellData[] bossCellDatas;
+        private CellData[] bossCellDatas;
 
         [SerializeField]
-        private New_CellData[] runnerCellDatas;
+        private CellData[] runnerCellDatas;
 
         [SerializeField]
-        private New_PlayerStandController[] playerStandControllers;
+        private PlayerStandController[] playerStandControllers;
 
         [SerializeField]
         private Image back;
 
         [SerializeField]
-        private New_OnButtonHeldControlScheme backControlScheme;
+        private OnButtonHeldControlScheme backControlScheme;
 
         [SerializeField]
         private CanvasGroup[] showOnGameReady;
@@ -47,14 +47,14 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         [SerializeField]
         private SwapImages[] runnerFaces;
 
-        private New_PlayerPrefabManager playerPrefabManager;
+        private PlayerPrefabManager playerPrefabManager;
 
         private uint currentId = 0;
         private Dictionary<PlayerHandle, uint> playerIds = new Dictionary<PlayerHandle, uint>();
 
-        private Dictionary<PlayerHandle, New_CellData> playersCurrentCell = new Dictionary<PlayerHandle, New_CellData>();
-        private Dictionary<New_CellData, HashSet<PlayerHandle>> bossCellCurrentContainedPlayers = new Dictionary<New_CellData, HashSet<PlayerHandle>>();
-        private Dictionary<New_CellData, HashSet<PlayerHandle>> runnerCellCurrentContainedPlayers = new Dictionary<New_CellData, HashSet<PlayerHandle>>();
+        private Dictionary<PlayerHandle, CellData> playersCurrentCell = new Dictionary<PlayerHandle, CellData>();
+        private Dictionary<CellData, HashSet<PlayerHandle>> bossCellCurrentContainedPlayers = new Dictionary<CellData, HashSet<PlayerHandle>>();
+        private Dictionary<CellData, HashSet<PlayerHandle>> runnerCellCurrentContainedPlayers = new Dictionary<CellData, HashSet<PlayerHandle>>();
 
         private Dictionary<PlayerHandle, bool> playerSelectionDone = new Dictionary<PlayerHandle, bool>();
 
@@ -62,14 +62,14 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         void Awake()
         {
-            playerPrefabManager = GetComponent<New_PlayerPrefabManager>();
+            playerPrefabManager = GetComponent<PlayerPrefabManager>();
 
-            foreach(New_CellData cellData in bossCellDatas)
+            foreach(CellData cellData in bossCellDatas)
             {
                 bossCellCurrentContainedPlayers.Add(cellData, new HashSet<PlayerHandle>());
             }
 
-            foreach(New_CellData cellData in runnerCellDatas)
+            foreach(CellData cellData in runnerCellDatas)
             {
                 runnerCellCurrentContainedPlayers.Add(cellData, new HashSet<PlayerHandle>());
             }
@@ -162,7 +162,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         private void FillStand(PlayerHandle playerHandle)
         {
-            foreach(New_PlayerStandController playerStandController in playerStandControllers)
+            foreach(PlayerStandController playerStandController in playerStandControllers)
             {
                 if(playerStandController.PlayerHandle == null)
                 {
@@ -172,11 +172,11 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             }
         }
 
-        private RequestCompletionState UpdateCurrentCell(PlayerHandle playerHandle, New_CellData cellData)
+        private RequestCompletionState UpdateCurrentCell(PlayerHandle playerHandle, CellData cellData)
         {
             if(cellData != null)
             {
-                New_CellData previousCellData = playersCurrentCell[playerHandle];
+                CellData previousCellData = playersCurrentCell[playerHandle];
 
                 if(previousCellData != null)
                 {
@@ -190,7 +190,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                         runnerCellCurrentContainedPlayers[previousCellData].Remove(playerHandle);
                     }
 
-                    previousCellData.GetComponentInChildren<New_CellPlayersImageController>().Hide(playerIds[playerHandle]);
+                    previousCellData.GetComponentInChildren<CellPlayersImageController>().Hide(playerIds[playerHandle]);
                 }
 
                 if(bossCellCurrentContainedPlayers.ContainsKey(cellData))
@@ -205,9 +205,9 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
                 playersCurrentCell[playerHandle] = cellData;
 
-                cellData.GetComponentInChildren<New_CellPlayersImageController>().Show(playerIds[playerHandle]);
+                cellData.GetComponentInChildren<CellPlayersImageController>().Show(playerIds[playerHandle]);
 
-                foreach(New_PlayerStandController playerStandController in playerStandControllers)
+                foreach(PlayerStandController playerStandController in playerStandControllers)
                 {
                     if(playerStandController.PlayerHandle == playerHandle)
                     {
@@ -219,11 +219,11 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             return RequestCompletionState.Unmodified;
         }
 
-        private New_CellData FindFreeCellForPlayer()
+        private CellData FindFreeCellForPlayer()
         {
             if(RunnerCanBeSelected())
             {
-                foreach(New_CellData cellData in runnerCellDatas)
+                foreach(CellData cellData in runnerCellDatas)
                 {
                     if(runnerCellCurrentContainedPlayers[cellData].Count == 0)
                     {
@@ -234,7 +234,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
             if(BossCanBeSelected())
             {
-                foreach(New_CellData cellData in bossCellDatas)
+                foreach(CellData cellData in bossCellDatas)
                 {
                     if(bossCellCurrentContainedPlayers[cellData].Count == 0)
                     {
@@ -320,7 +320,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         private bool BossCanBeSelected()
         {
-            foreach(KeyValuePair<PlayerHandle, New_CellData> currentPlayerCurrentCell in playersCurrentCell)
+            foreach(KeyValuePair<PlayerHandle, CellData> currentPlayerCurrentCell in playersCurrentCell)
             {
                 if(currentPlayerCurrentCell.Value != null && currentPlayerCurrentCell.Value.isBoss && playerSelectionDone[currentPlayerCurrentCell.Key])
                 {
@@ -335,7 +335,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         {
             int runnerCount = 0;
 
-            foreach(KeyValuePair<PlayerHandle, New_CellData> currentPlayerCurrentCell in playersCurrentCell)
+            foreach(KeyValuePair<PlayerHandle, CellData> currentPlayerCurrentCell in playersCurrentCell)
             {
                 if(currentPlayerCurrentCell.Value != null && !currentPlayerCurrentCell.Value.isBoss && playerSelectionDone[currentPlayerCurrentCell.Key])
                 {
@@ -350,7 +350,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         {
             PlayerHandle bossHandle = null;
 
-            foreach(KeyValuePair<PlayerHandle, New_CellData> currentPlayerCurrentCell in playersCurrentCell)
+            foreach(KeyValuePair<PlayerHandle, CellData> currentPlayerCurrentCell in playersCurrentCell)
             {
                 currentPlayerCurrentCell.Key.IsBoss = currentPlayerCurrentCell.Value.isBoss;
                 currentPlayerCurrentCell.Key.CharacterType = currentPlayerCurrentCell.Value.characterType;
@@ -378,7 +378,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 return RequestCompletionState.Unmodified;
             }
 
-            New_CellData playerCell = playersCurrentCell[playerHandle];
+            CellData playerCell = playersCurrentCell[playerHandle];
 
             // Check if a Boss / Runner can be selected
 
@@ -399,7 +399,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
             // Check if the Boss / Runner has already been selected
 
-            foreach(KeyValuePair<PlayerHandle, New_CellData> playerCurrentCell in playersCurrentCell)
+            foreach(KeyValuePair<PlayerHandle, CellData> playerCurrentCell in playersCurrentCell)
             {
                 if(playerCurrentCell.Value == playerCell && playerSelectionDone[playerCurrentCell.Key])
                 {

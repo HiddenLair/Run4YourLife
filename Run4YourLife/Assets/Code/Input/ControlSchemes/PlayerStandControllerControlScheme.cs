@@ -1,6 +1,6 @@
 ﻿namespace Run4YourLife.InputManagement
 {
-    public class New_PlayerStandControllerControlScheme : ControlScheme
+    public class PlayerStandControllerControlScheme : ControlScheme
     {
         public InputAction Select { get; private set; }
         public InputAction Unselect { get; private set; }
@@ -8,7 +8,7 @@
         public InputAction VerticalStand { get; private set; }
         public InputAction HorizontalStand { get; private set; }
 
-        public New_PlayerStandControllerControlScheme()
+        public PlayerStandControllerControlScheme()
         {
             InputActions.Add(Select = new InputAction(new InputSource(Button.A), "Select"));
             InputActions.Add(Unselect = new InputAction(new InputSource(Button.B), "Unselect"));

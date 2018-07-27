@@ -6,7 +6,7 @@ using Run4YourLife.Player;
 
 namespace Run4YourLife.SceneSpecific.CharacterSelection
 {
-    public class New_PlayerPrefabManager : MonoBehaviour
+    public class PlayerPrefabManager : MonoBehaviour
     {
         [Serializable]
         public class PlayerPrefab

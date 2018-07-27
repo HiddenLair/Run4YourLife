@@ -7,8 +7,8 @@ using Run4YourLife.InputManagement;
 
 namespace Run4YourLife.SceneSpecific.CharacterSelection
 {
-    [RequireComponent(typeof(New_PlayerStandControllerControlScheme))]
-    public class New_PlayerStandController : MonoBehaviour, IPlayerHandleEvent
+    [RequireComponent(typeof(PlayerStandControllerControlScheme))]
+    public class PlayerStandController : MonoBehaviour, IPlayerHandleEvent
     {
         [SerializeField]
         private float rotationSpeed;
@@ -32,8 +32,8 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         private GameObject infoReady;
 
         private PlayerHandle playerHandle;
-        private New_PlayerStandsManager playerStandsManager;
-        private New_PlayerStandControllerControlScheme playerStandControlScheme;
+        private PlayerStandsManager playerStandsManager;
+        private PlayerStandControllerControlScheme playerStandControlScheme;
 
         private GameObject currentCharacter;
         private GameObject currentCharacterPrefab;
@@ -47,8 +47,8 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         void Awake()
         {
-            playerStandsManager = New_PlayerStandsManager.Instance;
-            playerStandControlScheme = GetComponent<New_PlayerStandControllerControlScheme>();
+            playerStandsManager = PlayerStandsManager.Instance;
+            playerStandControlScheme = GetComponent<PlayerStandControllerControlScheme>();
 
             InfoShowJoin();
             infoIndex.SetActive(false);

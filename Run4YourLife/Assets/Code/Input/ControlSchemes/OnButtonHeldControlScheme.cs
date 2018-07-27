@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace Run4YourLife.InputManagement
 {
-    public class New_OnButtonHeldControlScheme : OnButtonPressedControlScheme
+    public class OnButtonHeldControlScheme : OnButtonPressedControlScheme
     {
         [SerializeField]
         private UnityEvent onButtonHeld;
