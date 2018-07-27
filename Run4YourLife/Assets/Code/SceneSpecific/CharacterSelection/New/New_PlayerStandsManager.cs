@@ -42,21 +42,6 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         private CanvasGroup[] hideOnGameReady;
 
         [SerializeField]
-        private Image checkOneBoss;
-
-        [SerializeField]
-        private Image checkOneOrMoreRunners;
-
-        [SerializeField]
-        private Image checkAllReady;
-
-        [SerializeField]
-        private Sprite checkReady;
-
-        [SerializeField]
-        private Sprite checkNotReady;
-
-        [SerializeField]
         private SwapImages bossFace;
 
         [SerializeField]
@@ -259,7 +244,6 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         private void UpdateGameReady()
         {
-            UpdateCheckInfoGameReady();
             UpdatePlayerFacesGameReady();
 
             bool isGameReady = IsGameReady();
@@ -273,13 +257,6 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             {
                 canvasGroup.alpha = Convert.ToSingle(!isGameReady);
             }
-        }
-
-        private void UpdateCheckInfoGameReady()
-        {
-            checkOneBoss.sprite = OneBoss() ? checkReady : checkNotReady;
-            checkOneOrMoreRunners.sprite = OneOrMoreRunners() ? checkReady : checkNotReady;
-            checkAllReady.sprite = AllReady() ? checkReady : checkNotReady;
         }
 
         private void UpdatePlayerFacesGameReady()
