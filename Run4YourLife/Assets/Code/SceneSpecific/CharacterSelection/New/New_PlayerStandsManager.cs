@@ -221,19 +221,25 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         private New_CellData FindFreeCellForPlayer()
         {
-            foreach(New_CellData cellData in runnerCellDatas)
+            if(RunnerCanBeSelected())
             {
-                if(runnerCellCurrentContainedPlayers[cellData].Count == 0)
+                foreach(New_CellData cellData in runnerCellDatas)
                 {
-                    return cellData;
+                    if(runnerCellCurrentContainedPlayers[cellData].Count == 0)
+                    {
+                        return cellData;
+                    }
                 }
             }
 
-            foreach(New_CellData cellData in bossCellDatas)
+            if(BossCanBeSelected())
             {
-                if(bossCellCurrentContainedPlayers[cellData].Count == 0)
+                foreach(New_CellData cellData in bossCellDatas)
                 {
-                    return cellData;
+                    if(bossCellCurrentContainedPlayers[cellData].Count == 0)
+                    {
+                        return cellData;
+                    }
                 }
             }
 
@@ -261,14 +267,14 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         private void UpdatePlayerFacesGameReady()
         {
-            uint currentRunnerIndex = 0;
-
             bossFace.Reset();
 
             foreach(SwapImages runnerFace in runnerFaces)
             {
                 runnerFace.Reset();
             }
+
+            uint currentRunnerIndex = 0;
 
             foreach(KeyValuePair<PlayerHandle, bool> currentPlayerSelectionDone in playerSelectionDone)
             {
@@ -292,42 +298,11 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         private bool IsGameReady()
         {
-            return AllReady() && OneBoss() && OneOrMoreRunners();
-        }
+            // If 2+ players
+            // 1 Boss selected
+            // 1+ Different runners selected
 
-        private bool OneBoss()
-        {
-            bool bossFound = false;
-
-            foreach(KeyValuePair<PlayerHandle, New_CellData> currentPlayerCurrentCell in playersCurrentCell)
-            {
-                bool isBoss = currentPlayerCurrentCell.Value.isBoss;
-
-                if(isBoss)
-                {
-                    if(bossFound)
-                    {
-                        return false;
-                    }
-
-                    bossFound = true;
-                }
-            }
-
-            return bossFound;
-        }
-
-        private bool OneOrMoreRunners()
-        {
-            foreach(KeyValuePair<PlayerHandle, New_CellData> currentPlayerCurrentCell in playersCurrentCell)
-            {
-                if(!currentPlayerCurrentCell.Value.isBoss)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return currentId >= 2 && AllReady();
         }
 
         private bool AllReady()
@@ -341,6 +316,34 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             }
 
             return true;
+        }
+
+        private bool BossCanBeSelected()
+        {
+            foreach(KeyValuePair<PlayerHandle, New_CellData> currentPlayerCurrentCell in playersCurrentCell)
+            {
+                if(currentPlayerCurrentCell.Value != null && currentPlayerCurrentCell.Value.isBoss && playerSelectionDone[currentPlayerCurrentCell.Key])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool RunnerCanBeSelected()
+        {
+            int runnerCount = 0;
+
+            foreach(KeyValuePair<PlayerHandle, New_CellData> currentPlayerCurrentCell in playersCurrentCell)
+            {
+                if(currentPlayerCurrentCell.Value != null && !currentPlayerCurrentCell.Value.isBoss && playerSelectionDone[currentPlayerCurrentCell.Key])
+                {
+                    ++runnerCount;
+                }
+            }
+
+            return runnerCount < Math.Max(currentId, 2) - 1;
         }
 
         private void PreparePlayers()
@@ -377,18 +380,24 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
             New_CellData playerCell = playersCurrentCell[playerHandle];
 
+            // Check if a Boss / Runner can be selected
+
             if(playerCell.isBoss)
             {
-                // If a boss has already been selected, error
-
-                foreach(KeyValuePair<PlayerHandle, New_CellData> currentPlayerCurrentCell in playersCurrentCell)
+                if(!BossCanBeSelected())
                 {
-                    if(currentPlayerCurrentCell.Value.isBoss && playerSelectionDone[currentPlayerCurrentCell.Key])
-                    {
-                        return RequestCompletionState.Error;
-                    }
+                    return RequestCompletionState.Error;
                 }
             }
+            else
+            {
+                if(!RunnerCanBeSelected())
+                {
+                    return RequestCompletionState.Error;
+                }
+            }
+
+            // Check if the Boss / Runner has already been selected
 
             foreach(KeyValuePair<PlayerHandle, New_CellData> playerCurrentCell in playersCurrentCell)
             {
