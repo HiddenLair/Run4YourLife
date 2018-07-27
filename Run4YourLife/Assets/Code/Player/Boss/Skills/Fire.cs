@@ -5,7 +5,6 @@ using UnityEngine;
 namespace Run4YourLife.Player.Runner
 {
     [RequireComponent(typeof(AudioSource))]
-    [RequireComponent(typeof(ParticleSystem))]
     public class Fire : MonoBehaviour
     {
 
@@ -22,6 +21,15 @@ namespace Run4YourLife.Player.Runner
         [SerializeField]
         private float maxScale;
 
+        private ParticleSystem[] childParticles;
+        private Collider fireTrigger;
+
+        private void Awake()
+        {
+            childParticles = GetComponentsInChildren<ParticleSystem>();
+            fireTrigger = GetComponent<Collider>();
+        }
+
 
         private void OnDisable()
         {
@@ -30,8 +38,13 @@ namespace Run4YourLife.Player.Runner
 
         public void Play(float growDuration, float stableDuration)
         {
-            gameObject.SetActive(true);
-            transform.localScale = (new Vector3(minScale, minScale, minScale));
+            fireTrigger.enabled = true;
+
+            Vector3 minScaleVector = new Vector3(minScale, minScale, minScale);
+            SetParticlesScale(minScaleVector);
+            transform.localScale = minScaleVector;//To scale collider;
+
+            SetEmission(true);
             StartCoroutine(Implementation(growDuration, stableDuration));
         }
 
@@ -39,31 +52,50 @@ namespace Run4YourLife.Player.Runner
         {
             float lifeTimeIncreasePerSec = (maxScale - minScale) / growDuration;
             float timer = Time.time + growDuration;
-            Vector3 actualScale = transform.localScale;
+            Vector3 actualScale = new Vector3(minScale, minScale, minScale);
             while (timer > Time.time)
             {
                 float offset = lifeTimeIncreasePerSec * Time.deltaTime;
                 actualScale += new Vector3(offset, offset, offset);
+                SetParticlesScale(actualScale);
                 transform.localScale = actualScale;
                 yield return null;
             }
 
             yield return new WaitForSeconds(stableDuration);
-
-            timer = Time.time + growDuration;
-            while (timer > Time.time)
-            {
-                float offset = lifeTimeIncreasePerSec * Time.deltaTime;
-                actualScale -= new Vector3(offset, offset, offset);
-                transform.localScale = actualScale;
-                yield return null;
-            }
+     
+            //timer = Time.time + growDuration;
+            //while (timer > Time.time)
+            //{
+            //    float offset = lifeTimeIncreasePerSec * Time.deltaTime;
+            //    actualScale -= new Vector3(offset, offset, offset);
+            //    SetParticlesScale(actualScale);
+            //    yield return null;
+            //}
             Stop();
+        }
+
+        private void SetParticlesScale(Vector3 scale)
+        {
+            foreach(ParticleSystem p in childParticles)
+            {
+                p.transform.localScale = scale;
+            }
+        }
+
+        private void SetEmission(bool value)
+        {
+            foreach(ParticleSystem p in childParticles)
+            {
+                ParticleSystem.EmissionModule emission = p.emission;
+                emission.enabled = value;
+            }
         }
 
         public void Stop()
         {
-            gameObject.SetActive(false);
+            SetEmission(false);
+            fireTrigger.enabled = false;
         }
 
         void OnTriggerEnter(Collider other)
