@@ -66,6 +66,9 @@ namespace Run4YourLife.Player.Runner
         private float jumpHeight;
 
         [SerializeField]
+        private FXReceiver jumpReceiver;
+
+        [SerializeField]
         private Collider bossSpawnCheckCollider;
 
         #endregion
@@ -220,6 +223,7 @@ namespace Run4YourLife.Player.Runner
                 yield return new WaitForSeconds(timeBetweenJumps);
                 fatherInitialY = transform.parent.position.y;
                 finalPos = transform.position;
+                jumpReceiver.PlayFx();
                 yield return StartCoroutine(Jump(jumpHeight));
             }
         }
