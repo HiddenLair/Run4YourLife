@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Run4YourLife.UI;
 using Run4YourLife.Player;
 using Run4YourLife.InputManagement;
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.SceneSpecific.CharacterSelection
 {
@@ -46,6 +47,9 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         [SerializeField]
         private SwapImages[] runnerFaces;
+
+        [SerializeField]
+        private AudioClip audioOnPlayerAdded;
 
         private PlayerPrefabManager playerPrefabManager;
 
@@ -126,6 +130,11 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             return playersCurrentCell[playerHandle].animationNameOnNotSelected;
         }
 
+        public bool IsOnBossCell(PlayerHandle playerHandle)
+        {
+            return playersCurrentCell[playerHandle].isBoss;
+        }
+
         public void UpdateBackFillAmount()
         {
             back.fillAmount = backControlScheme.GetPercent();
@@ -136,6 +145,11 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             if(gameStarting)
             {
                 return;
+            }
+
+            if(audioOnPlayerAdded != null)
+            {
+                AudioManager.Instance.PlaySFX(audioOnPlayerAdded);
             }
 
             FillStand(playerHandle);

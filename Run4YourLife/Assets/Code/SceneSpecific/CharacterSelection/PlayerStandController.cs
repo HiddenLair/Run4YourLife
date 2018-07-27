@@ -4,6 +4,7 @@ using Run4YourLife.Utils;
 using Run4YourLife.Player;
 using Run4YourLife.GameManagement;
 using Run4YourLife.InputManagement;
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.SceneSpecific.CharacterSelection
 {
@@ -30,6 +31,31 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         [SerializeField]
         private GameObject infoReady;
+
+        #region Audio
+
+        [SerializeField]
+        private AudioClip audioOnSelectCompletedIfBoss;
+
+        [SerializeField]
+        private AudioClip audioOnSelectCompletedIfRunner;
+
+        [SerializeField]
+        private AudioClip audioOnSelectError;
+
+        [SerializeField]
+        private AudioClip audioOnUnselectCompleted;
+
+        [SerializeField]
+        private AudioClip audioOnUnselectError;
+
+        [SerializeField]
+        private AudioClip audioOnMoveCompleted;
+
+        [SerializeField]
+        private AudioClip audioOnMoveError;
+
+        #endregion
 
         private PlayerHandle playerHandle;
         private PlayerStandsManager playerStandsManager;
@@ -110,6 +136,8 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                     InfoShowUnselect();
                     currentCharacter.GetComponent<Animator>().Play(playerStandsManager.GetAnimationNameOnSelected(playerHandle));
                 }
+
+                PlaySfx(playerStandsManager.IsOnBossCell(playerHandle) ? audioOnSelectCompletedIfBoss : audioOnSelectCompletedIfRunner, audioOnSelectError, requestCompletionState);
             }
 
             if(playerStandControlScheme.Unselect.Started())
@@ -122,6 +150,8 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                     InfoShowSelect();
                     currentCharacter.GetComponent<Animator>().Play(playerStandsManager.GetAnimationNameOnNotSelected(playerHandle));
                 }
+
+                PlaySfx(audioOnUnselectCompleted, audioOnUnselectError, requestCompletionState);
             }
 
             #endregion
@@ -137,12 +167,12 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 if(currentVertical >= threshold)
                 {
                     checkVerticalPlayerInput = false;
-                    playerStandsManager.OnPlayerInputUp(playerHandle);
+                    PlaySfx(audioOnMoveCompleted, audioOnMoveError, playerStandsManager.OnPlayerInputUp(playerHandle));
                 }
                 else if(currentVertical <= -threshold)
                 {
                     checkVerticalPlayerInput = false;
-                    playerStandsManager.OnPlayerInputDown(playerHandle);
+                    PlaySfx(audioOnMoveCompleted, audioOnMoveError, playerStandsManager.OnPlayerInputDown(playerHandle));
                 }
             }
 
@@ -151,12 +181,12 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 if(currentHorizontal >= threshold)
                 {
                     checkHorizontalPlayerInput = false;
-                    playerStandsManager.OnPlayerInputRight(playerHandle);
+                    PlaySfx(audioOnMoveCompleted, audioOnMoveError, playerStandsManager.OnPlayerInputRight(playerHandle));
                 }
                 else if(currentHorizontal <= -threshold)
                 {
                     checkHorizontalPlayerInput = false;
-                    playerStandsManager.OnPlayerInputLeft(playerHandle);
+                    PlaySfx(audioOnMoveCompleted, audioOnMoveError, playerStandsManager.OnPlayerInputLeft(playerHandle));
                 }
             }
 
@@ -177,6 +207,25 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             rotationY += rotationSpeed * playerStandControlScheme.Rotate.Value() * Time.deltaTime;
 
             #endregion
+        }
+
+        private void PlaySfx(AudioClip audioCompleted, AudioClip audioError, RequestCompletionState requestCompletionState)
+        {
+            AudioClip audioClip = null;
+
+            if(requestCompletionState == RequestCompletionState.Completed)
+            {
+                audioClip = audioCompleted;
+            }
+            else if(requestCompletionState == RequestCompletionState.Error)
+            {
+                audioClip = audioError;
+            }
+
+            if(audioClip != null)
+            {
+                AudioManager.Instance.PlaySFX(audioClip);
+            }
         }
 
         #region Info
