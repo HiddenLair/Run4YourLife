@@ -27,7 +27,12 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
         {
             base.Awake();
 
-            UpdateVolume(false);
+            float volume;
+            string parameter = audioMixerGroup.name + "Volume";
+            audioMixerGroup.audioMixer.GetFloat(parameter, out volume);
+
+            nActiveMusicalNotes = ComputeVolumeLevel(volume);
+            UpdateMusicalNotes();
         }
 
         protected override void OnArrowEvent(MoveEvent moveEvent)
@@ -48,6 +53,11 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
             }
 
             return 30f * Mathf.Log10(((float)nActiveMusicalNotes/musicalNotes.Length));
+        }
+
+        private int ComputeVolumeLevel(float volume)
+        {
+            return Mathf.RoundToInt(Mathf.Pow(10.0f, volume / 30.0f) * musicalNotes.Length);
         }
 
         private void UpdateVolume(bool updateNote)
