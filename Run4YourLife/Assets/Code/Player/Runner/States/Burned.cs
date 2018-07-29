@@ -37,9 +37,19 @@ namespace Run4YourLife.Player.Runner
         {
             if (Time.time > m_endBurnTime)
             {
-                m_statusEffectController.Remove(m_statusEffectSet);
-                Destroy(this);
+                EndBurned();
             }
+        }
+
+        private void OnDisable()
+        {
+            EndBurned();
+        }
+
+        private void EndBurned()
+        {
+            m_statusEffectController.Remove(m_statusEffectSet);
+            Destroy(this);
         }
     }
 }

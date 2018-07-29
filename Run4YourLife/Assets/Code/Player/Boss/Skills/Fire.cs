@@ -63,21 +63,12 @@ namespace Run4YourLife.Player.Runner
             }
 
             yield return new WaitForSeconds(stableDuration);
-     
-            //timer = Time.time + growDuration;
-            //while (timer > Time.time)
-            //{
-            //    float offset = lifeTimeIncreasePerSec * Time.deltaTime;
-            //    actualScale -= new Vector3(offset, offset, offset);
-            //    SetParticlesScale(actualScale);
-            //    yield return null;
-            //}
             Stop();
         }
 
         private void SetParticlesScale(Vector3 scale)
         {
-            foreach(ParticleSystem p in childParticles)
+            foreach (ParticleSystem p in childParticles)
             {
                 p.transform.localScale = scale;
             }
@@ -85,7 +76,7 @@ namespace Run4YourLife.Player.Runner
 
         private void SetEmission(bool value)
         {
-            foreach(ParticleSystem p in childParticles)
+            foreach (ParticleSystem p in childParticles)
             {
                 ParticleSystem.EmissionModule emission = p.emission;
                 emission.enabled = value;
