@@ -14,6 +14,16 @@ namespace Run4YourLife.Utils
             action();
         }
 
+        public static IEnumerator SkipFrames(Action action, int nFrames)
+        {
+            for (int i = 0; i < nFrames; i++)
+            {
+                yield return null;
+            }
+
+            action();
+        }
+
         public static IEnumerator SkipFrame<T>(Action<T> action, T parameter)
         {
             yield return null;

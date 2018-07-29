@@ -20,6 +20,7 @@ namespace Run4YourLife.Player.Runner
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(InputController))]
     [RequireComponent(typeof(RunnerBounceController))]
+    [RequireComponent(typeof(PlayerInstance))]
     public class RunnerController : MonoBehaviour, IRunnerEvents
     {
         private enum States
@@ -117,6 +118,7 @@ namespace Run4YourLife.Player.Runner
         private RunnerAttributeController m_runnerAttributeController;
         private RunnerControlScheme m_runnerControlScheme;
         private RunnerBounceController m_runnerBounceController;
+        private RunnerShieldController m_runnerShieldController;
         private Animator m_animator;
         private InputController m_inputController;
         private RunnerDashBreakableFinder m_runnerDashBreakableFinder;
@@ -151,10 +153,6 @@ namespace Run4YourLife.Player.Runner
         private bool m_reviveMode;
 
         private bool m_recentlyRevived;
-
-        private GameObject m_shieldGameObject;
-        private MaterialFadeOut m_shieldMaterialFadeOut;
-        private MaterialFitRunnerColor materialFitRunnerColor;
 
         private Coroutine shieldCooldownDestroy;
 
@@ -199,6 +197,10 @@ namespace Run4YourLife.Player.Runner
             m_runnerDashBreakableFinder = GetComponentInChildren<RunnerDashBreakableFinder>();
             Debug.Assert(m_runnerDashBreakableFinder != null);
 
+            m_runnerShieldController = GetComponentInChildren<RunnerShieldController>();
+            Debug.Assert(m_runnerShieldController != null);
+            m_runnerShieldController.Init(GetComponent<PlayerInstance>());
+
             m_graphics = transform.Find("Graphics");
             Debug.Assert(m_graphics != null);
 
@@ -208,15 +210,11 @@ namespace Run4YourLife.Player.Runner
             m_mainCamera = CameraManager.Instance.MainCamera;
             Debug.Assert(m_mainCamera != null);
 
-            Transform shieldTransform = transform.Find("Graphics/Shield");
-            Debug.Assert(shieldTransform != null);
-            m_shieldGameObject = shieldTransform.gameObject;
-            m_shieldMaterialFadeOut = m_shieldGameObject.GetComponent<MaterialFadeOut>();
-            materialFitRunnerColor = m_shieldGameObject.GetComponent<MaterialFitRunnerColor>();
-
             m_gravity = m_baseGravity;
             m_horizontalDrag = m_baseHorizontalDrag;
         }
+
+
 
         private void OnEnable()
         {
@@ -831,15 +829,13 @@ namespace Run4YourLife.Player.Runner
         public void ActivateShield(float shieldTime)
         {
             m_isShielded = true;
-            m_shieldGameObject.SetActive(true);
-            m_shieldMaterialFadeOut.Activate(shieldTime);
-            materialFitRunnerColor.Activate(GetComponent<PlayerInstance>().PlayerHandle.CharacterType);
+            m_runnerShieldController.ActivateShield(shieldTime);
         }
 
         public void DeactivateShield()
         {
             m_isShielded = false;
-            m_shieldGameObject.SetActive(false);
+            m_runnerShieldController.DeactivateShield();
         }
 
         /// <summary>
