@@ -19,12 +19,12 @@ namespace Run4YourLife.Player
         [SerializeField]
         private GameObject m_laserPrefab;
 
-        protected override void ExecuteShoot() //TODO: Move strings to BossAnimation
+        protected override void ExecuteShoot()
         {
             base.ExecuteShoot();
             IsHeadLocked = true;
 
-            m_animator.SetTrigger("Shoot");
+            m_animator.SetTrigger(BossAnimation.Triggers.Shoot);
             StartCoroutine(AnimationCallbacks.AfterStateAtNormalizedTime(m_animator, BossAnimation.StateNames.Move, m_fireLaserNormalizedTime, () => ExecuteShootCallback()));
         }
 
@@ -44,7 +44,7 @@ namespace Run4YourLife.Player
         {
             base.ExecuteMelee();
 
-            m_animator.SetTrigger(BossAnimation.Triggers.Melee);
+            m_animator.SetTrigger(BossAnimation.Triggers.Mele);
             AudioManager.Instance.PlaySFX(m_meleeClip);
         }
     }

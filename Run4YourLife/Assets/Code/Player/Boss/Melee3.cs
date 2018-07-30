@@ -7,7 +7,7 @@ namespace Run4YourLife.Player
     {
         protected override void ExecuteMelee()
         {
-            m_animator.SetTrigger(BossAnimation.Triggers.Melee);
+            m_animator.SetTrigger(BossAnimation.Triggers.Mele);
             AudioManager.Instance.PlaySFX(m_meleeClip);
         }
     }

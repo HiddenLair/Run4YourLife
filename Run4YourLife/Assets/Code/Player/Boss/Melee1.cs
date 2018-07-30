@@ -11,7 +11,7 @@ namespace Run4YourLife.Player
         private TrembleConfig trembleValues;
         protected override void ExecuteMelee()
         {
-            m_animator.SetTrigger(BossAnimation.Triggers.Melee);
+            m_animator.SetTrigger(BossAnimation.Triggers.Mele);
             AudioManager.Instance.PlaySFX(m_meleeClip);
             StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator,BossAnimation.StateNames.Mele,0.6f,()=>TrembleManager.Instance.Tremble(trembleValues)));
         }

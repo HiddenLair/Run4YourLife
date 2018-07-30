@@ -80,17 +80,17 @@ namespace Run4YourLife.Player
             Vector3 screenPos = mainCamera.WorldToViewportPoint(position);
             if (screenPos.x <= 0.5f)
             {
-                m_animator.SetTrigger("MeleR"); // Boss is flipped so it executes the inverted animation
+                m_animator.SetTrigger(BossAnimation.Triggers.MeleR); // Boss is flipped so it executes the inverted animation
                 position.x = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0)).x;
                 rightHand = true;
-                animation = "MeleRight";
+                animation = BossAnimation.StateNames.MeleRight;
             }
             else
             {
-                m_animator.SetTrigger("MeleL"); // Boss is flipped so it executes the inverted animation
+                m_animator.SetTrigger(BossAnimation.Triggers.MeleL); // Boss is flipped so it executes the inverted animation
                 position.x = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1)).x;
                 rightHand = false;
-                animation = "MeleLeft";
+                animation = BossAnimation.StateNames.MeleLeft;
             }
 
             StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator, animation, m_meleeNormalizedTime, () => ExecuteMeleeCallback(position, rightHand)));
