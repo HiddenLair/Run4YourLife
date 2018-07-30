@@ -1,5 +1,5 @@
-﻿using System;
-
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 using Run4YourLife.InputManagement;
@@ -35,7 +35,11 @@ namespace Run4YourLife.Player {
         [SerializeField]
         private Transform m_graphics;
 
+        [SerializeField]
+        public BumpController m_bump;
+
         private bool m_isFacingRight = true;
+
         
         private void Reset()
         {
@@ -100,7 +104,12 @@ namespace Run4YourLife.Player {
         {
             AudioManager.Instance.PlaySFX(m_revivePlayerSound);
             m_reviveParticles.PlayFx(false);
+            StartCoroutine(BumpRevive());          
+        }
 
+        IEnumerator BumpRevive()
+        {          
+            yield return new WaitForSeconds(m_bump.Bump());
             GameplayPlayerManager.Instance.OnRunnerRevive(m_playerInstance.PlayerHandle, transform.position + m_reviveRunnerOffset);
         }
     }

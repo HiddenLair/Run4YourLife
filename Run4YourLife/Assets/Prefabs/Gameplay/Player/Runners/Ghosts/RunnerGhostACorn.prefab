@@ -541,6 +541,7 @@ GameObject:
   - component: {fileID: 114941962315117718}
   - component: {fileID: 114009694195973500}
   - component: {fileID: 114397961036551890}
+  - component: {fileID: 114447251891918642}
   m_Layer: 0
   m_Name: RunnerGhostACorn
   m_TagString: Ghost
@@ -1376,7 +1377,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1709162717939534}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.707636, y: 0, z: 0.10226107}
+  m_LocalPosition: {x: 249.24768, y: 0, z: 1.2452621}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4486791266025644}
@@ -1755,7 +1756,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fx: {fileID: 1895639254101028, guid: 8452dd8d57c69f347b465c4a2926e19f, type: 2}
-  anim: {fileID: 0}
   sfx: {fileID: 0}
 --- !u!114 &114397961036551890
 MonoBehaviour:
@@ -1768,13 +1768,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd533a5bce7eb8c49a46be4599e06458, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speed: 4
+  m_speed: 10
   m_reviveRunnerOffset: {x: 0, y: -0.3, z: 0}
   m_revivePlayerSound: {fileID: 8300000, guid: a9a25dc4091142545bbba88564584c67, type: 3}
   m_controlScheme: {fileID: 114009694195973500}
   m_playerInstance: {fileID: 114941962315117718}
   m_reviveParticles: {fileID: 114134818522507682}
   m_graphics: {fileID: 4486791266025644}
+  m_bump: {fileID: 114447251891918642}
+--- !u!114 &114447251891918642
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1709162717939534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b3cd483c39bac489970d4829d62b13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightEye: {fileID: 137680239161160808}
+  leftEye: {fileID: 137655676958587194}
+  head: {fileID: 137187807951692124}
+  helmet: {fileID: 137093836732581472}
+  bumpTime: 0.2
 --- !u!114 &114499807902401388
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1787,7 +1804,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fx: {fileID: 1200353531548318, guid: 76cab33c44ee8e14c89e142f7ba0bbe6, type: 2}
-  anim: {fileID: 0}
   sfx: {fileID: 0}
 --- !u!114 &114683117607296336
 MonoBehaviour:

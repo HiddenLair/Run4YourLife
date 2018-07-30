@@ -843,6 +843,7 @@ GameObject:
   - component: {fileID: 114806912395929296}
   - component: {fileID: 114241127862253750}
   - component: {fileID: 114577198437136016}
+  - component: {fileID: 114788190223903192}
   m_Layer: 0
   m_Name: RunnerGhostBase
   m_TagString: Ghost
@@ -1478,7 +1479,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1983200650673696}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.282519, y: 6.85, z: -0.29241467}
+  m_LocalPosition: {x: 249.25092, y: 0, z: 1.0963502}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4499117156975178}
@@ -1678,7 +1679,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fx: {fileID: 1895639254101028, guid: 8452dd8d57c69f347b465c4a2926e19f, type: 2}
-  anim: {fileID: 0}
   sfx: {fileID: 0}
 --- !u!114 &114241127862253750
 MonoBehaviour:
@@ -1703,7 +1703,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fx: {fileID: 1200353531548318, guid: 76cab33c44ee8e14c89e142f7ba0bbe6, type: 2}
-  anim: {fileID: 0}
   sfx: {fileID: 0}
 --- !u!114 &114577198437136016
 MonoBehaviour:
@@ -1723,6 +1722,23 @@ MonoBehaviour:
   m_playerInstance: {fileID: 114806912395929296}
   m_reviveParticles: {fileID: 114237310977399982}
   m_graphics: {fileID: 4499117156975178}
+  m_bump: {fileID: 114788190223903192}
+--- !u!114 &114788190223903192
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1983200650673696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b3cd483c39bac489970d4829d62b13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightEye: {fileID: 137134556514921286}
+  leftEye: {fileID: 137666049169418382}
+  head: {fileID: 137327042267553024}
+  helmet: {fileID: 0}
+  bumpTime: 0.2
 --- !u!114 &114806912395929296
 MonoBehaviour:
   m_ObjectHideFlags: 1

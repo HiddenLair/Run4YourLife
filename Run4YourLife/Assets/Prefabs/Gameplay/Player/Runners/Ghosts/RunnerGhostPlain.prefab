@@ -176,6 +176,7 @@ GameObject:
   - component: {fileID: 114235075442223254}
   - component: {fileID: 114435095739421224}
   - component: {fileID: 114403219330621110}
+  - component: {fileID: 114556597214788278}
   m_Layer: 0
   m_Name: RunnerGhostPlain
   m_TagString: Ghost
@@ -1435,7 +1436,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1250770368814982}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.050022, y: 0, z: 0.391088}
+  m_LocalPosition: {x: 248.47871, y: 0, z: 1.4065237}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4922262343077848}
@@ -1706,13 +1707,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd533a5bce7eb8c49a46be4599e06458, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speed: 4
+  m_speed: 10
   m_reviveRunnerOffset: {x: 0, y: -0.3, z: 0}
   m_revivePlayerSound: {fileID: 8300000, guid: a9a25dc4091142545bbba88564584c67, type: 3}
   m_controlScheme: {fileID: 114435095739421224}
   m_playerInstance: {fileID: 114235075442223254}
   m_reviveParticles: {fileID: 114588277523268630}
   m_graphics: {fileID: 4922262343077848}
+  m_bump: {fileID: 114556597214788278}
 --- !u!114 &114435095739421224
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1738,6 +1740,22 @@ MonoBehaviour:
   m_bounceForce: 2
   m_collider: {fileID: 135584914344188088}
   m_runnerGhostController: {fileID: 114403219330621110}
+--- !u!114 &114556597214788278
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1250770368814982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b3cd483c39bac489970d4829d62b13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightEye: {fileID: 137554565131872854}
+  leftEye: {fileID: 137130826012298260}
+  head: {fileID: 137821593432728300}
+  helmet: {fileID: 0}
+  bumpTime: 0.2
 --- !u!114 &114588277523268630
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1750,7 +1768,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fx: {fileID: 1895639254101028, guid: 8452dd8d57c69f347b465c4a2926e19f, type: 2}
-  anim: {fileID: 0}
   sfx: {fileID: 0}
 --- !u!114 &114732530374951954
 MonoBehaviour:
@@ -1764,7 +1781,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fx: {fileID: 1200353531548318, guid: 76cab33c44ee8e14c89e142f7ba0bbe6, type: 2}
-  anim: {fileID: 0}
   sfx: {fileID: 0}
 --- !u!135 &135584914344188088
 SphereCollider:

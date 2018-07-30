@@ -22,9 +22,10 @@ public class BumpController : MonoBehaviour {
 
     #endregion
 
-    public void Bump()
+    public float Bump()
     {
         StartCoroutine(BumpInTime());
+        return bumpTime;
     }
 
     IEnumerator BumpInTime()

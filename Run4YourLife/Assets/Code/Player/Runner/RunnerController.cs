@@ -108,7 +108,7 @@ namespace Run4YourLife.Player.Runner
         private float fadePeriodAfterRevive = 0.2f;
 
         [SerializeField]
-        private Renderer[] m_renderersToFade;
+        private GameObject fadeRenderersFather;
 
         #endregion
 
@@ -158,6 +158,7 @@ namespace Run4YourLife.Player.Runner
 
         private float idleTimer = 0.0f;
 
+        private Renderer[] m_renderersToFade;
 
 
         #endregion
@@ -186,7 +187,7 @@ namespace Run4YourLife.Player.Runner
         {
             m_stateMachine = StateMachine<States>.Initialize(this);
             //m_stateMachine.Changed += (state) => Debug.Log(state); // Debug statement for characters
-
+            m_renderersToFade = fadeRenderersFather.GetComponentsInChildren<Renderer>();
             m_runnerControlScheme = GetComponent<RunnerControlScheme>();
             m_characterController = GetComponent<CharacterController>();
             m_runnerAttributeController = GetComponent<RunnerAttributeController>();
