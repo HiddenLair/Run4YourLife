@@ -41,7 +41,8 @@ namespace Run4YourLife.Player.Runner
             fireTrigger.enabled = true;
 
             Vector3 minScaleVector = new Vector3(minScale, minScale, minScale);
-            SetParticlesScale(minScaleVector);
+            Vector3 maxScaleVector = new Vector3(maxScale,maxScale,maxScale);
+            SetParticlesScale(maxScaleVector);//Now particles dont scale in grow
             transform.localScale = minScaleVector;//To scale collider;
 
             SetEmission(true);
@@ -57,7 +58,7 @@ namespace Run4YourLife.Player.Runner
             {
                 float offset = lifeTimeIncreasePerSec * Time.deltaTime;
                 actualScale += new Vector3(offset, offset, offset);
-                SetParticlesScale(actualScale);
+                //SetParticlesScale(actualScale); 
                 transform.localScale = actualScale;
                 yield return null;
             }
