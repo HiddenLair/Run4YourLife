@@ -19,9 +19,6 @@ namespace Run4YourLife.SceneSpecific.WinMenu
         [SerializeField]
         private float othersScale = 3.0f;
 
-        [SerializeField]
-        private string winnerAnimation = "dance";
-
         private RunnerPrefabManager runnerPrefabManager;
 
         void Awake()
@@ -41,7 +38,7 @@ namespace Run4YourLife.SceneSpecific.WinMenu
 
         private void Start()
         {
-            if(PlayerManager.Instance.PlayerHandles.Count == 0)
+            if (PlayerManager.Instance.PlayerHandles.Count == 0)
             {
                 SetUpTestPlayers(3);
             }
@@ -53,7 +50,7 @@ namespace Run4YourLife.SceneSpecific.WinMenu
         {
             Debug.Log("Setting up test players");
 
-            for(uint i = 0; i < numRunners; ++i)
+            for (uint i = 0; i < numRunners; ++i)
             {
                 PlayerManager.Instance.AddPlayer(new PlayerHandle()
                 {
@@ -68,14 +65,14 @@ namespace Run4YourLife.SceneSpecific.WinMenu
         {
             List<PlayerHandle> runnerPlayerHandles = PlayerManager.Instance.RunnerPlayerHandles;
 
-            for(int i = 0; i < runnerPlayerHandles.Count; ++i)
+            for (int i = 0; i < runnerPlayerHandles.Count; ++i)
             {
                 GameObject runner = Instantiate(runnerPrefabManager.GetRunner(runnerPlayerHandles[i].CharacterType), spawnPoints[i].transform, false);
 
                 float scale = i == 0 ? winnerScale : othersScale;
                 runner.transform.localScale = scale * Vector3.one;
 
-                runner.GetComponent<Animator>().Play(winnerAnimation);
+                runner.GetComponent<Animator>().SetTrigger(RunnerAnimation.Parameters.Triggers.Dance);
             }
         }
     }
