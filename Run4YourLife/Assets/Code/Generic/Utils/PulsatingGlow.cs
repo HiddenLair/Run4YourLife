@@ -10,15 +10,18 @@ public class PulsatingGlow : MonoBehaviour
     [SerializeField]
     private float pulseSpeed = 1;
 
-    private Renderer m_renderer;
+    private Renderer[] m_renderers;
 
     void Start ()
     {
-        m_renderer = GetComponentInChildren<Renderer>();
+        m_renderers = GetComponentsInChildren<Renderer>();
 	}
 
 	void Update () 
     {
-        m_renderer.material.SetFloat("_EmissionForce", Mathf.PingPong(Time.time * pulseSpeed, maxIntensity));
+        foreach (Renderer renderer in m_renderers)
+        {
+            renderer.material.SetFloat("_EmissionForce", Mathf.PingPong(Time.time * pulseSpeed, maxIntensity));
+        }
 	}
 }
