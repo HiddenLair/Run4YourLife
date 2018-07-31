@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 114383793237765762}
   - component: {fileID: 114138590175114846}
   - component: {fileID: 114575912067514364}
+  - component: {fileID: 114858626752787412}
   m_Layer: 9
   m_Name: Bomb_Phase1
   m_TagString: Untagged
@@ -458,6 +459,7 @@ MonoBehaviour:
   fireScript: {fileID: 114241821019569138}
   timeBetweenJumps: 2
   jumpHeight: 2
+  jumpReceiver: {fileID: 0}
   bossSpawnCheckCollider: {fileID: 135206787080930730}
 --- !u!114 &114575912067514364
 MonoBehaviour:
@@ -474,6 +476,20 @@ MonoBehaviour:
   m_isStatic: 0
   m_canBeRegenerated: 0
   m_disolveAnimationDuration: 0.5
+--- !u!114 &114858626752787412
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1674844452342998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70e9cb7816bdb52449dd2c5e895235d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_parent: {fileID: 0}
+  m_simulatePosition: 1
+  m_simualteRotation: 1
 --- !u!114 &114984591473477910
 MonoBehaviour:
   m_ObjectHideFlags: 1

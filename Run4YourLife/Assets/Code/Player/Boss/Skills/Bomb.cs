@@ -81,6 +81,7 @@ namespace Run4YourLife.Player.Runner
         private Vector3 speed = Vector3.zero;
         private bool destroyOnLanding = false;
         private Transform fatherTransformStorage;
+        private SimulateChildOf simulateChildOf;
         private float fatherInitialY;
 
         private Fire[] fireScripts;
@@ -91,6 +92,7 @@ namespace Run4YourLife.Player.Runner
         {
             m_collider = GetComponent<Collider>();
             m_renderer = GetComponentInChildren<Renderer>();
+            simulateChildOf = GetComponent<SimulateChildOf>();
             Debug.Assert(m_renderer != null);
         }
 
@@ -192,7 +194,10 @@ namespace Run4YourLife.Player.Runner
                 {
                     finalPos.y += yVar;
                     transform.position = finalPos;
-                    transform.SetParent(fatherTransformStorage);
+                    simulateChildOf.Parent = fatherTransformStorage;
+
+                    //transform.SetParent(fatherTransformStorage);
+
                     if (destroyOnLanding)
                     {
                         Explode();

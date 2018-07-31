@@ -188,9 +188,11 @@ namespace Run4YourLife.Player
         private void ExecuteSkill(SkillBase skill, ActionType type, SkillBase.SkillSpawnData skillSpawnData)
         {
             GameObject instance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(skill.gameObject, skillSpawnData.position, Quaternion.identity);
+            SimulateChildOf simulateChildOf = instance.GetComponent<SimulateChildOf>();
             if (skillSpawnData.parent != null)
             {
-                instance.transform.SetParent(skillSpawnData.parent);
+                simulateChildOf.Parent = skillSpawnData.parent;
+                //instance.transform.SetParent(skillSpawnData.parent);
             }
 
             m_animator.SetTrigger(BossAnimation.Triggers.Cast);

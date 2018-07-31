@@ -69,6 +69,7 @@ GameObject:
   - component: {fileID: 4055895842181392}
   - component: {fileID: 54447292799171528}
   - component: {fileID: 114839807435500362}
+  - component: {fileID: 114755068181469686}
   m_Layer: 9
   m_Name: EarthSpike_Phase1
   m_TagString: Untagged
@@ -331,6 +332,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 412452455570aa44bac37005f9813a6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114755068181469686
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1696466390942686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70e9cb7816bdb52449dd2c5e895235d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_parent: {fileID: 0}
+  m_simulatePosition: 1
+  m_simualteRotation: 1
 --- !u!114 &114839807435500362
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -353,7 +368,8 @@ MonoBehaviour:
   m_earthSpikeChild: {fileID: 1052776497450230}
   m_spikeGrowTrembleConfig: {fileID: 11400000, guid: 03cab4ac5e3009e44817adf8e80ef748,
     type: 2}
-  m_breakableWallPrefab: {fileID: 0}
+  m_breakableWallPrefab: {fileID: 1705394957324018, guid: 309cba5a49b22a64994d48fac9d971b3,
+    type: 2}
 --- !u!198 &198528916331117510
 ParticleSystem:
   m_ObjectHideFlags: 1

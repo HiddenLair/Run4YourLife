@@ -38,7 +38,6 @@ namespace Run4YourLife.Player
         [SerializeField]
         private GameObject m_breakableWallPrefab;
 
-
         public override bool CheckAndRepositionSkillSpawn(ref SkillSpawnData skillSpawnData)
         {
             Collider[] stageElements;
