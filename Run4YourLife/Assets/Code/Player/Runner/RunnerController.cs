@@ -341,9 +341,8 @@ namespace Run4YourLife.Player.Runner
                 TrimPlayerPositionHorizontalInsideGameplayArea();
             }
 
-            m_animator.SetFloat(RunnerAnimation.xSpeed, Mathf.Abs(movement.x));
-            m_animator.SetFloat(RunnerAnimation.ySpeed, m_velocity.y);
-            m_animator.SetBool(RunnerAnimation.isGrounded, m_characterController.isGrounded);
+            m_animator.SetFloat(RunnerAnimation.Parameters.Float.HorizontalSpeed, Mathf.Abs(movement.x));
+            m_animator.SetFloat(RunnerAnimation.Parameters.Float.VerticalSpeed, m_velocity.y);
         }
 
         private void TrimPlayerPositionHorizontalInsideGameplayArea()
@@ -383,7 +382,7 @@ namespace Run4YourLife.Player.Runner
         private void Idle_Enter()
         {
             m_canDoubleJumpAgain = true;
-            m_animator.SetTrigger(RunnerAnimation.idle);
+            m_animator.SetBool(RunnerAnimation.Parameters.Bool.Idle, true);
         }
 
         private void Idle_Update()
@@ -413,6 +412,11 @@ namespace Run4YourLife.Player.Runner
             }
         }
 
+        private void Idle_Exit()
+        {
+            m_animator.SetBool(RunnerAnimation.Parameters.Bool.Idle, false);
+        }
+
         #endregion
 
         #region Move
@@ -420,6 +424,8 @@ namespace Run4YourLife.Player.Runner
         private void Move_Enter()
         {
             m_canDoubleJumpAgain = true;
+
+            m_animator.SetBool(RunnerAnimation.Parameters.Bool.Move, true);
         }
 
         private void Move_Update()
@@ -439,6 +445,11 @@ namespace Run4YourLife.Player.Runner
             {
                 m_stateMachine.ChangeState(States.Idle);
             }
+        }
+
+        private void Move_Exit()
+        {
+            m_animator.SetBool(RunnerAnimation.Parameters.Bool.Move, false);
         }
 
         #endregion
@@ -495,12 +506,14 @@ namespace Run4YourLife.Player.Runner
         private void Jump_Enter()
         {
             AudioManager.Instance.PlaySFX(m_jumpClip);
-            m_animator.SetTrigger(RunnerAnimation.jump);
+            m_animator.SetBool(RunnerAnimation.Parameters.Bool.Airborne, true);
 
             //set vertical velocity to the velocity needed to reach maxJumpHeight
             m_velocity.y = HeightToVelocity(m_runnerAttributeController.GetAttribute(RunnerAttribute.JumpHeight));
             m_jump_previousPositionY = transform.position.y;
+
         }
+
         private void Jump_Update()
         {
             GravityAndDrag();
@@ -524,6 +537,11 @@ namespace Run4YourLife.Player.Runner
             m_jump_previousPositionY = transform.position.y;
         }
 
+        private void Jump_Exit()
+        {
+            m_animator.SetBool(RunnerAnimation.Parameters.Bool.Airborne, false);
+        }
+
         #endregion
 
         #region SecondJump
@@ -536,7 +554,7 @@ namespace Run4YourLife.Player.Runner
 
             AudioManager.Instance.PlaySFX(m_fartClip);
             m_fartParticleReceiver.PlayFx();
-            m_animator.SetTrigger(RunnerAnimation.jump);
+            m_animator.SetTrigger(RunnerAnimation.Parameters.Triggers.Frontflip);
 
             float jumpHeight = m_secondJumpHeight;
             if (m_velocity.y > 0)
@@ -622,12 +640,15 @@ namespace Run4YourLife.Player.Runner
 
         private void Fall_Enter()
         {
+            m_animator.SetBool(RunnerAnimation.Parameters.Bool.Airborne, true);
+
             m_gravity = m_endOfJumpGravity;
         }
 
         private void Fall_Exit()
         {
             m_gravity = m_baseGravity;
+            m_animator.SetBool(RunnerAnimation.Parameters.Bool.Airborne, false);
         }
 
         private void Fall_Update()
@@ -666,6 +687,8 @@ namespace Run4YourLife.Player.Runner
 
         private IEnumerator Bounce_Enter()
         {
+            m_animator.SetBool(RunnerAnimation.Parameters.Bool.Airborne, true);
+
             m_canDoubleJumpAgain = true;
 
             AudioManager.Instance.PlaySFX(m_bounceClip);
@@ -696,6 +719,11 @@ namespace Run4YourLife.Player.Runner
             m_bounce_previousY = transform.position.y;
         }
 
+        private void Bounce_Exit()
+        {
+            m_animator.SetBool(RunnerAnimation.Parameters.Bool.Airborne, false);
+        }
+
         #endregion
 
         #region Dash
@@ -707,7 +735,7 @@ namespace Run4YourLife.Player.Runner
             AudioManager.Instance.PlaySFX(m_dashClip);
 
             m_isReadyToDash = false;
-            m_animator.SetTrigger(RunnerAnimation.dash);
+            m_animator.SetTrigger(RunnerAnimation.Parameters.Triggers.Dash);
 
             m_dashTrail.gameObject.SetActive(true);
 
@@ -761,8 +789,7 @@ namespace Run4YourLife.Player.Runner
         {
             m_horizontalDrag = m_impulseHorizontalDrag;
 
-            m_animator.SetTrigger(RunnerAnimation.push);
-            m_animator.SetFloat(RunnerAnimation.pushForce, m_push_force.x);
+            m_animator.SetTrigger(RunnerAnimation.Parameters.Triggers.Push);
 
             m_velocity += m_push_force;
         }
@@ -801,15 +828,13 @@ namespace Run4YourLife.Player.Runner
             m_graphics.rotation = Quaternion.identity;
             //Activate particle effects
             //Activate shock animation
-            m_animator.SetTrigger(RunnerAnimation.shock);
+            m_animator.SetTrigger(RunnerAnimation.Parameters.Triggers.Shock);
         }
 
         private void Shock_Exit()
         {
             RotateGraphicsAtFacingDirection();
             //Deactivate particle effects
-            //Deactivate animation
-            m_animator.SetTrigger(RunnerAnimation.stopShock);
         }
 
         private void Shock_Update()

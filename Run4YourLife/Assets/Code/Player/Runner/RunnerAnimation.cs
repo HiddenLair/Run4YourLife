@@ -1,21 +1,44 @@
-﻿namespace Run4YourLife.Player
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class RunnerAnimation : MonoBehaviour
 {
-    public static class RunnerAnimation {
 
-        //Float
-        public static readonly string xSpeed = "xSpeed";
-        public static readonly string ySpeed = "ySpeed";
-        public static readonly string pushForce = "pushForce";
+    public class States
+    {
+        public static readonly string Idle = "Idle";
+        public static readonly string Move = "Move";
+        public static readonly string Airborne = "Airborne";
+        public static readonly string Frontflip = "Frontflip";
+        public static readonly string Push = "Push";
+        public static readonly string Dash = "Dash";
+        public static readonly string Shock = "Shock";
+        public static readonly string Dance = "Dance";
+    }
 
-        //Bool
-        public static readonly string isGrounded = "isGrounded";
+    public class Parameters
+    {
+        public class Float
+        {
+            public static readonly string HorizontalSpeed = "xSpeed";
+            public static readonly string VerticalSpeed = "ySpeed";
+        }
 
-        //Trigger
-        public static readonly string jump = "jump";
-        public static readonly string dash = "dash";
-        public static readonly string shock = "shock";
-        public static readonly string stopShock = "stopShock";
-        public static readonly string push = "push";
-        public static readonly string idle = "idle";
+        public class Bool
+        {
+            public static readonly string Idle = "Idle";
+            public static readonly string Move = "Move";
+            public static readonly string Airborne = "Airborne";
+        }
+
+        public class Triggers
+        {
+            public static readonly string Frontflip = "Frontflip";
+            public static readonly string Push = "Push";
+            public static readonly string Dash = "Dash";
+            public static readonly string Shock = "Shock";
+            public static readonly string Dance = "Dance";
+        }
     }
 }
