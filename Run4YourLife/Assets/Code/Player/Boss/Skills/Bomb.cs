@@ -195,9 +195,6 @@ namespace Run4YourLife.Player.Runner
                     finalPos.y += yVar;
                     transform.position = finalPos;
                     simulateChildOf.Parent = fatherTransformStorage;
-
-                    //transform.SetParent(fatherTransformStorage);
-
                     if (destroyOnLanding)
                     {
                         Explode();

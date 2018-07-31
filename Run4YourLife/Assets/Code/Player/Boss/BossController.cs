@@ -192,7 +192,6 @@ namespace Run4YourLife.Player
             if (skillSpawnData.parent != null)
             {
                 simulateChildOf.Parent = skillSpawnData.parent;
-                //instance.transform.SetParent(skillSpawnData.parent);
             }
 
             m_animator.SetTrigger(BossAnimation.Triggers.Cast);
