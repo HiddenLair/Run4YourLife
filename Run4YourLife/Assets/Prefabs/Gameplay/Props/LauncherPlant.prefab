@@ -54,7 +54,7 @@ GameObject:
   - component: {fileID: 4020031646775104}
   - component: {fileID: 114403341536357374}
   - component: {fileID: 114636495819365962}
-  - component: {fileID: 114224865392001738}
+  - component: {fileID: 114546959916159364}
   m_Layer: 9
   m_Name: LauncherPlant
   m_TagString: Untagged
@@ -129,7 +129,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1410030826953418}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4231951948776752}
@@ -250,19 +250,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114224865392001738
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1410030826953418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8073855dcfad5724c94cad4bdb64b4aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_parent: {fileID: 0}
-  m_timeBetweenRetrivals: 10
 --- !u!114 &114403341536357374
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -278,7 +265,6 @@ MonoBehaviour:
   timeBetweenShoots: 2.5
   shootInitZone: {fileID: 4544687038185118}
   bullet: {fileID: 1740353084455346, guid: 056333314fc68ef4590036d0b66ba856, type: 2}
-  m_nBulletCached: 2
   m_launchAudioClip: {fileID: 8300000, guid: da9b7ee4ef4f93c4fa43194112113204, type: 3}
 --- !u!114 &114430068153150040
 MonoBehaviour:
@@ -292,6 +278,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_monoBehaviour: {fileID: 114403341536357374}
+--- !u!114 &114546959916159364
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1410030826953418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ab5c4c55ba562a4abadaf3f57a845f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_requestObjective: 0
+  m_poolRequests:
+  - prefab: {fileID: 1740353084455346, guid: 056333314fc68ef4590036d0b66ba856, type: 2}
+    amount: 2
 --- !u!114 &114636495819365962
 MonoBehaviour:
   m_ObjectHideFlags: 1
