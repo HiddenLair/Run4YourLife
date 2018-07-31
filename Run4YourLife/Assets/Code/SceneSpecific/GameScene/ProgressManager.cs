@@ -12,23 +12,25 @@ namespace Run4YourLife.GameManagement
 
     public class ProgressManager : MonoBehaviour
     {
-        private GameObject m_uiManager;
+        private IUIProgressEvents m_progressEventUI;
 
         void Awake()
         {
-            m_uiManager = GameObject.FindGameObjectWithTag(Tags.UI);
-            Debug.Assert(m_uiManager != null, "UI not found");
+            GameObject ui = GameObject.FindGameObjectWithTag(Tags.UI);
+            Debug.Assert(ui != null);
+            m_progressEventUI = ui.GetComponent<IUIProgressEvents>();
+            Debug.Assert(m_progressEventUI != null);
         }
 
         void Update()
         {
             GameObject boss = GameplayPlayerManager.Instance.Boss;
-            if(boss != null)
+            if (boss != null)
             {
                 IProgressProvider progressProvider = boss.GetComponent<IProgressProvider>();
-                if(progressProvider != null)
+                if (progressProvider != null)
                 {
-                    ExecuteEvents.Execute<IUIProgressEvents>(m_uiManager, null, (x, y) => x.OnBossProgress(progressProvider.Progress));
+                    m_progressEventUI.OnBossProgress(progressProvider.Progress);
                 }
             }
         }

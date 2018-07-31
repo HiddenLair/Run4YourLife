@@ -20,6 +20,8 @@ public class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
             {
                 m_instance = (T)FindObjectOfType(typeof(T));
 
+                /* 
+
                 if (m_instance == null)
                 {
                     Debug.LogError("[Singleton] An instance of " + typeof(T) + 
@@ -31,6 +33,7 @@ public class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
                         " - there should never be more than 1 singleton!" +
                         " Reopening the scene might fix it.");
                 }
+                */
             }
             return m_instance;
         }
@@ -40,10 +43,10 @@ public class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
     {
         get
         {
-            if(m_instanceGameObject == null)
+            if (m_instanceGameObject == null)
             {
                 T instance = Instance;
-                if(instance != null)
+                if (instance != null)
                 {
                     m_instanceGameObject = instance.gameObject;
                 }
@@ -57,7 +60,7 @@ public class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
     /// </summary>
     protected virtual void OnDestroy()
     {
-        if(this == m_instance)
+        if (this == m_instance)
             m_instance = null;
     }
 }
