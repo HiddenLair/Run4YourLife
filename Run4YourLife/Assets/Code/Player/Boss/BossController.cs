@@ -78,6 +78,7 @@ namespace Run4YourLife.Player
         private bool m_isHeadLocked;
         private bool m_isHeadLookAtAttachedToCrosshair = true;
         private Vector3 m_lookAtPosition;
+        private PulsatingGlowDefaultShader glowController;
         protected Quaternion m_initialHeadRotation;
 
         protected BossControlScheme m_controlScheme;
@@ -104,6 +105,7 @@ namespace Run4YourLife.Player
             m_animator = GetComponent<Animator>();
             m_crossHairControl = GetComponent<CrossHairControl>();
             m_ui = GameObject.FindGameObjectWithTag(Tags.UI);
+            glowController = GetComponentInChildren<PulsatingGlowDefaultShader>();
 
             Debug.Assert(m_ui != null);
 
@@ -124,21 +126,25 @@ namespace Run4YourLife.Player
                 {
                     m_lightningReadyTime = Time.time + m_lightningSkill.Cooldown;
                     ExecuteSkill(m_lightningSkill, ActionType.Y, skillSpawnData);
+                    ChangeGlowColor(Color.yellow,m_animator.GetCurrentAnimatorClipInfo(0).Length);
                 }
                 else if (m_controlScheme.EarthSpike.Started() && (m_earthSpikeReadyTime <= Time.time) && m_earthSpikeSkill.CheckAndRepositionSkillSpawn(ref skillSpawnData))
                 {
                     m_earthSpikeReadyTime = Time.time + m_earthSpikeSkill.Cooldown;
                     ExecuteSkill(m_earthSpikeSkill, ActionType.A, skillSpawnData);
+                    ChangeGlowColor(Color.green, m_animator.GetCurrentAnimatorClipInfo(0).Length);
                 }
                 else if (m_controlScheme.Wind.Started() && (m_windReadyTime <= Time.time) && m_windSkill.CheckAndRepositionSkillSpawn(ref skillSpawnData))
                 {
                     m_windReadyTime = Time.time + m_windSkill.Cooldown;
                     ExecuteSkill(m_windSkill, ActionType.X, skillSpawnData);
+                    ChangeGlowColor(Color.cyan, m_animator.GetCurrentAnimatorClipInfo(0).Length);
                 }
                 else if (m_controlScheme.Bomb.Started() && (m_bombReadyTime <= Time.time) && m_bombSkill.CheckAndRepositionSkillSpawn(ref skillSpawnData))
                 {
                     m_bombReadyTime = Time.time + m_bombSkill.Cooldown;
                     ExecuteSkill(m_bombSkill, ActionType.B, skillSpawnData);
+                    ChangeGlowColor(Color.red, m_animator.GetCurrentAnimatorClipInfo(0).Length);
                 }
                 else if (m_controlScheme.Shoot.Started() && m_shootReadyTime <= Time.time)
                 {
@@ -151,6 +157,14 @@ namespace Run4YourLife.Player
                     ExecuteMelee();
                     StartCoroutine(YieldHelper.WaitForSeconds(() => OnShootReady(), m_meleeCooldown));
                 }
+            }
+        }
+
+        private void ChangeGlowColor(Color color, float time)
+        {
+            if (glowController != null)
+            {
+                glowController.ChangeGlowColor(color, time);
             }
         }
 

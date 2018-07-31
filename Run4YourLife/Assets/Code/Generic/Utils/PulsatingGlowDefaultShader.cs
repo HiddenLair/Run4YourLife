@@ -49,4 +49,25 @@ public class PulsatingGlowDefaultShader : MonoBehaviour {
             item.mat.SetColor("_EmissionColor", finalColor);
         }
     }
+
+    public void ChangeGlowColor(Color color,float time)
+    {
+        StartCoroutine(ColorInTime(color,time));
+    }
+
+    IEnumerator ColorInTime(Color color,float time)
+    {
+        float timer = Time.time + time;
+        List<RenderColor> temp = new List<RenderColor>(m_colors);
+        while(timer > Time.time)
+        {
+            for(int i = 0; i < m_colors.Count; ++i)
+            {
+                RenderColor c = m_colors[i];
+                c.color = Color.Lerp(temp[i].color, color, 1 - (timer - Time.time / time));
+                m_colors[i] = c;
+            }
+            yield return null;
+        }
+    }
 }
