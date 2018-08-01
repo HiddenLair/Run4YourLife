@@ -79,6 +79,7 @@ namespace Run4YourLife.Player
         private bool m_isHeadLookAtAttachedToCrosshair = true;
         private Vector3 m_lookAtPosition;
         private PulsatingGlowDefaultShader glowController;
+        private ParticlesColorChanger particlesController;
         protected Quaternion m_initialHeadRotation;
 
         protected BossControlScheme m_controlScheme;
@@ -106,6 +107,7 @@ namespace Run4YourLife.Player
             m_crossHairControl = GetComponent<CrossHairControl>();
             m_ui = GameObject.FindGameObjectWithTag(Tags.UI);
             glowController = GetComponentInChildren<PulsatingGlowDefaultShader>();
+            particlesController = GetComponentInChildren<ParticlesColorChanger>();
 
             Debug.Assert(m_ui != null);
 
@@ -165,6 +167,10 @@ namespace Run4YourLife.Player
             if (glowController != null)
             {
                 glowController.ChangeGlowColor(color, time);
+            }
+            if(particlesController != null)
+            {
+                particlesController.ChangeColor(color,time);
             }
         }
 
