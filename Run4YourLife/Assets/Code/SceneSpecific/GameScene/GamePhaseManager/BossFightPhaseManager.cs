@@ -53,7 +53,8 @@ namespace Run4YourLife.GameManagement
         public override void StartPhase()
         {
             StartPhaseCommon();
-            StartCoroutine(YieldHelper.WaitForSeconds(() => m_bossFightGemManager.PlaceFirstGem(), 3));
+
+            m_bossFightGemManager.StartGemMinigame();
         }
 
         void StartPhaseCommon()
@@ -98,7 +99,8 @@ namespace Run4YourLife.GameManagement
             m_virtualCamera.transform.position = m_bossFightStartingCameraPositionDebug.position;
 
             StartPhaseCommon();
-            StartCoroutine(YieldHelper.WaitForSeconds(() => m_bossFightGemManager.PlaceFirstGem(), 3));
+
+            m_bossFightGemManager.StartGemMinigame();
         }
 
         public override void DebugEndPhase()

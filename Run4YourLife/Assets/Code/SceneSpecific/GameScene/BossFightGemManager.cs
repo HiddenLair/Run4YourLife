@@ -10,13 +10,10 @@ using Run4YourLife.Utils;
 public class BossFightGemManager : SingletonMonoBehaviour<BossFightGemManager>
 {
     [SerializeField]
+    private float m_startingMinigameDelay;
+
+    [SerializeField]
     private float m_timeBetweenGems;
-
-    [SerializeField]
-    private float m_timeBetweenTeleports;
-
-    [SerializeField]
-    private float m_timeInvisibleAfterTeleport;
 
     [SerializeField]
     private GameObject m_gemPrefab;
@@ -39,7 +36,7 @@ public class BossFightGemManager : SingletonMonoBehaviour<BossFightGemManager>
     {
         m_bossFightPhaseManager = GetComponent<BossFightPhaseManager>();
 
-        foreach(GameObject standGem in m_standGems)
+        foreach (GameObject standGem in m_standGems)
         {
             standGem.SetActive(false);
         }
@@ -49,17 +46,18 @@ public class BossFightGemManager : SingletonMonoBehaviour<BossFightGemManager>
     {
         m_gemInstance = DynamicObjectsManager.Instance.GameObjectPool.Get(m_gemPrefab);
         m_gemInstanceController = m_gemInstance.GetComponent<GemController>();
+        m_gemInstanceController.Init(m_possibleGemPositions);
     }
 
-    public void PlaceFirstGem()
+    public void StartGemMinigame()
     {
-        ResetState();
-
-        m_gemBehaviour = StartCoroutine(GemBehaviour(false));
+        ResetGemMinigameState();
+        StartCoroutine(PlaceGemAfterDelay(m_startingMinigameDelay));
     }
 
-    private void ResetState()
+    private void ResetGemMinigameState()
     {
+        StopAllCoroutines();
         m_gemInstance.SetActive(false);
         m_currentGemIndex = 0;
         foreach (GameObject standGem in m_standGems)
@@ -70,8 +68,6 @@ public class BossFightGemManager : SingletonMonoBehaviour<BossFightGemManager>
 
     public void OnGemHasBeenDestroyed()
     {
-        StopCoroutine(m_gemBehaviour); 
-        m_gemBehaviour = null;
         m_gemInstance.SetActive(false);
 
         m_standGems[m_currentGemIndex].SetActive(true);
@@ -79,7 +75,7 @@ public class BossFightGemManager : SingletonMonoBehaviour<BossFightGemManager>
 
         if (m_currentGemIndex < m_standGems.Length)
         {
-            m_gemBehaviour = StartCoroutine(GemBehaviour(true));
+            StartCoroutine(PlaceGemAfterDelay(m_timeBetweenGems));
         }
         else
         {
@@ -87,36 +83,10 @@ public class BossFightGemManager : SingletonMonoBehaviour<BossFightGemManager>
         }
     }
 
-    private IEnumerator GemBehaviour(bool startingDelay)
+    private IEnumerator PlaceGemAfterDelay(float delay)
     {
-        if (startingDelay)
-        {
-            yield return new WaitForSeconds(m_timeBetweenGems);
-        }
-
+        yield return new WaitForSeconds(delay);
         m_gemInstance.SetActive(true);
-        Vector3 position;
-        
-        //Start by placing immediately the gem somewhere
-        position = RandomDifferentTeleportPosition(m_gemInstance.transform.position);
-        m_gemInstanceController.TeleportToPositionAfterTime(position, 0);
-
-        //Move the gem around at intervals
-        while (true)
-        {
-            yield return new WaitForSeconds(m_timeBetweenTeleports);
-            position = RandomDifferentTeleportPosition(m_gemInstance.transform.position);
-            m_gemInstanceController.TeleportToPositionAfterTime(position, m_timeInvisibleAfterTeleport);
-        }
-    }
-
-    private Vector3 RandomDifferentTeleportPosition(Vector3 position)
-    {
-        Vector3 randomPosition;
-        do
-        {
-            randomPosition = m_possibleGemPositions[Random.Range(0, m_possibleGemPositions.Length)].position;
-        } while (randomPosition == position);
-        return randomPosition;
+        m_gemInstanceController.StartMoving();
     }
 }
