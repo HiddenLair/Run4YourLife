@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.SceneManagement;
 
 namespace Run4YourLife.SceneManagement
@@ -8,30 +7,26 @@ namespace Run4YourLife.SceneManagement
     {
         private bool loadingScene = false;
 
-        public void ExecuteRequest(SceneTransitionRequestData data)
+        public AsyncOperation ExecuteRequest(SceneTransitionRequestData data)
         {
             if(data.loadScene && data.unloadScene)
             {
-                if(!loadingScene)
-                {
-                    StartCoroutine(LoadUnloadScene(data));
-                }
+                Debug.LogError("LOAD + UNLOAD");
             }
-            else if(data.loadScene)
+            else if(data.loadScene && !loadingScene)
             {
-                if(!loadingScene)
-                {
-                    LoadScene(data);
-                }
+                return LoadScene(data);
             }
             else if(data.unloadScene)
             {
-                UnloadScene(data);
+                return UnloadScene(data);
             }
             else
             {
                 Debug.LogError("Requesting a scene load, but did not specify a load nor unload");
             }
+
+            return null;
         }
         
         private AsyncOperation UnloadScene(SceneTransitionRequestData data)
@@ -44,32 +39,10 @@ namespace Run4YourLife.SceneManagement
             loadingScene = true;
 
             AsyncOperation loadSceneAsync = SceneManager.LoadSceneAsync(data.sceneName, data.loadSceneMode);
+            loadSceneAsync.allowSceneActivation = data.setLoadedSceneAsActiveScene;
             loadSceneAsync.completed += (op) => { loadingScene = false; };
 
             return loadSceneAsync;
-        }
-
-        private IEnumerator LoadUnloadScene(SceneTransitionRequestData data)
-        {
-            AsyncOperation unloadSceneAsync = UnloadScene(data);
-
-            AsyncOperation loadSceneAsync = LoadScene(data);
-            loadSceneAsync.allowSceneActivation = false;
-
-            while(!loadSceneAsync.isDone)
-            {
-                // loading bar progress
-                //_loadingProgress = Mathf.Clamp01(asyncScene.progress / 0.9f) * 100;
-
-                // scene has loaded as much as possible, the last 10% can't be multi-threaded
-                if(loadSceneAsync.progress >= 0.9f)
-                {
-                    yield return new WaitUntil(() => unloadSceneAsync.isDone);
-                    loadSceneAsync.allowSceneActivation = true;
-                }
-
-                yield return null;
-            }
         }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 namespace Run4YourLife.SceneManagement
 {
-    [System.Serializable]
+    [Serializable]
     public class SceneTransitionRequestData
     {
         public bool loadScene;
@@ -24,23 +24,29 @@ namespace Run4YourLife.SceneManagement
         }
 
         [SerializeField]
-        private SceneTransitionRequest.ExecutionEvent m_loadEvent = SceneTransitionRequest.ExecutionEvent.Custom;
+        private ExecutionEvent m_loadEvent = ExecutionEvent.Custom;
 
         [SerializeField]
         private SceneTransitionRequestData m_sceneLoadRequestData;
 
+        private AsyncOperation request;
+
         private void Start()
         {
-            if (m_loadEvent.Equals(ExecutionEvent.Start))
+            if(m_loadEvent.Equals(ExecutionEvent.Start))
             {
                 Execute();
             }
         }
 
-        public void Execute()
+        public AsyncOperation GetRequest()
         {
-            SceneTransitionManager.Instance.ExecuteRequest(m_sceneLoadRequestData);
+            return request;
         }
 
+        public void Execute()
+        {
+            request = SceneTransitionManager.Instance.ExecuteRequest(m_sceneLoadRequestData);
+        }
     }
 }
