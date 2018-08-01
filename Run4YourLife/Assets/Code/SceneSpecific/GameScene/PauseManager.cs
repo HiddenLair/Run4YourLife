@@ -53,6 +53,13 @@ namespace Run4YourLife.GameManagement
             }
         }
 
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            Time.timeScale = 1.0f;
+        }
+
         public void PauseGame()
         {
             Debug.Assert(m_pauseState == PauseState.UNPAUSED);
