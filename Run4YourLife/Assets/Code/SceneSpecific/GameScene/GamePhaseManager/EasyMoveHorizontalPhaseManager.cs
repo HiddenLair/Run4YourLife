@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using Cinemachine;
 
 using Run4YourLife.Player.Runner;
 using Run4YourLife.Player.Boss;
 using Run4YourLife.UI;
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.GameManagement
 {
@@ -16,6 +15,9 @@ namespace Run4YourLife.GameManagement
 
         [SerializeField]
         private CinemachineVirtualCamera m_virtualCamera;
+
+        [SerializeField]
+        private AudioClip m_phaseMusic;
 
         private PlayerSpawner m_playerSpawner;
 
@@ -74,6 +76,7 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugStartPhase()
         {
+            AudioManager.Instance.PlayMusic(m_phaseMusic);
             m_playerSpawner.ActivatePlayers();
             StartPhaseCommon();
         }

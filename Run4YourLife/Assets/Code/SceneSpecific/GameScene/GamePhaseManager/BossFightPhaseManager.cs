@@ -3,6 +3,7 @@ using Cinemachine;
 
 using Run4YourLife.Player.Runner;
 using Run4YourLife.Utils;
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.GameManagement
 {
@@ -21,6 +22,10 @@ namespace Run4YourLife.GameManagement
 
         [SerializeField]
         private Transform[] m_runnerSpawns;
+
+        [SerializeField]
+        private AudioClip m_phaseMusic;
+
 
         #endregion
 
@@ -86,6 +91,8 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugStartPhase()
         {
+            AudioManager.Instance.PlayMusic(m_phaseMusic);
+
             m_playerSpawner.ActivateBoss();
             m_playerSpawner.ActivatePlayers();
             m_virtualCamera.transform.position = m_bossFightStartingCameraPositionDebug.position;

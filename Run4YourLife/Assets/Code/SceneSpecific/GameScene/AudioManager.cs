@@ -13,6 +13,8 @@ namespace Run4YourLife.GameManagement.AudioManagement
         [SerializeField]
         private AudioSource m_musicAudioSource;
 
+        private Coroutine m_fadeOutAndPlayMusicCoroutine;
+
         public void PlaySFX(AudioClip audioClip)
         {
             if (audioClip == null)
@@ -24,6 +26,11 @@ namespace Run4YourLife.GameManagement.AudioManagement
 
         public void PlayMusic(AudioClip audioClip)
         {
+            if (m_fadeOutAndPlayMusicCoroutine != null)
+            {
+                ResetFadeOutAndPlayMusicState();
+            }
+
             if (m_musicAudioSource.clip != audioClip)
             {
                 m_musicAudioSource.Stop();
@@ -31,6 +38,38 @@ namespace Run4YourLife.GameManagement.AudioManagement
                 m_musicAudioSource.loop = true;
                 m_musicAudioSource.Play();
             }
+        }
+
+        public void PlayMusicAfterFadeOut(AudioClip audioClip, float fadeOutDuration)
+        {
+            if (m_fadeOutAndPlayMusicCoroutine != null)
+            {
+                ResetFadeOutAndPlayMusicState();
+            }
+
+            m_fadeOutAndPlayMusicCoroutine = StartCoroutine(FadeOutAndPlayMusicBehaviour(audioClip, fadeOutDuration));
+        }
+
+        private void ResetFadeOutAndPlayMusicState()
+        {
+            StopCoroutine(m_fadeOutAndPlayMusicCoroutine);
+            m_fadeOutAndPlayMusicCoroutine = null;
+            m_musicAudioSource.volume = 1;
+        }
+
+        private IEnumerator FadeOutAndPlayMusicBehaviour(AudioClip audioClip, float fadeOutDuration)
+        {
+            float startVolume = m_musicAudioSource.volume;
+
+            while (m_musicAudioSource.volume > 0)
+            {
+                m_musicAudioSource.volume -= startVolume * Time.deltaTime / fadeOutDuration;
+                yield return null;
+            }
+
+            m_musicAudioSource.volume = startVolume;
+
+            PlayMusic(audioClip);
         }
 
         public void PauseMusic()

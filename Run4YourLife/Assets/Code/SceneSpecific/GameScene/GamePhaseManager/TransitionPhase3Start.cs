@@ -1,8 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.Playables;
+
 using Cinemachine;
+
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.GameManagement
 {
@@ -25,6 +29,12 @@ namespace Run4YourLife.GameManagement
         [SerializeField]
         private Vector3 offsetFromPortal = new Vector3(0, -0.5f, 0);
 
+        [SerializeField]
+        private AudioClip m_phaseMusic;
+
+        [SerializeField]
+        private float m_musicFadeOutDuration;
+
         private Coroutine m_startPhaseCoroutine;
         private PlayerSpawner m_playerSpawner;
 
@@ -42,6 +52,8 @@ namespace Run4YourLife.GameManagement
 
         private IEnumerator StartPhaseCoroutine()
         {
+            AudioManager.Instance.PlayMusicAfterFadeOut(m_phaseMusic, m_musicFadeOutDuration);
+
             CameraManager.Instance.TransitionToCamera(m_virtualCamera);
 
             StartCutSceneRunners();
@@ -50,7 +62,7 @@ namespace Run4YourLife.GameManagement
 
             EndCutSceneRunners();
             StartCutSceneBoss();
-            
+
             yield return new WaitUntil(() => m_BossCutscene.state != PlayState.Playing); // wait until cutscene has completed
 
             EndCutSceneBoss();
