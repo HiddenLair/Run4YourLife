@@ -51,7 +51,7 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
 
         public void OnMove(AxisEventData eventData)
         {
-            switch(eventData.moveDir)
+            switch (eventData.moveDir)
             {
                 case MoveDirection.Right:
                     m_rightArrowPlayableDirector.Play();
@@ -62,6 +62,7 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
                     OnArrowEvent(MoveEvent.Left);
                     break;
             }
+            AudioManager.Instance.PlaySFX(m_switchClip);
         }
 
         public virtual void OnSelect(BaseEventData eventData)
