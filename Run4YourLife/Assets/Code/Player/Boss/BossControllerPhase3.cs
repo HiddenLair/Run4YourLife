@@ -34,6 +34,7 @@ namespace Run4YourLife.Player
 
             Vector3 director = (m_crossHairControl.Position - m_shotSpawn.position).normalized;
             Quaternion rotation = Quaternion.FromToRotation(Vector3.forward, director);
+            rotation.z = 0;
             GameObject laserInstance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(m_laserPrefab, m_shotSpawn.position, rotation, true);
             laserInstance.GetComponent<SimulateChildOf>().Parent = m_shotSpawn;
 

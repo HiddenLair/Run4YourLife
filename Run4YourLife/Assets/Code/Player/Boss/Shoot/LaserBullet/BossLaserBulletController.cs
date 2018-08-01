@@ -12,9 +12,6 @@ namespace Run4YourLife.Player.Boss
         private float m_chargeDuration;
 
         [SerializeField]
-        private float m_laserDuration;
-
-        [SerializeField]
         private float m_maxLaserDistance;
 
         [SerializeField]
@@ -26,6 +23,9 @@ namespace Run4YourLife.Player.Boss
 
         [SerializeField]
         private FXReceiver m_laserReceiver;
+
+        [SerializeField]
+        private GameObject collisionParticle;
 
         private void OnEnable()
         {
@@ -40,15 +40,12 @@ namespace Run4YourLife.Player.Boss
 
         private void ResetState()
         {
-            m_chargeLaserReceiver.transform.GetChild(0).gameObject.SetActive(false);
-            m_laserReceiver.transform.GetChild(0).gameObject.SetActive(false);
         }
 
         private IEnumerator LaserBehaviour()
         {
             // Charge Laser
             m_chargeLaserReceiver.PlayFx(true);
-            m_chargeLaserReceiver.transform.GetChild(0).gameObject.SetActive(true);
             yield return new WaitForSeconds(m_chargeDuration);
 
             // Fire Laser
@@ -58,8 +55,12 @@ namespace Run4YourLife.Player.Boss
             Vector3 center = transform.position + transform.forward * laserDistance / 2f;
             Vector3 halfExtents = new Vector3(m_laserCollisionWidth / 2f, m_laserCollisionWidth / 2f, laserDistance / 2f);
 
-            m_laserReceiver.transform.GetChild(0).gameObject.SetActive(true);
-            m_laserReceiver.PlayFx(true);
+            GameObject laser = m_laserReceiver.PlayFx(true);
+            laser.GetComponent<ParticleScaler>().SetScale(new Vector3(laserDistance, m_laserCollisionWidth,1));
+            if (laserEnd != transform.position + transform.forward * m_maxLaserDistance)
+            {
+                FXManager.Instance.InstantiateFromValues(laserEnd,transform.rotation, collisionParticle);
+            }
 
             // Check for players to kill
             Collider[] runnersHit = Physics.OverlapBox(center, halfExtents, transform.rotation, Layers.Runner, QueryTriggerInteraction.Ignore);
@@ -73,9 +74,6 @@ namespace Run4YourLife.Player.Boss
                 }
             }
 
-            yield return new WaitForSeconds(m_laserDuration);
-            m_chargeLaserReceiver.transform.GetChild(0).gameObject.SetActive(false);
-            m_laserReceiver.transform.GetChild(0).gameObject.SetActive(false);
             gameObject.SetActive(false);
         }
 
