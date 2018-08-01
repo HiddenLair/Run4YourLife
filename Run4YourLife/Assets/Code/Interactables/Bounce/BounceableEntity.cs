@@ -59,9 +59,7 @@ namespace Run4YourLife.Interactables
 
         public override Vector3 GetStartingBouncePosition(RunnerController runnerCharacterController)
         {
-            Vector3 startingBouncePosition = runnerCharacterController.transform.position;
-            startingBouncePosition.y = m_collider.bounds.max.y;
-            return startingBouncePosition;
+            return runnerCharacterController.transform.position;
         }
     }
 }
