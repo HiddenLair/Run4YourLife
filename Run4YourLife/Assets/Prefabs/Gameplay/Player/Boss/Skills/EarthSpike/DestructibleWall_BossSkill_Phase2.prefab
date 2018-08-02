@@ -37,6 +37,7 @@ GameObject:
   - component: {fileID: 54073771859843826}
   - component: {fileID: 65834704821620746}
   - component: {fileID: 114114631040832786}
+  - component: {fileID: 114696219055174526}
   m_Layer: 9
   m_Name: DestructibleWall_BossSkill_Phase2
   m_TagString: Wall
@@ -231,6 +232,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_receiver: {fileID: 114699948722508940}
   m_destroyClip: {fileID: 8300000, guid: cd67734886631124987345b869fa66d9, type: 3}
+--- !u!114 &114696219055174526
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1705394957324018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70e9cb7816bdb52449dd2c5e895235d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_parent: {fileID: 0}
+  m_simulatePosition: 1
+  m_simualteRotation: 1
+  onParentDisabled:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114699948722508940
 MonoBehaviour:
   m_ObjectHideFlags: 1

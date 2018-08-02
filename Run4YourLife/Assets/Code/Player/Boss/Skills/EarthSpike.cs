@@ -38,6 +38,13 @@ namespace Run4YourLife.Player
         [SerializeField]
         private GameObject m_breakableWallPrefab;
 
+        private SimulateChildOf simulatedParent;
+
+        private void Awake()
+        {
+            simulatedParent = GetComponent<SimulateChildOf>();
+        }
+
         public override bool CheckAndRepositionSkillSpawn(ref SkillSpawnData skillSpawnData)
         {
             Collider[] stageElements;
@@ -210,7 +217,7 @@ namespace Run4YourLife.Player
             if (phase != SkillBase.Phase.PHASE1)
             {
                 GameObject instance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(m_breakableWallPrefab, transform.position, Quaternion.identity, true);
-                instance.transform.SetParent(transform.parent);
+                instance.GetComponent<SimulateChildOf>().Parent = simulatedParent.Parent;
             }
         }
 

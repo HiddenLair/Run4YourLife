@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SimulateChildOf : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class SimulateChildOf : MonoBehaviour
 
     [SerializeField]
     private bool m_simualteRotation = true;
+
+    [SerializeField]
+    public UnityEvent onParentDisabled;
 
     private Vector3 m_previousPosition;
     private Quaternion m_previousRotation;
@@ -46,6 +50,13 @@ public class SimulateChildOf : MonoBehaviour
     {
         if (m_parent != null)
         {
+            if (!m_parent.gameObject.activeSelf)
+            {
+                onParentDisabled.Invoke();
+                m_parent = null;
+                return;
+            }
+
             if (m_simulatePosition)
             {
                 Vector3 positionDelta = m_parent.position - m_previousPosition;
