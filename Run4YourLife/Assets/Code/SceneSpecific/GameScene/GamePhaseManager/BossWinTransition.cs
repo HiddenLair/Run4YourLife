@@ -37,6 +37,7 @@ namespace Run4YourLife.GameManagement
         {
             GameObject boss = GameplayPlayerManager.Instance.Boss;
             List<GameObject> ghosts = GameplayPlayerManager.Instance.Ghosts;
+            GameplayPlayerManager.Instance.SetEventsToListen(false);
 
             foreach (GameObject ghost in ghosts)
             {

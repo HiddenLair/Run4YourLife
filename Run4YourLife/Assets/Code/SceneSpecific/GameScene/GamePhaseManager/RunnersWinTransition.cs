@@ -100,6 +100,8 @@ namespace Run4YourLife.GameManagement
         {
             cutSceneNumber = 0;
 
+            GameplayPlayerManager.Instance.SetEventsToListen(false);
+
             //Now, we deactivate all, and start cinemachine
             foreach (GameObject runner in runners)
             {
@@ -114,6 +116,7 @@ namespace Run4YourLife.GameManagement
 
         private void EndRunnersPositioningCutScene()
         {
+            GameplayPlayerManager.Instance.SetEventsToListen(true);
             m_positioningCutscene.Stop();
             Unbind(m_positioningCutscene);
         }

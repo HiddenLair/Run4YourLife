@@ -57,6 +57,7 @@ namespace Run4YourLife.GameManagement
 
         private void StartEndCutScene(List<GameObject> runners)
         {
+            GameplayPlayerManager.Instance.SetEventsToListen(false);
 
             foreach (GameObject runner in runners)
             {
@@ -71,6 +72,8 @@ namespace Run4YourLife.GameManagement
 
         private void EndCutScene(List<GameObject> runners)
         {
+            GameplayPlayerManager.Instance.SetEventsToListen(true);
+
             m_endCutScene.Stop();
             Unbind(m_endCutScene);
             foreach (GameObject runner in runners)

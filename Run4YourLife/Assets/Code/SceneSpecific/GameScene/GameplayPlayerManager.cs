@@ -70,6 +70,8 @@ namespace Run4YourLife.GameManagement
         private IGameplayEvents m_gameplayEvents;
         private FirstKillManager m_firstKillManager;
 
+        private bool listeningToEvents = true;
+
         #endregion
 
         #region Initialize
@@ -193,6 +195,11 @@ namespace Run4YourLife.GameManagement
 
         public void OnRunnerDeath(PlayerHandle playerHandle, Vector3 position)
         {
+            if (!listeningToEvents)
+            {
+                return;
+            }
+
             DeactivateRunner(playerHandle);
             ActivateRunnerGhost(playerHandle, position);
 
@@ -222,12 +229,20 @@ namespace Run4YourLife.GameManagement
 
         public GameObject OnRunnerRevive(PlayerHandle playerHandle, Vector3 position)
         {
+            if (!listeningToEvents)
+            {
+                return null;
+            }
             DeactivateGhost(playerHandle);
             return ActivateRunner(playerHandle, position, true);
         }
 
         public GameObject OnRunnerActivate(PlayerHandle playerHandle, Vector3 position)
         {
+            if (!listeningToEvents)
+            {
+                return null;
+            }
             DeactivateGhost(playerHandle);
             return ActivateRunner(playerHandle, position, false);
         }
@@ -281,6 +296,11 @@ namespace Run4YourLife.GameManagement
             GameObject ghost = m_ghostGameObject[playerHandle];
             m_ghostsAlive.Remove(ghost);
             ghost.SetActive(false);
+        }
+
+        public void SetEventsToListen(bool value)
+        {
+            listeningToEvents = value;
         }
 
         private GameObject GetBossForPhase(GamePhase gamePhase)
