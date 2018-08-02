@@ -22,7 +22,7 @@ namespace Run4YourLife.UI
             }
         }
 
-        public void Reset()
+        public void ResetInitial()
         {
             foreach(Image image in images)
             {

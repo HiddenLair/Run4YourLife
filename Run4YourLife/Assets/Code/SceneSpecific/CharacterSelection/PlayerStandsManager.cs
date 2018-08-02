@@ -281,11 +281,11 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         private void UpdatePlayerFacesGameReady()
         {
-            bossFace.Reset();
+            bossFace.ResetInitial();
 
             foreach(SwapImages runnerFace in runnerFaces)
             {
-                runnerFace.Reset();
+                runnerFace.ResetInitial();
             }
 
             uint currentRunnerIndex = 0;
@@ -422,6 +422,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             }
 
             playerSelectionDone[playerHandle] = true;
+            playerCell.GetComponentInChildren<SwapImages>().Swap();
 
             UpdateGameReady();
 
@@ -441,6 +442,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             }
 
             playerSelectionDone[playerHandle] = false;
+            playersCurrentCell[playerHandle].GetComponentInChildren<SwapImages>().Swap();
 
             UpdateGameReady();
 
