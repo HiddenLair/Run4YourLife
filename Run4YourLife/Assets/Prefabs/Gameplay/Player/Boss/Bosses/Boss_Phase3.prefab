@@ -825,6 +825,8 @@ GameObject:
   - component: {fileID: 95395369194825998}
   - component: {fileID: 65748660475380346}
   - component: {fileID: 65196135858415902}
+  - component: {fileID: 114270703803720966}
+  - component: {fileID: 114447732724832884}
   m_Layer: 11
   m_Name: R4YL_CHAR_BOSS
   m_TagString: BossRockScore
@@ -3044,6 +3046,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67862ff6a22191f4bad73a5704bd6977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114270703803720966
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1614667946386488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a0a1607dcc639248859209c25a0788c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114365934285163218
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3078,6 +3091,20 @@ MonoBehaviour:
     amount: 1
   - prefab: {fileID: 1110396084154354, guid: 045121e5642c5d844b10139b6ef8b6d6, type: 2}
     amount: 1
+--- !u!114 &114447732724832884
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1614667946386488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9c9993ee9f90894caee57c5b1e373cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minIntensity: 0.25
+  maxIntensity: 1.5
+  pulseSpeed: 0.5
 --- !u!114 &114481992341649112
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3140,7 +3167,7 @@ MonoBehaviour:
   m_path: {fileID: 0}
   m_positionUnits: 1
   m_speed: 3
-  m_acceleration: 0
+  m_acceleration: 0.025
   m_position: 0
   bossStatsPathModifiers:
   - waypointIndex: 5
@@ -3164,8 +3191,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53826f760bdb8524ea6e0c774079b415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_meleeCooldown: 1
-  m_shootCooldown: 4
+  m_meleeCooldown: 8
+  m_shootCooldown: 10
   m_normalizedTimeToSpawnTrap: 0.2
   m_lightningSkill: {fileID: 114577542301879746, guid: 9d238db45ef3b59419750ebbf3084a66,
     type: 2}
