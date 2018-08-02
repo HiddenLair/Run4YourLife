@@ -50,7 +50,7 @@ public class SimulateChildOf : MonoBehaviour
     {
         if (m_parent != null)
         {
-            if (!m_parent.gameObject.activeSelf)
+            if (!m_parent.gameObject.activeInHierarchy)
             {
                 onParentDisabled.Invoke();
                 m_parent = null;
