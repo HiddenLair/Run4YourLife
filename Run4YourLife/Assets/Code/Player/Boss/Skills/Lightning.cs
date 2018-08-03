@@ -22,7 +22,7 @@ namespace Run4YourLife.Player {
         private float delayHit;
 
         [SerializeField]
-        private GameObject flashEffect;
+        private GameObject cloudEffect;
 
         [SerializeField]
         private GameObject lighningEffect;
@@ -81,7 +81,7 @@ namespace Run4YourLife.Player {
             Vector3 position = transform.position;
             position.y = CameraConverter.ViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, new Vector2(0,0)).y;
             transform.position = position;
-            StartCoroutine(Flash());
+            StartCoroutine(Cloud());
             if (phase == SkillBase.Phase.PHASE3)
             {
                 StartCoroutine(StartNewLeftLightning(1,transform.position));
@@ -89,20 +89,30 @@ namespace Run4YourLife.Player {
             }
         }
 
-        IEnumerator Flash()
+        IEnumerator Cloud()
         {
-            Transform flashBody = flashEffect.transform;
+            Transform flashBody = cloudEffect.transform;
             Vector3 newSize = Vector3.one;
-            newSize.x = newSize.z = width;
             
             float topScreen = CameraConverter.ViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, new Vector2(0,1)).y;
-            newSize.y = (topScreen - transform.position.y);// / 2;
-            //flashBody.localScale = newSize;
-            flashBody.localPosition = new Vector3(0, newSize.y - 0.5f, -1);
-            flashEffect.SetActive(true);
+            float yPos = (topScreen - transform.position.y)-cloudEffect.GetComponent<Renderer>().bounds.extents.y;// / 2;
+            flashBody.localPosition = new Vector3(0, yPos, -1);
+            cloudEffect.SetActive(true);
+            StartCoroutine(HoldCloudTop());
             yield return lightningDelay;
-            //flashEffect.SetActive(false);
+
             LightningHit();
+        }
+
+        IEnumerator HoldCloudTop()
+        {
+            while (true)
+            {
+                float topScreen = CameraConverter.ViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, new Vector2(0, 1)).y;
+                float yPos = (topScreen - transform.position.y) - cloudEffect.GetComponent<Renderer>().bounds.extents.y;// / 2;
+                cloudEffect.transform.localPosition = new Vector3(0, yPos, -1);
+                yield return null;
+            }
         }
 
         private void LightningHit()
@@ -110,10 +120,10 @@ namespace Run4YourLife.Player {
             AudioManager.Instance.PlaySFX(m_skillTriggerClip);
             TrembleManager.Instance.Tremble(trembleConfig);
             Camera mainCamera = CameraManager.Instance.MainCamera;
-            Vector3 pos = Vector3.zero;
-
+            Vector3 pos = Vector3.zero;            
             
-            pos.y = CameraConverter.ViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, new Vector2(0,1)).y;
+            float topScreen = CameraConverter.ViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, new Vector2(0, 1)).y;
+            pos.y = topScreen - transform.position.y;
             lighningEffect.transform.localPosition = pos;
 
             LayerMask finalMask = Layers.Runner | Layers.Stage;
@@ -139,6 +149,7 @@ namespace Run4YourLife.Player {
             }
 
             lighningEffect.SetActive(true);
+            lighningEffect.GetComponent<ParticleScaler>().SetXScale(width);
             ParticleSystem[] lightning = lighningEffect.GetComponentsInChildren<ParticleSystem>();
             StartCoroutine(WaitForParticleSystems(lightning,lighningEffect));
         }
