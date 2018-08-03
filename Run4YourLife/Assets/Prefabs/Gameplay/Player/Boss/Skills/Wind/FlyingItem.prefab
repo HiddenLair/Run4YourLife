@@ -50,7 +50,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4643907908580858}
   - component: {fileID: 95118498789653144}
-  - component: {fileID: 114773036398313114}
   m_Layer: 0
   m_Name: R4YL_PROP_chicken
   m_TagString: Untagged
@@ -114,6 +113,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4603892315292084}
   - component: {fileID: 137226465927693720}
+  - component: {fileID: 114363137865550972}
   m_Layer: 0
   m_Name: R4YL_PROP_chicken1
   m_TagString: Untagged
@@ -219,7 +219,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1495642661319978}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 251.86072, y: 1.05, z: 0.014886856}
+  m_LocalPosition: {x: 116.094666, y: 6.532111, z: -9.125249}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4667275860195400}
@@ -397,6 +397,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114363137865550972
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1554177116950916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74e3a222d74efeb4a8ec46b95736f2a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_gameObjectToDisable: {fileID: 1495642661319978}
 --- !u!114 &114763986435997398
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -409,18 +421,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_velocity: {x: -5, y: 0, z: 0}
---- !u!114 &114773036398313114
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1209117123095022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74e3a222d74efeb4a8ec46b95736f2a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_gameObjectToDisable: {fileID: 1495642661319978}
 --- !u!114 &114910945530261302
 MonoBehaviour:
   m_ObjectHideFlags: 1
