@@ -7,6 +7,11 @@ namespace Run4YourLife.SceneManagement
     {
         private bool loadingScene = false;
 
+        public bool IsSceneLoaded(string sceneName)
+        {
+            return SceneManager.GetSceneByName(sceneName).IsValid();
+        }
+
         public AsyncOperation ExecuteRequest(SceneTransitionRequestData data)
         {
             if(data.loadScene && data.unloadScene)

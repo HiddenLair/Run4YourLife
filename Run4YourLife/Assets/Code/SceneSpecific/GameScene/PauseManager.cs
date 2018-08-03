@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
 
 using Run4YourLife.SceneManagement;
 using Run4YourLife.InputManagement;
@@ -40,13 +38,22 @@ namespace Run4YourLife.GameManagement
 
         private void Update()
         {
-            if (m_playersGameControlScheme.Pause.Started())
+            if(m_playersGameControlScheme.Pause.Started())
             {
-                if (m_pauseState == PauseState.UNPAUSED)
+                if(m_pauseState == PauseState.UNPAUSED)
                 {
                     PauseGame();
                 }
-                else
+
+                /*
+
+                Input is always checked
+                PauseManager can request OptionsMenu to be loaded in additive mode
+                If pauseState is paused and OptionsMenu has been loaded, pauseState cannot change
+
+                */
+
+                else if(!SceneTransitionManager.Instance.IsSceneLoaded("OptionsMenu"))
                 {
                     ResumeGame();
                 }
@@ -56,7 +63,6 @@ namespace Run4YourLife.GameManagement
         protected override void OnDestroy()
         {
             base.OnDestroy();
-
             Time.timeScale = 1.0f;
         }
 
@@ -64,19 +70,18 @@ namespace Run4YourLife.GameManagement
         {
             Debug.Assert(m_pauseState == PauseState.UNPAUSED);
             m_pauseState = PauseState.PAUSED;
-            Time.timeScale = 0;
+            Time.timeScale = 0.0f;
             m_pauseSceneLoader.Execute();
             CameraManager.Instance.CinemachineBrain.enabled = false;
             AudioManager.Instance.PlaySFX(m_pauseGameAudioClip);
             AudioManager.Instance.PauseMusic();
 
-
-            foreach (GameObject runner in GameplayPlayerManager.Instance.RunnersAlive)
+            foreach(GameObject runner in GameplayPlayerManager.Instance.RunnersAlive)
             {
                 runner.SetActive(false);
             }
 
-            foreach (GameObject ghost in GameplayPlayerManager.Instance.GhostsAlive)
+            foreach(GameObject ghost in GameplayPlayerManager.Instance.GhostsAlive)
             {
                 ghost.SetActive(false);
             }
@@ -86,19 +91,18 @@ namespace Run4YourLife.GameManagement
         {
             Debug.Assert(m_pauseState == PauseState.PAUSED);
             m_pauseState = PauseState.UNPAUSED;
-            Time.timeScale = 1;
+            Time.timeScale = 1.0f;
             m_pauseSceneUnloader.Execute();
             CameraManager.Instance.CinemachineBrain.enabled = true;
             AudioManager.Instance.PlaySFX(m_resumeGameAudioClip);
             AudioManager.Instance.UnPauseMusic();
 
-
-            foreach (GameObject runner in GameplayPlayerManager.Instance.RunnersAlive)
+            foreach(GameObject runner in GameplayPlayerManager.Instance.RunnersAlive)
             {
                 runner.SetActive(true);
             }
 
-            foreach (GameObject ghost in GameplayPlayerManager.Instance.GhostsAlive)
+            foreach(GameObject ghost in GameplayPlayerManager.Instance.GhostsAlive)
             {
                 ghost.SetActive(true);
             }
