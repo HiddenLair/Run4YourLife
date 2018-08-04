@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.Playables;
 using Run4YourLife.Player;
+using System;
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.GameManagement
 {
@@ -25,10 +27,12 @@ namespace Run4YourLife.GameManagement
             {
                 mono.enabled = true;
             }
+
+            // For some reason if we don't do this, the character is teleported or we lose control over it
             Animator anim = g.GetComponent<Animator>();
-            Avatar temp = anim.avatar;
+            Avatar avatar = anim.avatar;
             anim.avatar = null;
-            anim.avatar = temp;
+            anim.avatar = avatar;
         }
 
         protected void BindTimelineTracks(PlayableDirector director, List<GameObject> runners, GameObject boss)
@@ -55,6 +59,10 @@ namespace Run4YourLife.GameManagement
                         }
                     }
                 }
+                else if (itm.streamName.Contains("Audio"))
+                {
+                    SetTrackBindingsAudio(director, itm);
+                }
                 else if (itm.streamName.Contains("Move"))
                 {
                     SetTrackBindingByTransform(director, itm, runners, boss);
@@ -63,6 +71,18 @@ namespace Run4YourLife.GameManagement
                 {
                     SentTrackBindingByObject(director, itm, runners, boss);
                 }
+            }
+        }
+
+        private void SetTrackBindingsAudio(PlayableDirector director, PlayableBinding itm)
+        {
+            if (itm.streamName.Contains("Music"))
+            {
+                director.SetGenericBinding(itm.sourceObject, AudioManager.Instance.MusicAudioSource);
+            }
+            else if (itm.streamName.Contains("SFX"))
+            {
+                director.SetGenericBinding(itm.sourceObject, AudioManager.Instance.SFXAudioSource);
             }
         }
 
@@ -110,7 +130,7 @@ namespace Run4YourLife.GameManagement
         {
             if (itm.streamName.Contains("Player1") && runners.Count > 0)
             {
-                if(runners[0].CompareTag(Tags.Ghost))
+                if (runners[0].CompareTag(Tags.Ghost))
                 {
                     return true;
                 }

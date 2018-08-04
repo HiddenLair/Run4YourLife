@@ -15,6 +15,12 @@ namespace Run4YourLife.GameManagement.AudioManagement
 
         private Coroutine m_fadeOutAndPlayMusicCoroutine;
 
+        /// Do not play using this. It is used only for retrieving the references in the cinematics.
+        public AudioSource MusicAudioSource { get { return m_musicAudioSource; } }
+
+        /// Do not play using this. It is used only for retrieving the references in the cinematics.
+        public AudioSource SFXAudioSource { get { return m_sfxAudioSource; } }
+
         public void PlaySFX(AudioClip audioClip)
         {
             if (audioClip == null)
