@@ -18,6 +18,7 @@ MonoBehaviour:
   - {fileID: 114838815021297732}
   - {fileID: 114198486794227326}
   - {fileID: 114269963924273758}
+  - {fileID: 114815674502096440}
   m_FixedDuration: 0
   m_EditorSettings:
     m_Framerate: 60
@@ -158,7 +159,7 @@ MonoBehaviour:
     exposedName: 
     defaultValue: {fileID: 0}
   endLocation:
-    exposedName: 1.96892E+38
+    exposedName: 7.816016E+37
     defaultValue: {fileID: 0}
 --- !u!114 &114082811464917560
 MonoBehaviour:
@@ -547,6 +548,34 @@ MonoBehaviour:
   m_Children:
   - {fileID: 114817049722141682}
   m_Clips: []
+--- !u!114 &114281929336691006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1977359656, guid: 6a10b2909283487f913b00d94cd3faf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Clip: {fileID: 8300000, guid: 8875201bacf86b245bd467befb445838, type: 3}
+  m_Loop: 0
+  m_bufferingTime: 0.1
+--- !u!114 &114378163925061544
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1977359656, guid: 6a10b2909283487f913b00d94cd3faf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Clip: {fileID: 8300000, guid: 7ae24c7294605e34991a7fdab2ec4919, type: 3}
+  m_Loop: 0
+  m_bufferingTime: 0.1
 --- !u!114 &114390514416751446
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -579,8 +608,148 @@ MonoBehaviour:
     exposedName: 
     defaultValue: {fileID: 0}
   endLocation:
-    exposedName: -3.17533E+38
+    exposedName: 6.110128E+37
     defaultValue: {fileID: 0}
+--- !u!114 &114391222014716168
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1544527758, guid: 6a10b2909283487f913b00d94cd3faf5, type: 3}
+  m_Name: Track Sub-Group
+  m_EditorClassIdentifier: 
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_AnimClip: {fileID: 0}
+  m_Parent: {fileID: 114198486794227326}
+  m_Children: []
+  m_Clips: []
+--- !u!114 &114412879316927640
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -2113462093, guid: 6a10b2909283487f913b00d94cd3faf5, type: 3}
+  m_Name: AudioSFX
+  m_EditorClassIdentifier: 
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_AnimClip: {fileID: 0}
+  m_Parent: {fileID: 114815674502096440}
+  m_Children: []
+  m_Clips:
+  - m_Start: 0
+    m_ClipIn: 0
+    m_Asset: {fileID: 114378163925061544}
+    m_UnderlyingAsset: {fileID: 8300000, guid: 7ae24c7294605e34991a7fdab2ec4919, type: 3}
+    m_Duration: 2
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: 114412879316927640}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: -1
+    m_BlendOutDuration: 0.16666666666666674
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: Ancient_Game_Magic_Soft_Buff_Hit_Spell_2_Howl
+    m_Version: 1
+  - m_Start: 1.8333333333333333
+    m_ClipIn: 0
+    m_Asset: {fileID: 114281929336691006}
+    m_UnderlyingAsset: {fileID: 8300000, guid: 8875201bacf86b245bd467befb445838, type: 3}
+    m_Duration: 2.708333333333334
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: 114412879316927640}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: 0.16666666666666674
+    m_BlendOutDuration: -1
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: Boss_Laugh
+    m_Version: 1
 --- !u!114 &114436977835886410
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -762,7 +931,7 @@ MonoBehaviour:
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
     m_BlendInDuration: -1
-    m_BlendOutDuration: -1
+    m_BlendOutDuration: 0.16666666666666674
     m_MixInCurve:
       serializedVersion: 2
       m_Curve:
@@ -810,16 +979,16 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: eat_souls
     m_Version: 1
-  - m_Start: 2
+  - m_Start: 1.8333333333333333
     m_ClipIn: 0
     m_Asset: {fileID: 114022196292279634}
     m_UnderlyingAsset: {fileID: 7400008, guid: 78cbea455c89ac44db5a308576511c83, type: 3}
-    m_Duration: 2.7083333333333335
+    m_Duration: 2.708333333333334
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114668329721248482}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
-    m_BlendInDuration: -1
+    m_BlendInDuration: 0.16666666666666674
     m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
@@ -887,7 +1056,7 @@ MonoBehaviour:
     exposedName: 
     defaultValue: {fileID: 0}
   endLocation:
-    exposedName: -2.607876E+38
+    exposedName: 1.513486E+38
     defaultValue: {fileID: 0}
 --- !u!114 &114806089830172288
 MonoBehaviour:
@@ -909,6 +1078,25 @@ MonoBehaviour:
   - {fileID: 114976227775721032}
   - {fileID: 114021401225990946}
   - {fileID: 114176967523715408}
+  m_Clips: []
+--- !u!114 &114815674502096440
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1544527758, guid: 6a10b2909283487f913b00d94cd3faf5, type: 3}
+  m_Name: Audio
+  m_EditorClassIdentifier: 
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_AnimClip: {fileID: 0}
+  m_Parent: {fileID: 11400000}
+  m_Children:
+  - {fileID: 114412879316927640}
   m_Clips: []
 --- !u!114 &114817049722141682
 MonoBehaviour:
