@@ -14,21 +14,16 @@ namespace Run4YourLife.SceneManagement
 
         public AsyncOperation ExecuteRequest(SceneTransitionRequestData data)
         {
-            if(data.loadScene && data.unloadScene)
+            if(data.loadScene)
             {
-                Debug.LogError("LOAD + UNLOAD");
-            }
-            else if(data.loadScene && !loadingScene)
-            {
-                return LoadScene(data);
-            }
-            else if(data.unloadScene)
-            {
-                return UnloadScene(data);
+                if(!loadingScene)
+                {
+                    return LoadScene(data);
+                }
             }
             else
             {
-                Debug.LogError("Requesting a scene load, but did not specify a load nor unload");
+                return UnloadScene(data);
             }
 
             return null;
@@ -36,7 +31,7 @@ namespace Run4YourLife.SceneManagement
         
         private AsyncOperation UnloadScene(SceneTransitionRequestData data)
         {
-            return SceneManager.UnloadSceneAsync(data.unloadedSceneName);
+            return SceneManager.UnloadSceneAsync(data.sceneName);
         }
 
         private AsyncOperation LoadScene(SceneTransitionRequestData data)

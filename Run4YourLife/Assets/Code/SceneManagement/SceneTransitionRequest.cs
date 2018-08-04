@@ -7,12 +7,12 @@ namespace Run4YourLife.SceneManagement
     [Serializable]
     public class SceneTransitionRequestData
     {
-        public bool loadScene;
         public string sceneName;
+        public bool loadScene;
+        
+        [Header("If Load Scene")]
         public LoadSceneMode loadSceneMode;
         public bool setLoadedSceneAsActiveScene;
-        public bool unloadScene;
-        public string unloadedSceneName;
     }
 
     public class SceneTransitionRequest : MonoBehaviour
