@@ -11,7 +11,6 @@ public class BreakBossSkillOnPhysicInteraction : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        Debug.Log(collider.gameObject.name, collider.gameObject);
         CheckBossSkillBreakableAndSendBreakEvent(collider.gameObject);
     }
 
