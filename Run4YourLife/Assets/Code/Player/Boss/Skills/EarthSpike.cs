@@ -6,10 +6,12 @@ using UnityEngine;
 using Run4YourLife.CameraUtils;
 using Run4YourLife.GameManagement;
 using Run4YourLife.GameManagement.AudioManagement;
+using Run4YourLife.Interactables;
+using System.Linq;
 
 namespace Run4YourLife.Player
 {
-    public class EarthSpike : SkillBase
+    public class EarthSpike : SkillBase, IBossSkillBreakable
     {
         [SerializeField]
         private Vector3 m_spawnColliderBounds;
@@ -98,19 +100,23 @@ namespace Run4YourLife.Player
 
         private bool CrosshairInsideStageElements(Vector3 position, out Collider[] stageElements)
         {
-            stageElements = Physics.OverlapBox(position, new Vector3(0.1f, 0.1f, 0.1f), Quaternion.identity, Layers.Stage, QueryTriggerInteraction.Ignore);
+            Collider[] colliders = Physics.OverlapBox(position, new Vector3(0.1f, 0.1f, 0.1f), Quaternion.identity, Layers.Stage, QueryTriggerInteraction.Ignore);
+            stageElements = colliders.Where(x => !x.CompareTag(Tags.Wall)).ToArray();
+
             return stageElements.Length > 0;
         }
 
         private bool FindValidStageElementToSpawnAbove(Vector3 position, out RaycastHit validElement)
         {
             RaycastHit[] hits = Physics.RaycastAll(position, Vector3.down, Mathf.Infinity, Layers.Stage, QueryTriggerInteraction.Ignore);
-            if(hits.Length > 0)
+            hits = hits.Where(x => !x.collider.CompareTag(Tags.Wall)).ToArray();
+
+            if (hits.Length > 0)
             {
                 int min = 0;
                 for (int i = 1; i < hits.Length; i++)
                 {
-                    if(hits[i].distance < hits[min].distance)
+                    if (hits[i].distance < hits[min].distance)
                     {
                         min = i;
                     }
@@ -130,6 +136,8 @@ namespace Run4YourLife.Player
         {
             Vector3 halfBounds = m_spawnColliderBounds / 2f;
             Collider[] colliders = Physics.OverlapBox(position + new Vector3(0, halfBounds.y, 0), halfBounds * 0.9f, Quaternion.identity, Layers.Stage, QueryTriggerInteraction.Ignore);
+            colliders = colliders.Where(x => !x.CompareTag(Tags.Wall)).ToArray();
+
             if (colliders.Length > 0)
             {
                 bool leftPentrating = colliders[0].bounds.center.x <= position.x;
@@ -221,9 +229,16 @@ namespace Run4YourLife.Player
             }
         }
 
+        void IBossSkillBreakable.Break()
+        {
+            StopAllCoroutines();
+            gameObject.SetActive(false);
+        }
+
         private void OnDrawGizmosSelected()
         {
             Gizmos.DrawWireCube(transform.position + new Vector3(0, m_spawnColliderBounds.y / 2f), m_spawnColliderBounds);
         }
+
     }
 }

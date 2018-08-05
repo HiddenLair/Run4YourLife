@@ -1,14 +1,15 @@
 ﻿using System.Collections;
-using UnityEngine.EventSystems;
-using Run4YourLife.GameManagement.AudioManagement;
+
 using UnityEngine;
+
+using Run4YourLife.GameManagement.AudioManagement;
 using Run4YourLife.GameManagement;
+using Run4YourLife.Interactables;
 
 namespace Run4YourLife.Player.Runner
 {
-    public class Bomb : SkillBase
+    public class Bomb : SkillBase, IBossSkillBreakable
     {
-
         #region Inspector
 
         [SerializeField]
@@ -84,8 +85,6 @@ namespace Run4YourLife.Player.Runner
         private SimulateChildOf simulateChildOf;
         private float fatherInitialY;
 
-        private Fire[] fireScripts;
-
         #endregion
 
         private void Awake()
@@ -128,10 +127,6 @@ namespace Run4YourLife.Player.Runner
         {
             speed.y = initialSpeed;
             destroyOnLanding = false;
-            //foreach (Fire f in fireScripts)
-            //{
-            //    f.Stop();
-            //}
         }
 
         protected override void OnSkillStart()
@@ -139,7 +134,7 @@ namespace Run4YourLife.Player.Runner
             RaycastHit info;
             if (Physics.Raycast(transform.position, Vector3.down, out info, rayCheckerLenght, Layers.Stage))
             {
-                if (info.collider.CompareTag(Tags.Water) || info.collider.CompareTag(Tags.Wall))
+                if (info.collider.CompareTag(Tags.Water))
                 {
                     destroyOnLanding = true;
                 }
@@ -206,7 +201,6 @@ namespace Run4YourLife.Player.Runner
             }
             TrembleManager.Instance.Tremble(trembleFall);
             AudioManager.Instance.PlaySFX(m_trapfallClip);
-            //m_skillAudioSource.PlayOneShot(m_trapfallClip);
         }
 
         IEnumerator Fire()
@@ -270,7 +264,11 @@ namespace Run4YourLife.Player.Runner
             {
                 if (!Physics.Linecast(transform.position, c.bounds.center, Layers.Stage))
                 {
-                    ExecuteEvents.Execute<IRunnerEvents>(c.gameObject, null, (x, y) => x.Kill());
+                    IRunnerEvents runnerEvents = c.GetComponent<IRunnerEvents>();
+                    if (runnerEvents != null)
+                    {
+                        runnerEvents.Kill();
+                    }
                 }
             }
 
@@ -289,6 +287,15 @@ namespace Run4YourLife.Player.Runner
         private float HeightToVelocity(float height)
         {
             return Mathf.Sqrt(height * -2.0f * gravity);
+        }
+
+        void IBossSkillBreakable.Break()
+        {
+            Debug.Assert(gameObject.activeSelf);
+            if (gameObject.activeSelf)
+            {
+                Explode();
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.Interactables
 {
-    public class BreakableWallController : MonoBehaviour, IRunnerDashBreakable
+    public class BreakableWallController : MonoBehaviour, IRunnerDashBreakable, IBossSkillBreakable
     {
         [SerializeField]
         private FXReceiver m_receiver;

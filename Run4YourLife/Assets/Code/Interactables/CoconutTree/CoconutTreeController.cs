@@ -4,30 +4,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using Run4YourLife.Utils;
 
-public class CoconutTreeController : MonoBehaviour {
-
-    [SerializeField]
-    private float m_timeToReappear;
-
-    private CoconutController m_coconutController;
-
-    private void Awake()
+namespace Run4YourLife.Interactables
+{
+    public class CoconutTreeController : MonoBehaviour
     {
-        m_coconutController = GetComponentInChildren<CoconutController>();
-        Debug.Assert(m_coconutController != null);
-    }
 
-    public void OnRunnerTriggeredCoconutFall()
-    {
-        if(m_coconutController.Aviable)
+        [SerializeField]
+        private float m_timeToReappear;
+
+        private CoconutController m_coconutController;
+
+        private void Awake()
         {
-            m_coconutController.Fall();
-            StartCoroutine(YieldHelper.WaitForSeconds(() => ResetCoconut(), m_timeToReappear));
+            m_coconutController = GetComponentInChildren<CoconutController>();
+            Debug.Assert(m_coconutController != null);
         }
-    }
 
-    public void ResetCoconut()
-    {
-        m_coconutController.Reset();
+        public void OnRunnerTriggeredCoconutFall()
+        {
+            if (m_coconutController.Aviable)
+            {
+                m_coconutController.Fall();
+                StartCoroutine(YieldHelper.WaitForSeconds(() => ResetCoconut(), m_timeToReappear));
+            }
+        }
+
+        public void ResetCoconut()
+        {
+            m_coconutController.Reset();
+        }
     }
 }
