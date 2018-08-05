@@ -396,7 +396,7 @@ namespace Run4YourLife.Player.Runner
             }
             else if (m_characterController.isGrounded)
             {
-                if (m_runnerControlScheme.Move.ValueMaximized() != 0)
+                if (m_inputController.ValueMaximized(m_runnerControlScheme.Move) != 0)
                 {
                     m_dustParticleReceiver.PlayFx(false);
                     m_stateMachine.ChangeState(States.Move);
@@ -441,7 +441,7 @@ namespace Run4YourLife.Player.Runner
             {
                 m_stateMachine.ChangeState(States.CoyoteMove);
             }
-            else if (m_runnerControlScheme.Move.ValueMaximized() == 0 && m_velocity == Vector3.zero && idleTimer >= m_timeToIdle)
+            else if (m_inputController.ValueMaximized(m_runnerControlScheme.Move) == 0 && m_velocity == Vector3.zero && idleTimer >= m_timeToIdle)
             {
                 m_stateMachine.ChangeState(States.Idle);
             }
