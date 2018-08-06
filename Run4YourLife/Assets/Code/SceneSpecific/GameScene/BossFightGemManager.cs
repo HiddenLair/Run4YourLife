@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 using Run4YourLife.GameManagement;
+using Run4YourLife.SceneSpecific;
 using Run4YourLife.GameManagement.AudioManagement;
 using Run4YourLife.Utils;
 
@@ -22,7 +23,7 @@ public class BossFightGemManager : SingletonMonoBehaviour<BossFightGemManager>
     private Transform[] m_possibleGemPositions;
 
     [SerializeField]
-    private GameObject[] m_standGems;
+    private GemColumnController[] m_gemColumns;
 
     private GameObject m_gemInstance;
     private GemController m_gemInstanceController;
@@ -35,10 +36,9 @@ public class BossFightGemManager : SingletonMonoBehaviour<BossFightGemManager>
     private void Awake()
     {
         m_bossFightPhaseManager = GetComponent<BossFightPhaseManager>();
-
-        foreach (GameObject standGem in m_standGems)
+        foreach (GemColumnController column in m_gemColumns)
         {
-            standGem.SetActive(false);
+            column.DeactivateColumn();
         }
     }
 
@@ -60,9 +60,9 @@ public class BossFightGemManager : SingletonMonoBehaviour<BossFightGemManager>
         StopAllCoroutines();
         m_gemInstance.SetActive(false);
         m_currentGemIndex = 0;
-        foreach (GameObject standGem in m_standGems)
+        foreach (GemColumnController column in m_gemColumns)
         {
-            standGem.SetActive(false);
+            column.DeactivateColumn();
         }
     }
 
@@ -70,10 +70,10 @@ public class BossFightGemManager : SingletonMonoBehaviour<BossFightGemManager>
     {
         m_gemInstance.SetActive(false);
 
-        m_standGems[m_currentGemIndex].SetActive(true);
+        m_gemColumns[m_currentGemIndex].ActivateColumn();
         m_currentGemIndex++;
 
-        if (m_currentGemIndex < m_standGems.Length)
+        if (m_currentGemIndex < m_gemColumns.Length)
         {
             StartCoroutine(PlaceGemAfterDelay(m_timeBetweenGems));
         }
