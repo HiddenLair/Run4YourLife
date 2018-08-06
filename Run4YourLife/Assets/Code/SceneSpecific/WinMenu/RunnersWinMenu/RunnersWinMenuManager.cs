@@ -13,12 +13,6 @@ namespace Run4YourLife.SceneSpecific.WinMenu
         [SerializeField]
         private GameObject[] spawnPoints;
 
-        [SerializeField]
-        private float winnerScale = 5.0f;
-
-        [SerializeField]
-        private float othersScale = 3.0f;
-
         private RunnerPrefabManager runnerPrefabManager;
 
         void Awake()
@@ -68,10 +62,6 @@ namespace Run4YourLife.SceneSpecific.WinMenu
             for (int i = 0; i < runnerPlayerHandles.Count; ++i)
             {
                 GameObject runner = Instantiate(runnerPrefabManager.GetRunner(runnerPlayerHandles[i].CharacterType), spawnPoints[i].transform, false);
-
-                float scale = i == 0 ? winnerScale : othersScale;
-                runner.transform.localScale = scale * Vector3.one;
-
                 runner.GetComponent<Animator>().SetTrigger(RunnerAnimation.Parameters.Triggers.Dance);
             }
         }
