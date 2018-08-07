@@ -23,7 +23,6 @@ namespace Run4YourLife.Player
         [SerializeField]
         private float m_meleeNormalizedTime;
 
-
         [SerializeField]
         private TrembleConfig m_meleeTrembleConfig;
 

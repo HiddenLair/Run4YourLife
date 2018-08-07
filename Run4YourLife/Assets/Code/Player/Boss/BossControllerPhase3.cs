@@ -19,6 +19,12 @@ namespace Run4YourLife.Player
         [SerializeField]
         private GameObject m_laserPrefab;
 
+        [SerializeField]
+        private float m_meleeNormalizedTime;
+
+        [SerializeField]
+        private TrembleConfig m_meleeTrembleConfig;
+
         protected override void ExecuteShoot()
         {
             base.ExecuteShoot();
@@ -51,6 +57,8 @@ namespace Run4YourLife.Player
 
             m_animator.SetTrigger(BossAnimation.Triggers.Mele);
             AudioManager.Instance.PlaySFX(m_meleeClip);
+
+            StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator, BossAnimation.StateNames.Mele, m_meleeNormalizedTime, () => TrembleManager.Instance.Tremble(m_meleeTrembleConfig)));
         }
     }
 }
