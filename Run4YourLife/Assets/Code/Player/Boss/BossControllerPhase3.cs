@@ -38,6 +38,10 @@ namespace Run4YourLife.Player
             GameObject laserInstance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(m_laserPrefab, m_shotSpawn.position, rotation, true);
             laserInstance.GetComponent<SimulateChildOf>().Parent = m_shotSpawn;
 
+
+            // we wait for the Shoot state because at this moment in time, the code is in a transition moving towards shoot
+            // when in a transition we are still not in the state
+            // it happens to be that when the transition ends, the particle ends too
             StartCoroutine(AnimationCallbacks.OnState(m_animator, BossAnimation.StateNames.Shoot, () => IsHeadLocked = false));
         }
 

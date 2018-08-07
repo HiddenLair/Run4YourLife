@@ -29,22 +29,28 @@ namespace Run4YourLife.Player
         {
             base.ExecuteShoot();
             m_animator.SetTrigger(BossAnimation.Triggers.Shoot);
-            StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator, BossAnimation.Triggers.Shoot, m_shootBulletNormalizedTime, () => ExecuteShootCallback()));
+
+            IsHeadLocked = true;
+
+            Vector3 position = m_crossHairControl.Position;
+            Quaternion rotation = Quaternion.FromToRotation(Vector3.right, (position - m_shotSpawn.position).normalized);
+
+            StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator, BossAnimation.Triggers.Shoot, m_shootBulletNormalizedTime, () => ExecuteShootCallback(position, rotation)));
         }
 
-        private void ExecuteShootCallback()
+        private void ExecuteShootCallback(Vector3 position, Quaternion rotation)
         {
+            GameObject bulletInstance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(m_bulletPrefab, m_shotSpawn.position, rotation, true);
+            bulletInstance.GetComponent<BossExplosiveBulletController>().LaunchBullet(position);
+
             AudioManager.Instance.PlaySFX(m_shotClip);
 
-            Vector3 director = (m_crossHairControl.Position - m_shotSpawn.position).normalized;
-            Quaternion rotation = Quaternion.FromToRotation(Vector3.right, director);
-            GameObject bulletInstance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(m_bulletPrefab, m_shotSpawn.position, rotation, true);
-            bulletInstance.GetComponent<BossExplosiveBulletController>().LaunchBullet(m_crossHairControl.Position);
+            IsHeadLocked = false;
         }
         #endregion
 
         #region Melee
-                
+
 
         [SerializeField]
         private GameObject m_leftHandPrefab;
@@ -59,7 +65,7 @@ namespace Run4YourLife.Player
         private GameObject m_leftHandGraphics;
 
         [SerializeField]
-        private GameObject m_rightHandGraphics; 
+        private GameObject m_rightHandGraphics;
 
         [SerializeField]
         private float m_meleeNormalizedTime;
@@ -81,14 +87,14 @@ namespace Run4YourLife.Player
             if (screenPos.x <= 0.5f)
             {
                 m_animator.SetTrigger(BossAnimation.Triggers.MeleR); // Boss is flipped so it executes the inverted animation
-                position.x = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0,0)).x;
+                position.x = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0, 0)).x;
                 rightHand = true;
                 animation = BossAnimation.StateNames.MeleRight;
             }
             else
             {
                 m_animator.SetTrigger(BossAnimation.Triggers.MeleL); // Boss is flipped so it executes the inverted animation
-                position.x = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1,1)).x;
+                position.x = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1, 1)).x;
                 rightHand = false;
                 animation = BossAnimation.StateNames.MeleLeft;
             }
@@ -114,7 +120,7 @@ namespace Run4YourLife.Player
             m_isExecutingMeleeRight = rightHand;
         }
 
-        protected override void OnShootReady() 
+        protected override void OnShootReady()
         {
             if (m_isExecutingMeleeRight)
             {
