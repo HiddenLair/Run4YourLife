@@ -8,7 +8,8 @@ using Run4YourLife.GameManagement;
 
 namespace Run4YourLife.Player
 {
-    public class BossControllerPhase1 : BossController {
+    public class BossControllerPhase1 : BossController
+    {
 
         [SerializeField]
         private GameObject m_bulletPrefab;
@@ -30,18 +31,23 @@ namespace Run4YourLife.Player
         {
             base.ExecuteShoot();
             m_animator.SetTrigger(BossAnimation.Triggers.Shoot);
-            StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator, BossAnimation.StateNames.Shoot, m_shootBulletNormalizedTime, () => ExecuteShootCallback()));
+
+            IsHeadLocked = true;
+
+            Vector3 direction = (m_crossHairControl.Position - m_shotSpawn.position).normalized;
+            Quaternion rotation = Quaternion.FromToRotation(Vector3.right, direction);
+
+            StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator, BossAnimation.StateNames.Shoot, m_shootBulletNormalizedTime, () => ExecuteShootCallback(direction, rotation)));
         }
 
-        private void ExecuteShootCallback()
+        private void ExecuteShootCallback(Vector3 direction, Quaternion rotation)
         {
-            Vector3 director = (m_crossHairControl.Position - m_shotSpawn.position).normalized;
-            Quaternion rotation = Quaternion.FromToRotation(Vector3.right,director);
-            GameObject bulletInstance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(m_bulletPrefab, m_shotSpawn.position, rotation);
-            bulletInstance.SetActive(true);
-            bulletInstance.GetComponent<Rigidbody>().velocity = director * m_bulletSpeed;
-        
+            GameObject bulletInstance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(m_bulletPrefab, m_shotSpawn.position, rotation, true);
+            bulletInstance.GetComponent<Rigidbody>().velocity = direction * m_bulletSpeed;
+
             AudioManager.Instance.PlaySFX(m_shotClip);
+
+            IsHeadLocked = false;
         }
 
         protected override void ExecuteMelee()
@@ -49,7 +55,7 @@ namespace Run4YourLife.Player
             base.ExecuteMelee();
             m_animator.SetTrigger(BossAnimation.Triggers.Mele);
             AudioManager.Instance.PlaySFX(m_meleeClip);
-            StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator, BossAnimation.StateNames.Mele, m_meleeNormalizedTime, ()=> TrembleManager.Instance.Tremble(m_meleeTrembleConfig)));
+            StartCoroutine(AnimationCallbacks.OnStateAtNormalizedTime(m_animator, BossAnimation.StateNames.Mele, m_meleeNormalizedTime, () => TrembleManager.Instance.Tremble(m_meleeTrembleConfig)));
         }
     }
 }
