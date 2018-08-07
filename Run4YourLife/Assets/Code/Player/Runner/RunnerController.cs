@@ -750,6 +750,7 @@ namespace Run4YourLife.Player.Runner
         {
             m_velocity.x = 0;
             m_dashTrail.gameObject.SetActive(false);
+            StartCoroutine(YieldHelper.WaitForSeconds(() => m_isReadyToDash = true, m_dashCooldown)); // set ready to dash after some time
         }
 
         private void Dash_Update()
@@ -760,8 +761,6 @@ namespace Run4YourLife.Player.Runner
 
             if (Time.time >= m_dash_endTime)
             {
-                StartCoroutine(YieldHelper.WaitForSeconds(() => m_isReadyToDash = true, m_dashCooldown)); // set ready to dash after some time
-
                 if (m_characterController.isGrounded)
                 {
                     m_stateMachine.ChangeState(States.Move);
