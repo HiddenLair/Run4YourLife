@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 using Run4YourLife.GameManagement;
 using Run4YourLife.GameManagement.AudioManagement;
 using Run4YourLife.CameraUtils;
+using Run4YourLife.Utils;
 
 namespace Run4YourLife.Player {
     public class Lightning : SkillBase
