@@ -27,6 +27,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1114624656911992
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4212761998934602}
+  - component: {fileID: 65409421577829216}
+  - component: {fileID: 114086624982264818}
+  m_Layer: 9
+  m_Name: RunnerDetector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1236773500276238
 GameObject:
   m_ObjectHideFlags: 1
@@ -170,7 +187,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4405700726168584}
   - component: {fileID: 54156686216007988}
-  - component: {fileID: 65225329854846206}
   - component: {fileID: 114854963285388418}
   - component: {fileID: 114013578984232944}
   - component: {fileID: 114649184513069464}
@@ -182,6 +198,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &4212761998934602
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1114624656911992}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4405700726168584}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4385279013380322
 Transform:
   m_ObjectHideFlags: 1
@@ -211,6 +240,7 @@ Transform:
   - {fileID: 4985226098210878}
   - {fileID: 4462790952433150}
   - {fileID: 4385279013380322}
+  - {fileID: 4212761998934602}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -377,12 +407,12 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65225329854846206
+--- !u!65 &65409421577829216
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1917008379314224}
+  m_GameObject: {fileID: 1114624656911992}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
@@ -499,6 +529,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxIntensity: 20
   pulseSpeed: 15
+--- !u!114 &114086624982264818
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1114624656911992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26e93297980a53f4a80ddf31962c75a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_bombController: {fileID: 114854963285388418}
 --- !u!114 &114196182644191866
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -633,6 +675,8 @@ MonoBehaviour:
   timeBetweenJumps: 2
   jumpHeight: 2
   jumpReceiver: {fileID: 114599453071816648}
+  m_runnerDetectorTrigger: {fileID: 65409421577829216}
+  m_skillBreakTrigger: {fileID: 135917410169066696}
   bossSpawnCheckCollider: {fileID: 135064996932806518}
 --- !u!135 &135064996932806518
 SphereCollider:

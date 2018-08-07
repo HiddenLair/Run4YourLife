@@ -1,17 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
-namespace Run4YourLife.Player
+namespace Run4YourLife.Player.Boss.Skills
 {
-    public abstract class SkillBase : MonoBehaviour {
+    public abstract class SkillBase : MonoBehaviour
+    {
 
-        public struct SkillSpawnData {
+        public struct SkillSpawnData
+        {
             public Vector3 position;
             public Transform parent;
         }
 
-        public enum Phase {PHASE1,PHASE2,PHASE3 };
+        public enum Phase { PHASE1, PHASE2, PHASE3 };
 
         [SerializeField]
         protected Phase phase;
@@ -29,7 +32,8 @@ namespace Run4YourLife.Player
             return true;
         }
 
-        public void StartSkill() {
+        public void StartSkill()
+        {
             ResetState();
             OnSkillStart();
         }

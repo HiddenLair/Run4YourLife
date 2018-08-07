@@ -5,9 +5,11 @@ using UnityEngine;
 using Run4YourLife.Player;
 using Run4YourLife.Utils;
 
-namespace Run4YourLife.Interactables {
+namespace Run4YourLife.Interactables
+{
     [RequireComponent(typeof(ParticleSystem))]
-    public class Tornado : MonoBehaviour {
+    public class TornadoController : MonoBehaviour
+    {
 
         #region Inspector
         [SerializeField]
@@ -63,13 +65,13 @@ namespace Run4YourLife.Interactables {
 
         private void Update()
         {
-            if(timer < Time.time)
+            if (timer < Time.time)
             {
                 Stop();
             }
 
             Move();
-            if(turnTimer < Time.time)
+            if (turnTimer < Time.time)
             {
                 StartCoroutine(Turn());
                 turnTimer = Time.time + timeBetweenDirectionChange;
@@ -93,7 +95,7 @@ namespace Run4YourLife.Interactables {
             Vector3 lastDirector = actualDirector;
             Vector3 newDirector = GenerateRandomDirector();
 
-            while(actualLerp < 1)
+            while (actualLerp < 1)
             {
                 actualLerp += Time.deltaTime / timeToTurn;
                 actualDirector = Vector3.Lerp(lastDirector, newDirector, actualLerp);
@@ -105,7 +107,7 @@ namespace Run4YourLife.Interactables {
         {
             particleCollider.enabled = false;
             particle.Stop();
-            StartCoroutine( YieldHelper.WaitUntil(()=>Deactivate(),()=>!particle.IsAlive()));
+            StartCoroutine(YieldHelper.WaitUntil(() => Deactivate(), () => !particle.IsAlive()));
         }
 
         private void Deactivate()

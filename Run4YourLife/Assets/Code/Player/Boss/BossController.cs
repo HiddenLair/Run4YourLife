@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -9,8 +10,8 @@ using Run4YourLife.Utils;
 using Run4YourLife.InputManagement;
 using Run4YourLife.UI;
 using Run4YourLife.GameManagement.AudioManagement;
-using System;
 using Run4YourLife.GameManagement;
+using Run4YourLife.Player.Boss.Skills;
 
 namespace Run4YourLife.Player
 {
@@ -128,7 +129,7 @@ namespace Run4YourLife.Player
                 {
                     m_lightningReadyTime = Time.time + m_lightningSkill.Cooldown;
                     ExecuteSkill(m_lightningSkill, ActionType.Y, skillSpawnData);
-                    ChangeGlowColor(Color.yellow,m_animator.GetCurrentAnimatorClipInfo(0).Length);
+                    ChangeGlowColor(Color.yellow, m_animator.GetCurrentAnimatorClipInfo(0).Length);
                 }
                 else if (m_controlScheme.EarthSpike.Started() && (m_earthSpikeReadyTime <= Time.time) && m_earthSpikeSkill.CheckAndRepositionSkillSpawn(ref skillSpawnData))
                 {
@@ -168,9 +169,9 @@ namespace Run4YourLife.Player
             {
                 glowController.ChangeGlowColor(color, time);
             }
-            if(particlesController != null)
+            if (particlesController != null)
             {
-                particlesController.ChangeColor(color,time);
+                particlesController.ChangeColor(color, time);
             }
         }
 

@@ -9,9 +9,9 @@ using Run4YourLife.GameManagement.AudioManagement;
 using Run4YourLife.Interactables;
 using System.Linq;
 
-namespace Run4YourLife.Player
+namespace Run4YourLife.Player.Boss.Skills.EarthSpike
 {
-    public class EarthSpike : SkillBase, IBossSkillBreakable
+    public class EarthSpikeController : SkillBase, IBossSkillBreakable
     {
         [SerializeField]
         private Vector3 m_spawnColliderBounds;

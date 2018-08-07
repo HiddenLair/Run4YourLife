@@ -5,10 +5,11 @@ using UnityEngine;
 using Run4YourLife.GameManagement.AudioManagement;
 using Run4YourLife.GameManagement;
 using Run4YourLife.Interactables;
+using Run4YourLife.Player.Runner;
 
-namespace Run4YourLife.Player.Runner
+namespace Run4YourLife.Player.Boss.Skills.Bomb
 {
-    public class Bomb : SkillBase, IBossSkillBreakable
+    public class BombController : SkillBase, IBossSkillBreakable
     {
         #region Inspector
 
@@ -58,7 +59,7 @@ namespace Run4YourLife.Player.Runner
         private float fireStableDuration;
 
         [SerializeField]
-        private Fire fireScript;
+        private FireController fireScript;
 
         [SerializeField]
         private float timeBetweenJumps;
@@ -70,13 +71,18 @@ namespace Run4YourLife.Player.Runner
         private FXReceiver jumpReceiver;
 
         [SerializeField]
+        private Collider m_runnerDetectorTrigger;
+
+        [SerializeField]
+        private Collider m_skillBreakTrigger;
+
+        [SerializeField]
         private Collider bossSpawnCheckCollider;
 
         #endregion
 
         #region Variables
 
-        private Collider m_collider;
         private Renderer m_renderer;
         private Vector3 finalPos;
         private Vector3 speed = Vector3.zero;
@@ -89,7 +95,6 @@ namespace Run4YourLife.Player.Runner
 
         private void Awake()
         {
-            m_collider = GetComponent<Collider>();
             m_renderer = GetComponentInChildren<Renderer>();
             simulateChildOf = GetComponent<SimulateChildOf>();
             Debug.Assert(m_renderer != null);
@@ -97,7 +102,8 @@ namespace Run4YourLife.Player.Runner
 
         private void OnEnable()
         {
-            m_collider.enabled = false;
+            m_runnerDetectorTrigger.enabled = false;
+            m_skillBreakTrigger.enabled = false;
 
             speed.y = initialSpeed;
 
@@ -151,7 +157,8 @@ namespace Run4YourLife.Player.Runner
         private IEnumerator FadeInAndFall()
         {
             yield return StartCoroutine(GenerateTrap());
-            m_collider.enabled = true;
+            m_runnerDetectorTrigger.enabled = true;
+            m_skillBreakTrigger.enabled = true;
             yield return StartCoroutine(Fall());
 
             if (phase != SkillBase.Phase.PHASE1)
@@ -246,15 +253,7 @@ namespace Run4YourLife.Player.Runner
             }
         }
 
-        private void OnTriggerEnter(Collider collider)
-        {
-            if (collider.CompareTag(Tags.Runner))
-            {
-                Explode();
-            }
-        }
-
-        private void Explode()
+        public void Explode()
         {
             StopAllCoroutines();
 

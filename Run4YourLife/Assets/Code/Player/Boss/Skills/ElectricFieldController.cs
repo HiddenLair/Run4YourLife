@@ -5,9 +5,9 @@ using UnityEngine.EventSystems;
 using Run4YourLife.Player;
 using Run4YourLife.Utils;
 
-namespace Run4YourLife.Interactables
+namespace Run4YourLife.Player.Boss.Skills.Lightning
 {
-    public class ElectricField : MonoBehaviour
+    public class ElectricFieldController : MonoBehaviour
     {
 
         [SerializeField]
@@ -30,7 +30,7 @@ namespace Run4YourLife.Interactables
         private void Update()
         {
             timeElapsed += Time.deltaTime;
-            if(timeElapsed >= fieldDuration)
+            if (timeElapsed >= fieldDuration)
             {
                 Deactivate();
             }
@@ -42,7 +42,7 @@ namespace Run4YourLife.Interactables
             {
                 p.Stop();
                 StartCoroutine(YieldHelper.WaitUntil(() => gameObject.SetActive(false), () => !p.IsAlive()));
-            }          
+            }
         }
 
         private void OnTriggerEnter(Collider other)

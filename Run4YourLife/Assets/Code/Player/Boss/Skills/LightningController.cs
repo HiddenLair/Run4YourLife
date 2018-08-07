@@ -11,8 +11,9 @@ using Run4YourLife.GameManagement.AudioManagement;
 using Run4YourLife.CameraUtils;
 using Run4YourLife.Utils;
 
-namespace Run4YourLife.Player {
-    public class Lightning : SkillBase
+namespace Run4YourLife.Player.Boss.Skills.Lightning
+{
+    public class LightningController : SkillBase
     {
         #region Inspector
 
@@ -54,7 +55,7 @@ namespace Run4YourLife.Player {
 
         [SerializeField]
         private GameObject lightningGameObject;
-        
+
         [SerializeField]
         private int maxNumberOfLightnings;
 
@@ -80,13 +81,13 @@ namespace Run4YourLife.Player {
         protected override void OnSkillStart()
         {
             Vector3 position = transform.position;
-            position.y = CameraConverter.ViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, new Vector2(0,0)).y;
+            position.y = CameraConverter.ViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, new Vector2(0, 0)).y;
             transform.position = position;
             StartCoroutine(Cloud());
             if (phase == SkillBase.Phase.PHASE3)
             {
-                StartCoroutine(StartNewLeftLightning(1,transform.position));
-                StartCoroutine(StartNewRightLightning(1,transform.position));
+                StartCoroutine(StartNewLeftLightning(1, transform.position));
+                StartCoroutine(StartNewRightLightning(1, transform.position));
             }
         }
 
@@ -94,9 +95,9 @@ namespace Run4YourLife.Player {
         {
             Transform flashBody = cloudEffect.transform;
             Vector3 newSize = Vector3.one;
-            
-            float topScreen = CameraConverter.ViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, new Vector2(0,1)).y;
-            float yPos = (topScreen - transform.position.y)-cloudEffect.GetComponent<Renderer>().bounds.extents.y;// / 2;
+
+            float topScreen = CameraConverter.ViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, new Vector2(0, 1)).y;
+            float yPos = (topScreen - transform.position.y) - cloudEffect.GetComponent<Renderer>().bounds.extents.y;// / 2;
             flashBody.localPosition = new Vector3(0, yPos, -1);
             cloudEffect.SetActive(true);
             StartCoroutine(HoldCloudTop());
@@ -121,8 +122,8 @@ namespace Run4YourLife.Player {
             AudioManager.Instance.PlaySFX(m_skillTriggerClip);
             TrembleManager.Instance.Tremble(trembleConfig);
             Camera mainCamera = CameraManager.Instance.MainCamera;
-            Vector3 pos = Vector3.zero;            
-            
+            Vector3 pos = Vector3.zero;
+
             float topScreen = CameraConverter.ViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, new Vector2(0, 1)).y;
             pos.y = topScreen - transform.position.y;
             lighningEffect.transform.localPosition = pos;
@@ -130,7 +131,7 @@ namespace Run4YourLife.Player {
             LayerMask finalMask = Layers.Runner | Layers.Stage;
 
             RaycastHit[] hits;
-            hits = Physics.SphereCastAll(lighningEffect.transform.position, width/2, Vector3.down, pos.y - transform.position.y,finalMask,QueryTriggerInteraction.Ignore);
+            hits = Physics.SphereCastAll(lighningEffect.transform.position, width / 2, Vector3.down, pos.y - transform.position.y, finalMask, QueryTriggerInteraction.Ignore);
 
             List<RaycastHit> nonRunnersHits = new List<RaycastHit>();
             foreach (RaycastHit hit in hits)
@@ -144,7 +145,7 @@ namespace Run4YourLife.Player {
                     nonRunnersHits.Add(hit);
                 }
             }
-            if(phase != SkillBase.Phase.PHASE1)
+            if (phase != SkillBase.Phase.PHASE1)
             {
                 SetElectricFields(nonRunnersHits);
             }
@@ -152,7 +153,7 @@ namespace Run4YourLife.Player {
             lighningEffect.SetActive(true);
             lighningEffect.GetComponent<ParticleScaler>().SetXScale(width);
             ParticleSystem[] lightning = lighningEffect.GetComponentsInChildren<ParticleSystem>();
-            StartCoroutine(WaitForParticleSystems(lightning,lighningEffect));
+            StartCoroutine(WaitForParticleSystems(lightning, lighningEffect));
         }
 
         private void SetElectricFields(List<RaycastHit> hits)
@@ -162,9 +163,9 @@ namespace Run4YourLife.Player {
 
             List<RaycastHit> spawnFieldHits = new List<RaycastHit>();
             hits = hits.OrderBy(a => a.distance).ToList();
-            for(int i = 0;i<hits.Count; ++i)
+            for (int i = 0; i < hits.Count; ++i)
             {
-                if(hits[i].collider.CompareTag(Tags.Runner))
+                if (hits[i].collider.CompareTag(Tags.Runner))
                 {
                     continue;
                 }
@@ -173,12 +174,12 @@ namespace Run4YourLife.Player {
                     spawnFieldHits.Add(hits[i]);
                 }
 
-                while (i+1 < hits.Count)
+                while (i + 1 < hits.Count)
                 {
                     Collider c1 = hits[i].collider;
                     Collider c2 = hits[i + 1].collider;
 
-                    if(c1.bounds.min.y < c2.bounds.max.y + delta)
+                    if (c1.bounds.min.y < c2.bounds.max.y + delta)
                     {
                         ++i;
                     }
@@ -195,10 +196,11 @@ namespace Run4YourLife.Player {
             }
         }
 
-        IEnumerator WaitForParticleSystems(ParticleSystem[] particles,GameObject particleSystem)
+        IEnumerator WaitForParticleSystems(ParticleSystem[] particles, GameObject particleSystem)
         {
             bool finish = false;
-            while(!finish){
+            while (!finish)
+            {
                 finish = true;
                 for (int i = 0; i < particles.Length; ++i)
                 {
@@ -231,12 +233,12 @@ namespace Run4YourLife.Player {
         {
             yield return new WaitForSeconds(delayBetweenLightnings * Mathf.Pow(delayBetweenLightningsProgresion, iterationNumber));
 
-            position.x -= newLightningsDistance * Mathf.Pow( newLightningsDistanceProgresion , iterationNumber);
+            position.x -= newLightningsDistance * Mathf.Pow(newLightningsDistanceProgresion, iterationNumber);
             GameObject instance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(lightningGameObject, position, Quaternion.identity, true);
-            instance.GetComponent<Lightning>().SetDelayHit(newLightningsDelayHit * Mathf.Pow(newLightningsDelayHitProgresion,iterationNumber));
+            instance.GetComponent<LightningController>().SetDelayHit(newLightningsDelayHit * Mathf.Pow(newLightningsDelayHitProgresion, iterationNumber));
             instance.GetComponent<SkillBase>().StartSkill();
 
-            float leftScreen = CameraConverter.ViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, new Vector2(0,0)).x;
+            float leftScreen = CameraConverter.ViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, new Vector2(0, 0)).x;
 
             if (position.x > leftScreen && iterationNumber < maxNumberOfLightnings)
             {
@@ -255,19 +257,20 @@ namespace Run4YourLife.Player {
             }
         }
 
-        IEnumerator StartNewRightLightning(int iterationNumber,Vector3 position)
+        IEnumerator StartNewRightLightning(int iterationNumber, Vector3 position)
         {
-            yield return new WaitForSeconds(delayBetweenLightnings * Mathf.Pow(delayBetweenLightningsProgresion,iterationNumber));
+            yield return new WaitForSeconds(delayBetweenLightnings * Mathf.Pow(delayBetweenLightningsProgresion, iterationNumber));
 
             position.x += newLightningsDistance * Mathf.Pow(newLightningsDistanceProgresion, iterationNumber);
             GameObject instance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(lightningGameObject, position, Quaternion.identity, true);
-            instance.GetComponent<Lightning>().SetDelayHit(newLightningsDelayHit * Mathf.Pow(newLightningsDelayHitProgresion, iterationNumber));
+            instance.GetComponent<LightningController>().SetDelayHit(newLightningsDelayHit * Mathf.Pow(newLightningsDelayHitProgresion, iterationNumber));
             instance.GetComponent<SkillBase>().StartSkill();
 
-            float rightScreen = CameraConverter.ViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, new Vector2(1,1)).x;
+            float rightScreen = CameraConverter.ViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, new Vector2(1, 1)).x;
 
-            if (position.x < rightScreen && iterationNumber < maxNumberOfLightnings) {
-                StartCoroutine(StartNewRightLightning(++iterationNumber,position));
+            if (position.x < rightScreen && iterationNumber < maxNumberOfLightnings)
+            {
+                StartCoroutine(StartNewRightLightning(++iterationNumber, position));
             }
             else
             {

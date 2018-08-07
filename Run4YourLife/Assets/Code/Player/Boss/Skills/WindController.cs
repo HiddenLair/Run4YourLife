@@ -5,10 +5,11 @@ using UnityEngine;
 
 using Run4YourLife.GameManagement;
 using Run4YourLife.CameraUtils;
+using Run4YourLife.Player.Runner;
 
-namespace Run4YourLife.Player.Runner
+namespace Run4YourLife.Player.Boss.Skills.Wind
 {
-    public class Wind : SkillBase
+    public class WindController : SkillBase
     {
         #region Inspector
 

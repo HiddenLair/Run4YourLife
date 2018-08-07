@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
-namespace Run4YourLife.Player.Runner
+using Run4YourLife.Player.Runner;
+
+namespace Run4YourLife.Player.Boss.Skills.Bomb
 {
     [RequireComponent(typeof(AudioSource))]
-    public class Fire : MonoBehaviour
+    public class FireController : MonoBehaviour
     {
 
         [SerializeField]
@@ -41,7 +44,7 @@ namespace Run4YourLife.Player.Runner
             fireTrigger.enabled = true;
 
             Vector3 minScaleVector = new Vector3(minScale, minScale, minScale);
-            Vector3 maxScaleVector = new Vector3(maxScale,maxScale,maxScale);
+            Vector3 maxScaleVector = new Vector3(maxScale, maxScale, maxScale);
             SetParticlesScale(maxScaleVector);//Now particles dont scale in grow
             transform.localScale = minScaleVector;//To scale collider;
 
