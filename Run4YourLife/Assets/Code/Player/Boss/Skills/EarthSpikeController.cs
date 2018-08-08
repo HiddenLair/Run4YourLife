@@ -29,10 +29,13 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
         private float m_breakEarthSpikeDelay;
 
         [SerializeField]
-        private GameObject m_warningSpikeParticles;
+        private FXReceiver m_spawnParticles;
 
         [SerializeField]
-        private GameObject m_earthSpikeChild;
+        private GameObject m_earthSpikeGraphics;
+
+        [SerializeField]
+        private Collider m_bossSkillBreakTrigger;
 
         [SerializeField]
         private TrembleConfig m_spikeGrowTrembleConfig;
@@ -40,11 +43,15 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
         [SerializeField]
         private GameObject m_breakableWallPrefab;
 
-        private SimulateChildOf simulatedParent;
+        private Vector3 m_initialLocalScale;
+
+        private SimulateChildOf m_simulateChildOf;
+
 
         private void Awake()
         {
-            simulatedParent = GetComponent<SimulateChildOf>();
+            m_initialLocalScale = transform.localScale;
+            m_simulateChildOf = GetComponent<SimulateChildOf>();
         }
 
         public override bool CheckAndRepositionSkillSpawn(ref SkillSpawnData skillSpawnData)
@@ -181,9 +188,9 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
         protected override void ResetState()
         {
             StopAllCoroutines();
-            m_warningSpikeParticles.SetActive(false);
-            m_earthSpikeChild.SetActive(false);
-            m_earthSpikeChild.transform.localScale = Vector3.zero;
+            m_earthSpikeGraphics.SetActive(false);
+            m_bossSkillBreakTrigger.enabled = false;
+            transform.localScale = Vector3.zero;
         }
 
         protected override void OnSkillStart()
@@ -196,24 +203,24 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
             AudioManager.Instance.PlaySFX(m_skillTriggerClip);
 
             // Display Ground Particles for a short amount of time
-            m_warningSpikeParticles.SetActive(true);
+            m_spawnParticles.PlayFx(false);
             yield return new WaitForSeconds(m_warningParticlesDuration);
-            m_warningSpikeParticles.SetActive(false);
 
             TrembleManager.Instance.Tremble(m_spikeGrowTrembleConfig);
 
             // Earth spike grows
-            m_earthSpikeChild.SetActive(true);
+            m_bossSkillBreakTrigger.enabled = true;
+            m_earthSpikeGraphics.SetActive(true);
             float endTime = Time.time + m_earthSpikeGrowthDuration;
             while (Time.time < endTime)
             {
                 float percentage = 1f - ((endTime - Time.time) / m_earthSpikeGrowthDuration);
-                m_earthSpikeChild.transform.localScale = Vector3.one * percentage;
+                transform.localScale = m_initialLocalScale * percentage;
                 yield return null;
             }
 
             yield return new WaitForSeconds(m_breakEarthSpikeDelay);
-            m_earthSpikeChild.SetActive(false);
+            m_earthSpikeGraphics.SetActive(false);
 
             SpawnBreakableWall();
 
@@ -225,7 +232,7 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
             if (phase != SkillBase.Phase.PHASE1)
             {
                 GameObject instance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(m_breakableWallPrefab, transform.position, Quaternion.identity, true);
-                instance.GetComponent<SimulateChildOf>().Parent = simulatedParent.Parent;
+                instance.GetComponent<SimulateChildOf>().Parent = m_simulateChildOf.Parent;
             }
         }
 
@@ -239,6 +246,5 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
         {
             Gizmos.DrawWireCube(transform.position + new Vector3(0, m_spawnColliderBounds.y / 2f), m_spawnColliderBounds);
         }
-
     }
 }
