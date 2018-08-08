@@ -203,7 +203,7 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
             AudioManager.Instance.PlaySFX(m_skillTriggerClip);
 
             // Display Ground Particles for a short amount of time
-            m_spawnParticles.PlayFx(false);
+            m_spawnParticles.PlayFx(true);
             yield return new WaitForSeconds(m_warningParticlesDuration);
 
             TrembleManager.Instance.Tremble(m_spikeGrowTrembleConfig);
