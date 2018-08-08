@@ -53,6 +53,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4672823005401622}
+  - component: {fileID: 114279715331583094}
   - component: {fileID: 114882684143256148}
   m_Layer: 0
   m_Name: Boss_Phase1_Shotimpact
@@ -94,7 +95,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1637268079511322}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.687, y: 1.547, z: -0.7685623}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4093486931590142}
@@ -102,6 +103,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114279715331583094
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1637268079511322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d02689d46ad6094094cc5bbaa23bc48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114882684143256148
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -116,6 +128,11 @@ MonoBehaviour:
   m_parent: {fileID: 0}
   m_simulatePosition: 1
   m_simualteRotation: 1
+  onParentDisabled:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!198 &198035969567229682
 ParticleSystem:
   m_ObjectHideFlags: 1

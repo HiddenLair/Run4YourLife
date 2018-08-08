@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4143873627772754}
   - component: {fileID: 198467236012695114}
+  - component: {fileID: 114139539698563608}
   - component: {fileID: 199164915906617990}
   - component: {fileID: 114623829393729418}
   m_Layer: 0
@@ -42,6 +43,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114139539698563608
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1876708485271496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d02689d46ad6094094cc5bbaa23bc48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114623829393729418
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -56,6 +68,11 @@ MonoBehaviour:
   m_parent: {fileID: 0}
   m_simulatePosition: 1
   m_simualteRotation: 1
+  onParentDisabled:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!198 &198467236012695114
 ParticleSystem:
   m_ObjectHideFlags: 1
