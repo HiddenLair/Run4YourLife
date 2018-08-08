@@ -186,7 +186,7 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
             }
         }
 
-        private IEnumerator Fall()
+        private IEnumerator Fall() // @TODO does this work 100% reliably with falling platforms and moving platforms¿?
         {
             while (true)
             {

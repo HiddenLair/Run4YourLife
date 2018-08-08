@@ -6,15 +6,10 @@ using Run4YourLife;
 
 namespace Run4YourLife.Interactables
 {
-    public class FallingPlatformNotifier : MonoBehaviour {
-
+    public class FallingPlatformRunnerNotifier : MonoBehaviour
+    {
+        [SerializeField]
         private FallingPlatformController m_fallingPlatformController;
-
-        private void Awake()
-        {
-            m_fallingPlatformController = transform.parent.GetComponent<FallingPlatformController>();
-            Debug.Assert(m_fallingPlatformController);
-        }
 
         private void OnTriggerEnter(Collider collider)
         {
