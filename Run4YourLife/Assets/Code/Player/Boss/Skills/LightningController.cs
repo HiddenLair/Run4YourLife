@@ -21,6 +21,9 @@ namespace Run4YourLife.Player.Boss.Skills.Lightning
         private AudioClip thunderHitClip;
 
         [SerializeField]
+        private AudioClip cloudEmergingClip;
+
+        [SerializeField]
         private float width;
 
         [SerializeField]
@@ -96,6 +99,7 @@ namespace Run4YourLife.Player.Boss.Skills.Lightning
 
         IEnumerator Cloud()
         {
+            AudioManager.Instance.PlaySFX(cloudEmergingClip);
             Transform flashBody = cloudEffect.transform;
             Vector3 newSize = Vector3.one;
 
