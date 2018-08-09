@@ -18,6 +18,9 @@ namespace Run4YourLife.Player.Boss.Skills.Lightning
         #region Inspector
 
         [SerializeField]
+        private AudioClip thunderHitClip;
+
+        [SerializeField]
         private float width;
 
         [SerializeField]
@@ -119,7 +122,7 @@ namespace Run4YourLife.Player.Boss.Skills.Lightning
 
         private void LightningHit()
         {
-            AudioManager.Instance.PlaySFX(m_skillTriggerClip);
+            AudioManager.Instance.PlaySFX(thunderHitClip);
             TrembleManager.Instance.Tremble(trembleConfig);
             Camera mainCamera = CameraManager.Instance.MainCamera;
             Vector3 pos = Vector3.zero;

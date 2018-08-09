@@ -20,9 +20,6 @@ namespace Run4YourLife.Player.Boss.Skills
         protected Phase phase;
 
         [SerializeField]
-        protected AudioClip m_skillTriggerClip;
-
-        [SerializeField]
         private float m_cooldown;
 
         public float Cooldown { get { return m_cooldown; } }

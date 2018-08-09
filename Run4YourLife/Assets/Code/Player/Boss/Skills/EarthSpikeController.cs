@@ -14,6 +14,9 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
     public class EarthSpikeController : SkillBase, IBossSkillBreakable
     {
         [SerializeField]
+        private AudioClip m_earthAdviseClip;
+
+        [SerializeField]
         private Vector3 m_spawnColliderBounds;
 
         [SerializeField]
@@ -200,7 +203,7 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
 
         private IEnumerator SkillBehaviuour()
         {
-            AudioManager.Instance.PlaySFX(m_skillTriggerClip);
+            AudioManager.Instance.PlaySFX(m_earthAdviseClip);
 
             // Display Ground Particles for a short amount of time
             m_spawnParticles.PlayFx(true);
