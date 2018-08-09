@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 95909117871615214}
   - component: {fileID: 114948982138489064}
   - component: {fileID: 114161163883398350}
+  - component: {fileID: 82540297778564214}
   m_Layer: 0
   m_Name: R4YL_PROP_Waterfall
   m_TagString: Untagged
@@ -220,8 +221,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1987078544089144}
-  m_LocalRotation: {x: 0.00000019861234, y: 0.70710677, z: -0.7071068, w: 0.00000019861236}
-  m_LocalPosition: {x: -182.13388, y: 23.71, z: -20.98}
+  m_LocalRotation: {x: 0.00000019861236, y: 0.7071068, z: -0.7071068, w: 0.00000019861236}
+  m_LocalPosition: {x: -182.13388, y: 8.660002, z: -20.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4827693569268736}
@@ -298,6 +299,99 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1987078544089144}
   m_Mesh: {fileID: 4300000, guid: e7249feb43021ef4db4d1d364c814bd8, type: 3}
+--- !u!82 &82540297778564214
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1987078544089144}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 243518932095323286, guid: 4548ecbfae7eea54282375c3e8f999c7,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: 65ead2266ccbbba409a57057da02a721, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.5
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 200
+  DopplerLevel: 0.4
+  MinDistance: 10
+  MaxDistance: 50
+  Pan2D: 0
+  rolloffMode: 2
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0.48120117
+      value: 1
+      inSlope: -4.0016
+      outSlope: -4.0016
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.6902801
+      value: 0.42312294
+      inSlope: -2.024196
+      outSlope: -2.024196
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.86769104
+      value: 0.09365845
+      inSlope: -1.5372659
+      outSlope: -1.5372659
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: -0.2501
+      outSlope: -0.2501
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &95909117871615214
 Animator:
   serializedVersion: 3
