@@ -5,7 +5,7 @@ using UnityEngine;
 
 using Run4YourLife.CameraUtils;
 using Run4YourLife.GameManagement;
-using Run4YourLife.GameManagement.AudioManagement;
+using Run4YourLife.Utils;
 using Run4YourLife.Interactables;
 using System.Linq;
 
@@ -13,9 +13,6 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
 {
     public class EarthSpikeController : SkillBase, IBossSkillBreakable
     {
-        [SerializeField]
-        private AudioClip m_earthAdviseClip;
-
         [SerializeField]
         private Vector3 m_spawnColliderBounds;
 
@@ -32,10 +29,16 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
         private float m_breakEarthSpikeDelay;
 
         [SerializeField]
+        private float m_timeBeingBreak;
+
+        [SerializeField]
         private FXReceiver m_spawnParticles;
 
         [SerializeField]
         private GameObject m_earthSpikeGraphics;
+
+        [SerializeField]
+        private GameObject m_breakEarthSpikeGraphics;
 
         [SerializeField]
         private Collider m_bossSkillBreakTrigger;
@@ -190,8 +193,15 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
 
         protected override void ResetState()
         {
+            foreach(Collider c in GetComponentsInChildren<Collider>())
+            {
+                c.enabled = true;
+            }
             StopAllCoroutines();
             m_earthSpikeGraphics.SetActive(false);
+            EarthPikeBreakController temp = m_breakEarthSpikeGraphics.GetComponent<EarthPikeBreakController>();
+            m_breakEarthSpikeGraphics.SetActive(false);
+            temp.Reset();
             m_bossSkillBreakTrigger.enabled = false;
             transform.localScale = Vector3.zero;
         }
@@ -203,8 +213,6 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
 
         private IEnumerator SkillBehaviuour()
         {
-            AudioManager.Instance.PlaySFX(m_earthAdviseClip);
-
             // Display Ground Particles for a short amount of time
             m_spawnParticles.PlayFx(true);
             yield return new WaitForSeconds(m_warningParticlesDuration);
@@ -222,12 +230,22 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
                 yield return null;
             }
 
-            yield return new WaitForSeconds(m_breakEarthSpikeDelay);
-            m_earthSpikeGraphics.SetActive(false);
+            yield return new WaitForSeconds(m_breakEarthSpikeDelay);          
 
             SpawnBreakableWall();
+            innerBreak();
+        }
 
-            gameObject.SetActive(false);
+        private void innerBreak()
+        {
+            StopAllCoroutines();
+            foreach (Collider c in GetComponentsInChildren<Collider>())
+            {
+                c.enabled = false;
+            }
+            m_earthSpikeGraphics.SetActive(false);
+            m_breakEarthSpikeGraphics.SetActive(true);
+            StartCoroutine(YieldHelper.WaitForSeconds(()=>gameObject.SetActive(false),m_timeBeingBreak));
         }
 
         private void SpawnBreakableWall()
