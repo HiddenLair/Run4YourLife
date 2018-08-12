@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 4458946598923050}
   - component: {fileID: 114093186400943376}
   - component: {fileID: 114917403599896106}
+  - component: {fileID: 114932662728123584}
   m_Layer: 10
   m_Name: FloatingSmallDestructible
   m_TagString: Untagged
@@ -70,6 +71,7 @@ GameObject:
   - component: {fileID: 4083636340722934}
   - component: {fileID: 33802282618773790}
   - component: {fileID: 23664306825573100}
+  - component: {fileID: 95687168716714266}
   m_Layer: 10
   m_Name: R4YL_PROP_ground_platform_phase3
   m_TagString: Untagged
@@ -109,8 +111,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1640360424270392}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 285.4347, y: -14.58, z: 73.783195}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 13.96, y: 8.86, z: 0}
   m_LocalScale: {x: 0.5, y: 0.25, z: 0.5}
   m_Children:
   - {fileID: 4873934280324096}
@@ -194,6 +196,23 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: bf5ec615a61fa2f4c9963a9097e16dab, type: 3}
+--- !u!95 &95687168716714266
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1807148064083382}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 66d7b5edc3e0c9e408038f185ba40d40, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114093186400943376
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -221,3 +240,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGround: 0
+--- !u!114 &114932662728123584
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1640360424270392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7887b554881ee9146b25e5e9908e7132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 95687168716714266}
+  AnimatorStateName: Oscillate
+  delay: 0
+  randomize: 1
