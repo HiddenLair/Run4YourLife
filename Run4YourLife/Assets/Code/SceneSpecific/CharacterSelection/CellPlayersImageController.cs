@@ -8,22 +8,27 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         [SerializeField]
         private Image[] images;
 
+        [SerializeField]
+        private bool scaleOnShow = false;
+
         public void Show(uint index)
         {
-            images[index].gameObject.SetActive(true);
+            images[index].enabled = true;
+
+            if(scaleOnShow)
+            {
+                Scale(index);
+            }
         }
 
         public void Hide(uint index)
         {
-            images[index].gameObject.SetActive(false);
+            images[index].enabled = false;
         }
 
-        public void HideAll()
+        public void Scale(uint index)
         {
-            foreach(Image image in images)
-            {
-                image.gameObject.SetActive(false);
-            }
+            images[index].GetComponent<ScaleOnTick>().Tick();
         }
     }
 }

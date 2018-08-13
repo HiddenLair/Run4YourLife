@@ -61,6 +61,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         private Dictionary<CellData, HashSet<PlayerHandle>> bossCellCurrentContainedPlayers = new Dictionary<CellData, HashSet<PlayerHandle>>();
         private Dictionary<CellData, HashSet<PlayerHandle>> runnerCellCurrentContainedPlayers = new Dictionary<CellData, HashSet<PlayerHandle>>();
 
+        private int runnerSelectedCount = 0;
         private Dictionary<PlayerHandle, bool> playerSelectionDone = new Dictionary<PlayerHandle, bool>();
 
         private bool gameStarting = false;
@@ -163,12 +164,12 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
             if(currentId == 0)
             {
-                bossFace.gameObject.SetActive(true);
-                runnerFaces[0].gameObject.SetActive(true);
+                bossFace.GetComponent<Image>().enabled = true;
+                runnerFaces[0].GetComponent<Image>().enabled = true;
             }
             else if(currentId >= 2)
             {
-                runnerFaces[currentId - 1].gameObject.SetActive(true);
+                runnerFaces[currentId - 1].GetComponent<Image>().enabled = true;
             }
 
             playerIds.Add(playerHandle, currentId++);
@@ -291,7 +292,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                             ShowOnGameReady(isGameReady);
                             HideOnGameReady(isGameReady);
                         }
-                    }, 0.5f));
+                    }, 0.25f));
                 }
 
                 previousIsGameReady = isGameReady;
@@ -458,8 +459,18 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
             playerSelectionDone[playerHandle] = true;
             playerCell.GetComponentInChildren<SwapImages>().Swap();
+            playerCell.GetComponentInChildren<CellPlayersImageController>().Scale(playerIds[playerHandle]);
 
             UpdateGameReady();
+
+            if(playerCell.isBoss)
+            {
+                bossFace.GetComponent<ScaleOnTick>().Tick();
+            }
+            else
+            {
+                runnerFaces[runnerSelectedCount++].GetComponent<ScaleOnTick>().Tick();
+            }
 
             return RequestCompletionState.Completed;
         }
@@ -476,10 +487,17 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 return RequestCompletionState.Unmodified;
             }
 
+            CellData playerCell = playersCurrentCell[playerHandle];
+
             playerSelectionDone[playerHandle] = false;
-            playersCurrentCell[playerHandle].GetComponentInChildren<SwapImages>().Swap();
+            playerCell.GetComponentInChildren<SwapImages>().Swap();
 
             UpdateGameReady();
+
+            if(!playerCell.isBoss)
+            {
+                --runnerSelectedCount;
+            }
 
             return RequestCompletionState.Completed;
         }
