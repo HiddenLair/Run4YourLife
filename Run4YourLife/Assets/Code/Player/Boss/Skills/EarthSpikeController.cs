@@ -29,16 +29,10 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
         private float m_breakEarthSpikeDelay;
 
         [SerializeField]
-        private float m_timeBeingBreak;
-
-        [SerializeField]
         private FXReceiver m_spawnParticles;
 
         [SerializeField]
         private GameObject m_earthSpikeGraphics;
-
-        [SerializeField]
-        private GameObject m_breakEarthSpikeGraphics;
 
         [SerializeField]
         private Collider m_bossSkillBreakTrigger;
@@ -48,6 +42,9 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
 
         [SerializeField]
         private GameObject m_breakableWallPrefab;
+
+        [SerializeField]
+        private GameObject m_brokenEarthSpikePrefab;
 
         private Vector3 m_initialLocalScale;
 
@@ -193,15 +190,12 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
 
         protected override void ResetState()
         {
-            foreach(Collider c in GetComponentsInChildren<Collider>())
+            foreach (Collider c in GetComponentsInChildren<Collider>())
             {
                 c.enabled = true;
             }
             StopAllCoroutines();
             m_earthSpikeGraphics.SetActive(false);
-            EarthPikeBreakController temp = m_breakEarthSpikeGraphics.GetComponent<EarthPikeBreakController>();
-            m_breakEarthSpikeGraphics.SetActive(false);
-            temp.Reset();
             m_bossSkillBreakTrigger.enabled = false;
             transform.localScale = Vector3.zero;
         }
@@ -230,22 +224,22 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
                 yield return null;
             }
 
-            yield return new WaitForSeconds(m_breakEarthSpikeDelay);          
+            yield return new WaitForSeconds(m_breakEarthSpikeDelay);
 
             SpawnBreakableWall();
-            innerBreak();
-        }
+            SpawnBrokenEarthSpike();
 
-        private void innerBreak()
-        {
-            StopAllCoroutines();
             foreach (Collider c in GetComponentsInChildren<Collider>())
             {
                 c.enabled = false;
             }
-            m_earthSpikeGraphics.SetActive(false);
-            m_breakEarthSpikeGraphics.SetActive(true);
-            StartCoroutine(YieldHelper.WaitForSeconds(()=>gameObject.SetActive(false),m_timeBeingBreak));
+            gameObject.SetActive(false);
+        }
+
+        private void SpawnBrokenEarthSpike()
+        {
+            GameObject brokenSpikeInstance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(m_brokenEarthSpikePrefab, transform.position, Quaternion.identity, true);
+            brokenSpikeInstance.GetComponent<SimulateChildOf>().Parent = m_simulateChildOf.Parent;
         }
 
         private void SpawnBreakableWall()
