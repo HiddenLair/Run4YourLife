@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Run4YourLife.GameManagement.AudioManagement;
 using UnityEngine;
 
 namespace Run4YourLife.Interactables
@@ -18,6 +19,8 @@ namespace Run4YourLife.Interactables
         private float sinkMaxDistance = 5.0f;
         [SerializeField]
         private Animator animator;
+        [SerializeField]
+        private AudioClip interactAudio;
         #endregion
 
         #region Variables
@@ -104,6 +107,7 @@ namespace Run4YourLife.Interactables
                 {
                     triggerLogicActive = false;
                     animator.SetTrigger("Enter");
+                    AudioManager.Instance.PlaySFX(interactAudio);
                     StartCoroutine(ChangeStateDelayed(State.SINKING, sinkDelay));
                 }
             }
