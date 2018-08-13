@@ -53,8 +53,6 @@ namespace Run4YourLife.GameManagement
         public override void StartPhase()
         {
             StartPhaseCommon();
-
-            m_bossFightGemManager.StartGemMinigame();
         }
 
         void StartPhaseCommon()
@@ -65,6 +63,8 @@ namespace Run4YourLife.GameManagement
             m_virtualCamera.Follow = boss.transform;
             m_virtualCamera.LookAt = boss.transform;
             CameraManager.Instance.TransitionToCamera(m_virtualCamera);
+
+            m_bossFightGemManager.StartGemMinigame();
         }
 
         public void StartNextPhase()
@@ -99,15 +99,12 @@ namespace Run4YourLife.GameManagement
             m_virtualCamera.transform.position = m_bossFightStartingCameraPositionDebug.position;
 
             StartPhaseCommon();
-
-            m_bossFightGemManager.StartGemMinigame();
         }
 
         public override void DebugEndPhase()
         {
-            StopAllCoroutines();
-
             GameplayPlayerManager.Instance.DebugClearPlayers();
+            m_bossFightGemManager.StopGemMinigame();
 
             EndPhaseCommon();
         }

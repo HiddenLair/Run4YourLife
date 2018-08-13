@@ -55,6 +55,11 @@ public class BossFightGemManager : SingletonMonoBehaviour<BossFightGemManager>
         StartCoroutine(PlaceGemAfterDelay(m_startingMinigameDelay));
     }
 
+    public void StopGemMinigame()
+    {
+        ResetGemMinigameState();
+    }
+
     private void ResetGemMinigameState()
     {
         StopAllCoroutines();
