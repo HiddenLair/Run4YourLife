@@ -137,7 +137,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1696466390942686}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.561363, y: 0, z: -0.039407253}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4192262512971642}
@@ -362,7 +362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fx: {fileID: 1201061734182528, guid: 9abcf0803c941e44dab9f004c252b348, type: 2}
-  sfx: {fileID: 8300000, guid: cf6bf5ccab379894e94aa1649c4f044b, type: 3}
+  sfx: {fileID: 8300000, guid: df0bf6e767f874948b1ebcd2f2251cab, type: 3}
 --- !u!114 &114650564823330484
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -446,3 +446,23 @@ MonoBehaviour:
     type: 2}
   m_brokenEarthSpikePrefab: {fileID: 1787515738354626, guid: b39682dd616855f438da26a57789977d,
     type: 2}
+  m_growAnimationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 1.3920385
+      outSlope: 1.3920385
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  m_growSpikeSound: {fileID: 8300000, guid: 4e0cfe444a5c66b42ba32dc60312b401, type: 3}
+  m_breakSpikeSound: {fileID: 8300000, guid: 0dd59268d95732d4c95944a569f90e5c, type: 3}

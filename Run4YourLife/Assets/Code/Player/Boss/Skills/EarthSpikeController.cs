@@ -8,6 +8,7 @@ using Run4YourLife.GameManagement;
 using Run4YourLife.Utils;
 using Run4YourLife.Interactables;
 using System.Linq;
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.Player.Boss.Skills.EarthSpike
 {
@@ -45,6 +46,15 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
 
         [SerializeField]
         private GameObject m_brokenEarthSpikePrefab;
+
+        [SerializeField]
+        private AnimationCurve m_growAnimationCurve;
+
+        [SerializeField]
+        private AudioClip m_growSpikeSound;
+
+        [SerializeField]
+        private AudioClip m_breakSpikeSound;
 
         private Vector3 m_initialLocalScale;
 
@@ -214,17 +224,21 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
             TrembleManager.Instance.Tremble(m_spikeGrowTrembleConfig);
 
             // Earth spike grows
+            AudioManager.Instance.PlaySFX(m_growSpikeSound);
             m_bossSkillBreakTrigger.enabled = true;
             m_earthSpikeGraphics.SetActive(true);
             float endTime = Time.time + m_earthSpikeGrowthDuration;
             while (Time.time < endTime)
             {
-                float percentage = 1f - ((endTime - Time.time) / m_earthSpikeGrowthDuration);
-                transform.localScale = m_initialLocalScale * percentage;
+                float animationPosition = 1f - ((endTime - Time.time) / m_earthSpikeGrowthDuration);
+                float scale = m_growAnimationCurve.Evaluate(animationPosition);
+                transform.localScale = m_initialLocalScale * scale;
                 yield return null;
             }
 
             yield return new WaitForSeconds(m_breakEarthSpikeDelay);
+
+            AudioManager.Instance.PlaySFX(m_breakSpikeSound);
 
             SpawnBreakableWall();
             SpawnBrokenEarthSpike();
