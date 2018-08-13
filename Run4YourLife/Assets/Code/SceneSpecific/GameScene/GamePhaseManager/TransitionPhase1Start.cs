@@ -21,7 +21,7 @@ namespace Run4YourLife.GameManagement
 
         private PlayerSpawner m_playerSpawner;
 
-        private Coroutine m_startPhaseCoroutine;      
+        private Coroutine m_startPhaseCoroutine;
 
         #region Initialization
 
@@ -35,7 +35,7 @@ namespace Run4YourLife.GameManagement
 
         public override void StartPhase()
         {
-            if(phaseMusic != null)
+            if (phaseMusic != null)
             {
                 AudioManager.Instance.PlayMusic(phaseMusic);
             }
@@ -46,11 +46,11 @@ namespace Run4YourLife.GameManagement
         private IEnumerator StartPhaseCoroutine()
         {
             CameraManager.Instance.TransitionToCamera(m_cinemachineVirtualCamera);
-            
+
             StartCutscene();
-            
+
             yield return new WaitUntil(() => m_startingCutscene.state != PlayState.Playing); // wait until cutscene has completed
-            
+
             EndCutScene();
 
             GameManager.Instance.ChangeGamePhase(GamePhase.EasyMoveHorizontal);
@@ -61,14 +61,14 @@ namespace Run4YourLife.GameManagement
             m_playerSpawner.ActivateRunners();
             m_playerSpawner.ActivateBoss();
 
-            foreach(GameObject runner in GameplayPlayerManager.Instance.Runners)
+            foreach (GameObject runner in GameplayPlayerManager.Instance.Runners)
             {
                 DeactivateScripts(runner);
             }
 
             DeactivateScripts(GameplayPlayerManager.Instance.Boss);
 
-            BindTimelineTracks(m_startingCutscene,GameplayPlayerManager.Instance.Runners, GameplayPlayerManager.Instance.Boss);
+            BindTimelineTracks(m_startingCutscene, GameplayPlayerManager.Instance.Runners, GameplayPlayerManager.Instance.Boss);
             m_startingCutscene.Play();
         }
 
@@ -97,7 +97,7 @@ namespace Run4YourLife.GameManagement
         public override void DebugEndPhase()
         {
             StopCoroutine(m_startPhaseCoroutine);
-                m_startPhaseCoroutine = null;
+            m_startPhaseCoroutine = null;
 
             EndCutScene();
 

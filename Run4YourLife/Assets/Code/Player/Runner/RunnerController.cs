@@ -180,7 +180,7 @@ namespace Run4YourLife.Player.Runner
 
         #endregion
 
-        private bool IsDashing { get { return m_stateMachine.State == States.Dash; } }
+        public bool IsDashing { get { return m_stateMachine.State == States.Dash; } }
 
 
         private void Awake()

@@ -1,8 +1,11 @@
-﻿using Run4YourLife.GameManagement.AudioManagement;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
+
+using Run4YourLife.GameManagement.AudioManagement;
+using Run4YourLife.Player.Runner;
 
 public class GemController : MonoBehaviour, IRunnerDashBreakable
 {
