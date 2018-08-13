@@ -6,6 +6,7 @@ using UnityEngine;
 using Run4YourLife.GameManagement;
 using Run4YourLife.CameraUtils;
 using Run4YourLife.Player.Runner;
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.Player.Boss.Skills.Wind
 {
@@ -73,7 +74,7 @@ namespace Run4YourLife.Player.Boss.Skills.Wind
 
             Vector3 newPos = new Vector3(topRight.x, mainCamera.transform.position.y, transform.position.z);
             transform.position = newPos;
-            Vector3 newScale = new Vector3(0, topRight.y - bottomLeft.y, 2);//z 2 is an arbitrary number, you can change if you need
+            Vector3 newScale = new Vector3(0, topRight.y - bottomLeft.y, 2); //z 2 is an arbitrary number, you can change if you need
             transform.localScale = newScale;
 
             windParticles.SetActive(true);
@@ -150,20 +151,6 @@ namespace Run4YourLife.Player.Boss.Skills.Wind
 
         private Vector3 GetTornadoSpawn()
         {
-            //Bounds colliderBounds = GetComponentInChildren<Collider>().bounds;
-            //Vector3 pos;
-            //pos.z = transform.position.z;
-            //while (true)
-            //{
-            //    pos.x = UnityEngine.Random.Range(colliderBounds.min.x, colliderBounds.max.x);
-            //    pos.y = UnityEngine.Random.Range(colliderBounds.min.y, colliderBounds.max.y);
-
-            //    Collider[] colliders = Physics.OverlapBox(pos,Vector3.one,Quaternion.identity,Layers.Stage,QueryTriggerInteraction.Ignore);
-            //    if(colliders.Length == 0)
-            //    {
-            //        return pos;
-            //    }
-            //}
             Bounds colliderBounds = GetComponentInChildren<Collider>().bounds;
             Vector3 pos;
             pos.z = transform.position.z;
