@@ -137,6 +137,11 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             return playersCurrentCell[playerHandle].isBoss;
         }
 
+        public bool IsSelected(PlayerHandle playerHandle)
+        {
+            return playerSelectionDone[playerHandle];
+        }
+
         public void UpdateBackFillAmount()
         {
             back.fillAmount = backControlScheme.GetPercent();

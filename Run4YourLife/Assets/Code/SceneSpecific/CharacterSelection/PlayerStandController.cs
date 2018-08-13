@@ -134,7 +134,15 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 if(requestCompletionState == RequestCompletionState.Completed)
                 {
                     InfoShowUnselect();
-                    currentCharacter.GetComponent<Animator>().Play(playerStandsManager.GetAnimationNameOnSelected(playerHandle));
+
+                    StartCoroutine(YieldHelper.WaitForSeconds(() =>
+                    {
+                        if(playerStandsManager.IsSelected(playerHandle))
+                        {
+                            currentCharacter.GetComponent<Animator>().Play(playerStandsManager.GetAnimationNameOnSelected(playerHandle));
+                        }
+                    }, 0.15f));
+
                     currentCharacter.GetComponent<ScaleOnTick>().Tick();
                 }
 
