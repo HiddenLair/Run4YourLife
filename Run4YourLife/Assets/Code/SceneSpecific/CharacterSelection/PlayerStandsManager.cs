@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
 using Run4YourLife.UI;
+using Run4YourLife.Utils;
 using Run4YourLife.Player;
 using Run4YourLife.InputManagement;
 using Run4YourLife.GameManagement.AudioManagement;
@@ -63,6 +64,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         private Dictionary<PlayerHandle, bool> playerSelectionDone = new Dictionary<PlayerHandle, bool>();
 
         private bool gameStarting = false;
+        private bool previousIsGameReady = false;
 
         void Awake()
         {
@@ -268,11 +270,39 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
             bool isGameReady = IsGameReady();
 
+            if(isGameReady != previousIsGameReady)
+            {
+                if(!isGameReady)
+                {
+                    ShowOnGameReady(isGameReady);
+                    HideOnGameReady(isGameReady);
+                }
+                else
+                {
+                    StartCoroutine(YieldHelper.WaitForSeconds(() =>
+                    {
+                        if(isGameReady = IsGameReady())
+                        {
+                            ShowOnGameReady(isGameReady);
+                            HideOnGameReady(isGameReady);
+                        }
+                    }, 0.5f));
+                }
+
+                previousIsGameReady = isGameReady;
+            }
+        }
+
+        private void ShowOnGameReady(bool isGameReady)
+        {
             foreach(CanvasGroup canvasGroup in showOnGameReady)
             {
                 canvasGroup.alpha = Convert.ToSingle(isGameReady);
             }
+        }
 
+        private void HideOnGameReady(bool isGameReady)
+        {
             foreach(CanvasGroup canvasGroup in hideOnGameReady)
             {
                 canvasGroup.alpha = Convert.ToSingle(!isGameReady);
