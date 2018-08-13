@@ -210,25 +210,25 @@ namespace Run4YourLife.Player
 
         private void ExecuteSkill(SkillBase skill, ActionType type, SkillBase.SkillSpawnData skillSpawnData)
         {
-            GameObject instance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(skill.gameObject, skillSpawnData.position, Quaternion.identity);
-            SimulateChildOf simulateChildOf = instance.GetComponent<SimulateChildOf>();
-            if (skillSpawnData.parent != null)
-            {
-                simulateChildOf.Parent = skillSpawnData.parent;
-            }
-
             m_animator.SetTrigger(BossAnimation.Triggers.Cast);
-            StartCoroutine(AnimationCallbacks.AfterStateAtNormalizedTime(m_animator, BossAnimation.StateNames.Move, m_normalizedTimeToSpawnTrap, () => PlaceSkillAtAnimationCallback(instance)));
+            StartCoroutine(AnimationCallbacks.AfterStateAtNormalizedTime(m_animator, BossAnimation.StateNames.Move, m_normalizedTimeToSpawnTrap, () => PlaceSkillAtAnimationCallback(skill.gameObject, skillSpawnData)));
             AudioManager.Instance.PlaySFX(m_castClip);
             ExecuteEvents.Execute<IUICrossHairEvents>(m_ui, null, (x, y) => x.OnActionUsed(type, skill.Cooldown));
         }
 
-        private void PlaceSkillAtAnimationCallback(GameObject instance)
+        private void PlaceSkillAtAnimationCallback(GameObject prefab, SkillBase.SkillSpawnData skillSpawnData)
         {
+            GameObject instance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(prefab, skillSpawnData.position, Quaternion.identity);
+
+            SimulateChildOf simulateChildOf = instance.GetComponent<SimulateChildOf>();
+            if(skillSpawnData.parent != null)
+            {
+                simulateChildOf.Parent = skillSpawnData.parent;
+            }
+
             instance.SetActive(true);
             instance.GetComponent<SkillBase>().StartSkill();
         }
-
 
         protected virtual void ExecuteShoot()
         {
