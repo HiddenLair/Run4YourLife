@@ -135,6 +135,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 {
                     InfoShowUnselect();
                     currentCharacter.GetComponent<Animator>().Play(playerStandsManager.GetAnimationNameOnSelected(playerHandle));
+                    currentCharacter.GetComponent<ScaleOnTick>().Tick();
                 }
 
                 PlaySfx(playerStandsManager.IsOnBossCell(playerHandle) ? audioOnSelectCompletedIfBoss : audioOnSelectCompletedIfRunner, audioOnSelectError, requestCompletionState);
