@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 using Run4YourLife.GameManagement.AudioManagement;
+using Run4YourLife.Player.Runner;
 
 namespace Run4YourLife.Interactables
 {
