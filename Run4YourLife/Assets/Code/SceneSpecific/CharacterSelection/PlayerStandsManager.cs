@@ -292,7 +292,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                             ShowOnGameReady(isGameReady);
                             HideOnGameReady(isGameReady);
                         }
-                    }, 0.25f));
+                    }, 0.333f));
                 }
 
                 previousIsGameReady = isGameReady;
