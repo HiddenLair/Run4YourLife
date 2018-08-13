@@ -36,13 +36,25 @@ namespace Run4YourLife.Player
         private SkillBase m_lightningSkill;
 
         [SerializeField]
+        private FXReceiver m_lightningCastReceiver;
+
+        [SerializeField]
         private SkillBase m_earthSpikeSkill;
+
+        [SerializeField]
+        private FXReceiver m_earthSpikeCastReceiver;
 
         [SerializeField]
         private SkillBase m_windSkill;
 
         [SerializeField]
+        private FXReceiver m_windCastReceiver;
+
+        [SerializeField]
         private SkillBase m_bombSkill;
+
+        [SerializeField]
+        private FXReceiver m_bombCastReceiver;
 
         [SerializeField]
         [Tooltip("Offset in euler angles from wich the head will look, used to shoot with the mouth instead of the beak")]
@@ -129,24 +141,28 @@ namespace Run4YourLife.Player
                 {
                     m_lightningReadyTime = Time.time + m_lightningSkill.Cooldown;
                     ExecuteSkill(m_lightningSkill, ActionType.Y, skillSpawnData);
+                    m_lightningCastReceiver.PlayFx(true);
                     ChangeGlowColor(Color.yellow, m_animator.GetCurrentAnimatorClipInfo(0).Length);
                 }
                 else if (m_controlScheme.EarthSpike.Started() && (m_earthSpikeReadyTime <= Time.time) && m_earthSpikeSkill.CheckAndRepositionSkillSpawn(ref skillSpawnData))
                 {
                     m_earthSpikeReadyTime = Time.time + m_earthSpikeSkill.Cooldown;
                     ExecuteSkill(m_earthSpikeSkill, ActionType.A, skillSpawnData);
+                    m_earthSpikeCastReceiver.PlayFx(true);
                     ChangeGlowColor(Color.green, m_animator.GetCurrentAnimatorClipInfo(0).Length);
                 }
                 else if (m_controlScheme.Wind.Started() && (m_windReadyTime <= Time.time) && m_windSkill.CheckAndRepositionSkillSpawn(ref skillSpawnData))
                 {
                     m_windReadyTime = Time.time + m_windSkill.Cooldown;
                     ExecuteSkill(m_windSkill, ActionType.X, skillSpawnData);
+                    m_windCastReceiver.PlayFx(true);
                     ChangeGlowColor(Color.cyan, m_animator.GetCurrentAnimatorClipInfo(0).Length);
                 }
                 else if (m_controlScheme.Bomb.Started() && (m_bombReadyTime <= Time.time) && m_bombSkill.CheckAndRepositionSkillSpawn(ref skillSpawnData))
                 {
                     m_bombReadyTime = Time.time + m_bombSkill.Cooldown;
                     ExecuteSkill(m_bombSkill, ActionType.B, skillSpawnData);
+                    m_bombCastReceiver.PlayFx(true);
                     ChangeGlowColor(Color.red, m_animator.GetCurrentAnimatorClipInfo(0).Length);
                 }
                 else if (m_controlScheme.Shoot.Started() && m_shootReadyTime <= Time.time)

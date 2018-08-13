@@ -43,6 +43,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1049881835184556
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4490690331859902}
+  - component: {fileID: 114572558444544700}
+  m_Layer: 11
+  m_Name: LightningCastReceiver
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1055738881657088
 GameObject:
   m_ObjectHideFlags: 1
@@ -1003,6 +1019,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1737202279502088
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4367163559605004}
+  - component: {fileID: 114420113362233796}
+  m_Layer: 11
+  m_Name: EarthSpikeReceiver
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1738032934875870
 GameObject:
   m_ObjectHideFlags: 0
@@ -1114,6 +1146,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1764472111933118
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4494678388737128}
+  - component: {fileID: 114562948404504614}
+  m_Layer: 11
+  m_Name: WindCastReceiver
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1768143444670520
 GameObject:
   m_ObjectHideFlags: 1
@@ -1216,6 +1264,22 @@ GameObject:
   - component: {fileID: 4053440899921480}
   m_Layer: 11
   m_Name: Boss_Anim2:RightShoulder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1846448449841322
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4759705442857278}
+  - component: {fileID: 114764459038264590}
+  m_Layer: 11
+  m_Name: BombCastReceiver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1723,6 +1787,10 @@ Transform:
   - {fileID: 4645835494735672}
   - {fileID: 4127219060520888}
   - {fileID: 4694356609119718}
+  - {fileID: 4759705442857278}
+  - {fileID: 4490690331859902}
+  - {fileID: 4494678388737128}
+  - {fileID: 4367163559605004}
   m_Father: {fileID: 4052205983590582}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1960,6 +2028,19 @@ Transform:
   m_Father: {fileID: 4314301104269644}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4367163559605004
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1737202279502088}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.9200035, y: 0.16600296, z: -0.28900337}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4195706866573176}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4380125385347724
 Transform:
   m_ObjectHideFlags: 1
@@ -2116,6 +2197,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4305616636163672}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4490690331859902
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1049881835184556}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.92, y: 0.166, z: -0.289}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4195706866573176}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4494678388737128
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1764472111933118}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.92000216, y: 0.16600184, z: -0.28900212}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4195706866573176}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4496979429918322
 Transform:
@@ -2518,6 +2625,19 @@ Transform:
   - {fileID: 4626648578459464}
   m_Father: {fileID: 4688092275463636}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4759705442857278
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1846448449841322}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.92000216, y: 0.16600184, z: -0.28900212}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4195706866573176}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4767489835080968
 Transform:
@@ -3091,6 +3211,19 @@ MonoBehaviour:
     amount: 1
   - prefab: {fileID: 1110396084154354, guid: 045121e5642c5d844b10139b6ef8b6d6, type: 2}
     amount: 1
+--- !u!114 &114420113362233796
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1737202279502088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cb52b0f7a8d8b1458965b078cdc7767, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fx: {fileID: 1843611113106518, guid: 4b10b69370f3ebc41bc81f167f3e7800, type: 2}
+  sfx: {fileID: 0}
 --- !u!114 &114447732724832884
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3116,6 +3249,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7943cf917c37b24aaaf47a1ae2e38c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114562948404504614
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1764472111933118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cb52b0f7a8d8b1458965b078cdc7767, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fx: {fileID: 1845417519090074, guid: 872e97a363c3dcb4a996cfbb38e201ae, type: 2}
+  sfx: {fileID: 0}
+--- !u!114 &114572558444544700
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1049881835184556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cb52b0f7a8d8b1458965b078cdc7767, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fx: {fileID: 1953928210187016, guid: 7eebee2dd3a19db4a8ad2de5fcb10cd5, type: 2}
+  sfx: {fileID: 0}
 --- !u!114 &114748026163325168
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3127,6 +3286,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7943cf917c37b24aaaf47a1ae2e38c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114764459038264590
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1846448449841322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cb52b0f7a8d8b1458965b078cdc7767, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fx: {fileID: 1239392866660314, guid: 159af91d9d1de824ba66da9b8a8b5930, type: 2}
+  sfx: {fileID: 0}
 --- !u!114 &114772048301559046
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3196,12 +3368,16 @@ MonoBehaviour:
   m_normalizedTimeToSpawnTrap: 0.2
   m_lightningSkill: {fileID: 114577542301879746, guid: 9d238db45ef3b59419750ebbf3084a66,
     type: 2}
+  m_lightningCastReceiver: {fileID: 114572558444544700}
   m_earthSpikeSkill: {fileID: 114456848960578226, guid: 789f74a666f93f84b86520d78a2460e4,
     type: 2}
+  m_earthSpikeCastReceiver: {fileID: 114420113362233796}
   m_windSkill: {fileID: 114835432817374338, guid: 0bfe2032de56a7247a38c41e38c90195,
     type: 2}
+  m_windCastReceiver: {fileID: 114562948404504614}
   m_bombSkill: {fileID: 114854963285388418, guid: 2064cae466c7b35478bf63deeaaa36e9,
     type: 2}
+  m_bombCastReceiver: {fileID: 114764459038264590}
   m_headLookAtOffset: {x: 0, y: -90, z: 17}
   m_headLerpFactor: 6
   m_headBone: {fileID: 4584662799879848}
@@ -3211,6 +3387,9 @@ MonoBehaviour:
   m_meleeClip: {fileID: 8300000, guid: 5a17a99919f460e4f961de3bb2f63aa7, type: 3}
   m_fireLaserNormalizedTime: 0.7
   m_laserPrefab: {fileID: 1110396084154354, guid: 045121e5642c5d844b10139b6ef8b6d6,
+    type: 2}
+  m_meleeNormalizedTime: 0.6
+  m_meleeTrembleConfig: {fileID: 11400000, guid: 816ad2774a8af72468f15c8b9fa05382,
     type: 2}
 --- !u!137 &137017230866588148
 SkinnedMeshRenderer:
