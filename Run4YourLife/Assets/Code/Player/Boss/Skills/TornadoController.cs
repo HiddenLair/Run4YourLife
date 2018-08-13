@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine;
 
+using Run4YourLife.CameraUtils;
+using Run4YourLife.GameManagement;
 using Run4YourLife.Player;
 using Run4YourLife.Utils;
 
@@ -107,7 +109,23 @@ namespace Run4YourLife.Interactables
         {
             particleCollider.enabled = false;
             particle.Stop();
-            StartCoroutine(YieldHelper.WaitUntil(() => Deactivate(), () => !particle.IsAlive()));
+                       StartCoroutine(WaitForDeactivate());
+        }
+
+        IEnumerator WaitForDeactivate()
+        {
+            while (true)
+            {
+                Vector2 pos = transform.position;
+                Vector2 bottomLeft = CameraConverter.ViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, Vector2.zero);
+                Vector2 topRight = CameraConverter.ViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, Vector2.one);
+                if (!(bottomLeft.x < pos.x && topRight.x > pos.x && bottomLeft.y < pos.y && topRight.y > pos.y) || !particle.IsAlive())
+                {
+                    Deactivate();
+                    break;
+                }
+                yield return null;
+            }
         }
 
         private void Deactivate()
