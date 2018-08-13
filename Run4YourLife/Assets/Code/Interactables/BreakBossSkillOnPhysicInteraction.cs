@@ -4,23 +4,25 @@ using UnityEngine;
 
 using Run4YourLife.Interactables;
 
-public class BreakBossSkillOnPhysicInteraction : MonoBehaviour
+public class BreakBossSkillOnPhysicInteraction : MonoBehaviour, IBossSkillBreakable
 {
     [SerializeField]
     private GameObject m_bossSkillBreakable;
 
     private void OnTriggerEnter(Collider collider)
     {
-        CheckBossSkillBreakableAndSendBreakEvent(collider.gameObject);
+        if (m_bossSkillBreakable.activeSelf)
+        {
+            CheckBossSkillBreakableAndSendBreakEvent(collider.gameObject);
+        }
     }
 
-    private void CheckBossSkillBreakableAndSendBreakEvent(GameObject runner)
+    private void CheckBossSkillBreakableAndSendBreakEvent(GameObject gameObject)
     {
-        IBossSkillBreakable bossSkillBreakable = runner.GetComponent<IBossSkillBreakable>();
+        IBossSkillBreakable bossSkillBreakable = gameObject.GetComponent<IBossSkillBreakable>();
         if (bossSkillBreakable != null)
         {
             m_bossSkillBreakable.GetComponent<IBossSkillBreakable>().Break();
-
             bossSkillBreakable.Break();
         }
     }
@@ -29,5 +31,10 @@ public class BreakBossSkillOnPhysicInteraction : MonoBehaviour
     {
         Debug.Assert(m_bossSkillBreakable != null);
         Debug.Assert(m_bossSkillBreakable.GetComponent<IBossSkillBreakable>() != null);
+    }
+
+    public void Break()
+    {
+        m_bossSkillBreakable.GetComponent<IBossSkillBreakable>().Break();
     }
 }

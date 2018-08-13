@@ -290,11 +290,7 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
 
         void IBossSkillBreakable.Break()
         {
-            Debug.Assert(gameObject.activeSelf);
-            if (gameObject.activeSelf)
-            {
-                Explode();
-            }
+            Explode();
         }
     }
 }
