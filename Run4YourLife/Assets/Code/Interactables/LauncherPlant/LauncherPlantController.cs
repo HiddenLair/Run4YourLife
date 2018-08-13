@@ -5,6 +5,7 @@ using UnityEngine;
 
 using Run4YourLife.GameManagement.AudioManagement;
 using Run4YourLife.GameManagement;
+using Run4YourLife.Interactables.Pollen;
 
 namespace Run4YourLife.Interactables
 {
@@ -18,6 +19,9 @@ namespace Run4YourLife.Interactables
 
         [SerializeField]
         private float timeBetweenShoots;
+
+        [SerializeField]
+        private float m_shootTimeAlive;
 
         [SerializeField]
         private Transform shootInitZone;
@@ -58,6 +62,7 @@ namespace Run4YourLife.Interactables
 
             GameObject instance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(bullet, shootInitZone.position, shootInitZone.rotation);
             instance.SetActive(true);
+            instance.GetComponent<PollenController>().SetTimeAlive(m_shootTimeAlive);
             Rigidbody rb = instance.GetComponent<Rigidbody>();
             rb.velocity = Vector3.zero;
             rb.AddForce(instance.transform.up * shootForce);

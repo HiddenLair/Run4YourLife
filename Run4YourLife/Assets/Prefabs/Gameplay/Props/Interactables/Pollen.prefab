@@ -19,25 +19,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4084486618095970}
-  m_Layer: 10
-  m_Name: Graphics
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1650234130445106
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4178904985661274}
-  - component: {fileID: 135773796298165688}
-  - component: {fileID: 114915276139747986}
   m_Layer: 9
-  m_Name: KillPlayer
+  m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,8 +36,8 @@ GameObject:
   - component: {fileID: 4175297722329404}
   - component: {fileID: 54181210884180468}
   - component: {fileID: 135960157430357898}
-  - component: {fileID: 114308934154780636}
-  m_Layer: 10
+  - component: {fileID: 114686452426201038}
+  m_Layer: 9
   m_Name: Pollen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +54,7 @@ GameObject:
   - component: {fileID: 4797047358623332}
   - component: {fileID: 198978312698250986}
   - component: {fileID: 199003402263797108}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: skulls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +71,7 @@ GameObject:
   - component: {fileID: 4493071101116128}
   - component: {fileID: 198077910882783520}
   - component: {fileID: 199401755877024670}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Pollen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +88,7 @@ GameObject:
   - component: {fileID: 4971500864061328}
   - component: {fileID: 198153697698951696}
   - component: {fileID: 199870001496145184}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,26 +116,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1829718625258658}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.127, y: 0.6279396, z: -1.0598145}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4084486618095970}
-  - {fileID: 4178904985661274}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4178904985661274
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1650234130445106}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4175297722329404}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4493071101116128
 Transform:
@@ -210,7 +179,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114308934154780636
+--- !u!114 &114686452426201038
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -218,32 +187,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1829718625258658}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7b07168b1191dd4bacd5a14497e6955, type: 3}
+  m_Script: {fileID: 11500000, guid: 8387fcd2e84999449a39524ddd719e1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114915276139747986
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1650234130445106}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 412452455570aa44bac37005f9813a6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!135 &135773796298165688
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1650234130445106}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &135960157430357898
 SphereCollider:
   m_ObjectHideFlags: 1
