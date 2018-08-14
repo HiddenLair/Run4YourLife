@@ -19,17 +19,7 @@ public class GameObjectPool : MonoBehaviour
     [SerializeField]
     private Transform m_parent;
 
-    [SerializeField]
-    private float m_timeBetweenRetrivals = 10;
-
-    private float m_nextRetrivalTime;
-
     private Dictionary<GameObject, List<GameObject>> m_pool = new Dictionary<GameObject, List<GameObject>>();
-
-    private void OnEnable()
-    {
-        m_nextRetrivalTime = Time.time + m_timeBetweenRetrivals;
-    }
 
     public void Request(PoolRequest poolPetition)
     {
@@ -81,8 +71,9 @@ public class GameObjectPool : MonoBehaviour
         {
             foreach (GameObject g in instances)
             {
-                if (!g.activeInHierarchy && (g.transform.parent == m_parent))
+                if (!g.activeInHierarchy)
                 {
+                    Debug.Assert(g.transform.parent == m_parent, g);
                     return g;
                 }
             }
@@ -108,30 +99,5 @@ public class GameObjectPool : MonoBehaviour
         instance.transform.localScale = scale;
         instance.SetActive(activate);
         return instance;
-    }
-
-    private void Update()
-    {
-        if (m_nextRetrivalTime <= Time.time)
-        {
-            RetrieveObjectsToPool();
-            m_nextRetrivalTime = Time.time + m_timeBetweenRetrivals;
-        }
-    }
-
-    private void RetrieveObjectsToPool()
-    {
-        foreach (KeyValuePair<GameObject, List<GameObject>> item in m_pool)
-        {
-            foreach (GameObject g in item.Value)
-            {
-                if (!g.activeInHierarchy)
-                {
-                    g.transform.SetParent(m_parent);
-                    g.transform.localPosition = Vector3.zero;
-                    g.transform.localRotation = Quaternion.identity;
-                }
-            }
-        }
     }
 }
