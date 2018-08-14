@@ -20,6 +20,9 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
         protected AudioClip m_trapDetonationClip;
 
         [SerializeField]
+        private AudioClip m_fireClip;
+
+        [SerializeField]
         private float m_fadeInTime;
 
         [SerializeField]
@@ -216,6 +219,7 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
             {
                 yield return new WaitForSeconds(timeBetweenFire);
                 fireScript.Play(fireGrowDuration, fireStableDuration);
+                AudioManager.Instance.PlaySFX(m_fireClip);
             }
         }
 
