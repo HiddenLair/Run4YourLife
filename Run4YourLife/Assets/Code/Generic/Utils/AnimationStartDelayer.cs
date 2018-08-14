@@ -11,7 +11,7 @@ namespace Run4YourLife.Utils
         private string AnimatorStateName;
 
         [SerializeField]
-        private float delay;
+        private float delay = 0.0f;
 
         [SerializeField]
         private bool randomize = false;
@@ -22,7 +22,7 @@ namespace Run4YourLife.Utils
 
             if(randomize)
             {
-                delayTime = Random.Range(0.0f, 1.5f);
+                delayTime = Random.Range(0.0f, 1.0f * delay);
             }
             else
             {
