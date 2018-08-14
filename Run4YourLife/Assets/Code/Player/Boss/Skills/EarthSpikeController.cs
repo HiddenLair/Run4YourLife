@@ -9,6 +9,7 @@ using Run4YourLife.Utils;
 using Run4YourLife.Interactables;
 using System.Linq;
 using Run4YourLife.GameManagement.AudioManagement;
+using Run4YourLife.Player.Runner;
 
 namespace Run4YourLife.Player.Boss.Skills.EarthSpike
 {
@@ -56,14 +57,20 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
         [SerializeField]
         private AudioClip m_breakSpikeSound;
 
-        private Vector3 m_initialLocalScale;
+        [SerializeField]
+        private ColliderBounds[] m_colliderArray;
 
         private SimulateChildOf m_simulateChildOf;
 
+        [Serializable]
+        private struct ColliderBounds
+        {
+            public BoxCollider collider;
+            public float percentage;
+        }
 
         private void Awake()
         {
-            m_initialLocalScale = transform.localScale;
             m_simulateChildOf = GetComponent<SimulateChildOf>();
         }
 
@@ -200,14 +207,14 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
 
         protected override void ResetState()
         {
-            foreach (Collider c in GetComponentsInChildren<Collider>())
+            for(int i= 0; i<m_colliderArray.Length;++i)
             {
-                c.enabled = true;
+                m_colliderArray[i].collider.enabled = false;
             }
             StopAllCoroutines();
             m_earthSpikeGraphics.SetActive(false);
             m_bossSkillBreakTrigger.enabled = false;
-            transform.localScale = Vector3.zero;
+            m_earthSpikeGraphics.transform.localScale = Vector3.zero;
         }
 
         protected override void OnSkillStart()
@@ -228,11 +235,17 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
             m_bossSkillBreakTrigger.enabled = true;
             m_earthSpikeGraphics.SetActive(true);
             float endTime = Time.time + m_earthSpikeGrowthDuration;
+            int index = 0;
             while (Time.time < endTime)
             {
                 float animationPosition = 1f - ((endTime - Time.time) / m_earthSpikeGrowthDuration);
                 float scale = m_growAnimationCurve.Evaluate(animationPosition);
-                transform.localScale = m_initialLocalScale * scale;
+                m_earthSpikeGraphics.transform.localScale = Vector3.one * scale;
+                while(index < m_colliderArray.Length && m_colliderArray[index].percentage <= scale)
+                {
+                    CheckForCollision(m_colliderArray[index].collider);
+                    m_colliderArray[index++].collider.enabled=true;
+                }
                 yield return null;
             }
 
@@ -242,12 +255,17 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
 
             SpawnBreakableWall();
             SpawnBrokenEarthSpike();
-
-            foreach (Collider c in GetComponentsInChildren<Collider>())
-            {
-                c.enabled = false;
-            }
+           
             gameObject.SetActive(false);
+        }
+
+        private void CheckForCollision(BoxCollider c)
+        {
+            Collider[] hits = Physics.OverlapBox(c.center+c.transform.position,c.size/2.0f,c.transform.rotation,Layers.Runner);
+            foreach(Collider hitCollider in hits)
+            {
+                hitCollider.GetComponent<RunnerController>().AbsoluteKill();
+            }
         }
 
         private void SpawnBrokenEarthSpike()

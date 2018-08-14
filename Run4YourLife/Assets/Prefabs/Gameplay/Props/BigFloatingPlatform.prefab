@@ -35,6 +35,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4510509062329990}
   - component: {fileID: 114019642063677518}
+  - component: {fileID: 65884148252538728}
   m_Layer: 10
   m_Name: BigFloatingPlatform
   m_TagString: Untagged
@@ -52,8 +53,6 @@ GameObject:
   - component: {fileID: 4667948001036182}
   - component: {fileID: 33922037212493402}
   - component: {fileID: 23063516996883074}
-  - component: {fileID: 95744791923391872}
-  - component: {fileID: 64331829497067952}
   m_Layer: 10
   m_Name: R4YL_PROP_floating_platform
   m_TagString: Untagged
@@ -67,8 +66,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1744989394741982}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.97, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 20.2, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4711709058159922}
@@ -143,37 +142,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1973871481425154}
   m_Mesh: {fileID: 4300000, guid: 7b6bc3ef4911bed409c139ed550e4285, type: 3}
---- !u!64 &64331829497067952
-MeshCollider:
+--- !u!65 &65884148252538728
+BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1973871481425154}
+  m_GameObject: {fileID: 1744989394741982}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300000, guid: 7b6bc3ef4911bed409c139ed550e4285, type: 3}
---- !u!95 &95744791923391872
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1973871481425154}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 7b6bc3ef4911bed409c139ed550e4285, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
+  serializedVersion: 2
+  m_Size: {x: 9, y: 2.5, z: 2.5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114019642063677518
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -185,4 +165,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be02de567bee24748958a0b42c39c350, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGround: 0
+  isGround: 1
