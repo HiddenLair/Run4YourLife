@@ -6,7 +6,11 @@ using Run4YourLife.Utils;
 using Run4YourLife.GameManagement.AudioManagement;
 
 [RequireComponent(typeof(Rigidbody))]
-public class CoconutController : MonoBehaviour {
+public class CoconutController : MonoBehaviour
+{
+
+    [SerializeField]
+    private AudioClip m_releaseCoconutAudioClip;
 
     [SerializeField]
     private AudioClip m_hitGroundAudioClip;
@@ -18,7 +22,7 @@ public class CoconutController : MonoBehaviour {
 
     private void Awake()
     {
-        m_rigidbody = GetComponent<Rigidbody>();   
+        m_rigidbody = GetComponent<Rigidbody>();
         Reset();
     }
 
@@ -27,6 +31,7 @@ public class CoconutController : MonoBehaviour {
         Aviable = false;
         m_rigidbody.useGravity = true;
         m_rigidbody.isKinematic = false;
+        AudioManager.Instance.PlaySFX(m_releaseCoconutAudioClip);
     }
 
     public void Reset()
@@ -40,10 +45,10 @@ public class CoconutController : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if(!Aviable) // it is falling
+        if (!Aviable) // it is falling
         {
             IRunnerEvents runnerEvents = other.gameObject.GetComponent<IRunnerEvents>();
-            if(runnerEvents != null)
+            if (runnerEvents != null)
             {
                 runnerEvents.Kill();
             }
