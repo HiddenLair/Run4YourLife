@@ -228,7 +228,7 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
             while (true)
             {
                 yield return new WaitForSeconds(timeBetweenJumps);
-                fatherInitialY = transform.parent.position.y;
+                fatherInitialY = fatherTransformStorage.position.y;
                 finalPos = transform.position;
                 jumpReceiver.PlayFx();
                 yield return StartCoroutine(Jump(jumpHeight));
