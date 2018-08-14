@@ -1,16 +1,18 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Run4YourLife.SceneSpecific {
-    public class GemColumnController : MonoBehaviour {
+namespace Run4YourLife.SceneSpecific
+{
+    public class GemColumnController : MonoBehaviour
+    {
 
         [SerializeField]
         private GameObject gem;
 
         [SerializeField]
         private GameObject fire;
-
 
         public void ActivateColumn()
         {

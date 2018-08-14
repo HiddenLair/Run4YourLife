@@ -7,6 +7,7 @@ using Run4YourLife.GameManagement;
 using Run4YourLife.SceneSpecific;
 using Run4YourLife.GameManagement.AudioManagement;
 using Run4YourLife.Utils;
+using System;
 
 public class BossFightGemManager : SingletonMonoBehaviour<BossFightGemManager>
 {
@@ -15,6 +16,9 @@ public class BossFightGemManager : SingletonMonoBehaviour<BossFightGemManager>
 
     [SerializeField]
     private float m_timeBetweenGems;
+
+    [SerializeField]
+    private float m_nextPhaseDelay;
 
     [SerializeField]
     private GameObject m_gemPrefab;
@@ -84,7 +88,7 @@ public class BossFightGemManager : SingletonMonoBehaviour<BossFightGemManager>
         }
         else
         {
-            m_bossFightPhaseManager.StartNextPhase();
+            StartCoroutine(NextPhaseAfterDelay());
         }
     }
 
@@ -93,5 +97,11 @@ public class BossFightGemManager : SingletonMonoBehaviour<BossFightGemManager>
         yield return new WaitForSeconds(delay);
         m_gemInstance.SetActive(true);
         m_gemInstanceController.StartMoving();
+    }
+
+    private IEnumerator NextPhaseAfterDelay()
+    {
+        yield return new WaitForSeconds(m_nextPhaseDelay);
+        m_bossFightPhaseManager.StartNextPhase();
     }
 }
