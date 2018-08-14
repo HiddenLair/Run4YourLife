@@ -29,23 +29,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1379733957357142
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4826224718115854}
-  - component: {fileID: 65353463877597086}
-  - component: {fileID: 114650564823330484}
-  m_Layer: 9
-  m_Name: PlayerKillTrigger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1567997659158962
 GameObject:
   m_ObjectHideFlags: 1
@@ -71,6 +54,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4619146247324280}
   - component: {fileID: 65742964098009212}
+  - component: {fileID: 65933378189406454}
+  - component: {fileID: 65849669266102316}
+  - component: {fileID: 65604664315599716}
+  - component: {fileID: 65958671055065678}
   m_Layer: 10
   m_Name: StageCollider
   m_TagString: Untagged
@@ -115,7 +102,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &1941846862967528
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
@@ -137,13 +124,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1696466390942686}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 252.37057, y: 0, z: 0.10917044}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4192262512971642}
-  - {fileID: 4826224718115854}
   - {fileID: 4619146247324280}
-  - {fileID: 4961245373496242}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -184,7 +169,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4961245373496242}
   m_Father: {fileID: 4192262512971642}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -194,19 +180,6 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1588321322874002}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4055895842181392}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4826224718115854
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1379733957357142}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -224,8 +197,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4055895842181392}
-  m_RootOrder: 3
+  m_Father: {fileID: 4362646847316836}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23383667715220112
 MeshRenderer:
@@ -283,17 +256,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!65 &65353463877597086
+--- !u!65 &65604664315599716
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1379733957357142}
+  m_GameObject: {fileID: 1588321322874002}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.6, y: 1, z: 1}
+  m_Size: {x: 1, y: 0.5, z: 1}
   m_Center: {x: 0, y: 3, z: 0}
 --- !u!65 &65742964098009212
 BoxCollider:
@@ -305,8 +278,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.25, y: 2.5, z: 1}
-  m_Center: {x: 0, y: 1.25, z: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!65 &65753191727948820
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -319,6 +292,42 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.4, y: 3.5, z: 1}
   m_Center: {x: 0, y: 1.75, z: 0}
+--- !u!65 &65849669266102316
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1588321322874002}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.75, z: 1}
+  m_Center: {x: 0, y: 2.4, z: 0}
+--- !u!65 &65933378189406454
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1588321322874002}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!65 &65958671055065678
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1588321322874002}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.25, z: 1}
+  m_Center: {x: 0, y: 3.4, z: 0}
 --- !u!95 &95426715668528710
 Animator:
   serializedVersion: 3
@@ -363,17 +372,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fx: {fileID: 1201061734182528, guid: 9abcf0803c941e44dab9f004c252b348, type: 2}
   sfx: {fileID: 8300000, guid: df0bf6e767f874948b1ebcd2f2251cab, type: 3}
---- !u!114 &114650564823330484
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1379733957357142}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 412452455570aa44bac37005f9813a6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114755068181469686
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -466,3 +464,14 @@ MonoBehaviour:
     m_RotationOrder: 0
   m_growSpikeSound: {fileID: 8300000, guid: 4e0cfe444a5c66b42ba32dc60312b401, type: 3}
   m_breakSpikeSound: {fileID: 8300000, guid: 0dd59268d95732d4c95944a569f90e5c, type: 3}
+  m_colliderArray:
+  - collider: {fileID: 65742964098009212}
+    percentage: 0
+  - collider: {fileID: 65933378189406454}
+    percentage: 0.28571
+  - collider: {fileID: 65849669266102316}
+    percentage: 0.57142
+  - collider: {fileID: 65604664315599716}
+    percentage: 0.78571
+  - collider: {fileID: 65958671055065678}
+    percentage: 0.92857
