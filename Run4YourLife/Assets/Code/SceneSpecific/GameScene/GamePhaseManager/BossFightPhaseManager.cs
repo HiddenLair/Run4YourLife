@@ -18,9 +18,6 @@ namespace Run4YourLife.GameManagement
         private CinemachineVirtualCamera m_virtualCamera;
 
         [SerializeField]
-        private Transform m_bossFightStartingCameraPositionDebug;
-
-        [SerializeField]
         private Transform[] m_runnerSpawns;
 
         [SerializeField]
@@ -60,10 +57,6 @@ namespace Run4YourLife.GameManagement
             GameObject boss = GameplayPlayerManager.Instance.Boss;
             Debug.Assert(boss != null);
 
-            m_virtualCamera.Follow = boss.transform;
-            m_virtualCamera.LookAt = boss.transform;
-            CameraManager.Instance.TransitionToCamera(m_virtualCamera);
-
             m_bossFightGemManager.StartGemMinigame();
         }
 
@@ -96,7 +89,7 @@ namespace Run4YourLife.GameManagement
 
             m_playerSpawner.ActivateBoss();
             m_playerSpawner.ActivatePlayers();
-            m_virtualCamera.transform.position = m_bossFightStartingCameraPositionDebug.position;
+            CameraManager.Instance.TransitionToCamera(m_virtualCamera);
 
             StartPhaseCommon();
         }
