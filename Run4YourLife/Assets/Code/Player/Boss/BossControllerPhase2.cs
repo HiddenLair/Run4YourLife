@@ -43,7 +43,7 @@ namespace Run4YourLife.Player
             GameObject bulletInstance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(m_bulletPrefab, m_shotSpawn.position, rotation, true);
             bulletInstance.GetComponent<BossExplosiveBulletController>().LaunchBullet(position);
 
-            AudioManager.Instance.PlaySFX(m_shotClip);
+            AudioManager.Instance.PlaySFX(m_shotFireClip);
 
             IsHeadLocked = false;
         }

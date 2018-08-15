@@ -74,8 +74,10 @@ namespace Run4YourLife.Player
         private AudioClip m_castClip;
 
         [SerializeField]
-        [Tooltip("Audio clip that plays when the boss shoots a bullet")]
-        protected AudioClip m_shotClip;
+        protected AudioClip m_shotWarningClip;
+
+        [SerializeField]
+        protected AudioClip m_shotFireClip;
 
         [SerializeField]
         protected AudioClip m_meleeClip;
@@ -221,7 +223,7 @@ namespace Run4YourLife.Player
             GameObject instance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(prefab, skillSpawnData.position, Quaternion.identity);
 
             SimulateChildOf simulateChildOf = instance.GetComponent<SimulateChildOf>();
-            if(skillSpawnData.parent != null)
+            if (skillSpawnData.parent != null)
             {
                 simulateChildOf.Parent = skillSpawnData.parent;
             }

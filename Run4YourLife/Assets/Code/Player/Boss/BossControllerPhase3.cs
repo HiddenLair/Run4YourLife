@@ -36,7 +36,7 @@ namespace Run4YourLife.Player
 
         private void ExecuteShootCallback()
         {
-            AudioManager.Instance.PlaySFX(m_shotClip);
+            AudioManager.Instance.PlaySFX(m_shotFireClip);
 
             Vector3 director = (m_crossHairControl.Position - m_shotSpawn.position).normalized;
             Quaternion rotation = Quaternion.FromToRotation(Vector3.forward, director);
