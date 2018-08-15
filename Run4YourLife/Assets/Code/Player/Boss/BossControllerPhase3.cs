@@ -36,14 +36,12 @@ namespace Run4YourLife.Player
 
         private void ExecuteShootCallback()
         {
-            AudioManager.Instance.PlaySFX(m_shotFireClip);
-
             Vector3 director = (m_crossHairControl.Position - m_shotSpawn.position).normalized;
             Quaternion rotation = Quaternion.FromToRotation(Vector3.forward, director);
             rotation.z = 0;
             GameObject laserInstance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(m_laserPrefab, m_shotSpawn.position, rotation, true);
             laserInstance.GetComponent<SimulateChildOf>().Parent = m_shotSpawn;
-
+            laserInstance.GetComponent<BossLaserBulletController>().FireLaser();
 
             // we wait for the Shoot state because at this moment in time, the code is in a transition moving towards shoot
             // when in a transition we are still not in the state

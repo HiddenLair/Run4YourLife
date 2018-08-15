@@ -27,7 +27,7 @@ namespace Run4YourLife.Player.Boss
         [SerializeField]
         private GameObject collisionParticle;
 
-        private void OnEnable()
+        public void FireLaser()
         {
             StartCoroutine(LaserBehaviour());
         }
@@ -56,10 +56,10 @@ namespace Run4YourLife.Player.Boss
             Vector3 halfExtents = new Vector3(m_laserCollisionWidth / 2f, m_laserCollisionWidth / 2f, laserDistance / 2f);
 
             GameObject laser = m_laserReceiver.PlayFx(true);
-            laser.GetComponent<ParticleScaler>().SetScale(new Vector3(laserDistance, m_laserCollisionWidth,1));
+            laser.GetComponent<ParticleScaler>().SetScale(new Vector3(laserDistance, m_laserCollisionWidth, 1));
             if (laserEnd != transform.position + transform.forward * m_maxLaserDistance)
             {
-                FXManager.Instance.InstantiateFromValues(laserEnd,transform.rotation, collisionParticle);
+                FXManager.Instance.InstantiateFromValues(laserEnd, transform.rotation, collisionParticle);
             }
 
             // Check for players to kill

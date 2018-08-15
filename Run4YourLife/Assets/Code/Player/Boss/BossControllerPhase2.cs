@@ -32,6 +32,8 @@ namespace Run4YourLife.Player
 
             IsHeadLocked = true;
 
+            AudioManager.Instance.PlaySFX(m_shotWarningClip);
+
             Vector3 position = m_crossHairControl.Position;
             Quaternion rotation = Quaternion.FromToRotation(Vector3.right, (position - m_shotSpawn.position).normalized);
 
