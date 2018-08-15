@@ -52,13 +52,10 @@ public class CoconutController : MonoBehaviour
             {
                 runnerEvents.Kill();
             }
-            else
-            {
-                AudioManager.Instance.PlaySFX(m_hitGroundAudioClip);
-            }
+
+            AudioManager.Instance.PlaySFX(m_hitGroundAudioClip);
 
             gameObject.SetActive(false);
-
         }
     }
 }
