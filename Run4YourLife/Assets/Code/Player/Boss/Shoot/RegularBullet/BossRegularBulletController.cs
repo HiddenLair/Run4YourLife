@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 using Run4YourLife;
 using Run4YourLife.Player;
+using Run4YourLife.GameManagement.AudioManagement;
 
 namespace Run4YourLife.Player.Boss
 {
@@ -13,6 +15,9 @@ namespace Run4YourLife.Player.Boss
 
         [SerializeField]
         private GameObject m_hitParticles;
+
+        [SerializeField]
+        private AudioClip m_hitGroundClip;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -23,7 +28,8 @@ namespace Run4YourLife.Player.Boss
                     ExecuteEvents.Execute<IRunnerEvents>(other.gameObject, null, (x, y) => x.Kill());
                 }
 
-                GenerateHitParticle(transform.position);
+                FXManager.Instance.InstantiateFromValues(transform.position, Quaternion.identity, m_hitParticles);
+                AudioManager.Instance.PlaySFX(m_hitGroundClip);
 
                 gameObject.SetActive(false);
             }
@@ -31,7 +37,7 @@ namespace Run4YourLife.Player.Boss
 
         private void GenerateHitParticle(Vector3 position)
         {
-            FXManager.Instance.InstantiateFromValues(position, Quaternion.identity, m_hitParticles);
+
         }
 
         public void RegularBulletBecameInvisible()
