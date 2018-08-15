@@ -29,6 +29,9 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
         private float rayCheckerLenght = 10.0f;
 
         [SerializeField]
+        private float timeBetweenChecks = 0.1f;
+
+        [SerializeField]
         private float gravity = -9.8f;
 
         [SerializeField]
@@ -140,17 +143,7 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
 
         protected override void OnSkillStart()
         {
-            RaycastHit info;
-            if (Physics.Raycast(transform.position, Vector3.down, out info, rayCheckerLenght, Layers.Stage))
-            {
-                if (info.collider.CompareTag(Tags.Water))
-                {
-                    destroyOnLanding = true;
-                }
-                finalPos = transform.position + Vector3.down * info.distance;
-                fatherTransformStorage = info.collider.gameObject.transform;
-                fatherInitialY = fatherTransformStorage.position.y;
-            }
+            CheckRay();
 
             FXManager.Instance.InstantiateFromValues(transform.position, indicatorParticles.transform.rotation, indicatorParticles);
 
@@ -159,10 +152,12 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
 
         private IEnumerator FadeInAndFall()
         {
+            Coroutine checker = StartCoroutine(RayCheckerInTime());
             yield return StartCoroutine(GenerateTrap());
             m_runnerDetectorTrigger.enabled = true;
             m_skillBreakTrigger.enabled = true;
             yield return StartCoroutine(Fall());
+            StopCoroutine(checker);
 
             if (phase != SkillBase.Phase.PHASE1)
             {
@@ -171,6 +166,31 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
             if (phase == SkillBase.Phase.PHASE3)
             {
                 StartCoroutine(Jump());
+            }
+        }
+
+        private IEnumerator RayCheckerInTime()
+        {
+            WaitForSeconds toYield = new WaitForSeconds(timeBetweenChecks);
+            while (true)
+            {
+                yield return toYield; // We wait first, cause on first call we have already done the check on skill start function
+                CheckRay();               
+            }
+        }
+
+        private void CheckRay()
+        {
+            RaycastHit info;
+            if (Physics.Raycast(transform.position, Vector3.down, out info, rayCheckerLenght, Layers.Stage,QueryTriggerInteraction.Ignore))
+            {
+                if (info.collider.CompareTag(Tags.Water))
+                {
+                    destroyOnLanding = true;
+                }
+                finalPos = transform.position + Vector3.down * info.distance;
+                fatherTransformStorage = info.collider.gameObject.transform;
+                fatherInitialY = fatherTransformStorage.position.y;
             }
         }
 
@@ -189,7 +209,7 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
             }
         }
 
-        private IEnumerator Fall() // @TODO does this work 100% reliably with falling platforms and moving platforms¿?
+        private IEnumerator Fall()
         {
             while (true)
             {
