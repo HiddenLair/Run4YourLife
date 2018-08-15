@@ -33,6 +33,8 @@ namespace Run4YourLife.Player
 
             IsHeadLocked = true;
 
+            AudioManager.Instance.PlaySFX(m_shotWarningClip);
+
             Vector3 direction = (m_crossHairControl.Position - m_shotSpawn.position).normalized;
             Quaternion rotation = Quaternion.FromToRotation(Vector3.right, direction);
 
@@ -44,7 +46,7 @@ namespace Run4YourLife.Player
             GameObject bulletInstance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(m_bulletPrefab, m_shotSpawn.position, rotation, true);
             bulletInstance.GetComponent<Rigidbody>().velocity = direction * m_bulletSpeed;
 
-            AudioManager.Instance.PlaySFX(m_shotClip);
+            AudioManager.Instance.PlaySFX(m_shotFireClip);
 
             IsHeadLocked = false;
         }
