@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+
+using UnityEngine;
 
 using Run4YourLife.SceneManagement;
 using Run4YourLife.InputManagement;
@@ -38,9 +40,9 @@ namespace Run4YourLife.GameManagement
 
         private void Update()
         {
-            if(m_playersGameControlScheme.Pause.Started())
+            if (m_playersGameControlScheme.Pause.Started())
             {
-                if(m_pauseState == PauseState.UNPAUSED)
+                if (m_pauseState == PauseState.UNPAUSED)
                 {
                     PauseGame();
                 }
@@ -53,7 +55,7 @@ namespace Run4YourLife.GameManagement
 
                 */
 
-                else if(!SceneTransitionManager.Instance.IsSceneLoaded("OptionsMenu"))
+                else if (!SceneTransitionManager.Instance.IsSceneLoaded("OptionsMenu"))
                 {
                     ResumeGame();
                 }
@@ -76,19 +78,30 @@ namespace Run4YourLife.GameManagement
             AudioManager.Instance.PlaySFX(m_pauseGameAudioClip);
             AudioManager.Instance.PauseMusic();
 
-            foreach(GameObject runner in GameplayPlayerManager.Instance.RunnersAlive)
+            foreach (GameObject runner in GameplayPlayerManager.Instance.RunnersAlive)
             {
-                runner.SetActive(false);
+                runner.GetComponent<RunnerControlScheme>().Active = false;
             }
 
-            foreach(GameObject ghost in GameplayPlayerManager.Instance.GhostsAlive)
+            foreach (GameObject ghost in GameplayPlayerManager.Instance.GhostsAlive)
             {
-                ghost.SetActive(false);
+                ghost.GetComponent<RunnerGhostControlScheme>().Active = false;
             }
+
+            GameplayPlayerManager.Instance.Boss.GetComponent<BossControlScheme>().Active = false;
         }
 
         public void ResumeGame()
         {
+            StartCoroutine(ResumeGameCoroutine());
+        }
+
+        private IEnumerator ResumeGameCoroutine()
+        {
+            // we need to wait one frame so that the player that pressed the continue button does not jump / use boss skill.
+            // We skip the frame because the player that pressed continue has the A input started value true
+            yield return null;
+
             Debug.Assert(m_pauseState == PauseState.PAUSED);
             m_pauseState = PauseState.UNPAUSED;
             Time.timeScale = 1.0f;
@@ -97,15 +110,17 @@ namespace Run4YourLife.GameManagement
             AudioManager.Instance.PlaySFX(m_resumeGameAudioClip);
             AudioManager.Instance.UnPauseMusic();
 
-            foreach(GameObject runner in GameplayPlayerManager.Instance.RunnersAlive)
+            foreach (GameObject runner in GameplayPlayerManager.Instance.RunnersAlive)
             {
-                runner.SetActive(true);
+                runner.GetComponent<RunnerControlScheme>().Active = true;
             }
 
-            foreach(GameObject ghost in GameplayPlayerManager.Instance.GhostsAlive)
+            foreach (GameObject ghost in GameplayPlayerManager.Instance.GhostsAlive)
             {
-                ghost.SetActive(true);
+                ghost.GetComponent<RunnerGhostControlScheme>().Active = true;
             }
+
+            GameplayPlayerManager.Instance.Boss.GetComponent<BossControlScheme>().Active = true;
         }
     }
 }
