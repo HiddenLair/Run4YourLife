@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.Playables;
-using Cinemachine;
+using Run4YourLife.SceneSpecific;
 
 namespace Run4YourLife.GameManagement
 {
@@ -16,6 +16,9 @@ namespace Run4YourLife.GameManagement
 
         [SerializeField]
         private PlayableDirector m_endCutScene;
+
+        [SerializeField]
+        private GemColumnController[] m_columns;
 
         private Coroutine m_startPhaseCoroutine;
 
@@ -85,7 +88,10 @@ namespace Run4YourLife.GameManagement
 
         public override void EndPhase()
         {
-
+            foreach(GemColumnController c in m_columns)
+            {
+                c.DeactivateColumn();
+            }
         }
 
         public override void DebugStartPhase()
