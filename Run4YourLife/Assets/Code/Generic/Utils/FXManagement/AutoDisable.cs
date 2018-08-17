@@ -2,23 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AutoDisable : MonoBehaviour {
+public class AutoDisable : MonoBehaviour
+{
+    private ParticleSystem[] m_particleSystems;
 
-    private ParticleSystem[] particles;
+    private void Awake()
+    {
+        m_particleSystems = GetComponentsInChildren<ParticleSystem>();
+    }
 
-	// Use this for initialization
-	void Start () {
-        particles = GetComponentsInChildren<ParticleSystem>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        foreach (ParticleSystem p in particles) {
-            if (p.IsAlive())
+    void Update()
+    {
+        foreach (ParticleSystem p in m_particleSystems)
+        {
+            if (p.IsAlive(false))
             {
                 return;
             }
         }
+
         gameObject.SetActive(false);
     }
 }
