@@ -23,16 +23,37 @@ namespace Run4YourLife.Cinemachine
         [Range(0, 1)]
         [Tooltip("Percentual screen Y position for target")]
         public float m_screenY = 0.5f;
+
+        public CinemachineScreenTransposerData()
+        {
+        }
+
+        public CinemachineScreenTransposerData(CinemachineScreenTransposerData other)
+        {
+            this.m_offsetFromTarget = other.m_offsetFromTarget;
+            this.m_verticalHeight = other.m_verticalHeight;
+            this.m_screenX = other.m_screenX;
+            this.m_screenY = other.m_screenY;
+        }
     }
 
     public class CinemachineScreenTransposer : CinemachineComponentBase
     {
-        public CinemachineScreenTransposerData m_cinemachineScreenTransposerData;
+        [SerializeField]
+        // Used for serialization don't use directly
+        private CinemachineScreenTransposerData m_screenTransposerData;
+
+        private CinemachineScreenTransposerData m_cinemachineScreenTransposerData;
         private Transform m_previousTarget;
 
         public override bool IsValid { get { return enabled && FollowTarget != null; } }
-
+        public CinemachineScreenTransposerData CinemachineScreenTransposerData { get { return m_cinemachineScreenTransposerData; } set { m_cinemachineScreenTransposerData = value; } }
         public override CinemachineCore.Stage Stage { get { return CinemachineCore.Stage.Body; } }
+
+        private void Awake()
+        {
+            m_cinemachineScreenTransposerData = new CinemachineScreenTransposerData(m_screenTransposerData);
+        }
 
         public override void MutateCameraState(ref CameraState curState, float deltaTime)
         {
