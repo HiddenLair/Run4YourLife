@@ -15,10 +15,23 @@ namespace Run4YourLife.Interactables.FlyingChicken
 
         private Rigidbody m_rigidbody;
 
+        private RunnerDashBreakableState m_state;
+
+        RunnerDashBreakableState IRunnerDashBreakable.RunnerDashBreakableState { get { return m_state; } }
 
         private void Awake()
         {
             m_rigidbody = GetComponent<Rigidbody>();
+        }
+
+        private void OnEnable()
+        {
+            ResetState();
+        }
+
+        private void ResetState()
+        {
+            m_state = RunnerDashBreakableState.Alive;
         }
 
         private void FixedUpdate()
@@ -36,6 +49,8 @@ namespace Run4YourLife.Interactables.FlyingChicken
 
         void IRunnerDashBreakable.Break()
         {
+            m_state = RunnerDashBreakableState.Broken;
+
             m_explodeParticles.PlayFx(false);
             gameObject.SetActive(false);
         }

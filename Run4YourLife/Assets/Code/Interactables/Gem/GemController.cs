@@ -9,6 +9,7 @@ using Run4YourLife.Player.Runner;
 
 public class GemController : MonoBehaviour, IRunnerDashBreakable
 {
+
     [SerializeField]
     private float m_timeBetweenTeleports;
 
@@ -31,6 +32,10 @@ public class GemController : MonoBehaviour, IRunnerDashBreakable
 
     private Transform[] m_possibleGemPositions;
 
+    private RunnerDashBreakableState m_state;
+
+    RunnerDashBreakableState IRunnerDashBreakable.RunnerDashBreakableState { get { return m_state; } }
+
     private void Awake()
     {
         m_collider = GetComponent<Collider>();
@@ -49,6 +54,7 @@ public class GemController : MonoBehaviour, IRunnerDashBreakable
     private void ResetState()
     {
         Display(false);
+        m_state = RunnerDashBreakableState.Alive;
     }
 
     private void OnDisable()
@@ -87,12 +93,6 @@ public class GemController : MonoBehaviour, IRunnerDashBreakable
         }
     }
 
-    public void Break()
-    {
-        m_destructionReceiver.PlayFx();
-        BossFightGemManager.Instance.OnGemHasBeenDestroyed();
-    }
-
     private void Display(bool state)
     {
         m_graphicsChild.SetActive(state);
@@ -107,5 +107,11 @@ public class GemController : MonoBehaviour, IRunnerDashBreakable
             randomPosition = m_possibleGemPositions[UnityEngine.Random.Range(0, m_possibleGemPositions.Length)].position;
         } while (randomPosition == transform.position);
         return randomPosition;
+    }
+
+    void IRunnerDashBreakable.Break()
+    {
+        m_destructionReceiver.PlayFx();
+        BossFightGemManager.Instance.OnGemHasBeenDestroyed();
     }
 }

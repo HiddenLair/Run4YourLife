@@ -13,7 +13,7 @@ namespace Run4YourLife.SceneSpecific.WinMenu
 
         void Awake()
         {
-            if(m_sceneMusic != null)
+            if (m_sceneMusic != null)
             {
                 AudioManager.Instance.PlayMusic(m_sceneMusic);
             }
