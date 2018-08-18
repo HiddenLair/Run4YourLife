@@ -227,6 +227,9 @@ namespace Run4YourLife.Player.Runner
 
         private void ResetMembers()
         {
+            FadeByRender(true);
+            m_recentlyRevived = false;
+
             m_gravity = m_baseGravity;
             m_horizontalDrag = m_baseHorizontalDrag;
             m_velocity = Vector3.zero;
@@ -911,16 +914,17 @@ namespace Run4YourLife.Player.Runner
 
         public void RecentlyRevived()
         {
-            m_recentlyRevived = true;
-            StartCoroutine(ManageRecentlyRevived());
+            StartCoroutine(RecentlyRevivedBehaviour());
         }
 
-        IEnumerator ManageRecentlyRevived()
+        private IEnumerator RecentlyRevivedBehaviour()
         {
+            m_recentlyRevived = true;
+
             bool faded = false;
-            float timer = Time.time + inmuneTimeAfterRevive;
+            float endTime = Time.time + inmuneTimeAfterRevive;
             float fadeTimer = Time.time + fadePeriodAfterRevive;
-            while (timer > Time.time)
+            while (endTime > Time.time)
             {
                 if (fadeTimer <= Time.time)
                 {
@@ -931,6 +935,7 @@ namespace Run4YourLife.Player.Runner
                 yield return null;
             }
             FadeByRender(true);
+
             m_recentlyRevived = false;
         }
 

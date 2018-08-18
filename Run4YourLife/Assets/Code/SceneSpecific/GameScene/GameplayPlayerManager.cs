@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -18,9 +18,6 @@ namespace Run4YourLife.GameManagement
         GameObject OnRunnerRevive(PlayerHandle playerHandle, Vector3 position);
         GameObject OnRunnerActivate(PlayerHandle playerHandle, Vector3 position);
     }
-
-    [System.Serializable]
-    public class OnPlayerReviveEvent : UnityEvent<GameObject> { }
 
     [RequireComponent(typeof(GameManager))]
     [RequireComponent(typeof(RunnerPrefabManager))]

@@ -31,7 +31,7 @@ namespace Run4YourLife.GameManagement
             EndCutScene();
 
             GameManager.Instance.EndGame_BossWin();
-        }     
+        }
 
         private void StartCutScene()
         {
@@ -57,25 +57,26 @@ namespace Run4YourLife.GameManagement
             Unbind(m_startingCutscene);
         }
 
-        private void BindEndLocationTransformReference(Transform t,String trackStringId, int minClipNum , int maxClipNum)
+        private void BindEndLocationTransformReference(Transform t, String trackStringId, int minClipNum, int maxClipNum)
         {
             TimelineAsset tl = m_startingCutscene.playableAsset as TimelineAsset;
 
             //find the control track;
             var tracks = tl.GetOutputTracks();
 
-            foreach(TrackAsset track in tracks)
+            foreach (TrackAsset track in tracks)
             {
-                if (track.name.Contains(trackStringId)) {
+                if (track.name.Contains(trackStringId))
+                {
                     //create the new clip on the TL
                     var tlClips = track.GetClips();
                     int i = 0;
                     foreach (TimelineClip tlClip in tlClips)
                     {
                         TransformTweenClip clip = tlClip.underlyingAsset as TransformTweenClip;
-                        if(i >= minClipNum && i <= maxClipNum)
+                        if (i >= minClipNum && i <= maxClipNum)
                         {
-                            clip.endLocation.exposedName = UnityEngine.Random.Range(float.MinValue,float.MaxValue).ToString();
+                            clip.endLocation.exposedName = UnityEngine.Random.Range(float.MinValue, float.MaxValue).ToString();
                             m_startingCutscene.SetReferenceValue(clip.endLocation.exposedName, t);
                         }
                         ++i;
@@ -99,6 +100,7 @@ namespace Run4YourLife.GameManagement
             m_startPhaseCoroutine = null;
 
             EndCutScene();
+            GameplayPlayerManager.Instance.SetEventsToListen(true);
             foreach (GameObject ghost in GameplayPlayerManager.Instance.Ghosts)
             {
                 ActivateScripts(ghost);
