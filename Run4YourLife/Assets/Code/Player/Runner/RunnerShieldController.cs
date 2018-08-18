@@ -1,8 +1,5 @@
-﻿using System;
+﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using Run4YourLife.Utils;
-using UnityEngine;
 
 namespace Run4YourLife.Player.Runner
 {
@@ -10,8 +7,8 @@ namespace Run4YourLife.Player.Runner
     public class RunnerShieldController : MonoBehaviour
     {
         [SerializeField]
-        [Range(0, 1)]
-        private float m_atenuation;
+        [Range(0.0f, 1.0f)]
+        private float m_atenuation = 0.5f;
 
         private MeshRenderer m_meshRenderer;
         private Material m_shieldMaterial;
@@ -32,16 +29,16 @@ namespace Run4YourLife.Player.Runner
             switch (characterType)
             {
                 case CharacterType.ACorn:
-                    color = Color.blue;
-                    break;
-                case CharacterType.Skull:
-                    color = Color.magenta;
-                    break;
-                case CharacterType.Snake:
                     color = Color.yellow;
                     break;
-                case CharacterType.Plain:
+                case CharacterType.Skull:
+                    color = Color.white;
+                    break;
+                case CharacterType.Snake:
                     color = Color.red;
+                    break;
+                case CharacterType.Plain:
+                    color = Color.magenta;
                     break;
                 case CharacterType.NoColor:
                     color = Color.gray;
