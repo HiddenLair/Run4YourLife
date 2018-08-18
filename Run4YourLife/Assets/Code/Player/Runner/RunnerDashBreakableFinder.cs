@@ -15,10 +15,19 @@ namespace Run4YourLife.Player.Runner
 
         public IRunnerDashBreakable RunnerDashBreakable { get { return m_runnerDashBreakable; } }
 
+        public void BreakIfAviable()
+        {
+            if (m_runnerDashBreakable != null && m_runnerDashBreakable.RunnerDashBreakableState == RunnerDashBreakableState.Alive)
+            {
+                m_runnerDashBreakable.Break();
+                m_runnerDashBreakable = null;
+            }
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             IRunnerDashBreakable runnerDashBreakable = other.GetComponent<IRunnerDashBreakable>();
-            if (runnerDashBreakable != null)
+            if (runnerDashBreakable != null && runnerDashBreakable.RunnerDashBreakableState == RunnerDashBreakableState.Alive)
             {
                 m_runnerDashBreakable = runnerDashBreakable;
             }
@@ -42,15 +51,6 @@ namespace Run4YourLife.Player.Runner
         private void OnValidate()
         {
             Debug.Assert(m_runnerController != null);
-        }
-
-        internal void BreakIfAviable()
-        {
-            if (m_runnerDashBreakable != null)
-            {
-                m_runnerDashBreakable.Break();
-                m_runnerDashBreakable = null;
-            }
         }
         #endregion
     }
