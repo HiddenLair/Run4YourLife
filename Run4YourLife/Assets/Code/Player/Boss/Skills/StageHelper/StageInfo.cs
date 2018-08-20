@@ -83,4 +83,9 @@ public class StageInfo : MonoBehaviour {
         value = minValue;
         return minHasValue;
     }
+
+    public void SetStageInfoGroup(StageGroupInfo group)
+    {
+        groupInfo = group;
+    }
 }
