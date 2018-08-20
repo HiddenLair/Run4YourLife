@@ -87,6 +87,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4178777655375100}
+  - component: {fileID: 114925741835034764}
   m_Layer: 0
   m_Name: WindParticles
   m_TagString: Untagged
@@ -294,6 +295,19 @@ MonoBehaviour:
   timeBetweenFlyingItems: 0
   tornado: {fileID: 0}
   timeBetweenTornados: 0
+--- !u!114 &114925741835034764
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1622334378515526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd45443e3df09a948908d4be40418ad2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleSystemRenderer: {fileID: 199390043398290950}
+  timeToFade: 1
 --- !u!198 &198568028818359024
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -354,7 +368,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 597422348
+  randomSeed: 1612726770
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3715,7 +3729,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1956443692
+  randomSeed: 781726850
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3803,9 +3817,9 @@ ParticleSystem:
         m_RotationOrder: 4
     startColor:
       serializedVersion: 2
-      minMaxState: 3
+      minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0.19607843}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 0.60784316}
@@ -7085,7 +7099,7 @@ ParticleSystemRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: 08c133eef4d9bb04880d20d882558c8b, type: 2}
+  - {fileID: 0}
   - {fileID: 2100000, guid: c3893857130201b42801a96a1dbae74d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -7106,7 +7120,7 @@ ParticleSystemRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_RenderMode: 0
+  m_RenderMode: 5
   m_SortMode: 0
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
@@ -7119,7 +7133,7 @@ ParticleSystemRenderer:
   m_Pivot: {x: 0, y: 0, z: 0}
   m_UseCustomVertexStreams: 0
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}

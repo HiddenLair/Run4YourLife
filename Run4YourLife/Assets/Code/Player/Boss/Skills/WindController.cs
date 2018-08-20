@@ -7,6 +7,7 @@ using Run4YourLife.GameManagement;
 using Run4YourLife.CameraUtils;
 using Run4YourLife.Player.Runner;
 using Run4YourLife.GameManagement.AudioManagement;
+using Run4YourLife.Utils;
 
 namespace Run4YourLife.Player.Boss.Skills.Wind
 {
@@ -56,6 +57,8 @@ namespace Run4YourLife.Player.Boss.Skills.Wind
         private float flyingItemTimer = 0.0f;
         private float tornadoTimer = 0.0f;
 
+        private ParticleFadeOut particleFadeOutController;
+
         #endregion
 
         protected override void ResetState()
@@ -77,6 +80,12 @@ namespace Run4YourLife.Player.Boss.Skills.Wind
             Vector3 newScale = new Vector3(0, topRight.y - bottomLeft.y, 2); //z 2 is an arbitrary number, you can change if you need
             transform.localScale = newScale;
 
+            if (particleFadeOutController == null)
+            {
+                particleFadeOutController = GetComponentInChildren<ParticleFadeOut>();
+                //windDuration -= particleFadeOutController.timeToFade;
+            }
+
             windParticles.SetActive(true);
 
             StartCoroutine(FillScreen());
@@ -84,6 +93,11 @@ namespace Run4YourLife.Player.Boss.Skills.Wind
 
         IEnumerator FillScreen()
         {
+            if (particleFadeOutController != null)
+            {
+                particleFadeOutController.RestoreParticleTrailMaterial();
+            }
+
             Camera mainCamera = CameraManager.Instance.MainCamera;
             float increasePerSec = 100 / windFillScreenTime;
             Vector3 actualScale = transform.localScale;
@@ -184,6 +198,13 @@ namespace Run4YourLife.Player.Boss.Skills.Wind
 
                 yield return null;
             }
+
+            if (particleFadeOutController != null)
+            {
+                particleFadeOutController.FadeOutParticleTrailMaterial();
+                yield return new WaitForSeconds(particleFadeOutController.timeToFade);
+            }
+
             windParticles.SetActive(false);
             gameObject.SetActive(false);
         }
