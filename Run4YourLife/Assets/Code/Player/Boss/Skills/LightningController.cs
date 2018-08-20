@@ -63,14 +63,17 @@ namespace Run4YourLife.Player.Boss.Skills.Lightning
         private GameObject lightningGameObject;
 
         [SerializeField]
-        private int maxNumberOfLightnings;
+        private int maxNumberOfLightningsPerSide;
 
         #endregion
 
         #region Private Variables
 
         private WaitForSeconds lightningDelay;
-        private bool oneLightningSideFinished = false;
+        private bool rightLightningSideFinished = false;
+        private bool leftLightningSideFinished = false;
+        private bool mainLightningFinished = false;
+        private float maxIterationModificable = 0.0f;
 
         #endregion
 
@@ -81,7 +84,10 @@ namespace Run4YourLife.Player.Boss.Skills.Lightning
 
         protected override void ResetState()
         {
-            oneLightningSideFinished = false;
+            rightLightningSideFinished = false;
+            leftLightningSideFinished = false;
+            mainLightningFinished = false;
+            maxIterationModificable = maxNumberOfLightningsPerSide;
         }
 
         protected override void OnSkillStart()
@@ -108,8 +114,7 @@ namespace Run4YourLife.Player.Boss.Skills.Lightning
             flashBody.localPosition = new Vector3(0, yPos, -1);
             cloudEffect.SetActive(true);
             StartCoroutine(HoldCloudTop());
-            yield return lightningDelay;
-
+            yield return lightningDelay;            
             LightningHit();
         }
 
@@ -156,7 +161,6 @@ namespace Run4YourLife.Player.Boss.Skills.Lightning
             {
                 SetElectricFields(nonRunnersHits);
             }
-
             lighningEffect.SetActive(true);
             lighningEffect.GetComponent<ParticleScaler>().SetXScale(width);
             ParticleSystem[] lightning = lighningEffect.GetComponentsInChildren<ParticleSystem>();
@@ -220,10 +224,11 @@ namespace Run4YourLife.Player.Boss.Skills.Lightning
                 yield return null;
             }
             particleSystem.SetActive(false);
-            if (phase != SkillBase.Phase.PHASE3)
+            if (phase != Phase.PHASE3 || (rightLightningSideFinished && leftLightningSideFinished))
             {
                 gameObject.SetActive(false);
             }
+            mainLightningFinished = true;
         }
 
         public void SetDelayHit(float value)
@@ -240,26 +245,27 @@ namespace Run4YourLife.Player.Boss.Skills.Lightning
         {
             yield return new WaitForSeconds(delayBetweenLightnings * Mathf.Pow(delayBetweenLightningsProgresion, iterationNumber));
 
-            position.x -= newLightningsDistance * Mathf.Pow(newLightningsDistanceProgresion, iterationNumber);
-            GameObject instance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(lightningGameObject, position, Quaternion.identity, true);
-            instance.GetComponent<LightningController>().SetDelayHit(newLightningsDelayHit * Mathf.Pow(newLightningsDelayHitProgresion, iterationNumber));
-            instance.GetComponent<SkillBase>().StartSkill();
-
+            position.x -= newLightningsDistance * Mathf.Pow(newLightningsDistanceProgresion, iterationNumber);           
             float leftScreen = CameraConverter.ViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, new Vector2(0, 0)).x;
 
-            if (position.x > leftScreen && iterationNumber < maxNumberOfLightnings)
+            if (position.x > leftScreen && iterationNumber <= maxIterationModificable)
             {
+                GameObject instance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(lightningGameObject, position, Quaternion.identity, true);
+                instance.GetComponent<LightningController>().SetDelayHit(newLightningsDelayHit * Mathf.Pow(newLightningsDelayHitProgresion, iterationNumber));
+                instance.GetComponent<SkillBase>().StartSkill();
+
                 StartCoroutine(StartNewLeftLightning(++iterationNumber, position));
             }
             else
             {
-                if (oneLightningSideFinished)
+                if (rightLightningSideFinished && mainLightningFinished)
                 {
                     gameObject.SetActive(false);
                 }
                 else
                 {
-                    oneLightningSideFinished = true;
+                    leftLightningSideFinished = true;
+                    maxIterationModificable += maxIterationModificable - (iterationNumber - 1);//As we start with iter 1, we have to substract it
                 }
             }
         }
@@ -269,25 +275,26 @@ namespace Run4YourLife.Player.Boss.Skills.Lightning
             yield return new WaitForSeconds(delayBetweenLightnings * Mathf.Pow(delayBetweenLightningsProgresion, iterationNumber));
 
             position.x += newLightningsDistance * Mathf.Pow(newLightningsDistanceProgresion, iterationNumber);
-            GameObject instance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(lightningGameObject, position, Quaternion.identity, true);
-            instance.GetComponent<LightningController>().SetDelayHit(newLightningsDelayHit * Mathf.Pow(newLightningsDelayHitProgresion, iterationNumber));
-            instance.GetComponent<SkillBase>().StartSkill();
-
             float rightScreen = CameraConverter.ViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, new Vector2(1, 1)).x;
 
-            if (position.x < rightScreen && iterationNumber < maxNumberOfLightnings)
+            if (position.x < rightScreen && iterationNumber <= maxIterationModificable)
             {
+                GameObject instance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(lightningGameObject, position, Quaternion.identity, true);
+                instance.GetComponent<LightningController>().SetDelayHit(newLightningsDelayHit * Mathf.Pow(newLightningsDelayHitProgresion, iterationNumber));
+                instance.GetComponent<SkillBase>().StartSkill();
+
                 StartCoroutine(StartNewRightLightning(++iterationNumber, position));
             }
             else
             {
-                if (oneLightningSideFinished)
+                if (leftLightningSideFinished && mainLightningFinished)
                 {
                     gameObject.SetActive(false);
                 }
                 else
                 {
-                    oneLightningSideFinished = true;
+                    rightLightningSideFinished = true;
+                    maxIterationModificable += maxIterationModificable - (iterationNumber-1);//As we start with iter 1, we have to substract it
                 }
             }
         }
