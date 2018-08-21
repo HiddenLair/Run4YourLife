@@ -1103,6 +1103,7 @@ GameObject:
   - component: {fileID: 114281202304976766}
   - component: {fileID: 114937719800839606}
   - component: {fileID: 114806822835380222}
+  - component: {fileID: 114629547429040202}
   m_Layer: 8
   m_Name: RunnerACorn
   m_TagString: Player
@@ -2893,6 +2894,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fx: {fileID: 1751776643570596, guid: fa8134d7703a4c34bb96cae308ef5c96, type: 2}
   sfx: {fileID: 0}
+--- !u!114 &114629547429040202
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1912393269269488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70e9cb7816bdb52449dd2c5e895235d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_parent: {fileID: 0}
+  m_simulatePosition: 1
+  m_simualteRotation: 1
+  m_onParentDisableAction: 0
+  onParentDisabled:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114746206290452870
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class RigidbodySimpleVelocityMovement : MonoBehaviour {
+public class RigidbodySimpleVelocityMovement : MonoBehaviour
+{
 
     [SerializeField]
     private Vector3 m_velocity;

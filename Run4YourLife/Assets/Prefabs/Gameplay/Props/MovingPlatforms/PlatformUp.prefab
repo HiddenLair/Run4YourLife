@@ -22,9 +22,9 @@ GameObject:
   - component: {fileID: 54763877123979814}
   - component: {fileID: 65934927824867842}
   - component: {fileID: 114817481724252516}
-  - component: {fileID: 114234058463110892}
   - component: {fileID: 114890727110993142}
   - component: {fileID: 114422835612598762}
+  - component: {fileID: 114640837298327338}
   m_Layer: 10
   m_Name: PlatformUp
   m_TagString: Untagged
@@ -887,18 +887,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114234058463110892
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1084588529787208}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4182b0fbcd295b40ae7e07cdc792509, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_velocity: {x: 0, y: 2, z: 0}
 --- !u!114 &114316961270723448
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -937,6 +925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdb75e9e9fec50b4ea9b1cd69d5fe9a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  referenceGroup: []
 --- !u!114 &114471212770381208
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -976,6 +965,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGround: 0
+--- !u!114 &114640837298327338
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1084588529787208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5213f0d833367a646a8ad276c05f3663, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: {x: 0, y: 2, z: 0}
 --- !u!114 &114647824066756474
 MonoBehaviour:
   m_ObjectHideFlags: 1

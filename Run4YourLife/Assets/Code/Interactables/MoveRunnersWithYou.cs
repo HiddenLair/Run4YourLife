@@ -5,28 +5,11 @@ namespace Run4YourLife.Interactables
 {
     public class MoveRunnersWithYou : MonoBehaviour
     {
-
-        private Vector3 m_previousPosition;
-
-        List<Transform> players = new List<Transform>();
-
-        void FixedUpdate()
-        {
-            Vector3 delta = transform.position - m_previousPosition;
-
-            foreach (Transform transform in players)
-            {
-                transform.Translate(delta, Space.World);
-            }
-
-            m_previousPosition = transform.position;
-        }
-
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag(Tags.Runner))
             {
-                players.Add(other.transform);
+                other.GetComponent<SimulateChildOf>().Parent = transform;
             }
         }
 
@@ -34,13 +17,12 @@ namespace Run4YourLife.Interactables
         {
             if (other.CompareTag(Tags.Runner))
             {
-                players.Remove(other.transform);
+                SimulateChildOf simulateChildOf = other.GetComponent<SimulateChildOf>();
+                if (simulateChildOf.Parent == transform)
+                {
+                    simulateChildOf.Parent = null;
+                }
             }
-        }
-
-        private void OnDisable()
-        {
-            players.Clear();
         }
     }
 }

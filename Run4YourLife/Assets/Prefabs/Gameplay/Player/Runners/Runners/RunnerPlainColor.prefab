@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 114477727771639482}
   - component: {fileID: 114650279607915530}
   - component: {fileID: 114460606155332844}
+  - component: {fileID: 114042066120907742}
   m_Layer: 8
   m_Name: RunnerPlainColor
   m_TagString: Player
@@ -2537,6 +2538,26 @@ TrailRenderer:
     generateLightingData: 0
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
+--- !u!114 &114042066120907742
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1059789723846708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70e9cb7816bdb52449dd2c5e895235d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_parent: {fileID: 0}
+  m_simulatePosition: 1
+  m_simualteRotation: 1
+  m_onParentDisableAction: 0
+  onParentDisabled:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114072971896187650
 MonoBehaviour:
   m_ObjectHideFlags: 1

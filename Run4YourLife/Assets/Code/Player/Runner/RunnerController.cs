@@ -21,6 +21,7 @@ namespace Run4YourLife.Player.Runner
     [RequireComponent(typeof(InputController))]
     [RequireComponent(typeof(RunnerBounceController))]
     [RequireComponent(typeof(PlayerInstance))]
+    [RequireComponent(typeof(SimulateChildOf))]
     public class RunnerController : MonoBehaviour, IRunnerEvents
     {
         private enum States
@@ -122,6 +123,7 @@ namespace Run4YourLife.Player.Runner
         private Animator m_animator;
         private InputController m_inputController;
         private RunnerDashBreakableFinder m_runnerDashBreakableFinder;
+        private SimulateChildOf m_simulateChildOf;
 
         private Transform m_graphics;
         private Transform m_dashTrail;
@@ -154,9 +156,7 @@ namespace Run4YourLife.Player.Runner
 
         private bool m_recentlyRevived;
 
-        private Coroutine shieldCooldownDestroy;
-
-        private float idleTimer = 0.0f;
+        private float m_idleTimer = 0.0f;
 
         private Renderer[] m_renderersToFade;
 
@@ -194,6 +194,7 @@ namespace Run4YourLife.Player.Runner
             m_runnerBounceController = GetComponent<RunnerBounceController>();
             m_animator = GetComponent<Animator>();
             m_inputController = GetComponent<InputController>();
+            m_simulateChildOf = GetComponent<SimulateChildOf>();
 
             m_runnerDashBreakableFinder = GetComponentInChildren<RunnerDashBreakableFinder>();
             Debug.Assert(m_runnerDashBreakableFinder != null);
@@ -210,35 +211,36 @@ namespace Run4YourLife.Player.Runner
 
             m_mainCamera = CameraManager.Instance.MainCamera;
             Debug.Assert(m_mainCamera != null);
-
-            m_gravity = m_baseGravity;
-            m_horizontalDrag = m_baseHorizontalDrag;
         }
 
 
 
         private void OnEnable()
         {
-            ResetMembers();
+            ResetState();
             m_runnerControlScheme.Active = true;
 
             m_stateMachine.ChangeState(States.Idle);
         }
 
-        private void ResetMembers()
+        private void ResetState()
         {
-            FadeByRender(true);
-            m_recentlyRevived = false;
-
-            m_gravity = m_baseGravity;
-            m_horizontalDrag = m_baseHorizontalDrag;
-            m_velocity = Vector3.zero;
-
             m_isReadyToDash = true;
             m_ceilingCollision = false;
-            m_dashTrail.gameObject.SetActive(false);
+            m_recentlyRevived = false;
+
+            m_simulateChildOf.Parent = null;
+
+            m_gravity = m_baseGravity;
+            m_velocity = Vector3.zero;
+            m_horizontalDrag = m_baseHorizontalDrag;
+
             WindForceRelative = 0.0f;
-            idleTimer = 0.0f;
+            m_idleTimer = 0.0f;
+
+            m_dashTrail.gameObject.SetActive(false);
+            FadeByRender(true);
+
             m_animator.Rebind();
         }
 
@@ -255,7 +257,7 @@ namespace Run4YourLife.Player.Runner
                 m_stateMachine.ChangeState(States.Dash);
             }
             //Idle time  manage
-            idleTimer += Time.deltaTime;
+            m_idleTimer += Time.deltaTime;
         }
 
         #region Collision
@@ -318,7 +320,7 @@ namespace Run4YourLife.Player.Runner
 
             if (horizontal != 0)
             {
-                idleTimer = 0.0f;//Reset idle timer
+                m_idleTimer = 0.0f;//Reset idle timer
             }
 
             Vector3 windMovement = (Vector3.left * m_runnerAttributeController.GetAttribute(RunnerAttribute.Speed) * Time.deltaTime) * WindForceRelative;
@@ -444,7 +446,7 @@ namespace Run4YourLife.Player.Runner
             {
                 m_stateMachine.ChangeState(States.CoyoteMove);
             }
-            else if (m_inputController.ValueMaximized(m_runnerControlScheme.Move) == 0 && m_velocity == Vector3.zero && idleTimer >= m_timeToIdle)
+            else if (m_inputController.ValueMaximized(m_runnerControlScheme.Move) == 0 && m_velocity == Vector3.zero && m_idleTimer >= m_timeToIdle)
             {
                 m_stateMachine.ChangeState(States.Idle);
             }

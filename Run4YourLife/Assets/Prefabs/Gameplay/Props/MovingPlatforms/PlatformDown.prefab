@@ -124,9 +124,9 @@ GameObject:
   - component: {fileID: 54932821713766716}
   - component: {fileID: 65747638677513526}
   - component: {fileID: 114046933023278440}
-  - component: {fileID: 114165154303753150}
   - component: {fileID: 114206248397471340}
   - component: {fileID: 114284279438046434}
+  - component: {fileID: 114461232103367166}
   m_Layer: 10
   m_Name: PlatformDown
   m_TagString: Untagged
@@ -898,18 +898,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c0c5c604a1074d44a3b71c29d3a47fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114165154303753150
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1544942685355322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4182b0fbcd295b40ae7e07cdc792509, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_velocity: {x: 0, y: -2, z: 0}
 --- !u!114 &114206248397471340
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -963,6 +951,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdb75e9e9fec50b4ea9b1cd69d5fe9a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  referenceGroup: []
 --- !u!114 &114404752444100708
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -978,6 +967,18 @@ MonoBehaviour:
   m_isStatic: 0
   m_canBeRegenerated: 1
   m_disolveAnimationDuration: 0.5
+--- !u!114 &114461232103367166
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1544942685355322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5213f0d833367a646a8ad276c05f3663, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: {x: 0, y: -2, z: 0}
 --- !u!114 &114498595391389436
 MonoBehaviour:
   m_ObjectHideFlags: 1

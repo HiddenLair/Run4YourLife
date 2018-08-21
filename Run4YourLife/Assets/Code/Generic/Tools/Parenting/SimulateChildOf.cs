@@ -15,8 +15,6 @@ public class SimulateChildOf : MonoBehaviour
     [SerializeField]
     private Transform m_parent;
 
-
-
     [SerializeField]
     private bool m_simulatePosition = true;
 
@@ -38,11 +36,7 @@ public class SimulateChildOf : MonoBehaviour
         set
         {
             m_parent = value;
-            if (m_parent != null)
-            {
-                m_previousPosition = m_parent.position;
-                m_previousRotation = m_parent.rotation;
-            }
+            ChangeBehaviourState();
         }
     }
 
@@ -51,12 +45,18 @@ public class SimulateChildOf : MonoBehaviour
 
     private void OnEnable()
     {
+        ChangeBehaviourState();
+    }
+
+    private void ChangeBehaviourState()
+    {
         if (m_parent != null)
         {
             m_previousPosition = m_parent.position;
             m_previousRotation = m_parent.rotation;
         }
     }
+
     private void LateUpdate()
     {
         if (m_parent != null && CheckParentActive())
@@ -103,7 +103,7 @@ public class SimulateChildOf : MonoBehaviour
         {
             case OnParentDisableAction.None:
             case OnParentDisableAction.Disable:
-                if (onParentDisabled.GetPersistentEventCount() > 0)
+                if (onParentDisabled != null && onParentDisabled.GetPersistentEventCount() > 0)
                 {
                     Debug.LogWarning("SimulateChildOf would call a unityevent with no actions but you have set some actions", gameObject);
                 }
