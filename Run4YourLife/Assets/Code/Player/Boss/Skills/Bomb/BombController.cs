@@ -254,7 +254,6 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
 
         public void Explode()
         {
-            Debug.Log("Explode");
             StopAllCoroutines();
 
             Collider[] collisions = Physics.OverlapSphere(transform.position, m_explosionRatius, Layers.Runner);
