@@ -399,31 +399,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 0
   m_cooldown: 0
+  m_fadeInTime: 1
+  gravity: -9.8
+  initialSpeed: -5
+  m_explosionRatius: 1.5
+  timeBetweenActions: 2
+  jumpHeight: 2
+  fireGrowDuration: 0.5
+  fireStableDuration: 0.5
+  fireScript: {fileID: 0}
+  m_runnerDetectorTrigger: {fileID: 65318458814532836}
+  m_skillBreakTrigger: {fileID: 135454438742574384}
+  bossSpawnCheckCollider: {fileID: 135206787080930730}
+  spawnPortalParticles: {fileID: 114724404366571924}
+  explosionParticles: {fileID: 114984591473477910}
+  jumpReceiver: {fileID: 0}
+  trembleFall: {fileID: 11400000, guid: cedd707519a2b98458accab40af743c3, type: 2}
+  trembleExplosion: {fileID: 11400000, guid: 55d95d3ec5be1ae42b0bf5e6a245738b, type: 2}
   m_trapfallClip: {fileID: 8300000, guid: 95067c754cb1ad34db4124fde13b2545, type: 3}
   m_trapDetonationClip: {fileID: 8300000, guid: c7089bbb0eef8b94989d7d2458034bcb,
     type: 3}
   m_fireClip: {fileID: 8300000, guid: 0e3b013edbbac464eaf760fb156e7e4a, type: 3}
-  m_fadeInTime: 1
-  rayCheckerLenght: 100
-  timeBetweenChecks: 0.1
-  gravity: -9.8
-  initialSpeed: -5
-  spawnPortalParticles: {fileID: 114724404366571924}
-  m_explosionRatius: 1.5
-  explosionParticles: {fileID: 114984591473477910}
-  activationParticles: {fileID: 1855392622981348}
-  trembleFall: {fileID: 11400000, guid: cedd707519a2b98458accab40af743c3, type: 2}
-  trembleExplosion: {fileID: 11400000, guid: 55d95d3ec5be1ae42b0bf5e6a245738b, type: 2}
-  timeBetweenFire: 2
-  fireGrowDuration: 0.5
-  fireStableDuration: 0.5
-  fireScript: {fileID: 0}
-  timeBetweenJumps: 2
-  jumpHeight: 2
-  jumpReceiver: {fileID: 0}
-  m_runnerDetectorTrigger: {fileID: 65318458814532836}
-  m_skillBreakTrigger: {fileID: 135454438742574384}
-  bossSpawnCheckCollider: {fileID: 135206787080930730}
 --- !u!114 &114575912067514364
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -493,8 +489,8 @@ MonoBehaviour:
   onParentDisabled:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114575912067514364}
-        m_MethodName: Destroy
+      - m_Target: {fileID: 114383793237765762}
+        m_MethodName: Explode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -11,18 +11,13 @@ using System;
 namespace Run4YourLife.Player.Boss.Skills.Bomb
 {
     [RequireComponent(typeof(SimulateChildOf))]
+    [RequireComponent(typeof(Rigidbody))]
     public class BombController : SkillBase, IBossSkillBreakable
     {
         #region Inspector
 
         [SerializeField]
         private float m_fadeInTime;
-
-        [SerializeField]
-        private float rayCheckerLenght;
-
-        [SerializeField]
-        private float timeBetweenChecks;
 
         [SerializeField]
         private float gravity;
@@ -34,13 +29,10 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
         private float m_explosionRatius;
 
         [SerializeField]
-        private float timeBetweenJumps;
+        private float timeBetweenActions;
 
         [SerializeField]
         private float jumpHeight;
-
-        [SerializeField]
-        private float timeBetweenFire;
 
         [SerializeField]
         private float fireGrowDuration;
@@ -89,13 +81,10 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
         #region Variables
 
         private Vector3 speed;
-        private Vector3 finalPos;
-        private bool destroyOnLanding;
-        private float fatherInitialY;
 
         private Renderer m_renderer;
-        private Transform fatherTransformStorage;
         private SimulateChildOf simulateChildOf;
+        private new Rigidbody rigidbody;
 
         #endregion
 
@@ -105,6 +94,12 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
             Debug.Assert(m_renderer != null);
 
             simulateChildOf = GetComponent<SimulateChildOf>();
+            rigidbody = GetComponent<Rigidbody>();
+        }
+
+        private void OnDisable()
+        {
+            StopAllCoroutines();
         }
 
         public override bool CheckAndRepositionSkillSpawn(ref SkillSpawnData skillSpawnData)
@@ -121,12 +116,14 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
         {
             StopAllCoroutines();
 
+            simulateChildOf.Parent = null;
+
             m_runnerDetectorTrigger.enabled = false;
             m_skillBreakTrigger.enabled = false;
 
             speed.y = initialSpeed;
 
-            SetInitialTiling(m_renderer.material);
+            SetRandomNoise(m_renderer.material);
 
             if (fireScript != null)
             {
@@ -134,10 +131,20 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
             }
         }
 
+        private void SetRandomNoise(Material mat)
+        {
+            if (mat.HasProperty("_Noise"))
+            {
+                mat.SetTextureOffset("_Noise", new Vector2()
+                {
+                    x = Mathf.Sin(Time.time),
+                    y = Mathf.Cos(Time.time)
+                });
+            }
+        }
+
         protected override void OnSkillStart()
         {
-            CheckRay();
-
             spawnPortalParticles.PlayFx(false);
 
             StartCoroutine(BombStartingBehaviour());
@@ -151,10 +158,7 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
             m_runnerDetectorTrigger.enabled = true;
             m_skillBreakTrigger.enabled = true;
 
-            //Fall to ground
-            Coroutine checker = StartCoroutine(RayCheckerInTime());
             yield return StartCoroutine(Fall());
-            StopCoroutine(checker);
 
             //Start Behaviour for the phase
             switch (phase)
@@ -165,57 +169,6 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
                 case SkillBase.Phase.PHASE3:
                     StartCoroutine(Phase3BombGroundedBehaviour());
                     break;
-            }
-        }
-
-        private IEnumerator Phase2BombGroundedBehaviour()
-        {
-            while (true)
-            {
-                yield return new WaitForSeconds(timeBetweenFire);
-
-                //Play Fire
-                fireScript.Play(fireGrowDuration, fireStableDuration);
-                AudioManager.Instance.PlaySFX(m_fireClip);
-            }
-        }
-
-        private IEnumerator Phase3BombGroundedBehaviour()
-        {
-            while (true)
-            {
-                yield return new WaitForSeconds(timeBetweenJumps);
-
-                //Play Fire
-                fireScript.Play(fireGrowDuration, fireStableDuration);
-                AudioManager.Instance.PlaySFX(m_fireClip);
-
-                yield return StartCoroutine(Jump());
-            }
-        }
-
-        private IEnumerator RayCheckerInTime()
-        {
-            WaitForSeconds waitForTimeBetweenChecks = new WaitForSeconds(timeBetweenChecks);
-            while (true)
-            {
-                yield return waitForTimeBetweenChecks; // We wait first, cause on first call we have already done the check on skill start function
-                CheckRay();
-            }
-        }
-
-        private void CheckRay()
-        {
-            RaycastHit info;
-            if (Physics.Raycast(transform.position, Vector3.down, out info, rayCheckerLenght, Layers.Stage, QueryTriggerInteraction.Ignore))
-            {
-                if (info.collider.CompareTag(Tags.Water))
-                {
-                    destroyOnLanding = true;
-                }
-                finalPos = transform.position + Vector3.down * info.distance;
-                fatherTransformStorage = info.collider.gameObject.transform;
-                fatherInitialY = fatherTransformStorage.position.y;
             }
         }
 
@@ -236,35 +189,53 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
 
         private IEnumerator Fall()
         {
-            while (true)
+            RaycastHit raycastHit;
+            Vector3 movement = speed * Time.deltaTime;
+            while (!rigidbody.SweepTest(movement, out raycastHit, movement.magnitude, QueryTriggerInteraction.Ignore))
             {
-                transform.Translate(speed * Time.deltaTime);
-                float yVar = (fatherTransformStorage != null ? fatherTransformStorage.position.y - fatherInitialY : 0);
-                if (transform.position.y < finalPos.y + yVar)
-                {
-                    finalPos.y += yVar;
-                    transform.position = finalPos;
-                    simulateChildOf.Parent = fatherTransformStorage;
-                    if (destroyOnLanding)
-                    {
-                        Explode(); // This wills stop coroutines
-                        yield break;
-                    }
-                    break;
-                }
-                speed.y += gravity * Time.deltaTime;
+                transform.Translate(movement);
                 yield return null;
+                speed.y += gravity * Time.deltaTime;
+                movement = speed * Time.deltaTime;
             }
+
+            transform.position = raycastHit.point;
+            simulateChildOf.Parent = raycastHit.transform;
+
             TrembleManager.Instance.Tremble(trembleFall);
             AudioManager.Instance.PlaySFX(m_trapfallClip);
+        }
+
+        private IEnumerator Phase2BombGroundedBehaviour()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(timeBetweenActions);
+                PlayFire();
+            }
+        }
+
+        private IEnumerator Phase3BombGroundedBehaviour()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(timeBetweenActions);
+
+                PlayFire();
+                yield return StartCoroutine(Jump());
+            }
+        }
+
+        private void PlayFire()
+        {
+            fireScript.Play(fireGrowDuration, fireStableDuration);
+            AudioManager.Instance.PlaySFX(m_fireClip);
         }
 
         private IEnumerator Jump()
         {
             jumpReceiver.PlayFx();
 
-            fatherInitialY = fatherTransformStorage.position.y;
-            finalPos = transform.position;
             speed.y = HeightToVelocity(jumpHeight);
             while (speed.y > 0)
             {
@@ -276,8 +247,14 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
             yield return StartCoroutine(Fall());
         }
 
+        private float HeightToVelocity(float height)
+        {
+            return Mathf.Sqrt(height * -2.0f * gravity);
+        }
+
         public void Explode()
         {
+            Debug.Log("Explode");
             StopAllCoroutines();
 
             Collider[] collisions = Physics.OverlapSphere(transform.position, m_explosionRatius, Layers.Runner);
@@ -303,23 +280,6 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
         void IBossSkillBreakable.Break()
         {
             Explode();
-        }
-
-        private float HeightToVelocity(float height)
-        {
-            return Mathf.Sqrt(height * -2.0f * gravity);
-        }
-
-        private void SetInitialTiling(Material mat)
-        {
-            if (mat.HasProperty("_Noise"))
-            {
-                mat.SetTextureOffset("_Noise", new Vector2()
-                {
-                    x = Mathf.Sin(Time.time),
-                    y = Mathf.Cos(Time.time)
-                });
-            }
         }
 
         private void OnDrawGizmosSelected()
