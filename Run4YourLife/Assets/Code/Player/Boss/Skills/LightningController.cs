@@ -73,7 +73,6 @@ namespace Run4YourLife.Player.Boss.Skills.Lightning
         private bool rightLightningSideFinished = false;
         private bool leftLightningSideFinished = false;
         private bool mainLightningFinished = false;
-        private float maxIterationModificable = 0.0f;
 
         #endregion
 
@@ -87,7 +86,6 @@ namespace Run4YourLife.Player.Boss.Skills.Lightning
             rightLightningSideFinished = false;
             leftLightningSideFinished = false;
             mainLightningFinished = false;
-            maxIterationModificable = maxNumberOfLightningsPerSide;
         }
 
         protected override void OnSkillStart()
@@ -248,7 +246,7 @@ namespace Run4YourLife.Player.Boss.Skills.Lightning
             position.x -= newLightningsDistance * Mathf.Pow(newLightningsDistanceProgresion, iterationNumber);           
             float leftScreen = CameraConverter.ViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, new Vector2(0, 0)).x;
 
-            if (position.x > leftScreen && iterationNumber <= maxIterationModificable)
+            if (position.x > leftScreen && iterationNumber <= maxNumberOfLightningsPerSide)
             {
                 GameObject instance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(lightningGameObject, position, Quaternion.identity, true);
                 instance.GetComponent<LightningController>().SetDelayHit(newLightningsDelayHit * Mathf.Pow(newLightningsDelayHitProgresion, iterationNumber));
@@ -265,7 +263,6 @@ namespace Run4YourLife.Player.Boss.Skills.Lightning
                 else
                 {
                     leftLightningSideFinished = true;
-                    maxIterationModificable += maxIterationModificable - (iterationNumber - 1);//As we start with iter 1, we have to substract it
                 }
             }
         }
@@ -274,10 +271,9 @@ namespace Run4YourLife.Player.Boss.Skills.Lightning
         {
             yield return new WaitForSeconds(delayBetweenLightnings * Mathf.Pow(delayBetweenLightningsProgresion, iterationNumber));
 
-            position.x += newLightningsDistance * Mathf.Pow(newLightningsDistanceProgresion, iterationNumber);
-            float rightScreen = CameraConverter.ViewportToGamePlaneWorldPosition(CameraManager.Instance.MainCamera, new Vector2(1, 1)).x;
+            position.x += newLightningsDistance * Mathf.Pow(newLightningsDistanceProgresion, iterationNumber);           
 
-            if (position.x < rightScreen && iterationNumber <= maxIterationModificable)
+            if (iterationNumber <= maxNumberOfLightningsPerSide)
             {
                 GameObject instance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(lightningGameObject, position, Quaternion.identity, true);
                 instance.GetComponent<LightningController>().SetDelayHit(newLightningsDelayHit * Mathf.Pow(newLightningsDelayHitProgresion, iterationNumber));
@@ -294,7 +290,6 @@ namespace Run4YourLife.Player.Boss.Skills.Lightning
                 else
                 {
                     rightLightningSideFinished = true;
-                    maxIterationModificable += maxIterationModificable - (iterationNumber-1);//As we start with iter 1, we have to substract it
                 }
             }
         }
