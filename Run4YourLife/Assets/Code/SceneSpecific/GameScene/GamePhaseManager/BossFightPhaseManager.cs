@@ -4,6 +4,7 @@ using Cinemachine;
 using Run4YourLife.Player.Runner;
 using Run4YourLife.Utils;
 using Run4YourLife.GameManagement.AudioManagement;
+using System.Collections.Generic;
 
 namespace Run4YourLife.GameManagement
 {
@@ -22,6 +23,9 @@ namespace Run4YourLife.GameManagement
 
         [SerializeField]
         private AudioClip m_phaseMusic;
+
+        [SerializeField]
+        private GameObject[] m_dynamicGameObjectsPrefabToDisableOnPhaseEnd;
 
 
         #endregion
@@ -76,6 +80,16 @@ namespace Run4YourLife.GameManagement
             {
                 RunnerController runnerCharacterController = runner.GetComponent<RunnerController>();
                 runnerCharacterController.CheckOutScreen = false;
+            }
+
+            List<GameObject> activeInstances = new List<GameObject>();
+            foreach (GameObject prefab in m_dynamicGameObjectsPrefabToDisableOnPhaseEnd)
+            {
+                DynamicObjectsManager.Instance.GameObjectPool.GetActiveNonAlloc(prefab, ref activeInstances);
+                foreach (GameObject instance in activeInstances)
+                {
+                    instance.SetActive(false);
+                }
             }
         }
 

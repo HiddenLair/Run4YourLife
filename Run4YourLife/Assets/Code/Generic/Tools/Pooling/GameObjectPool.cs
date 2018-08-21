@@ -100,4 +100,21 @@ public class GameObjectPool : MonoBehaviour
         instance.SetActive(activate);
         return instance;
     }
+
+    public void GetActiveNonAlloc(GameObject prefab, ref List<GameObject> activeInstances)
+    {
+        activeInstances.Clear();
+        List<GameObject> instances;
+        m_pool.TryGetValue(prefab, out instances);
+        if (instances != null)
+        {
+            foreach (GameObject g in instances)
+            {
+                if (g.activeInHierarchy)
+                {
+                    activeInstances.Add(g);
+                }
+            }
+        }
+    }
 }
