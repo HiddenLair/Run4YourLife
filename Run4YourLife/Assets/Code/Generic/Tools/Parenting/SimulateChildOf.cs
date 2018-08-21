@@ -5,15 +5,26 @@ using UnityEngine.Events;
 
 public class SimulateChildOf : MonoBehaviour
 {
+    private enum OnParentDisableAction
+    {
+        None,
+        Disable,
+        UnityEventCall
+    }
 
     [SerializeField]
     private Transform m_parent;
+
+
 
     [SerializeField]
     private bool m_simulatePosition = true;
 
     [SerializeField]
     private bool m_simualteRotation = true;
+
+    [SerializeField]
+    private OnParentDisableAction m_onParentDisableAction;
 
     [SerializeField]
     public UnityEvent onParentDisabled;
@@ -48,19 +59,12 @@ public class SimulateChildOf : MonoBehaviour
     }
     private void LateUpdate()
     {
-        if (m_parent != null)
+        if (m_parent != null && CheckParentActive())
         {
-            if (!m_parent.gameObject.activeInHierarchy)
-            {
-                onParentDisabled.Invoke();
-                m_parent = null;
-                return;
-            }
-
             if (m_simulatePosition)
             {
                 Vector3 positionDelta = m_parent.position - m_previousPosition;
-                transform.position += positionDelta;
+                transform.Translate(positionDelta, Space.World);
             }
 
             if (m_simualteRotation)
@@ -71,6 +75,33 @@ public class SimulateChildOf : MonoBehaviour
 
             m_previousPosition = m_parent.position;
             m_previousRotation = m_parent.rotation;
+        }
+    }
+
+    private bool CheckParentActive()
+    {
+        bool active = m_parent.gameObject.activeInHierarchy;
+        if (!active)
+        {
+            switch (m_onParentDisableAction)
+            {
+                case OnParentDisableAction.Disable:
+                    gameObject.SetActive(false);
+                    break;
+                case OnParentDisableAction.UnityEventCall:
+                    onParentDisabled.Invoke();
+                    break;
+            }
+            m_parent = null;
+        }
+        return active;
+    }
+
+    private void OnValidate()
+    {
+        if (m_onParentDisableAction == OnParentDisableAction.UnityEventCall)
+        {
+            Debug.Assert(onParentDisabled.GetPersistentEventCount() > 0, "SimulateChildOf would call a unityevent with no actions. It would be best if you set the ondisableaction to none", gameObject);
         }
     }
 }
