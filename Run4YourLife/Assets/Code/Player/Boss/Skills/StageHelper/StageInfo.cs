@@ -26,10 +26,13 @@ public class StageInfo : MonoBehaviour {
         Collider[] colliders = gameObject.GetComponentsInChildren<Collider>();
         CalculateMinValue(colliders);
         CalculateTopValue(colliders);
-        groupInfo = transform.parent.GetComponent<StageGroupInfo>();
-        if(groupInfo != null)
+        if (groupInfo == null)//We check if some group has recruided it, if not, it look if we have to subscribe
         {
-            groupInfo.Subscribe(topValue,minValue,minHasValue);
+            groupInfo = transform.parent.GetComponent<StageGroupInfo>();
+            if (groupInfo != null)
+            {
+                groupInfo.Subscribe(topValue, minValue, minHasValue);
+            }
         }
 	}
 
