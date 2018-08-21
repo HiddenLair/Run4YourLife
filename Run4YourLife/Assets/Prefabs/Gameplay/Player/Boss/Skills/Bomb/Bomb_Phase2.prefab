@@ -19,11 +19,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4407693253089258}
-  - component: {fileID: 82540000728075502}
-  - component: {fileID: 114437053813038674}
   - component: {fileID: 136174852382519864}
+  - component: {fileID: 114437053813038674}
   m_Layer: 9
-  m_Name: R4YL_PART_Bomb_FIRE
+  m_Name: Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,6 +147,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1889633707657348
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4012709239972380}
+  - component: {fileID: 114707031809738226}
+  m_Layer: 9
+  m_Name: Portal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1894405131329674
 GameObject:
   m_ObjectHideFlags: 1
@@ -181,6 +196,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &4012709239972380
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1889633707657348}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4733664109319810}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4152659553003340
 Transform:
   m_ObjectHideFlags: 1
@@ -207,7 +235,7 @@ Transform:
   - {fileID: 4900574360783082}
   - {fileID: 4152659553003340}
   m_Father: {fileID: 4733664109319810}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4475558695245332
 Transform:
@@ -234,7 +262,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4733664109319810}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4701076420378474
 Transform:
@@ -247,7 +275,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4733664109319810}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4733664109319810
 Transform:
@@ -260,6 +288,7 @@ Transform:
   m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_Children:
   - {fileID: 4475558695245332}
+  - {fileID: 4012709239972380}
   - {fileID: 4528153222086614}
   - {fileID: 4407693253089258}
   - {fileID: 4899360909559282}
@@ -279,7 +308,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4733664109319810}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4882135452938500
 Transform:
@@ -305,7 +334,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4733664109319810}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4900574360783082
 Transform:
@@ -388,86 +417,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.7, z: 0.5}
   m_Center: {x: 0, y: 0.35, z: 0}
---- !u!82 &82540000728075502
-AudioSource:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1092809332212844}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
 --- !u!95 &95415326475857584
 Animator:
   serializedVersion: 3
@@ -511,31 +460,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phase: 1
   m_cooldown: 10
-  m_trapfallClip: {fileID: 8300000, guid: 95067c754cb1ad34db4124fde13b2545, type: 3}
-  m_trapDetonationClip: {fileID: 8300000, guid: c7089bbb0eef8b94989d7d2458034bcb,
-    type: 3}
-  m_fireClip: {fileID: 8300000, guid: ba9cf5797ab9553459b871c28cf9f696, type: 3}
   m_fadeInTime: 1
   rayCheckerLenght: 100
+  timeBetweenChecks: 0.1
   gravity: -9.8
   initialSpeed: -5
-  indicatorParticles: {fileID: 1876708485271496, guid: 14aa9b2669f5a8e40b3b34edc370d9a5,
-    type: 2}
   m_explosionRatius: 1.75
-  explosionParticles: {fileID: 114984591473477910}
-  activationParticles: {fileID: 1855392622981348}
-  trembleFall: {fileID: 11400000, guid: cedd707519a2b98458accab40af743c3, type: 2}
-  trembleExplosion: {fileID: 11400000, guid: 55d95d3ec5be1ae42b0bf5e6a245738b, type: 2}
+  timeBetweenJumps: 2
+  jumpHeight: 2
   timeBetweenFire: 2.5
   fireGrowDuration: 0.5
   fireStableDuration: 0.5
   fireScript: {fileID: 114437053813038674}
-  timeBetweenJumps: 2
-  jumpHeight: 2
-  jumpReceiver: {fileID: 0}
   m_runnerDetectorTrigger: {fileID: 65253598748087252}
   m_skillBreakTrigger: {fileID: 135132672637730504}
   bossSpawnCheckCollider: {fileID: 135206787080930730}
+  spawnPortalParticles: {fileID: 114707031809738226}
+  explosionParticles: {fileID: 114984591473477910}
+  jumpReceiver: {fileID: 0}
+  trembleFall: {fileID: 11400000, guid: cedd707519a2b98458accab40af743c3, type: 2}
+  trembleExplosion: {fileID: 11400000, guid: 55d95d3ec5be1ae42b0bf5e6a245738b, type: 2}
+  m_trapfallClip: {fileID: 8300000, guid: 95067c754cb1ad34db4124fde13b2545, type: 3}
+  m_trapDetonationClip: {fileID: 8300000, guid: c7089bbb0eef8b94989d7d2458034bcb,
+    type: 3}
+  m_fireClip: {fileID: 8300000, guid: ba9cf5797ab9553459b871c28cf9f696, type: 3}
 --- !u!114 &114437053813038674
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -571,6 +519,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114707031809738226
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1889633707657348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cb52b0f7a8d8b1458965b078cdc7767, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fx: {fileID: 1876708485271496, guid: 14aa9b2669f5a8e40b3b34edc370d9a5, type: 2}
+  sfx: {fileID: 0}
 --- !u!114 &114853513787031704
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -705,7 +666,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 551416159
+  randomSeed: -2013017988
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4111,7 +4072,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 322498549
+  randomSeed: 213494343
   InitialModule:
     serializedVersion: 3
     enabled: 1

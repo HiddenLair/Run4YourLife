@@ -7,7 +7,6 @@ using Run4YourLife.Player.Runner;
 
 namespace Run4YourLife.Player.Boss.Skills.Bomb
 {
-    [RequireComponent(typeof(AudioSource))]
     public class FireController : MonoBehaviour
     {
 
