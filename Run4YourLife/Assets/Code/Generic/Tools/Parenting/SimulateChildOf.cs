@@ -99,9 +99,22 @@ public class SimulateChildOf : MonoBehaviour
 
     private void OnValidate()
     {
-        if (m_onParentDisableAction == OnParentDisableAction.UnityEventCall)
+        switch (m_onParentDisableAction)
         {
-            Debug.Assert(onParentDisabled.GetPersistentEventCount() > 0, "SimulateChildOf would call a unityevent with no actions. It would be best if you set the ondisableaction to none", gameObject);
+            case OnParentDisableAction.None:
+            case OnParentDisableAction.Disable:
+                if (onParentDisabled.GetPersistentEventCount() > 0)
+                {
+                    Debug.LogWarning("SimulateChildOf would call a unityevent with no actions but you have set some actions", gameObject);
+                }
+                break;
+
+            case OnParentDisableAction.UnityEventCall:
+                if (onParentDisabled.GetPersistentEventCount() == 0)
+                {
+                    Debug.LogWarning("SimulateChildOf would call a unityevent with no actions. It would be best if you set the ondisableaction to none", gameObject);
+                }
+                break;
         }
     }
 }
