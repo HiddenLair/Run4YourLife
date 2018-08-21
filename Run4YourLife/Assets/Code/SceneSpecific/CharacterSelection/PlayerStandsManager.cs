@@ -211,8 +211,6 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                     {
                         runnerCellCurrentContainedPlayers[previousCellData].Remove(playerHandle);
                     }
-
-                    previousCellData.GetComponentInChildren<CellPlayersImageController>().Hide(playerIds[playerHandle]);
                 }
 
                 if(bossCellCurrentContainedPlayers.ContainsKey(cellData))
@@ -226,8 +224,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 }
 
                 playersCurrentCell[playerHandle] = cellData;
-
-                cellData.GetComponentInChildren<CellPlayersImageController>().Show(playerIds[playerHandle]);
+                BoardCellPlayerManager.Instance.SetPlayerCell(playerIds[playerHandle], cellData.transform);
 
                 foreach(PlayerStandController playerStandController in playerStandControllers)
                 {
@@ -459,7 +456,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
             playerSelectionDone[playerHandle] = true;
             playerCell.GetComponentInChildren<SwapImages>().Swap();
-            playerCell.GetComponentInChildren<CellPlayersImageController>().Scale(playerIds[playerHandle]);
+            BoardCellPlayerManager.Instance.LockPlayerCell(playerIds[playerHandle]);
 
             UpdateGameReady();
 
@@ -491,6 +488,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
             playerSelectionDone[playerHandle] = false;
             playerCell.GetComponentInChildren<SwapImages>().Swap();
+            BoardCellPlayerManager.Instance.UnlockPlayerCell(playerIds[playerHandle]);
 
             UpdateGameReady();
 
