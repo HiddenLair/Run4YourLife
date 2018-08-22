@@ -36,6 +36,8 @@ namespace Run4YourLife.Interactables
         private void Awake()
         {
             m_animator = GetComponentInChildren<Animator>();
+            Debug.Assert(m_animator != null);
+
             m_startingPosition = transform.localPosition;
             m_currentSpeed = m_startingSpeed;
         }

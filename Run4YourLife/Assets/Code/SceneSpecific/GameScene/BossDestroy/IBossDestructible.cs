@@ -17,6 +17,8 @@ namespace Run4YourLife.GameManagement
         void Destroy();
         void Regenerate();
 
+        bool IsRegeneratable { get; }
+
         float DestroyPosition { get; }
         BossDestructibleState BossDestructibleState { get; }
     }

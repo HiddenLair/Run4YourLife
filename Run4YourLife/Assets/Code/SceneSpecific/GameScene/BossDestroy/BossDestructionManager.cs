@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -77,7 +77,7 @@ namespace Run4YourLife.GameManagement
 
                     case BossDestructibleState.InDestruction:
                     case BossDestructibleState.Destroyed:
-                        if (bossDestructible.DestroyPosition > xBossPosition)
+                        if (bossDestructible.DestroyPosition > xBossPosition && bossDestructible.IsRegeneratable)
                         {
                             bossDestructible.Regenerate();
                         }
