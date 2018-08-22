@@ -95,8 +95,8 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
                 if (SelectStageElementColliderToSpawnAbove(stageElements, ref stageCollider, ref position))
                 {
                     UpdateSkillSpawnDataSpawnLocation(stageCollider, position, ref skillSpawnData);
+                    return true;
                 }
-                return true;
             }
 
             return false;
@@ -207,7 +207,7 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
 
         protected override void ResetState()
         {
-            for(int i= 0; i<m_colliderArray.Length;++i)
+            for (int i = 0; i < m_colliderArray.Length; ++i)
             {
                 m_colliderArray[i].collider.enabled = false;
             }
@@ -224,7 +224,7 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
 
         private IEnumerator SkillBehaviuour()
         {
-            // Display Ground Particles for a short amount of time
+            // Display Ground Particles and wait for a short amount of time
             m_spawnParticles.PlayFx(true);
             yield return new WaitForSeconds(m_warningParticlesDuration);
 
@@ -241,10 +241,10 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
                 float animationPosition = 1f - ((endTime - Time.time) / m_earthSpikeGrowthDuration);
                 float scale = m_growAnimationCurve.Evaluate(animationPosition);
                 m_earthSpikeGraphics.transform.localScale = Vector3.one * scale;
-                while(index < m_colliderArray.Length && m_colliderArray[index].percentage <= scale)
+                while (index < m_colliderArray.Length && m_colliderArray[index].percentage <= scale)
                 {
                     CheckForCollision(m_colliderArray[index].collider);
-                    m_colliderArray[index++].collider.enabled=true;
+                    m_colliderArray[index++].collider.enabled = true;
                 }
                 yield return null;
             }
@@ -255,14 +255,14 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
 
             SpawnBreakableWall();
             SpawnBrokenEarthSpike();
-           
+
             gameObject.SetActive(false);
         }
 
         private void CheckForCollision(BoxCollider c)
         {
-            Collider[] hits = Physics.OverlapBox(c.center+c.transform.position,c.size/2.0f,c.transform.rotation,Layers.Runner);
-            foreach(Collider hitCollider in hits)
+            Collider[] hits = Physics.OverlapBox(c.center + c.transform.position, c.size / 2.0f, c.transform.rotation, Layers.Runner);
+            foreach (Collider hitCollider in hits)
             {
                 hitCollider.GetComponent<RunnerController>().AbsoluteKill();
             }
