@@ -9,7 +9,7 @@ using Run4YourLife.GameManagement;
 using Run4YourLife.CameraUtils;
 using Run4YourLife.Player.Boss;
 
-namespace Run4YourLife.Player
+namespace Run4YourLife.Player.Boss
 {
     public class BossControllerPhase2 : BossController
     {

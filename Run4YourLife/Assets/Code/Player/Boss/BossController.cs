@@ -13,7 +13,7 @@ using Run4YourLife.GameManagement.AudioManagement;
 using Run4YourLife.GameManagement;
 using Run4YourLife.Player.Boss.Skills;
 
-namespace Run4YourLife.Player
+namespace Run4YourLife.Player.Boss
 {
 
     [RequireComponent(typeof(BossControlScheme))]

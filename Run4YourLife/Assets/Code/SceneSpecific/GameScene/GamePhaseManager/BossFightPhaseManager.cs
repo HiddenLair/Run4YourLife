@@ -5,6 +5,7 @@ using Run4YourLife.Player.Runner;
 using Run4YourLife.Utils;
 using Run4YourLife.GameManagement.AudioManagement;
 using System.Collections.Generic;
+using Run4YourLife.Player.Boss;
 
 namespace Run4YourLife.GameManagement
 {
@@ -61,6 +62,8 @@ namespace Run4YourLife.GameManagement
             GameObject boss = GameplayPlayerManager.Instance.Boss;
             Debug.Assert(boss != null);
 
+            boss.GetComponent<BossControllerPhase2>().enabled = true;
+
             m_bossFightGemManager.StartGemMinigame();
         }
 
@@ -76,6 +79,10 @@ namespace Run4YourLife.GameManagement
 
         private void EndPhaseCommon()
         {
+            GameObject boss = GameplayPlayerManager.Instance.Boss;
+            Debug.Assert(boss != null);
+            boss.GetComponent<BossControllerPhase2>().enabled = false;
+
             foreach (GameObject runner in GameplayPlayerManager.Instance.Runners)
             {
                 RunnerController runnerCharacterController = runner.GetComponent<RunnerController>();
