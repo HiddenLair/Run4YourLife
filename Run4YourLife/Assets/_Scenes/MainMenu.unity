@@ -445,6 +445,8 @@ GameObject:
   - component: {fileID: 400624384}
   - component: {fileID: 400624386}
   - component: {fileID: 400624385}
+  - component: {fileID: 400624388}
+  - component: {fileID: 400624387}
   m_Layer: 5
   m_Name: Leaves1
   m_TagString: Untagged
@@ -503,6 +505,38 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 400624383}
+--- !u!114 &400624387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 400624383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7887b554881ee9146b25e5e9908e7132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 400624388}
+  AnimatorStateName: Idle
+  delay: 0.75
+  randomize: 1
+--- !u!95 &400624388
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 400624383}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 314bd1dcf78b5e44db98b8e97b77ac7c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &403693409
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,6 +547,8 @@ GameObject:
   - component: {fileID: 403693410}
   - component: {fileID: 403693413}
   - component: {fileID: 403693412}
+  - component: {fileID: 403693414}
+  - component: {fileID: 403693411}
   m_Layer: 5
   m_Name: PlantBalls
   m_TagString: Untagged
@@ -538,6 +574,21 @@ RectTransform:
   m_AnchoredPosition: {x: 462, y: 171}
   m_SizeDelta: {x: 315, y: 342}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &403693411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 403693409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7887b554881ee9146b25e5e9908e7132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 403693414}
+  AnimatorStateName: Idle
+  delay: 0.75
+  randomize: 1
 --- !u!114 &403693412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -571,6 +622,23 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 403693409}
+--- !u!95 &403693414
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 403693409}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 884e2ed7f9cc7e246a30c467429710aa, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!224 &420319503 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224532512713771464, guid: f0bb5bfe89276aa47a1c2f1c646c4c2e,
@@ -2967,6 +3035,8 @@ GameObject:
   - component: {fileID: 1972998097}
   - component: {fileID: 1972998099}
   - component: {fileID: 1972998098}
+  - component: {fileID: 1972998101}
+  - component: {fileID: 1972998100}
   m_Layer: 5
   m_Name: Flower
   m_TagString: Untagged
@@ -3025,6 +3095,38 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1972998096}
+--- !u!114 &1972998100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1972998096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7887b554881ee9146b25e5e9908e7132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1972998101}
+  AnimatorStateName: Idle
+  delay: 0.75
+  randomize: 1
+--- !u!95 &1972998101
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1972998096}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 94aa00fa38a2a2a40a1305288be31dc0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &2021863186
 GameObject:
   m_ObjectHideFlags: 0
@@ -3347,6 +3449,8 @@ GameObject:
   - component: {fileID: 2071334306}
   - component: {fileID: 2071334308}
   - component: {fileID: 2071334307}
+  - component: {fileID: 2071334310}
+  - component: {fileID: 2071334309}
   m_Layer: 5
   m_Name: Leaves3
   m_TagString: Untagged
@@ -3405,6 +3509,38 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2071334305}
+--- !u!114 &2071334309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2071334305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7887b554881ee9146b25e5e9908e7132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 2071334310}
+  AnimatorStateName: Idle
+  delay: 0.75
+  randomize: 1
+--- !u!95 &2071334310
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2071334305}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b6b4657fb8b89d940909a733fa266cfa, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &2078811139
 GameObject:
   m_ObjectHideFlags: 0
