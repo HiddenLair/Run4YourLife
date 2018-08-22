@@ -22,11 +22,6 @@ namespace Run4YourLife.GameManagement
 
         public BossDestructibleState BossDestructibleState { get { return m_bossDestructibleState; } }
 
-        protected virtual void OnEnable()
-        {
-            m_bossDestructibleState = BossDestructibleState.Alive;
-        }
-
         protected virtual void OnDisable()
         {
             m_bossDestructibleState = BossDestructibleState.Destroyed;
@@ -65,6 +60,8 @@ namespace Run4YourLife.GameManagement
             if (m_canBeRegenerated)
             {
                 RegenerateBehaviour();
+
+                m_bossDestructibleState = BossDestructibleState.Alive;
 
                 foreach (IBossDestructibleNotified bossDestructibleNotified in m_bossDestructiblesNotified)
                 {
