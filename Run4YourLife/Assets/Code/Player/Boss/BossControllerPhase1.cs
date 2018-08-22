@@ -6,7 +6,7 @@ using Run4YourLife.GameManagement.AudioManagement;
 using Run4YourLife.Utils;
 using Run4YourLife.GameManagement;
 
-namespace Run4YourLife.Player
+namespace Run4YourLife.Player.Boss
 {
     public class BossControllerPhase1 : BossController
     {
