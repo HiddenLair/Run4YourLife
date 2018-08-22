@@ -117,10 +117,10 @@ namespace Run4YourLife.GameManagement
 
         public override void DebugEndPhase()
         {
+            EndPhaseCommon();
+
             GameplayPlayerManager.Instance.DebugClearPlayers();
             m_bossFightGemManager.StopGemMinigame();
-
-            EndPhaseCommon();
         }
 
         #endregion
