@@ -113,6 +113,7 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
 
             if (topStageElementHeightPosition < topScreenHeightPosition)
             {
+                //Can be spawned on top of the object because it is inside the screen
                 collider = colliders[0];
                 position = new Vector3()
                 {
@@ -122,6 +123,29 @@ namespace Run4YourLife.Player.Boss.Skills.EarthSpike
                 };
                 return true;
             }
+            else
+            {
+                //Can't be spawned on top, let's look on the bottom
+                float bottomStageElementHeightPosition;
+                if (info.GetMinValue(out bottomStageElementHeightPosition)) //The object may not have a bottom
+                {
+                    float bottomScreenHeightPosition = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0, 0)).y;
+                    if (bottomStageElementHeightPosition > bottomScreenHeightPosition) //The bottom may not be inside the screen
+                    {
+                        //There is space in the bottom and is inside the screen
+                        position.y = bottomStageElementHeightPosition;
+                        RaycastHit validStageElement;
+                        if (FindValidStageElementToSpawnAbove(position, out validStageElement))
+                        {
+                            position = validStageElement.point;
+                            collider = validStageElement.collider;
+                            return true;
+                        }
+                    }
+                }
+            }
+
+
             return false;
         }
 
