@@ -16,7 +16,7 @@ public class StageGroupInfo : MonoBehaviour {
 
     #endregion
 
-    private void Awake()
+    private void Start()
     {
         foreach (StageInfo info in referenceGroup)
         {
