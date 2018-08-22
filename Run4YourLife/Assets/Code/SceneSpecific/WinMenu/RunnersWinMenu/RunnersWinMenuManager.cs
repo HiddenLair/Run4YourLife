@@ -62,7 +62,7 @@ namespace Run4YourLife.SceneSpecific.WinMenu
             for (int i = 0; i < runnerPlayerHandles.Count; ++i)
             {
                 GameObject runner = Instantiate(runnerPrefabManager.GetRunner(runnerPlayerHandles[i].CharacterType), spawnPoints[i].transform, false);
-                runner.GetComponent<Animator>().SetTrigger(RunnerAnimation.Parameters.Triggers.Dance);
+                runner.GetComponent<Animator>().Play("Dance");
             }
         }
     }
