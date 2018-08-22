@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -220,7 +220,7 @@ namespace Run4YourLife.Player.Runner
             ResetState();
             m_runnerControlScheme.Active = true;
 
-            m_stateMachine.ChangeState(States.Idle);
+            m_stateMachine.ChangeState(States.Idle, StateTransition.Overwrite);
         }
 
         private void ResetState()
