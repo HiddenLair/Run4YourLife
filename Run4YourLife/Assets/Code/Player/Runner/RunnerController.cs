@@ -103,6 +103,9 @@ namespace Run4YourLife.Player.Runner
         private FXReceiver deathReceiver;
 
         [SerializeField]
+        private FXReceiver m_fireStateReceiver;
+
+        [SerializeField]
         private float inmuneTimeAfterRevive = 2.0f;
 
         [SerializeField]
@@ -159,6 +162,8 @@ namespace Run4YourLife.Player.Runner
         private float m_idleTimer = 0.0f;
 
         private Renderer[] m_renderersToFade;
+
+        private GameObject fireParticles;
 
 
         #endregion
@@ -881,6 +886,20 @@ namespace Run4YourLife.Player.Runner
             }
 
             return false;
+        }
+
+        #endregion
+
+        #region Fire
+
+        public void ActivateFire()
+        {
+            fireParticles = m_fireStateReceiver.PlayFx(true);
+        }
+
+        public void DeactivateFire()
+        {
+            fireParticles.SetActive(false);
         }
 
         #endregion
