@@ -20,18 +20,13 @@ namespace Run4YourLife.Utils
 
         private bool Faded = false;
 
+        private Color originalColor;
+
         #endregion
 
-        public void RestoreParticleMaterial()
+        private void Awake()
         {
-            Color originalColor = particleSystemRenderer.material.GetColor("_TintColor");
-            particleSystemRenderer.material.SetColor("_TintColor", new Color(originalColor.r, originalColor.g, originalColor.b, 1.0f));
-        }
-
-        public void RestoreParticleTrailMaterial()
-        {
-            Color originalColor = particleSystemRenderer.trailMaterial.GetColor("_TintColor");
-            particleSystemRenderer.trailMaterial.SetColor("_TintColor", new Color(originalColor.r, originalColor.g, originalColor.b, 1.0f));
+            originalColor = particleSystemRenderer.trailMaterial.GetColor("_TintColor");
         }
 
         public void FadeOutParticleMaterial()
@@ -55,13 +50,13 @@ namespace Run4YourLife.Utils
                 timePassed += Time.deltaTime;
                 float percent = timePassed / timeToFade;
 
-                Color originalColor = particleSystemRenderer.trailMaterial.GetColor("_TintColor");
+                float newAlphaValue = originalColor.a;
 
-                originalColor.a = 1.0f - percent;
+                newAlphaValue = 1.0f - percent;
 
-                particleSystemRenderer.trailMaterial.SetColor("_TintColor", new Color(originalColor.r, originalColor.g, originalColor.b, originalColor.a));
+                particleSystemRenderer.trailMaterial.SetColor("_TintColor", new Color(originalColor.r, originalColor.g, originalColor.b, newAlphaValue));
 
-                if (originalColor.a < 0.001f)
+                if (newAlphaValue < 0.001f)
                 {
                     Faded = true;
                 }
@@ -81,13 +76,13 @@ namespace Run4YourLife.Utils
                 timePassed += Time.deltaTime;
                 float percent = timePassed / timeToFade;
 
-                Color originalColor = particleSystemRenderer.material.GetColor("_TintColor");
+                Color originalMatColor = particleSystemRenderer.material.GetColor("_TintColor");
 
-                originalColor.a = 1.0f - percent;
+                originalMatColor.a = 1.0f - percent;
 
-                particleSystemRenderer.material.SetColor("_TintColor", new Color(originalColor.r, originalColor.g, originalColor.b, originalColor.a));
+                particleSystemRenderer.material.SetColor("_TintColor", new Color(originalMatColor.r, originalMatColor.g, originalMatColor.b, originalMatColor.a));
 
-                if (originalColor.a < 0.001f)
+                if (originalMatColor.a < 0.001f)
                 {
                     Faded = true;
                 }
@@ -96,6 +91,11 @@ namespace Run4YourLife.Utils
                     yield return null;
                 }
             }
+        }
+
+        private void OnDisable()
+        {
+            particleSystemRenderer.trailMaterial.SetColor("_TintColor", new Color(originalColor.r, originalColor.g, originalColor.b, originalColor.a));
         }
     }
 }

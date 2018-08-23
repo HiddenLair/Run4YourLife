@@ -93,11 +93,6 @@ namespace Run4YourLife.Player.Boss.Skills.Wind
 
         IEnumerator FillScreen()
         {
-            if (particleFadeOutController != null)
-            {
-                particleFadeOutController.RestoreParticleTrailMaterial();
-            }
-
             Camera mainCamera = CameraManager.Instance.MainCamera;
             float increasePerSec = 100 / windFillScreenTime;
             Vector3 actualScale = transform.localScale;
