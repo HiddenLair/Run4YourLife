@@ -278,6 +278,9 @@ namespace Run4YourLife.GameManagement
             m_boss = GetBossForPhase(gamePhase);
             m_boss.transform.position = position;
             m_boss.SetActive(true);
+
+            GlobalDataContainer.Instance.Set("CurrentBossId", m_sceneBosses.IndexOf(m_boss));
+
             return m_boss;
         }
 
