@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.17600127, g: 0.22025777, b: 0.30258632, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -4898,7 +4898,6 @@ GameObject:
   - component: {fileID: 157230952}
   - component: {fileID: 157230955}
   - component: {fileID: 157230954}
-  - component: {fileID: 157230953}
   - component: {fileID: 157230956}
   m_Layer: 13
   m_Name: Clouds
@@ -4920,18 +4919,6 @@ Transform:
   m_Father: {fileID: 1454385668}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &157230953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 157230951}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 061f1f8e08f75c74f85f940c4c95fe2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: {x: 0.005, y: 0}
 --- !u!33 &157230954
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5607,6 +5594,7 @@ GameObject:
   - component: {fileID: 168087529}
   - component: {fileID: 168087533}
   - component: {fileID: 168087539}
+  - component: {fileID: 168087537}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameController
@@ -5786,6 +5774,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dc1deacf26353f4795f7f17ed4859bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &168087537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 168087525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5819b07487816d6469388da8cf4ba7ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  background1: {fileID: 765843036}
+  background2: {fileID: 1090700392}
+  background3: {fileID: 765843036}
 --- !u!114 &168087538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8130,7 +8132,6 @@ GameObject:
   - component: {fileID: 229609796}
   - component: {fileID: 229609799}
   - component: {fileID: 229609798}
-  - component: {fileID: 229609797}
   - component: {fileID: 229609800}
   m_Layer: 13
   m_Name: Plantsmedium
@@ -8152,18 +8153,6 @@ Transform:
   m_Father: {fileID: 1454385668}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &229609797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 229609795}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 061f1f8e08f75c74f85f940c4c95fe2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: {x: 0.01, y: 0}
 --- !u!33 &229609798
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -24559,7 +24548,6 @@ GameObject:
   - component: {fileID: 494039819}
   - component: {fileID: 494039822}
   - component: {fileID: 494039821}
-  - component: {fileID: 494039820}
   - component: {fileID: 494039823}
   m_Layer: 13
   m_Name: NearTrees
@@ -24581,18 +24569,6 @@ Transform:
   m_Father: {fileID: 1454385668}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &494039820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 494039818}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 061f1f8e08f75c74f85f940c4c95fe2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: {x: 0.01, y: 0}
 --- !u!33 &494039821
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -27866,7 +27842,6 @@ GameObject:
   - component: {fileID: 575268766}
   - component: {fileID: 575268769}
   - component: {fileID: 575268768}
-  - component: {fileID: 575268767}
   - component: {fileID: 575268770}
   m_Layer: 13
   m_Name: Plantsback
@@ -27888,18 +27863,6 @@ Transform:
   m_Father: {fileID: 1454385668}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &575268767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 575268765}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 061f1f8e08f75c74f85f940c4c95fe2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: {x: 0.01, y: 0}
 --- !u!33 &575268768
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -35612,7 +35575,7 @@ GameObject:
   - component: {fileID: 765843038}
   - component: {fileID: 765843037}
   m_Layer: 0
-  m_Name: Background
+  m_Name: Background1And3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47745,7 +47708,7 @@ GameObject:
   - component: {fileID: 1090700395}
   - component: {fileID: 1090700394}
   m_Layer: 0
-  m_Name: TMP_BackgroundPhase2
+  m_Name: Background2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47763,7 +47726,7 @@ Transform:
   m_Children:
   - {fileID: 1163716781}
   m_Father: {fileID: 1455766653}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1090700394
 MonoBehaviour:
@@ -48284,7 +48247,6 @@ GameObject:
   - component: {fileID: 1105873604}
   - component: {fileID: 1105873607}
   - component: {fileID: 1105873606}
-  - component: {fileID: 1105873605}
   - component: {fileID: 1105873608}
   m_Layer: 13
   m_Name: MediumTrees
@@ -48306,18 +48268,6 @@ Transform:
   m_Father: {fileID: 1454385668}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1105873605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1105873603}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 061f1f8e08f75c74f85f940c4c95fe2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: {x: 0.01, y: 0}
 --- !u!33 &1105873606
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -50622,7 +50572,7 @@ Transform:
   - {fileID: 1441804610}
   - {fileID: 1805919754}
   m_Father: {fileID: 1455766653}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1187845343
 Prefab:
@@ -70567,9 +70517,9 @@ Transform:
   - {fileID: 1777500088}
   - {fileID: 1793479657}
   - {fileID: 765843040}
+  - {fileID: 1090700393}
   - {fileID: 1739262683}
   - {fileID: 1185261670}
-  - {fileID: 1090700393}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -83486,7 +83436,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1455766653}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1742863320
 Prefab:
@@ -89673,7 +89623,6 @@ GameObject:
   - component: {fileID: 1815195297}
   - component: {fileID: 1815195300}
   - component: {fileID: 1815195299}
-  - component: {fileID: 1815195298}
   - component: {fileID: 1815195301}
   m_Layer: 13
   m_Name: DarkTrees
@@ -89695,18 +89644,6 @@ Transform:
   m_Father: {fileID: 1454385668}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1815195298
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1815195296}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 061f1f8e08f75c74f85f940c4c95fe2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: {x: 0.007, y: 0}
 --- !u!33 &1815195299
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -90146,7 +90083,6 @@ GameObject:
   - component: {fileID: 1827773171}
   - component: {fileID: 1827773174}
   - component: {fileID: 1827773173}
-  - component: {fileID: 1827773172}
   - component: {fileID: 1827773175}
   m_Layer: 13
   m_Name: Backtrees
@@ -90168,18 +90104,6 @@ Transform:
   m_Father: {fileID: 1454385668}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1827773172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1827773170}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 061f1f8e08f75c74f85f940c4c95fe2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: {x: 0.01, y: 0}
 --- !u!33 &1827773173
 MeshFilter:
   m_ObjectHideFlags: 0
