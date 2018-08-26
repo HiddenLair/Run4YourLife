@@ -15,43 +15,16 @@ public class AutoTilingAdjust : MonoBehaviour
     [SerializeField]
     private CoordinateSystem coordinateSystem = CoordinateSystem.XZ;
 
-    private Renderer m_renderer;
-    private MeshFilter m_meshFilter;
-
-    private Material sharedMaterial;
-
-    void Awake()
-    {
-        m_renderer = GetComponent<Renderer>();
-        m_meshFilter = GetComponent<MeshFilter>();
-
-        sharedMaterial = m_renderer.sharedMaterial;
-    }
-
     void Start()
     {
         ComputeTextureTiling();
-    }
-
-    void OnValidate() // Inspector
-    {
-        // Test the proper step
-        // Visualize the changes
-        // This can be removed on release
-
-        Awake();
-        Start();
-    }
-
-    private void OnDestroy()
-    {
-        m_renderer.sharedMaterial = sharedMaterial;
+        Destroy(this);
     }
 
     private Vector2 GetMeshSize()
     {
         Vector2 size = Vector2.zero;
-        Vector3 meshSize = m_meshFilter.sharedMesh.bounds.size;
+        Vector3 meshSize = GetComponent<MeshFilter>().sharedMesh.bounds.size;
 
         switch(coordinateSystem)
         {
@@ -75,6 +48,6 @@ public class AutoTilingAdjust : MonoBehaviour
     private void ComputeTextureTiling()
     {
         Vector2 meshSize = GetMeshSize();
-        m_renderer.sharedMaterial.mainTextureScale = meshSize / step;
+        GetComponent<Renderer>().material.mainTextureScale = meshSize / step;
     }
 }

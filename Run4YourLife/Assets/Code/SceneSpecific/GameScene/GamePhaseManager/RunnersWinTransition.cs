@@ -125,6 +125,8 @@ namespace Run4YourLife.GameManagement
         {
             cutSceneNumber = 1;
 
+            GameplayPlayerManager.Instance.SetEventsToListen(false);
+
             //Play end transition
             BindTimelineTracks(m_endCutscene, GameplayPlayerManager.Instance.Runners, GameplayPlayerManager.Instance.Boss);
 
@@ -133,6 +135,7 @@ namespace Run4YourLife.GameManagement
 
         private void EndBossDeactivateCutScene()
         {
+            GameplayPlayerManager.Instance.SetEventsToListen(true);
             m_endCutscene.Stop();
             Unbind(m_endCutscene);
         }
