@@ -15,7 +15,7 @@ namespace Run4YourLife.GameManagement
 
         protected void DeactivateScripts(GameObject g)
         {
-            foreach (MonoBehaviour mono in g.GetComponents<MonoBehaviour>())
+            foreach (MonoBehaviour mono in g.GetComponentsInChildren<MonoBehaviour>())
             {
                 mono.enabled = false;
             }
@@ -23,7 +23,7 @@ namespace Run4YourLife.GameManagement
 
         protected void ActivateScripts(GameObject g)
         {
-            foreach (MonoBehaviour mono in g.GetComponents<MonoBehaviour>())
+            foreach (MonoBehaviour mono in g.GetComponentsInChildren<MonoBehaviour>())
             {
                 mono.enabled = true;
             }
