@@ -53,7 +53,12 @@ namespace Cinemachine.Timeline
                     camA = shot.VirtualCamera;
                     ++activeInputs;
                     if (activeInputs == 2)
+                    {
+                        //In order to keep active hierarchy fine and use tremble
+                        camB.VirtualCameraGameObject.SetActive(false);
+                        camA.VirtualCameraGameObject.SetActive(true);
                         break;
+                    }
                 }
             }
 
