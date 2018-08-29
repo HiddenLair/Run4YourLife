@@ -1,4 +1,5 @@
-﻿using System;
+﻿using TMPro;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -44,10 +45,16 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         private CanvasGroup[] hideOnGameReady;
 
         [SerializeField]
-        private SwapImages bossFace;
+        private GameObject bossFace;
 
         [SerializeField]
-        private SwapImages[] runnerFaces;
+        private TextMeshProUGUI bossesLeftText;
+
+        [SerializeField]
+        private GameObject runnerFace;
+
+        [SerializeField]
+        private TextMeshProUGUI runnersLeftText;
 
         [SerializeField]
         private AudioClip audioOnPlayerAdded;
@@ -61,7 +68,6 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
         private Dictionary<CellData, HashSet<PlayerHandle>> bossCellCurrentContainedPlayers = new Dictionary<CellData, HashSet<PlayerHandle>>();
         private Dictionary<CellData, HashSet<PlayerHandle>> runnerCellCurrentContainedPlayers = new Dictionary<CellData, HashSet<PlayerHandle>>();
 
-        private int runnerSelectedCount = 0;
         private Dictionary<PlayerHandle, bool> playerSelectionDone = new Dictionary<PlayerHandle, bool>();
 
         private bool gameStarting = false;
@@ -161,16 +167,6 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             }
 
             FillStand(playerHandle);
-
-            if(currentId == 0)
-            {
-                bossFace.GetComponent<Image>().enabled = true;
-                runnerFaces[0].GetComponent<Image>().enabled = true;
-            }
-            else if(currentId >= 2)
-            {
-                runnerFaces[currentId - 1].GetComponent<Image>().enabled = true;
-            }
 
             playerIds.Add(playerHandle, currentId++);
 
@@ -314,29 +310,37 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
         private void UpdatePlayerFacesGameReady()
         {
-            bossFace.ResetInitial();
+            // Expected boss count vs selected bosses
+            // Expected runner count vs selected runners
 
-            foreach(SwapImages runnerFace in runnerFaces)
+            int bossesLeft = 1 - SelectedPlayerCount(true);
+            int runnersLeft = Math.Max((int)currentId, 2) - 1 - SelectedPlayerCount(false);
+
+            UpdatePlayerFaceGameReady(bossesLeft, bossFace.GetComponent<SwapImages>(), bossFace.GetComponent<ScaleOnTick>(), bossesLeftText);
+            UpdatePlayerFaceGameReady(runnersLeft, runnerFace.GetComponent<SwapImages>(), runnerFace.GetComponent<ScaleOnTick>(), runnersLeftText);
+        }
+
+        private void UpdatePlayerFaceGameReady(int countLeft, SwapImages swapImages, ScaleOnTick scaleOnTick, TextMeshProUGUI playerLeftText)
+        {
+            if(countLeft == 0)
             {
-                runnerFace.ResetInitial();
-            }
+                playerLeftText.color = Color.green;
+                playerLeftText.text = "Ready!";
 
-            uint currentRunnerIndex = 0;
-
-            foreach(KeyValuePair<PlayerHandle, bool> currentPlayerSelectionDone in playerSelectionDone)
-            {
-                if(currentPlayerSelectionDone.Value)
+                if(!swapImages.Swapped())
                 {
-                    bool isBoss = playersCurrentCell[currentPlayerSelectionDone.Key].isBoss;
+                    swapImages.Swap();
+                    scaleOnTick.Tick();
+                }
+            }
+            else
+            {
+                playerLeftText.color = Color.red;
+                playerLeftText.text = countLeft + " Left";
 
-                    if(isBoss)
-                    {
-                        bossFace.Swap();
-                    }
-                    else
-                    {
-                        runnerFaces[currentRunnerIndex++].Swap();
-                    }
+                if(swapImages.Swapped())
+                {
+                    swapImages.Swap();
                 }
             }
         }
@@ -365,32 +369,29 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
             return true;
         }
 
-        private bool BossCanBeSelected()
+        private int SelectedPlayerCount(bool isBoss)
         {
+            int count = 0;
+
             foreach(KeyValuePair<PlayerHandle, CellData> currentPlayerCurrentCell in playersCurrentCell)
             {
-                if(currentPlayerCurrentCell.Value != null && currentPlayerCurrentCell.Value.isBoss && playerSelectionDone[currentPlayerCurrentCell.Key])
+                if(currentPlayerCurrentCell.Value != null && currentPlayerCurrentCell.Value.isBoss == isBoss && playerSelectionDone[currentPlayerCurrentCell.Key])
                 {
-                    return false;
+                    ++count;
                 }
             }
 
-            return true;
+            return count;
+        }
+
+        private bool BossCanBeSelected()
+        {
+            return SelectedPlayerCount(true) < 1;
         }
 
         private bool RunnerCanBeSelected()
         {
-            int runnerCount = 0;
-
-            foreach(KeyValuePair<PlayerHandle, CellData> currentPlayerCurrentCell in playersCurrentCell)
-            {
-                if(currentPlayerCurrentCell.Value != null && !currentPlayerCurrentCell.Value.isBoss && playerSelectionDone[currentPlayerCurrentCell.Key])
-                {
-                    ++runnerCount;
-                }
-            }
-
-            return runnerCount < Math.Max(currentId, 2) - 1;
+            return SelectedPlayerCount(false) < Math.Max(currentId, 2) - 1;
         }
 
         private void PreparePlayers()
@@ -460,15 +461,6 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
             UpdateGameReady();
 
-            if(playerCell.isBoss)
-            {
-                bossFace.GetComponent<ScaleOnTick>().Tick();
-            }
-            else
-            {
-                runnerFaces[runnerSelectedCount++].GetComponent<ScaleOnTick>().Tick();
-            }
-
             return RequestCompletionState.Completed;
         }
 
@@ -492,11 +484,6 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
 
             UpdateGameReady();
 
-            if(!playerCell.isBoss)
-            {
-                --runnerSelectedCount;
-            }
-
             return RequestCompletionState.Completed;
         }
 
@@ -512,14 +499,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 return RequestCompletionState.Error;
             }
 
-            RequestCompletionState requestCompletionState = UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationUp);
-
-            if(requestCompletionState == RequestCompletionState.Completed)
-            {
-                UpdateGameReady();
-            }
-
-            return requestCompletionState;
+            return UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationUp);
         }
 
         public RequestCompletionState OnPlayerInputDown(PlayerHandle playerHandle)
@@ -534,14 +514,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 return RequestCompletionState.Error;
             }
 
-            RequestCompletionState requestCompletionState = UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationDown);
-
-            if(requestCompletionState == RequestCompletionState.Completed)
-            {
-                UpdateGameReady();
-            }
-
-            return requestCompletionState;
+            return UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationDown);
         }
 
         public RequestCompletionState OnPlayerInputLeft(PlayerHandle playerHandle)
@@ -556,14 +529,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 return RequestCompletionState.Error;
             }
 
-            RequestCompletionState requestCompletionState = UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationLeft);
-
-            if(requestCompletionState == RequestCompletionState.Completed)
-            {
-                UpdateGameReady();
-            }
-
-            return requestCompletionState;
+            return UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationLeft);
         }
 
         public RequestCompletionState OnPlayerInputRight(PlayerHandle playerHandle)
@@ -578,14 +544,7 @@ namespace Run4YourLife.SceneSpecific.CharacterSelection
                 return RequestCompletionState.Error;
             }
 
-            RequestCompletionState requestCompletionState = UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationRight);
-
-            if(requestCompletionState == RequestCompletionState.Completed)
-            {
-                UpdateGameReady();
-            }
-
-            return requestCompletionState;
+            return UpdateCurrentCell(playerHandle, playersCurrentCell[playerHandle].navigationRight);
         }
 
         #endregion

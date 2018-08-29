@@ -14,12 +14,16 @@ namespace Run4YourLife.UI
         [SerializeField]
         private Image[] images;
 
+        private bool swapped = false;
+
         public void Swap()
         {
             foreach(Image image in images)
             {
                 image.sprite = image.sprite == spriteA ? spriteB : spriteA;
             }
+
+            swapped = !swapped;
         }
 
         public void ResetInitial()
@@ -28,6 +32,13 @@ namespace Run4YourLife.UI
             {
                 image.sprite = spriteA;
             }
+
+            swapped = false;
+        }
+
+        public bool Swapped()
+        {
+            return swapped;
         }
     }
 }
