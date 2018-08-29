@@ -60,6 +60,12 @@ namespace Run4YourLife.GameManagement
             CameraManager.Instance.TransitionToCamera(m_virtualCamera);
 
             boss.GetComponent<BossPathWalker>().m_position = 0;
+
+            foreach(GameObject runner in GameplayPlayerManager.Instance.Runners)
+            {
+                RunnerController runnerCharacterController = runner.GetComponent<RunnerController>();
+                runnerCharacterController.CheckOutScreen = true;
+            }
         }
 
         public override void EndPhase()
