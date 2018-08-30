@@ -22,6 +22,7 @@ public class EyeController : MonoBehaviour
     [SerializeField]
     private float maxScaleMultiplier = 1.25f;
 
+    private Material material;
     private Coroutine coroutine;
     private Vector3 initialScale;
     private MeshRenderer meshRenderer;
@@ -29,13 +30,16 @@ public class EyeController : MonoBehaviour
     void Awake()
     {
         meshRenderer = GetComponent<MeshRenderer>();
-        meshRenderer.enabled = false;
+        material = meshRenderer.material;
 
         initialScale = transform.localScale;
     }
 
     void OnEnable()
     {
+        Color color = material.color; color.a = 0.0f;
+        material.color = color;
+
         coroutine = StartCoroutine(Controller());
     }
 
@@ -49,28 +53,65 @@ public class EyeController : MonoBehaviour
 
     private IEnumerator Controller()
     {
+        float fadeTime = 0.2f;
+
         while(true)
         {
             transform.localScale = initialScale * Random.Range(minScaleMultiplier, maxScaleMultiplier);
 
+            // 0 .. 0
             yield return new WaitForSeconds(Random.Range(minTimeBetweenVisibleS, maxTimeBetweenVisibleS));
 
-            meshRenderer.enabled = true;
+            // 0 -> 1
+            yield return StartCoroutine(Fade(true, fadeTime));
 
-            yield return new WaitForSeconds(Random.Range(minTimeVisibleS, maxTimeVisibleS));
+            // 1 .. 1
+            yield return new WaitForSeconds(0.5f * Random.Range(minTimeVisibleS, maxTimeVisibleS));
 
-            if(Random.Range(0.0f, 1.0f) >= 0.8f)
+            if(Random.Range(0.0f, 1.0f) >= 0.9f)
             {
-                meshRenderer.enabled = false;
+                // 1 -> 0
+                yield return StartCoroutine(Fade(false, 0.25f * fadeTime));
 
-                yield return new WaitForSeconds(0.15f * Random.Range(minTimeVisibleS, maxTimeVisibleS));
+                // 0 .. 0
+                yield return new WaitForSeconds(0.05f);
 
-                meshRenderer.enabled = true;
+                // 0 -> 1
+                yield return StartCoroutine(Fade(true, 0.25f * fadeTime));
             }
 
-            yield return new WaitForSeconds(Random.Range(minTimeVisibleS, maxTimeVisibleS));
+            // 1 .. 1
+            yield return new WaitForSeconds(0.5f * Random.Range(minTimeVisibleS, maxTimeVisibleS));
 
-            meshRenderer.enabled = false;
+            // 1 -> 0
+            yield return StartCoroutine(Fade(false, fadeTime));
         }
+    }
+
+    private IEnumerator Fade(bool alpha0To1, float timeS)
+    {
+        float remainingTimeS = timeS;
+        Color color = material.color;
+
+        color.a = alpha0To1 ? 0.0f : 1.0f;
+        material.color = color;
+
+        while(remainingTimeS >= 0.0f)
+        {
+            color.a = Mathf.Clamp01(remainingTimeS / timeS);
+
+            if(alpha0To1)
+            {
+                color.a = 1.0f - color.a;
+            }
+
+            material.color = color;
+            remainingTimeS -= Time.deltaTime;
+
+            yield return null;
+        }
+
+        color.a = alpha0To1 ? 1.0f : 0.0f;
+        material.color = color;
     }
 }

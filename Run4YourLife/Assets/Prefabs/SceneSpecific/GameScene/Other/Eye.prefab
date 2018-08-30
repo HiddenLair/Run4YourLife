@@ -48,7 +48,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1686925434831194}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -94,7 +94,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6d89ea698322a44990b15bb3c122321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minTimeVisibleS: 1
-  maxTimeVisibleS: 2
+  minTimeVisibleS: 0.5
+  maxTimeVisibleS: 1
   minTimeBetweenVisibleS: 1
-  maxTimeBetweenVisibleS: 5
+  maxTimeBetweenVisibleS: 10
+  minScaleMultiplier: 0.75
+  maxScaleMultiplier: 1.25
