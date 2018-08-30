@@ -14,9 +14,6 @@ namespace Run4YourLife.SceneSpecific.GameLoadingMenu
         [SerializeField]
         private TextMeshProUGUI loadingText;
 
-        [SerializeField]
-        private TextMeshProUGUI pressAnyKeyText;
-
         void Start()
         {
             StartCoroutine(UpdateProgress());
@@ -53,8 +50,7 @@ namespace Run4YourLife.SceneSpecific.GameLoadingMenu
 
         private void OnCompleted()
         {
-            loadingText.text = "Done!";
-            pressAnyKeyText.enabled = true;
+            loadingText.text = "Done! Press Any Button";
         }
 
         private int GetProgress()
