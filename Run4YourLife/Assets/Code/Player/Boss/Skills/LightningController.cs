@@ -141,7 +141,7 @@ namespace Run4YourLife.Player.Boss.Skills.Lightning
             LayerMask finalMask = Layers.Runner | Layers.Stage;
 
             RaycastHit[] hits;
-            hits = Physics.SphereCastAll(lighningEffect.transform.position, width / 2, Vector3.down, pos.y - transform.position.y, finalMask, QueryTriggerInteraction.Ignore);
+            hits = Physics.SphereCastAll(lighningEffect.transform.position, width / 2, Vector3.down, pos.y, finalMask, QueryTriggerInteraction.Ignore);
 
             List<RaycastHit> nonRunnersHits = new List<RaycastHit>();
             foreach (RaycastHit hit in hits)
