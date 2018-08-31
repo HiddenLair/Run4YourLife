@@ -50,6 +50,7 @@ namespace Run4YourLife.SceneSpecific.GameLoadingMenu
 
         private void OnCompleted()
         {
+            loadingText.color = Color.green;
             loadingText.text = "Done! Press Any Button";
         }
 
