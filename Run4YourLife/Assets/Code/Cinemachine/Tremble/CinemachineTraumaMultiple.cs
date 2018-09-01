@@ -39,7 +39,10 @@ namespace Run4YourLife.Cinemachine
 
         private void OnDisable()
         {
-            TrembleManager.Instance.Unsubscribe(this);
+            if (TrembleManager.Instance != null) // Ugly code
+            {
+                TrembleManager.Instance.Unsubscribe(this);
+            }
         }
 
 
@@ -50,7 +53,7 @@ namespace Run4YourLife.Cinemachine
         {
             VcamTraumaState cameraState = GetExtraState<VcamTraumaState>(vcam);
 
-            trembles.Add(new TrembleInfo(config,0,0));
+            trembles.Add(new TrembleInfo(config, 0, 0));
 
             cameraState.trauma = Mathf.Clamp01(cameraState.trauma + config.traumAmount);
         }
@@ -93,21 +96,21 @@ namespace Run4YourLife.Cinemachine
                 if (info.config.useDuration)
                 {
                     info.timer += Time.deltaTime;
-                    if(info.timer < info.config.duration)
+                    if (info.timer < info.config.duration)
                     {
                         continue;//We dont decrease trauma, till this duration is over
                     }
                 }
                 cameraState.trauma = Mathf.Clamp01(cameraState.trauma - info.config.m_traumaDecreaseSpeed * Time.deltaTime);
                 info.actualTraumaReduced += info.config.m_traumaDecreaseSpeed * Time.deltaTime;
-                if(info.actualTraumaReduced >= info.config.traumAmount)
+                if (info.actualTraumaReduced >= info.config.traumAmount)
                 {
                     trembles.Remove(info);
                 }
             }
         }
 
-        private void CalculateValuesFromTrembles(out float m_maxTranslationalMovement, out float m_maxRotationalTraumaAngle,out float frecuency)
+        private void CalculateValuesFromTrembles(out float m_maxTranslationalMovement, out float m_maxRotationalTraumaAngle, out float frecuency)
         {
             m_maxTranslationalMovement = 0;
             m_maxRotationalTraumaAngle = 0;
@@ -128,7 +131,7 @@ namespace Run4YourLife.Cinemachine
         /// </summary> 
         /// <param name="seed">seed that will be given to the perlin noise function</param> 
         /// <returns>value in the range [-1,1]</returns> 
-        private float GetRandomPerlinNoiseTimeBased(float seed , float frecuency)
+        private float GetRandomPerlinNoiseTimeBased(float seed, float frecuency)
         {
             float timeSeed = Time.time * frecuency;
             return (Mathf.PerlinNoise(timeSeed, seed) - 0.5f) * 2.0f;
