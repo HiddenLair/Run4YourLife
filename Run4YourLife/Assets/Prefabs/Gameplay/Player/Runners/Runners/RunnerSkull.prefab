@@ -258,6 +258,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1205130672132162
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4755463211102774}
+  - component: {fileID: 114680987885225900}
+  - component: {fileID: 136623606067938402}
+  m_Layer: 8
+  m_Name: RunnerBounce
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1248094112123106
 GameObject:
   m_ObjectHideFlags: 1
@@ -326,7 +343,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4276448762393818}
-  - component: {fileID: 82619153076867686}
   - component: {fileID: 95350296657178862}
   - component: {fileID: 54337009213086832}
   - component: {fileID: 143320797131065660}
@@ -337,7 +353,6 @@ GameObject:
   - component: {fileID: 114427372571650528}
   - component: {fileID: 114402962794386694}
   - component: {fileID: 114026639596952202}
-  - component: {fileID: 114402471203336734}
   - component: {fileID: 114570970210484876}
   - component: {fileID: 114114568517474598}
   m_Layer: 8
@@ -482,23 +497,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1381827535254360
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4770880323262362}
-  - component: {fileID: 135099582702169342}
-  - component: {fileID: 114617610344985166}
-  m_Layer: 9
-  m_Name: BounceableArea
-  m_TagString: Bounceable
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
 --- !u!1 &1413389146378924
 GameObject:
   m_ObjectHideFlags: 1
@@ -571,22 +569,6 @@ GameObject:
   - component: {fileID: 4236458911725700}
   m_Layer: 0
   m_Name: tail
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1448035675160056
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4526638456397820}
-  - component: {fileID: 114123277937771218}
-  m_Layer: 9
-  m_Name: BounceParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1638,11 +1620,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1293881295563976}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 372.21075, y: 22.15494, z: -1.8876649}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4280363612009534}
-  - {fileID: 4770880323262362}
+  - {fileID: 4755463211102774}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1925,19 +1907,6 @@ Transform:
   m_Father: {fileID: 4566794069260904}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4526638456397820
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1448035675160056}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4770880323262362}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4560342133682226
 Transform:
   m_ObjectHideFlags: 1
@@ -2210,6 +2179,19 @@ Transform:
   m_Father: {fileID: 4560342133682226}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4755463211102774
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1205130672132162}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4276448762393818}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4755868347505984
 Transform:
   m_ObjectHideFlags: 1
@@ -2236,20 +2218,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4241668732207854}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4770880323262362
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1381827535254360}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.807, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 4526638456397820}
-  m_Father: {fileID: 4276448762393818}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4771025425525150
 Transform:
@@ -2538,86 +2506,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
---- !u!82 &82619153076867686
-AudioSource:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1293881295563976}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
 --- !u!95 &95177725529799896
 Animator:
   serializedVersion: 3
@@ -2832,19 +2720,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114123277937771218
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1448035675160056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cb52b0f7a8d8b1458965b078cdc7767, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fx: {fileID: 1200353531548318, guid: 76cab33c44ee8e14c89e142f7ba0bbe6, type: 2}
-  sfx: {fileID: 0}
 --- !u!114 &114245366132671468
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2883,20 +2758,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fx: {fileID: 1747895177136780, guid: 339637275c8fd6e4794c63f89a508645, type: 2}
   sfx: {fileID: 0}
---- !u!114 &114402471203336734
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1293881295563976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3a3b6326faf46d41af8f1b5d68fd7f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_bounceJumpButtonSphereCastRatius: 0.25
-  m_verticalOffset: 0.13
-  m_colliderSize: {x: 0.5, y: 0.75, z: 0.5}
 --- !u!114 &114402962794386694
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2969,17 +2830,6 @@ MonoBehaviour:
   inmuneTimeAfterRevive: 2
   fadePeriodAfterRevive: 0.1
   fadeRenderersFather: {fileID: 1413389146378924}
---- !u!114 &114617610344985166
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1381827535254360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 041700effd1ef6f4bb0601cb732914b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114653462467680814
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2993,6 +2843,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fx: {fileID: 1920511670991916, guid: 10d08cb802bc8464e9e16560beab600a, type: 2}
   sfx: {fileID: 0}
+--- !u!114 &114680987885225900
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1205130672132162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3a3b6326faf46d41af8f1b5d68fd7f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_bounceJumpButtonSphereCastRatius: 0.25
+  m_verticalOffset: 0.13
+  m_colliderSize: {x: 0.5, y: 0.75, z: 0.5}
+  m_runnerCharacterController: {fileID: 114570970210484876}
 --- !u!114 &114742571727039172
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3051,18 +2916,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67d256071968d944793b20e43cfc5a0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!135 &135099582702169342
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1381827535254360}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.25
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &135823378186488818
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -3075,6 +2928,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.2
   m_Center: {x: 0, y: 0.5, z: -0.15}
+--- !u!136 &136623606067938402
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1205130672132162}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.25
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!137 &137025647333190414
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

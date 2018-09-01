@@ -19,7 +19,6 @@ namespace Run4YourLife.Player.Runner
     [RequireComponent(typeof(RunnerAttributeController))]
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(InputController))]
-    [RequireComponent(typeof(RunnerBounceController))]
     [RequireComponent(typeof(PlayerInstance))]
     [RequireComponent(typeof(SimulateChildOf))]
     public class RunnerController : MonoBehaviour, IRunnerEvents
@@ -196,10 +195,12 @@ namespace Run4YourLife.Player.Runner
             m_runnerControlScheme = GetComponent<RunnerControlScheme>();
             m_characterController = GetComponent<CharacterController>();
             m_runnerAttributeController = GetComponent<RunnerAttributeController>();
-            m_runnerBounceController = GetComponent<RunnerBounceController>();
             m_animator = GetComponent<Animator>();
             m_inputController = GetComponent<InputController>();
             m_simulateChildOf = GetComponent<SimulateChildOf>();
+
+            m_runnerBounceController = GetComponentInChildren<RunnerBounceController>();
+            Debug.Assert(m_runnerBounceController != null);
 
             m_runnerDashBreakableFinder = GetComponentInChildren<RunnerDashBreakableFinder>();
             Debug.Assert(m_runnerDashBreakableFinder != null);
