@@ -79,16 +79,21 @@ namespace Run4YourLife.Player.Boss
 
         private Vector3 LocateEndingLaserPosition()
         {
-            Vector3 position;
-            RaycastHit raycastHit;
-            if (Physics.Raycast(transform.position, transform.forward, out raycastHit, m_maxLaserDistance, Layers.Stage, QueryTriggerInteraction.Ignore))
+            Vector3 position = transform.position;
+
+            if (!Physics.CheckSphere(transform.position, 0.1f, Layers.Stage, QueryTriggerInteraction.Ignore)) // It is not inside an object
             {
-                position = raycastHit.point;
+                RaycastHit raycastHit;
+                if (Physics.Raycast(transform.position, transform.forward, out raycastHit, m_maxLaserDistance, Layers.Stage, QueryTriggerInteraction.Ignore))
+                {
+                    position = raycastHit.point;
+                }
+                else
+                {
+                    position = transform.position + transform.forward * m_maxLaserDistance;
+                }
             }
-            else
-            {
-                position = transform.position + transform.forward * m_maxLaserDistance;
-            }
+
             return position;
         }
 
