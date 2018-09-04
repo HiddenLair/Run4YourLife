@@ -5,57 +5,58 @@ using Run4YourLife.Player;
 using Run4YourLife.Utils;
 using Run4YourLife.GameManagement.AudioManagement;
 
-[RequireComponent(typeof(Rigidbody))]
-public class CoconutController : MonoBehaviour
+namespace Run4YourLife.Interactables
 {
 
-    [SerializeField]
-    private AudioClip m_releaseCoconutAudioClip;
-
-    [SerializeField]
-    private AudioClip m_hitGroundAudioClip;
-
-
-    public bool Aviable { get; private set; }
-
-    private Rigidbody m_rigidbody;
-
-    private void Awake()
+    [RequireComponent(typeof(Rigidbody))]
+    public class CoconutController : MonoBehaviour
     {
-        m_rigidbody = GetComponent<Rigidbody>();
-        Reset();
-    }
 
-    public void Fall()
-    {
-        Aviable = false;
-        m_rigidbody.useGravity = true;
-        m_rigidbody.isKinematic = false;
-        AudioManager.Instance.PlaySFX(m_releaseCoconutAudioClip);
-    }
+        [SerializeField]
+        private AudioClip m_releaseCoconutAudioClip;
 
-    public void Reset()
-    {
-        Aviable = true;
-        gameObject.SetActive(true);
-        m_rigidbody.useGravity = false;
-        m_rigidbody.isKinematic = true;
-        transform.localPosition = Vector3.zero;
-    }
+        [SerializeField]
+        private AudioClip m_hitGroundAudioClip;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!Aviable) // it is falling
+
+        public bool Aviable { get; private set; }
+
+        private Rigidbody m_rigidbody;
+
+        private void Awake()
         {
-            IRunnerEvents runnerEvents = other.gameObject.GetComponent<IRunnerEvents>();
-            if (runnerEvents != null)
+            m_rigidbody = GetComponent<Rigidbody>();
+            Reset();
+        }
+
+        public void Fall()
+        {
+            Aviable = false;
+            m_rigidbody.useGravity = true;
+            m_rigidbody.isKinematic = false;
+            AudioManager.Instance.PlaySFX(m_releaseCoconutAudioClip);
+        }
+
+        public void Reset()
+        {
+            Aviable = true;
+            gameObject.SetActive(true);
+            m_rigidbody.useGravity = false;
+            m_rigidbody.isKinematic = true;
+            transform.localPosition = Vector3.zero;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            IRunnerEvents runnerEvents = other.GetComponent<IRunnerEvents>();
+            if (!Aviable && runnerEvents != null) // it is falling
             {
                 runnerEvents.Kill();
+
+                AudioManager.Instance.PlaySFX(m_hitGroundAudioClip);
+
+                gameObject.SetActive(false);
             }
-
-            AudioManager.Instance.PlaySFX(m_hitGroundAudioClip);
-
-            gameObject.SetActive(false);
         }
     }
 }
