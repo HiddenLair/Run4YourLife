@@ -18,6 +18,7 @@ namespace Run4YourLife.Debugging
     [RequireComponent(typeof(VertexAndTriangleCounter))]
     [RequireComponent(typeof(WalkerController))]
     [RequireComponent(typeof(PhaseSwitcher))]
+    [RequireComponent(typeof(ParticleCounter))]
     public class DebugSystemManager : MonoBehaviour
     {
         private const string cachedWindowNameStr = "Debugging Tools";
@@ -44,7 +45,7 @@ namespace Run4YourLife.Debugging
 
         void Awake()
         {
-            if(DebugSystemManagerHelper.DebuggingToolsEnabled())
+            if (DebugSystemManagerHelper.DebuggingToolsEnabled())
             {
                 AddDebugFeatures();
             }
@@ -53,7 +54,7 @@ namespace Run4YourLife.Debugging
                 Destroy(this);
 
                 DebugFeature[] allDebugFeatures = FindObjectsOfType<DebugFeature>();
-                for(int i = 0; i < allDebugFeatures.Length; ++i)
+                for (int i = 0; i < allDebugFeatures.Length; ++i)
                 {
                     Destroy(allDebugFeatures[i]);
                 }
@@ -62,7 +63,7 @@ namespace Run4YourLife.Debugging
 
         void Update()
         {
-            if(Input.GetKeyDown(KeyCode.F1))
+            if (Input.GetKeyDown(KeyCode.F1))
             {
                 debugging = !debugging;
             }
@@ -86,6 +87,7 @@ namespace Run4YourLife.Debugging
             generalDebugFeatures.Add(GetComponent<FPSCounter>());
             generalDebugFeatures.Add(GetComponent<VertexAndTriangleCounter>());
             generalDebugFeatures.Add(CameraManager.Instance.MainCamera.gameObject.AddComponent<WireframeMode>());
+            generalDebugFeatures.Add(GetComponent<ParticleCounter>());
         }
 
         private void AddBossDebugFeatures()
@@ -109,7 +111,7 @@ namespace Run4YourLife.Debugging
 
         void OnGUI()
         {
-            if(debugging)
+            if (debugging)
             {
                 windowRect = GUI.Window(0, windowRect, OnGUIWindow, cachedWindowNameStr);
             }
@@ -119,11 +121,11 @@ namespace Run4YourLife.Debugging
         {
             GUILayout.BeginHorizontal();
 
-            for(int i = 0; i < debugFeatures.Count; ++i)
+            for (int i = 0; i < debugFeatures.Count; ++i)
             {
                 GUI.color = currentDebugFeaturesSetIndex == i ? Color.green : Color.red;
 
-                if(GUILayout.Button(debugFeatures[i].Value))
+                if (GUILayout.Button(debugFeatures[i].Value))
                 {
                     currentDebugFeaturesSetIndex = i;
                 }
@@ -137,7 +139,7 @@ namespace Run4YourLife.Debugging
 
             List<DebugFeature> currentDebugFeatures = debugFeatures[currentDebugFeaturesSetIndex].Key;
 
-            foreach(DebugFeature debugFeature in currentDebugFeatures)
+            foreach (DebugFeature debugFeature in currentDebugFeatures)
             {
                 debugFeature.OnDrawGUI();
             }

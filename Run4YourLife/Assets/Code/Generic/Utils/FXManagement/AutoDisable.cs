@@ -11,7 +11,7 @@ public class AutoDisable : MonoBehaviour
         m_particleSystems = GetComponentsInChildren<ParticleSystem>();
     }
 
-    void Update()
+    void LateUpdate()
     {
         foreach (ParticleSystem p in m_particleSystems)
         {
