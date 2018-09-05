@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 
+
 namespace Run4YourLife.Debugging
 {
     public class VertexAndTriangleCounter : DebugFeature
     {
+#if UNITY_EDITOR
         [SerializeField]
         private float updateTimeS = 0.5f;
 
@@ -25,19 +27,27 @@ namespace Run4YourLife.Debugging
         // TriangleCounterHelper minimizes this cost by caching this information
 
         private TriangleCounterHelper triangleCounterHelper = new TriangleCounterHelper();
+#endif
 
         void OnDestroy()
         {
+#if UNITY_EDITOR
             triangleCounterHelper.Clear();
+#endif
         }
 
         protected override string GetPanelName()
         {
+#if UNITY_EDITOR
+            return "Vertex and triangle counter (only in editor)";
+#else
             return "Vertex and triangle counter";
+#endif
         }
 
         protected override void OnCustomDrawGUI()
         {
+#if UNITY_EDITOR
             if ((currentUpdateTimeS += Time.deltaTime) >= updateTimeS)
             {
                 Count(); // Updates current and last values
@@ -56,8 +66,10 @@ namespace Run4YourLife.Debugging
 
             GUILayout.Label(cachedCurrentVertexStr);
             GUILayout.Label(cachedCurrentTriangleStr);
+#endif
         }
 
+#if UNITY_EDITOR
         private void Count() // Expensive
         {
             lastVertexCount = currentVertexCount;
@@ -94,5 +106,6 @@ namespace Run4YourLife.Debugging
                 }
             }
         }
+#endif
     }
 }
