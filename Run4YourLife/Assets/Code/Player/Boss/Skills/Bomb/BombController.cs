@@ -83,8 +83,8 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
         private Vector3 speed;
 
         private Renderer m_renderer;
-        private SimulateChildOf simulateChildOf;
-        private new Rigidbody rigidbody;
+        private SimulateChildOf m_simulateChildOf;
+        private Rigidbody m_rigidbody;
 
         #endregion
 
@@ -93,8 +93,8 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
             m_renderer = GetComponentInChildren<Renderer>();
             Debug.Assert(m_renderer != null);
 
-            simulateChildOf = GetComponent<SimulateChildOf>();
-            rigidbody = GetComponent<Rigidbody>();
+            m_simulateChildOf = GetComponent<SimulateChildOf>();
+            m_rigidbody = GetComponent<Rigidbody>();
         }
 
         private void OnDisable()
@@ -116,7 +116,7 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
         {
             StopAllCoroutines();
 
-            simulateChildOf.Parent = null;
+            m_simulateChildOf.Parent = null;
 
             m_runnerDetectorTrigger.enabled = false;
             m_skillBreakTrigger.enabled = false;
@@ -191,7 +191,7 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
         {
             RaycastHit raycastHit;
             Vector3 movement = speed * Time.deltaTime;
-            while (!rigidbody.SweepTest(movement, out raycastHit, movement.magnitude, QueryTriggerInteraction.Ignore))
+            while (!m_rigidbody.SweepTest(movement, out raycastHit, movement.magnitude, QueryTriggerInteraction.Ignore))
             {
                 transform.Translate(movement);
                 yield return null;
@@ -200,7 +200,7 @@ namespace Run4YourLife.Player.Boss.Skills.Bomb
             }
 
             transform.position = raycastHit.point;
-            simulateChildOf.Parent = raycastHit.transform;
+            m_simulateChildOf.Parent = raycastHit.transform;
 
             TrembleManager.Instance.Tremble(trembleFall);
             AudioManager.Instance.PlaySFX(m_trapfallClip);
