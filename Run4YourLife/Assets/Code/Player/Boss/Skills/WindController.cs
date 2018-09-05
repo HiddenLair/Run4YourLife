@@ -8,6 +8,7 @@ using Run4YourLife.CameraUtils;
 using Run4YourLife.Player.Runner;
 using Run4YourLife.GameManagement.AudioManagement;
 using Run4YourLife.Utils;
+using System.Collections.Generic;
 
 namespace Run4YourLife.Player.Boss.Skills.Wind
 {
@@ -16,16 +17,8 @@ namespace Run4YourLife.Player.Boss.Skills.Wind
         #region Inspector
 
         [SerializeField]
-        [Range(0, 200)]
-        private float windMaxForceRelative;
-
-        [SerializeField]
-        [Range(0, 100)]
-        private float windMinForceRelative;
-
-        [SerializeField]
-        [Range(0, 100)]
-        private float screenMinWind;
+        [Range(0, 1)]
+        private float windForceRelative;
 
         [SerializeField]
         private float windDuration;
@@ -53,13 +46,20 @@ namespace Run4YourLife.Player.Boss.Skills.Wind
         #region Variables
 
         private float actualFillPercent = 0.0f;
-
         private float flyingItemTimer = 0.0f;
         private float tornadoTimer = 0.0f;
 
         private ParticleFadeOut particleFadeOutController;
 
+        private HashSet<RunnerController> runnerControllers = new HashSet<RunnerController>();
+        private Predicate<RunnerController> deleteInactiveRunners = (x) => x == null || !x.gameObject.activeInHierarchy;
+
         #endregion
+
+        private void OnDisable()
+        {
+            runnerControllers.Clear();
+        }
 
         protected override void ResetState()
         {
@@ -83,7 +83,6 @@ namespace Run4YourLife.Player.Boss.Skills.Wind
             if (particleFadeOutController == null)
             {
                 particleFadeOutController = GetComponentInChildren<ParticleFadeOut>();
-                //windDuration -= particleFadeOutController.timeToFade;
             }
 
             windParticles.SetActive(true);
@@ -204,36 +203,30 @@ namespace Run4YourLife.Player.Boss.Skills.Wind
             gameObject.SetActive(false);
         }
 
-        private void OnTriggerStay(Collider other)
+        private void LateUpdate()
         {
-            if (other.CompareTag(Tags.Runner))
+            runnerControllers.RemoveWhere(deleteInactiveRunners);
+            foreach (RunnerController runnerController in runnerControllers)
             {
-                Camera mainCamera = CameraManager.Instance.MainCamera;
-                Vector3 bottomLeft = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(0, 0));
-                Vector3 topRight = CameraConverter.ViewportToGamePlaneWorldPosition(mainCamera, new Vector2(1, 1));
+                runnerController.WindForceRelative += windForceRelative;
+            }
+        }
 
-                float hitOffset = (other.transform.position.x - bottomLeft.x) - ((topRight.x - bottomLeft.x) * screenMinWind / 100);
-                float screenOffset = (topRight.x - bottomLeft.x) - ((topRight.x - bottomLeft.x) * screenMinWind / 100);
-
-                float percentaje = hitOffset / screenOffset;
-
-                if (percentaje < 0)
-                {
-                    other.GetComponent<RunnerController>().WindForceRelative = windMinForceRelative;
-                }
-                else
-                {
-                    float increasePerPercentaje = windMaxForceRelative - windMinForceRelative / 100;
-                    other.GetComponent<RunnerController>().WindForceRelative = (increasePerPercentaje * percentaje) + windMinForceRelative;
-                }
+        private void OnTriggerEnter(Collider other)
+        {
+            RunnerController runnerController = other.GetComponent<RunnerController>();
+            if (runnerController != null)
+            {
+                runnerControllers.Add(runnerController);
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag(Tags.Runner))
+            RunnerController runnerController = other.GetComponent<RunnerController>();
+            if (runnerController != null)
             {
-                other.GetComponent<RunnerController>().WindForceRelative = 0.0f;
+                runnerControllers.Remove(runnerController);
             }
         }
     }

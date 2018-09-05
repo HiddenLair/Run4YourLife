@@ -329,11 +329,16 @@ namespace Run4YourLife.Player.Runner
                 m_idleTimer = 0.0f;//Reset idle timer
             }
 
-            Vector3 windMovement = (Vector3.left * m_runnerAttributeController.GetAttribute(RunnerAttribute.Speed) * Time.deltaTime) * WindForceRelative;
             Vector3 inputMovement = transform.right * (horizontal * m_runnerAttributeController.GetAttribute(RunnerAttribute.Speed) * Time.deltaTime);
-            Vector3 totalMovement = inputMovement + (m_velocity + windMovement) * Time.deltaTime + ExternalVelocity * Time.deltaTime;
+            Vector3 velocityMovement = m_velocity * Time.deltaTime;
+
+            Vector3 windVelocity = Vector3.left * (m_runnerAttributeController.GetAttribute(RunnerAttribute.Speed) * WindForceRelative);
+            Vector3 externalMovement = (ExternalVelocity + windVelocity) * Time.deltaTime;
+
+            Vector3 totalMovement = inputMovement + externalMovement + velocityMovement;
 
             ExternalVelocity = Vector3.zero;
+            WindForceRelative = 0f;
 
             Move(totalMovement);
         }
