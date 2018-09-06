@@ -22,7 +22,7 @@ namespace Run4YourLife.Interactables
 
         public void OnRunnerTriggeredCoconutFall()
         {
-            if (m_coconutController.Aviable)
+            if (m_coconutController.IsIdle)
             {
                 m_coconutController.Fall();
                 StartCoroutine(YieldHelper.WaitForSeconds(() => ResetCoconut(), m_timeToReappear));

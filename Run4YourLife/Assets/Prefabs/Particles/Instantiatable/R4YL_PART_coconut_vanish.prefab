@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4767024593436422}
   - component: {fileID: 198076794366054934}
   - component: {fileID: 199266958106178578}
+  - component: {fileID: 114297950912943982}
+  - component: {fileID: 114034230083435148}
   m_Layer: 0
   m_Name: R4YL_PART_coconut_vanish
   m_TagString: Untagged
@@ -41,6 +43,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114034230083435148
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1448836093170098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70e9cb7816bdb52449dd2c5e895235d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_parent: {fileID: 0}
+  m_simulatePosition: 1
+  m_simualteRotation: 1
+  m_onParentDisableAction: 0
+  onParentDisabled:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &114297950912943982
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1448836093170098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d02689d46ad6094094cc5bbaa23bc48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &198076794366054934
 ParticleSystem:
   m_ObjectHideFlags: 1
