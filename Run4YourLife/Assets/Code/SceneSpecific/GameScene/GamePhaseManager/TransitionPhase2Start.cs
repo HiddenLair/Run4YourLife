@@ -57,11 +57,11 @@ namespace Run4YourLife.GameManagement
 
             StartRunnersCutScene();
 
+            StartBossCutScene();
+
             yield return new WaitUntil(() => m_RunnersCutscene.state != PlayState.Playing); // wait until cutscene has completed
 
             EndRunnersCutScene();
-
-            StartBossCutScene();
 
             yield return new WaitUntil(() => m_BossCutscene.state != PlayState.Playing); // wait until cutscene has completed
 
