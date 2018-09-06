@@ -8527,6 +8527,11 @@ Prefab:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 114714164399558440, guid: 7a99727aee93b7b408a7e7494abcd869,
+        type: 2}
+      propertyPath: m_cullingRatius
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7a99727aee93b7b408a7e7494abcd869, type: 2}
   m_IsPrefabParent: 0
@@ -16940,7 +16945,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 837320951
+  randomSeed: -1215264428
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -21017,6 +21022,11 @@ Prefab:
     - target: {fileID: 1951763056625912, guid: 7a99727aee93b7b408a7e7494abcd869, type: 2}
       propertyPath: m_Name
       value: fog (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114714164399558440, guid: 7a99727aee93b7b408a7e7494abcd869,
+        type: 2}
+      propertyPath: m_cullingRatius
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7a99727aee93b7b408a7e7494abcd869, type: 2}
@@ -32378,6 +32388,11 @@ Prefab:
       propertyPath: m_Name
       value: fog (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 114714164399558440, guid: 7a99727aee93b7b408a7e7494abcd869,
+        type: 2}
+      propertyPath: m_cullingRatius
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7a99727aee93b7b408a7e7494abcd869, type: 2}
   m_IsPrefabParent: 0
@@ -35195,6 +35210,11 @@ Prefab:
     - target: {fileID: 1951763056625912, guid: 7a99727aee93b7b408a7e7494abcd869, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 114714164399558440, guid: 7a99727aee93b7b408a7e7494abcd869,
+        type: 2}
+      propertyPath: m_cullingRatius
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7a99727aee93b7b408a7e7494abcd869, type: 2}
@@ -45064,6 +45084,11 @@ Prefab:
     - target: {fileID: 1951763056625912, guid: 7a99727aee93b7b408a7e7494abcd869, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 114714164399558440, guid: 7a99727aee93b7b408a7e7494abcd869,
+        type: 2}
+      propertyPath: m_cullingRatius
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7a99727aee93b7b408a7e7494abcd869, type: 2}
@@ -56544,6 +56569,11 @@ Prefab:
       propertyPath: m_Name
       value: fog (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 114714164399558440, guid: 7a99727aee93b7b408a7e7494abcd869,
+        type: 2}
+      propertyPath: m_cullingRatius
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7a99727aee93b7b408a7e7494abcd869, type: 2}
   m_IsPrefabParent: 0
@@ -59044,6 +59074,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2027987402}
   - component: {fileID: 1204149545}
+  - component: {fileID: 1204149546}
   m_Layer: 0
   m_Name: EndItem
   m_TagString: Untagged
@@ -59069,6 +59100,19 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &1204149546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1204149544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c04c442e7205ab41b1695b99fd87957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_cullingRatius: 4
+  m_simulateTime: 0
 --- !u!1001 &1204767681
 Prefab:
   m_ObjectHideFlags: 0

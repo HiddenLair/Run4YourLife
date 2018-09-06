@@ -135,6 +135,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4534045327049556}
+  - component: {fileID: 114708739615192704}
   m_Layer: 0
   m_Name: Coco Trail
   m_TagString: Untagged
@@ -570,6 +571,19 @@ MonoBehaviour:
   m_hitGroundAudioClip: {fileID: 8300000, guid: dbdfc8855509c0746945f9a72a5a6428,
     type: 3}
   m_coconutExplosionParticles: {fileID: 114739330146718394}
+--- !u!114 &114708739615192704
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1642991306364546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c04c442e7205ab41b1695b99fd87957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_cullingRatius: 0.3
+  m_simulateTime: 0
 --- !u!114 &114739330146718394
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -658,7 +672,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1098693211
+  randomSeed: -1723449954
   InitialModule:
     serializedVersion: 3
     enabled: 1

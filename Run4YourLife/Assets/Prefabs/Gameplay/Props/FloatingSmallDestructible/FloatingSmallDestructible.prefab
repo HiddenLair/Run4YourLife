@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4242751960600822}
   - component: {fileID: 198843645345821160}
   - component: {fileID: 199648132873286124}
+  - component: {fileID: 114601052790974110}
   m_Layer: 0
   m_Name: R4YL_PART_floating_rock
   m_TagString: Untagged
@@ -175,7 +176,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1640360424270392}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.96, y: 8.86, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.25, z: 0.5}
   m_Children:
   - {fileID: 4243049326847504}
@@ -280,7 +281,7 @@ Animator:
   m_GameObject: {fileID: 1807148064083382}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 66d7b5edc3e0c9e408038f185ba40d40, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -320,6 +321,19 @@ MonoBehaviour:
   m_isStatic: 1
   m_canBeRegenerated: 1
   m_disolveAnimationDuration: 0.75
+--- !u!114 &114601052790974110
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1382088543428868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c04c442e7205ab41b1695b99fd87957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_cullingRatius: 1.5
+  m_simulateTime: 0
 --- !u!114 &114917403599896106
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -418,7 +432,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1003351436
+  randomSeed: 227343614
   InitialModule:
     serializedVersion: 3
     enabled: 1
