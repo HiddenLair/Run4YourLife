@@ -17,6 +17,9 @@ namespace Run4YourLife.GameManagement
         private PlayableDirector m_RunnersCutscene;
 
         [SerializeField]
+        private PlayableDirector m_PortalCutScene;
+
+        [SerializeField]
         private PlayableDirector m_BossCutscene;
 
         [SerializeField]
@@ -56,7 +59,7 @@ namespace Run4YourLife.GameManagement
             CameraManager.Instance.TransitionToCamera(m_virtualCamera);
 
             StartRunnersCutScene();
-
+            StartPortalCutScene();
             StartBossCutScene();
 
             yield return new WaitUntil(() => m_RunnersCutscene.state != PlayState.Playing); // wait until cutscene has completed
@@ -65,7 +68,9 @@ namespace Run4YourLife.GameManagement
 
             yield return new WaitUntil(() => m_BossCutscene.state != PlayState.Playing); // wait until cutscene has completed
 
+            EndPortalCutScene();
             EndBossCutScene();
+            
 
             GameManager.Instance.ChangeGamePhase(GamePhase.BossFight);
         }
@@ -97,6 +102,16 @@ namespace Run4YourLife.GameManagement
             }
         }
 
+        private void StartPortalCutScene()
+        {
+            m_PortalCutScene.Play();
+        }
+
+        private void EndPortalCutScene()
+        {
+            m_PortalCutScene.Stop();
+        }
+
         private void StartBossCutScene()
         {
             //Boss intro
@@ -122,6 +137,7 @@ namespace Run4YourLife.GameManagement
             m_startPhaseCoroutine = null;
 
             EndRunnersCutScene();
+            EndPortalCutScene();
             EndBossCutScene();
 
             GameplayPlayerManager.Instance.DebugClearPlayers();
