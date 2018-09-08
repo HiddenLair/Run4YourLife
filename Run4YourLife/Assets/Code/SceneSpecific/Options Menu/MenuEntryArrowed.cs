@@ -51,18 +51,26 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
 
         public void OnMove(AxisEventData eventData)
         {
+            bool playSFX = false;
+
             switch (eventData.moveDir)
             {
                 case MoveDirection.Right:
                     m_rightArrowPlayableDirector.Play();
                     OnArrowEvent(MoveEvent.Right);
+                    playSFX = true;
                     break;
                 case MoveDirection.Left:
                     m_leftArrowPlayableDirector.Play();
                     OnArrowEvent(MoveEvent.Left);
+                    playSFX = true;
                     break;
             }
-            AudioManager.Instance.PlaySFX(m_switchClip);
+
+            if(playSFX && m_switchClip != null)
+            {
+                AudioManager.Instance.PlaySFX(m_switchClip);
+            }
         }
 
         public virtual void OnSelect(BaseEventData eventData)
@@ -75,8 +83,6 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
         {
             leftArrowImage.sprite = arrowNotSelected;
             rightArrowImage.sprite = arrowNotSelected;
-
-            AudioManager.Instance.PlaySFX(m_switchClip);
         }
 
         protected abstract void OnArrowEvent(MoveEvent moveEvent);

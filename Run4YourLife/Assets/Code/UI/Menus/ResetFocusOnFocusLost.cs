@@ -12,7 +12,7 @@ public class ResetFocusOnFocusLost : MonoBehaviour
     void Start()
     {
         eventSystem = EventSystem.current;
-        eventSystem.SetSelectedGameObject(gameObjectOnUnableToResetFocus);
+        eventSystem.SetSelectedGameObject(gameObjectOnUnableToResetFocus, null);
     }
 
     void Update()
@@ -30,7 +30,7 @@ public class ResetFocusOnFocusLost : MonoBehaviour
                 lastGameObjectFocus = gameObjectOnUnableToResetFocus;
             }
 
-            eventSystem.SetSelectedGameObject(lastGameObjectFocus);
+            eventSystem.SetSelectedGameObject(lastGameObjectFocus, null);
         }
     }
 }

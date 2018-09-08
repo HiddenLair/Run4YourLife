@@ -72,16 +72,16 @@ public class CustomButton : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     public void OnSelect(BaseEventData eventData)
     {
+        if(eventData != null && selectedButton != null)
+        {
+            AudioManager.Instance.PlaySFX(selectedButton);
+        }
+
         SetFocus(true);
     }
 
     public void OnDeselect(BaseEventData eventData)
     {
-        if (selectedButton != null)
-        {
-            AudioManager.Instance.PlaySFX(selectedButton);
-        }
-
         SetFocus(false);
     }
 
