@@ -66,7 +66,13 @@ namespace Run4YourLife.Debugging
             if (Input.GetKeyDown(KeyCode.F1))
             {
                 debugging = !debugging;
+                Cursor.visible = debugging;
             }
+        }
+
+        void OnDestroy()
+        {
+            Cursor.visible = false;
         }
 
         private void AddDebugFeatures()
