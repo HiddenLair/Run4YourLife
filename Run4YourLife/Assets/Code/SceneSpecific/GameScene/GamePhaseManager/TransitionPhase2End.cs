@@ -49,12 +49,15 @@ namespace Run4YourLife.GameManagement
         }
 
         private void StartPortalCutScene()
+            
         {
+            BindAudio(m_portalCutscene);
             m_portalCutscene.Play();
         }
 
         private void EndPortalCutScene()
         {
+            Unbind(m_portalCutscene);
             m_portalCutscene.Stop();
         }
 

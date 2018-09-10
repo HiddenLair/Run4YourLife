@@ -74,6 +74,19 @@ namespace Run4YourLife.GameManagement
             }
         }
 
+        protected void BindAudio(PlayableDirector director)
+        {
+            timelineAsset = (TimelineAsset)director.playableAsset;
+            var outputs = timelineAsset.outputs;
+            foreach (PlayableBinding itm in outputs)
+            {
+                if (itm.streamName.Contains("Audio"))
+                {
+                    SetTrackBindingsAudio(director, itm);
+                }
+            }
+        }
+
         private void SetTrackBindingsAudio(PlayableDirector director, PlayableBinding itm)
         {
             if (itm.streamName.Contains("Music"))

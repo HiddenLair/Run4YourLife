@@ -104,11 +104,13 @@ namespace Run4YourLife.GameManagement
 
         private void StartPortalCutScene()
         {
+            BindAudio(m_PortalCutScene);
             m_PortalCutScene.Play();
         }
 
         private void EndPortalCutScene()
         {
+            Unbind(m_PortalCutScene);
             m_PortalCutScene.Stop();
         }
 
