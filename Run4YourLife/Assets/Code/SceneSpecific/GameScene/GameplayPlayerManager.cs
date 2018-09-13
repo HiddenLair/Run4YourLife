@@ -177,7 +177,7 @@ namespace Run4YourLife.GameManagement
             }
         }
 
-        public void OnplayerHandleChanged(GameObject player, PlayerHandle playerHandle)
+        private void OnplayerHandleChanged(GameObject player, PlayerHandle playerHandle)
         {
             foreach (IPlayerHandleEvent playerHandleEvent in player.GetComponents<IPlayerHandleEvent>())
             {
