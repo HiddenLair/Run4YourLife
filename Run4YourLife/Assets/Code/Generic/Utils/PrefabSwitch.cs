@@ -1,5 +1,7 @@
-﻿using UnityEngine;  // UnityEngine gives us general access.
+﻿#if UNITY_EDITOR
+using UnityEngine;  // UnityEngine gives us general access.
 using UnityEditor;  // UnityEditor gives us editor-specific access.
+
 
 /// <summary>Performs manual iteration to swap out one game object for another.</summary>
 public class PrefabSwitch : MonoBehaviour
@@ -109,3 +111,4 @@ public class PrefabSwitchEditor : Editor
         }
     }
 }
+#endif
