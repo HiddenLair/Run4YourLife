@@ -242,6 +242,7 @@ namespace Run4YourLife.Player.Runner
             m_horizontalDrag = m_baseHorizontalDrag;
 
             WindForceRelative = 0.0f;
+            ExternalVelocity = Vector3.zero;
             m_idleTimer = 0.0f;
 
             m_dashTrail.gameObject.SetActive(false);
