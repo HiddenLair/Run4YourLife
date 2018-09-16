@@ -6,112 +6,124 @@ using UnityEngine;
 
 using Run4YourLife.GameManagement.AudioManagement;
 using Run4YourLife.Player.Runner;
+using Run4YourLife.GameManagement;
 
-public class GemController : MonoBehaviour, IRunnerDashBreakable
+namespace Run4YourLife.Interactables
 {
 
-    [SerializeField]
-    private float m_timeBetweenTeleports;
-
-    [SerializeField]
-    private float m_teleportDuration;
-
-    [SerializeField]
-    private FXReceiver m_spawnReceiver;
-
-    [SerializeField]
-    private FXReceiver m_destructionReceiver;
-
-    [SerializeField]
-    private FXReceiver m_teleportReceiver;
-
-    [SerializeField]
-    private GameObject m_graphicsChild;
-
-    private Collider m_collider;
-
-    private Transform[] m_possibleGemPositions;
-
-    private RunnerDashBreakableState m_state;
-
-    RunnerDashBreakableState IRunnerDashBreakable.RunnerDashBreakableState { get { return m_state; } }
-
-    private void Awake()
+    public class GemController : MonoBehaviour
     {
-        m_collider = GetComponent<Collider>();
-    }
 
-    public void Init(Transform[] possibleGemPositions)
-    {
-        m_possibleGemPositions = possibleGemPositions;
-    }
+        [SerializeField]
+        private float m_timeBetweenTeleports;
 
-    private void OnEnable()
-    {
-        ResetState();
-    }
+        [SerializeField]
+        private float m_teleportDuration;
 
-    private void ResetState()
-    {
-        Display(false);
-        m_state = RunnerDashBreakableState.Alive;
-    }
+        [SerializeField]
+        private FXReceiver m_spawnReceiver;
 
-    private void OnDisable()
-    {
-        StopAllCoroutines();
-    }
+        [SerializeField]
+        private FXReceiver m_destructionReceiver;
 
-    public void StartMoving()
-    {
-        StartCoroutine(GemBehaviour());
-    }
+        [SerializeField]
+        private FXReceiver m_teleportReceiver;
 
-    private IEnumerator GemBehaviour()
-    {
-        //Start by placing immediately the gem somewhere
-        transform.position = RandomDifferentTeleportPosition();
-        Display(true);
-        m_spawnReceiver.PlayFx(false);
+        [SerializeField]
+        private GameObject m_graphicsChild;
 
-        //Move the gem around at intervals
-        while (true)
+        private Collider m_collider;
+
+        private Transform[] m_possibleGemPositions;
+
+        private bool m_active;
+
+        private void Awake()
         {
-            //we let the gem still for a while
-            yield return new WaitForSeconds(m_timeBetweenTeleports);
+            m_collider = GetComponent<Collider>();
+        }
 
-            //teleport gem
-            //we hide it for some time
-            m_teleportReceiver.PlayFx(false);
+        public void Init(Transform[] possibleGemPositions)
+        {
+            m_possibleGemPositions = possibleGemPositions;
+        }
+
+        private void OnEnable()
+        {
+            ResetState();
+        }
+
+        private void ResetState()
+        {
             Display(false);
-            yield return new WaitForSeconds(m_teleportDuration);
+            m_active = true;
+        }
 
-            //gem appears again
+        private void OnDisable()
+        {
+            StopAllCoroutines();
+        }
+
+        public void StartMoving()
+        {
+            StartCoroutine(GemBehaviour());
+        }
+
+        private IEnumerator GemBehaviour()
+        {
+            //Start by placing immediately the gem somewhere
             transform.position = RandomDifferentTeleportPosition();
             Display(true);
             m_spawnReceiver.PlayFx(false);
+
+            //Move the gem around at intervals
+            while (true)
+            {
+                //we let the gem still for a while
+                yield return new WaitForSeconds(m_timeBetweenTeleports);
+
+                //teleport gem
+                //we hide it for some time
+                m_teleportReceiver.PlayFx(false);
+                Display(false);
+                yield return new WaitForSeconds(m_teleportDuration);
+
+                //gem appears again
+                transform.position = RandomDifferentTeleportPosition();
+                Display(true);
+                m_spawnReceiver.PlayFx(false);
+            }
         }
-    }
 
-    private void Display(bool state)
-    {
-        m_graphicsChild.SetActive(state);
-        m_collider.enabled = state;
-    }
-
-    private Vector3 RandomDifferentTeleportPosition()
-    {
-        Vector3 randomPosition;
-        do
+        private void Display(bool state)
         {
-            randomPosition = m_possibleGemPositions[UnityEngine.Random.Range(0, m_possibleGemPositions.Length)].position;
-        } while (randomPosition == transform.position);
-        return randomPosition;
-    }
+            m_graphicsChild.SetActive(state);
+            m_collider.enabled = state;
+        }
 
-    void IRunnerDashBreakable.Break()
-    {
-        m_destructionReceiver.PlayFx();
-        BossFightGemManager.Instance.OnGemHasBeenDestroyed();
+        private Vector3 RandomDifferentTeleportPosition()
+        {
+            Vector3 randomPosition;
+            do
+            {
+                randomPosition = m_possibleGemPositions[UnityEngine.Random.Range(0, m_possibleGemPositions.Length)].position;
+            } while (randomPosition == transform.position);
+            return randomPosition;
+        }
+
+        private void Break()
+        {
+            m_destructionReceiver.PlayFx();
+            BossFightGemManager.Instance.OnGemHasBeenDestroyed();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (m_active && other.CompareTag(Tags.Runner))
+            {
+                m_active = false;
+                Break();
+            }
+        }
     }
 }
