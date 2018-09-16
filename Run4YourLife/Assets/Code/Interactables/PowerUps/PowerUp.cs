@@ -7,10 +7,11 @@ using UnityEngine.Playables;
 using Run4YourLife.GameManagement;
 using Run4YourLife.Player;
 
+
 namespace Run4YourLife.Interactables
 {
     [RequireComponent(typeof(PlayableDirector))]
-    public abstract class PowerUp : MonoBehaviour
+    public abstract class PowerUp : MonoBehaviour, IBossDestructibleNotified
     {
         protected enum PowerUpType { Void, Single, Shared };
 
@@ -28,7 +29,7 @@ namespace Run4YourLife.Interactables
 
         private void OnTriggerEnter(Collider other)
         {
-            if(!activated && other.CompareTag(Tags.Runner))
+            if (!activated && other.CompareTag(Tags.Runner))
             {
                 activated = true;
                 ExecutePowerUp(other.gameObject);
@@ -66,6 +67,15 @@ namespace Run4YourLife.Interactables
                     }
                     break;
             }
+        }
+
+        void IBossDestructibleNotified.OnDestroyed()
+        {
+        }
+
+        void IBossDestructibleNotified.OnRegenerated()
+        {
+            activated = false;
         }
     }
 }
