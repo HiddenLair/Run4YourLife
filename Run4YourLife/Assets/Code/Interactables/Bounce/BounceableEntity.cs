@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 using Run4YourLife.Player.Runner;
-using Run4YourLife.InputManagement;
 
 namespace Run4YourLife.Interactables
 {
@@ -55,11 +52,6 @@ namespace Run4YourLife.Interactables
         public override bool ShouldBounceByContact(RunnerController runnerCharacterController)
         {
             return m_bounceTrigger == BounceTrigger.Allways || (m_bounceTrigger == BounceTrigger.NegativeVerticalVelocity && runnerCharacterController.Velocity.y < 0);
-        }
-
-        public override Vector3 GetStartingBouncePosition(RunnerController runnerCharacterController)
-        {
-            return runnerCharacterController.transform.position;
         }
     }
 }

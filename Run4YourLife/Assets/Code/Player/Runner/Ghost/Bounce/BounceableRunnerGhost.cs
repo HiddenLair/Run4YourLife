@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 using Run4YourLife.Interactables;
 
@@ -41,13 +39,6 @@ namespace Run4YourLife.Player.Runner.Ghost
         {
             base.BouncedOn();
             m_runnerGhostController.ReviveRunner();
-        }
-
-        public override Vector3 GetStartingBouncePosition(RunnerController runnerCharacterController)
-        {
-            Vector3 startingBouncePosition = runnerCharacterController.transform.position;
-            startingBouncePosition.y = m_collider.bounds.max.y;
-            return startingBouncePosition;
         }
 
         public override bool ShouldBounceByContact(RunnerController runnerCharacterController)

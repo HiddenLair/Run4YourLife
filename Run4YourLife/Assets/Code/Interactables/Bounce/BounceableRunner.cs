@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 using Run4YourLife.Player.Runner;
 
@@ -8,7 +6,6 @@ namespace Run4YourLife.Interactables
 {
     public class BounceableRunner : BounceableEntityBase
     {
-
         private RunnerController m_runnerCharacterController;
         private RunnerAttributeController m_runnerAttributeController;
         private BumpController m_bumpController;
@@ -54,13 +51,6 @@ namespace Run4YourLife.Interactables
         {
             base.BouncedOn();
             m_bumpController.Bump();
-        }
-
-        public override Vector3 GetStartingBouncePosition(RunnerController runnerCharacterController)
-        {
-            Vector3 startingBouncePosition = runnerCharacterController.transform.position;
-            startingBouncePosition.y = m_collider.bounds.max.y;
-            return startingBouncePosition;
         }
     }
 }

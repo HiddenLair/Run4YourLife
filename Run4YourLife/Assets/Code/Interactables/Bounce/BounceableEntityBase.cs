@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-using UnityEngine;
+﻿using UnityEngine;
 
 using Run4YourLife.Player.Runner;
 
@@ -19,8 +16,8 @@ namespace Run4YourLife.Interactables
             Debug.Assert(m_bounceParticle != null);
         }
 
-        public abstract Vector3 GetStartingBouncePosition(RunnerController runnerCharacterController);
         public abstract bool ShouldBounceByContact(RunnerController runnerCharacterController);
+
         public virtual void BouncedOn()
         {
             m_bounceParticle.PlayFx(false);

@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 
-using Run4YourLife;
 using Run4YourLife.Interactables;
-
 
 namespace Run4YourLife.Player.Runner
 {
@@ -49,7 +47,6 @@ namespace Run4YourLife.Player.Runner
 
         private void ExecuteBounce(IBounceable bounceable)
         {
-            transform.position = bounceable.GetStartingBouncePosition(m_runnerCharacterController);
             m_runnerCharacterController.Bounce(bounceable.BounceForce);
             bounceable.BouncedOn();
         }
