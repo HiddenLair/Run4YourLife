@@ -39,10 +39,13 @@ namespace Run4YourLife.UI
         {
             if(useCoroutine != null)
             {
+                onUseEnd.Invoke();
+
                 StopCoroutine(useCoroutine);
                 useCoroutine = null;
-                ResetUseState();
             }
+
+            ResetUseState();
         }
 
         private void ResetUseState()
@@ -68,6 +71,8 @@ namespace Run4YourLife.UI
             m_cooldownImage.fillAmount = ComputeFillAmount(0.0f);
 
             onUseEnd.Invoke();
+
+            useCoroutine = null;
         }
 
         private float ComputeFillAmount(float value)
