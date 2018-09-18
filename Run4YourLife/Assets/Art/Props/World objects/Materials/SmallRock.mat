@@ -10,7 +10,7 @@ Material:
   m_Shader: {fileID: 4800000, guid: ac650bea2f0a6124eb93bc4ed6452b7f, type: 3}
   m_ShaderKeywords: _NORMALMAP
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -36,6 +36,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _Diffuse:
         m_Texture: {fileID: 2800000, guid: 2b66a7158c71fd44fa050ddf362e761e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Emission:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -116,6 +120,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _Dissolveamout: 0
     - _DstBlend: 0
+    - _EmissionForce: 0
     - _Gloss: 2.28
     - _GlossMapScale: 1
     - _Glossiness: 0
@@ -131,6 +136,7 @@ Material:
     - _Specularity: 0.79
     - _SrcBlend: 1
     - _UVSec: 0
+    - _UseEmision: 0
     - _ZWrite: 1
     - _ambient_occlusion_power: 10
     - _base_color_tiling: 4.39
@@ -147,6 +153,7 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DiffuseColor: {r: 1, g: 1, b: 1, a: 0}
+    - _EmisionColor: {r: 1, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _base_color_multiply: {r: 1, g: 1, b: 1, a: 1}
