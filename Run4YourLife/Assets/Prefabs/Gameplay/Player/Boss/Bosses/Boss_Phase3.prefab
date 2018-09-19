@@ -543,6 +543,7 @@ GameObject:
   - component: {fileID: 114800066667396244}
   - component: {fileID: 114006545318141672}
   - component: {fileID: 114399716927243462}
+  - component: {fileID: 114989845849734064}
   m_Layer: 11
   m_Name: Boss_Phase3
   m_TagString: Boss
@@ -2081,7 +2082,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1432021327500220}
-  m_LocalRotation: {x: -0.00000009735359, y: 0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 246.02, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2495,7 +2496,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1978160456493734}
-  m_LocalRotation: {x: -0.11512199, y: 0.091125175, z: 0.054321293, w: 0.9876701}
+  m_LocalRotation: {x: -0.11512205, y: 0.091125175, z: 0.054321323, w: 0.9876701}
   m_LocalPosition: {x: -0.080050185, y: 1.1695338, z: -0.25692824}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2698,7 +2699,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1157994669608900}
-  m_LocalRotation: {x: 0.007650951, y: 0.00025004116, z: 0.21700937, w: 0.9761395}
+  m_LocalRotation: {x: 0.0076509514, y: 0.00025004116, z: 0.21700938, w: 0.9761395}
   m_LocalPosition: {x: -0.08048273, y: 0.38305297, z: -0.008592794}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3355,7 +3356,7 @@ MonoBehaviour:
   m_path: {fileID: 0}
   m_positionUnits: 1
   m_speed: 3
-  m_acceleration: 0.025
+  m_acceleration: 0.015
   m_position: 0
   bossStatsPathModifiers:
   - waypointIndex: 5
@@ -3363,11 +3364,25 @@ MonoBehaviour:
     accelerationMultiplier: 0
     blendingStartingPercentage: 0
     blendingType: 0
+    oscilationActive: 0
   - waypointIndex: 4
     speedMultiplier: 1
     accelerationMultiplier: 1
     blendingStartingPercentage: 0.6
     blendingType: 1
+    oscilationActive: 1
+  - waypointIndex: 10
+    speedMultiplier: 0.6
+    accelerationMultiplier: 0
+    blendingStartingPercentage: 0
+    blendingType: 1
+    oscilationActive: 1
+  - waypointIndex: 9
+    speedMultiplier: 1
+    accelerationMultiplier: 1
+    blendingStartingPercentage: 0.6
+    blendingType: 0
+    oscilationActive: 1
 --- !u!114 &114922183039526402
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3401,13 +3416,26 @@ MonoBehaviour:
   m_castClip: {fileID: 8300000, guid: f7d08eafd83937b4cadc664892af1821, type: 3}
   m_shotWarningClip: {fileID: 0}
   m_shotFireClip: {fileID: 0}
-  m_meleeClip: {fileID: 8300000, guid: 5a17a99919f460e4f961de3bb2f63aa7, type: 3}
+  m_meleeClip: {fileID: 8300000, guid: ba9a707c455899540b5ab5cd98aef02d, type: 3}
   m_fireLaserNormalizedTime: 0.7
   m_laserPrefab: {fileID: 1110396084154354, guid: 045121e5642c5d844b10139b6ef8b6d6,
     type: 2}
   m_meleeNormalizedTime: 0.6
   m_meleeTrembleConfig: {fileID: 11400000, guid: 816ad2774a8af72468f15c8b9fa05382,
     type: 2}
+--- !u!114 &114989845849734064
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1432021327500220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fab4e4b0d1043f54eb1f3c66f44f509c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timePerOscilation: 2
+  maximumVariation: 1
 --- !u!137 &137017230866588148
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -3814,7 +3842,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -40835912
+  randomSeed: 1953361527
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -23980,7 +24008,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 755338891
+  randomSeed: -2133817632
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -27341,7 +27369,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -6090395
+  randomSeed: 9711130
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -30702,7 +30730,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -2014360088
+  randomSeed: 675824254
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -34063,7 +34091,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1541540779
+  randomSeed: -637379941
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -40785,7 +40813,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1458260677
+  randomSeed: -837346590
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -47507,7 +47535,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 827495754
+  randomSeed: 1489926898
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -54229,7 +54257,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1352069415
+  randomSeed: 1768860121
   InitialModule:
     serializedVersion: 3
     enabled: 1

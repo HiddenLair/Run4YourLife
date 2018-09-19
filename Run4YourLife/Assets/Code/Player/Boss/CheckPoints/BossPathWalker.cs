@@ -4,9 +4,11 @@ using Cinemachine;
 
 using Run4YourLife.Cinemachine;
 using Run4YourLife.GameManagement;
+using Run4YourLife.Utils;
 
 namespace Run4YourLife.Player.Boss
 {
+    [RequireComponent(typeof(PositionYOscilation))]
     [ExecuteInEditMode]
     public class BossPathWalker : MonoBehaviour, IProgressProvider
     {
@@ -22,6 +24,7 @@ namespace Run4YourLife.Player.Boss
             public float accelerationMultiplier = 1.0f;
             public float blendingStartingPercentage = 0.0f;
             public BlendingType blendingType = BlendingType.Exponential;
+            public bool oscilationActive = true;
         }
 
         /// <summary>The path to follow</summary>
@@ -51,6 +54,7 @@ namespace Run4YourLife.Player.Boss
         public CinemachineScreenTransposerData CinemachineScreenTransposerData { get { return m_cinemachineScreenTransposerData; } }
 
         private BossStatsPathModifier[] m_bossStatsPathModifiers;
+        private PositionYOscilation oscilateScript;
 
         public float Progress
         {
@@ -62,6 +66,7 @@ namespace Run4YourLife.Player.Boss
 
         private void Awake()
         {
+            oscilateScript = GetComponent<PositionYOscilation>();
             BuildBossStatsPathModifiers();
             UpdatePositionAndScreenTransposerData(m_position);
         }
@@ -131,6 +136,8 @@ namespace Run4YourLife.Player.Boss
             m_path.GetWaypointIndex(m_position, m_positionUnits, out index, out decimalPart);
 
             BossStatsPathModifier bossStatsPathModifier = m_bossStatsPathModifiers[index];
+
+            oscilateScript.enabled = bossStatsPathModifier.oscilationActive;
 
             speedMultiplier = bossStatsPathModifier.speedMultiplier;
             accelerationMultiplier = bossStatsPathModifier.accelerationMultiplier;
