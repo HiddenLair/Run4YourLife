@@ -37,15 +37,14 @@ public class EyeController : MonoBehaviour
 
     void OnEnable()
     {
-        Color color = material.color; color.a = 0.0f;
-        material.color = color;
+        meshRenderer.enabled = false;
 
         coroutine = StartCoroutine(Controller());
     }
 
     void OnDisable()
     {
-        if(coroutine != null)
+        if (coroutine != null)
         {
             StopCoroutine(coroutine);
         }
@@ -55,7 +54,7 @@ public class EyeController : MonoBehaviour
     {
         float fadeTime = 0.2f;
 
-        while(true)
+        while (true)
         {
             transform.localScale = initialScale * Random.Range(minScaleMultiplier, maxScaleMultiplier);
 
@@ -68,7 +67,7 @@ public class EyeController : MonoBehaviour
             // 1 .. 1
             yield return new WaitForSeconds(0.5f * Random.Range(minTimeVisibleS, maxTimeVisibleS));
 
-            if(Random.Range(0.0f, 1.0f) >= 0.9f)
+            if (Random.Range(0.0f, 1.0f) >= 0.9f)
             {
                 // 1 -> 0
                 yield return StartCoroutine(Fade(false, 0.25f * fadeTime));
@@ -96,11 +95,11 @@ public class EyeController : MonoBehaviour
         color.a = alpha0To1 ? 0.0f : 1.0f;
         material.color = color;
 
-        while(remainingTimeS >= 0.0f)
+        while (remainingTimeS >= 0.0f)
         {
             color.a = Mathf.Clamp01(remainingTimeS / timeS);
 
-            if(alpha0To1)
+            if (alpha0To1)
             {
                 color.a = 1.0f - color.a;
             }
@@ -110,6 +109,8 @@ public class EyeController : MonoBehaviour
 
             yield return null;
         }
+
+        meshRenderer.enabled = alpha0To1;
 
         color.a = alpha0To1 ? 1.0f : 0.0f;
         material.color = color;
