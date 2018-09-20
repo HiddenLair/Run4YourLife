@@ -7,7 +7,7 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
     public abstract class MenuEntryArrowedContentText : MenuEntryArrowed
     {
         [SerializeField]
-        protected TextMeshProUGUI text;
+        private TextMeshProUGUI text;
 
         [SerializeField]
         private Color32 colorNormal = new Color32(150, 150, 150, 255);
@@ -25,6 +25,11 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
         {
             base.OnDeselect(eventData);
             text.color = colorNormal;
+        }
+
+        protected void UpdateTextContent(string textContent)
+        {
+            text.SetText(textContent);
         }
     }
 }

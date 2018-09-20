@@ -24,7 +24,7 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
 
         private void UpdateFullscreenText()
         {
-            text.text = Screen.fullScreen ? ON_FULLSCREEN_STRING : OFF_FULLSCREEN_STRING;
+            UpdateTextContent(Screen.fullScreen ? ON_FULLSCREEN_STRING : OFF_FULLSCREEN_STRING);
         }
     }
 }

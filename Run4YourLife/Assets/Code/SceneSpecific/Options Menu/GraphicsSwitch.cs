@@ -13,7 +13,7 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
 
         protected override void OnArrowEvent(MoveEvent moveEvent)
         {
-            switch(moveEvent)
+            switch (moveEvent)
             {
                 case MoveEvent.Left:
                     QualitySettings.DecreaseLevel();
@@ -28,7 +28,7 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
 
         private void UpdateGraphicsText()
         {
-            text.SetText(QualitySettings.names[QualitySettings.GetQualityLevel()]);
+            UpdateTextContent(QualitySettings.names[QualitySettings.GetQualityLevel()]);
         }
     }
 }

@@ -34,11 +34,11 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
 
             availableResolutions.Add(resolutions[0]);
 
-            foreach(Resolution resolution in resolutions)
+            foreach (Resolution resolution in resolutions)
             {
                 Resolution lastResolutionAdded = availableResolutions[availableResolutions.Count - 1];
 
-                if(resolution.width != lastResolutionAdded.width || resolution.height != lastResolutionAdded.height)
+                if (resolution.width != lastResolutionAdded.width || resolution.height != lastResolutionAdded.height)
                 {
                     availableResolutions.Add(resolution);
                 }
@@ -49,9 +49,9 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
         {
             resolutionIndex = availableResolutions.Count - 1;
 
-            for(int i = 0; i < availableResolutions.Count; ++i)
+            for (int i = 0; i < availableResolutions.Count; ++i)
             {
-                if(availableResolutions[i].width == Screen.width && availableResolutions[i].height == Screen.height)
+                if (availableResolutions[i].width == Screen.width && availableResolutions[i].height == Screen.height)
                 {
                     resolutionIndex = i;
                     break;
@@ -67,7 +67,7 @@ namespace Run4YourLife.SceneSpecific.OptionsMenu
 
         private void UpdateResolutionText()
         {
-            text.text = availableResolutions[resolutionIndex].width + " x " + availableResolutions[resolutionIndex].height;
+            UpdateTextContent(availableResolutions[resolutionIndex].width + " x " + availableResolutions[resolutionIndex].height);
         }
     }
 }
