@@ -9,10 +9,10 @@ public class FXManager : SingletonMonoBehaviour<FXManager>
 
     public GameObjectPool GameObjectPool { get { return m_gameObjectPool; } }
 
-    public GameObject InstantiateFromReceiver(FXReceiver receiver, GameObject prefab, bool setAsParent = false)
+    public GameObject InstantiateFromReceiver(FXReceiver receiver, bool setAsParent = false)
     {
         Transform parent = setAsParent ? receiver.transform : null;
-        return InstantiateFromValues(receiver.transform.position, receiver.transform.rotation, prefab, parent);
+        return InstantiateFromValues(receiver.transform.position, receiver.transform.rotation, receiver.FX, parent);
     }
 
     public GameObject InstantiateFromValues(Vector3 position, Quaternion rotation, GameObject prefab, Transform parent = null)

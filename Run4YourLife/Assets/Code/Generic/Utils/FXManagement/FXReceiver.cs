@@ -4,8 +4,14 @@ using Run4YourLife.GameManagement.AudioManagement;
 
 public class FXReceiver : MonoBehaviour
 {
-    public GameObject fx;
-    public AudioClip sfx;
+    [SerializeField]
+    private GameObject fx;
+
+    [SerializeField]
+    private AudioClip sfx;
+
+    public GameObject FX { get { return fx; } }
+    public AudioClip SFX { get { return sfx; } }
 
     public GameObject PlayFx(bool setAsParent = false)
     {
@@ -14,6 +20,6 @@ public class FXReceiver : MonoBehaviour
             AudioManager.Instance.PlaySFX(sfx);
         }
 
-        return FXManager.Instance.InstantiateFromReceiver(this, fx, setAsParent);
+        return FXManager.Instance.InstantiateFromReceiver(this, setAsParent);
     }
 }
