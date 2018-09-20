@@ -8,7 +8,6 @@ using Run4YourLife.Utils;
 
 namespace Run4YourLife.Player.Boss
 {
-    [RequireComponent(typeof(PositionYOscilation))]
     [ExecuteInEditMode]
     public class BossPathWalker : MonoBehaviour, IProgressProvider
     {
@@ -66,7 +65,7 @@ namespace Run4YourLife.Player.Boss
 
         private void Awake()
         {
-            oscilateScript = GetComponent<PositionYOscilation>();
+            oscilateScript = GetComponentInChildren<PositionYOscilation>();
             BuildBossStatsPathModifiers();
             UpdatePositionAndScreenTransposerData(m_position);
         }
@@ -137,7 +136,10 @@ namespace Run4YourLife.Player.Boss
 
             BossStatsPathModifier bossStatsPathModifier = m_bossStatsPathModifiers[index];
 
-            oscilateScript.enabled = bossStatsPathModifier.oscilationActive;
+            if (oscilateScript != null)
+            {
+                oscilateScript.enabled = bossStatsPathModifier.oscilationActive;
+            }
 
             speedMultiplier = bossStatsPathModifier.speedMultiplier;
             accelerationMultiplier = bossStatsPathModifier.accelerationMultiplier;

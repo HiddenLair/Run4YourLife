@@ -17,19 +17,16 @@ namespace Run4YourLife.Utils
         private float yOffsetPerSec;
         private float actualOffset;
         private float initialYPos;
-        private Vector3 lastPosition;
 
         private void Awake()
         {
             yOffsetPerSec = maximumVariation / timePerOscilation/2.0f;
-            initialYPos = transform.position.y;
-            lastPosition = transform.position;
+            initialYPos = transform.localPosition.y;
         }
 
         // Update is called once per frame
         void Update()
         {
-            initialYPos += transform.position.y - lastPosition.y;
             actualOffset += yOffsetPerSec * Time.deltaTime;
             if (actualOffset > maximumVariation)
             {
@@ -41,9 +38,9 @@ namespace Run4YourLife.Utils
                 actualOffset = 0;
                 yOffsetPerSec = -yOffsetPerSec;
             }
-            lastPosition = transform.position;
-            lastPosition.y = lastPosition.y + actualOffset;
-            transform.position = lastPosition;
+            Vector3 tempPos = transform.localPosition;
+            tempPos.y = initialYPos + actualOffset;
+            transform.localPosition = tempPos;
         }
     }
 }

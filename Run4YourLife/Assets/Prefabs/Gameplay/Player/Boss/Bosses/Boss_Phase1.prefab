@@ -558,7 +558,6 @@ GameObject:
   - component: {fileID: 114330724144454964}
   - component: {fileID: 114106074611172382}
   - component: {fileID: 114460337505168556}
-  - component: {fileID: 114713968383939700}
   m_Layer: 11
   m_Name: Boss_Phase1
   m_TagString: Boss
@@ -750,6 +749,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4193744677928946}
+  - component: {fileID: 114020592193689206}
   m_Layer: 11
   m_Name: Graphics
   m_TagString: Untagged
@@ -3167,6 +3167,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fx: {fileID: 1062436407703268, guid: 1d13008a648dc7448b5b63f6106aea9c, type: 2}
   sfx: {fileID: 0}
+--- !u!114 &114020592193689206
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1440511846285556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fab4e4b0d1043f54eb1f3c66f44f509c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timePerOscilation: 1.5
+  maximumVariation: 0.5
 --- !u!114 &114027399167953058
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3289,19 +3302,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fx: {fileID: 1608580873781696, guid: c551c47218c5a754fa74027bda6e1c79, type: 2}
   sfx: {fileID: 0}
---- !u!114 &114713968383939700
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1339971389182100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fab4e4b0d1043f54eb1f3c66f44f509c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timePerOscilation: 1
-  maximumVariation: 0.5
 --- !u!114 &114871553384709032
 MonoBehaviour:
   m_ObjectHideFlags: 1

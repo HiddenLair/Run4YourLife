@@ -407,6 +407,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4926114622434076}
+  - component: {fileID: 114612540129305984}
   m_Layer: 11
   m_Name: Graphics
   m_TagString: Untagged
@@ -543,7 +544,6 @@ GameObject:
   - component: {fileID: 114800066667396244}
   - component: {fileID: 114006545318141672}
   - component: {fileID: 114399716927243462}
-  - component: {fileID: 114989845849734064}
   m_Layer: 11
   m_Name: Boss_Phase3
   m_TagString: Boss
@@ -3292,6 +3292,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fx: {fileID: 1953928210187016, guid: 7eebee2dd3a19db4a8ad2de5fcb10cd5, type: 2}
   sfx: {fileID: 0}
+--- !u!114 &114612540129305984
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1340803161082170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fab4e4b0d1043f54eb1f3c66f44f509c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timePerOscilation: 2.5
+  maximumVariation: 1
 --- !u!114 &114748026163325168
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3423,19 +3436,6 @@ MonoBehaviour:
   m_meleeNormalizedTime: 0.6
   m_meleeTrembleConfig: {fileID: 11400000, guid: 816ad2774a8af72468f15c8b9fa05382,
     type: 2}
---- !u!114 &114989845849734064
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1432021327500220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fab4e4b0d1043f54eb1f3c66f44f509c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timePerOscilation: 1
-  maximumVariation: 0.5
 --- !u!137 &137017230866588148
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
