@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Run4YourLife.GameManagement.AudioManagement;
 using UnityEngine;
 
 public class FXManager : SingletonMonoBehaviour<FXManager>
@@ -11,6 +12,11 @@ public class FXManager : SingletonMonoBehaviour<FXManager>
 
     public GameObject InstantiateFromReceiver(FXReceiver receiver, bool setAsParent = false)
     {
+        if (receiver.SFX != null)
+        {
+            AudioManager.Instance.PlaySFX(receiver.SFX);
+        }
+
         Transform parent = setAsParent ? receiver.transform : null;
         return InstantiateFromValues(receiver.transform.position, receiver.transform.rotation, receiver.FX, parent);
     }

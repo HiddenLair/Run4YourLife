@@ -15,11 +15,6 @@ public class FXReceiver : MonoBehaviour
 
     public GameObject PlayFx(bool setAsParent = false)
     {
-        if (sfx != null)
-        {
-            AudioManager.Instance.PlaySFX(sfx);
-        }
-
         return FXManager.Instance.InstantiateFromReceiver(this, setAsParent);
     }
 }
