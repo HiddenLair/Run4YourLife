@@ -20,9 +20,6 @@ namespace Run4YourLife.Player.Boss
         private GameObject m_bulletPrefab;
 
         [SerializeField]
-        private float m_bulletSpeed;
-
-        [SerializeField]
         private float m_shootBulletNormalizedTime;
 
         protected override void ExecuteShoot()
@@ -110,13 +107,13 @@ namespace Run4YourLife.Player.Boss
             {
                 m_rightHandGraphics.SetActive(false);
                 GameObject handInstance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(m_rightHandPrefab, position, Quaternion.identity, true);
-                handInstance.GetComponent<Rigidbody>().velocity = handInstance.transform.right * m_armSpeed * Time.deltaTime;
+                handInstance.GetComponent<Rigidbody>().velocity = handInstance.transform.right * m_armSpeed;
             }
             else
             {
                 m_leftHandGraphics.SetActive(false);
                 GameObject handInstance = DynamicObjectsManager.Instance.GameObjectPool.GetAndPosition(m_leftHandPrefab, position, Quaternion.identity, true);
-                handInstance.GetComponent<Rigidbody>().velocity = -handInstance.transform.right * m_armSpeed * Time.deltaTime;
+                handInstance.GetComponent<Rigidbody>().velocity = -handInstance.transform.right * m_armSpeed;
             }
 
             m_isExecutingMeleeRight = rightHand;
