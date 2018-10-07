@@ -255,6 +255,7 @@ namespace Run4YourLife.Player.Runner
         {
             StopAllCoroutines();
             m_runnerControlScheme.Active = false;
+            ResetState();
         }
 
         private void Update()
