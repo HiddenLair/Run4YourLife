@@ -6,7 +6,7 @@ namespace Run4YourLife.Debugging
 {
     public static class DebugSystemManagerHelper
     {
-        private static bool FORCE_DEBUGGING_TOOLS = true; // This should be false on release
+        private static bool FORCE_DEBUGGING_TOOLS = false; // This should be false on release
 
         public static bool DebuggingToolsEnabled()
         {
