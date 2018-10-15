@@ -20,18 +20,18 @@ https://hiddenlair.github.io/Run4YourLife/
 
 ## Credits
 
-Game Designing, Gameplay Programming and Tools Programming:
-  Xavier Bravo Guillen  
-  Adrián Leroy Calle 
-  Gerard Pros Figueras
-  Pere Viader Masuet
+**Game Designing, Gameplay Programming and Tools Programming:**  
+- Xavier Bravo Guillen  
+- Adrián Leroy Calle  
+- Gerard Pros Figueras  
+- Pere Viader Masuet  
   
-3D Modeling, Animation and Concept Art:
-  Marta Florido Martín  
-  Pau Sánchez Penella  
-  MªÁngeles Almansa Rodríguez
+**3D Modeling, Animation and Concept Art:**  
+- Marta Florido Martín   
+- Pau Sánchez Penella  
+- MªÁngeles Almansa Rodríguez  
 
-Music:
-  Joan Roy Sunyer
+**Music:**  
+- Joan Roy Sunyer  
 
 Developed on Unity 2017.3.1f1
