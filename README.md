@@ -1,3 +1,5 @@
+![](https://github.com/HiddenLair/Run4YourLife/blob/master/Run4YourLife/Assets/Art/Sprites/R4YL_logo.png)
+
 # Run4YourLife
 
 (Final Masters project of the Masters on Videogame Design and Development (UPC School, 2017 - 2018))
